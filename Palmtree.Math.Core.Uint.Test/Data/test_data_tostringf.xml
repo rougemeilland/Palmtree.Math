@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dataitems>
+  <dataitem index="0">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">f</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0.00</result1>
+  </dataitem>
+  <dataitem index="1">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">f</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">0,00</result1>
+  </dataitem>
+  <dataitem index="2">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">f0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0</result1>
+  </dataitem>
+  <dataitem index="3">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">f0</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">0</result1>
+  </dataitem>
+  <dataitem index="4">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">f1</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0.0</result1>
+  </dataitem>
+  <dataitem index="5">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">f1</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">0,0</result1>
+  </dataitem>
+  <dataitem index="6">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">f5</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0.00000</result1>
+  </dataitem>
+  <dataitem index="7">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">f5</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">0,00000</result1>
+  </dataitem>
+  <dataitem index="8">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">F</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0.00</result1>
+  </dataitem>
+  <dataitem index="9">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">F</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">0,00</result1>
+  </dataitem>
+  <dataitem index="10">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">F0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0</result1>
+  </dataitem>
+  <dataitem index="11">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">F0</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">0</result1>
+  </dataitem>
+  <dataitem index="12">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">F1</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0.0</result1>
+  </dataitem>
+  <dataitem index="13">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">F1</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">0,0</result1>
+  </dataitem>
+  <dataitem index="14">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">F5</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0.00000</result1>
+  </dataitem>
+  <dataitem index="15">
+    <param1 type="ubigint">00</param1>
+    <param2 type="string">F5</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">0,00000</result1>
+  </dataitem>
+  <dataitem index="16">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">f</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12.00</result1>
+  </dataitem>
+  <dataitem index="17">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">f</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12,00</result1>
+  </dataitem>
+  <dataitem index="18">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">f0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12</result1>
+  </dataitem>
+  <dataitem index="19">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">f0</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12</result1>
+  </dataitem>
+  <dataitem index="20">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">f1</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12.0</result1>
+  </dataitem>
+  <dataitem index="21">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">f1</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12,0</result1>
+  </dataitem>
+  <dataitem index="22">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">f5</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12.00000</result1>
+  </dataitem>
+  <dataitem index="23">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">f5</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12,00000</result1>
+  </dataitem>
+  <dataitem index="24">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">F</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12.00</result1>
+  </dataitem>
+  <dataitem index="25">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">F</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12,00</result1>
+  </dataitem>
+  <dataitem index="26">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">F0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12</result1>
+  </dataitem>
+  <dataitem index="27">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">F0</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12</result1>
+  </dataitem>
+  <dataitem index="28">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">F1</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12.0</result1>
+  </dataitem>
+  <dataitem index="29">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">F1</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12,0</result1>
+  </dataitem>
+  <dataitem index="30">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">F5</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12.00000</result1>
+  </dataitem>
+  <dataitem index="31">
+    <param1 type="ubigint">01,0c</param1>
+    <param2 type="string">F5</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12,00000</result1>
+  </dataitem>
+  <dataitem index="32">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">f</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12345.00</result1>
+  </dataitem>
+  <dataitem index="33">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">f</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12345,00</result1>
+  </dataitem>
+  <dataitem index="34">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">f0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12345</result1>
+  </dataitem>
+  <dataitem index="35">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">f0</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12345</result1>
+  </dataitem>
+  <dataitem index="36">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">f1</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12345.0</result1>
+  </dataitem>
+  <dataitem index="37">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">f1</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12345,0</result1>
+  </dataitem>
+  <dataitem index="38">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">f5</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12345.00000</result1>
+  </dataitem>
+  <dataitem index="39">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">f5</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12345,00000</result1>
+  </dataitem>
+  <dataitem index="40">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">F</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12345.00</result1>
+  </dataitem>
+  <dataitem index="41">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">F</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12345,00</result1>
+  </dataitem>
+  <dataitem index="42">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">F0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12345</result1>
+  </dataitem>
+  <dataitem index="43">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">F0</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12345</result1>
+  </dataitem>
+  <dataitem index="44">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">F1</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12345.0</result1>
+  </dataitem>
+  <dataitem index="45">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">F1</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12345,0</result1>
+  </dataitem>
+  <dataitem index="46">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">F5</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">12345.00000</result1>
+  </dataitem>
+  <dataitem index="47">
+    <param1 type="ubigint">01,39,30</param1>
+    <param2 type="string">F5</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">12345,00000</result1>
+  </dataitem>
+  <dataitem index="48">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">f</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">123456789.00</result1>
+  </dataitem>
+  <dataitem index="49">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">f</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">123456789,00</result1>
+  </dataitem>
+  <dataitem index="50">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">f0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">123456789</result1>
+  </dataitem>
+  <dataitem index="51">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">f0</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">123456789</result1>
+  </dataitem>
+  <dataitem index="52">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">f1</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">123456789.0</result1>
+  </dataitem>
+  <dataitem index="53">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">f1</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">123456789,0</result1>
+  </dataitem>
+  <dataitem index="54">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">f5</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">123456789.00000</result1>
+  </dataitem>
+  <dataitem index="55">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">f5</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">123456789,00000</result1>
+  </dataitem>
+  <dataitem index="56">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">F</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">123456789.00</result1>
+  </dataitem>
+  <dataitem index="57">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">F</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">123456789,00</result1>
+  </dataitem>
+  <dataitem index="58">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">F0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">123456789</result1>
+  </dataitem>
+  <dataitem index="59">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">F0</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">123456789</result1>
+  </dataitem>
+  <dataitem index="60">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">F1</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">123456789.0</result1>
+  </dataitem>
+  <dataitem index="61">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">F1</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">123456789,0</result1>
+  </dataitem>
+  <dataitem index="62">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">F5</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">123456789.00000</result1>
+  </dataitem>
+  <dataitem index="63">
+    <param1 type="ubigint">01,15,cd,5b,07</param1>
+    <param2 type="string">F5</param2>
+    <param3 type="numberformatinfo">CultureName=fr-TN</param3>
+    <result1 type="string">123456789,00000</result1>
+  </dataitem>
+</dataitems>

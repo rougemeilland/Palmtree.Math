@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dataitems>
+  <dataitem index="0">
+    <param1 type="ubigint">00</param1>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="1">
+    <param1 type="ubigint">01,01</param1>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="2">
+    <param1 type="ubigint">01,e8,03</param1>
+    <result1 type="uint32">3</result1>
+  </dataitem>
+  <dataitem index="3">
+    <param1 type="ubigint">01,ff,03</param1>
+    <result1 type="uint32">3</result1>
+  </dataitem>
+  <dataitem index="4">
+    <param1 type="ubigint">01,00,04</param1>
+    <result1 type="uint32">3</result1>
+  </dataitem>
+  <dataitem index="5">
+    <param1 type="ubigint">01,d2,02,96,49</param1>
+    <result1 type="uint32">9</result1>
+  </dataitem>
+  <dataitem index="6">
+    <param1 type="ubigint">01,ff,ff,ff,ff</param1>
+    <result1 type="uint32">9</result1>
+  </dataitem>
+  <dataitem index="7">
+    <param1 type="ubigint">01,00,00,00,00,01</param1>
+    <result1 type="uint32">9</result1>
+  </dataitem>
+  <dataitem index="8">
+    <param1 type="ubigint">01,ff,e3,0b,54,02</param1>
+    <result1 type="uint32">9</result1>
+  </dataitem>
+  <dataitem index="9">
+    <param1 type="ubigint">01,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <result1 type="uint32">19</result1>
+  </dataitem>
+  <dataitem index="10">
+    <param1 type="ubigint">01,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <result1 type="uint32">19</result1>
+  </dataitem>
+  <dataitem index="11">
+    <param1 type="ubigint">01,00,00,00,00,00,00,00,00,01</param1>
+    <result1 type="uint32">19</result1>
+  </dataitem>
+  <dataitem index="12">
+    <param1 type="ubigint">01,ff,ff,0f,63,2d,5e,c7,6b,05</param1>
+    <result1 type="uint32">19</result1>
+  </dataitem>
+  <dataitem index="13">
+    <param1 type="ubigint">01,d2,0a,3f,ce,96,5f,bc,ac,b8,f3,db,c0,75,20,c9,a0,03</param1>
+    <result1 type="uint32">39</result1>
+  </dataitem>
+  <dataitem index="14">
+    <param1 type="ubigint">01,ff,ff,ff,ff,ff,60,f5,b9,ab,bf,a4,5c,c3,f1,29,63,1d</param1>
+    <result1 type="uint32">39</result1>
+  </dataitem>
+  <dataitem index="15">
+    <param1 type="ubigint">01,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,29,cb,1d,a1,6a,6d,15,7f,09,b4,68,92,ad,31,8f,22,3c,b6,3c,a2,8e,9e,6a</param1>
+    <result1 type="uint32">79</result1>
+  </dataitem>
+  <dataitem index="16">
+    <param1 type="ubigint">01,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,c0,ce,64,27,a2,63,ca,18,a4,ef,25,7b,d1,cd,70,ef,df,6b,1f,3e,ea,9d,5f,03</param1>
+    <result1 type="uint32">79</result1>
+  </dataitem>
+  <dataitem index="17">
+    <param1 type="ubigint">01,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,7b,ef,61,11,3d,24,5e,93,a9,88,45,42,21,db,9c,0c,9b,de,c4,1f,c6,58,cf,f4,5a,d1,cc,d6,fc,c7,a6,32,88,ea,83,91,c5,0a,a6,20,1d,29,a6,c5,44,75,6f,c3,13,88,06,32,a1,47,ae,67,01</param1>
+    <result1 type="uint32">159</result1>
+  </dataitem>
+  <dataitem index="18">
+    <param1 type="ubigint">01,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <result1 type="uint32">159</result1>
+  </dataitem>
+</dataitems>

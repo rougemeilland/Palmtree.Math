@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B800B958-9D3A-4312-9EF6-65F2CC87DA84}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Palmtree</RootNamespace>
+    <AssemblyName>Palmtree.Math</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\vs_dist\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\vs_dist\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BadBufferException.cs" />
+    <Compile Include="InsufficientBufferException.cs" />
+    <Compile Include="InternalErrorException.cs" />
+    <Compile Include="Math\Core\IUBigIntDisposable.cs" />
+    <Compile Include="Math\Core\UBigIntEngine.cs" />
+    <Compile Include="Math\Core\UBigIntHandle.cs" />
+    <Compile Include="Math\UBigInt.cs" />
+    <Compile Include="Math\UBigIntExtensions.cs" />
+    <Compile Include="Math\UBigInt_Add.cs" />
+    <Compile Include="Math\UBigInt_Arithmetic.cs" />
+    <Compile Include="Math\UBigInt_BitwiseAnd.cs" />
+    <Compile Include="Math\UBigInt_BitwiseOr.cs" />
+    <Compile Include="Math\UBigInt_Bytes.cs" />
+    <Compile Include="Math\UBigInt_Cast.cs" />
+    <Compile Include="Math\UBigInt_Compare.cs" />
+    <Compile Include="Math\UBigInt_Divide.cs" />
+    <Compile Include="Math\UBigInt_DivRem.cs" />
+    <Compile Include="Math\UBigInt_Equals.cs" />
+    <Compile Include="Math\UBigInt_ExclusiveOr.cs" />
+    <Compile Include="Math\UBigInt_GreatestCommonDivisor.cs" />
+    <Compile Include="Math\UBigInt_Multiply.cs" />
+    <Compile Include="Math\UBigInt_Remainder.cs" />
+    <Compile Include="Math\UBigInt_Shift.cs" />
+    <Compile Include="Math\UBigInt_String.cs" />
+    <Compile Include="Math\UBigInt_Subtruct.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
