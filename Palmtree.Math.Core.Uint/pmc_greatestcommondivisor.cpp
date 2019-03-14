@@ -129,7 +129,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_HEADER* PMC_GreatestCommonDivisor_X_I_Imp(NUMBER_HEADER* u, _UINT32_T v)
+    static NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_X_I_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v)
     {
         if (u->IS_ZERO)
         {
@@ -170,7 +170,7 @@ namespace Palmtree::Math::Core::Internal
                 if (u->UNIT_WORD_COUNT <= 1)
                 {
                     // u と v がともに 1 ワードで表現できる場合
-                    NUMBER_HEADER* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
+                    NUMBER_OBJECT_UINT* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
                     w->BLOCK[0] = GreatestCommonDivisor_1W_Imp(u->BLOCK[0], v);
                     root.CheckNumber(w);
                     CommitNumber(w);
@@ -185,7 +185,7 @@ namespace Palmtree::Math::Core::Internal
                     __UNIT_TYPE work_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count);
                     __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_bit_count);
                     __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_bit_count);
-                    NUMBER_HEADER* w = root.AllocateNumber(work_bit_count);
+                    NUMBER_OBJECT_UINT* w = root.AllocateNumber(work_bit_count);
                     __UNIT_TYPE u_tzcnt = u->TRAILING_ZERO_BITS_COUNT;
                     __UNIT_TYPE v_tzcnt = _TZCNT_ALT_UNIT(v);
                     __UNIT_TYPE k = _MINIMUM_UNIT(u_tzcnt, v_tzcnt);
@@ -211,7 +211,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_HEADER* PMC_GreatestCommonDivisor_X_L_Imp(NUMBER_HEADER* u, _UINT64_T v)
+    static NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_X_L_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
     {
         if (u->IS_ZERO)
         {
@@ -262,7 +262,7 @@ namespace Palmtree::Math::Core::Internal
                         if (u->UNIT_WORD_COUNT <= 1)
                         {
                             // u と v がともに 1 ワードで表現できる場合
-                            NUMBER_HEADER* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
+                            NUMBER_OBJECT_UINT* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
                             w->BLOCK[0] = GreatestCommonDivisor_1W_Imp(u->BLOCK[0], v_lo);
                             root.CheckNumber(w);
                             CommitNumber(w);
@@ -276,7 +276,7 @@ namespace Palmtree::Math::Core::Internal
                             __UNIT_TYPE work_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count);
                             __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_bit_count);
                             __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_bit_count);
-                            NUMBER_HEADER* w = root.AllocateNumber(work_bit_count);
+                            NUMBER_OBJECT_UINT* w = root.AllocateNumber(work_bit_count);
 
                             __UNIT_TYPE u_tzcnt = u->TRAILING_ZERO_BITS_COUNT;
                             __UNIT_TYPE v_tzcnt = _TZCNT_ALT_UNIT(v_lo);
@@ -310,7 +310,7 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE work_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count);
                         __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_bit_count);
                         __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_bit_count);
-                        NUMBER_HEADER* w = root.AllocateNumber(work_bit_count);
+                        NUMBER_OBJECT_UINT* w = root.AllocateNumber(work_bit_count);
 
                         __UNIT_TYPE u_tzcnt = u->TRAILING_ZERO_BITS_COUNT;
                         __UNIT_TYPE v_tzcnt = v_lo == 0 ? 32 + _TZCNT_ALT_UNIT(v_hi) : _TZCNT_ALT_UNIT(v_lo);
@@ -346,7 +346,7 @@ namespace Palmtree::Math::Core::Internal
                     if (u->UNIT_WORD_COUNT <= 1)
                     {
                         // u と v がともに 1 ワードで表現できる場合
-                        NUMBER_HEADER* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
+                        NUMBER_OBJECT_UINT* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
                         w->BLOCK[0] = GreatestCommonDivisor_1W_Imp(u->BLOCK[0], (__UNIT_TYPE)v);
                         root.CheckNumber(w);
                         CommitNumber(w);
@@ -362,7 +362,7 @@ namespace Palmtree::Math::Core::Internal
 
                         __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_bit_count);
                         __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_bit_count);
-                        NUMBER_HEADER* w = root.AllocateNumber(work_bit_count);
+                        NUMBER_OBJECT_UINT* w = root.AllocateNumber(work_bit_count);
                         __UNIT_TYPE u_tzcnt = u->TRAILING_ZERO_BITS_COUNT;
                         __UNIT_TYPE v_tzcnt = _TZCNT_ALT_UNIT((__UNIT_TYPE)v);
                         __UNIT_TYPE k = _MINIMUM_UNIT(u_tzcnt, v_tzcnt);
@@ -391,7 +391,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_HEADER* PMC_GreatestCommonDivisor_X_X_Imp(NUMBER_HEADER* u, NUMBER_HEADER* v)
+    static NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->IS_ZERO)
         {
@@ -435,7 +435,7 @@ namespace Palmtree::Math::Core::Internal
                 if (work_bit_count <= __UNIT_TYPE_BIT_COUNT)
                 {
                     // u と v がともに 1 ワードで表現できる場合
-                    NUMBER_HEADER* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
+                    NUMBER_OBJECT_UINT* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
                     w->BLOCK[0] = GreatestCommonDivisor_1W_Imp(u->BLOCK[0], v->BLOCK[0]);
                     root.CheckNumber(w);
                     CommitNumber(w);
@@ -447,7 +447,7 @@ namespace Palmtree::Math::Core::Internal
                     // u と v のどちらかが 1 ワードで表現できない場合
                     __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_bit_count);
                     __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_bit_count);
-                    NUMBER_HEADER* w = root.AllocateNumber(work_bit_count);
+                    NUMBER_OBJECT_UINT* w = root.AllocateNumber(work_bit_count);
 
                     __UNIT_TYPE u_tzcnt = u->TRAILING_ZERO_BITS_COUNT;
                     __UNIT_TYPE v_tzcnt = v->TRAILING_ZERO_BITS_COUNT;
@@ -487,10 +487,10 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_I_X;1");
         }
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        CheckNumber((NUMBER_HEADER*)v);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        CheckNumber((NUMBER_OBJECT_UINT*)v);
         ResourceHolderUINT root;
-        NUMBER_HEADER* w = PMC_GreatestCommonDivisor_X_I_Imp((NUMBER_HEADER*)v, u);
+        NUMBER_OBJECT_UINT* w = PMC_GreatestCommonDivisor_X_I_Imp((NUMBER_OBJECT_UINT*)v, u);
         root.HookNumber(w);
 #ifdef _DEBUG
         CheckNumber(w);
@@ -507,10 +507,10 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_X_I;1");
         }
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
-        CheckNumber((NUMBER_HEADER*)u);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        CheckNumber((NUMBER_OBJECT_UINT*)u);
         ResourceHolderUINT root;
-        NUMBER_HEADER* w = PMC_GreatestCommonDivisor_X_I_Imp((NUMBER_HEADER*)u, v);
+        NUMBER_OBJECT_UINT* w = PMC_GreatestCommonDivisor_X_I_Imp((NUMBER_OBJECT_UINT*)u, v);
         root.HookNumber(w);
 #ifdef _DEBUG
         CheckNumber(w);
@@ -527,10 +527,10 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_L_X;1");
         }
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        CheckNumber((NUMBER_HEADER*)v);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        CheckNumber((NUMBER_OBJECT_UINT*)v);
         ResourceHolderUINT root;
-        NUMBER_HEADER* w = PMC_GreatestCommonDivisor_X_L_Imp((NUMBER_HEADER*)v, u);
+        NUMBER_OBJECT_UINT* w = PMC_GreatestCommonDivisor_X_L_Imp((NUMBER_OBJECT_UINT*)v, u);
         root.HookNumber(w);
 #ifdef _DEBUG
         CheckNumber(w);
@@ -547,10 +547,10 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_X_L;1");
         }
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
-        CheckNumber((NUMBER_HEADER*)u);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        CheckNumber((NUMBER_OBJECT_UINT*)u);
         ResourceHolderUINT root;
-        NUMBER_HEADER* w = PMC_GreatestCommonDivisor_X_L_Imp((NUMBER_HEADER*)u, v);
+        NUMBER_OBJECT_UINT* w = PMC_GreatestCommonDivisor_X_L_Imp((NUMBER_OBJECT_UINT*)u, v);
         root.HookNumber(w);
 #ifdef _DEBUG
         CheckNumber(w);
@@ -562,15 +562,15 @@ namespace Palmtree::Math::Core::Internal
     PMC_HANDLE_UINT __PMC_CALL PMC_GreatestCommonDivisor_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
     {
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        NUMBER_HEADER* nu = (NUMBER_HEADER*)u;
-        NUMBER_HEADER* nv = (NUMBER_HEADER*)v;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        NUMBER_OBJECT_UINT* nu = (NUMBER_OBJECT_UINT*)u;
+        NUMBER_OBJECT_UINT* nv = (NUMBER_OBJECT_UINT*)v;
         CheckNumber(nu);
         CheckNumber(nv);
         ResourceHolderUINT root;
-        NUMBER_HEADER* w = PMC_GreatestCommonDivisor_X_X_Imp(nu, nv);
+        NUMBER_OBJECT_UINT* w = PMC_GreatestCommonDivisor_X_X_Imp(nu, nv);
         root.HookNumber(w);
 #ifdef _DEBUG
         CheckNumber(w);

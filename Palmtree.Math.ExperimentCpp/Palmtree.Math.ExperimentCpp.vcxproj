@@ -74,25 +74,25 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)vs_dist\$(Configuration)\x64\</OutDir>
     <IntDir>vs_build\x64_$(Configuration)\</IntDir>
-    <IncludePath>Z:\Sources\Lunor\Repos\rougemeilland\Palmtree.Math.Core.Uint\Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
+    <IncludePath>Z:\Sources\Lunor\Repos\rougemeilland\Palmtree.Math\Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)vs_dist\$(Configuration)\x86\</OutDir>
     <IntDir>vs_build\x86_$(Configuration)\</IntDir>
-    <IncludePath>Z:\Sources\Lunor\Repos\rougemeilland\Palmtree.Math.Core.Uint\Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
+    <IncludePath>Z:\Sources\Lunor\Repos\rougemeilland\Palmtree.Math\Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)vs_dist\$(Configuration)\x86\</OutDir>
     <IntDir>vs_build\x86_$(Configuration)\</IntDir>
-    <IncludePath>Z:\Sources\Lunor\Repos\rougemeilland\Palmtree.Math.Core.Uint\Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
+    <IncludePath>Z:\Sources\Lunor\Repos\rougemeilland\Palmtree.Math\Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)vs_dist\$(Configuration)\x64\</OutDir>
     <IntDir>vs_build\x64_$(Configuration)\</IntDir>
-    <IncludePath>Z:\Sources\Lunor\Repos\rougemeilland\Palmtree.Math.Core.Uint\Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
+    <IncludePath>Z:\Sources\Lunor\Repos\rougemeilland\Palmtree.Math\Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

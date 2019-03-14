@@ -31,6 +31,7 @@
 
 #include <windows.h>
 #include <intrin.h>
+#include "pmc_exception.h"
 #include "pmc_internal.h"
 
 
@@ -614,6 +615,56 @@ namespace Palmtree::Math::Core::Internal
             {
                 *sign = -1;
                 return ((_UINT64_T)u == 0x8000000000000000UL ? 0x8000000000000000UL : (_UINT64_T)-u);
+            }
+        }
+
+        __inline static _INT32_T GET_INT_32(char sign, _UINT32_T abs) noexcept(false)
+        {
+            if (sign > 0)
+            {
+                if (abs >= 0x80000000U)
+                    throw OverflowException(L"符号つき32bit整数への型変換に失敗しました。");
+                return ((_UINT32_T)abs);
+            }
+            else if (sign == 0)
+            {
+                if (abs != 0)
+                    throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;GET_INT_32;1");
+                return (0);
+            }
+            else
+            {
+                if (abs > 0x80000000U)
+                    throw OverflowException(L"符号つき32bit整数への型変換に失敗しました。");
+                else if (abs == 0x80000000U)
+                    return ((_INT32_T)abs);
+                else
+                    return (-(_INT32_T)abs);
+            }
+        }
+
+        __inline static _INT64_T GET_INT_64(char sign, _UINT64_T abs) noexcept(false)
+        {
+            if (sign > 0)
+            {
+                if (abs >= 0x80000000U)
+                    throw OverflowException(L"符号つき64bit整数への型変換に失敗しました。");
+                return ((_INT64_T)abs);
+            }
+            else if (sign == 0)
+            {
+                if (abs != 0)
+                    throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;GET_INT_64;1");
+                return (0);
+            }
+            else
+            {
+                if (abs > 0x8000000000000000U)
+                    throw OverflowException(L"符号つき64bit整数への型変換に失敗しました。");
+                else if (abs == 0x8000000000000000U)
+                    return ((_INT64_T)abs);
+                else
+                    return (-(_INT64_T)abs);
             }
         }
 

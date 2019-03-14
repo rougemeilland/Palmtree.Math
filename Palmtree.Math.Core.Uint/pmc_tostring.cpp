@@ -161,7 +161,7 @@ namespace Palmtree::Math::Core::Internal
             }
 
         public:
-            void Format(char x_sign, NUMBER_HEADER* x_abs, StringWriter* writer)
+            void Format(char x_sign, NUMBER_OBJECT_UINT* x_abs, StringWriter* writer)
             {
                 if (_precision < 0)
                     _precision = GetDefaultPrecisionValue();
@@ -196,7 +196,7 @@ namespace Palmtree::Math::Core::Internal
             virtual int GetDefaultPrecisionValue() = 0;
 #endif
 
-            virtual void FormatInternally(NUMBER_HEADER* x_abs, StringWriter* writer)
+            virtual void FormatInternally(NUMBER_OBJECT_UINT* x_abs, StringWriter* writer)
             {
                 ResourceHolderUINT root;
                 __UNIT_TYPE _10n_based_number_bit_count = x_abs->UNIT_BIT_COUNT + _DIVIDE_CEILING_UNIT(x_abs->UNIT_BIT_COUNT, 8);
@@ -223,7 +223,7 @@ namespace Palmtree::Math::Core::Internal
             virtual void WriteSuffix(char x_sign, StringWriter* writer) = 0;
 
         private:
-            __UNIT_TYPE ConvertAs10nBasedNumber(NUMBER_HEADER* x, __UNIT_TYPE* r_buf)
+            __UNIT_TYPE ConvertAs10nBasedNumber(NUMBER_OBJECT_UINT* x, __UNIT_TYPE* r_buf)
             {
                 ResourceHolderUINT root;
                 __UNIT_TYPE work_bit_count = x->UNIT_BIT_COUNT + __UNIT_TYPE_BIT_COUNT;
@@ -623,15 +623,15 @@ namespace Palmtree::Math::Core::Internal
                 writer->Write(L"+000");
             }
 
-            virtual void FormatInternally(NUMBER_HEADER* x_abs, StringWriter* writer) override
+            virtual void FormatInternally(NUMBER_OBJECT_UINT* x_abs, StringWriter* writer) override
             {
                 ResourceHolderUINT root;
                 size_t digit_count = (size_t)floor(PMC_Floor_Log10_Imp(x_abs)) + 1;
                 if (digit_count >= (size_t)(_precision + 2))
                 {
-                    NUMBER_HEADER* fraction_number = PMC_TimesOfExponentOf10_Imp(5, digit_count - _precision - 2);
+                    NUMBER_OBJECT_UINT* fraction_number = PMC_TimesOfExponentOf10_Imp(5, digit_count - _precision - 2);
                     root.HookNumber(fraction_number);
-                    NUMBER_HEADER* x2 = PMC_Add_X_X_Imp(x_abs, fraction_number);
+                    NUMBER_OBJECT_UINT* x2 = PMC_Add_X_X_Imp(x_abs, fraction_number);
                     root.HookNumber(x2);
                     Formatter::FormatInternally(x2, writer);
                 }
@@ -851,10 +851,10 @@ namespace Palmtree::Math::Core::Internal
                 }
             }
 
-            virtual void FormatInternally(NUMBER_HEADER* x_abs, StringWriter* writer) override
+            virtual void FormatInternally(NUMBER_OBJECT_UINT* x_abs, StringWriter* writer) override
             {
                 ResourceHolderUINT root;
-                NUMBER_HEADER* x2_abs = PMC_Multiply_X_I_Imp(x_abs, 100);
+                NUMBER_OBJECT_UINT* x2_abs = PMC_Multiply_X_I_Imp(x_abs, 100);
                 root.HookNumber(x2_abs);
                 Formatter::FormatInternally(x2_abs, writer);
             }
@@ -1014,7 +1014,7 @@ namespace Palmtree::Math::Core::Internal
             }
         };
 
-        static size_t ToStringC(char x_sign, NUMBER_HEADER* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringC(char x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             StringWriter writer(buffer, buffer_size);
             FormatterTypeC formatter(precision, format_option);
@@ -1022,7 +1022,7 @@ namespace Palmtree::Math::Core::Internal
             return (writer.GetLength());
         }
 
-        static size_t ToStringD(char x_sign, NUMBER_HEADER* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringD(char x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             StringWriter writer(buffer, buffer_size);
             FormatterTypeD formatter(precision, format_option);
@@ -1030,7 +1030,7 @@ namespace Palmtree::Math::Core::Internal
             return (writer.GetLength());
         }
 
-        static size_t ToStringE(char x_sign, NUMBER_HEADER* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringE(char x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             StringWriter writer(buffer, buffer_size);
             FormatterTypeE formatter(format_type, precision, format_option);
@@ -1038,7 +1038,7 @@ namespace Palmtree::Math::Core::Internal
             return (writer.GetLength());
         }
 
-        static size_t ToStringF(char x_sign, NUMBER_HEADER* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringF(char x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             StringWriter writer(buffer, buffer_size);
             FormatterTypeF formatter(precision, format_option);
@@ -1046,7 +1046,7 @@ namespace Palmtree::Math::Core::Internal
             return (writer.GetLength());
         }
 
-        static size_t ToStringN(char x_sign, NUMBER_HEADER* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringN(char x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             StringWriter writer(buffer, buffer_size);
             FormatterTypeN formatter(precision, format_option);
@@ -1055,7 +1055,7 @@ namespace Palmtree::Math::Core::Internal
         }
 
 
-        static size_t ToStringP(char x_sign, NUMBER_HEADER* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringP(char x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             StringWriter writer(buffer, buffer_size);
             FormatterTypeP formatter(precision, format_option);
@@ -1132,7 +1132,7 @@ namespace Palmtree::Math::Core::Internal
             }
         }
 
-        static size_t ToStringX(char x_sign, NUMBER_HEADER* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringX(char x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             if (precision < 1)
                 precision = 1;
@@ -1263,7 +1263,7 @@ namespace Palmtree::Math::Core::Internal
     namespace CustomFormatter
     {
 
-        static size_t ToStringCustom(char x_sign, NUMBER_HEADER* x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringCustom(char x_sign, NUMBER_OBJECT_UINT* x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             // 【実験結果】
             // %と‰の効果は重複してかかる。%が2個なら100*100倍、%と‰なら100*1000倍。%と‰はどこに書かれていてもそのとおりの場所で表示される。【例：(-1.23456789).ToString("0■%■0") => -12■%■3 】
@@ -1339,7 +1339,7 @@ namespace Palmtree::Math::Core::Internal
             return (FALSE);
     }
 
-    static size_t ToString_Imp(char x_sign, NUMBER_HEADER* x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    static size_t ToString_Imp(char x_sign, NUMBER_OBJECT_UINT* x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
         wchar_t format_type;
         int precision;
@@ -1385,12 +1385,23 @@ namespace Palmtree::Math::Core::Internal
     size_t __PMC_CALL PMC_ToString(PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false)
     {
         if (x == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"x");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"x");
         if (format_option == nullptr)
             format_option = &default_number_format_option;
-        NUMBER_HEADER* nx = (NUMBER_HEADER*)x;
+        NUMBER_OBJECT_UINT* nx = (NUMBER_OBJECT_UINT*)x;
         CheckNumber(nx);
         return (ToString_Imp(nx->IS_ZERO ? 0 : 1, nx, format, format_option, buffer, buffer_size));
+    }
+
+    size_t __PMC_CALL PMC_ToStringForSINT(char x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    {
+        if (x_abs == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"x_abs");
+        if (format_option == nullptr)
+            format_option = &default_number_format_option;
+        NUMBER_OBJECT_UINT* nx_abs = (NUMBER_OBJECT_UINT*)x_abs;
+        CheckNumber(nx_abs);
+        return (ToString_Imp(x_sign, nx_abs, format, format_option, buffer, buffer_size));
     }
 
     void InitializeNumberFormatoInfo(PMC_NUMBER_FORMAT_INFO* info)

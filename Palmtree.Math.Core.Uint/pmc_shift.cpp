@@ -303,22 +303,22 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_HEADER* PMC_RightShift_X_I_Imp(NUMBER_HEADER* u, _UINT32_T n)
+    static NUMBER_OBJECT_UINT* PMC_RightShift_X_I_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T n)
     {
         if (u->IS_ZERO)
-            return (&number_zero);
+            return (&number_object_uint_zero);
         else if (n == 0)
             return (DuplicateNumber(u));
         else
         {
             __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
             if (u_bit_count <= n)
-                return (&number_zero);
+                return (&number_object_uint_zero);
             else
             {
                 ResourceHolderUINT root;
                 __UNIT_TYPE w_bit_count = u_bit_count - n;
-                NUMBER_HEADER* w = root.AllocateNumber(w_bit_count);
+                NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 RightShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, n, w->BLOCK, FALSE);
                 root.CheckNumber(w);
                 CommitNumber(w);
@@ -328,10 +328,10 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_HEADER* PMC_LeftShift_X_I_Imp(NUMBER_HEADER* u, _UINT32_T n)
+    static NUMBER_OBJECT_UINT* PMC_LeftShift_X_I_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T n)
     {
         if (u->IS_ZERO)
-            return (&number_zero);
+            return (&number_object_uint_zero);
         else if (n == 0)
             return (DuplicateNumber(u));
         else
@@ -339,7 +339,7 @@ namespace Palmtree::Math::Core::Internal
             ResourceHolderUINT root;
             __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
             __UNIT_TYPE w_bit_count = u_bit_count + n;
-            NUMBER_HEADER* w = root.AllocateNumber(w_bit_count);
+            NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
             LeftShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, n, w->BLOCK, FALSE);
             root.CheckNumber(w);
             CommitNumber(w);
@@ -356,13 +356,13 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_shift.cpp;PMC_RightShift_X_I;1");
         }
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
-        NUMBER_HEADER* nu = (NUMBER_HEADER*)u;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        NUMBER_OBJECT_UINT* nu = (NUMBER_OBJECT_UINT*)u;
         CheckNumber(nu);
         ResourceHolderUINT root;
         char n_sign;
         _UINT32_T n_abs = GET_ABS_32(n, &n_sign);
-        NUMBER_HEADER* w = n_sign >= 0 ? PMC_RightShift_X_I_Imp(nu, n_abs) : PMC_LeftShift_X_I_Imp(nu, n_abs);
+        NUMBER_OBJECT_UINT* w = n_sign >= 0 ? PMC_RightShift_X_I_Imp(nu, n_abs) : PMC_LeftShift_X_I_Imp(nu, n_abs);
         root.HookNumber(w);
 #ifdef _DEBUG
         CheckNumber(w);
@@ -379,13 +379,13 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_LeftShift_X_I;1");
         }
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
-        NUMBER_HEADER* nu = (NUMBER_HEADER*)u;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        NUMBER_OBJECT_UINT* nu = (NUMBER_OBJECT_UINT*)u;
         CheckNumber(nu);
         ResourceHolderUINT root;
         char n_sign;
         _UINT32_T n_abs = GET_ABS_32(n, &n_sign);
-        NUMBER_HEADER* w = n_sign >= 0 ? PMC_LeftShift_X_I_Imp(nu, n_abs) : PMC_RightShift_X_I_Imp(nu, n_abs);
+        NUMBER_OBJECT_UINT* w = n_sign >= 0 ? PMC_LeftShift_X_I_Imp(nu, n_abs) : PMC_RightShift_X_I_Imp(nu, n_abs);
         root.HookNumber(w);
 #ifdef _DEBUG
         CheckNumber(w);

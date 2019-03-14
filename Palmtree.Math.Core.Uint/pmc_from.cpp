@@ -33,17 +33,17 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    NUMBER_HEADER* From_I_Imp(_UINT32_T x) noexcept(false)
+    NUMBER_OBJECT_UINT* From_I_Imp(_UINT32_T x) noexcept(false)
     {
         ResourceHolderUINT root;
-        NUMBER_HEADER* o = root.AllocateNumber(sizeof(x) * 8 - _LZCNT_ALT_32(x));
+        NUMBER_OBJECT_UINT* o = root.AllocateNumber(sizeof(x) * 8 - _LZCNT_ALT_32(x));
         o->BLOCK[0] = x;
         CommitNumber(o);
         root.UnlinkNumber(o);
         return (o);
     }
 
-    NUMBER_HEADER* From_L_Imp(_UINT64_T x) noexcept(false)
+    NUMBER_OBJECT_UINT* From_L_Imp(_UINT64_T x) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) * 2 < sizeof(x))
         {
@@ -60,7 +60,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 ResourceHolderUINT root;
                 __UNIT_TYPE x_bit_length = sizeof(x_lo) * 8 - _LZCNT_ALT_32(x_lo);
-                NUMBER_HEADER* o = root.AllocateNumber(x_bit_length);
+                NUMBER_OBJECT_UINT* o = root.AllocateNumber(x_bit_length);
                 o->BLOCK[0] = x_lo;
                 CommitNumber(o);
                 root.UnlinkNumber(o);
@@ -70,7 +70,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 ResourceHolderUINT root;
                 __UNIT_TYPE x_bit_length = sizeof(x) * 8 - _LZCNT_ALT_32(x_hi);
-                NUMBER_HEADER* o = root.AllocateNumber(x_bit_length);
+                NUMBER_OBJECT_UINT* o = root.AllocateNumber(x_bit_length);
                 o->BLOCK[0] = x_lo;
                 o->BLOCK[1] = x_hi;
                 CommitNumber(o);
@@ -83,7 +83,7 @@ namespace Palmtree::Math::Core::Internal
             // _UINT64_T を表現するのに 1 ワードで十分である処理系の場合
             ResourceHolderUINT root;
             __UNIT_TYPE x_bit_length = sizeof(x) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)x);
-            NUMBER_HEADER* o = root.AllocateNumber(x_bit_length);
+            NUMBER_OBJECT_UINT* o = root.AllocateNumber(x_bit_length);
             o->BLOCK[0] = (__UNIT_TYPE)x;
             CommitNumber(o);
             root.UnlinkNumber(o);
@@ -96,9 +96,9 @@ namespace Palmtree::Math::Core::Internal
         if (sizeof(__UNIT_TYPE) < sizeof(x))
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;PMC_From_I;1");
         ResourceHolderUINT root;
-        NUMBER_HEADER* o;
+        NUMBER_OBJECT_UINT* o;
         if (x == 0)
-            o = &number_zero;
+            o = &number_object_uint_zero;
         else
             o = From_I_Imp(x);
         root.HookNumber(o);
@@ -117,9 +117,9 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;PMC_From_L;1");
         }
         ResourceHolderUINT root;
-        NUMBER_HEADER* o;
+        NUMBER_OBJECT_UINT* o;
         if (x == 0)
-            o = &number_zero;
+            o = &number_object_uint_zero;
         else
             o = From_L_Imp(x);
         root.HookNumber(o);

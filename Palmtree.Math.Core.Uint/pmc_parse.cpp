@@ -963,7 +963,7 @@ namespace Palmtree::Math::Core::Internal
         _COPY_MEMORY_UNIT(out_buf, work_buf, work_buf_count);
     }
 
-    static PMC_STATUS_CODE TryParseDN(const wchar_t* source, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* o_sign, NUMBER_HEADER** o_abs, _UINT32_T* result)
+    static PMC_STATUS_CODE TryParseDN(const wchar_t* source, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* o_sign, NUMBER_OBJECT_UINT** o_abs, _UINT32_T* result)
     {
 #ifdef _M_IX86
         int word_digit_count = 9;
@@ -1095,7 +1095,7 @@ namespace Palmtree::Math::Core::Internal
         if ((*o_abs)->IS_ZERO)
         {
             root.DeallocateNumber(*o_abs);
-            *o_abs = &number_zero;
+            *o_abs = &number_object_uint_zero;
         }
         else
             root.UnlinkNumber(*o_abs);
@@ -1186,7 +1186,7 @@ namespace Palmtree::Math::Core::Internal
         return (state.ParseAsHexNumberString());
     }
 
-    static PMC_STATUS_CODE TryParseX(const wchar_t* source, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* o_sign, NUMBER_HEADER** o_abs, _UINT32_T* result)
+    static PMC_STATUS_CODE TryParseX(const wchar_t* source, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* o_sign, NUMBER_OBJECT_UINT** o_abs, _UINT32_T* result)
     {
         ResourceHolderUINT root;
         __UNIT_TYPE source_len = lstrlenW(source);
@@ -1259,7 +1259,7 @@ namespace Palmtree::Math::Core::Internal
         {
             root.DeallocateNumber(*o_abs);
             *o_sign = 0;
-            *o_abs = &number_zero;
+            *o_abs = &number_object_uint_zero;
         }
         else
             root.UnlinkNumber(*o_abs);
@@ -1267,7 +1267,7 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_STATUS_OK);
     }
 
-    static PMC_STATUS_CODE PMC_TryParse_Imp(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* o_sign, NUMBER_HEADER** o_abs, _UINT32_T* result)
+    static PMC_STATUS_CODE PMC_TryParse_Imp(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* o_sign, NUMBER_OBJECT_UINT** o_abs, _UINT32_T* result)
     {
         ResourceHolderUINT root;
         if (number_styles & PMC_NUMBER_STYLE_ALLOW_HEX_SPECIFIER)
@@ -1305,14 +1305,14 @@ namespace Palmtree::Math::Core::Internal
     PMC_STATUS_CODE __PMC_CALL PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_UINT* o, _UINT32_T* result) noexcept(false)
     {
         if (source == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"source");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"source");
         if (o == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"o");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"o");
         if (format_option == nullptr)
             format_option = &default_number_format_option;
         ResourceHolderUINT root;
         char o_sign;
-        NUMBER_HEADER* o_abs;
+        NUMBER_OBJECT_UINT* o_abs;
         PMC_STATUS_CODE err = PMC_TryParse_Imp(source, number_styles, format_option, &o_sign, &o_abs, result);
         if (err != PMC_STATUS_OK || !*result)
         {
@@ -1335,14 +1335,14 @@ namespace Palmtree::Math::Core::Internal
     PMC_STATUS_CODE __PMC_CALL PMC_TryParseForSINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* o_sign, PMC_HANDLE_UINT* o_abs, _UINT32_T* result)
     {
         if (source == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"source");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"source");
         if (o_sign == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"o_sign");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"o_sign");
         if (o_abs == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"o_abs");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"o_abs");
         if (format_option == nullptr)
             format_option = &default_number_format_option;
-        NUMBER_HEADER* no_abs;
+        NUMBER_OBJECT_UINT* no_abs;
         PMC_STATUS_CODE err = PMC_TryParse_Imp(source, number_styles, format_option, o_sign, &no_abs, result);
         if (err != PMC_STATUS_OK)
         {

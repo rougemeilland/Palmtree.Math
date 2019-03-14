@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("Palmtree.Math.Core.Uint.CsLauncher")]
+[assembly: AssemblyTitle("Palmtree.Math.Core.Sint.CodeGen.VersionInfo")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Palmtree.Math.Core.Uint.CsLauncher")]
+[assembly: AssemblyProduct("Palmtree.Math.Core.Sint.CodeGen.VersionInfo")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // このプロジェクトが COM に公開される場合、次の GUID が typelib の ID になります
-[assembly: Guid("5d155df0-4283-45bb-a066-37308229365e")]
+[assembly: Guid("e4459af9-2c82-4abe-b1d9-abe622e49515")]
 
 // アセンブリのバージョン情報は次の 4 つの値で構成されています:
 //

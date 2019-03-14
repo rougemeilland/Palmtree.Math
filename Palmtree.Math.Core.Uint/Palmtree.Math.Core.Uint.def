@@ -2,54 +2,11 @@ LIBRARY Palmtree.Math.Core.Uint.dll
 
 EXPORTS
 	PMC_UINT_Initialize
-	PMCCS_UINT_Initialize
-	PMCCS_GetConfigurationSettings
-	PMCCS_IS_EVEN
-	PMCCS_IS_ONE
-	PMCCS_IS_POWER_OF_TWO
-	PMCCS_IS_ZERO
-	PMCCS_GET_HASH_CODE
-	PMCCS_GetStatisticsInfo
-	PMCCS_From_I
-	PMCCS_From_L
-	PMCCS_Dispose
-	PMCCS_GetConstantValue_I
-	PMCCS_FromByteArray
-	PMCCS_ToByteArray
-	PMCCS_Clone_X
-	PMCCS_GetAllocatedMemorySize
-	PMCCS_To_X_I
-	PMCCS_To_X_L
-	PMCCS_ToString
-	PMCCS_Parse
-	PMCCS_TryParse
 	PMCCS_Add_I_X
 	PMCCS_Add_L_X
 	PMCCS_Add_X_I
 	PMCCS_Add_X_L
 	PMCCS_Add_X_X
-	PMCCS_Subtruct_I_X
-	PMCCS_Subtruct_L_X
-	PMCCS_Subtruct_X_I
-	PMCCS_Subtruct_X_L
-	PMCCS_Subtruct_X_X
-	PMCCS_Multiply_I_X
-	PMCCS_Multiply_L_X
-	PMCCS_Multiply_X_I
-	PMCCS_Multiply_X_L
-	PMCCS_Multiply_X_X
-	PMCCS_DivRem_I_X
-	PMCCS_DivRem_L_X
-	PMCCS_DivRem_X_I
-	PMCCS_DivRem_X_L
-	PMCCS_DivRem_X_X
-	PMCCS_Remainder_I_X
-	PMCCS_Remainder_L_X
-	PMCCS_Remainder_X_I
-	PMCCS_Remainder_X_L
-	PMCCS_Remainder_X_X
-	PMCCS_RightShift_X_I
-	PMCCS_LeftShift_X_I
 	PMCCS_BitwiseAnd_I_X
 	PMCCS_BitwiseAnd_L_X
 	PMCCS_BitwiseAnd_X_I
@@ -60,28 +17,73 @@ EXPORTS
 	PMCCS_BitwiseOr_X_I
 	PMCCS_BitwiseOr_X_L
 	PMCCS_BitwiseOr_X_X
-	PMCCS_ExclusiveOr_I_X
-	PMCCS_ExclusiveOr_L_X
-	PMCCS_ExclusiveOr_X_I
-	PMCCS_ExclusiveOr_X_L
-	PMCCS_ExclusiveOr_X_X
+	PMCCS_Clone_X
 	PMCCS_Compare_I_X
 	PMCCS_Compare_L_X
 	PMCCS_Compare_X_I
 	PMCCS_Compare_X_L
 	PMCCS_Compare_X_X
+	PMCCS_Decrement_X
+	PMCCS_Dispose
+	PMCCS_DivRem_I_X
+	PMCCS_DivRem_L_X
+	PMCCS_DivRem_X_I
+	PMCCS_DivRem_X_L
+	PMCCS_DivRem_X_X
 	PMCCS_Equals_I_X
 	PMCCS_Equals_L_X
 	PMCCS_Equals_X_I
 	PMCCS_Equals_X_L
 	PMCCS_Equals_X_X
+	PMCCS_ExclusiveOr_I_X
+	PMCCS_ExclusiveOr_L_X
+	PMCCS_ExclusiveOr_X_I
+	PMCCS_ExclusiveOr_X_L
+	PMCCS_ExclusiveOr_X_X
+	PMCCS_Floor_Log10
+	PMCCS_FromByteArray
+	PMCCS_From_I
+	PMCCS_From_L
+	PMCCS_GET_HASH_CODE
+	PMCCS_GetAllocatedMemorySize
+	PMCCS_GetConfigurationSettings
+	PMCCS_GetConstantValue_I
+	PMCCS_GetStatisticsInfo
 	PMCCS_GreatestCommonDivisor_I_X
 	PMCCS_GreatestCommonDivisor_L_X
 	PMCCS_GreatestCommonDivisor_X_I
 	PMCCS_GreatestCommonDivisor_X_L
 	PMCCS_GreatestCommonDivisor_X_X
+	PMCCS_IS_EVEN
+	PMCCS_IS_ONE
+	PMCCS_IS_POWER_OF_TWO
+	PMCCS_IS_ZERO
+	PMCCS_Increment_X
+	PMCCS_LeftShift_X_I
+	PMCCS_ModPow_X_X_X
+	PMCCS_Multiply_I_X
+	PMCCS_Multiply_L_X
+	PMCCS_Multiply_X_I
+	PMCCS_Multiply_X_L
+	PMCCS_Multiply_X_X
+	PMCCS_Parse
 	PMCCS_Pow_X_I
 	PMCCS_Pow_X_L
-	PMCCS_ModPow_X_X_X
+	PMCCS_Remainder_I_X
+	PMCCS_Remainder_L_X
+	PMCCS_Remainder_X_I
+	PMCCS_Remainder_X_L
+	PMCCS_Remainder_X_X
+	PMCCS_RightShift_X_I
+	PMCCS_Subtruct_I_X
+	PMCCS_Subtruct_L_X
+	PMCCS_Subtruct_X_I
+	PMCCS_Subtruct_X_L
+	PMCCS_Subtruct_X_X
 	PMCCS_TimesOfExponentOf10
-	PMCCS_Floor_Log10
+	PMCCS_ToByteArray
+	PMCCS_ToString
+	PMCCS_To_X_I
+	PMCCS_To_X_L
+	PMCCS_TryParse
+	PMCCS_UINT_Initialize

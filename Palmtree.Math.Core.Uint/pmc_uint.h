@@ -124,6 +124,12 @@ namespace Palmtree::Math::Core::Internal
             PMC_HANDLE_UINT(__PMC_CALL * Subtruct_X_L)(PMC_HANDLE_UINT u, _UINT64_T v);
             PMC_HANDLE_UINT(__PMC_CALL * Subtruct_X_X)(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v);
 
+            // Increment 関数
+            PMC_HANDLE_UINT(__PMC_CALL * Increment_X)(PMC_HANDLE_UINT x);
+
+            // Decrement 関数
+            PMC_HANDLE_UINT(__PMC_CALL * Decrement_X)(PMC_HANDLE_UINT x);
+
             // Multiply 関数
             PMC_HANDLE_UINT(__PMC_CALL * Multiply_I_X)(_UINT32_T u, PMC_HANDLE_UINT v);
             PMC_HANDLE_UINT(__PMC_CALL * Multiply_L_X)(_UINT64_T u, PMC_HANDLE_UINT v);
@@ -200,9 +206,10 @@ namespace Palmtree::Math::Core::Internal
             _UINT32_T(__PMC_CALL * Floor_Log10)(PMC_HANDLE_UINT v);
 
             // 非公開関数
-            PMC_HANDLE_UINT(__PMC_CALL * FromByteArrayForSINT)(unsigned char* buffer, size_t count, char* o_sign);
+            PMC_HANDLE_UINT(__PMC_CALL * FromByteArrayForSINT)(const unsigned char* buffer, size_t count, char* o_sign);
             size_t(__PMC_CALL * ToByteArrayForSINT)(char p_sign, PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
             PMC_STATUS_CODE(__PMC_CALL * TryParseForSINT)(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* o_sign, PMC_HANDLE_UINT* o_abs, _UINT32_T* result) noexcept(false);
+            size_t(__PMC_CALL * ToStringForSINT)(char x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
         } PMC_UINT_ENTRY_POINTS;
 #pragma endregion
 

@@ -89,9 +89,9 @@ namespace Palmtree::Math::Core::Internal
             : public __ChainBufferTag
         {
         private:
-            NUMBER_HEADER* _buffer;
+            NUMBER_OBJECT_UINT* _buffer;
         public:
-            __DynamicNumberChainBufferTag(NUMBER_HEADER* buffer);
+            __DynamicNumberChainBufferTag(NUMBER_OBJECT_UINT* buffer);
             virtual ~__DynamicNumberChainBufferTag();
             virtual BOOL EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
@@ -102,9 +102,9 @@ namespace Palmtree::Math::Core::Internal
             : public __ChainBufferTag
         {
         private:
-            NUMBER_HEADER* _buffer;
+            NUMBER_OBJECT_UINT* _buffer;
         public:
-            __NumberHandleHookingChainBufferTag(NUMBER_HEADER* buffer);
+            __NumberHandleHookingChainBufferTag(NUMBER_OBJECT_UINT* buffer);
             virtual ~__NumberHandleHookingChainBufferTag();
             virtual BOOL EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
@@ -115,9 +115,9 @@ namespace Palmtree::Math::Core::Internal
             : public __ChainBufferTag
         {
         private:
-            NUMBER_HEADER* _buffer;
+            NUMBER_OBJECT_UINT* _buffer;
         public:
-            __StaticNumberChainBufferTag(NUMBER_HEADER* buffer);
+            __StaticNumberChainBufferTag(NUMBER_OBJECT_UINT* buffer);
             virtual ~__StaticNumberChainBufferTag();
             virtual BOOL EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
@@ -155,15 +155,15 @@ namespace Palmtree::Math::Core::Internal
         void CheckString(wchar_t* buffer);
         void UnlinkString(wchar_t* buffer);
 
-        NUMBER_HEADER* AllocateNumber(__UNIT_TYPE bit_count);
-        void HookNumber(NUMBER_HEADER* buffer);
-        void DeallocateNumber(NUMBER_HEADER* buffer);
-        void CheckNumber(NUMBER_HEADER* buffer);
-        void UnlinkNumber(NUMBER_HEADER* buffer);
+        NUMBER_OBJECT_UINT* AllocateNumber(__UNIT_TYPE bit_count);
+        void HookNumber(NUMBER_OBJECT_UINT* buffer);
+        void DeallocateNumber(NUMBER_OBJECT_UINT* buffer);
+        void CheckNumber(NUMBER_OBJECT_UINT* buffer);
+        void UnlinkNumber(NUMBER_OBJECT_UINT* buffer);
 
-        void AttatchStaticNumber(NUMBER_HEADER* p, __UNIT_TYPE bit_count);
-        void DetatchStaticNumber(NUMBER_HEADER* buffer);
-        void UnlinkStatickNumber(NUMBER_HEADER* buffer);
+        void AttatchStaticNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count);
+        void DetatchStaticNumber(NUMBER_OBJECT_UINT* buffer);
+        void UnlinkStatickNumber(NUMBER_OBJECT_UINT* buffer);
     };
 
 }

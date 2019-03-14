@@ -48,8 +48,8 @@ namespace Palmtree::Math::Core::Internal
 
 #pragma region 静的変数の定義
     HANDLE hLocalHeap;
-    NUMBER_HEADER number_zero;
-    NUMBER_HEADER number_one;
+    NUMBER_OBJECT_UINT number_object_uint_zero;
+    NUMBER_OBJECT_UINT number_object_uint_one;
     CRITICAL_SECTION mcs;
 #pragma endregion
 
@@ -246,7 +246,7 @@ namespace Palmtree::Math::Core::Internal
 //#endif
     }
 
-    __inline static void ClearNumberHeader(NUMBER_HEADER* p)
+    __inline static void ClearNumberHeader(NUMBER_OBJECT_UINT* p)
     {
 #ifdef _M_X64
         if (sizeof(*p) == sizeof(_UINT64_T) * 10)
@@ -296,7 +296,7 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    __inline static void FillNumberHeader(NUMBER_HEADER* p)
+    __inline static void FillNumberHeader(NUMBER_OBJECT_UINT* p)
     {
 #ifdef _M_X64
         if (sizeof(*p) == sizeof(_UINT64_T) * 10)
@@ -346,7 +346,7 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    static void InitializeNumber(NUMBER_HEADER* p, __UNIT_TYPE bit_count)
+    static void InitializeNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count)
     {
         if (bit_count > 0)
         {
@@ -381,7 +381,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static void CleanUpNumber(NUMBER_HEADER* p)
+    static void CleanUpNumber(NUMBER_OBJECT_UINT* p)
     {
         if (p->BLOCK != nullptr)
         {
@@ -397,29 +397,29 @@ namespace Palmtree::Math::Core::Internal
             DeallocateBlock(block, block_count, block_check_code);        }
     }
 
-    static void AttatchNumber(NUMBER_HEADER* p, __UNIT_TYPE bit_count)
+    static void AttatchNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count)
     {
         InitializeNumber(p, bit_count);
         p->IS_STATIC = true;
     }
 
-    static NUMBER_HEADER* AllocateNumber(__UNIT_TYPE bit_count)
+    static NUMBER_OBJECT_UINT* AllocateNumber(__UNIT_TYPE bit_count)
     {
         ResourceHolderUINT root;
-        NUMBER_HEADER* p = (NUMBER_HEADER*)root.AllocateBytes(sizeof(NUMBER_HEADER));
+        NUMBER_OBJECT_UINT* p = (NUMBER_OBJECT_UINT*)root.AllocateBytes(sizeof(NUMBER_OBJECT_UINT));
         InitializeNumber(p, bit_count);
         p->IS_STATIC = false;
         root.UnlinkBytes((void*)p);
         return (p);
     }
 
-    static void DetatchNumber(NUMBER_HEADER* p)
+    static void DetatchNumber(NUMBER_OBJECT_UINT* p)
     {
         if (p != nullptr && p->IS_STATIC)
             CleanUpNumber(p);
     }
 
-    static void DeallocateNumber(NUMBER_HEADER* p)
+    static void DeallocateNumber(NUMBER_OBJECT_UINT* p)
     {
         if (p != nullptr && !p->IS_STATIC)
         {
@@ -471,11 +471,20 @@ namespace Palmtree::Math::Core::Internal
         return (0);
     }
 
-    void CommitNumber(NUMBER_HEADER* p) noexcept(true)
+    void CommitNumber(NUMBER_OBJECT_UINT* p) noexcept(false)
     {
+        if (p->IS_COMMITTED)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;CommitNumber;1");
         p->UNIT_BIT_COUNT = GetEffectiveBitLength(p->BLOCK, p->BLOCK_COUNT, &p->UNIT_WORD_COUNT);
         if (p->UNIT_BIT_COUNT <= 0)
         {
+            if (p->BLOCK != nullptr)
+            {
+                DeallocateBlock(p->BLOCK, p->BLOCK_COUNT, p->BLOCK_CHECK_CODE);
+                p->BLOCK = nullptr;
+                p->BLOCK_COUNT = 0;
+                p->BLOCK_CHECK_CODE = 0;
+            }
             p->HASH_CODE = 0;
             p->IS_ZERO = true;
             p->IS_ONE = false;
@@ -506,10 +515,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    void CheckNumber(NUMBER_HEADER* p) noexcept(false)
+    void CheckNumber(NUMBER_OBJECT_UINT* p) noexcept(false)
     {
         if (p->SIGNATURE1 != PMC_SIGNATURE || p->SIGNATURE2 != PMC_UINT_SIGNATURE)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;CheckNumber;1");
+        if (p->IS_ZERO && !p->IS_STATIC)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;CheckNumber;1");
         if (!p->IS_ZERO)
         {
             CheckBlock(p->BLOCK, p->BLOCK_COUNT, p->BLOCK_CHECK_CODE);
@@ -525,14 +536,14 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    NUMBER_HEADER* DuplicateNumber(NUMBER_HEADER* x)
+    NUMBER_OBJECT_UINT* DuplicateNumber(NUMBER_OBJECT_UINT* x)
     {
         if (x->IS_STATIC)
             return (x);
         if (x->IS_ZERO)
-            return (&number_zero);
+            return (&number_object_uint_zero);
         __UNIT_TYPE x_bit_count = x->UNIT_BIT_COUNT;
-        NUMBER_HEADER* o = AllocateNumber(x_bit_count);
+        NUMBER_OBJECT_UINT* o = AllocateNumber(x_bit_count);
         _COPY_MEMORY_UNIT(o->BLOCK, x->BLOCK, o->BLOCK_COUNT);
         CommitNumber(o);
         return (o);
@@ -543,9 +554,9 @@ namespace Palmtree::Math::Core::Internal
         switch (type)
         {
         case PMC_CONSTANT_ZERO:
-            return ((PMC_HANDLE_UINT)&number_zero);
+            return ((PMC_HANDLE_UINT)&number_object_uint_zero);
         case PMC_CONSTANT_ONE:
-            return ((PMC_HANDLE_UINT)&number_one);
+            return ((PMC_HANDLE_UINT)&number_object_uint_one);
         default:
             throw ArgumentException(L"引数typeが未知の値です。");
         }
@@ -553,7 +564,7 @@ namespace Palmtree::Math::Core::Internal
 
     void __PMC_CALL PMC_Dispose(PMC_HANDLE_UINT p)
     {
-        NUMBER_HEADER* np = (NUMBER_HEADER*)p;
+        NUMBER_OBJECT_UINT* np = (NUMBER_OBJECT_UINT*)p;
         CheckNumber(np);
         DeallocateNumber(np);
     }
@@ -561,13 +572,13 @@ namespace Palmtree::Math::Core::Internal
     PMC_HANDLE_UINT __PMC_CALL PMC_Clone_X(PMC_HANDLE_UINT x) noexcept(false)
     {
         if (x == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"x");
-        NUMBER_HEADER* nx = (NUMBER_HEADER*)x;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"x");
+        NUMBER_OBJECT_UINT* nx = (NUMBER_OBJECT_UINT*)x;
         CheckNumber(nx);
         ResourceHolderUINT root;
-        NUMBER_HEADER* no;
+        NUMBER_OBJECT_UINT* no;
         if (nx->IS_ZERO)
-            no = &number_zero;
+            no = &number_object_uint_zero;
         else
             no = DuplicateNumber(nx);
         root.HookNumber(no);
@@ -677,7 +688,7 @@ namespace Palmtree::Math::Core::Internal
         Palmtree::Math::Core::Internal::DeallocateBlock(_buffer, _word_count, _check_code);
     }
 
-    ResourceHolderUINT::__DynamicNumberChainBufferTag::__DynamicNumberChainBufferTag(NUMBER_HEADER * buffer)
+    ResourceHolderUINT::__DynamicNumberChainBufferTag::__DynamicNumberChainBufferTag(NUMBER_OBJECT_UINT * buffer)
     {
         _buffer = buffer;
     }
@@ -701,7 +712,7 @@ namespace Palmtree::Math::Core::Internal
         Palmtree::Math::Core::Internal::DeallocateNumber(_buffer);
     }
 
-    ResourceHolderUINT::__NumberHandleHookingChainBufferTag::__NumberHandleHookingChainBufferTag(NUMBER_HEADER * buffer)
+    ResourceHolderUINT::__NumberHandleHookingChainBufferTag::__NumberHandleHookingChainBufferTag(NUMBER_OBJECT_UINT * buffer)
     {
         _buffer = buffer;
     }
@@ -724,7 +735,7 @@ namespace Palmtree::Math::Core::Internal
        Palmtree::Math::Core::Internal::DeallocateNumber(_buffer);
     }
 
-    ResourceHolderUINT::__StaticNumberChainBufferTag::__StaticNumberChainBufferTag(NUMBER_HEADER * buffer)
+    ResourceHolderUINT::__StaticNumberChainBufferTag::__StaticNumberChainBufferTag(NUMBER_OBJECT_UINT * buffer)
     {
         _buffer = buffer;
     }
@@ -896,23 +907,23 @@ namespace Palmtree::Math::Core::Internal
         tag->Unlink();
     }
 
-    NUMBER_HEADER * ResourceHolderUINT::AllocateNumber(__UNIT_TYPE bit_count)
+    NUMBER_OBJECT_UINT * ResourceHolderUINT::AllocateNumber(__UNIT_TYPE bit_count)
     {
         Lock lock_obj;
-        NUMBER_HEADER* buffer = Palmtree::Math::Core::Internal::AllocateNumber(bit_count);
+        NUMBER_OBJECT_UINT* buffer = Palmtree::Math::Core::Internal::AllocateNumber(bit_count);
         __ChainBufferTag* tag = new __DynamicNumberChainBufferTag(buffer);
         LinkTag(tag);
         return (buffer);
     }
 
-    void ResourceHolderUINT::HookNumber(NUMBER_HEADER * buffer)
+    void ResourceHolderUINT::HookNumber(NUMBER_OBJECT_UINT * buffer)
     {
         Lock lock_obj;
         __ChainBufferTag* tag = new __NumberHandleHookingChainBufferTag(buffer);
         LinkTag(tag);
     }
 
-    void ResourceHolderUINT::DeallocateNumber(NUMBER_HEADER * buffer)
+    void ResourceHolderUINT::DeallocateNumber(NUMBER_OBJECT_UINT * buffer)
     {
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
@@ -924,7 +935,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    void ResourceHolderUINT::CheckNumber(NUMBER_HEADER * buffer)
+    void ResourceHolderUINT::CheckNumber(NUMBER_OBJECT_UINT * buffer)
     {
 #ifdef _DEBUG
         Lock lock_obj;
@@ -935,7 +946,7 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    void ResourceHolderUINT::UnlinkNumber(NUMBER_HEADER * buffer)
+    void ResourceHolderUINT::UnlinkNumber(NUMBER_OBJECT_UINT * buffer)
     {
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
@@ -944,7 +955,7 @@ namespace Palmtree::Math::Core::Internal
         tag->Unlink();
     }
 
-    void ResourceHolderUINT::AttatchStaticNumber(NUMBER_HEADER* p, __UNIT_TYPE bit_count)
+    void ResourceHolderUINT::AttatchStaticNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count)
     {
         Lock lock_obj;
         Palmtree::Math::Core::Internal::AttatchNumber(p, bit_count);
@@ -952,7 +963,7 @@ namespace Palmtree::Math::Core::Internal
         LinkTag(tag);
     }
 
-    void ResourceHolderUINT::DetatchStaticNumber(NUMBER_HEADER * buffer)
+    void ResourceHolderUINT::DetatchStaticNumber(NUMBER_OBJECT_UINT * buffer)
     {
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
@@ -964,7 +975,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    void ResourceHolderUINT::UnlinkStatickNumber(NUMBER_HEADER * buffer)
+    void ResourceHolderUINT::UnlinkStatickNumber(NUMBER_OBJECT_UINT * buffer)
     {
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
@@ -981,7 +992,7 @@ namespace Palmtree::Math::Core::Internal
         *size = 0;
         DWORD LastError;
         PROCESS_HEAP_ENTRY Entry;
-        Entry.lpData = NULL;
+        Entry.lpData = nullptr;
         while (HeapWalk(hLocalHeap, &Entry))
         {
             BOOL is_allocated = FALSE;
@@ -1060,15 +1071,15 @@ namespace Palmtree::Math::Core::Internal
 
         try
         {
-            root.AttatchStaticNumber(&number_zero, 0);
-            CommitNumber(&number_zero);
+            root.AttatchStaticNumber(&number_object_uint_zero, 0);
+            CommitNumber(&number_object_uint_zero);
 
-            root.AttatchStaticNumber(&number_one, 1);
-            number_one.BLOCK[0] = 1;
-            CommitNumber(&number_one);
+            root.AttatchStaticNumber(&number_object_uint_one, 1);
+            number_object_uint_one.BLOCK[0] = 1;
+            CommitNumber(&number_object_uint_one);
 
-            root.UnlinkStatickNumber(&number_zero);
-            root.UnlinkStatickNumber(&number_one);
+            root.UnlinkStatickNumber(&number_object_uint_zero);
+            root.UnlinkStatickNumber(&number_object_uint_one);
             return (PMC_STATUS_OK);
         }
         catch (const Exception& ex)
@@ -1077,7 +1088,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    BOOL AllocateHeapArea() noexcept(true)
+    BOOL AllocateUINTHeapArea() noexcept(true)
     {
         hLocalHeap = HeapCreate(0, 0x1000, 0);
         if (hLocalHeap == nullptr)
@@ -1085,7 +1096,7 @@ namespace Palmtree::Math::Core::Internal
         return (TRUE);
     }
 
-    void DeallocateHeapArea() noexcept(true)
+    void DeallocateUINTHeapArea() noexcept(true)
     {
         if (hLocalHeap != nullptr)
         {

@@ -52,6 +52,8 @@
     <Compile Include="NullDataItem.cs" />
     <Compile Include="ExceptionDataItem.cs" />
     <Compile Include="IDataItem.cs" />
+    <Compile Include="Plugin\TestDataRendererPlugin_Increment_X.cs" />
+    <Compile Include="Plugin\TestDataRendererPlugin_Decrement_X.cs" />
     <Compile Include="Plugin\TestDataRendererPlugin_Floor_log10.cs" />
     <Compile Include="Plugin\TestDataRendererPlugin_ToStringX.cs" />
     <Compile Include="Plugin\TestDataRendererPlugin_ToStringR.cs" />

@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\vs_dist\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\vs_dist\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -71,4 +71,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>echo F | xcopy /Y "$(TargetDir)Palmtree.Math.dll" "$(SolutionDir)vs_dist\$(ConfigurationName)\Palmtree.Math.dll"
+echo F | xcopy /Y "$(TargetDir)Palmtree.Math.dll" "$(SolutionDir)dist\$(ConfigurationName)\Palmtree.Math.dll"
+echo F | xcopy /Y "$(TargetDir)Palmtree.Math.pdb" "$(SolutionDir)vs_dist\$(ConfigurationName)\Palmtree.Math.pdb"
+echo F | xcopy /Y "$(TargetDir)Palmtree.Math.pdb" "$(SolutionDir)dist\$(ConfigurationName)\Palmtree.Math.pdb"
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>

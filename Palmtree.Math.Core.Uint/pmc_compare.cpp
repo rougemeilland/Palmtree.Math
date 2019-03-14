@@ -54,7 +54,7 @@ namespace Palmtree::Math::Core::Internal
     }
 
 
-    static _INT32_T PMC_Compare_X_I_Imp(NUMBER_HEADER* u, _UINT32_T v)
+    static _INT32_T PMC_Compare_X_I_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v)
     {
         if (u->IS_ZERO)
         {
@@ -112,9 +112,9 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_compare.cpp;PMC_Compare_I_X;1");
         }
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        CheckNumber((NUMBER_HEADER*)v);
-        _INT32_T w = -PMC_Compare_X_I_Imp((NUMBER_HEADER*)v, u);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        CheckNumber((NUMBER_OBJECT_UINT*)v);
+        _INT32_T w = -PMC_Compare_X_I_Imp((NUMBER_OBJECT_UINT*)v, u);
 #ifdef _DEBUG
         if (w != 0 && w != 1 && w != -1)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_compare.cpp;PMC_Compare_I_X;2");
@@ -130,9 +130,9 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_compare.cpp;PMC_Compare_X_I;1");
         }
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
-        CheckNumber((NUMBER_HEADER*)u);
-        _INT32_T w = PMC_Compare_X_I_Imp((NUMBER_HEADER*)u, v);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        CheckNumber((NUMBER_OBJECT_UINT*)u);
+        _INT32_T w = PMC_Compare_X_I_Imp((NUMBER_OBJECT_UINT*)u, v);
 #ifdef _DEBUG
         if (w != 0 && w != 1 && w != -1)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_compare.cpp;PMC_Compare_X_I;2");
@@ -140,7 +140,7 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static _INT32_T PMC_Compare_X_L_Imp(NUMBER_HEADER* u, _UINT64_T v)
+    static _INT32_T PMC_Compare_X_L_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
     {
         if (u->IS_ZERO)
         {
@@ -266,9 +266,9 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_compare.cpp;PMC_Compare_L_X;1");
         }
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        CheckNumber((NUMBER_HEADER*)v);
-        _INT32_T w = -PMC_Compare_X_L_Imp((NUMBER_HEADER*)v, u);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        CheckNumber((NUMBER_OBJECT_UINT*)v);
+        _INT32_T w = -PMC_Compare_X_L_Imp((NUMBER_OBJECT_UINT*)v, u);
 #ifdef _DEBUG
         if (w != 0 && w != 1 && w != -1)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_compare.cpp;PMC_Compare_L_X;2");
@@ -284,9 +284,9 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_compare.cpp;PMC_Compare_X_L;1");
         }
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
-        CheckNumber((NUMBER_HEADER*)u);
-        _INT32_T w = PMC_Compare_X_L_Imp((NUMBER_HEADER*)u, v);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        CheckNumber((NUMBER_OBJECT_UINT*)u);
+        _INT32_T w = PMC_Compare_X_L_Imp((NUMBER_OBJECT_UINT*)u, v);
 #ifdef _DEBUG
         if (w != 0 && w != 1 && w != -1)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_compare.cpp;PMC_Compare_X_L;2");
@@ -294,7 +294,7 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    _INT32_T PMC_Compare_X_X_Imp(NUMBER_HEADER* u, NUMBER_HEADER* v)
+    _INT32_T PMC_Compare_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->IS_ZERO)
             return (v->IS_ZERO ? 0 : -1);
@@ -325,11 +325,11 @@ namespace Palmtree::Math::Core::Internal
     _INT32_T __PMC_CALL PMC_Compare_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        NUMBER_HEADER* nu = (NUMBER_HEADER*)u;
-        NUMBER_HEADER* nv = (NUMBER_HEADER*)v;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        NUMBER_OBJECT_UINT* nu = (NUMBER_OBJECT_UINT*)u;
+        NUMBER_OBJECT_UINT* nv = (NUMBER_OBJECT_UINT*)v;
         CheckNumber(nu);
         CheckNumber(nv);
         _INT32_T w = PMC_Compare_X_X_Imp(nu, nv);

@@ -32,6 +32,11 @@ namespace Palmtree.Math
     {
         #region パブリックメソッド
 
+        public UBigInt Increment()
+        {
+            return (new UBigInt(EngineObject.Increment(Handle)));
+        }
+
         public UBigInt Add(UInt32 v)
         {
             return (new UBigInt(EngineObject.Add(Handle, v)));
@@ -45,6 +50,11 @@ namespace Palmtree.Math
         public UBigInt Add(UBigInt v)
         {
             return (new UBigInt(EngineObject.Add(Handle, v.Handle)));
+        }
+
+        public static UBigInt operator ++(UBigInt x)
+        {
+            return (new UBigInt(EngineObject.Increment(x.Handle)));
         }
 
         public static UBigInt operator +(UInt32 u, UBigInt v)

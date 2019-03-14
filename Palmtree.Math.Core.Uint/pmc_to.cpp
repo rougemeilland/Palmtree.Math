@@ -40,10 +40,10 @@ namespace Palmtree::Math::Core::Internal
             // 32bit未満のCPUは未対応
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_To_X_I;1");
         }
-        NUMBER_HEADER* np = (NUMBER_HEADER*)p;
+        NUMBER_OBJECT_UINT* np = (NUMBER_OBJECT_UINT*)p;
         CheckNumber(np);
         if (np->UNIT_BIT_COUNT > sizeof(_UINT32_T) * 8)
-            throw OverflowException(L"32bit整数への型変換に失敗しました。");
+            throw OverflowException(L"符号なし32bit整数への型変換に失敗しました。");
         return (np->IS_ZERO ? 0 : (_UINT32_T)np->BLOCK[0]);
     }
 
@@ -54,10 +54,10 @@ namespace Palmtree::Math::Core::Internal
             // 32bit未満のCPUは未対応
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_To_X_L;1");
         }
-        NUMBER_HEADER* np = (NUMBER_HEADER*)p;
+        NUMBER_OBJECT_UINT* np = (NUMBER_OBJECT_UINT*)p;
         CheckNumber(np);
         if (np->UNIT_BIT_COUNT > sizeof(_UINT64_T) * 8)
-            throw OverflowException(L"64bit整数への型変換に失敗しました。");
+            throw OverflowException(L"符号なし64bit整数への型変換に失敗しました。");
         if (np->IS_ZERO)
             return (0);
         else

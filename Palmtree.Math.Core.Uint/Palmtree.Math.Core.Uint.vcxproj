@@ -191,7 +191,6 @@
     <ClInclude Include="pmc_exception.h" />
     <ClInclude Include="pmc_resourceholder.h" />
     <ClInclude Include="pmc_uint.h" />
-    <ClInclude Include="pmc_uint_debug.h" />
     <ClInclude Include="pmc_inline_func.h" />
     <ClInclude Include="pmc_internal.h" />
     <ClInclude Include="pmc_uint_internal.h" />

@@ -887,6 +887,20 @@ namespace Palmtree.Math.Core
             return (r);
         }
 
+        public UBigIntHandle Increment(UBigIntHandle x)
+        {
+            IntPtr r;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Increment_X(x.NativeHandle, out r));
+            return (new UBigIntHandle(r, this));
+        }
+
+        public UBigIntHandle Decrement(UBigIntHandle x)
+        {
+            IntPtr r;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Decrement_X(x.NativeHandle, out r));
+            return (new UBigIntHandle(r, this));
+        }
+
         #endregion
 
         #region プライベートメソッド
@@ -992,11 +1006,6 @@ namespace Palmtree.Math.Core
 
         [DllImport("Palmtree.Math.Core.Uint.dll", CharSet = CharSet.Unicode, EntryPoint = "PMCCS_ToString")]
         private static extern Int32 PMCCS_GetStringCount(IntPtr x, string format, [In]PMC_NUMBER_FORMAT_INFO format_option, IntPtr buffer, int buffer_size, out int size);
-
-        /*
-        [DllImport("Palmtree.Math.Core.Uint.dll", CharSet = CharSet.Unicode)]
-        private static extern Int32 PMCCS_GetStringCount(IntPtr x, string format, [In]PMC_NUMBER_FORMAT_INFO format_option, out int size);
-        */
 
         [DllImport("Palmtree.Math.Core.Uint.dll", CharSet = CharSet.Unicode)]
         private static extern Int32 PMCCS_Parse(string source, int number_styles, [In]PMC_NUMBER_FORMAT_INFO format_option, out IntPtr o);
@@ -1189,6 +1198,12 @@ namespace Palmtree.Math.Core
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
         private static extern Int32 PMCCS_Floor_Log10(IntPtr v, out UInt32 r);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_Increment_X(IntPtr x, out IntPtr r);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_Decrement_X(IntPtr x, out IntPtr r);
 
         #endregion
 

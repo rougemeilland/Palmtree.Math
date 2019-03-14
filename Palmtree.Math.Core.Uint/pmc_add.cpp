@@ -295,7 +295,48 @@ namespace Palmtree::Math::Core::Internal
         DoCarry(c, up, u_count - v_count, wp, w_count - v_count);
     }
 
-    static NUMBER_HEADER* PMC_Add_X_I_Imp(NUMBER_HEADER* nu, _UINT32_T v)
+    static NUMBER_OBJECT_UINT* PMC_Increment_X_Imp(NUMBER_OBJECT_UINT* x)
+    {
+        if (x->IS_ZERO)
+        {
+            // x が 0 である場合
+
+            // 1 を返す
+            return (&number_object_uint_one);
+        }
+        else
+        {
+            // x が 0 ではない場合
+
+            // x + 1 を計算する
+            ResourceHolderUINT root;
+            __UNIT_TYPE x_bit_count = x->UNIT_BIT_COUNT;
+            __UNIT_TYPE w_bit_count = x_bit_count + 1;
+            NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
+            DoCarry(1, x->BLOCK, x->UNIT_WORD_COUNT, nw->BLOCK, nw->BLOCK_COUNT);
+            root.CheckNumber(nw);
+            CommitNumber(nw);
+            root.UnlinkNumber(nw);
+            return (nw);
+        }
+    }
+
+    PMC_HANDLE_UINT __PMC_CALL PMC_Increment_X(PMC_HANDLE_UINT x)
+    {
+        if (x == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"x");
+        CheckNumber((NUMBER_OBJECT_UINT*)x);
+        ResourceHolderUINT root;
+        NUMBER_OBJECT_UINT* nw = PMC_Increment_X_Imp((NUMBER_OBJECT_UINT*)x);
+        root.HookNumber(nw);
+#ifdef _DEBUG
+        CheckNumber(nw);
+#endif
+        root.UnlinkNumber(nw);
+        return ((PMC_HANDLE_UINT)nw);
+    }
+
+    static NUMBER_OBJECT_UINT* PMC_Add_X_I_Imp(NUMBER_OBJECT_UINT* nu, _UINT32_T v)
     {
         if (nu->IS_ZERO)
         {
@@ -306,13 +347,13 @@ namespace Palmtree::Math::Core::Internal
                 // y が 0 である場合
 
                 // x と y がともに 0 であるので、加算結果の 0 を呼び出し元に返す。
-                return (&number_zero);
+                return (&number_object_uint_zero);
             }
             else
             {
                 // y が 0 ではない場合
 
-                // 加算結果となる y の値を持つ NUMBER_HEADER 構造体を獲得し、呼び出し元へ返す。
+                // 加算結果となる y の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
                 return (From_I_Imp(v));
             }
         }
@@ -324,7 +365,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // y が 0 である場合
 
-                // 加算結果となる x の値を持つ NUMBER_HEADER 構造体を獲得し、呼び出し元へ返す。
+                // 加算結果となる x の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
                 return (DuplicateNumber(nu));
             }
             else
@@ -336,7 +377,7 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE u_bit_count = nu->UNIT_BIT_COUNT;
                 __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v);
                 __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
-                NUMBER_HEADER* nw = root.AllocateNumber(w_bit_count);
+                NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
                 Add_X_1W(nu->BLOCK, nu->UNIT_WORD_COUNT, v, nw->BLOCK, nw->BLOCK_COUNT);
                 root.CheckNumber(nw);
                 CommitNumber(nw);
@@ -354,10 +395,10 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_I_X;1");
         }
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        CheckNumber((NUMBER_HEADER*)v);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        CheckNumber((NUMBER_OBJECT_UINT*)v);
         ResourceHolderUINT root;
-        NUMBER_HEADER* nw =  PMC_Add_X_I_Imp((NUMBER_HEADER*)v, u);
+        NUMBER_OBJECT_UINT* nw =  PMC_Add_X_I_Imp((NUMBER_OBJECT_UINT*)v, u);
         root.HookNumber(nw);
 #ifdef _DEBUG
         CheckNumber(nw);
@@ -374,10 +415,10 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_X_I;1");
         }
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
-        CheckNumber((NUMBER_HEADER*)u);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        CheckNumber((NUMBER_OBJECT_UINT*)u);
         ResourceHolderUINT root;
-        NUMBER_HEADER* nw = PMC_Add_X_I_Imp((NUMBER_HEADER*)u, v);
+        NUMBER_OBJECT_UINT* nw = PMC_Add_X_I_Imp((NUMBER_OBJECT_UINT*)u, v);
         root.HookNumber(nw);
 #ifdef _DEBUG
         CheckNumber(nw);
@@ -386,7 +427,7 @@ namespace Palmtree::Math::Core::Internal
         return ((PMC_HANDLE_UINT)nw);
     }
 
-    static NUMBER_HEADER* PMC_Add_X_L_Imp(NUMBER_HEADER* u, _UINT64_T v)
+    static NUMBER_OBJECT_UINT* PMC_Add_X_L_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
     {
         if (u->IS_ZERO)
         {
@@ -397,13 +438,13 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 である場合
 
                 // u と v がともに 0 であるので、加算結果の 0 を呼び出し元に返す。
-                return (&number_zero);
+                return (&number_object_uint_zero);
             }
             else
             {
                 // v が 0 ではない場合
 
-                // 加算結果となる v の値を持つ NUMBER_HEADER 構造体を獲得し、呼び出し元へ返す。
+                // 加算結果となる v の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
                 return (From_L_Imp(v));
             }
         }
@@ -415,7 +456,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v が 0 である場合
 
-                // 加算結果となる u の値を持つ NUMBER_HEADER 構造体を獲得し、呼び出し元へ返す。
+                // 加算結果となる u の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
                 return (DuplicateNumber(u));
             }
             else
@@ -437,7 +478,7 @@ namespace Palmtree::Math::Core::Internal
                         ResourceHolderUINT root;
                         __UNIT_TYPE v_bit_count = sizeof(v_lo) * 8 - _LZCNT_ALT_32(v_lo);
                         __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
-                        NUMBER_HEADER* w = root.AllocateNumber(w_bit_count);
+                        NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                         Add_X_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, w->BLOCK, w->BLOCK_COUNT);
                         root.CheckNumber(w);
                         CommitNumber(w);
@@ -451,7 +492,7 @@ namespace Palmtree::Math::Core::Internal
                         ResourceHolderUINT root;
                         __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v_hi);
                         __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
-                        NUMBER_HEADER* w = root.AllocateNumber(w_bit_count);
+                        NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                         Add_X_2W(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK, w->BLOCK_COUNT);
                         root.CheckNumber(w);
                         CommitNumber(w);
@@ -467,7 +508,7 @@ namespace Palmtree::Math::Core::Internal
                     __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
                     __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)v);
                     __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
-                    NUMBER_HEADER* w = root.AllocateNumber(w_bit_count);
+                    NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                     Add_X_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, w->BLOCK, w->BLOCK_COUNT);
                     root.CheckNumber(w);
                     CommitNumber(w);
@@ -486,13 +527,13 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_L_X;1");
         }
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        CheckNumber((NUMBER_HEADER*)v);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        CheckNumber((NUMBER_OBJECT_UINT*)v);
         ResourceHolderUINT root;
-        NUMBER_HEADER* w = PMC_Add_X_L_Imp((NUMBER_HEADER*)v, u);
+        NUMBER_OBJECT_UINT* w = PMC_Add_X_L_Imp((NUMBER_OBJECT_UINT*)v, u);
         root.HookNumber(w);
 #ifdef _DEBUG
-        CheckNumber((NUMBER_HEADER*)w);
+        CheckNumber((NUMBER_OBJECT_UINT*)w);
 #endif
         root.UnlinkNumber(w);
         return ((PMC_HANDLE_UINT)w);
@@ -506,24 +547,24 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_X_L;1");
         }
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
-        CheckNumber((NUMBER_HEADER*)u);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        CheckNumber((NUMBER_OBJECT_UINT*)u);
         ResourceHolderUINT root;
-        NUMBER_HEADER* w = PMC_Add_X_L_Imp((NUMBER_HEADER*)u, v);
+        NUMBER_OBJECT_UINT* w = PMC_Add_X_L_Imp((NUMBER_OBJECT_UINT*)u, v);
         root.HookNumber(w);
 #ifdef _DEBUG
-        CheckNumber((NUMBER_HEADER*)w);
+        CheckNumber((NUMBER_OBJECT_UINT*)w);
 #endif
         root.UnlinkNumber(w);
         return ((PMC_HANDLE_UINT)w);
     }
 
-    NUMBER_HEADER* PMC_Add_X_X_Imp(NUMBER_HEADER* u, NUMBER_HEADER* v)
+    NUMBER_OBJECT_UINT* PMC_Add_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->IS_ZERO)
         {
             if (v->IS_ZERO)
-                return (&number_zero);
+                return (&number_object_uint_zero);
             else
                 return (DuplicateNumber(v));
         }
@@ -537,7 +578,7 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
                 __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
                 __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
-                NUMBER_HEADER* w = root.AllocateNumber(w_bit_count);
+                NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 (*fp_Add_Imp)(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
                 root.CheckNumber(w);
                 CommitNumber(w);
@@ -550,13 +591,13 @@ namespace Palmtree::Math::Core::Internal
     PMC_HANDLE_UINT __PMC_CALL PMC_Add_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
     {
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        CheckNumber((NUMBER_HEADER*)u);
-        CheckNumber((NUMBER_HEADER*)v);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        CheckNumber((NUMBER_OBJECT_UINT*)u);
+        CheckNumber((NUMBER_OBJECT_UINT*)v);
         ResourceHolderUINT root;
-        NUMBER_HEADER* w = PMC_Add_X_X_Imp((NUMBER_HEADER*)u, (NUMBER_HEADER*)v);
+        NUMBER_OBJECT_UINT* w = PMC_Add_X_X_Imp((NUMBER_OBJECT_UINT*)u, (NUMBER_OBJECT_UINT*)v);
         root.HookNumber(w);
 #ifdef _DEBUG
         CheckNumber(w);

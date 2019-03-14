@@ -19,9 +19,6 @@
     <ClInclude Include="pmc.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="pmc_uint_debug.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="pmc_uint.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>

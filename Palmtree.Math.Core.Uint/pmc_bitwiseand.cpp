@@ -151,8 +151,8 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_I_X;1");
         }
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        NUMBER_HEADER* nv = (NUMBER_HEADER*)v;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        NUMBER_OBJECT_UINT* nv = (NUMBER_OBJECT_UINT*)v;
         CheckNumber(nv);
         if (nv->IS_ZERO)
         {
@@ -181,8 +181,8 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_X_I;1");
         }
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
-        NUMBER_HEADER* nu = (NUMBER_HEADER*)u;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        NUMBER_OBJECT_UINT* nu = (NUMBER_OBJECT_UINT*)u;
         CheckNumber(nu);
         if (nu->IS_ZERO)
         {
@@ -211,8 +211,8 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_L_X;1");
         }
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        NUMBER_HEADER* nv = (NUMBER_HEADER*)v;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        NUMBER_OBJECT_UINT* nv = (NUMBER_OBJECT_UINT*)v;
         CheckNumber(nv);
         if (nv->IS_ZERO)
         {
@@ -255,8 +255,8 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_X_L;1");
         }
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        NUMBER_HEADER* nu = (NUMBER_HEADER*)u;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        NUMBER_OBJECT_UINT* nu = (NUMBER_OBJECT_UINT*)u;
         CheckNumber(nu);
         if (nu->IS_ZERO)
         {
@@ -291,19 +291,19 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_HEADER* PMC_BitwiseAnd_X_X_Imp(NUMBER_HEADER* u, NUMBER_HEADER* v)
+    static NUMBER_OBJECT_UINT* PMC_BitwiseAnd_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->IS_ZERO)
-            return (&number_zero);
+            return (&number_object_uint_zero);
         else if (v->IS_ZERO)
-            return (&number_zero);
+            return (&number_object_uint_zero);
         else
         {
             ResourceHolderUINT root;
             __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
             __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
             __UNIT_TYPE w_bit_count = _MINIMUM_UNIT(u_bit_count, v_bit_count);
-            NUMBER_HEADER* w = root.AllocateNumber(w_bit_count);
+            NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
             __UNIT_TYPE w_word_count = _DIVIDE_CEILING_UNIT(w_bit_count, __UNIT_TYPE_BIT_COUNT);
             BitwiseAnd_X_X(u->BLOCK, v->BLOCK, w->BLOCK, w_word_count);
             root.CheckNumber(w);
@@ -311,7 +311,7 @@ namespace Palmtree::Math::Core::Internal
             if (w->IS_ZERO)
             {
                 root.DeallocateNumber(w);
-                return (&number_zero);
+                return (&number_object_uint_zero);
             }
             root.UnlinkNumber(w);
             return (w);
@@ -321,15 +321,15 @@ namespace Palmtree::Math::Core::Internal
     PMC_HANDLE_UINT __PMC_CALL PMC_BitwiseAnd_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
     {
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        NUMBER_HEADER* nu = (NUMBER_HEADER*)u;
-        NUMBER_HEADER* nv = (NUMBER_HEADER*)v;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        NUMBER_OBJECT_UINT* nu = (NUMBER_OBJECT_UINT*)u;
+        NUMBER_OBJECT_UINT* nv = (NUMBER_OBJECT_UINT*)v;
         CheckNumber(nu);
         CheckNumber(nv);
         ResourceHolderUINT root;
-        NUMBER_HEADER* nw = PMC_BitwiseAnd_X_X_Imp(nu, nv);
+        NUMBER_OBJECT_UINT* nw = PMC_BitwiseAnd_X_X_Imp(nu, nv);
         root.HookNumber(nw);
 #ifdef _DEBUG
         CheckNumber(nw);

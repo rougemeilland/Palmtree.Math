@@ -25,6 +25,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 
 namespace Palmtree.Math.Core.Uint.CodeGen.TestData.Plugin
 {
@@ -35,6 +36,18 @@ namespace Palmtree.Math.Core.Uint.CodeGen.TestData.Plugin
             : base("test_data_bitwiseand_x_x.xml")
         {
 
+        }
+
+        protected override IEnumerable<BigInteger> AdditionalUBigIntDataSource
+        {
+            get
+            {
+                return (new[]
+                {
+                    new BigInteger(1),
+                    new BigInteger(2),
+                });
+            }
         }
 
         protected override IEnumerable<TestDataItemContainer> TestDataItems

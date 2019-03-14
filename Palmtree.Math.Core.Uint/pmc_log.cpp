@@ -34,18 +34,18 @@ namespace Palmtree::Math::Core::Internal
 {
     static double log10_2; // 0.3010299956639811952137388947244
 
-    _UINT32_T PMC_Floor_Log10_Imp(NUMBER_HEADER* v)
+    _UINT32_T PMC_Floor_Log10_Imp(NUMBER_OBJECT_UINT* v)
     {
         if (v->IS_ZERO)
             throw ArithmeticException(L"0の対数は未定義です。");
 
         ResourceHolderUINT root;
         _UINT32_T result = (_UINT32_T)floor((v->UNIT_BIT_COUNT - 1)* log10_2);
-        NUMBER_HEADER* exp1 = PMC_TimesOfExponentOf10_Imp(1, result);
+        NUMBER_OBJECT_UINT* exp1 = PMC_TimesOfExponentOf10_Imp(1, result);
         root.HookNumber(exp1);
         while (true)
         {
-            NUMBER_HEADER* exp2 = PMC_Multiply_X_I_Imp(exp1, 10);
+            NUMBER_OBJECT_UINT* exp2 = PMC_Multiply_X_I_Imp(exp1, 10);
             root.HookNumber(exp2);
             root.DeallocateNumber(exp1);
             exp1 = exp2;
@@ -61,8 +61,8 @@ namespace Palmtree::Math::Core::Internal
     _UINT32_T __PMC_CALL PMC_Floor_Log10(PMC_HANDLE_UINT v)
     {
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        NUMBER_HEADER* nv = (NUMBER_HEADER*)v;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        NUMBER_OBJECT_UINT* nv = (NUMBER_OBJECT_UINT*)v;
         CheckNumber(nv);
         return (PMC_Floor_Log10_Imp(nv));
     }

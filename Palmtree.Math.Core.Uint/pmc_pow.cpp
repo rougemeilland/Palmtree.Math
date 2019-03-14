@@ -78,7 +78,7 @@ namespace Palmtree::Math::Core::Internal
         _COPY_MEMORY_UNIT(r_buf, u_ptr, u_count);
     }
 
-    NUMBER_HEADER* PMC_Pow_X_I_Imp(NUMBER_HEADER* v, _UINT32_T e) noexcept(false)
+    NUMBER_OBJECT_UINT* PMC_Pow_X_I_Imp(NUMBER_OBJECT_UINT* v, _UINT32_T e) noexcept(false)
     {
         if (v->IS_ZERO)
         {
@@ -95,7 +95,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // e が 0 ではない場合
 
-                return (&number_zero);
+                return (&number_object_uint_zero);
             }
         }
         else if (v->IS_ONE)
@@ -103,7 +103,7 @@ namespace Palmtree::Math::Core::Internal
             // v が 1 である場合
 
             // e が何であってもべき乗は 1 となる。
-            return (&number_one);
+            return (&number_object_uint_one);
         }
         else
         {
@@ -114,7 +114,7 @@ namespace Palmtree::Math::Core::Internal
                 // e が 0 である場合
 
                 // 計算結果の 1 を返す
-                return (&number_one);
+                return (&number_object_uint_one);
             }
             else if (e == 1)
             {
@@ -139,7 +139,7 @@ namespace Palmtree::Math::Core::Internal
 
                 __UNIT_TYPE* work1_buf = root.AllocateBlock(work_bit_count);
                 __UNIT_TYPE* work2_buf = root.AllocateBlock(work_bit_count);
-                NUMBER_HEADER* r = root.AllocateNumber(work_bit_count);
+                NUMBER_OBJECT_UINT* r = root.AllocateNumber(work_bit_count);
                 Pow_X_I_Imp(v->BLOCK, v->UNIT_WORD_COUNT, e, work1_buf, work2_buf, r->BLOCK);
                 root.CheckBlock(work1_buf);
                 root.CheckBlock(work2_buf);
@@ -197,7 +197,7 @@ namespace Palmtree::Math::Core::Internal
         _COPY_MEMORY_UNIT(r_buf, u_ptr, u_count);
     }
 
-    NUMBER_HEADER* PMC_Pow_X_L_Imp(NUMBER_HEADER* v, _UINT64_T e) noexcept(false)
+    NUMBER_OBJECT_UINT* PMC_Pow_X_L_Imp(NUMBER_OBJECT_UINT* v, _UINT64_T e) noexcept(false)
     {
         if (v->IS_ZERO)
         {
@@ -214,7 +214,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // e が 0 ではない場合
 
-                return (&number_zero);
+                return (&number_object_uint_zero);
             }
         }
         else if (v->IS_ONE)
@@ -222,7 +222,7 @@ namespace Palmtree::Math::Core::Internal
             // v が 1 である場合
 
             // e が何であってもべき乗は 1 となる。
-            return (&number_one);
+            return (&number_object_uint_one);
         }
         else
         {
@@ -233,7 +233,7 @@ namespace Palmtree::Math::Core::Internal
                 // e が 0 である場合
 
                 // 計算結果の 1 を返す
-                return (&number_one);
+                return (&number_object_uint_one);
             }
             else if (e == 1)
             {
@@ -258,7 +258,7 @@ namespace Palmtree::Math::Core::Internal
 
                 __UNIT_TYPE* work1_buf = root.AllocateBlock(work_bit_count);
                 __UNIT_TYPE* work2_buf = root.AllocateBlock(work_bit_count);
-                NUMBER_HEADER* r = root.AllocateNumber(work_bit_count);
+                NUMBER_OBJECT_UINT* r = root.AllocateNumber(work_bit_count);
                 Pow_X_L_Imp(v->BLOCK, v->UNIT_WORD_COUNT, e, work1_buf, work2_buf, r->BLOCK);
                 root.CheckBlock(work1_buf);
                 root.CheckBlock(work2_buf);
@@ -279,10 +279,10 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_pow.cpp;PMC_Pow_X_I;1");
         }
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        CheckNumber((NUMBER_HEADER*)v);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        CheckNumber((NUMBER_OBJECT_UINT*)v);
         ResourceHolderUINT root;
-        NUMBER_HEADER* r = PMC_Pow_X_I_Imp((NUMBER_HEADER*)v, e);
+        NUMBER_OBJECT_UINT* r = PMC_Pow_X_I_Imp((NUMBER_OBJECT_UINT*)v, e);
         root.HookNumber(r);
 #ifdef _DEBUG
         CheckNumber(r);
@@ -300,10 +300,10 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_pow.cpp;PMC_Pow_X_I;1");
         }
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        CheckNumber((NUMBER_HEADER*)v);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        CheckNumber((NUMBER_OBJECT_UINT*)v);
         ResourceHolderUINT root;
-        NUMBER_HEADER* r = PMC_Pow_X_L_Imp((NUMBER_HEADER*)v, e);
+        NUMBER_OBJECT_UINT* r = PMC_Pow_X_L_Imp((NUMBER_OBJECT_UINT*)v, e);
         root.HookNumber(r);
 #ifdef _DEBUG
         CheckNumber(r);
@@ -315,19 +315,19 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    NUMBER_HEADER* PMC_TimesOfExponentOf10_Imp(_UINT32_T v, __UNIT_TYPE e)
+    NUMBER_OBJECT_UINT* PMC_TimesOfExponentOf10_Imp(_UINT32_T v, __UNIT_TYPE e)
     {
         if (v == 0)
-            return (&number_zero);
+            return (&number_object_uint_zero);
         if (e == 0)
             return (From_I_Imp(v));
         ResourceHolderUINT root;
-        NUMBER_HEADER* _10 = From_I_Imp(10);
+        NUMBER_OBJECT_UINT* _10 = From_I_Imp(10);
         root.HookNumber(_10);
 #if _M_IX86
-        NUMBER_HEADER* exponent_of_10 = PMC_Pow_X_I_Imp(_10, e);
+        NUMBER_OBJECT_UINT* exponent_of_10 = PMC_Pow_X_I_Imp(_10, e);
 #elif defined(_M_X64)
-        NUMBER_HEADER* exponent_of_10 = PMC_Pow_X_L_Imp(_10, e);
+        NUMBER_OBJECT_UINT* exponent_of_10 = PMC_Pow_X_L_Imp(_10, e);
 #else
 #error unknown platform
 #endif
@@ -336,7 +336,7 @@ namespace Palmtree::Math::Core::Internal
         else
         {
             root.HookNumber(exponent_of_10);
-            NUMBER_HEADER* x_times_of_exponent_of_10 = PMC_Multiply_X_I_Imp(exponent_of_10, v);
+            NUMBER_OBJECT_UINT* x_times_of_exponent_of_10 = PMC_Multiply_X_I_Imp(exponent_of_10, v);
             return (x_times_of_exponent_of_10);
         }
     }

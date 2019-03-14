@@ -1297,6 +1297,36 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Increment_X(PMC_HANDLE_UINT x, PMC_HANDLE_UINT* r)
+    {
+        if (r == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *r = PMC_Increment_X(x);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Decrement_X(PMC_HANDLE_UINT x, PMC_HANDLE_UINT* r)
+    {
+        if (r == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *r = PMC_Decrement_X(x);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
 }
 
 

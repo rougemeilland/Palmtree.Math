@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<setting>
+  <toolchains>
+    <toolchain platform="x86">C:\GNU\MINGW64\i686-8.1.0-win32-dwarf-rt_v6-rev0\mingw32\bin</toolchain>
+    <toolchain platform="x64">C:\GNU\MINGW64\x86_64-8.1.0-win32-seh-rt_v6-rev0\mingw64\bin</toolchain>
+  </toolchains>
+  <targetfilename>Palmtree.Math.Core.Sint.Launcher.exe</targetfilename>
+  <sourcefilefilters>
+  </sourcefilefilters>
+  <cflags>
+    <cflag on="x86">-D_M_IX86</cflag>
+    <cflag on="x64">-D_M_IX64</cflag>
+    <cflag on="Debug">-g</cflag>
+    <cflag on="Debug">-D_DEBUG</cflag>
+    <cflag on="Release">-O2</cflag>
+  </cflags>
+  <ldflags>
+  </ldflags>
+</setting>
+

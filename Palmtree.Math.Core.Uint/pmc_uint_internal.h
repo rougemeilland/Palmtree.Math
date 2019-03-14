@@ -37,7 +37,7 @@ namespace Palmtree::Math::Core::Internal
 {
 
 #pragma region 型の定義
-    typedef struct __tag_NUMBER_HEADER
+    typedef struct __tag_NUMBER_OBJECT_UINT
     {
         __UNIT_TYPE HASH_CODE;              // データのハッシュコード。
         unsigned IS_ZERO : 1;               // データが 0 なら TRUE
@@ -60,7 +60,7 @@ namespace Palmtree::Math::Core::Internal
         // UNIT_ARRAY[UNIT_COUNT]の要素はデータの正当性チェックのために使用される。
         __UNIT_TYPE* BLOCK;
         __UNIT_TYPE BLOCK_CHECK_CODE;       // BLOCK が指す領域の検査用の数値
-    } NUMBER_HEADER;
+    } NUMBER_OBJECT_UINT;
 #pragma endregion
 
 
@@ -69,34 +69,34 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_CONFIGURATION_INFO configuration_info;
 
     // 整数 0 のインスタンス
-    extern NUMBER_HEADER number_zero;
+    extern NUMBER_OBJECT_UINT number_object_uint_zero;
 
     // 整数 1 のインスタンス
-    extern NUMBER_HEADER number_one;
+    extern NUMBER_OBJECT_UINT number_object_uint_one;
 
     // パフォーマンスカウンタ
     extern PMC_STATISTICS_INFO statistics_info;
 
     // 内部ヒープメモリ領域を獲得する。
-    extern BOOL AllocateHeapArea(void) noexcept(true);
+    extern BOOL AllocateUINTHeapArea(void) noexcept(true);
 
     // 内部ヒープメモリ領域を解放する。
-    extern void DeallocateHeapArea(void) noexcept(true);
+    extern void DeallocateUINTHeapArea(void) noexcept(true);
 
     // p->BLOCK に格納された数値を確定します。
-    extern void CommitNumber(NUMBER_HEADER* p) noexcept(true);
+    extern void CommitNumber(NUMBER_OBJECT_UINT* p) noexcept(false);
 
-    // 与えられた NUMBER_HEADER 構造体へのポインタが正しい構造体を指しているかどうか検査します。(主としてメモリ破壊の観点で)
-    extern void CheckNumber(NUMBER_HEADER* p) noexcept(false);
+    // 与えられた NUMBER_OBJECT_UINT 構造体へのポインタが正しい構造体を指しているかどうか検査します。(主としてメモリ破壊の観点で)
+    extern void CheckNumber(NUMBER_OBJECT_UINT* p) noexcept(false);
 
-    // 与えられた NUMBER_HEADER 構造体を複製する。p が指す NUMBER_HEADER 構造体は 0 値であってはならない。
-    extern NUMBER_HEADER* DuplicateNumber(NUMBER_HEADER* p);
+    // 与えられた NUMBER_OBJECT_UINT 構造体を複製する。p が指す NUMBER_OBJECT_UINT 構造体は 0 値であってはならない。
+    extern NUMBER_OBJECT_UINT* DuplicateNumber(NUMBER_OBJECT_UINT* p);
 
-    // 32bit 整数 x から NUMBER_HEADER 構造体を構築し、そのポインタを o が指す領域に格納して返す。x は 0 であってはならない。
-    extern NUMBER_HEADER* From_I_Imp(_UINT32_T x) noexcept(false);
+    // 32bit 整数 x から NUMBER_OBJECT_UINT 構造体を構築し、そのポインタを o が指す領域に格納して返す。x は 0 であってはならない。
+    extern NUMBER_OBJECT_UINT* From_I_Imp(_UINT32_T x) noexcept(false);
 
-    // 64bit 整数 x から NUMBER_HEADER 構造体を構築し、そのポインタを o が指す領域に格納して返す。x は 0 であってはならない。
-    extern NUMBER_HEADER* From_L_Imp(_UINT64_T x) noexcept(false);
+    // 64bit 整数 x から NUMBER_OBJECT_UINT 構造体を構築し、そのポインタを o が指す領域に格納して返す。x は 0 であってはならない。
+    extern NUMBER_OBJECT_UINT* From_L_Imp(_UINT64_T x) noexcept(false);
 
     // 指定されたワード列を右にシフトして指定された領域に格納する。シフト数は 0 であってはならない。
     extern void RightShift_Imp(__UNIT_TYPE* p, __UNIT_TYPE p_word_count, __UNIT_TYPE n, __UNIT_TYPE* o, BOOL padding_zero);
@@ -126,25 +126,25 @@ namespace Palmtree::Math::Core::Internal
     extern void InitializeNumberFormatoInfo(PMC_NUMBER_FORMAT_INFO* info);
 
     // 多倍長整数の加算を行う。
-    extern NUMBER_HEADER* PMC_Add_X_X_Imp(NUMBER_HEADER* u, NUMBER_HEADER* v);
+    extern NUMBER_OBJECT_UINT* PMC_Add_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v);
 
     // 多倍長整数のべき乗を計算する。
-    extern NUMBER_HEADER* PMC_Pow_X_I_Imp(NUMBER_HEADER* v, _UINT32_T e) noexcept(false);
+    extern NUMBER_OBJECT_UINT* PMC_Pow_X_I_Imp(NUMBER_OBJECT_UINT* v, _UINT32_T e) noexcept(false);
 
     // 多倍長整数のべき乗を計算する。
-    extern NUMBER_HEADER* PMC_Pow_X_L_Imp(NUMBER_HEADER* v, _UINT64_T e) noexcept(false);
+    extern NUMBER_OBJECT_UINT* PMC_Pow_X_L_Imp(NUMBER_OBJECT_UINT* v, _UINT64_T e) noexcept(false);
 
     // 多倍長整数と整数の乗算を行う。
-    extern NUMBER_HEADER* PMC_Multiply_X_I_Imp(NUMBER_HEADER* u, _UINT32_T v);
+    extern NUMBER_OBJECT_UINT* PMC_Multiply_X_I_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v);
 
     // v * 10^e を計算する。
-    extern NUMBER_HEADER* PMC_TimesOfExponentOf10_Imp(_UINT32_T v, __UNIT_TYPE e);
+    extern NUMBER_OBJECT_UINT* PMC_TimesOfExponentOf10_Imp(_UINT32_T v, __UNIT_TYPE e);
 
     // 常用対数の整数部を計算する
-    extern _UINT32_T PMC_Floor_Log10_Imp(NUMBER_HEADER* v);
+    extern _UINT32_T PMC_Floor_Log10_Imp(NUMBER_OBJECT_UINT* v);
 
     // 多倍長整数の大小比較を行う。
-    _INT32_T PMC_Compare_X_X_Imp(NUMBER_HEADER* u, NUMBER_HEADER* v);
+    _INT32_T PMC_Compare_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v);
 #pragma endregion
 
 
@@ -246,6 +246,10 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_UINT __PMC_CALL PMC_Subtruct_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
     extern PMC_HANDLE_UINT __PMC_CALL PMC_Subtruct_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
+    extern PMC_HANDLE_UINT __PMC_CALL PMC_Increment_X(PMC_HANDLE_UINT x) noexcept(false);
+
+    extern PMC_HANDLE_UINT __PMC_CALL PMC_Decrement_X(PMC_HANDLE_UINT x) noexcept(false);
+
     extern PMC_HANDLE_UINT __PMC_CALL PMC_Multiply_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
     extern PMC_HANDLE_UINT __PMC_CALL PMC_Multiply_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
     extern PMC_HANDLE_UINT __PMC_CALL PMC_Multiply_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
@@ -307,9 +311,10 @@ namespace Palmtree::Math::Core::Internal
 
     extern _UINT32_T __PMC_CALL PMC_Floor_Log10(PMC_HANDLE_UINT v);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_FromByteArrayForSINT(unsigned char* buffer, size_t count, char* o_sign) noexcept(false);
+    extern PMC_HANDLE_UINT __PMC_CALL PMC_FromByteArrayForSINT(const unsigned char* buffer, size_t count, char* o_sign) noexcept(false);
     extern size_t __PMC_CALL PMC_ToByteArrayForSINT(char p_sign, PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
     extern PMC_STATUS_CODE __PMC_CALL PMC_TryParseForSINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* o_sign, PMC_HANDLE_UINT* o_abs, _UINT32_T* result) noexcept(false);
+    extern size_t __PMC_CALL PMC_ToStringForSINT(char x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
 #pragma endregion
 
 

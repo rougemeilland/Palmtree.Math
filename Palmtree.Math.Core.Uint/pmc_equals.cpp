@@ -32,7 +32,7 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    static _UINT32_T Equals_X_I_Imp(NUMBER_HEADER* u, _UINT32_T v)
+    static _UINT32_T Equals_X_I_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v)
     {
         if (u->IS_ZERO)
         {
@@ -63,7 +63,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static _UINT32_T Equals_X_L_Imp(NUMBER_HEADER* u, _UINT64_T v)
+    static _UINT32_T Equals_X_L_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
     {
         if (u->IS_ZERO)
         {
@@ -159,9 +159,9 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_equals.cpp;PMC_Equals_I_X;1");
         }
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        CheckNumber((NUMBER_HEADER*)v);
-        _UINT32_T w = Equals_X_I_Imp((NUMBER_HEADER*)v, u);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        CheckNumber((NUMBER_OBJECT_UINT*)v);
+        _UINT32_T w = Equals_X_I_Imp((NUMBER_OBJECT_UINT*)v, u);
 #ifdef _DEBUG
         if (w != 0 && w != 1)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_equals.cpp;PMC_Equals_I_X;2");
@@ -177,9 +177,9 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_equals.cpp;PMC_Equals_X_I;1");
         }
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
-        CheckNumber((NUMBER_HEADER*)u);
-        _INT32_T w = Equals_X_I_Imp((NUMBER_HEADER*)u, v);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        CheckNumber((NUMBER_OBJECT_UINT*)u);
+        _INT32_T w = Equals_X_I_Imp((NUMBER_OBJECT_UINT*)u, v);
 #ifdef _DEBUG
         if (w != 0 && w != 1)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_equals.cpp;PMC_Equals_X_I;2");
@@ -195,9 +195,9 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_equals.cpp;PMC_Equals_L_X;1");
         }
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        CheckNumber((NUMBER_HEADER*)v);
-        _UINT32_T w = Equals_X_L_Imp((NUMBER_HEADER*)v, u);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        CheckNumber((NUMBER_OBJECT_UINT*)v);
+        _UINT32_T w = Equals_X_L_Imp((NUMBER_OBJECT_UINT*)v, u);
 #ifdef _DEBUG
         if (w != 0 && w != 1)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_equals.cpp;PMC_Equals_L_X;2");
@@ -213,9 +213,9 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_equals.cpp;PMC_Equals_X_L;1");
         }
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
-        CheckNumber((NUMBER_HEADER*)u);
-        _UINT32_T w = Equals_X_L_Imp((NUMBER_HEADER*)u, v);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        CheckNumber((NUMBER_OBJECT_UINT*)u);
+        _UINT32_T w = Equals_X_L_Imp((NUMBER_OBJECT_UINT*)u, v);
 #ifdef _DEBUG
         if (w != 0 && w != 1)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_equals.cpp;PMC_Equals_X_L;2");
@@ -226,11 +226,11 @@ namespace Palmtree::Math::Core::Internal
     _UINT32_T __PMC_CALL PMC_Equals_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        NUMBER_HEADER* nu = (NUMBER_HEADER*)u;
-        NUMBER_HEADER* nv = (NUMBER_HEADER*)v;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        NUMBER_OBJECT_UINT* nu = (NUMBER_OBJECT_UINT*)u;
+        NUMBER_OBJECT_UINT* nv = (NUMBER_OBJECT_UINT*)v;
         CheckNumber(nu);
         CheckNumber(nv);
         _INT32_T w;

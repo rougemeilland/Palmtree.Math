@@ -22,7 +22,7 @@ namespace Palmtree::Math::Core::Internal
         // Create a new heap with default parameters.
         //
         hHeap = HeapCreate(0, 0, 0);
-        if (hHeap == NULL) {
+        if (hHeap == nullptr) {
             _tprintf(TEXT("Failed to create a new heap with LastError %d.\n"),
                 GetLastError());
             return 1;
@@ -44,7 +44,7 @@ namespace Palmtree::Math::Core::Internal
 
         _tprintf(TEXT("Walking heap %#p...\n\n"), hHeap);
 
-        Entry.lpData = NULL;
+        Entry.lpData = nullptr;
         while (HeapWalk(hHeap, &Entry) != FALSE) {
             if ((Entry.wFlags & PROCESS_HEAP_ENTRY_BUSY) != 0) {
                 _tprintf(TEXT("Allocated block"));

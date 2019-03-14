@@ -183,6 +183,53 @@ namespace Palmtree::Math::Core::Internal
         DoBorrow(c, up, u_count - v_count, wp, w_count - v_count);
     }
 
+    static NUMBER_OBJECT_UINT* PMC_Decrement_X_Imp(NUMBER_OBJECT_UINT* x)
+    {
+        if (x->IS_ZERO)
+        {
+            // x が 0 である場合
+
+            // 演算結果は負となってしまうのでエラーを返す。
+            throw OverflowException(L"減算によりオーバーフローが発生しました。");
+        }
+        else
+        {
+            // x が 0 ではない場合
+
+            // x - 1 を計算する
+            ResourceHolderUINT root;
+            __UNIT_TYPE x_bit_count = x->UNIT_BIT_COUNT;
+            __UNIT_TYPE w_bit_count = x_bit_count;
+            NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
+            DoBorrow(1, x->BLOCK, x->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
+            root.CheckNumber(w);
+            CommitNumber(w);
+            if (w->IS_ZERO)
+            {
+                root.DeallocateNumber(w);
+                w = &number_object_uint_zero;
+            }
+            else
+                root.UnlinkNumber(w);
+            return (w);
+        }
+    }
+
+    PMC_HANDLE_UINT __PMC_CALL PMC_Decrement_X(PMC_HANDLE_UINT x) noexcept(false)
+    {
+        if (x == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        CheckNumber((NUMBER_OBJECT_UINT*)x);
+        ResourceHolderUINT root;
+        NUMBER_OBJECT_UINT* w = PMC_Decrement_X_Imp((NUMBER_OBJECT_UINT*)x);
+        root.HookNumber(w);
+#ifdef _DEBUG
+        CheckNumber(w);
+#endif
+        root.UnlinkNumber(w);
+        return ((PMC_HANDLE_UINT)w);
+    }
+
     _UINT32_T __PMC_CALL PMC_Subtruct_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(u) * 8)
@@ -191,8 +238,8 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_subtruct.cpp;PMC_Subtruct_I_X;1");
         }
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        NUMBER_HEADER* nv = (NUMBER_HEADER*)v;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        NUMBER_OBJECT_UINT* nv = (NUMBER_OBJECT_UINT*)v;
         CheckNumber(nv);
         if (u == 0)
         {
@@ -255,7 +302,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_HEADER* PMC_Subtruct_X_I_Imp(NUMBER_HEADER* u, _UINT32_T v)
+    static NUMBER_OBJECT_UINT* PMC_Subtruct_X_I_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v)
     {
         if (u->IS_ZERO)
         {
@@ -266,7 +313,7 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 である場合
 
                 // u と v がともに 0 であるので、演算結果の 0 を呼び出し元に返す。
-                return (&number_zero);
+                return (&number_object_uint_zero);
             }
             else
             {
@@ -284,7 +331,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v が 0 である場合
 
-                // 演算結果となる x の値を持つ NUMBER_HEADER 構造体を獲得し、呼び出し元へ返す。
+                // 演算結果となる x の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
                 return (DuplicateNumber(u));
             }
             else
@@ -303,14 +350,14 @@ namespace Palmtree::Math::Core::Internal
                 {
                     ResourceHolderUINT root;
                     __UNIT_TYPE w_bit_count = u_bit_count;
-                    NUMBER_HEADER* w = root.AllocateNumber(w_bit_count);
+                    NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                     Subtruct_X_1W(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK, w->BLOCK_COUNT);
                     root.CheckNumber(w);
                     CommitNumber(w);
                     if (w->IS_ZERO)
                     {
                         root.DeallocateNumber(w);
-                        w = &number_zero;
+                        w = &number_object_uint_zero;
                     }
                     else
                         root.UnlinkNumber(w);
@@ -328,11 +375,11 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_subtruct.cpp;PMC_Subtruct_X_I;1");
         }
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
-        NUMBER_HEADER* nu = (NUMBER_HEADER*)u;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        NUMBER_OBJECT_UINT* nu = (NUMBER_OBJECT_UINT*)u;
         CheckNumber(nu);
         ResourceHolderUINT root;
-        NUMBER_HEADER* w = PMC_Subtruct_X_I_Imp(nu, v);
+        NUMBER_OBJECT_UINT* w = PMC_Subtruct_X_I_Imp(nu, v);
         root.HookNumber(w);
 #ifdef _DEBUG
         CheckNumber(w);
@@ -349,8 +396,8 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_subtruct.cpp;PMC_Subtruct_L_X;1");
         }
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        NUMBER_HEADER* nv = (NUMBER_HEADER*)v;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        NUMBER_OBJECT_UINT* nv = (NUMBER_OBJECT_UINT*)v;
         CheckNumber(nv);
         if (u == 0)
         {
@@ -379,7 +426,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v が 0 である場合
 
-                // 演算結果となる u の値を持つ NUMBER_HEADER 構造体を獲得し、呼び出し元へ返す。
+                // 演算結果となる u の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
                 return (u);
             }
             else
@@ -502,7 +549,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_HEADER* PMC_Subtruct_X_L_Imp(NUMBER_HEADER* u, _UINT64_T v)
+    static NUMBER_OBJECT_UINT* PMC_Subtruct_X_L_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
     {
         if (u->IS_ZERO)
         {
@@ -513,7 +560,7 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 である場合
 
                 // u と v がともに 0 であるので、演算結果の 0 を呼び出し元に返す。
-                return (&number_zero);
+                return (&number_object_uint_zero);
             }
             else
             {
@@ -531,7 +578,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v が 0 である場合
 
-                // 演算結果となる x の値を持つ NUMBER_HEADER 構造体を獲得し、呼び出し元へ返す。
+                // 演算結果となる x の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
                 return (DuplicateNumber(u));
             }
             else
@@ -559,14 +606,14 @@ namespace Palmtree::Math::Core::Internal
                         {
                             ResourceHolderUINT root;
                             __UNIT_TYPE w_bit_count = u_bit_count;
-                            NUMBER_HEADER* w = root.AllocateNumber(w_bit_count);
+                            NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                             Subtruct_X_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, w->BLOCK, w->BLOCK_COUNT);
                             root.CheckNumber(w);
                             CommitNumber(w);
                             if (w->IS_ZERO)
                             {
                                 root.DeallocateNumber(w);
-                                w = &number_zero;
+                                w = &number_object_uint_zero;
                             }
                             else
                                 root.UnlinkNumber(w);
@@ -584,14 +631,14 @@ namespace Palmtree::Math::Core::Internal
                             throw OverflowException(L"減算によりオーバーフローが発生しました。");
                         }
                         __UNIT_TYPE w_bit_count = u_bit_count;
-                        NUMBER_HEADER* w = root.AllocateNumber(w_bit_count);
+                        NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                         Subtruct_X_2W(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK, w->BLOCK_COUNT);
                         root.CheckNumber(w);
                         CommitNumber(w);
                         if (w->IS_ZERO)
                         {
                             root.DeallocateNumber(w);
-                            w = &number_zero;
+                            w = &number_object_uint_zero;
                         }
                         else
                             root.UnlinkNumber(w);
@@ -610,14 +657,14 @@ namespace Palmtree::Math::Core::Internal
                         throw OverflowException(L"減算によりオーバーフローが発生しました。");
                     }
                     __UNIT_TYPE w_bit_count = x_bit_count;
-                    NUMBER_HEADER* w = root.AllocateNumber(w_bit_count);
+                    NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                     Subtruct_X_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, w->BLOCK, w->BLOCK_COUNT);
                     root.CheckNumber(w);
                     CommitNumber(w);
                     if (w->IS_ZERO)
                     {
                         root.DeallocateNumber(w);
-                        w = &number_zero;
+                        w = &number_object_uint_zero;
                     }
                     else
                         root.UnlinkNumber(w);
@@ -635,11 +682,11 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_subtruct.cpp;PMC_Subtruct_X_L;1");
         }
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        NUMBER_HEADER* nu = (NUMBER_HEADER*)u;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        NUMBER_OBJECT_UINT* nu = (NUMBER_OBJECT_UINT*)u;
         CheckNumber(nu);
         ResourceHolderUINT root;
-        NUMBER_HEADER* w = PMC_Subtruct_X_L_Imp(nu, v);
+        NUMBER_OBJECT_UINT* w = PMC_Subtruct_X_L_Imp(nu, v);
         root.HookNumber(w);
 #ifdef _DEBUG
         CheckNumber(w);
@@ -648,7 +695,7 @@ namespace Palmtree::Math::Core::Internal
         return ((PMC_HANDLE_UINT)w);
     }
 
-    static NUMBER_HEADER* PMC_Subtruct_X_X_Imp(NUMBER_HEADER* u, NUMBER_HEADER* v)
+    static NUMBER_OBJECT_UINT* PMC_Subtruct_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->IS_ZERO)
         {
@@ -657,7 +704,7 @@ namespace Palmtree::Math::Core::Internal
                 // y が 0 である場合
 
                 // x と y がともに 0 であるので、演算結果の 0 を呼び出し元に返す。
-                return (&number_zero);
+                return (&number_object_uint_zero);
             }
             else
             {
@@ -675,7 +722,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // y が 0 である場合
 
-                // 演算結果となる x の値を持つ NUMBER_HEADER 構造体を獲得し、呼び出し元へ返す。
+                // 演算結果となる x の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
                 return (DuplicateNumber(u));
             }
             else
@@ -692,7 +739,7 @@ namespace Palmtree::Math::Core::Internal
                     throw OverflowException(L"減算によりオーバーフローが発生しました。");
                 }
                 __UNIT_TYPE w_bit_count = u_bit_count;
-                NUMBER_HEADER* w = root.AllocateNumber(w_bit_count);
+                NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 Subtruct_Imp(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
                 root.CheckNumber(w);
                 CommitNumber(w);
@@ -700,7 +747,7 @@ namespace Palmtree::Math::Core::Internal
                 if (w->IS_ZERO)
                 {
                     root.DeallocateNumber(w);
-                    w = &number_zero;
+                    w = &number_object_uint_zero;
                 }
                 else
                     root.UnlinkNumber(w);
@@ -712,15 +759,15 @@ namespace Palmtree::Math::Core::Internal
     PMC_HANDLE_UINT __PMC_CALL PMC_Subtruct_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"u");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
-        NUMBER_HEADER* nu = (NUMBER_HEADER*)u;
-        NUMBER_HEADER* nv = (NUMBER_HEADER*)v;
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        NUMBER_OBJECT_UINT* nu = (NUMBER_OBJECT_UINT*)u;
+        NUMBER_OBJECT_UINT* nv = (NUMBER_OBJECT_UINT*)v;
         CheckNumber(nu);
         CheckNumber(nv);
         ResourceHolderUINT root;
-        NUMBER_HEADER* w = PMC_Subtruct_X_X_Imp(nu, nv);
+        NUMBER_OBJECT_UINT* w = PMC_Subtruct_X_X_Imp(nu, nv);
         root.HookNumber(w);
 #ifdef _DEBUG
         CheckNumber(w);

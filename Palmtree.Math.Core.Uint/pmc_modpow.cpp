@@ -53,7 +53,7 @@ namespace Palmtree::Math::Core::Internal
         *v = t;
     }
 
-    static NUMBER_HEADER* Remainder(NUMBER_HEADER* u, NUMBER_HEADER* v)
+    static NUMBER_OBJECT_UINT* Remainder(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         //Lock lock_obj;
         if (u->UNIT_BIT_COUNT < v->UNIT_BIT_COUNT)
@@ -62,7 +62,7 @@ namespace Palmtree::Math::Core::Internal
         {
             ResourceHolderUINT root;
             __UNIT_TYPE* work_v_buf = root.AllocateBlock(v->UNIT_BIT_COUNT);
-            NUMBER_HEADER* r = root.AllocateNumber(u->UNIT_BIT_COUNT + __UNIT_TYPE_BIT_COUNT);
+            NUMBER_OBJECT_UINT* r = root.AllocateNumber(u->UNIT_BIT_COUNT + __UNIT_TYPE_BIT_COUNT);
             if (u->UNIT_WORD_COUNT < v->UNIT_WORD_COUNT)
                 _COPY_MEMORY_UNIT(r->BLOCK, u->BLOCK, u->UNIT_WORD_COUNT);
             else
@@ -86,7 +86,7 @@ namespace Palmtree::Math::Core::Internal
             return (EXCEPTION_CONTINUE_SEARCH);
     }
 
-    static NUMBER_HEADER* ModulePower(NUMBER_HEADER* v, NUMBER_HEADER* e, NUMBER_HEADER* m)
+    static NUMBER_OBJECT_UINT* ModulePower(NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT* e, NUMBER_OBJECT_UINT* m)
     {
         //Lock lock_obj;
         ResourceHolderUINT root;
@@ -105,7 +105,7 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE work_v_bit_count = m_count * __UNIT_TYPE_BIT_COUNT;
         __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_v_bit_count);
         __UNIT_TYPE r_bit_count = m->UNIT_BIT_COUNT;
-        NUMBER_HEADER* r = root.AllocateNumber(r_bit_count);
+        NUMBER_OBJECT_UINT* r = root.AllocateNumber(r_bit_count);
 
         __UNIT_TYPE v_count;
         int cmp = Compare_Easy(v->BLOCK, v->UNIT_WORD_COUNT, m_buf, m_count);
@@ -114,7 +114,7 @@ namespace Palmtree::Math::Core::Internal
             // v == m である場合
 
             // v を何乗してもその剰余は 0 であるため、0 を返す。
-            return (&number_zero);
+            return (&number_object_uint_zero);
         }
         else if (cmp > 0)
         {
@@ -132,7 +132,7 @@ namespace Palmtree::Math::Core::Internal
             if (v_count <= 0)
             {
                 // v2 が 0 になってしまった場合はべき乗を繰り返しても 0 になることが確定なので 0 を返す
-                return (&number_zero);
+                return (&number_object_uint_zero);
             }
         }
         else
@@ -208,7 +208,7 @@ namespace Palmtree::Math::Core::Internal
                 if (u_count <= 0)
                 {
                     // 剰余が 0 になった場合はこれ以上続行しても解が 0 以外にはならないので、処理を中断して 0 を返す
-                    return (&number_zero);
+                    return (&number_object_uint_zero);
                 }
             }
 
@@ -255,7 +255,7 @@ namespace Palmtree::Math::Core::Internal
                     if (u_count <= 0)
                     {
                         // 剰余が 0 になった場合はこれ以上続行しても解が 0 以外にはならないので、処理を中断して 0 を返す
-                        return (&number_zero);
+                        return (&number_object_uint_zero);
                     }
                 }
             }
@@ -269,7 +269,7 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    static NUMBER_HEADER* PMC_ModPow_X_X_X_Imp(NUMBER_HEADER* v, NUMBER_HEADER* e, NUMBER_HEADER* m)
+    static NUMBER_OBJECT_UINT* PMC_ModPow_X_X_X_Imp(NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT* e, NUMBER_OBJECT_UINT* m)
     {
         //Lock lock_obj;
         if (m->IS_ZERO)
@@ -297,7 +297,7 @@ namespace Palmtree::Math::Core::Internal
                     // e が 0 ではない場合
 
                     // v の e 乗がどんな値であっても 1 では必ず割り切れるので剰余は 0 となる。
-                    return (&number_zero);
+                    return (&number_object_uint_zero);
                 }
             }
             else
@@ -305,7 +305,7 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 ではない場合
 
                 // v の e 乗がどんな値であっても 1 では必ず割り切れるので剰余は 0 となる。
-                return (&number_zero);
+                return (&number_object_uint_zero);
             }
         }
         else
@@ -325,7 +325,7 @@ namespace Palmtree::Math::Core::Internal
                 {
                     // e が 0 ではない場合
 
-                    return (&number_zero);
+                    return (&number_object_uint_zero);
                 }
             }
             else if (v->IS_ONE)
@@ -333,7 +333,7 @@ namespace Palmtree::Math::Core::Internal
                 // v が 1 の場合
 
                 // 1 を何乗しても 1 であり、1 を 2 以上の数で割ればその剰余は必ず 1 となる
-                return (&number_one);
+                return (&number_object_uint_one);
             }
             else
             {
@@ -341,7 +341,7 @@ namespace Palmtree::Math::Core::Internal
                 if (e->IS_ZERO)
                 {
                     // e が 0 の場合
-                    return (&number_one);
+                    return (&number_object_uint_one);
                 }
                 else if (e->IS_ONE)
                 {
@@ -364,16 +364,16 @@ namespace Palmtree::Math::Core::Internal
     {
         //Lock lock_obj;
         if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"v");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
         if (e == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"e");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"e");
         if (m == nullptr)
-            throw ArgumentNullException(L"引数にnullptrが与えられています。", L"m");
-        CheckNumber((NUMBER_HEADER*)v);
-        CheckNumber((NUMBER_HEADER*)e);
-        CheckNumber((NUMBER_HEADER*)m);
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"m");
+        CheckNumber((NUMBER_OBJECT_UINT*)v);
+        CheckNumber((NUMBER_OBJECT_UINT*)e);
+        CheckNumber((NUMBER_OBJECT_UINT*)m);
         ResourceHolderUINT root;
-        NUMBER_HEADER* r = PMC_ModPow_X_X_X_Imp((NUMBER_HEADER*)v, (NUMBER_HEADER*)e, (NUMBER_HEADER*)m);
+        NUMBER_OBJECT_UINT* r = PMC_ModPow_X_X_X_Imp((NUMBER_OBJECT_UINT*)v, (NUMBER_OBJECT_UINT*)e, (NUMBER_OBJECT_UINT*)m);
         root.HookNumber(r);
 #ifdef _DEBUG
         CheckNumber(r);
