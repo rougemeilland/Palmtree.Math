@@ -24,8 +24,6 @@
 
 
 #include <windows.h>
-#include <math.h>
-#include "pmc_exception.h"
 #include "pmc_stringio.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_uint_internal.h"
@@ -161,7 +159,7 @@ namespace Palmtree::Math::Core::Internal
             }
 
         public:
-            void Format(char x_sign, NUMBER_OBJECT_UINT* x_abs, StringWriter* writer)
+            void Format(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, StringWriter* writer)
             {
                 if (_precision < 0)
                     _precision = GetDefaultPrecisionValue();
@@ -214,13 +212,13 @@ namespace Palmtree::Math::Core::Internal
             virtual void WriteZeroValue(StringWriter* writer) = 0;
 
             // 数値の前に表示される文字列を書き込みます。(例: 符号、通貨記号、など)
-            virtual void WritePrefix(char x_sign, StringWriter* writer) = 0;
+            virtual void WritePrefix(SIGN_T x_sign, StringWriter* writer) = 0;
 
             // 単純な数字列を書式に応じて変換し、StringWriterに書き込みます。(例: precision に応じた 0 パディング、3桁区切り、など)
             virtual void FormatNumberSequence(const wchar_t* number_sequence_str, StringWriter* writer) = 0;
 
             // 数値の後に表示される文字列を書き込みます。(例: 符号、通貨記号、など)
-            virtual void WriteSuffix(char x_sign, StringWriter* writer) = 0;
+            virtual void WriteSuffix(SIGN_T x_sign, StringWriter* writer) = 0;
 
         private:
             __UNIT_TYPE ConvertAs10nBasedNumber(NUMBER_OBJECT_UINT* x, __UNIT_TYPE* r_buf)
@@ -374,7 +372,7 @@ namespace Palmtree::Math::Core::Internal
                 }
             }
 
-            virtual void WritePrefix(char x_sign, StringWriter * writer) override
+            virtual void WritePrefix(SIGN_T x_sign, StringWriter * writer) override
             {
                 if (x_sign >= 0)
                 {
@@ -475,7 +473,7 @@ namespace Palmtree::Math::Core::Internal
                 }
             }
 
-            virtual void WriteSuffix(char x_sign, StringWriter * writer) override
+            virtual void WriteSuffix(SIGN_T x_sign, StringWriter * writer) override
             {
                 if (x_sign >= 0)
                 {
@@ -579,7 +577,7 @@ namespace Palmtree::Math::Core::Internal
                 writer->Write(L'0', _precision < 1 ? 1 : _precision);
             }
 
-            virtual void WritePrefix(char x_sign, StringWriter * writer) override
+            virtual void WritePrefix(SIGN_T x_sign, StringWriter * writer) override
             {
                 if (x_sign < 0)
                     writer->Write(_number_format_info->NegativeSign);
@@ -591,7 +589,7 @@ namespace Palmtree::Math::Core::Internal
                 writer->Write(number_sequence_str);
             }
 
-            virtual void WriteSuffix(char x_sign, StringWriter * writer) override
+            virtual void WriteSuffix(SIGN_T x_sign, StringWriter * writer) override
             {
             }
         };
@@ -626,7 +624,7 @@ namespace Palmtree::Math::Core::Internal
             virtual void FormatInternally(NUMBER_OBJECT_UINT* x_abs, StringWriter* writer) override
             {
                 ResourceHolderUINT root;
-                size_t digit_count = (size_t)floor(PMC_Floor_Log10_Imp(x_abs)) + 1;
+                size_t digit_count = (size_t)PMC_Floor_Log10_Imp(x_abs) + 1;
                 if (digit_count >= (size_t)(_precision + 2))
                 {
                     NUMBER_OBJECT_UINT* fraction_number = PMC_TimesOfExponentOf10_Imp(5, digit_count - _precision - 2);
@@ -639,7 +637,7 @@ namespace Palmtree::Math::Core::Internal
                     Formatter::FormatInternally(x_abs, writer);
             }
 
-            virtual void WritePrefix(char x_sign, StringWriter * writer) override
+            virtual void WritePrefix(SIGN_T x_sign, StringWriter * writer) override
             {
                 if (x_sign < 0)
                     writer->Write(_number_format_info->NegativeSign);
@@ -675,7 +673,7 @@ namespace Palmtree::Math::Core::Internal
                 writer->Write(exp_buf);
             }
 
-            virtual void WriteSuffix(char x_sign, StringWriter * writer) override
+            virtual void WriteSuffix(SIGN_T x_sign, StringWriter * writer) override
             {
             }
         };
@@ -705,7 +703,7 @@ namespace Palmtree::Math::Core::Internal
                 }
             }
 
-            virtual void WritePrefix(char x_sign, StringWriter * writer) override
+            virtual void WritePrefix(SIGN_T x_sign, StringWriter * writer) override
             {
                 if (x_sign < 0)
                     writer->Write(_number_format_info->NegativeSign);
@@ -721,7 +719,7 @@ namespace Palmtree::Math::Core::Internal
                 }
             }
 
-            virtual void WriteSuffix(char x_sign, StringWriter * writer) override
+            virtual void WriteSuffix(SIGN_T x_sign, StringWriter * writer) override
             {
             }
         };
@@ -751,7 +749,7 @@ namespace Palmtree::Math::Core::Internal
                 }
             }
 
-            virtual void WritePrefix(char x_sign, StringWriter * writer) override
+            virtual void WritePrefix(SIGN_T x_sign, StringWriter * writer) override
             {
                 if (x_sign >= 0)
                 {
@@ -797,7 +795,7 @@ namespace Palmtree::Math::Core::Internal
                 }
             }
 
-            virtual void WriteSuffix(char x_sign, StringWriter * writer) override
+            virtual void WriteSuffix(SIGN_T x_sign, StringWriter * writer) override
             {
                 if (x_sign >= 0)
                 {
@@ -859,7 +857,7 @@ namespace Palmtree::Math::Core::Internal
                 Formatter::FormatInternally(x2_abs, writer);
             }
 
-            virtual void WritePrefix(char x_sign, StringWriter * writer) override
+            virtual void WritePrefix(SIGN_T x_sign, StringWriter * writer) override
             {
                 if (x_sign >= 0)
                 {
@@ -945,7 +943,7 @@ namespace Palmtree::Math::Core::Internal
                 }
             }
 
-            virtual void WriteSuffix(char x_sign, StringWriter * writer) override
+            virtual void WriteSuffix(SIGN_T x_sign, StringWriter * writer) override
             {
                 if (x_sign >= 0)
                 {
@@ -1014,7 +1012,7 @@ namespace Palmtree::Math::Core::Internal
             }
         };
 
-        static size_t ToStringC(char x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringC(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             StringWriter writer(buffer, buffer_size);
             FormatterTypeC formatter(precision, format_option);
@@ -1022,7 +1020,7 @@ namespace Palmtree::Math::Core::Internal
             return (writer.GetLength());
         }
 
-        static size_t ToStringD(char x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringD(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             StringWriter writer(buffer, buffer_size);
             FormatterTypeD formatter(precision, format_option);
@@ -1030,7 +1028,7 @@ namespace Palmtree::Math::Core::Internal
             return (writer.GetLength());
         }
 
-        static size_t ToStringE(char x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringE(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             StringWriter writer(buffer, buffer_size);
             FormatterTypeE formatter(format_type, precision, format_option);
@@ -1038,7 +1036,7 @@ namespace Palmtree::Math::Core::Internal
             return (writer.GetLength());
         }
 
-        static size_t ToStringF(char x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringF(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             StringWriter writer(buffer, buffer_size);
             FormatterTypeF formatter(precision, format_option);
@@ -1046,7 +1044,7 @@ namespace Palmtree::Math::Core::Internal
             return (writer.GetLength());
         }
 
-        static size_t ToStringN(char x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringN(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             StringWriter writer(buffer, buffer_size);
             FormatterTypeN formatter(precision, format_option);
@@ -1055,7 +1053,7 @@ namespace Palmtree::Math::Core::Internal
         }
 
 
-        static size_t ToStringP(char x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringP(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             StringWriter writer(buffer, buffer_size);
             FormatterTypeP formatter(precision, format_option);
@@ -1132,7 +1130,7 @@ namespace Palmtree::Math::Core::Internal
             }
         }
 
-        static size_t ToStringX(char x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringX(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             if (precision < 1)
                 precision = 1;
@@ -1263,7 +1261,7 @@ namespace Palmtree::Math::Core::Internal
     namespace CustomFormatter
     {
 
-        static size_t ToStringCustom(char x_sign, NUMBER_OBJECT_UINT* x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+        static size_t ToStringCustom(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
         {
             // 【実験結果】
             // %と‰の効果は重複してかかる。%が2個なら100*100倍、%と‰なら100*1000倍。%と‰はどこに書かれていてもそのとおりの場所で表示される。【例：(-1.23456789).ToString("0■%■0") => -12■%■3 】
@@ -1339,7 +1337,7 @@ namespace Palmtree::Math::Core::Internal
             return (FALSE);
     }
 
-    static size_t ToString_Imp(char x_sign, NUMBER_OBJECT_UINT* x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    static size_t ToString_Imp(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
         wchar_t format_type;
         int precision;
@@ -1382,25 +1380,21 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    size_t __PMC_CALL PMC_ToString(PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false)
+    size_t PMC_ToString(PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false)
     {
-        if (x == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"x");
+        NUMBER_OBJECT_UINT* nx = GET_NUMBER_OBJECT(x, L"x");
         if (format_option == nullptr)
             format_option = &default_number_format_option;
-        NUMBER_OBJECT_UINT* nx = (NUMBER_OBJECT_UINT*)x;
-        CheckNumber(nx);
-        return (ToString_Imp(nx->IS_ZERO ? 0 : 1, nx, format, format_option, buffer, buffer_size));
+        return (ToString_Imp(nx->IS_ZERO ? SIGN_ZERO : SIGN_POSITIVE, nx, format, format_option, buffer, buffer_size));
     }
 
-    size_t __PMC_CALL PMC_ToStringForSINT(char x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    size_t PMC_ToStringForSINT(SIGN_T x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
         if (x_abs == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"x_abs");
         if (format_option == nullptr)
             format_option = &default_number_format_option;
-        NUMBER_OBJECT_UINT* nx_abs = (NUMBER_OBJECT_UINT*)x_abs;
-        CheckNumber(nx_abs);
+        NUMBER_OBJECT_UINT* nx_abs = GET_NUMBER_OBJECT(x_abs, L"x_abs");
         return (ToString_Imp(x_sign, nx_abs, format, format_option, buffer, buffer_size));
     }
 
@@ -1434,7 +1428,7 @@ namespace Palmtree::Math::Core::Internal
         lstrcpyW(info->PositiveSign, L"+");
     }
 
-    void __PMC_CALL PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info)
+    void PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info)
     {
         InitializeNumberFormatoInfo(info);
     }

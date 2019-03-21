@@ -164,6 +164,16 @@ namespace Palmtree::Math::Core::Internal
             }
             return (nullptr);
         }
+
+#ifdef _DEBUG
+        void CheckBuffer(void* buffer)
+        {
+            void* found_tag = FindTag(buffer);
+            if (found_tag != nullptr)
+                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_resourceholder.h;ResourceHolder::CheckBuffer;1");
+        }
+#endif
+
     };
 
 }

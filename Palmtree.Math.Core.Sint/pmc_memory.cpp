@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -29,7 +29,7 @@
 #include "pmc_resourceholder_sint.h"
 
 
-#pragma region ƒvƒ‰ƒbƒgƒtƒH[ƒ€ŒÅ—L‚Ì’è‹`
+#pragma region ãƒ—ãƒ©ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒ å›ºæœ‰ã®å®šç¾©
 #ifdef _M_IX86
 #define	DEFAULT_MEMORY_DATA (0xcccccccc)
 #elif defined(_M_X64)
@@ -43,9 +43,9 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-#pragma region Ã“I•Ï”‚Ì’è‹`
-    HANDLE hLocalHeap;
-    CRITICAL_SECTION mcs;
+#pragma region é™çš„å¤‰æ•°ã®å®šç¾©
+    static HANDLE hLocalHeap;
+    static CRITICAL_SECTION mcs;
     NUMBER_OBJECT_SINT number_object_sint_zero;
     NUMBER_OBJECT_SINT number_object_sint_one;
     NUMBER_OBJECT_SINT number_object_sint_minus_one;
@@ -76,7 +76,6 @@ namespace Palmtree::Math::Core::Internal
                 __p[2] = 0;
                 __p[3] = 0;
                 __p[4] = 0;
-                __p[5] = 0;
             }
 #ifdef _M_IX64
             else if (sizeof(*p) % sizeof(_UINT64_T) == 0)
@@ -115,7 +114,6 @@ namespace Palmtree::Math::Core::Internal
                 __p[2] = (_UINT32_T)DEFAULT_MEMORY_DATA;
                 __p[3] = (_UINT32_T)DEFAULT_MEMORY_DATA;
                 __p[4] = (_UINT32_T)DEFAULT_MEMORY_DATA;
-                __p[5] = (_UINT32_T)DEFAULT_MEMORY_DATA;
             }
 #ifdef _M_IX64
             else if (sizeof(*p) % sizeof(_UINT64_T) == 0)
@@ -132,28 +130,47 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    static void InitializeNumber(NUMBER_OBJECT_SINT* p, char sign, PMC_HANDLE_UINT abs)
+    static void InitializeNumber(NUMBER_OBJECT_SINT* p, SIGN_T sign, PMC_HANDLE_UINT abs)
     {
+        if (abs->FLAGS.IS_ZERO)
+            sign = SIGN_ZERO;
         ClearNumberHeader(p);
         p->SIGNATURE1 = PMC_SIGNATURE;
         p->SIGNATURE2 = PMC_SINT_SIGNATURE;
         p->SIGN = sign;
         p->ABS = abs;
         p->IS_EVEN = abs->FLAGS.IS_EVEN;
-        p->IS_MINUS_ONE = sign < 0 && abs->FLAGS.IS_ONE;
-        p->IS_ONE = sign > 0 && abs->FLAGS.IS_ONE;
-        p->IS_POWER_OF_TWO = sign > 0 && abs->FLAGS.IS_POWER_OF_TWO;
-        p->IS_ZERO = abs->FLAGS.IS_ZERO;
+        if (abs->FLAGS.IS_ZERO)
+        {
+            p->IS_MINUS_ONE = false;
+            p->IS_ONE = false;
+            p->IS_POWER_OF_TWO = false;
+            p->IS_ZERO = true;
+        }
+        else if (sign >= 0)
+        {
+            p->IS_MINUS_ONE = false;
+            p->IS_ONE = abs->FLAGS.IS_ONE;
+            p->IS_POWER_OF_TWO = abs->FLAGS.IS_POWER_OF_TWO;
+            p->IS_ZERO = false;
+        }
+        else
+        {
+            p->IS_MINUS_ONE = abs->FLAGS.IS_ONE;
+            p->IS_ONE = false;
+            p->IS_POWER_OF_TWO = false;
+            p->IS_ZERO = false;
+        }
 
 #ifdef _DEBUG
-        if (sign != -1 && sign != 0 && sign != 1)
-            throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;InitializeNumber;1");
+        if (sign != SIGN_NEGATIVE && sign != SIGN_ZERO && sign != SIGN_POSITIVE)
+            throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;InitializeNumber;1");
 
-        if (sign != 0 && p->IS_ZERO)
-            throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;InitializeNumber;2");
+        if (sign != SIGN_ZERO && p->IS_ZERO)
+            throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;InitializeNumber;2");
 
-        if (sign == 0 && !p->IS_ZERO)
-            throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;InitializeNumber;3");
+        if (sign == SIGN_ZERO && !p->IS_ZERO)
+            throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;InitializeNumber;3");
 #endif
     }
 
@@ -162,13 +179,13 @@ namespace Palmtree::Math::Core::Internal
         ep_uint.Dispose(p->ABS);
     }
 
-    static void AttatchNumber(NUMBER_OBJECT_SINT* p, char sign, PMC_HANDLE_UINT abs)
+    static void AttatchNumber(NUMBER_OBJECT_SINT* p, SIGN_T sign, PMC_HANDLE_UINT abs)
     {
         InitializeNumber(p, sign, abs);
         p->IS_STATIC = TRUE;
     }
 
-    static NUMBER_OBJECT_SINT* AllocateNumber(char sign, PMC_HANDLE_UINT abs)
+    static NUMBER_OBJECT_SINT* AllocateNumber(SIGN_T sign, PMC_HANDLE_UINT abs)
     {
         ResourceHolderSINT root;
         NUMBER_OBJECT_SINT* p = (NUMBER_OBJECT_SINT*)root.AllocateBytes(sizeof(NUMBER_OBJECT_SINT));
@@ -194,127 +211,152 @@ namespace Palmtree::Math::Core::Internal
         HeapFree(hLocalHeap, 0, p);
     }
 
-    void CheckNumber(NUMBER_OBJECT_SINT* p) noexcept(false)
+    void __CheckNumber(NUMBER_OBJECT_SINT* p) noexcept(false)
     {
         if (p->SIGNATURE1 != PMC_SIGNATURE || p->SIGNATURE2 != PMC_SINT_SIGNATURE)
-            throw BadBufferException(L"ƒƒ‚ƒŠ—Ìˆæ‚Ì•s®‡‚ðŒŸo‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;CheckNumber;1");
+            throw BadBufferException(L"ãƒ¡ãƒ¢ãƒªé ˜åŸŸã®ä¸æ•´åˆã‚’æ¤œå‡ºã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;CheckNumber;1");
     }
 
-    static NUMBER_OBJECT_SINT* DuplicateNumber(char sign, PMC_HANDLE_UINT x)
+    NUMBER_OBJECT_SINT* From_I_Imp(SIGN_T x_sign, _UINT32_T x_abs)
     {
-        if (x->FLAGS.IS_ZERO)
-        {
-            if (sign != 0)
-                throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;DuplicateNumber;1");
+        if (x_abs == 0)
             return (&number_object_sint_zero);
-        }
-        if (x->FLAGS.IS_ONE)
+        else
         {
-            if (sign > 0)
-                return (&number_object_sint_one);
-            else if (sign == 0)
-                throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;DuplicateNumber;2");
-            else
-                return (&number_object_sint_minus_one);
+            ResourceHolderSINT root;
+            PMC_HANDLE_UINT o_abs = ep_uint.From(x_abs);
+            root.HookNumber(o_abs);
+            NUMBER_OBJECT_SINT* o = root.AllocateNumber(x_sign, o_abs);
+            root.UnlinkNumber(o_abs);
+            root.UnlinkNumber(o);
+            return (o);
         }
-        ResourceHolderSINT root;
-        PMC_HANDLE_UINT new_x = ep_uint.Clone_X(x);
-        root.HookNumber(new_x);
-        NUMBER_OBJECT_SINT* w = root.AllocateNumber(sign, new_x);
-        root.UnlinkNumber(new_x);
-        root.UnlinkNumber(w);
-        return (w);
+        return (PMC_STATUS_OK);
     }
 
-    NUMBER_OBJECT_SINT* DuplicateNumber_UX(PMC_HANDLE_UINT x)
+    NUMBER_OBJECT_SINT* From_L_Imp(SIGN_T x_sign, _UINT64_T x_abs)
+    {
+        if (x_abs == 0)
+            return (&number_object_sint_zero);
+        else
+        {
+            ResourceHolderSINT root;
+            PMC_HANDLE_UINT o_abs = ep_uint.From(x_abs);
+            root.HookNumber(o_abs);
+            NUMBER_OBJECT_SINT* o = root.AllocateNumber(x_sign, o_abs);
+            root.UnlinkNumber(o_abs);
+            root.UnlinkNumber(o);
+            return (o);
+        }
+    }
+
+    NUMBER_OBJECT_SINT* From_X_Imp(SIGN_T sign, PMC_HANDLE_UINT x)
     {
         if (x->FLAGS.IS_ZERO)
             return (&number_object_sint_zero);
         else
-            return (DuplicateNumber(1, x));
+        {
+            ResourceHolderSINT root;
+            PMC_HANDLE_UINT new_x = ep_uint.Clone(x);
+            root.HookNumber(new_x);
+            NUMBER_OBJECT_SINT* w = root.AllocateNumber(sign, new_x);
+            root.UnlinkNumber(new_x);
+            root.UnlinkNumber(w);
+            return (w);
+        }
     }
 
     NUMBER_OBJECT_SINT* DuplicateNumber_X(NUMBER_OBJECT_SINT* x)
     {
         if (x->IS_STATIC)
             return (x);
-        return (DuplicateNumber(x->SIGN, x->ABS));
-    }
-
-    NUMBER_OBJECT_SINT* NegateNumber_UX(PMC_HANDLE_UINT x)
-    {
-        if (x->FLAGS.IS_ZERO)
-            return (&number_object_sint_zero);
-        else
-            return (DuplicateNumber(-1, x));
+        return (From_X_Imp(x->SIGN, x->ABS));
     }
 
     NUMBER_OBJECT_SINT* NegateNumber_X(NUMBER_OBJECT_SINT* x)
     {
-        return (DuplicateNumber(-x->SIGN, x->ABS));
+        return (From_X_Imp(INVERT_SIGN(x->SIGN), x->ABS));
     }
 
-    PMC_HANDLE_SINT __PMC_CALL PMC_GetConstantValue_I(PMC_CONSTANT_VALUE_CODE type)
+    PMC_HANDLE_SINT PMC_GetConstantValue_I(PMC_CONSTANT_VALUE_CODE type)
     {
         switch (type)
         {
         case PMC_CONSTANT_ZERO:
-            return ((PMC_HANDLE_SINT)&number_object_sint_zero);
+            return (GET_NUMBER_HANDLE(&number_object_sint_zero));
         case PMC_CONSTANT_ONE:
-            return ((PMC_HANDLE_SINT)&number_object_sint_one);
+            return (GET_NUMBER_HANDLE(&number_object_sint_one));
         case PMC_CONSTANT_MINUS_ONE:
-            return ((PMC_HANDLE_SINT)&number_object_sint_minus_one);
+            return (GET_NUMBER_HANDLE(&number_object_sint_minus_one));
         default:
-            throw ArgumentException(L"ˆø”type‚ª–¢’m‚Ì’l‚Å‚·B");
+            throw ArgumentException(L"å¼•æ•°typeãŒæœªçŸ¥ã®å€¤ã§ã™ã€‚");
         }
     }
 
-    PMC_HANDLE_SINT __PMC_CALL PMC_Negate_X(PMC_HANDLE_SINT x)
+    PMC_HANDLE_SINT PMC_Negate_X(PMC_HANDLE_SINT x)
     {
-        if (x == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"x");
-        NUMBER_OBJECT_SINT* nx = (NUMBER_OBJECT_SINT*)x;
-        CheckNumber(nx);
-        return ((PMC_HANDLE_SINT)NegateNumber_X(nx));
+        NUMBER_OBJECT_SINT* nx = GET_NUMBER_OBJECT(x, L"x");
+        ResourceHolderSINT root;
+        NUMBER_OBJECT_SINT* nr = NegateNumber_X(nx);
+        root.HookNumber(nr);
+        PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
+        root.UnlinkNumber(nr);
+        return (r);
     }
 
-    PMC_HANDLE_SINT __PMC_CALL PMC_Negate_UX(PMC_HANDLE_UINT x)
+    PMC_HANDLE_SINT PMC_Negate_UX(PMC_HANDLE_UINT x)
     {
         if (x == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"x");
-        return ((PMC_HANDLE_SINT)NegateNumber_UX(x));
+            throw ArgumentNullException(L"å¼•æ•°ã«nullãŒä¸Žãˆã‚‰ã‚Œã¦ã„ã¾ã™ã€‚", L"x");
+        ResourceHolderSINT root;
+        NUMBER_OBJECT_SINT* nr = From_X_Imp(SIGN_NEGATIVE, x);
+        root.HookNumber(nr);
+        PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
+        root.UnlinkNumber(nr);
+        return (r);
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_Abs_X(PMC_HANDLE_SINT x)
+    PMC_HANDLE_UINT PMC_Abs_X(PMC_HANDLE_SINT x)
     {
-        if (x == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"x");
-        NUMBER_OBJECT_SINT* nx = (NUMBER_OBJECT_SINT*)x;
-        CheckNumber(nx);
-        return (ep_uint.Clone_X(nx->ABS));
+        NUMBER_OBJECT_SINT* nx = GET_NUMBER_OBJECT(x, L"x");
+        return (ep_uint.Clone(nx->ABS));
     }
 
-    PMC_HANDLE_SINT __PMC_CALL PMC_Clone_X(PMC_HANDLE_SINT x)
+    PMC_HANDLE_SINT PMC_Clone_X(PMC_HANDLE_SINT x)
     {
-        if (x == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"x");
-        NUMBER_OBJECT_SINT* nx = (NUMBER_OBJECT_SINT*)x;
-        CheckNumber(nx);
-        NUMBER_OBJECT_SINT* o = nx->IS_ZERO ? &number_object_sint_zero : DuplicateNumber_X(nx);
-#ifdef _DEBUG
-        CheckNumber(o);
-#endif
-        return ((PMC_HANDLE_SINT)o);
+        NUMBER_OBJECT_SINT* nx = GET_NUMBER_OBJECT(x, L"x");
+        ResourceHolderSINT root;
+        NUMBER_OBJECT_SINT* nr = nx->IS_ZERO ? &number_object_sint_zero : DuplicateNumber_X(nx);
+        root.HookNumber(nr);
+        PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
+        root.UnlinkNumber(nr);
+        return (r);
     }
 
-    void __PMC_CALL PMC_Dispose(PMC_HANDLE_SINT p)
+    void PMC_CheckHandle_UX(PMC_HANDLE_UINT p)
     {
-        NUMBER_OBJECT_SINT* np = (NUMBER_OBJECT_SINT*)p;
+        ep_uint.CheckHandle(p);
+    }
+
+    void PMC_CheckHandle_X(PMC_HANDLE_SINT p)
+    {
+        NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
+        __CheckNumber(np);
+        ep_uint.CheckHandle(np->ABS);
+    }
+
+    void PMC_Dispose_UX(PMC_HANDLE_UINT p)
+    {
+        ep_uint.Dispose(p);
+    }
+
+    void PMC_Dispose_X(PMC_HANDLE_SINT p)
+    {
+        NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
         DeallocateNumber(np);
-        return;
     }
 
-#pragma region ƒ`ƒF[ƒ“‚³‚ê‚½ƒƒ‚ƒŠŠÇ—
+#pragma region ãƒã‚§ãƒ¼ãƒ³ã•ã‚ŒãŸãƒ¡ãƒ¢ãƒªç®¡ç†
     Lock::Lock()
     {
         EnterCriticalSection(&mcs);
@@ -388,7 +430,7 @@ namespace Palmtree::Math::Core::Internal
 
     void  ResourceHolderSINT::__DynamicNumberChainBufferTag::Check()
     {
-        Palmtree::Math::Core::Internal::CheckNumber(_buffer);
+        Palmtree::Math::Core::Internal::__CheckNumber(_buffer);
     }
 
     void  ResourceHolderSINT::__DynamicNumberChainBufferTag::Destruct()
@@ -455,7 +497,7 @@ namespace Palmtree::Math::Core::Internal
         Lock lock_obj;
         void* buffer = HeapAlloc(hLocalHeap, HEAP_ZERO_MEMORY, size);
         if (buffer == nullptr)
-            throw NotEnoughMemoryException(L"ƒq[ƒvƒƒ‚ƒŠ—Ìˆæ‚ª•s‘«‚µ‚Ä‚¢‚Ü‚·B");
+            throw NotEnoughMemoryException(L"ãƒ’ãƒ¼ãƒ—ãƒ¡ãƒ¢ãƒªé ˜åŸŸãŒä¸è¶³ã—ã¦ã„ã¾ã™ã€‚");
 #ifdef _LOG_MEMORY
         {
             wprintf(L"0x%08lx: new header 0x%016llx\n", GetCurrentThreadId(), (unsigned long long)buffer);
@@ -483,19 +525,20 @@ namespace Palmtree::Math::Core::Internal
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
-            throw BadBufferException(L"ƒƒ‚ƒŠ—Ìˆæ‚Ì•s®‡‚ðŒŸo‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkBytes;1");
+            throw BadBufferException(L"ãƒ¡ãƒ¢ãƒªé ˜åŸŸã®ä¸æ•´åˆã‚’æ¤œå‡ºã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkBytes;1");
         tag->Unlink();
     }
 
-    NUMBER_OBJECT_SINT * ResourceHolderSINT::AllocateNumber(char sign, PMC_HANDLE_UINT abs)
+    NUMBER_OBJECT_SINT * ResourceHolderSINT::AllocateNumber(SIGN_T sign, PMC_HANDLE_UINT abs)
     {
+#ifdef _DEBUG
+        if (sign == SIGN_ZERO && !abs->FLAGS.IS_ZERO)
+            throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;ResourceHolderSINT::AllocateNumber;1");
+#endif
         Lock lock_obj;
         NUMBER_OBJECT_SINT* buffer = Palmtree::Math::Core::Internal::AllocateNumber(sign, abs);
 #ifdef _DEBUG
-        // “ñd“o˜^‚Ì–hŽ~
-        __ChainBufferTag* found_tag = FindTag(buffer);
-        if (found_tag != nullptr)
-            throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;ResourceHolderSINT::AllocateNumber;1");
+        CheckBuffer(buffer);
 #endif
         __ChainBufferTag* tag = new __DynamicNumberChainBufferTag(buffer);
         LinkTag(tag);
@@ -506,10 +549,8 @@ namespace Palmtree::Math::Core::Internal
     {
         Lock lock_obj;
 #ifdef _DEBUG
-        // “ñd“o˜^‚Ì–hŽ~
-        __ChainBufferTag* found_tag = FindTag(buffer);
-        if (found_tag != nullptr)
-            throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;ResourceHolderSINT::HookNumber;1");
+        if (!buffer->IS_STATIC)
+            CheckBuffer(buffer);
 #endif
         __ChainBufferTag* tag = new __NumberHandleHookingChainBufferTag(buffer);
         LinkTag(tag);
@@ -519,10 +560,8 @@ namespace Palmtree::Math::Core::Internal
     {
         Lock lock_obj;
 #ifdef _DEBUG
-        // “ñd“o˜^‚Ì–hŽ~
-        __ChainBufferTag* found_tag = FindTag(x);
-        if (found_tag != nullptr)
-            throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;ResourceHolderSINT::HookNumber;1");
+        if (!x->FLAGS.IS_STATIC)
+             CheckBuffer(x);
 #endif
         __ChainBufferTag* tag = new __UINTNumberHandleHookingChainBufferTag(x);
         LinkTag(tag);
@@ -558,7 +597,7 @@ namespace Palmtree::Math::Core::Internal
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
-            throw BadBufferException(L"ƒƒ‚ƒŠ—Ìˆæ‚Ì•s®‡‚ðŒŸo‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;ResourceHolderSINT::CheckNumber;1");
+            throw BadBufferException(L"ãƒ¡ãƒ¢ãƒªé ˜åŸŸã®ä¸æ•´åˆã‚’æ¤œå‡ºã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;ResourceHolderSINT::CheckNumber;1");
         tag->Check();
 #endif
     }
@@ -568,7 +607,7 @@ namespace Palmtree::Math::Core::Internal
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
-            throw BadBufferException(L"ƒƒ‚ƒŠ—Ìˆæ‚Ì•s®‡‚ðŒŸo‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkNumber;1");
+            throw BadBufferException(L"ãƒ¡ãƒ¢ãƒªé ˜åŸŸã®ä¸æ•´åˆã‚’æ¤œå‡ºã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkNumber;1");
         tag->Unlink();
     }
 
@@ -577,18 +616,15 @@ namespace Palmtree::Math::Core::Internal
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(x);
         if (tag == nullptr)
-            throw BadBufferException(L"ƒƒ‚ƒŠ—Ìˆæ‚Ì•s®‡‚ðŒŸo‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkNumber;1");
+            throw BadBufferException(L"ãƒ¡ãƒ¢ãƒªé ˜åŸŸã®ä¸æ•´åˆã‚’æ¤œå‡ºã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkNumber;1");
         tag->Unlink();
     }
 
-    void ResourceHolderSINT::AttatchStaticNumber(NUMBER_OBJECT_SINT * p, char sign, PMC_HANDLE_UINT abs)
+    void ResourceHolderSINT::AttatchStaticNumber(NUMBER_OBJECT_SINT * p, SIGN_T sign, PMC_HANDLE_UINT abs)
     {
         Lock lock_obj;
 #ifdef _DEBUG
-        // “ñd“o˜^‚Ì–hŽ~
-        __ChainBufferTag* found_tag = FindTag(p);
-        if (found_tag != nullptr)
-            throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;ResourceHolderSINT::HookNumber;1");
+        CheckBuffer(p);
 #endif
         Palmtree::Math::Core::Internal::AttatchNumber(p, sign, abs);
         __ChainBufferTag* tag = new __StaticNumberChainBufferTag(p);
@@ -612,12 +648,12 @@ namespace Palmtree::Math::Core::Internal
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
-            throw BadBufferException(L"ƒƒ‚ƒŠ—Ìˆæ‚Ì•s®‡‚ðŒŸo‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkStatickNumber;1");
+            throw BadBufferException(L"ãƒ¡ãƒ¢ãƒªé ˜åŸŸã®ä¸æ•´åˆã‚’æ¤œå‡ºã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkStatickNumber;1");
         tag->Unlink();
     }
 #pragma endregion
 
-#pragma region ƒq[ƒvƒƒ‚ƒŠŠÖ˜AŠÖ”
+#pragma region ãƒ’ãƒ¼ãƒ—ãƒ¡ãƒ¢ãƒªé–¢é€£é–¢æ•°
 
     static BOOL GetAllocatedMemorySize_Imp(_UINT64_T* size)
     {
@@ -680,24 +716,22 @@ namespace Palmtree::Math::Core::Internal
         return (TRUE);
     }
 
-    _UINT64_T __PMC_CALL PMC_GetAllocatedMemorySize() noexcept(false)
+    _UINT64_T PMC_GetAllocatedMemorySize() noexcept(false)
     {
         if (!HeapLock(hLocalHeap))
-            throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;GetAllocatedMemorySize;1");
+            throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;GetAllocatedMemorySize;1");
         _UINT64_T size;
         BOOL result = GetAllocatedMemorySize_Imp(&size);
         if (!HeapUnlock(hLocalHeap))
-            throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;GetAllocatedMemorySize;2");
+            throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;GetAllocatedMemorySize;2");
         if (!result)
-            throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;GetAllocatedMemorySize;3");
+            throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;GetAllocatedMemorySize;3");
         return (size);
     }
 
-    _INT32_T __PMC_CALL PMC_GetHashCode(PMC_HANDLE_SINT p) noexcept(false)
+    _INT32_T PMC_GetHashCode(PMC_HANDLE_SINT p) noexcept(false)
     {
-        if (p == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"p");
-        NUMBER_OBJECT_SINT* np = (NUMBER_OBJECT_SINT*)p;
+        NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
         return ((_INT32_T)np->SIGN ^ (_INT32_T)np->ABS->HASH_CODE);
     }
 
@@ -712,13 +746,13 @@ namespace Palmtree::Math::Core::Internal
 
         try
         {
-            PMC_HANDLE_UINT uint_zero = ep_uint.GetConstantValue_I(PMC_CONSTANT_ZERO);
+            PMC_HANDLE_UINT uint_zero = ep_uint.GetConstantValue(PMC_CONSTANT_ZERO);
             root.HookNumber(uint_zero);
-            PMC_HANDLE_UINT uint_one = ep_uint.GetConstantValue_I(PMC_CONSTANT_ONE);
+            PMC_HANDLE_UINT uint_one = ep_uint.GetConstantValue(PMC_CONSTANT_ONE);
             root.HookNumber(uint_one);
-            root.AttatchStaticNumber(&number_object_sint_zero, 0, uint_zero);
-            root.AttatchStaticNumber(&number_object_sint_one, 1, uint_one);
-            root.AttatchStaticNumber(&number_object_sint_minus_one, 01, uint_one);
+            root.AttatchStaticNumber(&number_object_sint_zero, SIGN_ZERO, uint_zero);
+            root.AttatchStaticNumber(&number_object_sint_one, SIGN_POSITIVE, uint_one);
+            root.AttatchStaticNumber(&number_object_sint_minus_one, SIGN_NEGATIVE, uint_one);
 
             number_handle_uint_one = uint_one;
             number_handle_uint_zero = uint_zero;

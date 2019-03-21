@@ -31,28 +31,26 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    PMC_HANDLE_SINT __PMC_CALL PMC_FromByteArray(const unsigned char* buffer, size_t count)
+    PMC_HANDLE_SINT PMC_FromByteArray(const unsigned char* buffer, size_t count)
     {
         if (buffer == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"x");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"buffer");
         if (count < 1)
             throw ArgumentException(L"空の配列が与えられています。");
         ResourceHolderSINT root;
-        char o_sign;
+        SIGN_T o_sign;
         PMC_HANDLE_UINT o_abs = ep_uint.FromByteArrayForSINT(buffer, count, &o_sign);
         root.HookNumber(o_abs);
-        NUMBER_OBJECT_SINT* o = root.AllocateNumber(o_sign, o_abs);
+        NUMBER_OBJECT_SINT* no = root.AllocateNumber(o_sign, o_abs);
+        PMC_HANDLE_SINT o = GET_NUMBER_HANDLE(no);
         root.UnlinkNumber(o_abs);
-        root.UnlinkNumber(o);
-        return ((PMC_HANDLE_SINT)o);
+        root.UnlinkNumber(no);
+        return (o);
     }
 
-    size_t __PMC_CALL PMC_ToByteArray(PMC_HANDLE_SINT p, unsigned char* buffer, size_t buffer_size)
+    size_t PMC_ToByteArray(PMC_HANDLE_SINT p, unsigned char* buffer, size_t buffer_size)
     {
-        if (p == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"x");
-        NUMBER_OBJECT_SINT* np = (NUMBER_OBJECT_SINT*)p;
-        CheckNumber(np);
+        NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
         size_t count = ep_uint.ToByteArrayForSINT(np->SIGN, np->ABS, buffer, buffer_size);
         return (count);
     }

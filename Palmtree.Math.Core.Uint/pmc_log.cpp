@@ -25,7 +25,6 @@
 
 #include <windows.h>
 #include <math.h>
-#include "pmc_exception.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_uint_internal.h"
 
@@ -58,12 +57,9 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT32_T __PMC_CALL PMC_Floor_Log10(PMC_HANDLE_UINT v)
+    _UINT32_T PMC_Floor_Log10(PMC_HANDLE_UINT v)
     {
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        NUMBER_OBJECT_UINT* nv = (NUMBER_OBJECT_UINT*)v;
-        CheckNumber(nv);
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         return (PMC_Floor_Log10_Imp(nv));
     }
 

@@ -30,38 +30,32 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    extern "C"
+    extern "C" BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD dwReason, LPVOID lpvReserved)
     {
-        /*
-         * DLLのエントリポイント
-         */
-
-        BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD dwReason, LPVOID lpvReserved)
+        BOOL result = TRUE;
+        switch (dwReason)
         {
-            BOOL result = TRUE;
-            switch (dwReason)
-            {
-            case DLL_PROCESS_ATTACH: // DLLがプロセスのアドレス空間にマッピングされた。
-                if (!AllocateSINTHeapArea())
-                    result = FALSE;
-                break;
-
-            case DLL_THREAD_ATTACH: // スレッドが作成されようとしている。
-                break;
-
-            case DLL_THREAD_DETACH: // スレッドが破棄されようとしている。
-                break;
-
-            case DLL_PROCESS_DETACH: // DLLのマッピングが解除されようとしている。
-                DeallocateSINTHeapArea();
-                break;
-            default:
+        case DLL_PROCESS_ATTACH: // DLLがプロセスのアドレス空間にマッピングされた。
+            if (!AllocateSINTHeapArea())
                 result = FALSE;
-                break;
-            }
-            return (result);
+            break;
+
+        case DLL_THREAD_ATTACH: // スレッドが作成されようとしている。
+            break;
+
+        case DLL_THREAD_DETACH: // スレッドが破棄されようとしている。
+            break;
+
+        case DLL_PROCESS_DETACH: // DLLのマッピングが解除されようとしている。
+            DeallocateSINTHeapArea();
+            break;
+        default:
+            result = FALSE;
+            break;
         }
+        return (result);
     }
+
 }
 
 

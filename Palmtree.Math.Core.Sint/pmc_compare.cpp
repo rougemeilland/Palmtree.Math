@@ -25,70 +25,65 @@
 
 #include <windows.h>
 #include "pmc_sint_internal.h"
-#include "pmc_exception.h"
-#include "pmc_inline_func.h"
 
 
 namespace Palmtree::Math::Core::Internal
 {
 
-    static _INT32_T CompareU_X_I_Imp(char sign, PMC_HANDLE_UINT u, _INT32_T v)
+    static SIGN_T CompareU_X_I_Imp(SIGN_T sign, PMC_HANDLE_UINT u, _UINT32_T v)
     {
         if (sign > 0)
-            return (ep_uint.Compare_X_I(u, v));
+            return (ep_uint.Compare(u, v));
 #ifdef _DEBUG
         else if (sign == 0)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_compare.cpp;CompareU_X_I_Imp;1");
 #endif
         else
-            return (ep_uint.Compare_I_X(v, u));
+            return (ep_uint.Compare(v, u));
     }
 
-    static _INT32_T CompareU_X_L_Imp(char sign, PMC_HANDLE_UINT u, _INT64_T v)
+    static SIGN_T CompareU_X_L_Imp(SIGN_T sign, PMC_HANDLE_UINT u, _UINT64_T v)
     {
         if (sign > 0)
-            return (ep_uint.Compare_X_L(u, v));
+            return (ep_uint.Compare(u, v));
 #ifdef _DEBUG
         else if (sign == 0)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_compare.cpp;CompareU_X_L_Imp;1");
 #endif
         else
-            return (ep_uint.Compare_L_X(v, u));
+            return (ep_uint.Compare(v, u));
     }
 
-    static _INT32_T CompareU_X_X_Imp(char sign, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
+    static SIGN_T CompareU_X_X_Imp(SIGN_T sign, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
     {
         if (sign > 0)
-            return (ep_uint.Compare_X_X(u, v));
+            return (ep_uint.Compare(u, v));
 #ifdef _DEBUG
         else if (sign == 0)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_compare.cpp;CompareU_X_X_Imp;1");
 #endif
         else
-            return (ep_uint.Compare_X_X(v, u));
+            return (ep_uint.Compare(v, u));
     }
 
-    __inline static _INT32_T CHECK_RETURN_VALUE(_INT32_T value)
+    __inline static SIGN_T EPILOGUE(SIGN_T value)
     {
 #ifdef _DEBUG
         if (value != 0 && value != 1 && value != -1)
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_compare.cpp;CHECK_RETURN_VALUE;1");
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_compare.cpp;EPILOGUE;1");
 #endif
         return (value);
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_UI_X(_UINT32_T u, PMC_HANDLE_SINT v)
+    SIGN_T PMC_Compare_UI_X(_UINT32_T u, PMC_HANDLE_SINT v)
     {
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        NUMBER_OBJECT_SINT* nv = (NUMBER_OBJECT_SINT*)v;
-        CheckNumber(nv);
+        NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (u == 0)
         {
             // u == 0 の場合
 
             // v の符号の反対を返す
-            return (CHECK_RETURN_VALUE(-nv->SIGN));
+            return (EPILOGUE(INVERT_SIGN(nv->SIGN)));
         }
         else
         {
@@ -99,32 +94,29 @@ namespace Palmtree::Math::Core::Internal
                 // v <= 0 の場合
 
                 // 1 を返す
-                return (CHECK_RETURN_VALUE(1));
+                return (EPILOGUE(SIGN_POSITIVE));
             }
             else
             {
                 // v > 0 の場合
 
                 // abs(u) と abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_I_Imp(-1, nv->ABS, u)));
+                return (EPILOGUE(CompareU_X_I_Imp(SIGN_NEGATIVE, nv->ABS, u)));
             }
         }
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_I_X(_INT32_T u, PMC_HANDLE_SINT v)
+    SIGN_T PMC_Compare_I_X(_INT32_T u, PMC_HANDLE_SINT v)
     {
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        NUMBER_OBJECT_SINT* nv = (NUMBER_OBJECT_SINT*)v;
-        CheckNumber(nv);
-        char u_sign;
+        NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
+        SIGN_T u_sign;
         _UINT32_T u_abs = GET_ABS_32(u, &u_sign);
         if (u_sign == 0)
         {
             // u == 0 の場合
 
             // v の符号の反対を返す
-            return (CHECK_RETURN_VALUE(-nv->SIGN));
+            return (EPILOGUE(INVERT_SIGN(nv->SIGN)));
         }
         else if (u_sign > 0)
         {
@@ -135,14 +127,14 @@ namespace Palmtree::Math::Core::Internal
                 // v <= 0 の場合
 
                 // 1 を返す
-                return (CHECK_RETURN_VALUE(1));
+                return (EPILOGUE(SIGN_POSITIVE));
             }
             else
             {
                 // v > 0 の場合
 
                 // abs(u) と abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_I_Imp(-1, nv->ABS, u_abs)));
+                return (EPILOGUE(CompareU_X_I_Imp(SIGN_NEGATIVE, nv->ABS, u_abs)));
             }
         }
         else
@@ -154,30 +146,27 @@ namespace Palmtree::Math::Core::Internal
                 // v >= 0 の場合
 
                 // -1 を返す
-                return (CHECK_RETURN_VALUE(-1));
+                return (EPILOGUE(SIGN_NEGATIVE));
             }
             else
             {
                 // v < 0 の場合
 
                 // -abs(u) と -abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_I_Imp(1, nv->ABS, u_abs)));
+                return (EPILOGUE(CompareU_X_I_Imp(SIGN_POSITIVE, nv->ABS, u_abs)));
             }
         }
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_UL_X(_UINT64_T u, PMC_HANDLE_SINT v)
+    SIGN_T PMC_Compare_UL_X(_UINT64_T u, PMC_HANDLE_SINT v)
     {
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        NUMBER_OBJECT_SINT* nv = (NUMBER_OBJECT_SINT*)v;
-        CheckNumber(nv);
+        NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (u == 0)
         {
             // u == 0 の場合
 
             // v の符号の反対を返す
-            return (CHECK_RETURN_VALUE(-nv->SIGN));
+            return (EPILOGUE(INVERT_SIGN(nv->SIGN)));
         }
         else
         {
@@ -188,32 +177,29 @@ namespace Palmtree::Math::Core::Internal
                 // v <= 0 の場合
 
                 // 1 を返す
-                return (CHECK_RETURN_VALUE(1));
+                return (EPILOGUE(SIGN_POSITIVE));
             }
             else
             {
                 // v > 0 の場合
 
                 // abs(u) と abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_L_Imp(-1, nv->ABS, u)));
+                return (EPILOGUE(CompareU_X_L_Imp(SIGN_NEGATIVE, nv->ABS, u)));
             }
         }
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_L_X(_INT64_T u, PMC_HANDLE_SINT v)
+    SIGN_T PMC_Compare_L_X(_INT64_T u, PMC_HANDLE_SINT v)
     {
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        NUMBER_OBJECT_SINT* nv = (NUMBER_OBJECT_SINT*)v;
-        CheckNumber(nv);
-        char u_sign;
+        NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
+        SIGN_T u_sign;
         _UINT64_T u_abs = GET_ABS_64(u, &u_sign);
         if (u_sign == 0)
         {
             // u == 0 の場合
 
             // v の符号の反対を返す
-            return (CHECK_RETURN_VALUE(-nv->SIGN));
+            return (EPILOGUE(INVERT_SIGN(nv->SIGN)));
         }
         else if (u_sign > 0)
         {
@@ -224,14 +210,14 @@ namespace Palmtree::Math::Core::Internal
                 // v <= 0 の場合
 
                 // 1 を返す
-                return (CHECK_RETURN_VALUE(1));
+                return (EPILOGUE(SIGN_POSITIVE));
             }
             else
             {
                 // v > 0 の場合
 
                 // abs(u) と abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_L_Imp(-1, nv->ABS, u_abs)));
+                return (EPILOGUE(CompareU_X_L_Imp(SIGN_NEGATIVE, nv->ABS, u_abs)));
             }
         }
         else
@@ -243,30 +229,27 @@ namespace Palmtree::Math::Core::Internal
                 // v >= 0 の場合
 
                 // -1 を返す
-                return (CHECK_RETURN_VALUE(-1));
+                return (EPILOGUE(SIGN_NEGATIVE));
             }
             else
             {
                 // v < 0 の場合
 
                 // -abs(u) と -abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_L_Imp(1, nv->ABS, u_abs)));
+                return (EPILOGUE(CompareU_X_L_Imp(SIGN_POSITIVE, nv->ABS, u_abs)));
             }
         }
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v)
+    SIGN_T PMC_Compare_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v)
     {
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        NUMBER_OBJECT_SINT* nv = (NUMBER_OBJECT_SINT*)v;
-        CheckNumber(nv);
+        NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (u->FLAGS.IS_ZERO)
         {
             // u == 0 の場合
 
             // v の符号の反対を返す
-            return (CHECK_RETURN_VALUE(-nv->SIGN));
+            return (EPILOGUE(INVERT_SIGN(nv->SIGN)));
         }
         else
         {
@@ -277,24 +260,21 @@ namespace Palmtree::Math::Core::Internal
                 // v == 0 の場合
 
                 // 1 を返す
-                return (CHECK_RETURN_VALUE(1));
+                return (EPILOGUE(SIGN_POSITIVE));
             }
             else
             {
                 // v > 0 の場合
 
                 // abs(u) と abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_X_Imp(1, u, nv->ABS)));
+                return (EPILOGUE(CompareU_X_X_Imp(SIGN_POSITIVE, u, nv->ABS)));
             }
         }
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_X_UI(PMC_HANDLE_SINT u, _UINT32_T v)
+    SIGN_T PMC_Compare_X_UI(PMC_HANDLE_SINT u, _UINT32_T v)
     {
-        if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        NUMBER_OBJECT_SINT* nu = (NUMBER_OBJECT_SINT*)u;
-        CheckNumber(nu);
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
         if (nu->SIGN == 0)
         {
             // u == 0 の場合
@@ -304,14 +284,14 @@ namespace Palmtree::Math::Core::Internal
                 // v == 0 の場合
 
                 // v の符号の反対を返す
-                return (CHECK_RETURN_VALUE(0));
+                return (EPILOGUE(SIGN_ZERO));
             }
             else
             {
                 // v > 0 の場合
 
                 // v の符号の反対を返す
-                return (CHECK_RETURN_VALUE(-1));
+                return (EPILOGUE(SIGN_NEGATIVE));
             }
 
         }
@@ -324,14 +304,14 @@ namespace Palmtree::Math::Core::Internal
                 // v == 0 の場合
 
                 // 1 を返す
-                return (CHECK_RETURN_VALUE(1));
+                return (EPILOGUE(SIGN_POSITIVE));
             }
             else
             {
                 // v > 0 の場合
 
                 // abs(u) と abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_I_Imp(1, nu->ABS, v)));
+                return (EPILOGUE(CompareU_X_I_Imp(SIGN_POSITIVE, nu->ABS, v)));
             }
         }
         else
@@ -339,24 +319,21 @@ namespace Palmtree::Math::Core::Internal
             // u < 0 の場合
 
             // -1 を返す
-            return (CHECK_RETURN_VALUE(-1));
+            return (EPILOGUE(SIGN_NEGATIVE));
         }
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_X_I(PMC_HANDLE_SINT u, _INT32_T v)
+    SIGN_T PMC_Compare_X_I(PMC_HANDLE_SINT u, _INT32_T v)
     {
-        if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        NUMBER_OBJECT_SINT* nu = (NUMBER_OBJECT_SINT*)u;
-        CheckNumber(nu);
-        char v_sign;
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        SIGN_T v_sign;
         _UINT32_T v_abs = GET_ABS_32(v, &v_sign);
         if (nu->SIGN == 0)
         {
             // u == 0 の場合
 
             // v の符号の反対を返す
-            return (CHECK_RETURN_VALUE(-v_sign));
+            return (EPILOGUE(INVERT_SIGN(v_sign)));
         }
         else if (nu->SIGN > 0)
         {
@@ -367,14 +344,14 @@ namespace Palmtree::Math::Core::Internal
                 // v == 0 の場合
 
                 // 1 を返す
-                return (CHECK_RETURN_VALUE(1));
+                return (EPILOGUE(SIGN_POSITIVE));
             }
             else
             {
                 // v > 0 の場合
 
                 // abs(u) と abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_I_Imp(1, nu->ABS, v_abs)));
+                return (EPILOGUE(CompareU_X_I_Imp(SIGN_POSITIVE, nu->ABS, v_abs)));
             }
         }
         else
@@ -386,24 +363,21 @@ namespace Palmtree::Math::Core::Internal
                 // v == 0 の場合
 
                 // -1 を返す
-                return (CHECK_RETURN_VALUE(-1));
+                return (EPILOGUE(SIGN_NEGATIVE));
             }
             else
             {
                 // v < 0 の場合
 
                 // -abs(u) と -abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_I_Imp(-1, nu->ABS, v_abs)));
+                return (EPILOGUE(CompareU_X_I_Imp(SIGN_NEGATIVE, nu->ABS, v_abs)));
             }
         }
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_X_UL(PMC_HANDLE_SINT u, _UINT64_T v)
+    SIGN_T PMC_Compare_X_UL(PMC_HANDLE_SINT u, _UINT64_T v)
     {
-        if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        NUMBER_OBJECT_SINT* nu = (NUMBER_OBJECT_SINT*)u;
-        CheckNumber(nu);
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
         if (nu->SIGN == 0)
         {
             // u == 0 の場合
@@ -413,14 +387,14 @@ namespace Palmtree::Math::Core::Internal
                 // v == 0 の場合
 
                 // v の符号の反対を返す
-                return (CHECK_RETURN_VALUE(0));
+                return (EPILOGUE(SIGN_ZERO));
             }
             else
             {
                 // v > 0 の場合
 
                 // v の符号の反対を返す
-                return (CHECK_RETURN_VALUE(-1));
+                return (EPILOGUE(SIGN_NEGATIVE));
             }
 
         }
@@ -433,14 +407,14 @@ namespace Palmtree::Math::Core::Internal
                 // v == 0 の場合
 
                 // 1 を返す
-                return (CHECK_RETURN_VALUE(1));
+                return (EPILOGUE(SIGN_POSITIVE));
             }
             else
             {
                 // v > 0 の場合
 
                 // abs(u) と abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_L_Imp(1, nu->ABS, v)));
+                return (EPILOGUE(CompareU_X_L_Imp(SIGN_POSITIVE, nu->ABS, v)));
             }
         }
         else
@@ -448,24 +422,21 @@ namespace Palmtree::Math::Core::Internal
             // u < 0 の場合
 
             // -1 を返す
-            return (CHECK_RETURN_VALUE(-1));
+            return (EPILOGUE(SIGN_NEGATIVE));
         }
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_X_L(PMC_HANDLE_SINT u, _INT64_T v)
+    SIGN_T PMC_Compare_X_L(PMC_HANDLE_SINT u, _INT64_T v)
     {
-        if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        NUMBER_OBJECT_SINT* nu = (NUMBER_OBJECT_SINT*)u;
-        CheckNumber(nu);
-        char v_sign;
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        SIGN_T v_sign;
         _UINT64_T v_abs = GET_ABS_64(v, &v_sign);
         if (nu->SIGN == 0)
         {
             // u == 0 の場合
 
             // v の符号の反対を返す
-            return (CHECK_RETURN_VALUE(-v_sign));
+            return (EPILOGUE(INVERT_SIGN(v_sign)));
         }
         else if (nu->SIGN > 0)
         {
@@ -476,14 +447,14 @@ namespace Palmtree::Math::Core::Internal
                 // v == 0 の場合
 
                 // 1 を返す
-                return (CHECK_RETURN_VALUE(1));
+                return (EPILOGUE(SIGN_POSITIVE));
             }
             else
             {
                 // v > 0 の場合
 
                 // abs(u) と abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_L_Imp(1, nu->ABS, v_abs)));
+                return (EPILOGUE(CompareU_X_L_Imp(SIGN_POSITIVE, nu->ABS, v_abs)));
             }
         }
         else
@@ -495,26 +466,23 @@ namespace Palmtree::Math::Core::Internal
                 // v == 0 の場合
 
                 // -1 を返す
-                return (CHECK_RETURN_VALUE(-1));
+                return (EPILOGUE(SIGN_NEGATIVE));
             }
             else
             {
                 // v < 0 の場合
 
                 // -abs(u) と -abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_L_Imp(-1, nu->ABS, v_abs)));
+                return (EPILOGUE(CompareU_X_L_Imp(SIGN_NEGATIVE, nu->ABS, v_abs)));
             }
         }
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v)
+    SIGN_T PMC_Compare_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v)
     {
-        if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        NUMBER_OBJECT_SINT* nu = (NUMBER_OBJECT_SINT*)u;
-        CheckNumber(nu);
         if (nu->SIGN == 0)
         {
             // u == 0 の場合
@@ -524,14 +492,14 @@ namespace Palmtree::Math::Core::Internal
                 // v == 0 の場合
 
                 // 0 を返す
-                return (CHECK_RETURN_VALUE(0));
+                return (EPILOGUE(SIGN_ZERO));
             }
             else
             {
                 // v > 0 の場合
 
                 // -1 を返す
-                return (CHECK_RETURN_VALUE(-1));
+                return (EPILOGUE(SIGN_NEGATIVE));
             }
         }
         else if (nu->SIGN > 0)
@@ -543,14 +511,14 @@ namespace Palmtree::Math::Core::Internal
                 // v == 0 の場合
 
                 // 1 を返す
-                return (CHECK_RETURN_VALUE(1));
+                return (EPILOGUE(SIGN_POSITIVE));
             }
             else
             {
                 // v > 0 の場合
 
                 // abs(u) と abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_X_Imp(1, nu->ABS, v)));
+                return (EPILOGUE(CompareU_X_X_Imp(SIGN_POSITIVE, nu->ABS, v)));
             }
         }
         else
@@ -558,26 +526,20 @@ namespace Palmtree::Math::Core::Internal
             // u < 0 の場合
 
             // -1 を返す
-            return (CHECK_RETURN_VALUE(-1));
+            return (EPILOGUE(SIGN_NEGATIVE));
         }
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v)
+    SIGN_T PMC_Compare_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v)
     {
-        if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        NUMBER_OBJECT_SINT* nu = (NUMBER_OBJECT_SINT*)u;
-        NUMBER_OBJECT_SINT* nv = (NUMBER_OBJECT_SINT*)v;
-        CheckNumber(nu);
-        CheckNumber(nv);
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (nu->SIGN == 0)
         {
             // u == 0 の場合
 
             // v の符号の反対を返す
-            return (CHECK_RETURN_VALUE(-nv->SIGN));
+            return (EPILOGUE(INVERT_SIGN(nv->SIGN)));
         }
         else if (nu->SIGN > 0)
         {
@@ -588,14 +550,14 @@ namespace Palmtree::Math::Core::Internal
                 // v == 0 の場合
 
                 // 1 を返す
-                return (CHECK_RETURN_VALUE(1));
+                return (EPILOGUE(SIGN_POSITIVE));
             }
             else
             {
                 // v > 0 の場合
 
                 // abs(u) と abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_X_Imp(1, nu->ABS, nv->ABS)));
+                return (EPILOGUE(CompareU_X_X_Imp(SIGN_POSITIVE, nu->ABS, nv->ABS)));
             }
         }
         else
@@ -607,14 +569,14 @@ namespace Palmtree::Math::Core::Internal
                 // v == 0 の場合
 
                 // -1 を返す
-                return (CHECK_RETURN_VALUE(-1));
+                return (EPILOGUE(SIGN_NEGATIVE));
             }
             else
             {
                 // v < 0 の場合
 
                 // -abs(u) と -abs(v) の比較結果を返す
-                return (CHECK_RETURN_VALUE(CompareU_X_X_Imp(-1, nu->ABS, nv->ABS)));
+                return (EPILOGUE(CompareU_X_X_Imp(SIGN_NEGATIVE, nu->ABS, nv->ABS)));
             }
         }
     }

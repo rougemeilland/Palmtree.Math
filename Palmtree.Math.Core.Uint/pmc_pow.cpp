@@ -24,7 +24,6 @@
 
 
 #include <windows.h>
-#include "pmc_exception.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
@@ -271,27 +270,23 @@ namespace Palmtree::Math::Core::Internal
     }
 #endif
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_Pow_X_I(PMC_HANDLE_UINT v, _UINT32_T e) noexcept(false)
+    PMC_HANDLE_UINT PMC_Pow_X_I(PMC_HANDLE_UINT v, _UINT32_T e) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(e) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_pow.cpp;PMC_Pow_X_I;1");
         }
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        CheckNumber((NUMBER_OBJECT_UINT*)v);
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* r = PMC_Pow_X_I_Imp((NUMBER_OBJECT_UINT*)v, e);
-        root.HookNumber(r);
-#ifdef _DEBUG
-        CheckNumber(r);
-#endif
-        root.UnlinkNumber(r);
-        return ((PMC_HANDLE_UINT)r);
+        NUMBER_OBJECT_UINT* nr = PMC_Pow_X_I_Imp(nv, e);
+        root.HookNumber(nr);
+        PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
+        root.UnlinkNumber(nr);
+        return (r);
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_Pow_X_L(PMC_HANDLE_UINT v, _UINT64_T e) noexcept(false)
+    PMC_HANDLE_UINT PMC_Pow_X_L(PMC_HANDLE_UINT v, _UINT64_T e) noexcept(false)
     {
 #ifdef _M_X64
         if (__UNIT_TYPE_BIT_COUNT < sizeof(e) * 8)
@@ -299,17 +294,13 @@ namespace Palmtree::Math::Core::Internal
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_pow.cpp;PMC_Pow_X_I;1");
         }
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        CheckNumber((NUMBER_OBJECT_UINT*)v);
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* r = PMC_Pow_X_L_Imp((NUMBER_OBJECT_UINT*)v, e);
-        root.HookNumber(r);
-#ifdef _DEBUG
-        CheckNumber(r);
-#endif
-        root.UnlinkNumber(r);
-        return ((PMC_HANDLE_UINT)r);
+        NUMBER_OBJECT_UINT* nr = PMC_Pow_X_L_Imp(nv, e);
+        root.HookNumber(nr);
+        PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
+        root.UnlinkNumber(nr);
+        return (r);
 #else
         throw NotSupportedException(L"現在のプラットフォームではサポートされない機能を実行しようとしました。");
 #endif
@@ -341,9 +332,14 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_TimesOfExponentOf10(_UINT32_T v, _UINT32_T e)
+    PMC_HANDLE_UINT PMC_TimesOfExponentOf10(_UINT32_T v, _UINT32_T e)
     {
-        return ((PMC_HANDLE_UINT)PMC_TimesOfExponentOf10_Imp(v, e));
+        ResourceHolderUINT root;
+        NUMBER_OBJECT_UINT* nr = PMC_TimesOfExponentOf10_Imp(v, e);
+        root.HookNumber(nr);
+        PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
+        root.UnlinkNumber(nr);
+        return (r);
     }
 
     PMC_STATUS_CODE Initialize_Pow(PROCESSOR_FEATURES* feature)

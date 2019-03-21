@@ -37,8 +37,6 @@
 #ifdef __cplusplus
 namespace Palmtree::Math::Core::Internal
 {
-    extern "C"
-    {
 #endif
 
 #pragma region マクロの定義
@@ -52,20 +50,78 @@ namespace Palmtree::Math::Core::Internal
 
 #pragma region 型の定義
 #ifdef _M_IX86
-        typedef _UINT32_T __UNIT_TYPE;
+    typedef _UINT32_T __UNIT_TYPE;
 #elif defined(_M_X64)
-        typedef _UINT64_T __UNIT_TYPE;
+    typedef _UINT64_T __UNIT_TYPE;
 #else
 #error unknown platform
 #endif
 
 #define __UNIT_TYPE_BYTE_COUNT (sizeof(__UNIT_TYPE))
 #define __UNIT_TYPE_BIT_COUNT (sizeof(__UNIT_TYPE) * 8)
+
 #pragma endregion
 
+#pragma region インライン関数
+
+    __inline static SIGN_T INVERT_SIGN(SIGN_T sign)
+    {
+        return ((SIGN_T)-(int)sign);
+    }
+
+    __inline static SIGN_T PRODUCT_SIGN(SIGN_T u_sign, SIGN_T v_sign)
+    {
+        if (u_sign == 0)
+            return (SIGN_ZERO);
+        else if (u_sign > 0)
+            return (v_sign);
+        else
+            return (INVERT_SIGN(v_sign));
+    }
+
+    // 整数値の符号と絶対値を取得する
+    __inline static _UINT32_T GET_ABS_32(_INT32_T u, SIGN_T* sign)
+    {
+        if (u > 0)
+        {
+            *sign = SIGN_POSITIVE;
+            return ((_UINT32_T)u);
+        }
+        else if (u == 0)
+        {
+            *sign = SIGN_ZERO;
+            return (0);
+        }
+        else
+        {
+            *sign = SIGN_NEGATIVE;
+            return ((_UINT32_T)u == 0x80000000U ? 0x80000000U : (_UINT32_T)-u);
+        }
+    }
+
+    // 整数値の符号と絶対値を取得する
+    __inline static _UINT64_T GET_ABS_64(_INT64_T u, SIGN_T* sign)
+    {
+        if (u > 0)
+        {
+            *sign = SIGN_POSITIVE;
+            return ((_UINT64_T)u);
+        }
+        else if (u == 0)
+        {
+            *sign = SIGN_ZERO;
+            return (0);
+        }
+        else
+        {
+            *sign = SIGN_NEGATIVE;
+            return ((_UINT64_T)u == 0x8000000000000000UL ? 0x8000000000000000UL : (_UINT64_T)-u);
+        }
+    }
+
+#pragma endregion
 
 #ifdef __cplusplus
-    }
 }
 #endif
 

@@ -24,7 +24,7 @@
 
 
 #include <windows.h>
-#include "pmc_internal.h"
+#include "pmc_uint_internal.h"
 
 
 namespace Palmtree::Math::Core::Internal
@@ -33,7 +33,7 @@ namespace Palmtree::Math::Core::Internal
     PMC_STATISTICS_INFO statistics_info;
 
     // 与えられた領域に現在まで採取されている統計情報を複写する。
-    void __PMC_CALL PMC_GetStatisticsInfo(PMC_STATISTICS_INFO* buffer)
+    void PMC_GetStatisticsInfo(PMC_STATISTICS_INFO* buffer)
     {
         buffer->COUNT_DIV32 = statistics_info.COUNT_DIV32;
         buffer->COUNT_DIV64 = statistics_info.COUNT_DIV64;

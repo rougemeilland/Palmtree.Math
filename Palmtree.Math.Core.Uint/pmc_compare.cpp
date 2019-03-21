@@ -24,7 +24,6 @@
 
 
 #include <windows.h>
-#include "pmc_exception.h"
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
 
@@ -32,7 +31,7 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    _INT32_T Compare_Imp(__UNIT_TYPE* u, __UNIT_TYPE* v, __UNIT_TYPE count)
+    SIGN_T Compare_Imp(__UNIT_TYPE* u, __UNIT_TYPE* v, __UNIT_TYPE count)
     {
         u += count;
         v += count;
@@ -43,18 +42,18 @@ namespace Palmtree::Math::Core::Internal
             --count;
 
             if (*u > *v)
-                return (1);
+                return (SIGN_POSITIVE);
             else if (*u < *v)
-                return (-1);
+                return (SIGN_NEGATIVE);
             else
             {
             }
         }
-        return (0);
+        return (SIGN_ZERO);
     }
 
 
-    static _INT32_T PMC_Compare_X_I_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v)
+    static SIGN_T PMC_Compare_X_I_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v)
     {
         if (u->IS_ZERO)
         {
@@ -62,18 +61,18 @@ namespace Palmtree::Math::Core::Internal
             if (v == 0)
             {
                 // v が 0 である場合
-                return (0);
+                return (SIGN_ZERO);
             }
             else
             {
                 // v が 0 でない場合
-                return (-1);
+                return (SIGN_NEGATIVE);
             }
         }
         else if (v == 0)
         {
             // v が 0 である場合
-            return (1);
+            return (SIGN_POSITIVE);
         }
         else
         {
@@ -83,38 +82,36 @@ namespace Palmtree::Math::Core::Internal
             if (u_bit_count > v_bit_count)
             {
                 // 明らかに u > v である場合
-                return (1);
+                return (SIGN_POSITIVE);
             }
             else if (u_bit_count < v_bit_count)
             {
                 // 明らかに u < v である場合
-                return (-1);
+                return (SIGN_NEGATIVE);
             }
             else
             {
                 // u > 0 && v > 0 かつ u のビット長と v のビット長が等しい場合
                 // ⇒ u と v はともに 1 ワードで表現できる
                 if (u->BLOCK[0] > v)
-                    return (1);
+                    return (SIGN_POSITIVE);
                 else if (u->BLOCK[0] < v)
-                    return (-1);
+                    return (SIGN_NEGATIVE);
                 else
-                    return (0);
+                    return (SIGN_ZERO);
             }
         }
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    SIGN_T PMC_Compare_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(u) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_compare.cpp;PMC_Compare_I_X;1");
         }
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        CheckNumber((NUMBER_OBJECT_UINT*)v);
-        _INT32_T w = -PMC_Compare_X_I_Imp((NUMBER_OBJECT_UINT*)v, u);
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
+        SIGN_T w = INVERT_SIGN(PMC_Compare_X_I_Imp(nv, u));
 #ifdef _DEBUG
         if (w != 0 && w != 1 && w != -1)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_compare.cpp;PMC_Compare_I_X;2");
@@ -122,17 +119,15 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false)
+    SIGN_T PMC_Compare_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(v) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_compare.cpp;PMC_Compare_X_I;1");
         }
-        if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        CheckNumber((NUMBER_OBJECT_UINT*)u);
-        _INT32_T w = PMC_Compare_X_I_Imp((NUMBER_OBJECT_UINT*)u, v);
+        NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        SIGN_T w = PMC_Compare_X_I_Imp(nu, v);
 #ifdef _DEBUG
         if (w != 0 && w != 1 && w != -1)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_compare.cpp;PMC_Compare_X_I;2");
@@ -140,7 +135,7 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static _INT32_T PMC_Compare_X_L_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
+    static SIGN_T PMC_Compare_X_L_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
     {
         if (u->IS_ZERO)
         {
@@ -148,18 +143,18 @@ namespace Palmtree::Math::Core::Internal
             if (v == 0)
             {
                 // v が 0 である場合
-                return (0);
+                return (SIGN_ZERO);
             }
             else
             {
                 // v が 0 でない場合
-                return (-1);
+                return (SIGN_NEGATIVE);
             }
         }
         else if (v == 0)
         {
             // v が 0 である場合
-            return (1);
+            return (SIGN_POSITIVE);
         }
         else
         {
@@ -177,23 +172,23 @@ namespace Palmtree::Math::Core::Internal
                     if (u_bit_count > v_bit_count)
                     {
                         // 明らかに u > v である場合
-                        return (1);
+                        return (SIGN_POSITIVE);
                     }
                     else if (u_bit_count < v_bit_count)
                     {
                         // 明らかに u < v である場合
-                        return (-1);
+                        return (SIGN_NEGATIVE);
                     }
                     else
                     {
                         // u > 0 && v > 0 かつ u のビット長と v のビット長が等しく、かつ v が 1 ワードで表現できる場合
                         // ⇒ u と v はともに 1 ワードで表現できる
                         if (u->BLOCK[0] > v_lo)
-                            return (1);
+                            return (SIGN_POSITIVE);
                         else if (u->BLOCK[0] < v_lo)
-                            return (-1);
+                            return (SIGN_NEGATIVE);
                         else
-                            return (0);
+                            return (SIGN_ZERO);
                     }
                 }
                 else
@@ -203,27 +198,27 @@ namespace Palmtree::Math::Core::Internal
                     if (u_bit_count > v_bit_count)
                     {
                         // 明らかに u > v である場合
-                        return (1);
+                        return (SIGN_POSITIVE);
                     }
                     else if (u_bit_count < v_bit_count)
                     {
                         // 明らかに u < v である場合
-                        return (-1);
+                        return (SIGN_NEGATIVE);
                     }
                     else
                     {
                         // u > 0 && v > 0 かつ u のビット長と v のビット長が等しく、かつ v が 2 ワードで表現できる場合
                         // ⇒ u と v はともに 2 ワードで表現できる
                         if (u->BLOCK[1] > v_hi)
-                            return (1);
+                            return (SIGN_POSITIVE);
                         else if (u->BLOCK[1] < v_hi)
-                            return (-1);
+                            return (SIGN_NEGATIVE);
                         else if (u->BLOCK[0] > v_lo)
-                            return (1);
+                            return (SIGN_POSITIVE);
                         else if (u->BLOCK[0] < v_lo)
-                            return (-1);
+                            return (SIGN_NEGATIVE);
                         else
-                            return (0);
+                            return (SIGN_ZERO);
                     }
                 }
             }
@@ -236,39 +231,37 @@ namespace Palmtree::Math::Core::Internal
                 if (u_bit_count > v_bit_count)
                 {
                     // 明らかに u > v である場合
-                    return (1);
+                    return (SIGN_POSITIVE);
                 }
                 else if (u_bit_count < v_bit_count)
                 {
                     // 明らかに u < v である場合
-                    return (-1);
+                    return (SIGN_NEGATIVE);
                 }
                 else
                 {
                     // u > 0 && v > 0 かつ u のビット長と v のビット長が等しく、かつ v が 1 ワードで表現できる場合
                     // ⇒ u と v はともに 1 ワードで表現できる
                     if (u->BLOCK[0] > v)
-                        return (1);
+                        return (SIGN_POSITIVE);
                     else if (u->BLOCK[0] < v)
-                        return (-1);
+                        return (SIGN_NEGATIVE);
                     else
-                        return (0);
+                        return (SIGN_ZERO);
                 }
             }
         }
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false)
+    SIGN_T PMC_Compare_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(u) * 8)
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_compare.cpp;PMC_Compare_L_X;1");
         }
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        CheckNumber((NUMBER_OBJECT_UINT*)v);
-        _INT32_T w = -PMC_Compare_X_L_Imp((NUMBER_OBJECT_UINT*)v, u);
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
+        SIGN_T w = INVERT_SIGN(PMC_Compare_X_L_Imp(nv, u));
 #ifdef _DEBUG
         if (w != 0 && w != 1 && w != -1)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_compare.cpp;PMC_Compare_L_X;2");
@@ -276,17 +269,15 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false)
+    SIGN_T PMC_Compare_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(v) * 8)
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_compare.cpp;PMC_Compare_X_L;1");
         }
-        if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        CheckNumber((NUMBER_OBJECT_UINT*)u);
-        _INT32_T w = PMC_Compare_X_L_Imp((NUMBER_OBJECT_UINT*)u, v);
+        NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        SIGN_T w = PMC_Compare_X_L_Imp(nu, v);
 #ifdef _DEBUG
         if (w != 0 && w != 1 && w != -1)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_compare.cpp;PMC_Compare_X_L;2");
@@ -294,12 +285,12 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    _INT32_T PMC_Compare_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
+    SIGN_T PMC_Compare_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->IS_ZERO)
-            return (v->IS_ZERO ? 0 : -1);
+            return (v->IS_ZERO ? SIGN_ZERO : SIGN_NEGATIVE);
         else if (v->IS_ZERO)
-            return (1);
+            return (SIGN_POSITIVE);
         else
         {
             __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
@@ -307,12 +298,12 @@ namespace Palmtree::Math::Core::Internal
             if (u_bit_count > v_bit_count)
             {
                 // 明らかに u > v である場合
-                return (1);
+                return (SIGN_POSITIVE);
             }
             else if (u_bit_count < v_bit_count)
             {
                 // 明らかに u < v である場合
-                return (-1);
+                return (SIGN_NEGATIVE);
             }
             else
             {
@@ -322,17 +313,11 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _INT32_T __PMC_CALL PMC_Compare_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
+    SIGN_T PMC_Compare_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
     {
-        if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        NUMBER_OBJECT_UINT* nu = (NUMBER_OBJECT_UINT*)u;
-        NUMBER_OBJECT_UINT* nv = (NUMBER_OBJECT_UINT*)v;
-        CheckNumber(nu);
-        CheckNumber(nv);
-        _INT32_T w = PMC_Compare_X_X_Imp(nu, nv);
+        NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
+        SIGN_T w = PMC_Compare_X_X_Imp(nu, nv);
 #ifdef _DEBUG
         if (w != 0 && w != 1 && w != -1)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_compare.cpp;PMC_Compare_X_X;1");

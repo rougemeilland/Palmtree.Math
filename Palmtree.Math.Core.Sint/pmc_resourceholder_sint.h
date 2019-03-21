@@ -116,6 +116,9 @@ namespace Palmtree::Math::Core::Internal
 
         };
 
+    private:
+        ResourceHolderSINT(const ResourceHolderSINT& p); // åƒÇ—èoÇµã÷é~
+
     public:
         ResourceHolderSINT();
         virtual ~ResourceHolderSINT();
@@ -124,7 +127,7 @@ namespace Palmtree::Math::Core::Internal
         void DeallocateBytes(void* buffer);
         void UnlinkBytes(void* buffer);
 
-        NUMBER_OBJECT_SINT* AllocateNumber(char sign, PMC_HANDLE_UINT abs);
+        NUMBER_OBJECT_SINT* AllocateNumber(SIGN_T sign, PMC_HANDLE_UINT abs);
         void HookNumber(NUMBER_OBJECT_SINT* buffer);
         void HookNumber(PMC_HANDLE_UINT x);
         void DeallocateNumber(NUMBER_OBJECT_SINT* buffer);
@@ -132,7 +135,7 @@ namespace Palmtree::Math::Core::Internal
         void CheckNumber(NUMBER_OBJECT_SINT* buffer);
         void UnlinkNumber(NUMBER_OBJECT_SINT* buffer);
         void UnlinkNumber(PMC_HANDLE_UINT x);
-        void AttatchStaticNumber(NUMBER_OBJECT_SINT* p, char sign, PMC_HANDLE_UINT abs);
+        void AttatchStaticNumber(NUMBER_OBJECT_SINT* p, SIGN_T sign, PMC_HANDLE_UINT abs);
         void DetatchStaticNumber(NUMBER_OBJECT_SINT* buffer);
         void UnlinkStatickNumber(NUMBER_OBJECT_SINT* buffer);
     };

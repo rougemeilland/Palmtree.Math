@@ -1,4 +1,4 @@
-/*
+Ôªø/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -31,24 +31,23 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    PMC_STATUS_CODE __PMC_CALL PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o, _UINT32_T* result) noexcept(false)
+    PMC_STATUS_CODE PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o) noexcept(false)
     {
         PMC_STATUS_CODE rc;
         if (source == nullptr)
-            throw ArgumentNullException(L"à¯êîÇ…nullÇ™ó^Ç¶ÇÁÇÍÇƒÇ¢Ç‹Ç∑ÅB", L"u");
+            throw ArgumentNullException(L"ÂºïÊï∞„Å´null„Åå‰∏é„Åà„Çâ„Çå„Å¶„ÅÑ„Åæ„Åô„ÄÇ", L"source");
         if (o == nullptr)
-            throw ArgumentNullException(L"à¯êîÇ…nullÇ™ó^Ç¶ÇÁÇÍÇƒÇ¢Ç‹Ç∑ÅB", L"u");
-        if (result == nullptr)
-            throw ArgumentNullException(L"à¯êîÇ…nullÇ™ó^Ç¶ÇÁÇÍÇƒÇ¢Ç‹Ç∑ÅB", L"u");
+            throw ArgumentNullException(L"ÂºïÊï∞„Å´null„Åå‰∏é„Åà„Çâ„Çå„Å¶„ÅÑ„Åæ„Åô„ÄÇ", L"o");
         ResourceHolderSINT root;
-        char o_sign;
+        SIGN_T o_sign;
         PMC_HANDLE_UINT o_abs;
-        if ((rc = ep_uint.TryParseForSINT(source, number_styles, format_option, &o_sign, &o_abs, result)) != PMC_STATUS_OK)
+        if ((rc = ep_uint.TryParseForSINT(source, number_styles, format_option, &o_sign, &o_abs)) != PMC_STATUS_OK)
             return (rc);
         root.HookNumber(o_abs);
-        *o = (PMC_HANDLE_SINT)root.AllocateNumber(o_sign, o_abs);
-        *result = 1;
+        NUMBER_OBJECT_SINT* no = root.AllocateNumber(o_sign, o_abs);
+        *o = GET_NUMBER_HANDLE(no);
         root.UnlinkNumber(o_abs);
+        root.UnlinkNumber(no);
         return (PMC_STATUS_OK);
     }
 

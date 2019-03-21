@@ -23,11 +23,14 @@
  */
 
 
+using System;
+
  namespace Palmtree.Math.Core
 {
     internal interface IUBigIntDisposable
     {
-        void Dispose(UBigIntHandle handle);
+        void CheckHandle(IntPtr handle);
+        void Dispose(IntPtr handle);
     }
 }
 

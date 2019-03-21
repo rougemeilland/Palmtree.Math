@@ -50,6 +50,7 @@ namespace Palmtree
         {
             _data = data;
         }
+
         public InternalErrorException(string data, string message, Exception innerException)
             : base(message, innerException)
         {

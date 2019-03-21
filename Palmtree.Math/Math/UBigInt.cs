@@ -92,7 +92,7 @@ namespace Palmtree.Math
 
         #region プライベートフィールド
 
-        private static Regex _tostring_format_pattern;
+        private static Regex _tostring_standard_format_pattern;
 
         #endregion
 
@@ -102,12 +102,12 @@ namespace Palmtree.Math
         {
             EngineObject = new Core.UBigIntEngine();
             var settings = new ConfigurationDictionary();
-            foreach (var key in new[] { "COMPILER", "PLATFORM" })
+            foreach (var key in new[] { "COMPILER", "PLATFORM", "TABLESIZE" })
                 settings.Add(key, EngineObject.GetConfigurationSettings(key));
             ConfigurationSettings = settings;
             Zero = new UBigInt(EngineObject.Zero);
             One = new UBigInt(EngineObject.One);
-            _tostring_format_pattern = new Regex("^[cdefgnprx]|[cdefgnprx][0-9]|[cdefgnprx][0-9][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            _tostring_standard_format_pattern = new Regex("^|[cdefgnprx]|[cdefgnprx][0-9]|[cdefgnprx][0-9][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
 
         public UBigInt()

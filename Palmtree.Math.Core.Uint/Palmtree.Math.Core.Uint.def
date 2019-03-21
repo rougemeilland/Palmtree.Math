@@ -1,7 +1,6 @@
 LIBRARY Palmtree.Math.Core.Uint.dll
 
 EXPORTS
-	PMC_UINT_Initialize
 	PMCCS_Add_I_X
 	PMCCS_Add_L_X
 	PMCCS_Add_X_I
@@ -17,6 +16,7 @@ EXPORTS
 	PMCCS_BitwiseOr_X_I
 	PMCCS_BitwiseOr_X_L
 	PMCCS_BitwiseOr_X_X
+	PMCCS_CheckHandle_X
 	PMCCS_Clone_X
 	PMCCS_Compare_I_X
 	PMCCS_Compare_L_X
@@ -24,7 +24,7 @@ EXPORTS
 	PMCCS_Compare_X_L
 	PMCCS_Compare_X_X
 	PMCCS_Decrement_X
-	PMCCS_Dispose
+	PMCCS_Dispose_X
 	PMCCS_DivRem_I_X
 	PMCCS_DivRem_L_X
 	PMCCS_DivRem_X_I

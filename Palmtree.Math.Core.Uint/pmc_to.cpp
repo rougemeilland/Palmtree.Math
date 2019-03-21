@@ -24,7 +24,6 @@
 
 
 #include <windows.h>
-#include "pmc_exception.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
@@ -33,29 +32,27 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    _UINT32_T __PMC_CALL PMC_To_X_I(PMC_HANDLE_UINT p) noexcept(false)
+    _UINT32_T PMC_To_X_I(PMC_HANDLE_UINT p) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) < sizeof(_UINT32_T))
         {
             // 32bit未満のCPUは未対応
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_To_X_I;1");
         }
-        NUMBER_OBJECT_UINT* np = (NUMBER_OBJECT_UINT*)p;
-        CheckNumber(np);
+        NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
         if (np->UNIT_BIT_COUNT > sizeof(_UINT32_T) * 8)
             throw OverflowException(L"符号なし32bit整数への型変換に失敗しました。");
         return (np->IS_ZERO ? 0 : (_UINT32_T)np->BLOCK[0]);
     }
 
-    _UINT64_T __PMC_CALL PMC_To_X_L(PMC_HANDLE_UINT p) noexcept(false)
+    _UINT64_T PMC_To_X_L(PMC_HANDLE_UINT p) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) * 2 < sizeof(_UINT64_T))
         {
             // 32bit未満のCPUは未対応
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_To_X_L;1");
         }
-        NUMBER_OBJECT_UINT* np = (NUMBER_OBJECT_UINT*)p;
-        CheckNumber(np);
+        NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
         if (np->UNIT_BIT_COUNT > sizeof(_UINT64_T) * 8)
             throw OverflowException(L"符号なし64bit整数への型変換に失敗しました。");
         if (np->IS_ZERO)

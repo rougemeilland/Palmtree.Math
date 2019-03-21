@@ -1,0 +1,1634 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F1950BCB-3AC3-4442-BBDF-21487CC32044}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Palmtree.Math.Test</RootNamespace>
+    <AssemblyName>Palmtree.Math.Test</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\vs_dist\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\vs_dist\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ComponentTestItemBase.cs" />
+    <Compile Include="ComponentTestPluginBase.cs" />
+    <Compile Include="ComponentTestPluginBase_1_1.cs" />
+    <Compile Include="ComponentTestPluginBase_2_1.cs" />
+    <Compile Include="ComponentTestPluginBase_2_2.cs" />
+    <Compile Include="ComponentTestPluginBase_3_1.cs" />
+    <Compile Include="ComponentTestPluginBase_3_2.cs" />
+    <Compile Include="DataItem.cs" />
+    <Compile Include="ExceptionDataItem.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="IComponentTestItem.cs" />
+    <Compile Include="IComponentTestPlugin.cs" />
+    <Compile Include="IDataItem.cs" />
+    <Compile Include="Int64DataItem.cs" />
+    <Compile Include="Int32DataItem.cs" />
+    <Compile Include="NullDataItem.cs" />
+    <Compile Include="NumberFormatInfoDataItem.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseAnd_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseAnd_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseAnd_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Add_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Add_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseAnd_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Add_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Add_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseAnd_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseAnd_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseAnd_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseAnd_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Add_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Add_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseAnd_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Add_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Add_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Add_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseAnd_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Add_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseAnd_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Add_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseOr_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseOr_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseOr_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseOr_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseOr_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseOr_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseOr_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseOr_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseOr_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseOr_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_BitwiseOr_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_CompareTo_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_CompareTo_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_CompareTo_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_CompareTo_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_CompareTo_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_CompareTo_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_CompareTo_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_CompareTo_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_CompareTo_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_CompareTo_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_CompareTo_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Abs_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Divide_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Divide_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Divide_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Divide_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Divide_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Divide_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Equals_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Equals_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Equals_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Equals_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Equals_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Equals_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ExclusiveOr_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ExclusiveOr_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ExclusiveOr_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ExclusiveOr_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ExclusiveOr_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ExclusiveOr_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_GreatestCommonDivisor_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_GreatestCommonDivisor_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_GreatestCommonDivisor_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_GreatestCommonDivisor_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_GreatestCommonDivisor_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_GreatestCommonDivisor_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Multiply_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Multiply_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Multiply_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Multiply_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Multiply_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Multiply_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Add_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Add_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Add_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Add_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Add_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Add_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseAnd_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseAnd_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseAnd_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseAnd_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseAnd_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseAnd_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseOr_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseOr_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseOr_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseOr_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseOr_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseOr_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Divide_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Divide_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Divide_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Divide_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Divide_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Divide_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Equality_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Equality_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Equality_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Equality_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Equality_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Equality_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ExclusiveOr_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ExclusiveOr_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ExclusiveOr_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ExclusiveOr_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ExclusiveOr_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ExclusiveOr_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThanOrEqual_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThanOrEqual_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThanOrEqual_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThanOrEqual_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThanOrEqual_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThanOrEqual_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThan_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThan_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThan_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThan_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThan_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThan_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Inequality_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Inequality_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Inequality_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Inequality_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Inequality_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Inequality_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThanOrEqual_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThanOrEqual_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThanOrEqual_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThanOrEqual_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThanOrEqual_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThanOrEqual_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThan_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThan_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThan_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThan_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThan_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThan_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Multiply_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Multiply_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Multiply_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Multiply_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Multiply_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Multiply_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Negate_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Negate_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Negate_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Negate_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_OneComplement_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_OneComplement_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_OneComplement_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_OneComplement_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Decrement_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Divide_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Divide_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Divide_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Divide_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Divide_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Equals_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Equals_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Equals_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Equals_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Equals_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ExclusiveOr_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ExclusiveOr_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ExclusiveOr_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ExclusiveOr_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ExclusiveOr_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_GreatestCommonDivisor_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_GreatestCommonDivisor_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_GreatestCommonDivisor_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_GreatestCommonDivisor_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_GreatestCommonDivisor_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Increment_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_LeftShift_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Multiply_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Multiply_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Multiply_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Multiply_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Multiply_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Add_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Add_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Add_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Add_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Add_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseAnd_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseAnd_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseAnd_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseAnd_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseAnd_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseOr_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseOr_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseOr_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseOr_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_BitwiseOr_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Decrement_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Divide_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Divide_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Divide_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Divide_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Divide_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Equality_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Equality_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Equality_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Equality_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Equality_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ExclusiveOr_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ExclusiveOr_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ExclusiveOr_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ExclusiveOr_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ExclusiveOr_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThanOrEqual_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThanOrEqual_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThanOrEqual_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThanOrEqual_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThanOrEqual_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThan_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThan_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThan_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThan_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_GreaterThan_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Increment_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Inequality_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Inequality_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Inequality_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Inequality_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Inequality_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LeftShift_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThanOrEqual_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThanOrEqual_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThanOrEqual_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThanOrEqual_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThanOrEqual_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThan_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThan_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThan_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThan_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_LesserThan_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Multiply_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Multiply_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Multiply_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Multiply_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Multiply_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Remainder_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Remainder_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Remainder_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Remainder_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Remainder_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Remainder_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Remainder_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Remainder_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Remainder_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Remainder_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Remainder_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_RightShift_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Subtruct_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Subtruct_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Subtruct_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Subtruct_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Subtruct_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Subtruct_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Subtruct_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Subtruct_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Subtruct_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Subtruct_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_op_Subtruct_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ParseDN1.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ParseDN2.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ParseDN3.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ParseX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Remainder_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Remainder_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Remainder_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Remainder_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Remainder_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Remainder_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Remainder_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Remainder_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Remainder_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Remainder_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Remainder_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_RightShift_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Compare_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Compare_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Compare_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Compare_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Compare_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Compare_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Compare_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Compare_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Compare_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Compare_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Compare_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_DivRem_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_DivRem_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_DivRem_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_DivRem_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_DivRem_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_DivRem_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_DivRem_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_DivRem_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_DivRem_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_DivRem_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_DivRem_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_DivRem_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_DivRem_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_DivRem_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_DivRem_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_DivRem_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_DivRem_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_DivRem_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_DivRem_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_DivRem_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_DivRem_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_static_DivRem_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Subtruct_I_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Subtruct_L_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Subtruct_UI_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Subtruct_UL_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Subtruct_UX_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Subtruct_X_I.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Subtruct_X_L.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Subtruct_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Subtruct_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Subtruct_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Subtruct_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ToStringC.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ToStringD.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ToStringE.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ToStringF.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ToStringG.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ToStringN.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ToStringP.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ToStringR.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ToStringX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_TryParseDN1.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_TryParseDN2.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_TryParseDN3.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_TryParseX.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Add_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Add_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Add_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Add_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Add_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_BitwiseAnd_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_BitwiseAnd_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_BitwiseAnd_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_BitwiseAnd_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_BitwiseAnd_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_BitwiseOr_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_BitwiseOr_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_BitwiseOr_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_BitwiseOr_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_BitwiseOr_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_CompareTo_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_CompareTo_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_CompareTo_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_CompareTo_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_CompareTo_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Decrement_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Divide_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Divide_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Divide_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Divide_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Divide_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_DivRem_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_DivRem_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_DivRem_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_DivRem_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_DivRem_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Equals_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Equals_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Equals_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Equals_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Equals_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ExclusiveOr_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ExclusiveOr_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ExclusiveOr_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ExclusiveOr_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ExclusiveOr_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_FloorLog10.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_GreatestCommonDivisor_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_GreatestCommonDivisor_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_GreatestCommonDivisor_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_GreatestCommonDivisor_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_GreatestCommonDivisor_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Increment_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_LeftShift_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ModPow_X_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Multiply_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Multiply_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Multiply_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Multiply_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Multiply_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Add_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Add_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Add_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Add_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Add_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_BitwiseAnd_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_BitwiseAnd_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_BitwiseAnd_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_BitwiseAnd_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_BitwiseAnd_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_BitwiseOr_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_BitwiseOr_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_BitwiseOr_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_BitwiseOr_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_BitwiseOr_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Decrement_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Divide_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Divide_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Divide_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Divide_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Divide_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Equality_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Equality_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Equality_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Equality_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Equality_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_ExclusiveOr_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_ExclusiveOr_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_ExclusiveOr_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_ExclusiveOr_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_ExclusiveOr_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_GreaterThanOrEqual_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_GreaterThanOrEqual_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_GreaterThanOrEqual_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_GreaterThanOrEqual_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_GreaterThanOrEqual_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_GreaterThan_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_GreaterThan_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_GreaterThan_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_GreaterThan_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_GreaterThan_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Increment_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Inequality_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Inequality_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Inequality_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Inequality_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Inequality_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_LeftShift_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_LesserThanOrEqual_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_LesserThanOrEqual_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_LesserThanOrEqual_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_LesserThanOrEqual_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_LesserThanOrEqual_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_LesserThan_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_LesserThan_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_LesserThan_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_LesserThan_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_LesserThan_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Multiply_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Multiply_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Multiply_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Multiply_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Multiply_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Remainder_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Remainder_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Remainder_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Remainder_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Remainder_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_RightShift_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Subtruct_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Subtruct_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Subtruct_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Subtruct_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_op_Subtruct_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ParseDN1.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ParseDN2.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ParseDN3.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ParseX.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Pow_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Remainder_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Remainder_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Remainder_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Remainder_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Remainder_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_RightShift_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_static_Compare_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_static_Compare_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_static_Compare_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_static_Compare_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_static_Compare_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_static_DivRem_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_static_DivRem_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_static_DivRem_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_static_DivRem_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_static_DivRem_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Subtruct_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Subtruct_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Subtruct_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Subtruct_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Subtruct_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ToStringC.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ToStringD.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ToStringE.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ToStringF.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ToStringG.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ToStringN.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ToStringP.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ToStringR.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ToStringX.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_TryParseDN1.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_TryParseDN2.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_TryParseDN3.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_TryParseX.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BigIntDataItem.cs" />
+    <Compile Include="UBigIntDataItem.cs" />
+    <Compile Include="UInt32DataItem.cs" />
+    <Compile Include="UInt64DataItem.cs" />
+    <Compile Include="XStringDataItem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\Sint\test_data_abs_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_add_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_add_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_add_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_add_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_add_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_add_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_add_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_add_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_add_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_add_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_add_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseand_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseand_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseand_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseand_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseand_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseand_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseand_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseand_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseand_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseand_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseand_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseor_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseor_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseor_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseor_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseor_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseor_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseor_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseor_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseor_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseor_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_bitwiseor_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_compare_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_compare_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_compare_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_compare_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_compare_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_compare_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_compare_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_compare_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_compare_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_compare_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_compare_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_decrement_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divide_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divide_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divide_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divide_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divide_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divide_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divide_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divide_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divide_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divide_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divide_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divrem_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divrem_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divrem_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divrem_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divrem_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divrem_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divrem_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divrem_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divrem_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divrem_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_divrem_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_equality_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_equality_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_equality_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_equality_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_equality_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_equality_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_equality_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_equality_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_equality_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_equality_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_equality_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_exclusiveor_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_exclusiveor_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_exclusiveor_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_exclusiveor_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_exclusiveor_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_exclusiveor_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_exclusiveor_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_exclusiveor_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_exclusiveor_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_exclusiveor_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_exclusiveor_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthanorequal_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthanorequal_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthanorequal_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthanorequal_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthanorequal_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthanorequal_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthanorequal_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthanorequal_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthanorequal_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthanorequal_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthanorequal_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthan_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthan_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthan_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthan_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthan_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthan_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthan_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthan_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthan_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthan_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greaterthan_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greatestcommondivisor_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greatestcommondivisor_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greatestcommondivisor_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greatestcommondivisor_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greatestcommondivisor_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greatestcommondivisor_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greatestcommondivisor_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greatestcommondivisor_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greatestcommondivisor_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greatestcommondivisor_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_greatestcommondivisor_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_increment_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_inequality_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_inequality_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_inequality_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_inequality_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_inequality_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_inequality_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_inequality_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_inequality_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_inequality_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_inequality_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_inequality_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_leftshift_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthanorequal_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthanorequal_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthanorequal_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthanorequal_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthanorequal_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthanorequal_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthanorequal_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthanorequal_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthanorequal_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthanorequal_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthanorequal_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthan_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthan_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthan_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthan_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthan_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthan_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthan_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthan_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthan_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthan_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_lesserthan_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_multiply_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_multiply_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_multiply_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_multiply_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_multiply_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_multiply_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_multiply_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_multiply_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_multiply_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_multiply_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_multiply_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_negate_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_negate_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_onecomplement_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_onecomplement_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_parsedn1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_parsedn2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_parsedn3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_parsex.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_remainder_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_remainder_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_remainder_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_remainder_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_remainder_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_remainder_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_remainder_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_remainder_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_remainder_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_remainder_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_remainder_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_rightshift_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_subtruct_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_subtruct_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_subtruct_ui_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_subtruct_ul_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_subtruct_ux_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_subtruct_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_subtruct_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_subtruct_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_subtruct_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_subtruct_x_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_subtruct_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_tostringc.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_tostringd.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_tostringe.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_tostringf.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_tostringg.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_tostringn.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_tostringp.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_tostringr.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_tostringx.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_tryparsedn1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_tryparsedn2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_tryparsedn3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_tryparsex.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_add_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_add_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_add_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_add_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_add_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_bitwiseand_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_bitwiseand_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_bitwiseand_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_bitwiseand_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_bitwiseand_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_bitwiseor_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_bitwiseor_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_bitwiseor_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_bitwiseor_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_bitwiseor_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_compare_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_compare_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_compare_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_compare_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_compare_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_decrement_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_divide_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_divide_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_divide_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_divide_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_divide_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_divrem_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_divrem_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_divrem_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_divrem_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_divrem_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_equality_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_equality_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_equality_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_equality_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_equality_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_equals_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_equals_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_equals_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_equals_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_equals_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_exclusiveor_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_exclusiveor_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_exclusiveor_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_exclusiveor_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_exclusiveor_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_floorlog10.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_greaterthanorequal_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_greaterthanorequal_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_greaterthanorequal_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_greaterthanorequal_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_greaterthanorequal_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_greaterthan_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_greaterthan_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_greaterthan_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_greaterthan_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_greaterthan_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_greatestcommondivisor_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_greatestcommondivisor_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_greatestcommondivisor_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_greatestcommondivisor_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_greatestcommondivisor_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_increment_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_inequality_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_inequality_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_inequality_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_inequality_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_inequality_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_leftshift_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_lesserthanorequal_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_lesserthanorequal_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_lesserthanorequal_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_lesserthanorequal_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_lesserthanorequal_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_lesserthan_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_lesserthan_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_lesserthan_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_lesserthan_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_lesserthan_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_modpow_x_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_multiply_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_multiply_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_multiply_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_multiply_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_multiply_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_parsedn1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_parsedn2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_parsedn3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_parsex.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_pow_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_remainder_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_remainder_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_remainder_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_remainder_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_remainder_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_rightshift_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_subtruct_i_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_subtruct_l_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_subtruct_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_subtruct_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_subtruct_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_tostringc.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_tostringd.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_tostringe.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_tostringf.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_tostringg.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_tostringn.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_tostringp.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_tostringr.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_tostringx.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_tryparsedn1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_tryparsedn2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_tryparsedn3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_tryparsex.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Palmtree.Math\Palmtree.Math.csproj">
+      <Project>{b800b958-9d3a-4312-9ef6-65f2cc87da84}</Project>
+      <Name>Palmtree.Math</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>echo F | xcopy /Y /Q /D "$(TargetDir)Palmtree.Math.Test.exe" "$(SolutionDir)vs_dist\$(ConfigurationName)\Palmtree.Math.Test_$(PlatformName).exe"
+echo F | xcopy /Y /Q /D "$(TargetDir)Palmtree.Math.Test.exe" "$(SolutionDir)dist\$(ConfigurationName)\Palmtree.Math.Test_$(PlatformName).exe"
+echo F | xcopy /Y /Q /D "$(TargetDir)Palmtree.Math.Test.exe.config" "$(SolutionDir)vs_dist\$(ConfigurationName)\Palmtree.Math.Test_$(PlatformName).exe.config"
+echo F | xcopy /Y /Q /D "$(TargetDir)Palmtree.Math.Test.exe.config" "$(SolutionDir)dist\$(ConfigurationName)\Palmtree.Math.Test_$(PlatformName).exe.config"
+echo F | xcopy /Y /Q /D "$(TargetDir)Palmtree.Math.Test.pdb" "$(SolutionDir)vs_dist\$(ConfigurationName)\Palmtree.Math.Test_$(PlatformName).pdb"
+echo F | xcopy /Y /Q /D "$(TargetDir)Palmtree.Math.Test.pdb" "$(SolutionDir)dist\$(ConfigurationName)\Palmtree.Math.Test_$(PlatformName).pdb"
+echo D | xcopy /Y /Q /D /s "$(TargetDir)Data\*.*" "$(SolutionDir)vs_dist\$(ConfigurationName)\Data\"
+echo D | xcopy /Y /Q /D /s "$(TargetDir)Data\*.*" "$(SolutionDir)dist\$(ConfigurationName)\Data\"
+</PostBuildEvent>
+  </PropertyGroup>
+</Project>

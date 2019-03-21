@@ -24,18 +24,15 @@
 
 
 #include <windows.h>
-#include "pmc_exception.h"
 #include "pmc_sint_internal.h"
-#include "pmc_inline_func.h"
 
 
 namespace Palmtree::Math::Core::Internal
 {
 
-    _UINT32_T __PMC_CALL PMC_To_X_UI(PMC_HANDLE_SINT p)
+    _UINT32_T PMC_To_X_UI(PMC_HANDLE_SINT p)
     {
-        NUMBER_OBJECT_SINT* np = (NUMBER_OBJECT_SINT*)p;
-        CheckNumber(np);
+        NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
         char p_sign = np->SIGN;
         if (p_sign == 0)
         {
@@ -52,23 +49,21 @@ namespace Palmtree::Math::Core::Internal
         else
         {
             // p >  0 の場合
-            return (ep_uint.To_X_I(np->ABS));
+            return (ep_uint.ToUInt32(np->ABS));
         }
     }
 
-    _INT32_T __PMC_CALL PMC_To_X_I(PMC_HANDLE_SINT p)
+    _INT32_T PMC_To_X_I(PMC_HANDLE_SINT p)
     {
-        NUMBER_OBJECT_SINT* np = (NUMBER_OBJECT_SINT*)p;
-        CheckNumber(np);
-        char p_sign = np->SIGN;
-        _UINT32_T p_abs = ep_uint.To_X_I(np->ABS);
+        NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
+        SIGN_T p_sign = np->SIGN;
+        _UINT32_T p_abs = ep_uint.ToUInt32(np->ABS);
         return (GET_INT_32(p_sign, p_abs));
     }
 
-    _UINT64_T __PMC_CALL PMC_To_X_UL(PMC_HANDLE_SINT p)
+    _UINT64_T PMC_To_X_UL(PMC_HANDLE_SINT p)
     {
-        NUMBER_OBJECT_SINT* np = (NUMBER_OBJECT_SINT*)p;
-        CheckNumber(np);
+        NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
         char p_sign = np->SIGN;
         if (p_sign == 0)
         {
@@ -85,23 +80,21 @@ namespace Palmtree::Math::Core::Internal
         else
         {
             // p >  0 の場合
-            return (ep_uint.To_X_L(np->ABS));
+            return (ep_uint.ToUInt64(np->ABS));
         }
     }
 
-    _INT64_T __PMC_CALL PMC_To_X_L(PMC_HANDLE_SINT p)
+    _INT64_T PMC_To_X_L(PMC_HANDLE_SINT p)
     {
-        NUMBER_OBJECT_SINT* np = (NUMBER_OBJECT_SINT*)p;
-        CheckNumber(np);
-        char p_sign = np->SIGN;
-        _UINT64_T p_abs = ep_uint.To_X_L(np->ABS);
+        NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
+        SIGN_T p_sign = np->SIGN;
+        _UINT64_T p_abs = ep_uint.ToUInt64(np->ABS);
         return (GET_INT_64(p_sign, p_abs));
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_To_X_UX(PMC_HANDLE_SINT p)
+    PMC_HANDLE_UINT PMC_To_X_UX(PMC_HANDLE_SINT p)
     {
-        NUMBER_OBJECT_SINT* np = (NUMBER_OBJECT_SINT*)p;
-        CheckNumber(np);
+        NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
         char p_sign = np->SIGN;
         if (p_sign == 0)
         {
@@ -118,7 +111,7 @@ namespace Palmtree::Math::Core::Internal
         else
         {
             // p >  0 の場合
-            return (ep_uint.Clone_X(np->ABS));
+            return (ep_uint.Clone(np->ABS));
         }
     }
 

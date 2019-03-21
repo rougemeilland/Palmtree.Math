@@ -317,27 +317,6 @@ namespace Palmtree::Math::Core::Internal
         }
     };
 
-    class SEHException
-        : public Exception
-    {
-    private:
-        const wchar_t* _data;
-    public:
-        SEHException(const wchar_t* message) noexcept(true)
-            : Exception(PMC_STATUS_BAD_BUFFER, message)
-        {
-        }
-
-        SEHException(const BadBufferException& p) noexcept(true)
-            : Exception(p)
-        {
-        }
-
-        virtual ~SEHException() noexcept(true)
-        {
-        }
-    };
-
 }
     
 #endif //PMC_EXCEPTION_H

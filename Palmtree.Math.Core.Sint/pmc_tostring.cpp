@@ -24,25 +24,20 @@
 
 
 #include <windows.h>
-#include "pmc_exception.h"
 #include "pmc_sint_internal.h"
-#include "pmc_inline_func.h"
 
 
 namespace Palmtree::Math::Core::Internal
 {
 
-    size_t __PMC_CALL PMC_ToString(PMC_HANDLE_SINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false)
+    size_t PMC_ToString(PMC_HANDLE_SINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false)
     {
-        if (x == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"x");
-        NUMBER_OBJECT_SINT* nx = (NUMBER_OBJECT_SINT*)x;
-        CheckNumber(nx);
+        NUMBER_OBJECT_SINT* nx = GET_NUMBER_OBJECT(x, L"x");
         size_t count = ep_uint.ToStringForSINT(nx->SIGN, nx->ABS, format, format_option, buffer, buffer_size);
         return (count);
     }
 
-    void __PMC_CALL PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info) noexcept(false)
+    void PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info) noexcept(false)
     {
         ep_uint.InitializeNumberFormatInfo(info);
     }

@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <intrin.h>
-#include "pmc.h"
-#include "pmc_stringio.h"
+//#include "pmc.h"
+//#include "pmc_stringio.h"
 
 namespace Palmtree::Math::Core::Internal
 {

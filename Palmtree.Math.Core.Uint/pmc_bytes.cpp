@@ -24,7 +24,6 @@
 
 
 #include <windows.h>
-#include "pmc_exception.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
@@ -47,30 +46,30 @@ namespace Palmtree::Math::Core::Internal
     }
 
 
-    static NUMBER_OBJECT_UINT* PMC_FromByteArrayForSINT_Imp(const unsigned char* buffer, size_t count, char* o_sign)
+    static NUMBER_OBJECT_UINT* PMC_FromByteArrayForSINT_Imp(const unsigned char* buffer, size_t count, SIGN_T* o_sign)
     {
         if (count < 1)
             throw FormatException(L"与えられたバイト列が多倍長整数として認識できません。");
         unsigned char header = buffer[0];
-        unsigned char sign = header & 0x03;
+        unsigned char sign_bit = header & 0x03;
         unsigned char header_reserved = header & 0xfc;
         if (header_reserved != 0)
             throw FormatException(L"与えられたバイト列が多倍長整数として認識できません。");
-        if (sign == 0)
+        if (sign_bit == 0)
         {
             if (count != 1)
                 throw FormatException(L"与えられたバイト列が多倍長整数として認識できません。");
-            *o_sign = 0;
+            *o_sign = SIGN_ZERO;
             return (&number_object_uint_zero);
         }
-        else if (sign == 2)
+        else if (sign_bit == 2)
             throw FormatException(L"与えられたバイト列が多倍長整数として認識できません。");
         else
         {
             __UNIT_TYPE bit_count = CountActualBitsFromBuffer(buffer + 1, count - 1);
             if (bit_count == 0)
             {
-                *o_sign = 0;
+                *o_sign = SIGN_ZERO;
                 return (&number_object_uint_zero);
             }
             else
@@ -79,27 +78,25 @@ namespace Palmtree::Math::Core::Internal
                 NUMBER_OBJECT_UINT* o_abs = root.AllocateNumber(bit_count);
                 _COPY_MEMORY_BYTE(o_abs->BLOCK, buffer + 1, _DIVIDE_CEILING_SIZE(bit_count, 8));
                 CommitNumber(o_abs);
-                *o_sign = sign == 1 ? 1 : -1;
+                *o_sign = sign_bit == 1 ? SIGN_POSITIVE : SIGN_NEGATIVE;
                 root.UnlinkNumber(o_abs);
                 return (o_abs);
             }
         }
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_FromByteArrayForSINT(const unsigned char* buffer, size_t count, char* o_sign) noexcept(false)
+    PMC_HANDLE_UINT PMC_FromByteArrayForSINT(const unsigned char* buffer, size_t count, SIGN_T* o_sign) noexcept(false)
     {
         if (buffer == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"buffer");
         if (o_sign == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"o_sign");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* o_abs = PMC_FromByteArrayForSINT_Imp(buffer, count, o_sign);
-        root.HookNumber(o_abs);
-#ifdef _DEBUG
-        CheckNumber(o_abs);
-#endif
-        root.UnlinkNumber(o_abs);
-        return ((PMC_HANDLE_UINT)o_abs);
+        NUMBER_OBJECT_UINT* no_abs = PMC_FromByteArrayForSINT_Imp(buffer, count, o_sign);
+        root.HookNumber(no_abs);
+        PMC_HANDLE_UINT o_abs = GET_NUMBER_HANDLE(no_abs);
+        root.UnlinkNumber(no_abs);
+        return (o_abs);
     }
 
     static NUMBER_OBJECT_UINT* PMC_FromByteArray_Imp(const unsigned char* buffer, size_t count)
@@ -136,26 +133,21 @@ namespace Palmtree::Math::Core::Internal
             throw FormatException(L"与えられたバイト列が多倍長整数として認識できません。");
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_FromByteArray(const unsigned char* buffer, size_t count) noexcept(false)
+    PMC_HANDLE_UINT PMC_FromByteArray(const unsigned char* buffer, size_t count) noexcept(false)
     {
         if (buffer == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"buffer");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* o = PMC_FromByteArray_Imp(buffer, count);
-        root.HookNumber(o);
-#ifdef _DEBUG
-        CheckNumber(o);
-#endif
-        root.UnlinkNumber(o);
-        return ((PMC_HANDLE_UINT)o);
+        NUMBER_OBJECT_UINT* no = PMC_FromByteArray_Imp(buffer, count);
+        root.HookNumber(no);
+        PMC_HANDLE_UINT o = GET_NUMBER_HANDLE(no);
+        root.UnlinkNumber(no);
+        return (o);
     }
 
-    size_t __PMC_CALL PMC_ToByteArrayForSINT(char p_sign, PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false)
+    size_t PMC_ToByteArrayForSINT(SIGN_T p_sign, PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false)
     {
-        if (p == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"p");
-        NUMBER_OBJECT_UINT* np = (NUMBER_OBJECT_UINT*)p;
-        CheckNumber(np);
+        NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
         size_t expected_abs_buffer_size = np->IS_ZERO ? 0 : _DIVIDE_CEILING_SIZE(np->UNIT_BIT_COUNT, 8);
         if (buffer != nullptr)
         {
@@ -185,12 +177,9 @@ namespace Palmtree::Math::Core::Internal
         return (expected_abs_buffer_size + 1);
     }
 
-    size_t __PMC_CALL PMC_ToByteArray(PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size)
+    size_t PMC_ToByteArray(PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size)
     {
-        if (p == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"p");
-        NUMBER_OBJECT_UINT* np = (NUMBER_OBJECT_UINT*)p;
-        CheckNumber(np);
+        NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
         size_t expected_abs_buffer_size = np->IS_ZERO ? 0 : _DIVIDE_CEILING_SIZE(np->UNIT_BIT_COUNT, 8);
         if (buffer != nullptr)
         {

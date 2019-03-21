@@ -116,7 +116,7 @@ namespace Palmtree.Math
 
         private static string ToString(Core.UBigIntHandle handle, string format, NumberFormatInfo provider)
         {
-            if (_tostring_format_pattern.IsMatch(format))
+            if (_tostring_standard_format_pattern.IsMatch(format))
                 return (EngineObject.ToString(handle, format, provider));
             else
                 return (ToStringCustomFormat(handle, format, provider));

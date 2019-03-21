@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dataitems>
+  <dataitem index="0">
+    <param1 type="ubigint">00</param1>
+    <result1 type="bigint">03,01</result1>
+  </dataitem>
+  <dataitem index="1">
+    <param1 type="ubigint">01,01</param1>
+    <result1 type="bigint">03,02</result1>
+  </dataitem>
+  <dataitem index="2">
+    <param1 type="ubigint">01,ff,ff,ff,ff</param1>
+    <result1 type="bigint">03,00,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="3">
+    <param1 type="ubigint">01,00,00,00,00,01</param1>
+    <result1 type="bigint">03,01,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="4">
+    <param1 type="ubigint">01,01,00,00,00,01</param1>
+    <result1 type="bigint">03,02,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="5">
+    <param1 type="ubigint">01,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <result1 type="bigint">03,00,00,00,00,00,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="6">
+    <param1 type="ubigint">01,00,00,00,00,00,00,00,00,01</param1>
+    <result1 type="bigint">03,01,00,00,00,00,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="7">
+    <param1 type="ubigint">01,01,00,00,00,00,00,00,00,01</param1>
+    <result1 type="bigint">03,02,00,00,00,00,00,00,00,01</result1>
+  </dataitem>
+</dataitems>

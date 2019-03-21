@@ -30,7 +30,7 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    void __PMC_CALL PMC_GetStatisticsInfo(PMC_STATISTICS_INFO* statistics_info)
+    void PMC_GetStatisticsInfo(PMC_STATISTICS_INFO* statistics_info)
     {
         ep_uint.GetStatisticsInfo(statistics_info);
     }

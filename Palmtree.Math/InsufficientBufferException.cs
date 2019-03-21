@@ -50,6 +50,7 @@ namespace Palmtree
         {
             _data = data;
         }
+
         public InsufficientBufferException(string data, string message, Exception innerException)
             : base(message, innerException)
         {

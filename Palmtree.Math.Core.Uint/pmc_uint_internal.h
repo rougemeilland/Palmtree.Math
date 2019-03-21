@@ -28,10 +28,14 @@
 #ifndef PMC_UINT_INTERNAL_H
 #define PMC_UINT_INTERNAL_H
 
+#if defined(__GNUC__) && defined(_M_IX86)
+#include <stdio.h>
+#endif
 
 #include <windows.h>
 #include "pmc_uint.h"
 #include "pmc_internal.h"
+#include "pmc_exception.h"
 
 namespace Palmtree::Math::Core::Internal
 {
@@ -40,6 +44,7 @@ namespace Palmtree::Math::Core::Internal
     typedef struct __tag_NUMBER_OBJECT_UINT
     {
         __UNIT_TYPE HASH_CODE;              // データのハッシュコード。
+        unsigned IS_STATIC : 1;             // 本構造体が静的に割り当てられていて開放不要ならばTRUE
         unsigned IS_ZERO : 1;               // データが 0 なら TRUE
         unsigned IS_ONE : 1;                // データが 1 なら TRUE
         unsigned IS_EVEN : 1;               // データが 偶数 なら TRUE
@@ -51,7 +56,6 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE UNIT_BIT_COUNT;         // データの有効部分の合計ビット数
         __UNIT_TYPE TRAILING_ZERO_BITS_COUNT;  // データの最下位の連続した 0 ビット数
 
-        unsigned IS_STATIC : 1;             // 本構造体が静的に割り当てられていて開放不要ならばTRUE
         unsigned IS_COMMITTED : 1;          // データ部のコミットが完了していればTRUE
 
         size_t BLOCK_COUNT;             // BLOCKが示す領域に格納可能な最大の要素数
@@ -87,7 +91,7 @@ namespace Palmtree::Math::Core::Internal
     extern void CommitNumber(NUMBER_OBJECT_UINT* p) noexcept(false);
 
     // 与えられた NUMBER_OBJECT_UINT 構造体へのポインタが正しい構造体を指しているかどうか検査します。(主としてメモリ破壊の観点で)
-    extern void CheckNumber(NUMBER_OBJECT_UINT* p) noexcept(false);
+    extern void __CheckNumber(NUMBER_OBJECT_UINT* p) noexcept(false);
 
     // 与えられた NUMBER_OBJECT_UINT 構造体を複製する。p が指す NUMBER_OBJECT_UINT 構造体は 0 値であってはならない。
     extern NUMBER_OBJECT_UINT* DuplicateNumber(NUMBER_OBJECT_UINT* p);
@@ -120,7 +124,7 @@ namespace Palmtree::Math::Core::Internal
     extern void DivRem_X_X(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE* r_buf);
 
     // 多倍長整数の大小比較を行う。
-    extern _INT32_T Compare_Imp(__UNIT_TYPE* u, __UNIT_TYPE* v, __UNIT_TYPE count);
+    extern SIGN_T Compare_Imp(__UNIT_TYPE* u, __UNIT_TYPE* v, __UNIT_TYPE count);
 
     // 与えられた PMC_NUMBER_FORMAT_INFO 構造体を既定値に初期化する。
     extern void InitializeNumberFormatoInfo(PMC_NUMBER_FORMAT_INFO* info);
@@ -144,7 +148,7 @@ namespace Palmtree::Math::Core::Internal
     extern _UINT32_T PMC_Floor_Log10_Imp(NUMBER_OBJECT_UINT* v);
 
     // 多倍長整数の大小比較を行う。
-    _INT32_T PMC_Compare_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v);
+    SIGN_T PMC_Compare_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v);
 #pragma endregion
 
 
@@ -209,112 +213,123 @@ namespace Palmtree::Math::Core::Internal
 
 
 #pragma region エントリポイントに登録される関数の宣言
-    extern PMC_STATUS_CODE __PMC_CALL PMC_GetConfigurationSettings(const wchar_t* key, wchar_t* value_buffer, _INT32_T value_buffer_size, _INT32_T* count);
+    extern bool PMC_UINT_Initialize();
 
-    extern void __PMC_CALL PMC_GetStatisticsInfo(PMC_STATISTICS_INFO* p);
+    extern PMC_STATUS_CODE PMC_GetConfigurationSettings(const wchar_t* key, wchar_t* value_buffer, _INT32_T value_buffer_size, _INT32_T* count);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_From_I(_UINT32_T x) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_From_L(_UINT64_T x) noexcept(false);
+    extern void PMC_GetStatisticsInfo(PMC_STATISTICS_INFO* p);
 
-    extern void __PMC_CALL PMC_Dispose(PMC_HANDLE_UINT p);
+    extern PMC_HANDLE_UINT PMC_From_I(_UINT32_T x) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_From_L(_UINT64_T x) noexcept(false);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_GetConstantValue_I(PMC_CONSTANT_VALUE_CODE type) noexcept(false);
+    extern void PMC_CheckHandle_X(PMC_HANDLE_UINT p);
+    extern void PMC_Dispose_X(PMC_HANDLE_UINT p);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_FromByteArray(const unsigned char* buffer, size_t count) noexcept(false);
-    extern size_t __PMC_CALL PMC_ToByteArray(PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_GetConstantValue_I(PMC_CONSTANT_VALUE_CODE type) noexcept(false);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Clone_X(PMC_HANDLE_UINT x) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_FromByteArray(const unsigned char* buffer, size_t count) noexcept(false);
+    extern size_t PMC_ToByteArray(PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
 
-    extern _UINT64_T __PMC_CALL PMC_GetAllocatedMemorySize();
+    extern PMC_HANDLE_UINT PMC_Clone_X(PMC_HANDLE_UINT x) noexcept(false);
 
-    extern _UINT32_T __PMC_CALL PMC_To_X_I(PMC_HANDLE_UINT p) noexcept(false);
-    extern _UINT64_T __PMC_CALL PMC_To_X_L(PMC_HANDLE_UINT p) noexcept(false);
+    extern _UINT64_T PMC_GetAllocatedMemorySize();
 
-    extern void __PMC_CALL PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info);
-    extern size_t __PMC_CALL PMC_ToString(PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
-    extern PMC_STATUS_CODE __PMC_CALL PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_UINT* o, _UINT32_T* result) noexcept(false);
+    extern _UINT32_T PMC_To_X_I(PMC_HANDLE_UINT p) noexcept(false);
+    extern _UINT64_T PMC_To_X_L(PMC_HANDLE_UINT p) noexcept(false);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Add_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Add_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Add_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Add_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Add_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern void PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info);
+    extern size_t PMC_ToString(PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
+    extern PMC_STATUS_CODE PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_UINT* o) noexcept(false);
 
-    extern _UINT32_T __PMC_CALL PMC_Subtruct_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern _UINT64_T __PMC_CALL PMC_Subtruct_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Subtruct_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Subtruct_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Subtruct_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Add_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Add_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Add_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Add_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Add_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Increment_X(PMC_HANDLE_UINT x) noexcept(false);
+    extern _UINT32_T PMC_Subtruct_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern _UINT64_T PMC_Subtruct_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Subtruct_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Subtruct_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Subtruct_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Decrement_X(PMC_HANDLE_UINT x) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Increment_X(PMC_HANDLE_UINT x) noexcept(false);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Multiply_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Multiply_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Multiply_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Multiply_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Multiply_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Decrement_X(PMC_HANDLE_UINT x) noexcept(false);
 
-    extern _UINT32_T __PMC_CALL PMC_DivRem_I_X(_UINT32_T u, PMC_HANDLE_UINT v, _UINT32_T* q) noexcept(false);
-    extern _UINT64_T __PMC_CALL PMC_DivRem_L_X(_UINT64_T u, PMC_HANDLE_UINT v, _UINT64_T* q) noexcept(false);
-    extern _UINT32_T __PMC_CALL PMC_DivRem_X_I(PMC_HANDLE_UINT u, _UINT32_T v, PMC_HANDLE_UINT* q) noexcept(false);
-    extern _UINT64_T __PMC_CALL PMC_DivRem_X_L(PMC_HANDLE_UINT u, _UINT64_T v, PMC_HANDLE_UINT* q) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_DivRem_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* q) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Multiply_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Multiply_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Multiply_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Multiply_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Multiply_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_RightShift_X_I(PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);
+    extern _UINT32_T PMC_DivRem_I_X(_UINT32_T u, PMC_HANDLE_UINT v, _UINT32_T* q) noexcept(false);
+    extern _UINT64_T PMC_DivRem_L_X(_UINT64_T u, PMC_HANDLE_UINT v, _UINT64_T* q) noexcept(false);
+    extern _UINT32_T PMC_DivRem_X_I(PMC_HANDLE_UINT u, _UINT32_T v, PMC_HANDLE_UINT* q) noexcept(false);
+    extern _UINT64_T PMC_DivRem_X_L(PMC_HANDLE_UINT u, _UINT64_T v, PMC_HANDLE_UINT* q) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_DivRem_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* q) noexcept(false);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_LeftShift_X_I(PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_RightShift_X_I(PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);
 
-    extern _UINT32_T __PMC_CALL PMC_BitwiseAnd_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern _UINT64_T __PMC_CALL PMC_BitwiseAnd_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern _UINT32_T __PMC_CALL PMC_BitwiseAnd_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
-    extern _UINT64_T __PMC_CALL PMC_BitwiseAnd_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_BitwiseAnd_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_LeftShift_X_I(PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_BitwiseOr_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_BitwiseOr_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_BitwiseOr_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_BitwiseOr_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_BitwiseOr_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern _UINT32_T PMC_BitwiseAnd_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern _UINT64_T PMC_BitwiseAnd_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern _UINT32_T PMC_BitwiseAnd_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern _UINT64_T PMC_BitwiseAnd_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_BitwiseAnd_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_ExclusiveOr_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_ExclusiveOr_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_ExclusiveOr_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_ExclusiveOr_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_ExclusiveOr_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern _UINT32_T PMC_OneCompliment_And_BitwiseAnd_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern _UINT64_T PMC_OneCompliment_And_BitwiseAnd_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern _INT32_T __PMC_CALL PMC_Compare_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern _INT32_T __PMC_CALL PMC_Compare_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern _INT32_T __PMC_CALL PMC_Compare_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
-    extern _INT32_T __PMC_CALL PMC_Compare_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern _INT32_T __PMC_CALL PMC_Compare_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_BitwiseOr_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_BitwiseOr_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_BitwiseOr_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_BitwiseOr_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_BitwiseOr_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern _UINT32_T __PMC_CALL PMC_Equals_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern _UINT32_T __PMC_CALL PMC_Equals_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern _UINT32_T __PMC_CALL PMC_Equals_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
-    extern _UINT32_T __PMC_CALL PMC_Equals_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern _UINT32_T __PMC_CALL PMC_Equals_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_ExclusiveOr_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_ExclusiveOr_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_ExclusiveOr_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_ExclusiveOr_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_ExclusiveOr_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_GreatestCommonDivisor_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_GreatestCommonDivisor_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_GreatestCommonDivisor_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_GreatestCommonDivisor_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_GreatestCommonDivisor_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern SIGN_T PMC_Compare_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern SIGN_T PMC_Compare_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern SIGN_T PMC_Compare_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern SIGN_T PMC_Compare_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern SIGN_T PMC_Compare_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Pow_X_I(PMC_HANDLE_UINT x, _UINT32_T n) noexcept(false);
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_Pow_X_L(PMC_HANDLE_UINT x, _UINT64_T n) noexcept(false);
+    extern bool PMC_Equals_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern bool PMC_Equals_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern bool PMC_Equals_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern bool PMC_Equals_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern bool PMC_Equals_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_ModPow_X_X_X(PMC_HANDLE_UINT v, PMC_HANDLE_UINT e, PMC_HANDLE_UINT m) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_TimesOfExponentOf10(_UINT32_T v, _UINT32_T e);
+    extern PMC_HANDLE_UINT PMC_Pow_X_I(PMC_HANDLE_UINT x, _UINT32_T n) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Pow_X_L(PMC_HANDLE_UINT x, _UINT64_T n) noexcept(false);
 
-    extern _UINT32_T __PMC_CALL PMC_Floor_Log10(PMC_HANDLE_UINT v);
+    extern PMC_HANDLE_UINT PMC_ModPow_X_X_X(PMC_HANDLE_UINT v, PMC_HANDLE_UINT e, PMC_HANDLE_UINT m) noexcept(false);
 
-    extern PMC_HANDLE_UINT __PMC_CALL PMC_FromByteArrayForSINT(const unsigned char* buffer, size_t count, char* o_sign) noexcept(false);
-    extern size_t __PMC_CALL PMC_ToByteArrayForSINT(char p_sign, PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
-    extern PMC_STATUS_CODE __PMC_CALL PMC_TryParseForSINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* o_sign, PMC_HANDLE_UINT* o_abs, _UINT32_T* result) noexcept(false);
-    extern size_t __PMC_CALL PMC_ToStringForSINT(char x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
+    extern PMC_HANDLE_UINT PMC_TimesOfExponentOf10(_UINT32_T v, _UINT32_T e);
+
+    extern _UINT32_T PMC_Floor_Log10(PMC_HANDLE_UINT v);
+
+    extern PMC_HANDLE_UINT PMC_FromByteArrayForSINT(const unsigned char* buffer, size_t count, SIGN_T* o_sign) noexcept(false);
+    extern size_t PMC_ToByteArrayForSINT(SIGN_T p_sign, PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
+    extern PMC_STATUS_CODE PMC_TryParseForSINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, PMC_HANDLE_UINT* o_abs) noexcept(false);
+    extern size_t PMC_ToStringForSINT(SIGN_T x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
+
+    extern void PMC_InternalTest();
 #pragma endregion
 
 
@@ -364,6 +379,24 @@ namespace Palmtree::Math::Core::Internal
     {
         _InterlockedExchangeAdd(&statistics_info.COUNT_MULTI64, value);
     }
+
+    __inline static NUMBER_OBJECT_UINT* GET_NUMBER_OBJECT(PMC_HANDLE_UINT x, const wchar_t* param_name)
+    {
+        if (x == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", param_name);
+        NUMBER_OBJECT_UINT* nx = (NUMBER_OBJECT_UINT*)x;
+        __CheckNumber(nx);
+        return (nx);
+    }
+
+    __inline static PMC_HANDLE_UINT GET_NUMBER_HANDLE(NUMBER_OBJECT_UINT* r)
+    {
+#ifdef _DEBUG
+        __CheckNumber(r);
+#endif
+        return ((PMC_HANDLE_UINT)r);
+    }
+
 #pragma endregion
 
 

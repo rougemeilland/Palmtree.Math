@@ -38,6 +38,7 @@ namespace Palmtree.Math.Core
             _is_disposed = false;
             _disposable_object = disposable_object;
             NativeHandle = native_handle;
+            disposable_object.CheckHandle(native_handle);
         }
 
         ~UBigIntHandle()
@@ -61,7 +62,7 @@ namespace Palmtree.Math.Core
                 {
                     try
                     {
-                        _disposable_object.Dispose(this);
+                        _disposable_object.Dispose(NativeHandle);
                     }
                     catch (Exception)
                     {

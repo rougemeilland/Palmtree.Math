@@ -74,29 +74,29 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)vs_dist\$(Configuration)\x86\</OutDir>
     <IntDir>vs_build\x86_$(Configuration)\</IntDir>
-    <IncludePath>Z:\Sources\Lunor\Repos\rougemeilland\Palmtree.Math\Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vs_dist\$(Configuration)\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)vs_dist\$(Configuration)\x64\</OutDir>
     <IntDir>vs_build\x64_$(Configuration)\</IntDir>
-    <IncludePath>Z:\Sources\Lunor\Repos\rougemeilland\Palmtree.Math\Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vs_dist\$(Configuration)\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)vs_dist\$(Configuration)\x86\</OutDir>
     <IntDir>vs_build\x86_$(Configuration)\</IntDir>
-    <IncludePath>Z:\Sources\Lunor\Repos\rougemeilland\Palmtree.Math\Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vs_dist\$(Configuration)\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)vs_dist\$(Configuration)\x64\</OutDir>
     <IntDir>vs_build\x64_$(Configuration)\</IntDir>
-    <IncludePath>Z:\Sources\Lunor\Repos\rougemeilland\Palmtree.Math\Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Palmtree.Math.Core.Uint;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vs_dist\$(Configuration)\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -107,7 +107,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;PALMTREEMATHCORESINT_EXPORTS;_WINDOWS;_USRDLL;_M_IX86;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <AssemblerOutput>All</AssemblerOutput>
       <BufferSecurityCheck />
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -118,7 +118,7 @@
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Palmtree.Math.Core.Uint.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>Palmtree.Math.Core.Sint.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
@@ -131,7 +131,7 @@
       <PreprocessorDefinitions>_DEBUG;PALMTREEMATHCORESINT_EXPORTS;_WINDOWS;_USRDLL;_M_IX64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <AssemblerOutput>All</AssemblerOutput>
       <BufferSecurityCheck />
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -142,7 +142,7 @@
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Palmtree.Math.Core.Uint.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
       <ModuleDefinitionFile>Palmtree.Math.Core.Sint.def</ModuleDefinitionFile>
@@ -160,7 +160,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;PALMTREEMATHCORESINT_EXPORTS;_WINDOWS;_USRDLL;_M_IX86;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <AssemblerOutput>All</AssemblerOutput>
       <BufferSecurityCheck>
       </BufferSecurityCheck>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -174,7 +174,7 @@
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Palmtree.Math.Core.Uint.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
       <GenerateMapFile>true</GenerateMapFile>
@@ -193,7 +193,7 @@
       <PreprocessorDefinitions>NDEBUG;PALMTREEMATHCORESINT_EXPORTS;_WINDOWS;_USRDLL;_M_IX64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <AssemblerOutput>All</AssemblerOutput>
       <BufferSecurityCheck>
       </BufferSecurityCheck>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -207,7 +207,7 @@
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Palmtree.Math.Core.Uint.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
       <GenerateMapFile>true</GenerateMapFile>
@@ -220,6 +220,7 @@
     <ClInclude Include="..\Palmtree.Math.Core.Uint\pmc_resourceholder.h" />
     <ClInclude Include="pmc_resourceholder_sint.h" />
     <ClInclude Include="pmc_sint.h" />
+    <ClInclude Include="pmc_sint_cppinterface.h" />
     <ClInclude Include="pmc_sint_internal.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -237,17 +238,23 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="pmc_add_sub.cpp" />
+    <ClCompile Include="pmc_bitwiseand.cpp" />
+    <ClCompile Include="pmc_bitwiseor.cpp" />
     <ClCompile Include="pmc_bytes.cpp" />
     <ClCompile Include="pmc_compare.cpp" />
     <ClCompile Include="pmc_divrem.cpp" />
     <ClCompile Include="pmc_equals.cpp" />
+    <ClCompile Include="pmc_exclusiveor.cpp" />
     <ClCompile Include="pmc_from.cpp" />
     <ClCompile Include="pmc_greatestcommondivisor.cpp" />
     <ClCompile Include="pmc_initialize.cpp" />
     <ClCompile Include="pmc_interface_csharp.cpp" />
     <ClCompile Include="pmc_memory.cpp" />
     <ClCompile Include="pmc_multiply.cpp" />
+    <ClCompile Include="pmc_onecomplement.cpp" />
     <ClCompile Include="pmc_parse.cpp" />
+    <ClCompile Include="pmc_shift.cpp" />
+    <ClCompile Include="pmc_sint_cppinterface.cpp" />
     <ClCompile Include="pmc_statistics.cpp" />
     <ClCompile Include="pmc_to.cpp" />
     <ClCompile Include="pmc_tostring.cpp" />

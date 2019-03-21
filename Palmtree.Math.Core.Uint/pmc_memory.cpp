@@ -25,11 +25,8 @@
 
 #include <windows.h>
 #include "pmc_resourceholder_uint.h"
-#include "pmc_exception.h"
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
-
-//#define _LOG_MEMORY
 
 #pragma region プラットフォーム固有の定義
 #ifdef _M_IX86
@@ -171,11 +168,6 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE* buffer = (__UNIT_TYPE*)HeapAlloc(hLocalHeap, HEAP_ZERO_MEMORY, bytes);
         if (buffer == nullptr)
             throw NotEnoughMemoryException(L"ヒープメモリ領域が不足しています。");
-#ifdef _LOG_MEMORY
-        {
-            wprintf(L"0x%08lx: new block 0x%016llx\n", GetCurrentThreadId(), (unsigned long long)buffer);
-        }
-#endif
         buffer[0] = words1;
         *allocated_block_words = words1;
 #ifdef _DEBUG
@@ -220,17 +212,11 @@ namespace Palmtree::Math::Core::Internal
         _FILL_MEMORY_UNIT(p, DEFAULT_MEMORY_DATA, buffer_words + 2);
         // バッファを解放する。
         HeapFree(hLocalHeap, 0, p);
-#ifdef _LOG_MEMORY
-        {
-            wprintf(L"0x%08lx: delete block 0x%016llx\n", GetCurrentThreadId(), (unsigned long long)p);
-        }
-#endif
     }
 
     // メモリ内容が正当かどうかが比較される。正当であれば復帰値として0が通知され、正当ではないのなら0以外が通知される。
     static void CheckBlock(__UNIT_TYPE* buffer, __UNIT_TYPE count, __UNIT_TYPE code)
     {
-//#ifdef _DEBUG
         if (buffer == nullptr)
             return;
         --buffer;
@@ -241,9 +227,6 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE code_desired = code;
         if (code_desired != code_actual)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;CheckBlockLight;2");
-//#else
-//        return;
-//#endif
     }
 
     __inline static void ClearNumberHeader(NUMBER_OBJECT_UINT* p)
@@ -361,11 +344,6 @@ namespace Palmtree::Math::Core::Internal
             p->BLOCK = block;
             p->BLOCK_CHECK_CODE = check_code;
             p->IS_COMMITTED = false;
-#ifdef _LOG_MEMORY
-            {
-                wprintf(L"0x%08lx: link 0x%016llx->0x%016llx\n", GetCurrentThreadId(), (unsigned long long)p, (unsigned long long)(block - 1));
-            }
-#endif
         }
         else
         {
@@ -389,11 +367,6 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE block_count = p->BLOCK_COUNT;
             __UNIT_TYPE block_check_code = p->BLOCK_CHECK_CODE;
             p->BLOCK = nullptr;
-#ifdef _LOG_MEMORY
-            {
-                wprintf(L"0x%08lx: unlink 0x%016llx->0x%016llx\n", GetCurrentThreadId(), (unsigned long long)p, (unsigned long long)(block - 1));
-            }
-#endif
             DeallocateBlock(block, block_count, block_check_code);        }
     }
 
@@ -426,11 +399,6 @@ namespace Palmtree::Math::Core::Internal
             CleanUpNumber(p);
             FillNumberHeader(p);
             HeapFree(hLocalHeap, 0, p);
-#ifdef _LOG_MEMORY
-            {
-                wprintf(L"0x%08lx: delete header 0x%016llx\n", GetCurrentThreadId(), (unsigned long long)p);
-            }
-#endif
         }
     }
 
@@ -515,24 +483,25 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    void CheckNumber(NUMBER_OBJECT_UINT* p) noexcept(false)
+    void __CheckNumber(NUMBER_OBJECT_UINT* p) noexcept(false)
     {
         if (p->SIGNATURE1 != PMC_SIGNATURE || p->SIGNATURE2 != PMC_UINT_SIGNATURE)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;CheckNumber;1");
-        if (p->IS_ZERO && !p->IS_STATIC)
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;CheckNumber;1");
-        if (!p->IS_ZERO)
-        {
+        if (p->BLOCK != nullptr)
             CheckBlock(p->BLOCK, p->BLOCK_COUNT, p->BLOCK_CHECK_CODE);
-#ifdef _DEBUG
-            if (p->IS_COMMITTED)
+        if (p->IS_COMMITTED)
+        {
+            if (p->IS_ZERO && !p->IS_STATIC)
+                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;CheckNumber;1");
+            if (!p->IS_ZERO)
             {
+#ifdef _DEBUG
                 __UNIT_TYPE actual_hash_code = CalculateHashCode(p->BLOCK, p->UNIT_WORD_COUNT);
                 __UNIT_TYPE desired_hash_code = p->HASH_CODE;
-                if (actual_hash_code !=  desired_hash_code)
+                if (actual_hash_code != desired_hash_code)
                     throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;CheckNumber;2");
-            }
 #endif
+            }
         }
     }
 
@@ -549,32 +518,34 @@ namespace Palmtree::Math::Core::Internal
         return (o);
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_GetConstantValue_I(PMC_CONSTANT_VALUE_CODE type) noexcept(false)
+    PMC_HANDLE_UINT PMC_GetConstantValue_I(PMC_CONSTANT_VALUE_CODE type) noexcept(false)
     {
         switch (type)
         {
         case PMC_CONSTANT_ZERO:
-            return ((PMC_HANDLE_UINT)&number_object_uint_zero);
+            return (GET_NUMBER_HANDLE(&number_object_uint_zero));
         case PMC_CONSTANT_ONE:
-            return ((PMC_HANDLE_UINT)&number_object_uint_one);
+            return (GET_NUMBER_HANDLE(&number_object_uint_one));
         default:
             throw ArgumentException(L"引数typeが未知の値です。");
         }
     }
 
-    void __PMC_CALL PMC_Dispose(PMC_HANDLE_UINT p)
+    void PMC_CheckHandle_X(PMC_HANDLE_UINT p)
     {
-        NUMBER_OBJECT_UINT* np = (NUMBER_OBJECT_UINT*)p;
-        CheckNumber(np);
+        NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
+        __CheckNumber(np);
+    }
+
+    void PMC_Dispose_X(PMC_HANDLE_UINT p)
+    {
+        NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
         DeallocateNumber(np);
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_Clone_X(PMC_HANDLE_UINT x) noexcept(false)
+    PMC_HANDLE_UINT PMC_Clone_X(PMC_HANDLE_UINT x) noexcept(false)
     {
-        if (x == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"x");
-        NUMBER_OBJECT_UINT* nx = (NUMBER_OBJECT_UINT*)x;
-        CheckNumber(nx);
+        NUMBER_OBJECT_UINT* nx = GET_NUMBER_OBJECT(x, L"x");
         ResourceHolderUINT root;
         NUMBER_OBJECT_UINT* no;
         if (nx->IS_ZERO)
@@ -582,11 +553,9 @@ namespace Palmtree::Math::Core::Internal
         else
             no = DuplicateNumber(nx);
         root.HookNumber(no);
-#ifdef _DEBUG
-        CheckNumber(no);
-#endif
+        PMC_HANDLE_UINT o = GET_NUMBER_HANDLE(no);
         root.UnlinkNumber(no);
-        return ((PMC_HANDLE_UINT)no);
+        return (o);
     }
 
 #pragma endregion
@@ -619,11 +588,6 @@ namespace Palmtree::Math::Core::Internal
     void ResourceHolderUINT::__GenericChainBufferTag::Destruct()
     {
         HeapFree(hLocalHeap, 0, _buffer);
-#ifdef _LOG_MEMORY
-        {
-            wprintf(L"0x%08lx: delete header 0x%016llx\n", GetCurrentThreadId(), (unsigned long long)_buffer);
-        }
-#endif
     }
 
     ResourceHolderUINT::____UNIT_TYPE_Array_ChainBufferTag::____UNIT_TYPE_Array_ChainBufferTag(__UNIT_TYPE * buffer, __UNIT_TYPE word_count, __UNIT_TYPE check_code)
@@ -704,7 +668,7 @@ namespace Palmtree::Math::Core::Internal
 
     void  ResourceHolderUINT::__DynamicNumberChainBufferTag::Check()
     {
-        Palmtree::Math::Core::Internal::CheckNumber(_buffer);
+        Palmtree::Math::Core::Internal::__CheckNumber(_buffer);
     }
 
     void  ResourceHolderUINT::__DynamicNumberChainBufferTag::Destruct()
@@ -772,11 +736,6 @@ namespace Palmtree::Math::Core::Internal
         void* buffer = HeapAlloc(hLocalHeap, HEAP_ZERO_MEMORY, size);
         if (buffer == nullptr)
             throw NotEnoughMemoryException(L"ヒープメモリ領域が不足しています。");
-#ifdef _LOG_MEMORY
-        {
-            wprintf(L"0x%08lx: new header 0x%016llx\n", GetCurrentThreadId(), (unsigned long long)buffer);
-        }
-        #endif
         __ChainBufferTag* tag = new __GenericChainBufferTag(buffer);
         LinkTag(tag);
         return (buffer);
@@ -919,6 +878,10 @@ namespace Palmtree::Math::Core::Internal
     void ResourceHolderUINT::HookNumber(NUMBER_OBJECT_UINT * buffer)
     {
         Lock lock_obj;
+#ifdef _DEBUG
+        if (!buffer->IS_STATIC)
+            CheckBuffer(buffer);
+#endif
         __ChainBufferTag* tag = new __NumberHandleHookingChainBufferTag(buffer);
         LinkTag(tag);
     }
@@ -958,6 +921,9 @@ namespace Palmtree::Math::Core::Internal
     void ResourceHolderUINT::AttatchStaticNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count)
     {
         Lock lock_obj;
+#ifdef _DEBUG
+        CheckBuffer(p);
+#endif
         Palmtree::Math::Core::Internal::AttatchNumber(p, bit_count);
         __ChainBufferTag* tag = new __StaticNumberChainBufferTag(p);
         LinkTag(tag);
@@ -1048,7 +1014,7 @@ namespace Palmtree::Math::Core::Internal
         return (TRUE);
     }
 
-    _UINT64_T __PMC_CALL PMC_GetAllocatedMemorySize()
+    _UINT64_T PMC_GetAllocatedMemorySize()
     {
         if (!HeapLock(hLocalHeap))
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;GetAllocatedMemorySize;1");

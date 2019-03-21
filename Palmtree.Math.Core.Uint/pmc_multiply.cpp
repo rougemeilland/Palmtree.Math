@@ -25,7 +25,6 @@
 
 #include <windows.h>
 #include "pmc_resourceholder_uint.h"
-#include "pmc_exception.h"
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
 
@@ -493,44 +492,36 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_Multiply_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_Multiply_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(u) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_multiply.cpp;PMC_Multiply_I_X;1");
         }
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        CheckNumber((NUMBER_OBJECT_UINT*)v);
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* w = PMC_Multiply_X_I_Imp((NUMBER_OBJECT_UINT*)v, u);
-        root.HookNumber(w);
-#ifdef _DEBUG
-        CheckNumber(w);
-#endif
-        root.UnlinkNumber(w);
-        return ((PMC_HANDLE_UINT)w);
+        NUMBER_OBJECT_UINT* nw = PMC_Multiply_X_I_Imp(nv, u);
+        root.HookNumber(nw);
+        PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
+        root.UnlinkNumber(nw);
+        return (w);
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_Multiply_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false)
+    PMC_HANDLE_UINT PMC_Multiply_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(v) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_multiply.cpp;PMC_Multiply_I_X;1");
         }
-        if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        CheckNumber((NUMBER_OBJECT_UINT*)u);
+        NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* w = PMC_Multiply_X_I_Imp((NUMBER_OBJECT_UINT*)u, v);
-        root.HookNumber(w);
-#ifdef _DEBUG
-        CheckNumber(w);
-#endif
-        root.UnlinkNumber(w);
-        return ((PMC_HANDLE_UINT)w);
+        NUMBER_OBJECT_UINT* nw = PMC_Multiply_X_I_Imp(nu, v);
+        root.HookNumber(nw);
+        PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
+        root.UnlinkNumber(nw);
+        return (w);
     }
 
     static NUMBER_OBJECT_UINT* PMC_Multiply_X_L_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
@@ -635,44 +626,36 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_Multiply_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_Multiply_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(u) * 8)
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_multiply.cpp;PMC_Multiply_L_X;1");
         }
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        CheckNumber((NUMBER_OBJECT_UINT*)v);
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* w = PMC_Multiply_X_L_Imp((NUMBER_OBJECT_UINT*)v, u);
-        root.HookNumber(w);
-#ifdef _DEBUG
-        CheckNumber(w);
-#endif
-        root.UnlinkNumber(w);
-        return ((PMC_HANDLE_UINT)w);
+        NUMBER_OBJECT_UINT* nw = PMC_Multiply_X_L_Imp(nv, u);
+        root.HookNumber(nw);
+        PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
+        root.UnlinkNumber(nw);
+        return (w);
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_Multiply_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false)
+    PMC_HANDLE_UINT PMC_Multiply_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(v) * 8)
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_multiply.cpp;PMC_Multiply_X_L;1");
         }
-        if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        CheckNumber((NUMBER_OBJECT_UINT*)u);
+        NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* w = PMC_Multiply_X_L_Imp((NUMBER_OBJECT_UINT*)u, v);
-        root.HookNumber(w);
-#ifdef _DEBUG
-        CheckNumber(w);
-#endif
-        root.UnlinkNumber(w);
-        return ((PMC_HANDLE_UINT)w);
+        NUMBER_OBJECT_UINT* nw = PMC_Multiply_X_L_Imp(nu, v);
+        root.HookNumber(nw);
+        PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
+        root.UnlinkNumber(nw);
+        return (w);
     }
 
     static NUMBER_OBJECT_UINT* PMC_Multiply_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
@@ -740,24 +723,16 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_Multiply_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_Multiply_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
     {
-        if (u == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        NUMBER_OBJECT_UINT* nu = (NUMBER_OBJECT_UINT*)u;
-        NUMBER_OBJECT_UINT* nv = (NUMBER_OBJECT_UINT*)v;
-        CheckNumber(nu);
-        CheckNumber(nv);
+        NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* w = PMC_Multiply_X_X_Imp(nu, nv);
-        root.HookNumber(w);
-#ifdef _DEBUG
-        CheckNumber(w);
-#endif
-        root.UnlinkNumber(w);
-        return ((PMC_HANDLE_UINT)w);
+        NUMBER_OBJECT_UINT* nw = PMC_Multiply_X_X_Imp(nu, nv);
+        root.HookNumber(nw);
+        PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
+        root.UnlinkNumber(nw);
+        return (w);
     }
 
     PMC_STATUS_CODE Initialize_Multiply(PROCESSOR_FEATURES* feature)

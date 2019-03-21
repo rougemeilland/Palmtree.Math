@@ -23,26 +23,23 @@
  */
 
 
-#include "pmc_exception.h"
 #include "pmc_sint_internal.h"
 
-#define __DLLEXPORT /*__declspec(dllexport)*/
 
 namespace Palmtree::Math::Core::Internal
 {
 
-    extern "C" _UINT32_T __DLLEXPORT __PMC_CALL PMCCS_SINT_Initialize(const PMC_CONFIGURATION_INFO* conf)
+    extern "C" _UINT32_T PMCCS_SINT_Initialize()
     {
-        _UINT32_T success = PMC_SINT_Initialize(conf) != nullptr ? 1 : 0;
-        return (success);
+        return (PMC_SINT_Initialize() ? 1 : 0);
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_GetConfigurationSettings(const wchar_t* key, wchar_t* value_buffer, _INT32_T value_buffer_size, _INT32_T* count)
+    extern "C" PMC_STATUS_CODE PMCCS_GetConfigurationSettings(const wchar_t* key, wchar_t* value_buffer, _INT32_T value_buffer_size, _INT32_T* count)
     {
         return (PMC_GetConfigurationSettings(key, value_buffer, value_buffer_size, count));
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_IS_EVEN(PMC_HANDLE_SINT p, _UINT32_T* r)
+    extern "C" PMC_STATUS_CODE PMCCS_IS_EVEN(PMC_HANDLE_SINT p, _UINT32_T* r)
     {
         if (p == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -59,7 +56,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_IS_MINUS_ONE(PMC_HANDLE_SINT p, _UINT32_T* r)
+    extern "C" PMC_STATUS_CODE PMCCS_IS_MINUS_ONE(PMC_HANDLE_SINT p, _UINT32_T* r)
     {
         if (p == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -76,7 +73,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_IS_ONE(PMC_HANDLE_SINT p, _UINT32_T* r)
+    extern "C" PMC_STATUS_CODE PMCCS_IS_ONE(PMC_HANDLE_SINT p, _UINT32_T* r)
     {
         if (p == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -93,7 +90,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_IS_POWER_OF_TWO(PMC_HANDLE_SINT p, _UINT32_T* r)
+    extern "C" PMC_STATUS_CODE PMCCS_IS_POWER_OF_TWO(PMC_HANDLE_SINT p, _UINT32_T* r)
     {
         if (p == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -110,7 +107,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_IS_ZERO(PMC_HANDLE_SINT p, _UINT32_T* r)
+    extern "C" PMC_STATUS_CODE PMCCS_IS_ZERO(PMC_HANDLE_SINT p, _UINT32_T* r)
     {
         if (p == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -127,7 +124,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_GetHashCode(PMC_HANDLE_SINT p, _INT32_T* r)
+    extern "C" PMC_STATUS_CODE PMCCS_GetHashCode(PMC_HANDLE_SINT p, _INT32_T* r)
     {
         if (p == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -144,12 +141,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" void __DLLEXPORT __PMC_CALL PMCCS_GetStatisticsInfo(PMC_STATISTICS_INFO* p)
+    extern "C" void PMCCS_GetStatisticsInfo(PMC_STATISTICS_INFO* p)
     {
         PMC_GetStatisticsInfo(p);
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_From_UI(_UINT32_T x, PMC_HANDLE_SINT* o)
+    extern "C" PMC_STATUS_CODE PMCCS_From_UI(_UINT32_T x, PMC_HANDLE_SINT* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -164,7 +161,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_From_I(_INT32_T x, PMC_HANDLE_SINT* o)
+    extern "C" PMC_STATUS_CODE PMCCS_From_I(_INT32_T x, PMC_HANDLE_SINT* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -179,7 +176,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_From_UL(_UINT64_T x, PMC_HANDLE_SINT* o)
+    extern "C" PMC_STATUS_CODE PMCCS_From_UL(_UINT64_T x, PMC_HANDLE_SINT* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -194,7 +191,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_From_L(_INT64_T x, PMC_HANDLE_SINT* o)
+    extern "C" PMC_STATUS_CODE PMCCS_From_L(_INT64_T x, PMC_HANDLE_SINT* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -209,7 +206,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_From_UX(PMC_HANDLE_UINT x, PMC_HANDLE_SINT* o)
+    extern "C" PMC_STATUS_CODE PMCCS_From_UX(PMC_HANDLE_UINT x, PMC_HANDLE_SINT* o)
     {
         if (x == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -226,13 +223,13 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Dispose(PMC_HANDLE_SINT p)
+    extern "C" PMC_STATUS_CODE PMCCS_CheckHandle_UX(PMC_HANDLE_UINT p)
     {
         if (p == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            PMC_Dispose(p);
+            PMC_CheckHandle_UX(p);
             return (PMC_STATUS_OK);
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
@@ -241,7 +238,52 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_GetConstantValue_I(PMC_CONSTANT_VALUE_CODE type, PMC_HANDLE_SINT* value)
+    extern "C" PMC_STATUS_CODE PMCCS_CheckHandle_X(PMC_HANDLE_SINT p)
+    {
+        if (p == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            PMC_CheckHandle_X(p);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE PMCCS_Dispose_UX(PMC_HANDLE_UINT p)
+    {
+        if (p == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            PMC_Dispose_UX(p);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE PMCCS_Dispose_X(PMC_HANDLE_SINT p)
+    {
+        if (p == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            PMC_Dispose_X(p);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE PMCCS_GetConstantValue_I(PMC_CONSTANT_VALUE_CODE type, PMC_HANDLE_SINT* value)
     {
         if (value == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -256,7 +298,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_FromByteArray(const unsigned char* buffer, _INT32_T count, PMC_HANDLE_SINT* value)
+    extern "C" PMC_STATUS_CODE PMCCS_FromByteArray(const unsigned char* buffer, _INT32_T count, PMC_HANDLE_SINT* value)
     {
         if (value == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -271,7 +313,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_ToByteArray(PMC_HANDLE_SINT p, unsigned char* buffer, _INT32_T buffer_size, _INT32_T* size)
+    extern "C" PMC_STATUS_CODE PMCCS_ToByteArray(PMC_HANDLE_SINT p, unsigned char* buffer, _INT32_T buffer_size, _INT32_T* size)
     {
         if (size == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -289,7 +331,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Clone_X(PMC_HANDLE_SINT x, PMC_HANDLE_SINT* o)
+    extern "C" PMC_STATUS_CODE PMCCS_Clone_X(PMC_HANDLE_SINT x, PMC_HANDLE_SINT* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -304,7 +346,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_GetAllocatedMemorySize(_UINT64_T* size)
+    extern "C" PMC_STATUS_CODE PMCCS_GetAllocatedMemorySize(_UINT64_T* size)
     {
         if (size == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -319,7 +361,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_To_X_UI(PMC_HANDLE_SINT p, _UINT32_T* o)
+    extern "C" PMC_STATUS_CODE PMCCS_To_X_UI(PMC_HANDLE_SINT p, _UINT32_T* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -334,7 +376,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_To_X_I(PMC_HANDLE_SINT p, _INT32_T* o)
+    extern "C" PMC_STATUS_CODE PMCCS_To_X_I(PMC_HANDLE_SINT p, _INT32_T* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -349,7 +391,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_To_X_UL(PMC_HANDLE_SINT p, _UINT64_T* o)
+    extern "C" PMC_STATUS_CODE PMCCS_To_X_UL(PMC_HANDLE_SINT p, _UINT64_T* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -364,7 +406,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_To_X_L(PMC_HANDLE_SINT p, _INT64_T* o)
+    extern "C" PMC_STATUS_CODE PMCCS_To_X_L(PMC_HANDLE_SINT p, _INT64_T* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -379,7 +421,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_To_X_UX(PMC_HANDLE_SINT p, PMC_HANDLE_UINT* o)
+    extern "C" PMC_STATUS_CODE PMCCS_To_X_UX(PMC_HANDLE_SINT p, PMC_HANDLE_UINT* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -394,7 +436,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_ToString(PMC_HANDLE_SINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, _INT32_T buffer_size, _INT32_T* size)
+    extern "C" PMC_STATUS_CODE PMCCS_ToString(PMC_HANDLE_SINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, _INT32_T buffer_size, _INT32_T* size)
     {
         if (size == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -412,7 +454,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Parse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o)
+    extern "C" PMC_STATUS_CODE PMCCS_Parse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o)
     {
         const PMC_NUMBER_STYLE_CODE all_styles =
             PMC_NUMBER_STYLE_ALLOW_LEADING_WHITE |
@@ -430,45 +472,42 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_ERROR);
         try
         {
-            _UINT32_T result;
-            PMC_STATUS_CODE err = PMC_TryParse(source, number_styles | PMC_NUMBER_STYLE_ALLOW_SIGNED_INTEGER | PMC_NUMBER_STYLE_ALLOW_EXCEPTION_THROWING, format_option, o, &result);
-            if (err != PMC_STATUS_OK)
-                return (err);
-            if (!result)
+            return (PMC_TryParse(source, number_styles | PMC_NUMBER_STYLE_ALLOW_SIGNED_INTEGER, format_option, o));
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE PMCCS_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o)
+    {
+        const PMC_NUMBER_STYLE_CODE all_styles =
+            PMC_NUMBER_STYLE_ALLOW_LEADING_WHITE |
+            PMC_NUMBER_STYLE_ALLOW_TRAILING_WHITE |
+            PMC_NUMBER_STYLE_ALLOW_LEADING_SIGN |
+            PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN |
+            PMC_NUMBER_STYLE_ALLOW_PARENTHESES |
+            PMC_NUMBER_STYLE_ALLOW_DECIMAL_POINT |
+            PMC_NUMBER_STYLE_ALLOW_THOUSANDS |
+            PMC_NUMBER_STYLE_ALLOW_CURRENCY_SYMBOL |
+            PMC_NUMBER_STYLE_ALLOW_HEX_SPECIFIER;
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        if (number_styles & ~all_styles)
+            return (PMC_STATUS_ARGUMENT_ERROR);
+        try
+        {
+            PMC_STATUS_CODE err = PMC_TryParse(source, number_styles | PMC_NUMBER_STYLE_ALLOW_SIGNED_INTEGER, format_option, o);
+            switch (err)
             {
-                // Ç±ÇÃÉãÅ[ÉgÇ…ìûíBÇ∑ÇÈÇ±Ç∆ÇÕÇ»Ç¢ÇÕÇ∏
-                return (PMC_STATUS_INTERNAL_ERROR);
-            }
-            return (PMC_STATUS_OK);
-        }
-        catch (const Palmtree::Math::Core::Internal::Exception& ex)
-        {
-            return (ex.GetStatusCode());
-        }
-    }
-
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o, _UINT32_T* result)
-    {
-        const PMC_NUMBER_STYLE_CODE all_styles =
-            PMC_NUMBER_STYLE_ALLOW_LEADING_WHITE |
-            PMC_NUMBER_STYLE_ALLOW_TRAILING_WHITE |
-            PMC_NUMBER_STYLE_ALLOW_LEADING_SIGN |
-            PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN |
-            PMC_NUMBER_STYLE_ALLOW_PARENTHESES |
-            PMC_NUMBER_STYLE_ALLOW_DECIMAL_POINT |
-            PMC_NUMBER_STYLE_ALLOW_THOUSANDS |
-            PMC_NUMBER_STYLE_ALLOW_CURRENCY_SYMBOL |
-            PMC_NUMBER_STYLE_ALLOW_HEX_SPECIFIER;
-        if (o == nullptr)
-            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
-        if (number_styles & ~all_styles)
-            return (PMC_STATUS_ARGUMENT_ERROR);
-        try
-        {
-            PMC_STATUS_CODE err = PMC_TryParse(source, number_styles | PMC_NUMBER_STYLE_ALLOW_SIGNED_INTEGER, format_option, o, result);
-            if (err != PMC_STATUS_OK)
+            case PMC_STATUS_FORMAT_ERROR:
+            case PMC_STATUS_OVERFLOW:
+                *o = nullptr;
+                return (PMC_STATUS_OK);
+            default:
                 return (err);
-            return (PMC_STATUS_OK);
+            }
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
@@ -476,7 +515,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Add_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Add_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -491,7 +530,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Add_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Add_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -506,7 +545,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Add_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Add_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -521,7 +560,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Add_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Add_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -536,7 +575,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Add_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Add_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -551,7 +590,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Add_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Add_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -566,7 +605,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Add_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Add_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -581,7 +620,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Add_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Add_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -596,7 +635,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Add_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Add_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -611,7 +650,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Add_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Add_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -626,7 +665,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Add_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Add_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -641,7 +680,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Subtruct_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Subtruct_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -656,7 +695,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Subtruct_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Subtruct_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -671,7 +710,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Subtruct_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Subtruct_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -686,7 +725,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Subtruct_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Subtruct_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -701,7 +740,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Subtruct_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Subtruct_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -716,7 +755,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Subtruct_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Subtruct_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -731,7 +770,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Subtruct_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Subtruct_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -746,7 +785,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Subtruct_X_UL(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Subtruct_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -761,7 +800,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Subtruct_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Subtruct_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -776,7 +815,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Subtruct_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Subtruct_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -791,7 +830,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Subtruct_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Subtruct_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -806,7 +845,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Multiply_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Multiply_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -821,7 +860,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Multiply_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Multiply_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -836,7 +875,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Multiply_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Multiply_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -851,7 +890,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Multiply_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Multiply_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -866,7 +905,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Multiply_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Multiply_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -881,7 +920,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Multiply_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Multiply_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -896,7 +935,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Multiply_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Multiply_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -911,7 +950,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Multiply_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Multiply_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -926,7 +965,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Multiply_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Multiply_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -941,7 +980,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Multiply_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Multiply_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -956,7 +995,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Multiply_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Multiply_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -971,7 +1010,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_DivRem_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q, _UINT32_T* r)
+    extern "C" PMC_STATUS_CODE PMCCS_DivRem_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q, _UINT32_T* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -986,7 +1025,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_DivRem_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q, _UINT32_T* r)
+    extern "C" PMC_STATUS_CODE PMCCS_DivRem_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q, _INT32_T* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1001,7 +1040,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_DivRem_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q, _UINT64_T* r)
+    extern "C" PMC_STATUS_CODE PMCCS_DivRem_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q, _UINT64_T* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1016,7 +1055,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_DivRem_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q, _UINT64_T* r)
+    extern "C" PMC_STATUS_CODE PMCCS_DivRem_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q, _INT64_T* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1031,7 +1070,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_DivRem_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q, PMC_HANDLE_UINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_DivRem_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q, PMC_HANDLE_UINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1046,7 +1085,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_DivRem_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* q, PMC_HANDLE_SINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_DivRem_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* q, PMC_HANDLE_SINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1061,7 +1100,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_DivRem_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* q, PMC_HANDLE_SINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_DivRem_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* q, PMC_HANDLE_SINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1076,7 +1115,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_DivRem_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* q, PMC_HANDLE_SINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_DivRem_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* q, PMC_HANDLE_SINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1091,7 +1130,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_DivRem_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* q, PMC_HANDLE_SINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_DivRem_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* q, PMC_HANDLE_SINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1106,7 +1145,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_DivRem_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* q, PMC_HANDLE_SINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_DivRem_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* q, PMC_HANDLE_SINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1121,7 +1160,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_DivRem_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q, PMC_HANDLE_SINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_DivRem_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q, PMC_HANDLE_SINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1136,7 +1175,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Remainder_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, _UINT32_T* r)
+    extern "C" PMC_STATUS_CODE PMCCS_Remainder_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, _UINT32_T* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1151,7 +1190,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Remainder_I_X(_INT32_T u, PMC_HANDLE_SINT v, _UINT32_T* r)
+    extern "C" PMC_STATUS_CODE PMCCS_Remainder_I_X(_INT32_T u, PMC_HANDLE_SINT v, _UINT32_T* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1166,7 +1205,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Remainder_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, _UINT64_T* r)
+    extern "C" PMC_STATUS_CODE PMCCS_Remainder_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, _UINT64_T* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1181,7 +1220,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Remainder_L_X(_INT64_T u, PMC_HANDLE_SINT v, _UINT64_T* r)
+    extern "C" PMC_STATUS_CODE PMCCS_Remainder_L_X(_INT64_T u, PMC_HANDLE_SINT v, _UINT64_T* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1196,7 +1235,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Remainder_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_UINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_Remainder_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_UINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1211,7 +1250,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Remainder_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_Remainder_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1226,7 +1265,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Remainder_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_Remainder_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1241,7 +1280,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Remainder_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_Remainder_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1256,7 +1295,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Remainder_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_Remainder_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1271,7 +1310,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Remainder_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_Remainder_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1286,7 +1325,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Remainder_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_Remainder_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1301,7 +1340,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_RightShift_X_I(PMC_HANDLE_SINT p, _INT32_T n, PMC_HANDLE_SINT* o)
+    extern "C" PMC_STATUS_CODE PMCCS_RightShift_X_I(PMC_HANDLE_SINT p, _INT32_T n, PMC_HANDLE_SINT* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1316,7 +1355,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_LeftShift_X_I(PMC_HANDLE_SINT p, _INT32_T n, PMC_HANDLE_SINT* o)
+    extern "C" PMC_STATUS_CODE PMCCS_LeftShift_X_I(PMC_HANDLE_SINT p, _INT32_T n, PMC_HANDLE_SINT* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1331,7 +1370,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseAnd_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, _UINT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseAnd_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, _UINT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1346,7 +1385,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseAnd_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseAnd_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1361,7 +1400,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseAnd_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, _UINT64_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseAnd_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, _UINT64_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1376,7 +1415,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseAnd_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseAnd_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1391,7 +1430,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseAnd_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_UINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseAnd_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_UINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1406,7 +1445,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseAnd_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, _UINT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseAnd_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, _UINT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1421,7 +1460,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseAnd_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseAnd_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1436,7 +1475,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseAnd_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, _UINT64_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseAnd_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, _UINT64_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1451,7 +1490,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseAnd_X_L(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseAnd_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1466,7 +1505,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseAnd_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseAnd_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1481,7 +1520,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseAnd_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseAnd_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1496,7 +1535,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseOr_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseOr_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1511,7 +1550,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseOr_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseOr_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1526,7 +1565,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseOr_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseOr_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1541,7 +1580,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseOr_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseOr_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1556,7 +1595,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseOr_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseOr_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1571,7 +1610,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseOr_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseOr_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1586,7 +1625,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseOr_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseOr_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1601,7 +1640,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseOr_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseOr_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1616,7 +1655,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseOr_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseOr_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1631,7 +1670,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseOr_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseOr_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1646,7 +1685,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_BitwiseOr_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_BitwiseOr_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1661,7 +1700,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_ExclusiveOr_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_ExclusiveOr_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1676,7 +1715,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_ExclusiveOr_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_ExclusiveOr_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1691,7 +1730,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_ExclusiveOr_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_ExclusiveOr_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1706,7 +1745,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_ExclusiveOr_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_ExclusiveOr_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1721,7 +1760,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_ExclusiveOr_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_ExclusiveOr_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1736,7 +1775,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_ExclusiveOr_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_ExclusiveOr_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1751,7 +1790,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_ExclusiveOr_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_ExclusiveOr_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1766,7 +1805,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_ExclusiveOr_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_ExclusiveOr_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1781,7 +1820,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_ExclusiveOr_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_ExclusiveOr_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1796,7 +1835,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_ExclusiveOr_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_ExclusiveOr_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1811,7 +1850,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_ExclusiveOr_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_ExclusiveOr_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1826,7 +1865,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Compare_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, _INT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Compare_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, _INT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1841,7 +1880,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Compare_I_X(_INT32_T u, PMC_HANDLE_SINT v, _INT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Compare_I_X(_INT32_T u, PMC_HANDLE_SINT v, _INT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1856,7 +1895,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Compare_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, _INT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Compare_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, _INT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1871,7 +1910,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Compare_L_X(_INT64_T u, PMC_HANDLE_SINT v, _INT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Compare_L_X(_INT64_T u, PMC_HANDLE_SINT v, _INT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1886,7 +1925,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Compare_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, _INT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Compare_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, _INT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1901,7 +1940,22 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Compare_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, _INT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Compare_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, _INT32_T* w)
+    {
+        if (w == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *w = PMC_Compare_X_UI(u, v);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE PMCCS_Compare_X_I(PMC_HANDLE_SINT u, _INT32_T v, _INT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1916,22 +1970,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Compare_X_I(PMC_HANDLE_SINT u, _INT32_T v, _INT32_T* w)
-    {
-        if (w == nullptr)
-            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
-        try
-        {
-            *w = PMC_Compare_X_I(u, v);
-            return (PMC_STATUS_OK);
-        }
-        catch (const Palmtree::Math::Core::Internal::Exception& ex)
-        {
-            return (ex.GetStatusCode());
-        }
-    }
-
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Compare_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, _INT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Compare_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, _INT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1946,7 +1985,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Compare_X_L(PMC_HANDLE_SINT u, _INT64_T v, _INT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Compare_X_L(PMC_HANDLE_SINT u, _INT64_T v, _INT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1961,7 +2000,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Compare_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, _INT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Compare_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, _INT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1976,7 +2015,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Compare_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, _INT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Compare_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, _INT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -1991,7 +2030,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Equals_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, _UINT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Equals_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, _UINT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2006,7 +2045,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Equals_I_X(_INT32_T u, PMC_HANDLE_SINT v, _UINT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Equals_I_X(_INT32_T u, PMC_HANDLE_SINT v, _UINT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2021,7 +2060,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Equals_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, _UINT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Equals_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, _UINT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2036,7 +2075,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Equals_L_X(_INT64_T u, PMC_HANDLE_SINT v, _UINT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Equals_L_X(_INT64_T u, PMC_HANDLE_SINT v, _UINT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2051,7 +2090,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Equals_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, _UINT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Equals_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, _UINT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2066,7 +2105,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Equals_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, _UINT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Equals_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, _UINT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2081,7 +2120,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Equals_X_I(PMC_HANDLE_SINT u, _INT32_T v, _UINT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Equals_X_I(PMC_HANDLE_SINT u, _INT32_T v, _UINT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2096,7 +2135,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Equals_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, _UINT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Equals_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, _UINT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2111,7 +2150,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Equals_X_L(PMC_HANDLE_SINT u, _INT64_T v, _UINT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Equals_X_L(PMC_HANDLE_SINT u, _INT64_T v, _UINT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2126,7 +2165,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Equals_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, _UINT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Equals_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, _UINT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2141,7 +2180,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Equals_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, _UINT32_T* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Equals_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, _UINT32_T* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2156,7 +2195,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_GreatestCommonDivisor_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_GreatestCommonDivisor_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_UINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2171,7 +2210,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_GreatestCommonDivisor_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_GreatestCommonDivisor_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_UINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2186,7 +2225,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_GreatestCommonDivisor_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_GreatestCommonDivisor_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_UINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2201,7 +2240,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_GreatestCommonDivisor_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_GreatestCommonDivisor_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_UINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2216,7 +2255,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_GreatestCommonDivisor_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_GreatestCommonDivisor_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_UINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2231,7 +2270,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_GreatestCommonDivisor_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_GreatestCommonDivisor_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_UINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2246,7 +2285,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_GreatestCommonDivisor_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_GreatestCommonDivisor_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_UINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2261,7 +2300,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_GreatestCommonDivisor_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_GreatestCommonDivisor_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_UINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2276,7 +2315,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_GreatestCommonDivisor_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_GreatestCommonDivisor_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_UINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2291,7 +2330,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_GreatestCommonDivisor_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_GreatestCommonDivisor_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2306,7 +2345,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_GreatestCommonDivisor_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_GreatestCommonDivisor_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_UINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2322,7 +2361,7 @@ namespace Palmtree::Math::Core::Internal
     }
 
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Abs_X(PMC_HANDLE_SINT u, PMC_HANDLE_UINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Abs_X(PMC_HANDLE_SINT u, PMC_HANDLE_UINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2337,20 +2376,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info)
-    {
-        try
-        {
-            PMC_InitializeNumberFormatInfo(info);
-            return (PMC_STATUS_OK);
-        }
-        catch (const Palmtree::Math::Core::Internal::Exception& ex)
-        {
-            return (ex.GetStatusCode());
-        }
-    }
-
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Negate_UX(PMC_HANDLE_UINT u, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Negate_UX(PMC_HANDLE_UINT u, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2365,7 +2391,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Negate_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_Negate_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2380,7 +2406,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_OneComplement_UX(PMC_HANDLE_UINT u, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_OneComplement_UX(PMC_HANDLE_UINT u, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2395,7 +2421,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_OneComplement_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT* w)
+    extern "C" PMC_STATUS_CODE PMCCS_OneComplement_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2410,7 +2436,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Increment_X(PMC_HANDLE_SINT x, PMC_HANDLE_SINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_Increment_X(PMC_HANDLE_SINT x, PMC_HANDLE_SINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2425,7 +2451,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __DLLEXPORT __PMC_CALL PMCCS_Decrement_X(PMC_HANDLE_SINT x, PMC_HANDLE_SINT* r)
+    extern "C" PMC_STATUS_CODE PMCCS_Decrement_X(PMC_HANDLE_SINT x, PMC_HANDLE_SINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);

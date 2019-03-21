@@ -15,11 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
+    <Xml Include="mymakefile.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="mymakefile.xml" />
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

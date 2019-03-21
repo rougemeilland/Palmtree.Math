@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -26,7 +26,6 @@
 #include <windows.h>
 #include "pmc_sint_internal.h"
 #include "pmc_resourceholder_sint.h"
-#include "pmc_inline_func.h"
 
 
 namespace Palmtree::Math::Core::Internal
@@ -36,596 +35,600 @@ namespace Palmtree::Math::Core::Internal
     // r.abs == u.abs % v.abs
     // r.sign == u.sign
 
-    // ¦˜b‚ğŠÈ’P‚É‚·‚é‚½‚ß‚É64ƒrƒbƒg®”Œ^‚É‚Â‚¢‚Ä‚Íl—¶‚µ‚È‚¢B
-    // 1) u ‚ª•„†‚È‚µ32bit®”Av ‚ª‘½”{’·®”‚Ìê‡‚ÉAq ‚Æ r ‚ğ•„†‚È‚µ(‚ ‚é‚¢‚Í•„†•t)32bit®”‚Å•\Œ»‚Å‚«‚é‚©H
-    //   u.sign >= 0 ‚È‚Ì‚ÅAq.sign == v.sign, r.sign > 0B
-    //   Ë u ‚Í•„†‚È‚µAq ‚Í•„†•t‚Å‚È‚¯‚ê‚Î‚È‚ç‚È‚¢B
-    //   r.abs <= u.abs ‚©‚Â r.abs < v.abs ‚È‚Ì‚ÅA r ‚Í•„†‚È‚µ32bit®”‚Å•\Œ»‚Å‚«‚éB
-    //   ˆê•ûAq ‚Í•„†‚ªŒÅ’è‚Å‚Í‚È‚¢‚½‚ß‚É•„†‚È‚µ®”‚Å‚Í•\Œ»‚Å‚«‚È‚¢B‚©‚ÂAq.abs <= u.abs ‚Å‚ ‚é‚ª•„†”½“]‚É‚æ‚è¸“x‚ª¸‚í‚ê‚é‰Â”\«‚ª‚ ‚éB
-    //   Ë‚æ‚Á‚ÄAq ‚Í‘½”{’·®”‚Å•\Œ»‚·‚é•K—v‚ª‚ ‚éB
+    // â€»è©±ã‚’ç°¡å˜ã«ã™ã‚‹ãŸã‚ã«64ãƒ“ãƒƒãƒˆæ•´æ•°å‹ã«ã¤ã„ã¦ã¯è€ƒæ…®ã—ãªã„ã€‚
+    // 1) u ãŒç¬¦å·ãªã—32bitæ•´æ•°ã€v ãŒå¤šå€é•·æ•´æ•°ã®å ´åˆã«ã€q ã¨ r ã‚’ç¬¦å·ãªã—(ã‚ã‚‹ã„ã¯ç¬¦å·ä»˜)32bitæ•´æ•°ã§è¡¨ç¾ã§ãã‚‹ã‹ï¼Ÿ
+    //   u.sign >= 0 ãªã®ã§ã€q.sign == v.sign, r.sign > 0ã€‚
+    //   â‡’ u ã¯ç¬¦å·ãªã—ã€q ã¯ç¬¦å·ä»˜ã§ãªã‘ã‚Œã°ãªã‚‰ãªã„ã€‚
+    //   r.abs <= u.abs ã‹ã¤ r.abs < v.abs ãªã®ã§ã€ r ã¯ç¬¦å·ãªã—32bitæ•´æ•°ã§è¡¨ç¾ã§ãã‚‹ã€‚
+    //   ä¸€æ–¹ã€q ã¯ç¬¦å·ãŒå›ºå®šã§ã¯ãªã„ãŸã‚ã«ç¬¦å·ãªã—æ•´æ•°ã§ã¯è¡¨ç¾ã§ããªã„ã€‚ã‹ã¤ã€q.abs <= u.abs ã§ã‚ã‚‹ãŒç¬¦å·åè»¢ã«ã‚ˆã‚Šç²¾åº¦ãŒå¤±ã‚ã‚Œã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ã€‚
+    //   â‡’ã‚ˆã£ã¦ã€q ã¯å¤šå€é•·æ•´æ•°ã§è¡¨ç¾ã™ã‚‹å¿…è¦ãŒã‚ã‚‹ã€‚
     //
-    // 2) u ‚ª•„†•t‚«32bit®”Av ‚ª‘½”{’·®”‚Ìê‡‚ÉAq ‚Æ r ‚ğ•„†‚È‚µ(‚ ‚é‚¢‚Í•„†•t)32bit®”‚Å•\Œ»‚Å‚«‚é‚©H
-    //   u ‚Æ q ‚Ì•„†‚Í‚Æ‚à‚ÉŒÅ’è‚³‚ê‚È‚¢‚½‚ßA•„†•t®”‚Å‚ ‚é•K—v‚ª‚ ‚éB
-    //   r.abs <= u.abs ‚©‚Â r.abs < v.abs ‚Å‚ ‚èAr ‚Íâ‘Î’l‚É‚¨‚¢‚Ä‚ÍuˆÈ‰º‚Å•„†‚É‚¨‚¢‚Ä‚Íu‚Æ“¯‚¶‚È‚Ì‚ÅAr‚Í32ƒrƒbƒg®”‚Å•\Œ»‚Å‚«‚éB
-    //   ˆê•ûAq‚É‚Â‚¢‚Ä‚Í1)‚Æ“¯—l‚Ì——R‚É‚æ‚è32ƒrƒbƒg®”‚Å•\Œ»‚·‚é‚±‚Æ‚Í‚Å‚«‚È‚¢B
+    // 2) u ãŒç¬¦å·ä»˜ã32bitæ•´æ•°ã€v ãŒå¤šå€é•·æ•´æ•°ã®å ´åˆã«ã€q ã¨ r ã‚’ç¬¦å·ãªã—(ã‚ã‚‹ã„ã¯ç¬¦å·ä»˜)32bitæ•´æ•°ã§è¡¨ç¾ã§ãã‚‹ã‹ï¼Ÿ
+    //   u ã¨ q ã®ç¬¦å·ã¯ã¨ã‚‚ã«å›ºå®šã•ã‚Œãªã„ãŸã‚ã€ç¬¦å·ä»˜æ•´æ•°ã§ã‚ã‚‹å¿…è¦ãŒã‚ã‚‹ã€‚
+    //   r.abs <= u.abs ã‹ã¤ r.abs < v.abs ã§ã‚ã‚Šã€r ã¯çµ¶å¯¾å€¤ã«ãŠã„ã¦ã¯uä»¥ä¸‹ã§ç¬¦å·ã«ãŠã„ã¦ã¯uã¨åŒã˜ãªã®ã§ã€rã¯32ãƒ“ãƒƒãƒˆæ•´æ•°ã§è¡¨ç¾ã§ãã‚‹ã€‚
+    //   ä¸€æ–¹ã€qã«ã¤ã„ã¦ã¯1)ã¨åŒæ§˜ã®ç†ç”±ã«ã‚ˆã‚Š32ãƒ“ãƒƒãƒˆæ•´æ•°ã§è¡¨ç¾ã™ã‚‹ã“ã¨ã¯ã§ããªã„ã€‚
     //
-    // 3) u ‚ª‘½”{’·®”Av ‚ª•„†‚È‚µ32bit®”‚Ìê‡‚ÉAq ‚Æ r ‚ğ•„†‚È‚µ(‚ ‚é‚¢‚Í•„†•t)32bit®”‚Å•\Œ»‚Å‚«‚é‚©H
-    //   u ‚Æ q ‚Ì•„†‚Í‚Æ‚à‚ÉŒÅ’è‚³‚ê‚È‚¢‚½‚ßA•„†•t®”‚Å‚ ‚é•K—v‚ª‚ ‚éB
-    //   r.abs < v.abs ‚Å‚Í‚ ‚é‚ªAr‚Ì•„†‚Í•‰‚Å‚à‚ ‚è‚¤‚é‚½‚ßA•„†”½“]‚É‚æ‚è¸“x‚ª¸‚í‚ê‚é‚±‚Æ‚ª‚ ‚éB
-    //   y—ázu == -2147483648(0x80000000)Av == 0x80000001‚Ìê‡AË r‚Ì•„†‚Í•‰‚©‚Ââ‘Î’l‚Í0x80000000‚Å‚ ‚é‚ªA‚±‚ê‚Í•„†•t32bit®”‚Å‚Í•\Œ»‚Å‚«‚È‚¢B‚±‚Ì”½—á‚É‚æ‚èAr‚Í•„†•t‘½”{’·®”‚Å‚ ‚é•K—v‚ª‚ ‚éB
-    //   ˆê•ûAq ‚É‚Â‚¢‚Ä‚ÍAq.abs == u.abs / v.abs ‚Å‚ ‚èA32ƒrƒbƒg®”‚Å•\Œ»‰Â”\‚Æ‚ÍŒÀ‚ç‚È‚¢‚±‚Æ‚ª—eˆÕ‚É‚í‚©‚éB
-    //   Ë‚±‚ê‚ç‚Ì‚±‚Æ‚©‚çAq ‚Æ r ‚Í‚Æ‚à‚É•„†•t‘½”{’·®”‚Å‚È‚¯‚ê‚Î‚È‚ç‚È‚¢B
+    // 3) u ãŒå¤šå€é•·æ•´æ•°ã€v ãŒç¬¦å·ãªã—32bitæ•´æ•°ã®å ´åˆã«ã€q ã¨ r ã‚’ç¬¦å·ãªã—(ã‚ã‚‹ã„ã¯ç¬¦å·ä»˜)32bitæ•´æ•°ã§è¡¨ç¾ã§ãã‚‹ã‹ï¼Ÿ
+    //   u ã¨ q ã®ç¬¦å·ã¯ã¨ã‚‚ã«å›ºå®šã•ã‚Œãªã„ãŸã‚ã€ç¬¦å·ä»˜æ•´æ•°ã§ã‚ã‚‹å¿…è¦ãŒã‚ã‚‹ã€‚
+    //   r.abs < v.abs ã§ã¯ã‚ã‚‹ãŒã€rã®ç¬¦å·ã¯è² ã§ã‚‚ã‚ã‚Šã†ã‚‹ãŸã‚ã€ç¬¦å·åè»¢ã«ã‚ˆã‚Šç²¾åº¦ãŒå¤±ã‚ã‚Œã‚‹ã“ã¨ãŒã‚ã‚‹ã€‚
+    //   ã€ä¾‹ã€‘u == -2147483648(0x80000000)ã€v == 0x80000001ã®å ´åˆã€â‡’ rã®ç¬¦å·ã¯è² ã‹ã¤çµ¶å¯¾å€¤ã¯0x80000000ã§ã‚ã‚‹ãŒã€ã“ã‚Œã¯ç¬¦å·ä»˜32bitæ•´æ•°ã§ã¯è¡¨ç¾ã§ããªã„ã€‚ã“ã®åä¾‹ã«ã‚ˆã‚Šã€rã¯ç¬¦å·ä»˜å¤šå€é•·æ•´æ•°ã§ã‚ã‚‹å¿…è¦ãŒã‚ã‚‹ã€‚
+    //   ä¸€æ–¹ã€q ã«ã¤ã„ã¦ã¯ã€q.abs == u.abs / v.abs ã§ã‚ã‚Šã€32ãƒ“ãƒƒãƒˆæ•´æ•°ã§è¡¨ç¾å¯èƒ½ã¨ã¯é™ã‚‰ãªã„ã“ã¨ãŒå®¹æ˜“ã«ã‚ã‹ã‚‹ã€‚
+    //   â‡’ã“ã‚Œã‚‰ã®ã“ã¨ã‹ã‚‰ã€q ã¨ r ã¯ã¨ã‚‚ã«ç¬¦å·ä»˜å¤šå€é•·æ•´æ•°ã§ãªã‘ã‚Œã°ãªã‚‰ãªã„ã€‚
     //
-    // 4) u ‚ª‘½”{’·®”Av ‚ª•„†•t‚«32bit®”‚Ìê‡‚ÉAq ‚Æ r ‚ğ•„†‚È‚µ(‚ ‚é‚¢‚Í•„†•t)32bit®”‚Å•\Œ»‚Å‚«‚é‚©H
-    //   u ‚Æ q ‚Ì•„†‚Í‚Æ‚à‚ÉŒÅ’è‚³‚ê‚È‚¢‚½‚ßA•„†•t®”‚Å‚ ‚é•K—v‚ª‚ ‚éB
-    //   r.abs < v.abs ‚Å‚ ‚è v.abs ‚ÌÅ‘å’l‚Í 0x80000000 ‚Å‚ ‚é‚½‚ßAr.abs ‚Í 0x80000000 ˆÈã‚Æ‚È‚é‚±‚Æ‚Í‚È‚­A•„†”½“]‚É‚æ‚Á‚Ä¸“x‚ª¸‚í‚ê‚é‚±‚Æ‚Í‚È‚¢B
-    //   Ë r ‚Í•„†•t32ƒrƒbƒg®”‚Å•\Œ»‚Å‚«‚éB
-    //   ˆê•ûAq ‚É‚Â‚¢‚Ä‚ÍA3)‚Æ“¯—l‚É•„†•t‘½”{’·®”‚Å‚È‚¯‚ê‚Î‚È‚ç‚È‚¢B
+    // 4) u ãŒå¤šå€é•·æ•´æ•°ã€v ãŒç¬¦å·ä»˜ã32bitæ•´æ•°ã®å ´åˆã«ã€q ã¨ r ã‚’ç¬¦å·ãªã—(ã‚ã‚‹ã„ã¯ç¬¦å·ä»˜)32bitæ•´æ•°ã§è¡¨ç¾ã§ãã‚‹ã‹ï¼Ÿ
+    //   u ã¨ q ã®ç¬¦å·ã¯ã¨ã‚‚ã«å›ºå®šã•ã‚Œãªã„ãŸã‚ã€ç¬¦å·ä»˜æ•´æ•°ã§ã‚ã‚‹å¿…è¦ãŒã‚ã‚‹ã€‚
+    //   r.abs < v.abs ã§ã‚ã‚Š v.abs ã®æœ€å¤§å€¤ã¯ 0x80000000 ã§ã‚ã‚‹ãŸã‚ã€r.abs ã¯ 0x80000000 ä»¥ä¸Šã¨ãªã‚‹ã“ã¨ã¯ãªãã€ç¬¦å·åè»¢ã«ã‚ˆã£ã¦ç²¾åº¦ãŒå¤±ã‚ã‚Œã‚‹ã“ã¨ã¯ãªã„ã€‚
+    //   â‡’ r ã¯ç¬¦å·ä»˜32ãƒ“ãƒƒãƒˆæ•´æ•°ã§è¡¨ç¾ã§ãã‚‹ã€‚
+    //   ä¸€æ–¹ã€q ã«ã¤ã„ã¦ã¯ã€3)ã¨åŒæ§˜ã«ç¬¦å·ä»˜å¤šå€é•·æ•´æ•°ã§ãªã‘ã‚Œã°ãªã‚‰ãªã„ã€‚
     //
-    // ¦Œ‹˜_F‚Ç‚ÌƒI[ƒo[ƒ[ƒh‚Ìê‡‚Å‚àq‚Í•„†•t‘½”{’·®”‚Å‚ ‚é•K—v‚ª‚ ‚éB‚Ü‚½Ar ‚ÍˆÈ‰º‚ÌğŒ‚ÅŒÅ’è¸“x®”‚É‚È‚é‚±‚Æ‚ª‚Å‚«‚éB
-    // a) u ‚ª•„†‚È‚µŒÅ’è¸“x®”‚Ìê‡ Ë r ‚Í v‚Æ“¯‚¶Œ^‚Ì®”
-    // b) u ‚ª•„†‚Â‚«ŒÅ’è¸“x®”‚Ìê‡ Ë r ‚Í v‚Æ“¯‚¶Œ^‚Ì®”
-    // c) v ‚ª•„†‚Â‚«ŒÅ’è¸“x®”‚Ìê‡ Ë r ‚Í v‚Æ“¯‚¶Œ^‚Ì®”
+    // â€»çµè«–ï¼šã©ã®ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ã®å ´åˆã§ã‚‚qã¯ç¬¦å·ä»˜å¤šå€é•·æ•´æ•°ã§ã‚ã‚‹å¿…è¦ãŒã‚ã‚‹ã€‚ã¾ãŸã€r ã¯ä»¥ä¸‹ã®æ¡ä»¶ã§å›ºå®šç²¾åº¦æ•´æ•°ã«ãªã‚‹ã“ã¨ãŒã§ãã‚‹ã€‚
+    // a) u ãŒç¬¦å·ãªã—å›ºå®šç²¾åº¦æ•´æ•°ã®å ´åˆ â‡’ r ã¯ vã¨åŒã˜å‹ã®æ•´æ•°
+    // b) u ãŒç¬¦å·ã¤ãå›ºå®šç²¾åº¦æ•´æ•°ã®å ´åˆ â‡’ r ã¯ vã¨åŒã˜å‹ã®æ•´æ•°
+    // c) v ãŒç¬¦å·ã¤ãå›ºå®šç²¾åº¦æ•´æ•°ã®å ´åˆ â‡’ r ã¯ vã¨åŒã˜å‹ã®æ•´æ•°
     //
-    // ‚Æ‚ÍŒ¾‚¤‚à‚Ì‚Ì
+    // ã¨ã¯è¨€ã†ã‚‚ã®ã®
     //
-    // ’¼ŠÏ“I‚È—‰ğ‚ª‚µ‚É‚­‚¢•”•ª‚à‚ ‚é‚½‚ßAr‚ÌŒ^‚ğˆÈ‰º‚Ì‚æ‚¤‚É‚·‚é(€–Úc‚ğíœ)
-    // a') u ‚ª•„†‚È‚µŒÅ’è¸“x®”‚Ìê‡ Ë r ‚Í v‚Æ“¯‚¶Œ^‚Ì®”
-    // b') u ‚ª•„†‚Â‚«ŒÅ’è¸“x®”‚Ìê‡ Ë r ‚Í v‚Æ“¯‚¶Œ^‚Ì®”
+    // ç›´è¦³çš„ãªç†è§£ãŒã—ã«ãã„éƒ¨åˆ†ã‚‚ã‚ã‚‹ãŸã‚ã€rã®å‹ã‚’ä»¥ä¸‹ã®ã‚ˆã†ã«ã™ã‚‹(é …ç›®cã‚’å‰Šé™¤)
+    // a') u ãŒç¬¦å·ãªã—å›ºå®šç²¾åº¦æ•´æ•°ã®å ´åˆ â‡’ r ã¯ vã¨åŒã˜å‹ã®æ•´æ•°
+    // b') u ãŒç¬¦å·ã¤ãå›ºå®šç²¾åº¦æ•´æ•°ã®å ´åˆ â‡’ r ã¯ vã¨åŒã˜å‹ã®æ•´æ•°
 
-
-
-    // ƒI[ƒo[ƒ[ƒh–ˆ‚Ì q ‚Æ r ‚ÌŒ^‚ğŒŸ“¢‚·‚é
-
-    _UINT32_T __PMC_CALL PMC_DivRem_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q)
+    _UINT32_T PMC_DivRem_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q)
     {
-        // ‘å’ï‚Ìê‡‚Í q ‚Æ r ‚Ì¸“x‚Í _INT32_T ‚Å–â‘è‚È‚¢‚ªAƒI[ƒo[ƒtƒ[‚µ‚Ä‚µ‚Ü‚¤ƒP[ƒX‚ª‘¶İ‚·‚é‚½‚ßAPMC_HANDLE_SINT Œ^‚Æ‚·‚é
-        // —á: u == -2147483648, v == -1 ‚Ìê‡Aq = 2147483648, r = 0 ‚Æ‚È‚é‚ª 2147483648 ‚Í _INT32_T‚Å‚Í•\Œ»‚Å‚«‚È‚¢B
-        if (v == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"v");
-        NUMBER_OBJECT_SINT* nv = (NUMBER_OBJECT_SINT*)v;
-        CheckNumber(nv);
+        // å¤§æŠµã®å ´åˆã¯ q ã¨ r ã®ç²¾åº¦ã¯ _INT32_T ã§å•é¡Œãªã„ãŒã€ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ã—ã¦ã—ã¾ã†ã‚±ãƒ¼ã‚¹ãŒå­˜åœ¨ã™ã‚‹ãŸã‚ã€PMC_HANDLE_SINT å‹ã¨ã™ã‚‹
+        // ä¾‹: u == -2147483648, v == -1 ã®å ´åˆã€q = 2147483648, r = 0 ã¨ãªã‚‹ãŒ 2147483648 ã¯ _INT32_Tã§ã¯è¡¨ç¾ã§ããªã„ã€‚
+        NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (nv->SIGN == 0)
         {
-            // v == 0 ‚Ìê‡
+            // v == 0 ã®å ´åˆ
 
-            // ƒGƒ‰[‚ğ•Ô‚·
-            throw DivisionByZeroException(L"0‚É‚æ‚éœZ‚ªs‚í‚ê‚æ‚¤‚Æ‚µ‚Ü‚µ‚½B");
+            // ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™
+            throw DivisionByZeroException(L"0ã«ã‚ˆã‚‹é™¤ç®—ãŒè¡Œã‚ã‚Œã‚ˆã†ã¨ã—ã¾ã—ãŸã€‚");
         }
         if (u == 0)
         {
-            // u == 0 ‚Ìê‡
+            // u == 0 ã®å ´åˆ
 
             if (q != nullptr)
-                *q = (PMC_HANDLE_SINT)&number_object_sint_zero;
+                *q = GET_NUMBER_HANDLE(&number_object_sint_zero);
             return (0);
         }
         else
         {
-            // u > 0 ‚Ìê‡
+            // u > 0 ã®å ´åˆ
 
             if (q != nullptr)
             {
-                char q_sign = nv->SIGN;
+                ResourceHolderSINT root;
+                SIGN_T q_sign = nv->SIGN;
                 _UINT32_T q_abs;
-                _UINT32_T r_abs = ep_uint.DivRem_I_X(u, nv->ABS, &q_abs);
-                *q = (PMC_HANDLE_SINT)From_I_Imp(q_abs == 0 ? 0 : q_sign, q_abs);
+                _UINT32_T r_abs = ep_uint.DivRem(u, nv->ABS, &q_abs);
+                NUMBER_OBJECT_SINT* nq = From_I_Imp(q_sign, q_abs);
+                root.HookNumber(nq);
+                *q = GET_NUMBER_HANDLE(nq);
+                root.UnlinkNumber(nq);
                 return (r_abs);
             }
             else
-                return (ep_uint.DivRem_I_X(u, nv->ABS, nullptr));
+                return (ep_uint.DivRem(u, nv->ABS, nullptr));
         }
     }
 
-    _INT32_T __PMC_CALL PMC_DivRem_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q)
+    _INT32_T PMC_DivRem_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q)
     {
-        // ‘å’ï‚Ìê‡‚Í q ‚Æ r ‚Ì¸“x‚Í _INT32_T ‚Å–â‘è‚È‚¢‚ªAƒI[ƒo[ƒtƒ[‚µ‚Ä‚µ‚Ü‚¤ƒP[ƒX‚ª‘¶İ‚·‚é‚½‚ßAPMC_HANDLE_SINT Œ^‚Æ‚·‚é
-        // —á: u == -2147483648, v == -1 ‚Ìê‡Aq = 2147483648, r = 0 ‚Æ‚È‚é‚ª 2147483648 ‚Í _INT32_T‚Å‚Í•\Œ»‚Å‚«‚È‚¢B
-        if (v == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"v");
-        NUMBER_OBJECT_SINT* nv = (NUMBER_OBJECT_SINT*)v;
-        CheckNumber(nv);
-        char u_sign;
+        // å¤§æŠµã®å ´åˆã¯ q ã¨ r ã®ç²¾åº¦ã¯ _INT32_T ã§å•é¡Œãªã„ãŒã€ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ã—ã¦ã—ã¾ã†ã‚±ãƒ¼ã‚¹ãŒå­˜åœ¨ã™ã‚‹ãŸã‚ã€PMC_HANDLE_SINT å‹ã¨ã™ã‚‹
+        // ä¾‹: u == -2147483648, v == -1 ã®å ´åˆã€q = 2147483648, r = 0 ã¨ãªã‚‹ãŒ 2147483648 ã¯ _INT32_Tã§ã¯è¡¨ç¾ã§ããªã„ã€‚
+        NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
+        SIGN_T u_sign;
         _UINT32_T u_abs = GET_ABS_32(u, &u_sign);
         if (nv->SIGN == 0)
         {
-            // v == 0 ‚Ìê‡
+            // v == 0 ã®å ´åˆ
 
-            // ƒGƒ‰[‚ğ•Ô‚·
-            throw DivisionByZeroException(L"0‚É‚æ‚éœZ‚ªs‚í‚ê‚æ‚¤‚Æ‚µ‚Ü‚µ‚½B");
+            // ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™
+            throw DivisionByZeroException(L"0ã«ã‚ˆã‚‹é™¤ç®—ãŒè¡Œã‚ã‚Œã‚ˆã†ã¨ã—ã¾ã—ãŸã€‚");
         }
         if (u_sign == 0)
         {
-            // u == 0 ‚Ìê‡
+            // u == 0 ã®å ´åˆ
 
             if (q != nullptr)
-                *q = (PMC_HANDLE_SINT)&number_object_sint_zero;
+                *q = GET_NUMBER_HANDLE(&number_object_sint_zero);
             return (0);
         }
         else
         {
-            // u != 0 ‚Ìê‡
+            // u != 0 ã®å ´åˆ
 
             if (q != nullptr)
             {
                 ResourceHolderSINT root;
-                char q_sign = u_sign > 0 ? nv->SIGN : -nv->SIGN;
-                char r_sign = u_sign;
+                SIGN_T q_sign = PRODUCT_SIGN( u_sign, nv->SIGN);
+                SIGN_T r_sign = u_sign;
                 _UINT32_T q_abs;
-                _UINT32_T r_abs = ep_uint.DivRem_I_X(u_abs, nv->ABS, &q_abs);
-                NUMBER_OBJECT_SINT* nq = From_I_Imp(q_abs == 0 ? 0 : q_sign, q_abs);
+                _UINT32_T r_abs = ep_uint.DivRem(u_abs, nv->ABS, &q_abs);
+                NUMBER_OBJECT_SINT* nq = From_I_Imp(q_sign, q_abs);
                 root.HookNumber(nq);
-                _INT32_T r = GET_INT_32(r_abs == 0 ? 0 : r_sign, r_abs);
+                _INT32_T r = GET_INT_32(r_sign, r_abs);
+                *q = GET_NUMBER_HANDLE(nq);
                 root.UnlinkNumber(nq);
-                *q = (PMC_HANDLE_SINT)nq;
                 return (r);
             }
             else
             {
-                char r_sign = u_sign;
-                _UINT32_T r_abs = ep_uint.DivRem_I_X(u_abs, nv->ABS, nullptr);
-                return (GET_INT_32(r_abs == 0 ? 0 : r_sign, r_abs));
+                SIGN_T r_sign = u_sign;
+                _UINT32_T r_abs = ep_uint.DivRem(u_abs, nv->ABS, nullptr);
+                return (GET_INT_32(r_sign, r_abs));
             }
         }
     }
 
-    _UINT64_T __PMC_CALL PMC_DivRem_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q)
+    _UINT64_T PMC_DivRem_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q)
     {
-        // ‘å’ï‚Ìê‡‚Í q ‚Æ r ‚Ì¸“x‚Í _INT32_T ‚Å–â‘è‚È‚¢‚ªAƒI[ƒo[ƒtƒ[‚µ‚Ä‚µ‚Ü‚¤ƒP[ƒX‚ª‘¶İ‚·‚é‚½‚ßAPMC_HANDLE_SINT Œ^‚Æ‚·‚é
-        // —á: u == -9223372036854775808, v == -1 ‚Ìê‡Aq = 9223372036854775808, r = 0 ‚Æ‚È‚é‚ª 9223372036854775808 ‚Í _INT64_T‚Å‚Í•\Œ»‚Å‚«‚È‚¢B
-        if (v == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"v");
-        NUMBER_OBJECT_SINT* nv = (NUMBER_OBJECT_SINT*)v;
-        CheckNumber(nv);
+        // å¤§æŠµã®å ´åˆã¯ q ã¨ r ã®ç²¾åº¦ã¯ _INT32_T ã§å•é¡Œãªã„ãŒã€ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ã—ã¦ã—ã¾ã†ã‚±ãƒ¼ã‚¹ãŒå­˜åœ¨ã™ã‚‹ãŸã‚ã€PMC_HANDLE_SINT å‹ã¨ã™ã‚‹
+        // ä¾‹: u == -9223372036854775808, v == -1 ã®å ´åˆã€q = 9223372036854775808, r = 0 ã¨ãªã‚‹ãŒ 9223372036854775808 ã¯ _INT64_Tã§ã¯è¡¨ç¾ã§ããªã„ã€‚
+        NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (nv->SIGN == 0)
         {
-            // v == 0 ‚Ìê‡
+            // v == 0 ã®å ´åˆ
 
-            // ƒGƒ‰[‚ğ•Ô‚·
-            throw DivisionByZeroException(L"0‚É‚æ‚éœZ‚ªs‚í‚ê‚æ‚¤‚Æ‚µ‚Ü‚µ‚½B");
+            // ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™
+            throw DivisionByZeroException(L"0ã«ã‚ˆã‚‹é™¤ç®—ãŒè¡Œã‚ã‚Œã‚ˆã†ã¨ã—ã¾ã—ãŸã€‚");
         }
         if (u == 0)
         {
-            // u == 0 ‚Ìê‡
+            // u == 0 ã®å ´åˆ
 
             if (q != nullptr)
-                *q = (PMC_HANDLE_SINT)&number_object_sint_zero;
+                *q = GET_NUMBER_HANDLE(&number_object_sint_zero);
             return (0);
         }
         else
         {
-            // u != 0 ‚Ìê‡
-
-            if (q != nullptr)
-            {
-                char q_sign = nv->SIGN;
-                _UINT64_T q_abs;
-                _UINT64_T r_abs = ep_uint.DivRem_L_X(u, nv->ABS, &q_abs);
-                *q = (PMC_HANDLE_SINT)From_L_Imp(q_abs == 0 ? 0 : q_sign, q_abs);
-                return (r_abs);
-            }
-            else
-                return (ep_uint.DivRem_L_X(u, nv->ABS, nullptr));
-        }
-    }
-
-    _INT64_T __PMC_CALL PMC_DivRem_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q)
-    {
-        // ‘å’ï‚Ìê‡‚Í q ‚Æ r ‚Ì¸“x‚Í _INT32_T ‚Å–â‘è‚È‚¢‚ªAƒI[ƒo[ƒtƒ[‚µ‚Ä‚µ‚Ü‚¤ƒP[ƒX‚ª‘¶İ‚·‚é‚½‚ßAPMC_HANDLE_SINT Œ^‚Æ‚·‚é
-        // —á: u == -9223372036854775808, v == -1 ‚Ìê‡Aq = 9223372036854775808, r = 0 ‚Æ‚È‚é‚ª 9223372036854775808 ‚Í _INT64_T‚Å‚Í•\Œ»‚Å‚«‚È‚¢B
-        if (v == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"v");
-        NUMBER_OBJECT_SINT* nv = (NUMBER_OBJECT_SINT*)v;
-        CheckNumber(nv);
-        char u_sign;
-        _UINT64_T u_abs = GET_ABS_64(u, &u_sign);
-        if (nv->SIGN == 0)
-        {
-            // v == 0 ‚Ìê‡
-
-            // ƒGƒ‰[‚ğ•Ô‚·
-            throw DivisionByZeroException(L"0‚É‚æ‚éœZ‚ªs‚í‚ê‚æ‚¤‚Æ‚µ‚Ü‚µ‚½B");
-        }
-        if (u_sign == 0)
-        {
-            // u == 0 ‚Ìê‡
-
-            if (q != nullptr)
-                *q = (PMC_HANDLE_SINT)&number_object_sint_zero;
-            return (0);
-        }
-        else
-        {
-            // u != 0 ‚Ìê‡
+            // u != 0 ã®å ´åˆ
 
             if (q != nullptr)
             {
                 ResourceHolderSINT root;
-                char q_sign = u_sign > 0 ? nv->SIGN : -nv->SIGN;
-                char r_sign = u_sign;
+                SIGN_T q_sign = nv->SIGN;
                 _UINT64_T q_abs;
-                _UINT64_T r_abs = ep_uint.DivRem_L_X(u_abs, nv->ABS, &q_abs);
-                NUMBER_OBJECT_SINT* nq = From_L_Imp(q_abs == 0 ? 0 : q_sign, q_abs);
+                _UINT64_T r_abs = ep_uint.DivRem(u, nv->ABS, &q_abs);
+                NUMBER_OBJECT_SINT* nq = From_L_Imp(q_sign, q_abs);
                 root.HookNumber(nq);
-                _INT64_T r = GET_INT_64(r_abs == 0 ? 0 : r_sign, r_abs);
+                *q = GET_NUMBER_HANDLE(nq);
                 root.UnlinkNumber(nq);
-                *q = (PMC_HANDLE_SINT)nq;
+                return (r_abs);
+            }
+            else
+                return (ep_uint.DivRem(u, nv->ABS, nullptr));
+        }
+    }
+
+    _INT64_T PMC_DivRem_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q)
+    {
+        // å¤§æŠµã®å ´åˆã¯ q ã¨ r ã®ç²¾åº¦ã¯ _INT32_T ã§å•é¡Œãªã„ãŒã€ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ã—ã¦ã—ã¾ã†ã‚±ãƒ¼ã‚¹ãŒå­˜åœ¨ã™ã‚‹ãŸã‚ã€PMC_HANDLE_SINT å‹ã¨ã™ã‚‹
+        // ä¾‹: u == -9223372036854775808, v == -1 ã®å ´åˆã€q = 9223372036854775808, r = 0 ã¨ãªã‚‹ãŒ 9223372036854775808 ã¯ _INT64_Tã§ã¯è¡¨ç¾ã§ããªã„ã€‚
+        NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
+        SIGN_T u_sign;
+        _UINT64_T u_abs = GET_ABS_64(u, &u_sign);
+        if (nv->SIGN == 0)
+        {
+            // v == 0 ã®å ´åˆ
+
+            // ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™
+            throw DivisionByZeroException(L"0ã«ã‚ˆã‚‹é™¤ç®—ãŒè¡Œã‚ã‚Œã‚ˆã†ã¨ã—ã¾ã—ãŸã€‚");
+        }
+        if (u_sign == 0)
+        {
+            // u == 0 ã®å ´åˆ
+
+            if (q != nullptr)
+                *q = GET_NUMBER_HANDLE(&number_object_sint_zero);
+            return (0);
+        }
+        else
+        {
+            // u != 0 ã®å ´åˆ
+
+            if (q != nullptr)
+            {
+                ResourceHolderSINT root;
+                SIGN_T q_sign = PRODUCT_SIGN(u_sign, nv->SIGN);
+                SIGN_T r_sign = u_sign;
+                _UINT64_T q_abs;
+                _UINT64_T r_abs = ep_uint.DivRem(u_abs, nv->ABS, &q_abs);
+                NUMBER_OBJECT_SINT* nq = From_L_Imp(q_sign, q_abs);
+                root.HookNumber(nq);
+                _INT64_T r = GET_INT_64(r_sign, r_abs);
+                *q = GET_NUMBER_HANDLE(nq);
+                root.UnlinkNumber(nq);
                 return (r);
             }
             else
             {
-                char r_sign = u_sign;
-                _UINT64_T r_abs = ep_uint.DivRem_L_X(u_abs, nv->ABS, nullptr);
-                return (GET_INT_64(r_abs == 0 ? 0 : r_sign, r_abs));
+                SIGN_T r_sign = u_sign;
+                _UINT64_T r_abs = ep_uint.DivRem(u_abs, nv->ABS, nullptr);
+                return (GET_INT_64(r_sign, r_abs));
             }
         }
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_DivRem_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q)
+    PMC_HANDLE_UINT PMC_DivRem_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q)
     {
         if (u == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"u");
-        if (v == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"v");
-        NUMBER_OBJECT_SINT* nv = (NUMBER_OBJECT_SINT*)v;
-        CheckNumber(nv);
+            throw ArgumentNullException(L"å¼•æ•°ã«nullãŒä¸ãˆã‚‰ã‚Œã¦ã„ã¾ã™ã€‚", L"u");
+        NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (nv->SIGN == 0)
         {
-            // v == 0 ‚Ìê‡
+            // v == 0 ã®å ´åˆ
 
-            // ƒGƒ‰[‚ğ•Ô‚·
-            throw DivisionByZeroException(L"0‚É‚æ‚éœZ‚ªs‚í‚ê‚æ‚¤‚Æ‚µ‚Ü‚µ‚½B");
+            // ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™
+            throw DivisionByZeroException(L"0ã«ã‚ˆã‚‹é™¤ç®—ãŒè¡Œã‚ã‚Œã‚ˆã†ã¨ã—ã¾ã—ãŸã€‚");
         }
         if (u->FLAGS.IS_ZERO)
         {
-            // u == 0 ‚Ìê‡
+            // u == 0 ã®å ´åˆ
 
             if (q != nullptr)
-                *q = (PMC_HANDLE_SINT)&number_object_sint_zero;
+                *q = GET_NUMBER_HANDLE(&number_object_sint_zero);
             return (number_handle_uint_zero);
         }
         else
         {
-            // u != 0 ‚Ìê‡
+            // u > 0 ã®å ´åˆ
 
             if (q != nullptr)
             {
                 ResourceHolderSINT root;
-                char q_sign = nv->SIGN;
+                SIGN_T q_sign = nv->SIGN;
                 PMC_HANDLE_UINT q_abs;
-                PMC_HANDLE_UINT r = ep_uint.DivRem_X_X(u, nv->ABS, &q_abs);
-                root.HookNumber(r);
-                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_abs->FLAGS.IS_ZERO ? 0 : q_sign, q_abs);
-                root.UnlinkNumber(r);
+                PMC_HANDLE_UINT r_abs = ep_uint.DivRem(u, nv->ABS, &q_abs);
+                root.HookNumber(r_abs);
+                root.HookNumber(q_abs);
+                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
+                *q = GET_NUMBER_HANDLE(nq);
+                root.UnlinkNumber(q_abs);
                 root.UnlinkNumber(nq);
-                *q = (PMC_HANDLE_SINT)nq;
+                root.UnlinkNumber(r_abs);
+                return (r_abs);
+            }
+            else
+            {
+                return (ep_uint.DivRem(u, nv->ABS, nullptr));
+            }
+        }
+    }
+
+    PMC_HANDLE_SINT PMC_DivRem_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* q)
+    {
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        if (v == 0)
+        {
+            // v == 0 ã®å ´åˆ
+
+            // ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™
+            throw DivisionByZeroException(L"0ã«ã‚ˆã‚‹é™¤ç®—ãŒè¡Œã‚ã‚Œã‚ˆã†ã¨ã—ã¾ã—ãŸã€‚");
+        }
+        if (nu->SIGN == 0)
+        {
+            // u == 0 ã®å ´åˆ
+
+            if (q != nullptr)
+                *q = GET_NUMBER_HANDLE(&number_object_sint_zero);
+            return (GET_NUMBER_HANDLE(&number_object_sint_zero));
+        }
+        else
+        {
+            // u != 0 ã®å ´åˆ
+
+            if (q != nullptr)
+            {
+                ResourceHolderSINT root;
+                SIGN_T q_sign = nu->SIGN;
+                SIGN_T r_sign = nu->SIGN;
+                PMC_HANDLE_UINT q_abs;
+                _UINT32_T r_abs =ep_uint.DivRem(nu->ABS, v, &q_abs);
+                root.HookNumber(q_abs);
+                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
+                NUMBER_OBJECT_SINT* nr = From_I_Imp(r_sign, r_abs);
+                root.HookNumber(nr);
+                *q = GET_NUMBER_HANDLE(nq);
+                PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
+                root.UnlinkNumber(q_abs);
+                root.UnlinkNumber(nq);
+                root.UnlinkNumber(nr);
                 return (r);
             }
             else
-                return (ep_uint.DivRem_X_X(u, nv->ABS, nullptr));
-        }
-    }
-
-    PMC_HANDLE_SINT __PMC_CALL PMC_DivRem_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* q)
-    {
-        if (u == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"u");
-        NUMBER_OBJECT_SINT* nu = (NUMBER_OBJECT_SINT*)u;
-        CheckNumber(nu);
-        if (v == 0)
-        {
-            // v == 0 ‚Ìê‡
-
-            // ƒGƒ‰[‚ğ•Ô‚·
-            throw DivisionByZeroException(L"0‚É‚æ‚éœZ‚ªs‚í‚ê‚æ‚¤‚Æ‚µ‚Ü‚µ‚½B");
-        }
-        if (nu->SIGN == 0)
-        {
-            // u == 0 ‚Ìê‡
-
-            if (q != nullptr)
-                *q = (PMC_HANDLE_SINT)&number_object_sint_zero;
-            return ((PMC_HANDLE_SINT)&number_object_sint_zero);
-        }
-        else
-        {
-            // u != 0 ‚Ìê‡
-
-            if (q != nullptr)
             {
                 ResourceHolderSINT root;
-                char q_sign = nu->SIGN;
-                char r_sign = nu->SIGN;
-                PMC_HANDLE_UINT q_abs;
-                _UINT32_T r_abs = ep_uint.DivRem_X_I(nu->ABS, v, &q_abs);
-                root.HookNumber(q_abs);
-                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_abs->FLAGS.IS_ZERO ? 0 : q_sign, q_abs);
-                NUMBER_OBJECT_SINT* nr = From_I_Imp(r_abs == 0 ? 0 : r_sign, r_abs);
+                SIGN_T r_sign = nu->SIGN;
+                _UINT32_T r_abs =ep_uint.DivRem(nu->ABS, v, nullptr);
+                NUMBER_OBJECT_SINT* nr = From_I_Imp(r_sign, r_abs);
                 root.HookNumber(nr);
-                root.UnlinkNumber(q_abs);
-                root.UnlinkNumber(nq);
+                PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
                 root.UnlinkNumber(nr);
-                *q = (PMC_HANDLE_SINT)nq;
-                return ((PMC_HANDLE_SINT)nr);
-            }
-            else
-            {
-                char r_sign = nu->SIGN;
-                _UINT32_T r_abs = ep_uint.DivRem_X_I(nu->ABS, v, nullptr);
-                return ((PMC_HANDLE_SINT)From_I_Imp(r_abs == 0 ? 0 : r_sign, r_abs));
+                return (r);
             }
         }
     }
 
-    PMC_HANDLE_SINT __PMC_CALL PMC_DivRem_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* q)
+    PMC_HANDLE_SINT PMC_DivRem_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* q)
     {
-        if (u == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"u");
-        NUMBER_OBJECT_SINT* nu = (NUMBER_OBJECT_SINT*)u;
-        CheckNumber(nu);
-        char v_sign;
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        SIGN_T v_sign;
         _UINT32_T v_abs = GET_ABS_32(v, &v_sign);
         if (v_sign == 0)
         {
-            // v == 0 ‚Ìê‡
+            // v == 0 ã®å ´åˆ
 
-            // ƒGƒ‰[‚ğ•Ô‚·
-            throw DivisionByZeroException(L"0‚É‚æ‚éœZ‚ªs‚í‚ê‚æ‚¤‚Æ‚µ‚Ü‚µ‚½B");
+            // ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™
+            throw DivisionByZeroException(L"0ã«ã‚ˆã‚‹é™¤ç®—ãŒè¡Œã‚ã‚Œã‚ˆã†ã¨ã—ã¾ã—ãŸã€‚");
         }
         if (nu->SIGN == 0)
         {
-            // u == 0 ‚Ìê‡
+            // u == 0 ã®å ´åˆ
 
             if (q != nullptr)
-                *q = (PMC_HANDLE_SINT)&number_object_sint_zero;
-            return (0);
+                *q = GET_NUMBER_HANDLE(&number_object_sint_zero);
+            return (GET_NUMBER_HANDLE(&number_object_sint_zero));
         }
         else
         {
-            // u != 0 ‚Ìê‡
+            // u != 0 ã®å ´åˆ
 
             if (q != nullptr)
             {
                 ResourceHolderSINT root;
-                char q_sign = nu->SIGN > 0 ? v_sign : -v_sign;
-                char r_sign = nu->SIGN;
+                SIGN_T q_sign = PRODUCT_SIGN(nu->SIGN, v_sign);
+                SIGN_T r_sign = nu->SIGN;
                 PMC_HANDLE_UINT q_abs;
-                _UINT32_T r_abs = ep_uint.DivRem_X_I(nu->ABS, v_abs, &q_abs);
+                _UINT32_T r_abs =ep_uint.DivRem(nu->ABS, v_abs, &q_abs);
                 root.HookNumber(q_abs);
-                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_abs->FLAGS.IS_ZERO ? 0 : q_sign, q_abs);
-                NUMBER_OBJECT_SINT* nr = From_I_Imp(r_abs == 0 ? 0 : r_sign, r_abs);
-                root.UnlinkNumber(q_abs);
-                root.UnlinkNumber(nq);
-                *q = (PMC_HANDLE_SINT)nq;
-                return ((PMC_HANDLE_SINT)nr);
-            }
-            else
-            {
-                char r_sign = nu->SIGN;
-                _UINT32_T r_abs = ep_uint.DivRem_X_I(nu->ABS, v_abs, nullptr);
-                return ((PMC_HANDLE_SINT)From_I_Imp(r_abs == 0 ? 0 : r_sign, r_abs));
-            }
-        }
-    }
-
-    PMC_HANDLE_SINT __PMC_CALL PMC_DivRem_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* q)
-    {
-        if (u == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"u");
-        NUMBER_OBJECT_SINT* nu = (NUMBER_OBJECT_SINT*)u;
-        CheckNumber(nu);
-        if (v == 0)
-        {
-            // v == 0 ‚Ìê‡
-
-            // ƒGƒ‰[‚ğ•Ô‚·
-            throw DivisionByZeroException(L"0‚É‚æ‚éœZ‚ªs‚í‚ê‚æ‚¤‚Æ‚µ‚Ü‚µ‚½B");
-        }
-        if (nu->SIGN == 0)
-        {
-            // u == 0 ‚Ìê‡
-
-            if (q != nullptr)
-                *q = (PMC_HANDLE_SINT)&number_object_sint_zero;
-            return ((PMC_HANDLE_SINT)&number_object_sint_zero);
-        }
-        else
-        {
-            // u != 0 ‚Ìê‡
-
-            if (q != nullptr)
-            {
-                ResourceHolderSINT root;
-                char q_sign = nu->SIGN;
-                char r_sign = nu->SIGN;
-                PMC_HANDLE_UINT q_abs;
-                _UINT64_T r_abs = ep_uint.DivRem_X_L(nu->ABS, v, &q_abs);
-                root.HookNumber(q_abs);
-                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_abs->FLAGS.IS_ZERO ? 0 : q_sign, q_abs);
-                NUMBER_OBJECT_SINT* nr = From_L_Imp(r_abs == 0 ? 0 : r_sign, r_abs);
+                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
+                NUMBER_OBJECT_SINT* nr = From_I_Imp(r_sign, r_abs);
                 root.HookNumber(nr);
+                *q = GET_NUMBER_HANDLE(nq);
+                PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
                 root.UnlinkNumber(q_abs);
                 root.UnlinkNumber(nq);
                 root.UnlinkNumber(nr);
-                *q = (PMC_HANDLE_SINT)nq;
-                return ((PMC_HANDLE_SINT)nr);
+                return (r);
             }
             else
             {
-                char r_sign = nu->SIGN;
-                _UINT64_T r_abs = ep_uint.DivRem_X_L(nu->ABS, v, nullptr);
-                return ((PMC_HANDLE_SINT)From_L_Imp(r_abs == 0 ? 0 : r_sign, r_abs));
+                ResourceHolderSINT root;
+                SIGN_T r_sign = nu->SIGN;
+                _UINT32_T r_abs =ep_uint.DivRem(nu->ABS, v_abs, nullptr);
+                NUMBER_OBJECT_SINT* nr = From_I_Imp(r_sign, r_abs);
+                root.HookNumber(nr);
+                PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
+                root.UnlinkNumber(nr);
+                return (r);
             }
         }
     }
 
-    PMC_HANDLE_SINT __PMC_CALL PMC_DivRem_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* q)
+    PMC_HANDLE_SINT PMC_DivRem_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* q)
     {
-        if (u == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"u");
-        NUMBER_OBJECT_SINT* nu = (NUMBER_OBJECT_SINT*)u;
-        CheckNumber(nu);
-        char v_sign;
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        if (v == 0)
+        {
+            // v == 0 ã®å ´åˆ
+
+            // ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™
+            throw DivisionByZeroException(L"0ã«ã‚ˆã‚‹é™¤ç®—ãŒè¡Œã‚ã‚Œã‚ˆã†ã¨ã—ã¾ã—ãŸã€‚");
+        }
+        if (nu->SIGN == 0)
+        {
+            // u == 0 ã®å ´åˆ
+
+            if (q != nullptr)
+                *q = GET_NUMBER_HANDLE(&number_object_sint_zero);
+            return (GET_NUMBER_HANDLE(&number_object_sint_zero));
+        }
+        else
+        {
+            // u != 0 ã®å ´åˆ
+
+            if (q != nullptr)
+            {
+                ResourceHolderSINT root;
+                SIGN_T q_sign = nu->SIGN;
+                SIGN_T r_sign = nu->SIGN;
+                PMC_HANDLE_UINT q_abs;
+                _UINT64_T r_abs =ep_uint.DivRem(nu->ABS, v, &q_abs);
+                root.HookNumber(q_abs);
+                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
+                NUMBER_OBJECT_SINT* nr = From_L_Imp(r_sign, r_abs);
+                root.HookNumber(nr);
+                *q = GET_NUMBER_HANDLE(nq);
+                PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
+                root.UnlinkNumber(q_abs);
+                root.UnlinkNumber(nq);
+                root.UnlinkNumber(nr);
+                return (r);
+            }
+            else
+            {
+                ResourceHolderSINT root;
+                SIGN_T r_sign = nu->SIGN;
+                _UINT64_T r_abs =ep_uint.DivRem(nu->ABS, v, nullptr);
+                NUMBER_OBJECT_SINT* nr = From_L_Imp(r_sign, r_abs);
+                root.HookNumber(nr);
+                PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
+                root.UnlinkNumber(nr);
+                return (r);
+            }
+        }
+    }
+
+    PMC_HANDLE_SINT PMC_DivRem_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* q)
+    {
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        SIGN_T v_sign;
         _UINT64_T v_abs = GET_ABS_64(v, &v_sign);
         if (v_sign == 0)
         {
-            // v == 0 ‚Ìê‡
+            // v == 0 ã®å ´åˆ
 
-            // ƒGƒ‰[‚ğ•Ô‚·
-            throw DivisionByZeroException(L"0‚É‚æ‚éœZ‚ªs‚í‚ê‚æ‚¤‚Æ‚µ‚Ü‚µ‚½B");
+            // ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™
+            throw DivisionByZeroException(L"0ã«ã‚ˆã‚‹é™¤ç®—ãŒè¡Œã‚ã‚Œã‚ˆã†ã¨ã—ã¾ã—ãŸã€‚");
         }
         if (nu->SIGN == 0)
         {
-            // u == 0 ‚Ìê‡
+            // u == 0 ã®å ´åˆ
 
             if (q != nullptr)
-                *q = (PMC_HANDLE_SINT)&number_object_sint_zero;
-            return (0);
+                *q = GET_NUMBER_HANDLE(&number_object_sint_zero);
+            return (GET_NUMBER_HANDLE(&number_object_sint_zero));
         }
         else
         {
-            // u != 0 ‚Ìê‡
+            // u != 0 ã®å ´åˆ
 
             if (q != nullptr)
             {
                 ResourceHolderSINT root;
-                char q_sign = nu->SIGN > 0 ? v_sign : -v_sign;
-                char r_sign = nu->SIGN;
+                SIGN_T q_sign = PRODUCT_SIGN(nu->SIGN, v_sign);
+                SIGN_T r_sign = nu->SIGN;
                 PMC_HANDLE_UINT q_abs;
-                _UINT64_T r_abs = ep_uint.DivRem_X_L(nu->ABS, v_abs, &q_abs);
+                _UINT64_T r_abs =ep_uint.DivRem(nu->ABS, v_abs, &q_abs);
                 root.HookNumber(q_abs);
-                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_abs->FLAGS.IS_ZERO ? 0 : q_sign, q_abs);
-                NUMBER_OBJECT_SINT* nr = From_L_Imp(r_abs == 0 ? 0 : r_sign, r_abs);
+                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
+                NUMBER_OBJECT_SINT* nr = From_L_Imp(r_sign, r_abs);
+                root.HookNumber(nr);
+                *q = GET_NUMBER_HANDLE(nq);
+                PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
                 root.UnlinkNumber(q_abs);
                 root.UnlinkNumber(nq);
-                *q = (PMC_HANDLE_SINT)nq;
-                return ((PMC_HANDLE_SINT)nr);
+                root.UnlinkNumber(nr);
+                return (r);
             }
             else
             {
-                char r_sign = nu->SIGN;
-                _UINT64_T r_abs = ep_uint.DivRem_X_L(nu->ABS, v_abs, nullptr);
-                return ((PMC_HANDLE_SINT)From_L_Imp(r_abs == 0 ? 0 : r_sign, r_abs));
+                ResourceHolderSINT root;
+                SIGN_T r_sign = nu->SIGN;
+                _UINT64_T r_abs =ep_uint.DivRem(nu->ABS, v_abs, nullptr);
+                NUMBER_OBJECT_SINT* nr = From_L_Imp(r_sign, r_abs);
+                root.HookNumber(nr);
+                PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
+                root.UnlinkNumber(nr);
+                return (r);
             }
         }
     }
 
-    PMC_HANDLE_SINT __PMC_CALL PMC_DivRem_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* q)
+    PMC_HANDLE_SINT PMC_DivRem_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* q)
     {
-        if (u == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"u");
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
         if (v == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"v");
-        NUMBER_OBJECT_SINT* nu = (NUMBER_OBJECT_SINT*)u;
-        CheckNumber(nu);
+            throw ArgumentNullException(L"å¼•æ•°ã«nullãŒä¸ãˆã‚‰ã‚Œã¦ã„ã¾ã™ã€‚", L"v");
         if (v->FLAGS.IS_ZERO)
         {
-            // v == 0 ‚Ìê‡
+            // v == 0 ã®å ´åˆ
 
-            // ƒGƒ‰[‚ğ•Ô‚·
-            throw DivisionByZeroException(L"0‚É‚æ‚éœZ‚ªs‚í‚ê‚æ‚¤‚Æ‚µ‚Ü‚µ‚½B");
+            // ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™
+            throw DivisionByZeroException(L"0ã«ã‚ˆã‚‹é™¤ç®—ãŒè¡Œã‚ã‚Œã‚ˆã†ã¨ã—ã¾ã—ãŸã€‚");
         }
         if (nu->SIGN == 0)
         {
-            // u == 0 ‚Ìê‡
+            // u == 0 ã®å ´åˆ
 
-            if (q == nullptr)
-                *q = (PMC_HANDLE_SINT)&number_object_sint_zero;
-            return ((PMC_HANDLE_SINT)&number_object_sint_zero);
+            if (q != nullptr)
+                *q = GET_NUMBER_HANDLE(&number_object_sint_zero);
+            return (GET_NUMBER_HANDLE(&number_object_sint_zero));
         }
         else
         {
-            // u != 0 ‚Ìê‡
+            // u != 0 ã®å ´åˆ
 
             if (q != nullptr)
             {
                 ResourceHolderSINT root;
-                char q_sign = nu->SIGN;
-                char r_sign = nu->SIGN;
+                SIGN_T q_sign = nu->SIGN;
+                SIGN_T r_sign = nu->SIGN;
                 PMC_HANDLE_UINT q_abs;
-                PMC_HANDLE_UINT r_abs = ep_uint.DivRem_X_X(nu->ABS, v, &q_abs);
+                PMC_HANDLE_UINT r_abs = ep_uint.DivRem(nu->ABS, v, &q_abs);
                 root.HookNumber(q_abs);
                 root.HookNumber(r_abs);
-                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_abs->FLAGS.IS_ZERO ? 0 : q_sign, q_abs);
-                NUMBER_OBJECT_SINT* nr = root.AllocateNumber(r_abs->FLAGS.IS_ZERO ? 0 : r_sign, r_abs);
+                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
+                NUMBER_OBJECT_SINT* nr = root.AllocateNumber(r_sign, r_abs);
+                *q = GET_NUMBER_HANDLE(nq);
+                PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
                 root.UnlinkNumber(q_abs);
                 root.UnlinkNumber(r_abs);
                 root.UnlinkNumber(nq);
                 root.UnlinkNumber(nr);
-                *q = (PMC_HANDLE_SINT)nq;
-                return ((PMC_HANDLE_SINT)nr);
+                return (r);
             }
             else
             {
                 ResourceHolderSINT root;
-                char r_sign = nu->SIGN;
-                PMC_HANDLE_UINT r_abs = ep_uint.DivRem_X_X(nu->ABS, v, nullptr);
+                SIGN_T r_sign = nu->SIGN;
+                PMC_HANDLE_UINT r_abs = ep_uint.DivRem(nu->ABS, v, nullptr);
                 root.HookNumber(r_abs);
-                NUMBER_OBJECT_SINT* nr = root.AllocateNumber(r_abs->FLAGS.IS_ZERO ? 0 : r_sign, r_abs);
+                NUMBER_OBJECT_SINT* nr = root.AllocateNumber(r_sign, r_abs);
+                PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
                 root.UnlinkNumber(r_abs);
                 root.UnlinkNumber(nr);
-                return ((PMC_HANDLE_SINT)nr);
+                return (r);
             }
         }
     }
 
-    PMC_HANDLE_SINT __PMC_CALL PMC_DivRem_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q)
+    PMC_HANDLE_SINT PMC_DivRem_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q)
     {
-        if (u == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"u");
-        if (v == nullptr)
-            throw ArgumentNullException(L"ˆø”‚Énull‚ª—^‚¦‚ç‚ê‚Ä‚¢‚Ü‚·B", L"v");
-        NUMBER_OBJECT_SINT* nu = (NUMBER_OBJECT_SINT*)u;
-        NUMBER_OBJECT_SINT* nv = (NUMBER_OBJECT_SINT*)v;
-        CheckNumber(nu);
-        CheckNumber(nv);
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (nv->IS_ZERO)
         {
-            // v == 0 ‚Ìê‡
+            // v == 0 ã®å ´åˆ
 
-            // ƒGƒ‰[‚ğ•Ô‚·
-            throw DivisionByZeroException(L"0‚É‚æ‚éœZ‚ªs‚í‚ê‚æ‚¤‚Æ‚µ‚Ü‚µ‚½B");
+            // ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™
+            throw DivisionByZeroException(L"0ã«ã‚ˆã‚‹é™¤ç®—ãŒè¡Œã‚ã‚Œã‚ˆã†ã¨ã—ã¾ã—ãŸã€‚");
         }
         if (nu->SIGN == 0)
         {
-            // u == 0 ‚Ìê‡
+            // u == 0 ã®å ´åˆ
 
             if (q != nullptr)
-                *q = (PMC_HANDLE_SINT)&number_object_sint_zero;
-            return ((PMC_HANDLE_SINT)&number_object_sint_zero);
+                *q = GET_NUMBER_HANDLE(&number_object_sint_zero);
+            return (GET_NUMBER_HANDLE(&number_object_sint_zero));
         }
         else
         {
-            // u != 0 ‚Ìê‡
+            // u != 0 ã®å ´åˆ
 
             if (q != nullptr)
             {
                 ResourceHolderSINT root;
-                char q_sign = nu->SIGN > 0 ? nv->SIGN : -nv->SIGN;
-                char r_sign = nu->SIGN;
+                SIGN_T q_sign = PRODUCT_SIGN(nu->SIGN, nv->SIGN);
+                SIGN_T r_sign = nu->SIGN;
                 PMC_HANDLE_UINT q_abs;
-                PMC_HANDLE_UINT r_abs = ep_uint.DivRem_X_X(nu->ABS, nv->ABS, &q_abs);
+                PMC_HANDLE_UINT r_abs = ep_uint.DivRem(nu->ABS, nv->ABS, &q_abs);
                 root.HookNumber(q_abs);
                 root.HookNumber(r_abs);
-                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_abs->FLAGS.IS_ZERO ? 0 : q_sign, q_abs);
-                NUMBER_OBJECT_SINT* nr = root.AllocateNumber(r_abs->FLAGS.IS_ZERO ? 0 : r_sign, r_abs);
+                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
+                NUMBER_OBJECT_SINT* nr = root.AllocateNumber(r_sign, r_abs);
+                *q = GET_NUMBER_HANDLE(nq);
+                PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
                 root.UnlinkNumber(q_abs);
                 root.UnlinkNumber(r_abs);
                 root.UnlinkNumber(nq);
                 root.UnlinkNumber(nr);
-                *q = (PMC_HANDLE_SINT)nq;
-                return ((PMC_HANDLE_SINT)nr);
+                return (r);
             }
             else
             {
                 ResourceHolderSINT root;
-                char r_sign = nu->SIGN;
-                PMC_HANDLE_UINT r_abs = ep_uint.DivRem_X_X(nu->ABS, nv->ABS, nullptr);
+                SIGN_T r_sign = nu->SIGN;
+                PMC_HANDLE_UINT r_abs = ep_uint.DivRem(nu->ABS, nv->ABS, nullptr);
                 root.HookNumber(r_abs);
-                NUMBER_OBJECT_SINT* nr = root.AllocateNumber(r_abs->FLAGS.IS_ZERO ? 0 : r_sign, r_abs);
+                NUMBER_OBJECT_SINT* nr = root.AllocateNumber(r_sign, r_abs);
+                PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
                 root.UnlinkNumber(r_abs);
                 root.UnlinkNumber(nr);
-                return ((PMC_HANDLE_SINT)nr);
+                return (r);
             }
         }
     }

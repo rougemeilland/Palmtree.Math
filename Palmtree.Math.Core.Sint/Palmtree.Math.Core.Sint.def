@@ -1,7 +1,6 @@
 LIBRARY Palmtree.Math.Core.Sint.dll
 
 EXPORTS
-	PMC_SINT_Initialize
 	PMCCS_Abs_X
 	PMCCS_Add_I_X
 	PMCCS_Add_L_X
@@ -36,6 +35,8 @@ EXPORTS
 	PMCCS_BitwiseOr_X_UL
 	PMCCS_BitwiseOr_X_UX
 	PMCCS_BitwiseOr_X_X
+	PMCCS_CheckHandle_UX
+	PMCCS_CheckHandle_X
 	PMCCS_Clone_X
 	PMCCS_Compare_I_X
 	PMCCS_Compare_L_X
@@ -49,7 +50,8 @@ EXPORTS
 	PMCCS_Compare_X_UX
 	PMCCS_Compare_X_X
 	PMCCS_Decrement_X
-	PMCCS_Dispose
+	PMCCS_Dispose_UX
+	PMCCS_Dispose_X
 	PMCCS_DivRem_I_X
 	PMCCS_DivRem_L_X
 	PMCCS_DivRem_UI_X
@@ -89,6 +91,7 @@ EXPORTS
 	PMCCS_From_UI
 	PMCCS_From_UL
 	PMCCS_From_UX
+	PMCCS_GetAllocatedMemorySize
 	PMCCS_GetConfigurationSettings
 	PMCCS_GetConstantValue_I
 	PMCCS_GetHashCode
@@ -110,7 +113,6 @@ EXPORTS
 	PMCCS_IS_POWER_OF_TWO
 	PMCCS_IS_ZERO
 	PMCCS_Increment_X
-	PMCCS_InitializeNumberFormatInfo
 	PMCCS_LeftShift_X_I
 	PMCCS_Multiply_I_X
 	PMCCS_Multiply_L_X
@@ -127,6 +129,18 @@ EXPORTS
 	PMCCS_Negate_X
 	PMCCS_OneComplement_UX
 	PMCCS_OneComplement_X
+	PMCCS_Parse
+	PMCCS_Remainder_UI_X
+	PMCCS_Remainder_I_X
+	PMCCS_Remainder_UL_X
+	PMCCS_Remainder_L_X
+	PMCCS_Remainder_UX_X
+	PMCCS_Remainder_X_UI
+	PMCCS_Remainder_X_I
+	PMCCS_Remainder_X_UL
+	PMCCS_Remainder_X_L
+	PMCCS_Remainder_X_UX
+	PMCCS_Remainder_X_X
 	PMCCS_RightShift_X_I
 	PMCCS_SINT_Initialize
 	PMCCS_Subtruct_I_X

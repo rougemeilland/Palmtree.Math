@@ -1,0 +1,398 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CE3BF22E-CD12-45DD-B14C-CCAC690DB32C}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Palmtree.Math.CodeGen.TestData</RootNamespace>
+    <AssemblyName>Palmtree.Math.CodeGen.TestData</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BigIntegerComparer.cs" />
+    <Compile Include="DataItem.cs" />
+    <Compile Include="ExceptionDataItem.cs" />
+    <Compile Include="IDataItem.cs" />
+    <Compile Include="Int64DataItem.cs" />
+    <Compile Include="Int32DataItem.cs" />
+    <Compile Include="ITestDataRendererPlugin.cs" />
+    <Compile Include="NullDataItem.cs" />
+    <Compile Include="NumberFormatInfoDataItem.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_OneComplement_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Negate_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_OneComplement_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Negate_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Abs_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Add_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Add_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Add_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Add_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Add_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Add_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Add_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Add_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Add_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Add_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Add_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseAnd_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseAnd_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseAnd_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseAnd_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseAnd_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseAnd_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseAnd_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseAnd_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseAnd_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseAnd_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseAnd_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Subtruct_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Subtruct_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Subtruct_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Subtruct_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Subtruct_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Subtruct_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Subtruct_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Subtruct_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Subtruct_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Subtruct_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Subtruct_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Remainder_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Remainder_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Remainder_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Remainder_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Remainder_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Remainder_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Remainder_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Remainder_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Remainder_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Remainder_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Remainder_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Multiply_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Multiply_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Multiply_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Multiply_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Multiply_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Multiply_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Multiply_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Multiply_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Multiply_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Multiply_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Multiply_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThanOrEqual_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThan_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Inequality_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThanOrEqual_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThanOrEqual_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThan_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Inequality_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThanOrEqual_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThan_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Inequality_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThanOrEqual_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThan_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Inequality_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThanOrEqual_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThan_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Inequality_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThanOrEqual_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThan_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Inequality_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThanOrEqual_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThan_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Inequality_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThanOrEqual_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThan_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Inequality_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThanOrEqual_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThan_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Inequality_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThanOrEqual_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThan_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Inequality_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThanOrEqual_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LesserThan_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Inequality_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThan_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThanOrEqual_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThan_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThanOrEqual_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThan_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThanOrEqual_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThan_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThanOrEqual_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThan_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThanOrEqual_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThan_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThanOrEqual_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThan_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThanOrEqual_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThan_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThanOrEqual_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThan_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThanOrEqual_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThan_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThanOrEqual_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreaterThan_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ExclusiveOr_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ExclusiveOr_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ExclusiveOr_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseOr_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseOr_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ExclusiveOr_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseOr_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseOr_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ExclusiveOr_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ExclusiveOr_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ExclusiveOr_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ExclusiveOr_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseOr_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseOr_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ExclusiveOr_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseOr_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseOr_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseOr_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ExclusiveOr_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseOr_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ExclusiveOr_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_BitwiseOr_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Compare_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Compare_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Compare_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Compare_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Compare_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Compare_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Compare_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Compare_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Compare_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Compare_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Compare_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Decrement_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Divide_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Divide_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Divide_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Divide_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Divide_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Divide_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Divide_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Divide_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Divide_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Divide_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Divide_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_DivRem_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_DivRem_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_DivRem_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_DivRem_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_DivRem_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_DivRem_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_DivRem_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_DivRem_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_DivRem_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_DivRem_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_DivRem_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Equality_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Equality_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Equality_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Equality_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Equality_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Equality_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Equality_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Equality_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Equality_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Equality_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Equality_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreatestCommonDivisor_UI_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreatestCommonDivisor_I_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreatestCommonDivisor_UL_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreatestCommonDivisor_L_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreatestCommonDivisor_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreatestCommonDivisor_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreatestCommonDivisor_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreatestCommonDivisor_X_L.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreatestCommonDivisor_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreatestCommonDivisor_UX_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_GreatestCommonDivisor_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_Increment_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LeftShift_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ParseDN1.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ParseDN2.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ParseDN3.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ParseX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_RightShift_X_I.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ToStringC.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ToStringD.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ToStringE.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ToStringF.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ToStringG.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ToStringN.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ToStringP.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ToStringR.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_ToStringX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_TryParseDN1.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_TryParseDN2.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_TryParseDN3.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_TryParseX.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Add_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Add_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Add_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Add_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Add_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_BitwiseAnd_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_BitwiseAnd_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_BitwiseAnd_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_BitwiseAnd_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_BitwiseAnd_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_BitwiseOr_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_BitwiseOr_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_BitwiseOr_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_BitwiseOr_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_BitwiseOr_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Compare_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Compare_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Compare_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Compare_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Compare_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Decrement_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Divide_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Divide_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Divide_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Divide_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Divide_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_DivRem_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_DivRem_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_DivRem_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_DivRem_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_DivRem_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Equality_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Equality_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Equality_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Equality_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Equality_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ExclusiveOr_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ExclusiveOr_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ExclusiveOr_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ExclusiveOr_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ExclusiveOr_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Floor_log10.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_GreaterThanOrEqual_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_GreaterThanOrEqual_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_GreaterThanOrEqual_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_GreaterThanOrEqual_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_GreaterThanOrEqual_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_GreaterThan_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_GreaterThan_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_GreaterThan_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_GreaterThan_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_GreaterThan_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_GreatestCommonDivisor_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_GreatestCommonDivisor_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_GreatestCommonDivisor_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_GreatestCommonDivisor_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_GreatestCommonDivisor_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Increment_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Inequality_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Inequality_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Inequality_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Inequality_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Inequality_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_LeftShift_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_LesserThanOrEqual_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_LesserThanOrEqual_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_LesserThanOrEqual_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_LesserThanOrEqual_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_LesserThanOrEqual_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_LesserThan_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_LesserThan_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_LesserThan_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_LesserThan_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_LesserThan_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ModPow_X_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Multiply_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Multiply_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Multiply_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Multiply_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Multiply_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ParseDN1.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ParseDN2.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ParseDN3.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ParseX.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Pow_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Remainder_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Remainder_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Remainder_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Remainder_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Remainder_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_RightShift_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Subtruct_I_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Subtruct_L_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Subtruct_X_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Subtruct_X_L.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_Subtruct_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringC.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringD.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringE.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringF.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringG.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringN.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringP.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringR.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringX.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_TryParseDN1.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_TryParseDN2.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_TryParseDN3.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_TryParseX.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestDataRendererPluginBase.cs" />
+    <Compile Include="TestDataRendererPluginBase_1_1.cs" />
+    <Compile Include="TestDataRendererPluginBase_2_1.cs" />
+    <Compile Include="TestDataRendererPluginBase_2_2.cs" />
+    <Compile Include="TestDataRendererPluginBase_3_1.cs" />
+    <Compile Include="TestDataRendererPluginBase_3_2.cs" />
+    <Compile Include="BigIntDataItem.cs" />
+    <Compile Include="UBigIntDataItem.cs" />
+    <Compile Include="UInt32DataItem.cs" />
+    <Compile Include="UInt64DataItem.cs" />
+    <Compile Include="XStringDataItem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

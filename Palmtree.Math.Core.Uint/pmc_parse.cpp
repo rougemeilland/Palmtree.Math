@@ -24,7 +24,6 @@
 
 
 #include <windows.h>
-#include "pmc_exception.h"
 #include "pmc_stringio.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_uint_internal.h"
@@ -64,7 +63,7 @@ namespace Palmtree::Math::Core::Internal
         StringWriter _int_part;
         StringWriter _frac_part;
         _UINT32_T _number_styles;
-        char* _sign;
+        SIGN_T* _sign;
         wchar_t _currency_symbol[17];
         wchar_t _positive_sign[17];
         wchar_t _negative_sign[17];
@@ -75,14 +74,13 @@ namespace Palmtree::Math::Core::Internal
         //bool _負数を許可する;
 
     public:
-        ParserState(const wchar_t* in_ptr, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* sign, wchar_t* int_part_buf, size_t int_part_buf_size, wchar_t* frac_part_buf, size_t frac_part_buf_size)
+        ParserState(const wchar_t* in_ptr, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* sign, wchar_t* int_part_buf, size_t int_part_buf_size, wchar_t* frac_part_buf, size_t frac_part_buf_size)
             : _source(in_ptr), _int_part(int_part_buf, int_part_buf_size), _frac_part(frac_part_buf, frac_part_buf_size)
         {
             _sign = sign;
             _number_styles = number_styles;
-            //_エラーを例外で通知する = (_number_styles & PMC_NUMBER_STYLE_ALLOW_EXCEPTION_THROWING) != 0;
             //_負数を許可する = (_number_styles & PMC_NUMBER_STYLE_ALLOW_SIGNED_INTEGER) != 0;
-            *_sign = 1;
+            *_sign = SIGN_POSITIVE;
 
             // 通貨単位の設定
             if (countof(_currency_symbol) < lstrlenW(format_option->CurrencySymbol) + 1)
@@ -137,7 +135,7 @@ namespace Palmtree::Math::Core::Internal
                     _source.SkipString(L" ");
                 if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_LEADING_SIGN) && _source.StartsWith(_positive_sign))
                 {
-                    *_sign = 1;
+                    *_sign = SIGN_POSITIVE;
                     _source.SkipString(_positive_sign);
                     if (ParseDecimalDigit(_source.PeekChar()) >= 0)
                         ParseAsIntegerPartNumberSequence();
@@ -150,7 +148,7 @@ namespace Palmtree::Math::Core::Internal
                 }
                 else if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_LEADING_SIGN) && _source.StartsWith(_negative_sign) /*&& 負数のエラーチェック()*/)
                 {
-                    *_sign = -1;
+                    *_sign = SIGN_NEGATIVE;
                     _source.SkipString(_negative_sign);
                     if (ParseDecimalDigit(_source.PeekChar()) >= 0)
                         ParseAsIntegerPartNumberSequence();
@@ -173,12 +171,12 @@ namespace Palmtree::Math::Core::Internal
                     }
                     if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_positive_sign))
                     {
-                        *_sign = 1;
+                        *_sign = SIGN_POSITIVE;
                         _source.SkipString(_positive_sign);
                     }
                     if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_negative_sign) /*&& 負数のエラーチェック()*/)
                     {
-                        *_sign = -1;
+                        *_sign = SIGN_NEGATIVE;
                         _source.SkipString(_negative_sign);
                     }
                     else
@@ -188,7 +186,7 @@ namespace Palmtree::Math::Core::Internal
             }
             else if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_PARENTHESES) && _source.StartsWith(L"(") /*&& 負数のエラーチェック()*/)
             {
-                *_sign = -1;
+                *_sign = SIGN_NEGATIVE;
                 _source.SkipString(L"(");
 
                 if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_CURRENCY_SYMBOL) && _source.StartsWith(_currency_symbol))
@@ -228,7 +226,7 @@ namespace Palmtree::Math::Core::Internal
             }
             else if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_LEADING_SIGN) && _source.StartsWith(_positive_sign))
             {
-                *_sign = 1;
+                *_sign = SIGN_POSITIVE;
                 _source.SkipString(_positive_sign);
                 if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_CURRENCY_SYMBOL) && _source.StartsWith(_currency_symbol))
                 {
@@ -269,7 +267,7 @@ namespace Palmtree::Math::Core::Internal
             }
             else if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_LEADING_SIGN) && _source.StartsWith(_negative_sign) /*&& 負数のエラーチェック()*/)
             {
-                *_sign = -1;
+                *_sign = SIGN_NEGATIVE;
                 _source.SkipString(_negative_sign);
                 if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_CURRENCY_SYMBOL) && _source.StartsWith(_currency_symbol))
                 {
@@ -325,12 +323,12 @@ namespace Palmtree::Math::Core::Internal
                         _source.SkipString(_currency_symbol);
                         if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_positive_sign))
                         {
-                            *_sign = 1;
+                            *_sign = SIGN_POSITIVE;
                             _source.SkipString(_positive_sign);
                         }
                         else if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_negative_sign) /*&& 負数のエラーチェック()*/)
                         {
-                            *_sign = -1;
+                            *_sign = SIGN_NEGATIVE;
                             _source.SkipString(_negative_sign);
                         }
                         else
@@ -341,12 +339,12 @@ namespace Palmtree::Math::Core::Internal
                     {
                         if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_positive_sign))
                         {
-                            *_sign = 1;
+                            *_sign = SIGN_POSITIVE;
                             _source.SkipString(_positive_sign);
                         }
                         else if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_negative_sign) /*&& 負数のエラーチェック()*/)
                         {
-                            *_sign = -1;
+                            *_sign = SIGN_NEGATIVE;
                             _source.SkipString(_negative_sign);
                         }
                         else
@@ -359,12 +357,12 @@ namespace Palmtree::Math::Core::Internal
                     _source.SkipString(_currency_symbol);
                     if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_positive_sign))
                     {
-                        *_sign = 1;
+                        *_sign = SIGN_POSITIVE;
                         _source.SkipString(_positive_sign);
                     }
                     else if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_negative_sign) /*&& 負数のエラーチェック()*/)
                     {
-                        *_sign = -1;
+                        *_sign = SIGN_NEGATIVE;
                         _source.SkipString(_negative_sign);
                     }
                     else
@@ -373,14 +371,14 @@ namespace Palmtree::Math::Core::Internal
                 }
                 else if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_positive_sign))
                 {
-                    *_sign = 1;
+                    *_sign = SIGN_POSITIVE;
                     _source.SkipString(_positive_sign);
                     if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_CURRENCY_SYMBOL) && _source.StartsWith(_currency_symbol))
                         _source.SkipString(_currency_symbol);
                 }
                 else if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_negative_sign) /*&& 負数のエラーチェック()*/)
                 {
-                    *_sign = -1;
+                    *_sign = SIGN_NEGATIVE;
                     _source.SkipString(_negative_sign);
                     if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_CURRENCY_SYMBOL) && _source.StartsWith(_currency_symbol))
                         _source.SkipString(_currency_symbol);
@@ -402,12 +400,12 @@ namespace Palmtree::Math::Core::Internal
                         _source.SkipString(_currency_symbol);
                         if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_positive_sign))
                         {
-                            *_sign = 1;
+                            *_sign = SIGN_POSITIVE;
                             _source.SkipString(_positive_sign);
                         }
                         else if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_negative_sign) /*&& 負数のエラーチェック()*/)
                         {
-                            *_sign = -1;
+                            *_sign = SIGN_NEGATIVE;
                             _source.SkipString(_negative_sign);
                         }
                         else
@@ -418,12 +416,12 @@ namespace Palmtree::Math::Core::Internal
                     {
                         if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_positive_sign))
                         {
-                            *_sign = 1;
+                            *_sign = SIGN_POSITIVE;
                             _source.SkipString(_positive_sign);
                         }
                         else if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_negative_sign) /*&& 負数のエラーチェック()*/)
                         {
-                            *_sign = -1;
+                            *_sign = SIGN_NEGATIVE;
                             _source.SkipString(_negative_sign);
                         }
                         else
@@ -436,12 +434,12 @@ namespace Palmtree::Math::Core::Internal
                     _source.SkipString(_currency_symbol);
                     if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_positive_sign))
                     {
-                        *_sign = 1;
+                        *_sign = SIGN_POSITIVE;
                         _source.SkipString(_positive_sign);
                     }
                     else if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_negative_sign) /*&& 負数のエラーチェック()*/)
                     {
-                        *_sign = -1;
+                        *_sign = SIGN_NEGATIVE;
                         _source.SkipString(_negative_sign);
                     }
                     else
@@ -450,14 +448,14 @@ namespace Palmtree::Math::Core::Internal
                 }
                 else if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_positive_sign))
                 {
-                    *_sign = 1;
+                    *_sign = SIGN_POSITIVE;
                     _source.SkipString(_positive_sign);
                     if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_CURRENCY_SYMBOL) && _source.StartsWith(_currency_symbol))
                         _source.SkipString(_currency_symbol);
                 }
                 else if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN) && _source.StartsWith(_negative_sign) /*&& 負数のエラーチェック()*/)
                 {
-                    *_sign = -1;
+                    *_sign = SIGN_NEGATIVE;
                     _source.SkipString(_negative_sign);
                     if ((_number_styles & PMC_NUMBER_STYLE_ALLOW_CURRENCY_SYMBOL) && _source.StartsWith(_currency_symbol))
                         _source.SkipString(_currency_symbol);
@@ -545,7 +543,7 @@ namespace Palmtree::Math::Core::Internal
     };
 
     // 10進数の数値を表す文字列を符号、整数部、小数部に分解する。数値が明らかに正である場合は *flag に 1、明らかに負である場合は *flag に -1 が格納され、数値が正か 0 か明らかには判断できない場合は *flag に 1 が格納される。
-    static int ParseAsDecimalNumberString(const wchar_t* in_ptr, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* sign, wchar_t* int_part_buf, size_t int_part_buf_size, wchar_t* frac_part_buf, size_t frac_part_buf_size)
+    static int ParseAsDecimalNumberString(const wchar_t* in_ptr, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* sign, wchar_t* int_part_buf, size_t int_part_buf_size, wchar_t* frac_part_buf, size_t frac_part_buf_size)
     {
         ParserState state(in_ptr, number_styles, format_option, sign, int_part_buf, int_part_buf_size, frac_part_buf, frac_part_buf_size);
         return (state.ParseAsDecimalNumberString());
@@ -963,7 +961,7 @@ namespace Palmtree::Math::Core::Internal
         _COPY_MEMORY_UNIT(out_buf, work_buf, work_buf_count);
     }
 
-    static PMC_STATUS_CODE TryParseDN(const wchar_t* source, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* o_sign, NUMBER_OBJECT_UINT** o_abs, _UINT32_T* result)
+    static PMC_STATUS_CODE TryParseDN(const wchar_t* source, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_abs)
     {
 #ifdef _M_IX86
         int word_digit_count = 9;
@@ -985,19 +983,11 @@ namespace Palmtree::Math::Core::Internal
         root.CheckString(int_part_buf);
         root.CheckString(frac_part_buf);
         if (!result_parsing)
-        {
-            *result = 0;
-            if (number_styles & PMC_NUMBER_STYLE_ALLOW_EXCEPTION_THROWING)
                 return (PMC_STATUS_FORMAT_ERROR);
-            return (PMC_STATUS_OK);
-        }
         if (int_part_buf[0] == L'\0' && (frac_part_buf[0] == L'\0' || frac_part_buf[0] == L'.' && frac_part_buf[1] == L'\0'))
         {
             // 整数部と小数部がともに空ならばエラーとする
-            *result = 0;
-            if (number_styles & PMC_NUMBER_STYLE_ALLOW_EXCEPTION_THROWING)
                 return (PMC_STATUS_FORMAT_ERROR);
-            return (PMC_STATUS_OK);
         }
 
         if (*o_sign < 0 && frac_part_buf[0] != L'\0')
@@ -1009,10 +999,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // 負数が許可されていない場合
 
-                *result = 0;
-                if (number_styles & PMC_NUMBER_STYLE_ALLOW_EXCEPTION_THROWING)
-                    return (PMC_STATUS_OVERFLOW);
-                return (PMC_STATUS_OK);
+                return (PMC_STATUS_OVERFLOW);
             }
         }
 
@@ -1041,19 +1028,14 @@ namespace Palmtree::Math::Core::Internal
 
         // 小数部が 0 ではない場合、エラーとする
         if (!(frac_part_buf[0] == L'\0' || frac_part_buf[0] == L'.' && frac_part_buf[1] == L'\0'))
-        {
-            *result = 0;
-            if (number_styles & PMC_NUMBER_STYLE_ALLOW_EXCEPTION_THROWING)
-                return (PMC_STATUS_OVERFLOW);
-            return (PMC_STATUS_OK);
-        }
+            return (PMC_STATUS_OVERFLOW);
 
         if (int_part_buf[0] == L'\0')
         {
             // 整数部が空である場合
 
             // 符号を 0 に 修正する
-            *o_sign = 0;
+            *o_sign = SIGN_ZERO;
 
             // 整数部に 0 を設定する
             int_part_buf[0] = L'0';
@@ -1068,10 +1050,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // 負数が許可されていない場合
 
-                *result = 0;
-                if (number_styles & PMC_NUMBER_STYLE_ALLOW_EXCEPTION_THROWING)
-                    return (PMC_STATUS_OVERFLOW);
-                return (PMC_STATUS_OK);
+                return (PMC_STATUS_OVERFLOW);
             }
         }
 
@@ -1107,7 +1086,6 @@ namespace Palmtree::Math::Core::Internal
         if (*o_sign != 0 && (*o_abs)->IS_ZERO)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_parse.cpp;TryParseDN;3");
 #endif
-        *result = 1;
         return (PMC_STATUS_OK);
     }
 
@@ -1181,12 +1159,12 @@ namespace Palmtree::Math::Core::Internal
 
     static int ParseAsHexNumberString(const wchar_t* in_ptr, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* int_part_buf, size_t int_part_buf_size)
     {
-        char dummy_sign;
+        SIGN_T dummy_sign;
         ParserState state(in_ptr, number_styles, format_option, &dummy_sign, int_part_buf, int_part_buf_size, nullptr, 0);
         return (state.ParseAsHexNumberString());
     }
 
-    static PMC_STATUS_CODE TryParseX(const wchar_t* source, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* o_sign, NUMBER_OBJECT_UINT** o_abs, _UINT32_T* result)
+    static PMC_STATUS_CODE TryParseX(const wchar_t* source, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_abs)
     {
         ResourceHolderUINT root;
         __UNIT_TYPE source_len = lstrlenW(source);
@@ -1195,12 +1173,7 @@ namespace Palmtree::Math::Core::Internal
         int result_parsing = ParseAsHexNumberString(source, number_styles, format_option, int_part_buf, int_part_buf_size);
         root.CheckString(int_part_buf);
         if (!result_parsing || int_part_buf[0] == L'\0')
-        {
-            *result = 0;
-            if (number_styles & PMC_NUMBER_STYLE_ALLOW_EXCEPTION_THROWING)
-                return (PMC_STATUS_FORMAT_ERROR);
-            return (PMC_STATUS_OK);
-        }
+            return (PMC_STATUS_FORMAT_ERROR);
 
         // 先頭 1 文字が 8～F であれば負数とみなす
         if (ParseHexDigit(int_part_buf[0]) >= 8)
@@ -1211,20 +1184,20 @@ namespace Palmtree::Math::Core::Internal
                 // 負数が許可されていないにもかかわらず先頭文字が'8'～'F'である場合
 
                 // そのまま正数として扱う
-                *o_sign = 1;
+                *o_sign = SIGN_POSITIVE;
             }
             else
             {
                 // 負数が許可されていて先頭文字が'8'～'F'である場合
 
                 // 負数として扱う
-                *o_sign = -1;
+                *o_sign = SIGN_NEGATIVE;
             }
         }
         else
         {
             // 先頭 1 文字が 0～7 であれば正数とみなす
-            *o_sign = 1;
+            *o_sign = SIGN_POSITIVE;
         }
 
         __UNIT_TYPE o_bit_count = lstrlenW(int_part_buf) * 4;
@@ -1258,16 +1231,15 @@ namespace Palmtree::Math::Core::Internal
         if ((*o_abs)->IS_ZERO)
         {
             root.DeallocateNumber(*o_abs);
-            *o_sign = 0;
+            *o_sign = SIGN_ZERO;
             *o_abs = &number_object_uint_zero;
         }
         else
             root.UnlinkNumber(*o_abs);
-        *result = 1;
         return (PMC_STATUS_OK);
     }
 
-    static PMC_STATUS_CODE PMC_TryParse_Imp(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* o_sign, NUMBER_OBJECT_UINT** o_abs, _UINT32_T* result)
+    static PMC_STATUS_CODE PMC_TryParse_Imp(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_abs)
     {
         ResourceHolderUINT root;
         if (number_styles & PMC_NUMBER_STYLE_ALLOW_HEX_SPECIFIER)
@@ -1275,34 +1247,30 @@ namespace Palmtree::Math::Core::Internal
             // 16進数の場合
 
             // 許可されている組み合わせのフラグ
-            _UINT32_T mask = PMC_NUMBER_STYLE_ALLOW_HEX_SPECIFIER | PMC_NUMBER_STYLE_ALLOW_LEADING_WHITE | PMC_NUMBER_STYLE_ALLOW_TRAILING_WHITE | PMC_NUMBER_STYLE_ALLOW_EXCEPTION_THROWING | PMC_NUMBER_STYLE_ALLOW_SIGNED_INTEGER;
+            _UINT32_T mask = PMC_NUMBER_STYLE_ALLOW_HEX_SPECIFIER | PMC_NUMBER_STYLE_ALLOW_LEADING_WHITE | PMC_NUMBER_STYLE_ALLOW_TRAILING_WHITE | PMC_NUMBER_STYLE_ALLOW_SIGNED_INTEGER;
 
             // 許可されていないフラグが指定されていればエラー
             if (number_styles & ~mask)
                 throw ArgumentException(L"引数number_stylesに許可されていない組み合わせのフラグが指定されました。");
 
-            PMC_STATUS_CODE err = TryParseX(source, number_styles, format_option, o_sign, o_abs, result);
-            if (err != PMC_STATUS_OK || !*result)
+            PMC_STATUS_CODE err = TryParseX(source, number_styles, format_option, o_sign, o_abs);
+            if (err != PMC_STATUS_OK)
                 return (err);
             root.HookNumber(*o_abs);
         }
         else
         {
             // 10進数の場合
-            PMC_STATUS_CODE err = TryParseDN(source, number_styles, format_option, o_sign, o_abs, result);
-            if (err != PMC_STATUS_OK || !*result)
+            PMC_STATUS_CODE err = TryParseDN(source, number_styles, format_option, o_sign, o_abs);
+            if (err != PMC_STATUS_OK)
                 return (err);
             root.HookNumber(*o_abs);
         }
-#ifdef _DEBUG
-        CheckNumber(*o_abs);
-#endif
         root.UnlinkNumber(*o_abs);
-        *result = 1;
         return (PMC_STATUS_OK);
     }
 
-    PMC_STATUS_CODE __PMC_CALL PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_UINT* o, _UINT32_T* result) noexcept(false)
+    PMC_STATUS_CODE PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_UINT* o) noexcept(false)
     {
         if (source == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"source");
@@ -1311,28 +1279,26 @@ namespace Palmtree::Math::Core::Internal
         if (format_option == nullptr)
             format_option = &default_number_format_option;
         ResourceHolderUINT root;
-        char o_sign;
+        SIGN_T o_sign;
         NUMBER_OBJECT_UINT* o_abs;
-        PMC_STATUS_CODE err = PMC_TryParse_Imp(source, number_styles, format_option, &o_sign, &o_abs, result);
-        if (err != PMC_STATUS_OK || !*result)
+        PMC_STATUS_CODE err = PMC_TryParse_Imp(source, number_styles, format_option, &o_sign, &o_abs);
+        if (err != PMC_STATUS_OK || o_abs == nullptr)
         {
-            *result = 0;
+            *o = nullptr;
             return (err);
         }
         root.HookNumber(o_abs);
         if (o_sign < 0)
         {
             // 負数は表現できないのでエラーとする
-            *result = 0;
             return (PMC_STATUS_OVERFLOW);
         }
-        *o = (PMC_HANDLE_UINT)o_abs;
+        *o = GET_NUMBER_HANDLE(o_abs);
         root.UnlinkNumber(o_abs);
-        *result = 1;
         return (PMC_STATUS_OK);
     }
 
-    PMC_STATUS_CODE __PMC_CALL PMC_TryParseForSINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, char* o_sign, PMC_HANDLE_UINT* o_abs, _UINT32_T* result)
+    PMC_STATUS_CODE PMC_TryParseForSINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, PMC_HANDLE_UINT* o_abs)
     {
         if (source == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"source");
@@ -1342,15 +1308,14 @@ namespace Palmtree::Math::Core::Internal
             throw ArgumentNullException(L"引数にnullが与えられています。", L"o_abs");
         if (format_option == nullptr)
             format_option = &default_number_format_option;
+        ResourceHolderUINT root;
         NUMBER_OBJECT_UINT* no_abs;
-        PMC_STATUS_CODE err = PMC_TryParse_Imp(source, number_styles, format_option, o_sign, &no_abs, result);
+        PMC_STATUS_CODE err = PMC_TryParse_Imp(source, number_styles, format_option, o_sign, &no_abs);
         if (err != PMC_STATUS_OK)
-        {
-            *result = 0;
             return (err);
-        }
-        *o_abs = (PMC_HANDLE_UINT)no_abs;
-        *result = 1;
+        root.HookNumber(no_abs);
+        *o_abs = GET_NUMBER_HANDLE(no_abs);
+        root.UnlinkNumber(no_abs);
         return (PMC_STATUS_OK);
     }
 
@@ -1367,7 +1332,6 @@ namespace Palmtree::Math::Core::Internal
     }
 
 }
-
 
 /*
  * END OF FILE

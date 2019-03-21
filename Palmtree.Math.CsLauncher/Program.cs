@@ -13,14 +13,17 @@ namespace Palmtree.Math.CsLauncher
     {
         static void Main(string[] args)
         {
-            var u1_array = new byte[] { 0x01, 0xe8, 0x03 };
-            var u1 = UBigInt.FromByteArray(u1_array);
-            var r1 = u1.FloorLog10(); // 3が正解
+            var x_int_1 = int.Parse(".00", NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign);
+            var x_int_2 = int.Parse("-.00", NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign);
+            var x_uint_1 = uint.Parse(".00", NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign);
+            //var x_uint_2 = uint.Parse("-.00", NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign); // 例外
+            var x_biginteger_1 = BigInteger.Parse(".00", NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign);
+            var x_biginteger_2 = BigInteger.Parse("-.00", NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign);
 
-            var u2_array = new byte[] { 0x01, 0xff, 0xe3, 0x0b, 0x54, 0x02 };
-            var u2 = UBigInt.FromByteArray(u2_array);
-            var r2 = u2.FloorLog10(); // 9が正解
+            BigInt value;
+            BigInt.TryParse("(.00)", NumberStyles.AllowParentheses | NumberStyles.AllowDecimalPoint, null, out value);
             Console.ReadLine();
         }
     }
+
 }

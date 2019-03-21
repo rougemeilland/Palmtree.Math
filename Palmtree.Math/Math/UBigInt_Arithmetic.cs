@@ -47,6 +47,31 @@ namespace Palmtree.Math
             return (EngineObject.FloorLog10(Handle));
         }
 
+        public BigInt Negate()
+        {
+            return (new BigInt(BigInt.EngineObject.Negate(Handle)));
+        }
+
+        public BigInt OneComplement()
+        {
+            return (new BigInt(BigInt.EngineObject.OneComplement(Handle)));
+        }
+
+        public static BigInt operator ~(UBigInt x)
+        {
+            return (new BigInt(BigInt.EngineObject.OneComplement(x.Handle)));
+        }
+
+        public static BigInt operator -(UBigInt x)
+        {
+            return (new BigInt(BigInt.EngineObject.Negate(x.Handle)));
+        }
+
+        public static UBigInt operator +(UBigInt x)
+        {
+            return (x);
+        }
+
         #endregion
     }
 }

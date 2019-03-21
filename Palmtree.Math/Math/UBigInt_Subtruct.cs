@@ -32,6 +32,11 @@ namespace Palmtree.Math
     {
         #region パブリックメソッド
 
+        public UBigInt Decrement()
+        {
+            return (new UBigInt(EngineObject.Decrement(Handle)));
+        }
+
         public UBigInt Subtruct(UInt32 v)
         {
             return (new UBigInt(EngineObject.Subtruct(Handle, v)));
@@ -45,6 +50,11 @@ namespace Palmtree.Math
         public UBigInt Subtruct(UBigInt v)
         {
             return (new UBigInt(EngineObject.Subtruct(Handle, v.Handle)));
+        }
+
+        public static UBigInt operator --(UBigInt x)
+        {
+            return (new UBigInt(EngineObject.Decrement(x.Handle)));
         }
 
         public static UInt32 operator -(UInt32 u, UBigInt v)

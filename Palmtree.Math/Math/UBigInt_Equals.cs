@@ -99,15 +99,9 @@ namespace Palmtree.Math
 
         public override bool Equals(object o)
         {
-            if (o == null)
+            if (o == null || GetType() != o.GetType())
                 return (false);
-            if (o.GetType() == GetType())
-                return (EngineObject.Equals(Handle, ((UBigInt)o).Handle));
-            if (o.GetType() == typeof(UInt32))
-                return (EngineObject.Equals(Handle, (UInt32)o));
-            if (o.GetType() == typeof(UInt64))
-                return (EngineObject.Equals(Handle, (UInt64)o));
-            return (false);
+            return (EngineObject.Equals(Handle, ((UBigInt)o).Handle));
         }
 
         public override int GetHashCode()

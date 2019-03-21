@@ -25,13 +25,9 @@
 
 #include <windows.h>
 #include "pmc_resourceholder_uint.h"
-#include "pmc_exception.h"
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
 
-
-//#define DO_TRACE (1)
-//#define _LOG_MEMORY
 
 namespace Palmtree::Math::Core::Internal
 {
@@ -55,7 +51,6 @@ namespace Palmtree::Math::Core::Internal
 
     static NUMBER_OBJECT_UINT* Remainder(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
-        //Lock lock_obj;
         if (u->UNIT_BIT_COUNT < v->UNIT_BIT_COUNT)
             return (DuplicateNumber(u));
         else
@@ -73,7 +68,13 @@ namespace Palmtree::Math::Core::Internal
             }
             root.DeallocateBlock(work_v_buf);
             CommitNumber(r);
-            root.UnlinkNumber(r);
+            if (r->IS_ZERO)
+            {
+                root.DeallocateNumber(r);
+                r = &number_object_uint_zero;
+            }
+            else
+                root.UnlinkNumber(r);
             return (r);
         }
     }
@@ -88,7 +89,6 @@ namespace Palmtree::Math::Core::Internal
 
     static NUMBER_OBJECT_UINT* ModulePower(NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT* e, NUMBER_OBJECT_UINT* m)
     {
-        //Lock lock_obj;
         ResourceHolderUINT root;
 
         __UNIT_TYPE* m_buf = m->BLOCK;
@@ -162,8 +162,6 @@ namespace Palmtree::Math::Core::Internal
 
         while (e_count > 0)
         {
-            //Lock lock_obj;
-
             // 次の桁の準備をする
             e_mask >>= 1;
             if (e_mask == 0)
@@ -177,11 +175,7 @@ namespace Palmtree::Math::Core::Internal
 
             // w := u * u を計算する
             root.ClearBlock(w_ptr);
-            {
-                // ここの乗算をクリティカルセクションに含めることによりアクセス違反の頻度が大きく変わる模様
-                //Lock lock_obj;
-                Multiply_X_X_Imp(u_ptr, u_count, u_ptr, u_count, w_ptr);
-            }
+            Multiply_X_X_Imp(u_ptr, u_count, u_ptr, u_count, w_ptr);
             root.CheckBlock(work_1_buf);
             root.CheckBlock(work_2_buf);
             SwapPointer(&u_ptr, &w_ptr);
@@ -192,8 +186,6 @@ namespace Palmtree::Math::Core::Internal
             // w := u % m を計算する
             if (u_count >= m_count)
             {
-                //Lock lock_obj;
-
                 root.ClearBlock(work_v_buf);
                 root.ClearBlock(w_ptr);
                 DivRem_X_X(u_ptr, u_count, m_buf, m_count, work_v_buf, nullptr, w_ptr);
@@ -216,14 +208,9 @@ namespace Palmtree::Math::Core::Internal
             {
                 // e の当該桁のビットが立っている場合
 
-                //Lock lock_obj;
-
                 // w := u * v を計算する
                 root.ClearBlock(w_ptr);
-                {
-                    //Lock lock_obj;
-                    Multiply_X_X_Imp(u_ptr, u_count, v_ptr, v_count, w_ptr);
-                }
+                Multiply_X_X_Imp(u_ptr, u_count, v_ptr, v_count, w_ptr);
                 root.CheckBlock(work_1_buf);
                 root.CheckBlock(work_2_buf);
                 SwapPointer(&u_ptr, &w_ptr);
@@ -235,16 +222,8 @@ namespace Palmtree::Math::Core::Internal
                 if (u_count >= m_count)
                 {
                     root.ClearBlock(work_v_buf);
-                    {
-                        // このClearBlockをクリティカルセクションに含めるかどうかでアクセス違反の頻度が大きく変わる
-                        //Lock lock_obj;
-                        root.ClearBlock(w_ptr);
-                    }
-                    {
-                        // この除算をクリティカルセクションに含めるかどうかでアクセス違反の頻度が大きく変わる
-                        //Lock lock_obj;
-                        DivRem_X_X(u_ptr, u_count, m_buf, m_count, work_v_buf, nullptr, w_ptr);
-                    }
+                    root.ClearBlock(w_ptr);
+                    DivRem_X_X(u_ptr, u_count, m_buf, m_count, work_v_buf, nullptr, w_ptr);
                     root.CheckBlock(work_v_buf);
                     root.CheckBlock(work_1_buf);
                     root.CheckBlock(work_2_buf);
@@ -265,13 +244,18 @@ namespace Palmtree::Math::Core::Internal
         _COPY_MEMORY_UNIT(r->BLOCK, u_ptr, u_count);
         root.CheckNumber(r);
         CommitNumber(r);
-        root.UnlinkNumber(r);
+        if (r->IS_ZERO)
+        {
+            root.DeallocateNumber(r);
+            r = &number_object_uint_zero;
+        }
+        else
+            root.UnlinkNumber(r);
         return (r);
     }
 
     static NUMBER_OBJECT_UINT* PMC_ModPow_X_X_X_Imp(NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT* e, NUMBER_OBJECT_UINT* m)
     {
-        //Lock lock_obj;
         if (m->IS_ZERO)
         {
             // m が 0 の場合
@@ -360,26 +344,17 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_ModPow_X_X_X(PMC_HANDLE_UINT v, PMC_HANDLE_UINT e, PMC_HANDLE_UINT m) noexcept(false)
+    PMC_HANDLE_UINT PMC_ModPow_X_X_X(PMC_HANDLE_UINT v, PMC_HANDLE_UINT e, PMC_HANDLE_UINT m) noexcept(false)
     {
-        //Lock lock_obj;
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        if (e == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"e");
-        if (m == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"m");
-        CheckNumber((NUMBER_OBJECT_UINT*)v);
-        CheckNumber((NUMBER_OBJECT_UINT*)e);
-        CheckNumber((NUMBER_OBJECT_UINT*)m);
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
+        NUMBER_OBJECT_UINT* ne = GET_NUMBER_OBJECT(e, L"e");
+        NUMBER_OBJECT_UINT* nm = GET_NUMBER_OBJECT(m, L"m");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* r = PMC_ModPow_X_X_X_Imp((NUMBER_OBJECT_UINT*)v, (NUMBER_OBJECT_UINT*)e, (NUMBER_OBJECT_UINT*)m);
-        root.HookNumber(r);
-#ifdef _DEBUG
-        CheckNumber(r);
-#endif
-        root.UnlinkNumber(r);
-        return ((PMC_HANDLE_UINT)r);
+        NUMBER_OBJECT_UINT* nr = PMC_ModPow_X_X_X_Imp(nv, ne, nm);
+        root.HookNumber(nr);
+        PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
+        root.UnlinkNumber(nr);
+        return (r);
     }
 
     PMC_STATUS_CODE Initialize_ModPow(PROCESSOR_FEATURES* feature)

@@ -24,7 +24,6 @@
 
 
 #include <windows.h>
-#include "pmc_exception.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
@@ -91,25 +90,23 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_From_I(_UINT32_T x) noexcept(false)
+    PMC_HANDLE_UINT PMC_From_I(_UINT32_T x) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) < sizeof(x))
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;PMC_From_I;1");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* o;
+        NUMBER_OBJECT_UINT* no;
         if (x == 0)
-            o = &number_object_uint_zero;
+            no = &number_object_uint_zero;
         else
-            o = From_I_Imp(x);
-        root.HookNumber(o);
-#ifdef _DEBUG
-        CheckNumber(o);
-#endif
-        root.UnlinkNumber(o);
-        return ((PMC_HANDLE_UINT)o);
+            no = From_I_Imp(x);
+        root.HookNumber(no);
+        PMC_HANDLE_UINT o = GET_NUMBER_HANDLE(no);
+        root.UnlinkNumber(no);
+        return (o);
     }
 
-    PMC_HANDLE_UINT __PMC_CALL PMC_From_L(_UINT64_T x) noexcept(false)
+    PMC_HANDLE_UINT PMC_From_L(_UINT64_T x) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) * 2 < sizeof(x))
         {
@@ -117,17 +114,15 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;PMC_From_L;1");
         }
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* o;
+        NUMBER_OBJECT_UINT* no;
         if (x == 0)
-            o = &number_object_uint_zero;
+            no = &number_object_uint_zero;
         else
-            o = From_L_Imp(x);
-        root.HookNumber(o);
-#ifdef _DEBUG
-        CheckNumber(o);
-#endif
-        root.UnlinkNumber(o);
-        return ((PMC_HANDLE_UINT)o);
+            no = From_L_Imp(x);
+        root.HookNumber(no);
+        PMC_HANDLE_UINT o = GET_NUMBER_HANDLE(no);
+        root.UnlinkNumber(no);
+        return (o);
     }
 
     PMC_STATUS_CODE Initialize_From(PROCESSOR_FEATURES *feature)
