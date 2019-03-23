@@ -162,6 +162,56 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    _INT32_T PMC_DivRem_I_UX(_INT32_T u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT * q) noexcept(false)
+    {
+        // 大抵の場合は q と r の精度は _INT32_T で問題ないが、オーバーフローしてしまうケースが存在するため、PMC_HANDLE_SINT 型とする
+        // 例: u == -2147483648, v == -1 の場合、q = 2147483648, r = 0 となるが 2147483648 は _INT32_Tでは表現できない。
+        if (v == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        SIGN_T u_sign;
+        _UINT32_T u_abs = GET_ABS_32(u, &u_sign);
+        if (v->FLAGS.IS_ZERO)
+        {
+            // v == 0 の場合
+
+            // エラーを返す
+            throw DivisionByZeroException(L"0による除算が行われようとしました。");
+        }
+        if (u_sign == 0)
+        {
+            // u == 0 の場合
+
+            if (q != nullptr)
+                *q = GET_NUMBER_HANDLE(&number_object_sint_zero);
+            return (0);
+        }
+        else
+        {
+            // u != 0 の場合
+
+            if (q != nullptr)
+            {
+                ResourceHolderSINT root;
+                SIGN_T q_sign = u_sign;
+                SIGN_T r_sign = u_sign;
+                _UINT32_T q_abs;
+                _UINT32_T r_abs = ep_uint.DivRem(u_abs, v, &q_abs);
+                NUMBER_OBJECT_SINT* nq = From_I_Imp(q_sign, q_abs);
+                root.HookNumber(nq);
+                _INT32_T r = GET_INT_32(r_sign, r_abs);
+                *q = GET_NUMBER_HANDLE(nq);
+                root.UnlinkNumber(nq);
+                return (r);
+            }
+            else
+            {
+                SIGN_T r_sign = u_sign;
+                _UINT32_T r_abs = ep_uint.DivRem(u_abs, v, nullptr);
+                return (GET_INT_32(r_sign, r_abs));
+            }
+        }
+    }
+
     _UINT64_T PMC_DivRem_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q)
     {
         // 大抵の場合は q と r の精度は _INT32_T で問題ないが、オーバーフローしてしまうケースが存在するため、PMC_HANDLE_SINT 型とする
@@ -247,6 +297,56 @@ namespace Palmtree::Math::Core::Internal
             {
                 SIGN_T r_sign = u_sign;
                 _UINT64_T r_abs = ep_uint.DivRem(u_abs, nv->ABS, nullptr);
+                return (GET_INT_64(r_sign, r_abs));
+            }
+        }
+    }
+
+    _INT64_T PMC_DivRem_L_UX(_INT64_T u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT * q) noexcept(false)
+    {
+        // 大抵の場合は q と r の精度は _INT32_T で問題ないが、オーバーフローしてしまうケースが存在するため、PMC_HANDLE_SINT 型とする
+        // 例: u == -9223372036854775808, v == -1 の場合、q = 9223372036854775808, r = 0 となるが 9223372036854775808 は _INT64_Tでは表現できない。
+        if (v == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        SIGN_T u_sign;
+        _UINT64_T u_abs = GET_ABS_64(u, &u_sign);
+        if (v->FLAGS.IS_ZERO)
+        {
+            // v == 0 の場合
+
+            // エラーを返す
+            throw DivisionByZeroException(L"0による除算が行われようとしました。");
+        }
+        if (u_sign == 0)
+        {
+            // u == 0 の場合
+
+            if (q != nullptr)
+                *q = GET_NUMBER_HANDLE(&number_object_sint_zero);
+            return (0);
+        }
+        else
+        {
+            // u != 0 の場合
+
+            if (q != nullptr)
+            {
+                ResourceHolderSINT root;
+                SIGN_T q_sign = u_sign;
+                SIGN_T r_sign = u_sign;
+                _UINT64_T q_abs;
+                _UINT64_T r_abs = ep_uint.DivRem(u_abs, v, &q_abs);
+                NUMBER_OBJECT_SINT* nq = From_L_Imp(q_sign, q_abs);
+                root.HookNumber(nq);
+                _INT64_T r = GET_INT_64(r_sign, r_abs);
+                *q = GET_NUMBER_HANDLE(nq);
+                root.UnlinkNumber(nq);
+                return (r);
+            }
+            else
+            {
+                SIGN_T r_sign = u_sign;
+                _UINT64_T r_abs = ep_uint.DivRem(u_abs, v, nullptr);
                 return (GET_INT_64(r_sign, r_abs));
             }
         }
@@ -408,6 +508,51 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    _UINT32_T PMC_DivRem_UX_I(PMC_HANDLE_UINT u, _INT32_T v, PMC_HANDLE_SINT * q) noexcept(false)
+    {
+        if (u == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        SIGN_T v_sign;
+        _UINT32_T v_abs = GET_ABS_32(v, &v_sign);
+        if (v_sign == 0)
+        {
+            // v == 0 の場合
+
+            // エラーを返す
+            throw DivisionByZeroException(L"0による除算が行われようとしました。");
+        }
+        if (u->FLAGS.IS_ZERO)
+        {
+            // u == 0 の場合
+
+            if (q != nullptr)
+                *q = GET_NUMBER_HANDLE(&number_object_sint_zero);
+            return (0);
+        }
+        else
+        {
+            // u > 0 の場合
+
+            if (q != nullptr)
+            {
+                ResourceHolderSINT root;
+                SIGN_T q_sign = v_sign;
+                PMC_HANDLE_UINT q_abs;
+                _UINT32_T r_abs = ep_uint.DivRem(u, v_abs, &q_abs);
+                root.HookNumber(q_abs);
+                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
+                *q = GET_NUMBER_HANDLE(nq);
+                root.UnlinkNumber(q_abs);
+                root.UnlinkNumber(nq);
+                return (r_abs);
+            }
+            else
+            {
+                return (ep_uint.DivRem(u, v_abs, nullptr));
+            }
+        }
+    }
+
     PMC_HANDLE_SINT PMC_DivRem_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* q)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
@@ -514,6 +659,51 @@ namespace Palmtree::Math::Core::Internal
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
                 root.UnlinkNumber(nr);
                 return (r);
+            }
+        }
+    }
+
+    _UINT64_T PMC_DivRem_UX_L(PMC_HANDLE_UINT u, _INT64_T v, PMC_HANDLE_SINT * q) noexcept(false)
+    {
+        if (u == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        SIGN_T v_sign;
+        _UINT64_T v_abs = GET_ABS_64(v, &v_sign);
+        if (v_sign == 0)
+        {
+            // v == 0 の場合
+
+            // エラーを返す
+            throw DivisionByZeroException(L"0による除算が行われようとしました。");
+        }
+        if (u->FLAGS.IS_ZERO)
+        {
+            // u == 0 の場合
+
+            if (q != nullptr)
+                *q = GET_NUMBER_HANDLE(&number_object_sint_zero);
+            return (0);
+        }
+        else
+        {
+            // u > 0 の場合
+
+            if (q != nullptr)
+            {
+                ResourceHolderSINT root;
+                SIGN_T q_sign = v_sign;
+                PMC_HANDLE_UINT q_abs;
+                _UINT64_T r_abs = ep_uint.DivRem(u, v_abs, &q_abs);
+                root.HookNumber(q_abs);
+                NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
+                *q = GET_NUMBER_HANDLE(nq);
+                root.UnlinkNumber(q_abs);
+                root.UnlinkNumber(nq);
+                return (r_abs);
+            }
+            else
+            {
+                return (ep_uint.DivRem(u, v_abs, nullptr));
             }
         }
     }

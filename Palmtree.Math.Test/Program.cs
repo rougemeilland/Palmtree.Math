@@ -37,23 +37,8 @@ namespace Palmtree.Math.Test
         [HandleProcessCorruptedStateExceptions]
         static void Main(string[] args)
         {
-            try
-            {
-                TestLoop();
-            }
-            catch (ArithmeticException ex)
-            {
-                Console.WriteLine(string.Format("Exception: {0}", ex.GetType().FullName));
-                Console.WriteLine(string.Format("Message: {0}", ex.Message));
-                Console.WriteLine(string.Format("StackTrace: {0}", ex.StackTrace));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(string.Format("Exception: {0}", ex.GetType().FullName));
-                Console.WriteLine(string.Format("Message: {0}", ex.Message));
-                Console.WriteLine(string.Format("StackTrace: {0}", ex.StackTrace));
-            }
-            //Console.ReadLine();
+            TestLoop();
+            // Console.ReadLine();
         }
 
         private static void TestLoop()
@@ -63,7 +48,7 @@ namespace Palmtree.Math.Test
             var plugins = current_assembly.GetTypes()
                           .Where(t => t.IsClass /*&& t.IsPublic */&& !t.IsAbstract && t.GetInterface(interface_name) != null)
                           .Select(t => (IComponentTestPlugin)current_assembly.CreateInstance(t.FullName))
-                          //.OrderBy(p => p.DataFileSize)
+                          .OrderBy(p => p.DataFileSize)
                           .ToArray();
             var 重複確認用コレクション = plugins
                 .GroupBy(plugin => plugin.PluginName)
@@ -107,7 +92,8 @@ namespace Palmtree.Math.Test
 
         private static bool TestItemFilter(IComponentTestItem test_item)
         {
-            return (test_item.PluginName.StartsWith("sint.greatestcommondivisor_ui_x") && test_item.Index >= 7);
+            return (true);
+            //return (test_item.PluginName.StartsWith("sint.bitwiseor_l_ux"));
         }
 
         [HandleProcessCorruptedStateExceptions]

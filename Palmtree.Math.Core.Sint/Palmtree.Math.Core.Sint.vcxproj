@@ -120,6 +120,7 @@
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
       <AdditionalDependencies>Palmtree.Math.Core.Uint.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>Palmtree.Math.Core.Sint.def</ModuleDefinitionFile>
+      <GenerateMapFile>true</GenerateMapFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -146,6 +147,7 @@
       <EntryPointSymbol>
       </EntryPointSymbol>
       <ModuleDefinitionFile>Palmtree.Math.Core.Sint.def</ModuleDefinitionFile>
+      <GenerateMapFile>true</GenerateMapFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -236,7 +238,7 @@
     <ResourceCompile Include="Palmtree.Math.Core.Sint.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="pmc_dllmain.cpp" />
     <ClCompile Include="pmc_add_sub.cpp" />
     <ClCompile Include="pmc_bitwiseand.cpp" />
     <ClCompile Include="pmc_bitwiseor.cpp" />

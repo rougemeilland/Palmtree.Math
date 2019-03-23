@@ -47,6 +47,21 @@ namespace Palmtree.Math
             return (new UBigInt(EngineObject.GreatestCommonDivisor(Handle, v.Handle)));
         }
 
+        public UBigInt GreatestCommonDivisor(Int32 v)
+        {
+            return (new UBigInt(BigInt.EngineObject.GreatestCommonDivisor(Handle, v)));
+        }
+
+        public UBigInt GreatestCommonDivisor(Int64 v)
+        {
+            return (new UBigInt(BigInt.EngineObject.GreatestCommonDivisor(Handle, v)));
+        }
+
+        public UBigInt GreatestCommonDivisor(BigInt v)
+        {
+            return (new UBigInt(BigInt.EngineObject.GreatestCommonDivisor(Handle, v.Handle)));
+        }
+
         #endregion
     }
 }

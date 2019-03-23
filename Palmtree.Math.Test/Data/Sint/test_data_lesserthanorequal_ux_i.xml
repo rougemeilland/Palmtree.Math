@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dataitems>
+  <dataitem index="0">
+    <param1 type="ubigint">00</param1>
+    <param2 type="int32">-1</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="1">
+    <param1 type="ubigint">00</param1>
+    <param2 type="int32">0</param2>
+    <result1 type="uint32">1</result1>
+  </dataitem>
+  <dataitem index="2">
+    <param1 type="ubigint">00</param1>
+    <param2 type="int32">1</param2>
+    <result1 type="uint32">1</result1>
+  </dataitem>
+  <dataitem index="3">
+    <param1 type="ubigint">01,01</param1>
+    <param2 type="int32">-1</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="4">
+    <param1 type="ubigint">01,01</param1>
+    <param2 type="int32">0</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="5">
+    <param1 type="ubigint">01,01</param1>
+    <param2 type="int32">1</param2>
+    <result1 type="uint32">1</result1>
+  </dataitem>
+  <dataitem index="6">
+    <param1 type="ubigint">01,ff,ff,ff,ff</param1>
+    <param2 type="int32">-1</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="7">
+    <param1 type="ubigint">01,ff,ff,ff,ff</param1>
+    <param2 type="int32">0</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="8">
+    <param1 type="ubigint">01,ff,ff,ff,ff</param1>
+    <param2 type="int32">1</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="9">
+    <param1 type="ubigint">01,00,00,00,00,01</param1>
+    <param2 type="int32">-1</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="10">
+    <param1 type="ubigint">01,00,00,00,00,01</param1>
+    <param2 type="int32">0</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="11">
+    <param1 type="ubigint">01,00,00,00,00,01</param1>
+    <param2 type="int32">1</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="12">
+    <param1 type="ubigint">01,01,00,00,00,01</param1>
+    <param2 type="int32">-1</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="13">
+    <param1 type="ubigint">01,01,00,00,00,01</param1>
+    <param2 type="int32">0</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="14">
+    <param1 type="ubigint">01,01,00,00,00,01</param1>
+    <param2 type="int32">1</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="15">
+    <param1 type="ubigint">01,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param2 type="int32">-1</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="16">
+    <param1 type="ubigint">01,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param2 type="int32">0</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="17">
+    <param1 type="ubigint">01,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param2 type="int32">1</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="18">
+    <param1 type="ubigint">01,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="int32">-1</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="19">
+    <param1 type="ubigint">01,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="int32">0</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="20">
+    <param1 type="ubigint">01,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="int32">1</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="21">
+    <param1 type="ubigint">01,01,00,00,00,00,00,00,00,01</param1>
+    <param2 type="int32">-1</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="22">
+    <param1 type="ubigint">01,01,00,00,00,00,00,00,00,01</param1>
+    <param2 type="int32">0</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+  <dataitem index="23">
+    <param1 type="ubigint">01,01,00,00,00,00,00,00,00,01</param1>
+    <param2 type="int32">1</param2>
+    <result1 type="uint32">0</result1>
+  </dataitem>
+</dataitems>

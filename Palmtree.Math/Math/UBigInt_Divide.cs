@@ -34,58 +34,91 @@ namespace Palmtree.Math
 
         public UBigInt Divide(UInt32 v)
         {
-            UInt32 r;
-            var q = EngineObject.DivRem(Handle, v, out r);
+            var q = EngineObject.DivRem(Handle, v, out UInt32 r);
             return (new UBigInt(q));
         }
 
         public UBigInt Divide(UInt64 v)
         {
-            UInt64 r;
-            var q = EngineObject.DivRem(Handle, v, out r);
+            var q = EngineObject.DivRem(Handle, v, out UInt64 r);
             return (new UBigInt(q));
         }
 
         public UBigInt Divide(UBigInt v)
         {
-            Core.UBigIntHandle r;
-            var q = EngineObject.DivRem(Handle, v.Handle, out r);
+            var q = EngineObject.DivRem(Handle, v.Handle, out Core.UBigIntHandle r);
             return (new UBigInt(q));
+        }
+
+        public BigInt Divide(Int32 v)
+        {
+            var q_handle = BigInt.EngineObject.DivRem(Handle, v, out UInt32 r);
+            return (new BigInt(q_handle));
+        }
+
+        public BigInt Divide(Int64 v)
+        {
+            var q_handle = BigInt.EngineObject.DivRem(Handle, v, out UInt64 r);
+            return (new BigInt(q_handle));
+        }
+
+        public BigInt Divide(BigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.DivRem(Handle, v.Handle, out Core.UBigIntHandle r)));
         }
 
         public static UInt32 operator /(UInt32 u, UBigInt v)
         {
-            UInt32 r;
-            var q = EngineObject.DivRem(u, v.Handle, out r);
+            var q = EngineObject.DivRem(u, v.Handle, out UInt32 r);
             return (q);
         }
 
         public static UInt64 operator /(UInt64 u, UBigInt v)
         {
-            UInt64 r;
-            var q = EngineObject.DivRem(u, v.Handle, out r);
+            var q = EngineObject.DivRem(u, v.Handle, out UInt64 r);
             return (q);
         }
 
         public static UBigInt operator /(UBigInt u, UInt32 v)
         {
-            UInt32 r;
-            var q = EngineObject.DivRem(u.Handle, v, out r);
+            var q = EngineObject.DivRem(u.Handle, v, out UInt32 r);
             return (new UBigInt(q));
         }
 
         public static UBigInt operator /(UBigInt u, UInt64 v)
         {
-            UInt64 r;
-            var q = EngineObject.DivRem(u.Handle, v, out r);
+            var q = EngineObject.DivRem(u.Handle, v, out UInt64 r);
             return (new UBigInt(q));
         }
 
         public static UBigInt operator /(UBigInt u, UBigInt v)
         {
-            Core.UBigIntHandle r;
-            var q = EngineObject.DivRem(u.Handle, v.Handle, out r);
+            var q = EngineObject.DivRem(u.Handle, v.Handle, out Core.UBigIntHandle r);
             return (new UBigInt(q));
+        }
+
+        public static BigInt operator /(Int32 u, UBigInt v)
+        {
+            var q_handle = BigInt.EngineObject.DivRem(u, v.Handle, out Int32 r);
+            return (new BigInt(q_handle));
+        }
+
+        public static BigInt operator /(Int64 u, UBigInt v)
+        {
+            var q_handle = BigInt.EngineObject.DivRem(u, v.Handle, out Int64 r);
+            return (new BigInt(q_handle));
+        }
+
+        public static BigInt operator /(UBigInt u, Int32 v)
+        {
+            var q_handle = BigInt.EngineObject.DivRem(u.Handle, v, out UInt32 r);
+            return (new BigInt(q_handle));
+        }
+
+        public static BigInt operator /(UBigInt u, Int64 v)
+        {
+            var q_handle = BigInt.EngineObject.DivRem(u.Handle, v, out UInt64 r);
+            return (new BigInt(q_handle));
         }
 
         #endregion

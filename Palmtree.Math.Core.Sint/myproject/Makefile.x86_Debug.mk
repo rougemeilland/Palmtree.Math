@@ -4,15 +4,11 @@ clean:
 	rm -f ../../dist/Debug/x86/Palmtree.Math.Core.Sint.dll ../build/x86_Debug/Palmtree.Math.Core.Sint.map
 	rm -r -f ../build/x86_Debug
 
-OBJS = ../build/x86_Debug/dllmain.o ../build/x86_Debug/pmc_add_sub.o ../build/x86_Debug/pmc_bitwiseand.o ../build/x86_Debug/pmc_bitwiseor.o ../build/x86_Debug/pmc_bytes.o ../build/x86_Debug/pmc_compare.o ../build/x86_Debug/pmc_divrem.o ../build/x86_Debug/pmc_equals.o ../build/x86_Debug/pmc_exclusiveor.o ../build/x86_Debug/pmc_from.o ../build/x86_Debug/pmc_greatestcommondivisor.o ../build/x86_Debug/pmc_initialize.o ../build/x86_Debug/pmc_interface_csharp.o ../build/x86_Debug/pmc_memory.o ../build/x86_Debug/pmc_multiply.o ../build/x86_Debug/pmc_onecomplement.o ../build/x86_Debug/pmc_parse.o ../build/x86_Debug/pmc_shift.o ../build/x86_Debug/pmc_sint_cppinterface.o ../build/x86_Debug/pmc_statistics.o ../build/x86_Debug/pmc_to.o ../build/x86_Debug/pmc_tostring.o ../build/x86_Debug/version.o ../../dist/Release/x86/Palmtree.Math.Core.Uint.dll
+OBJS = ../build/x86_Debug/pmc_add_sub.o ../build/x86_Debug/pmc_bitwiseand.o ../build/x86_Debug/pmc_bitwiseor.o ../build/x86_Debug/pmc_bytes.o ../build/x86_Debug/pmc_compare.o ../build/x86_Debug/pmc_divrem.o ../build/x86_Debug/pmc_dllmain.o ../build/x86_Debug/pmc_equals.o ../build/x86_Debug/pmc_exclusiveor.o ../build/x86_Debug/pmc_from.o ../build/x86_Debug/pmc_greatestcommondivisor.o ../build/x86_Debug/pmc_initialize.o ../build/x86_Debug/pmc_interface_csharp.o ../build/x86_Debug/pmc_memory.o ../build/x86_Debug/pmc_multiply.o ../build/x86_Debug/pmc_onecomplement.o ../build/x86_Debug/pmc_parse.o ../build/x86_Debug/pmc_shift.o ../build/x86_Debug/pmc_sint_cppinterface.o ../build/x86_Debug/pmc_statistics.o ../build/x86_Debug/pmc_to.o ../build/x86_Debug/pmc_tostring.o ../build/x86_Debug/version.o ../../dist/Release/x86/Palmtree.Math.Core.Uint.dll
 
 ../../dist/Debug/x86/Palmtree.Math.Core.Sint.dll: $(OBJS) ../Palmtree.Math.Core.Sint.def
 	mkdir -p ../../dist/Debug/x86
 	g++ -o ../../dist/Debug/x86/Palmtree.Math.Core.Sint.dll $(OBJS) ../Palmtree.Math.Core.Sint.def -shared -lkernel32 -luser32 -mwindows -Wl,--enable-stdcall-fixup -Wl,-Map=../build/x86_Debug/Palmtree.Math.Core.Sint.map -LZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/dist/Release/x86/
-
-../build/x86_Debug/dllmain.o: ../dllmain.cpp  ../../Palmtree.Math.Core.Uint/pmc.h  ../../Palmtree.Math.Core.Uint/pmc_uint.h  ../../Palmtree.Math.Core.Uint/pmc_cpuid.h  ../pmc_sint.h  ../../Palmtree.Math.Core.Uint/pmc_internal.h  ../../Palmtree.Math.Core.Uint/pmc_exception.h  ../../Palmtree.Math.Core.Uint/pmc_uint_cppinterface.h  ../pmc_sint_internal.h  ../mymakefile.xml
-	mkdir -p ../build/x86_Debug
-	g++ -c -save-temps=obj -Werror -D_M_IX86 -DPALMTREEMATHCORESINT_EXPORTS -g -D_DEBUG -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Uint/ -o ../build/x86_Debug/dllmain.o ../dllmain.cpp
 
 ../build/x86_Debug/pmc_add_sub.o: ../pmc_add_sub.cpp  ../../Palmtree.Math.Core.Uint/pmc.h  ../../Palmtree.Math.Core.Uint/pmc_exception.h  ../../Palmtree.Math.Core.Uint/pmc_uint.h  ../../Palmtree.Math.Core.Uint/pmc_cpuid.h  ../pmc_sint.h  ../../Palmtree.Math.Core.Uint/pmc_internal.h  ../../Palmtree.Math.Core.Uint/pmc_uint_cppinterface.h  ../../Palmtree.Math.Core.Uint/pmc_resourceholder.h  ../pmc_sint_internal.h  ../pmc_resourceholder_sint.h  ../mymakefile.xml
 	mkdir -p ../build/x86_Debug
@@ -37,6 +33,10 @@ OBJS = ../build/x86_Debug/dllmain.o ../build/x86_Debug/pmc_add_sub.o ../build/x8
 ../build/x86_Debug/pmc_divrem.o: ../pmc_divrem.cpp  ../../Palmtree.Math.Core.Uint/pmc.h  ../../Palmtree.Math.Core.Uint/pmc_uint.h  ../../Palmtree.Math.Core.Uint/pmc_cpuid.h  ../pmc_sint.h  ../../Palmtree.Math.Core.Uint/pmc_internal.h  ../../Palmtree.Math.Core.Uint/pmc_exception.h  ../../Palmtree.Math.Core.Uint/pmc_uint_cppinterface.h  ../../Palmtree.Math.Core.Uint/pmc_resourceholder.h  ../pmc_sint_internal.h  ../pmc_resourceholder_sint.h  ../mymakefile.xml
 	mkdir -p ../build/x86_Debug
 	g++ -c -save-temps=obj -Werror -D_M_IX86 -DPALMTREEMATHCORESINT_EXPORTS -g -D_DEBUG -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Uint/ -o ../build/x86_Debug/pmc_divrem.o ../pmc_divrem.cpp
+
+../build/x86_Debug/pmc_dllmain.o: ../pmc_dllmain.cpp  ../../Palmtree.Math.Core.Uint/pmc.h  ../../Palmtree.Math.Core.Uint/pmc_uint.h  ../../Palmtree.Math.Core.Uint/pmc_cpuid.h  ../pmc_sint.h  ../../Palmtree.Math.Core.Uint/pmc_internal.h  ../../Palmtree.Math.Core.Uint/pmc_exception.h  ../../Palmtree.Math.Core.Uint/pmc_uint_cppinterface.h  ../pmc_sint_internal.h  ../mymakefile.xml
+	mkdir -p ../build/x86_Debug
+	g++ -c -save-temps=obj -Werror -D_M_IX86 -DPALMTREEMATHCORESINT_EXPORTS -g -D_DEBUG -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Uint/ -o ../build/x86_Debug/pmc_dllmain.o ../pmc_dllmain.cpp
 
 ../build/x86_Debug/pmc_equals.o: ../pmc_equals.cpp  ../../Palmtree.Math.Core.Uint/pmc.h  ../../Palmtree.Math.Core.Uint/pmc_uint.h  ../../Palmtree.Math.Core.Uint/pmc_cpuid.h  ../pmc_sint.h  ../../Palmtree.Math.Core.Uint/pmc_internal.h  ../../Palmtree.Math.Core.Uint/pmc_exception.h  ../../Palmtree.Math.Core.Uint/pmc_uint_cppinterface.h  ../pmc_sint_internal.h  ../mymakefile.xml
 	mkdir -p ../build/x86_Debug

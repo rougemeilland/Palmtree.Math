@@ -297,7 +297,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // _UINT64_T が 1 ワードで表現できる場合
 
-                _UINT32_T w = (_UINT32_T)(~nu->BLOCK[0] & v);
+                _UINT64_T w = (_UINT64_T)(~nu->BLOCK[0] & v);
                 return (w);
             }
         }

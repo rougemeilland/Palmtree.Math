@@ -52,6 +52,21 @@ namespace Palmtree.Math
             return (new UBigInt(EngineObject.Subtruct(Handle, v.Handle)));
         }
 
+        public BigInt Subtruct(Int32 v)
+        {
+            return (new BigInt(BigInt.EngineObject.Subtruct(Handle, v)));
+        }
+
+        public BigInt Subtruct(Int64 v)
+        {
+            return (new BigInt(BigInt.EngineObject.Subtruct(Handle, v)));
+        }
+
+        public BigInt Subtruct(BigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.Subtruct(Handle, v.Handle)));
+        }
+
         public static UBigInt operator --(UBigInt x)
         {
             return (new UBigInt(EngineObject.Decrement(x.Handle)));
@@ -80,6 +95,26 @@ namespace Palmtree.Math
         public static UBigInt operator -(UBigInt u, UBigInt v)
         {
             return (new UBigInt(EngineObject.Subtruct(u.Handle, v.Handle)));
+        }
+
+        public static BigInt operator -(Int32 u, UBigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.Subtruct(u, v.Handle)));
+        }
+
+        public static BigInt operator -(Int64 u, UBigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.Subtruct(u, v.Handle)));
+        }
+
+        public static BigInt operator -(UBigInt u, Int32 v)
+        {
+            return (new BigInt(BigInt.EngineObject.Subtruct(u.Handle, v)));
+        }
+
+        public static BigInt operator -(UBigInt u, Int64 v)
+        {
+            return (new BigInt(BigInt.EngineObject.Subtruct(u.Handle, v)));
         }
 
         #endregion

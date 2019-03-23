@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Palmtree.Math.Test", "Palmt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Palmtree.Math.CodeGen.TestData", "Palmtree.Math.CodeGen.TestData\Palmtree.Math.CodeGen.TestData.csproj", "{CE3BF22E-CD12-45DD-B14C-CCAC690DB32C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Palmtree.Math.Core.Rtnl", "Palmtree.Math.Core.Rtnl\Palmtree.Math.Core.Rtnl.vcxproj", "{30E309C9-30DA-47DC-920E-4F50488CD798}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -185,6 +187,16 @@ Global
 		{CE3BF22E-CD12-45DD-B14C-CCAC690DB32C}.Release|x64.Build.0 = Release|Any CPU
 		{CE3BF22E-CD12-45DD-B14C-CCAC690DB32C}.Release|x86.ActiveCfg = Release|Any CPU
 		{CE3BF22E-CD12-45DD-B14C-CCAC690DB32C}.Release|x86.Build.0 = Release|Any CPU
+		{30E309C9-30DA-47DC-920E-4F50488CD798}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{30E309C9-30DA-47DC-920E-4F50488CD798}.Debug|x64.ActiveCfg = Debug|x64
+		{30E309C9-30DA-47DC-920E-4F50488CD798}.Debug|x64.Build.0 = Debug|x64
+		{30E309C9-30DA-47DC-920E-4F50488CD798}.Debug|x86.ActiveCfg = Debug|Win32
+		{30E309C9-30DA-47DC-920E-4F50488CD798}.Debug|x86.Build.0 = Debug|Win32
+		{30E309C9-30DA-47DC-920E-4F50488CD798}.Release|Any CPU.ActiveCfg = Release|Win32
+		{30E309C9-30DA-47DC-920E-4F50488CD798}.Release|x64.ActiveCfg = Release|x64
+		{30E309C9-30DA-47DC-920E-4F50488CD798}.Release|x64.Build.0 = Release|x64
+		{30E309C9-30DA-47DC-920E-4F50488CD798}.Release|x86.ActiveCfg = Release|Win32
+		{30E309C9-30DA-47DC-920E-4F50488CD798}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

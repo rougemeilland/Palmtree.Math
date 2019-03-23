@@ -47,6 +47,21 @@ namespace Palmtree.Math
             return (new UBigInt(EngineObject.BitwiseOr(Handle, v.Handle)));
         }
 
+        public BigInt BitwiseOr(Int32 v)
+        {
+            return (new BigInt(BigInt.EngineObject.BitwiseOr(Handle, v)));
+        }
+
+        public BigInt BitwiseOr(Int64 v)
+        {
+            return (new BigInt(BigInt.EngineObject.BitwiseOr(Handle, v)));
+        }
+
+        public BigInt BitwiseOr(BigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.BitwiseOr(Handle, v.Handle)));
+        }
+
         public static UBigInt operator |(UInt32 u, UBigInt v)
         {
             return (new UBigInt(EngineObject.BitwiseOr(u, v.Handle)));
@@ -70,6 +85,26 @@ namespace Palmtree.Math
         public static UBigInt operator |(UBigInt u, UBigInt v)
         {
             return (new UBigInt(EngineObject.BitwiseOr(u.Handle, v.Handle)));
+        }
+
+        public static BigInt operator |(Int32 u, UBigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.BitwiseOr(u, v.Handle)));
+        }
+
+        public static BigInt operator |(Int64 u, UBigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.BitwiseOr(u, v.Handle)));
+        }
+
+        public static BigInt operator |(UBigInt u, Int32 v)
+        {
+            return (new BigInt(BigInt.EngineObject.BitwiseOr(u.Handle, v)));
+        }
+
+        public static BigInt operator |(UBigInt u, Int64 v)
+        {
+            return (new BigInt(BigInt.EngineObject.BitwiseOr(u.Handle, v)));
         }
 
         #endregion

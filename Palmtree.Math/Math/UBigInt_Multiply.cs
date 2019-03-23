@@ -47,6 +47,21 @@ namespace Palmtree.Math
             return (new UBigInt(EngineObject.Multiply(Handle, v.Handle)));
         }
 
+        public BigInt Multiply(Int32 v)
+        {
+            return (new BigInt(BigInt.EngineObject.Multiply(Handle, v)));
+        }
+
+        public BigInt Multiply(Int64 v)
+        {
+            return (new BigInt(BigInt.EngineObject.Multiply(Handle, v)));
+        }
+
+        public BigInt Multiply(BigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.Multiply(Handle, v.Handle)));
+        }
+
         public static UBigInt operator *(UInt32 u, UBigInt v)
         {
             return (new UBigInt(EngineObject.Multiply(u, v.Handle)));
@@ -70,6 +85,26 @@ namespace Palmtree.Math
         public static UBigInt operator *(UBigInt u, UBigInt v)
         {
             return (new UBigInt(EngineObject.Multiply(u.Handle, v.Handle)));
+        }
+
+        public static BigInt operator *(Int32 u, UBigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.Multiply(u, v.Handle)));
+        }
+
+        public static BigInt operator *(Int64 u, UBigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.Multiply(u, v.Handle)));
+        }
+
+        public static BigInt operator *(UBigInt u, Int32 v)
+        {
+            return (new BigInt(BigInt.EngineObject.Multiply(u.Handle, v)));
+        }
+
+        public static BigInt operator *(UBigInt u, Int64 v)
+        {
+            return (new BigInt(BigInt.EngineObject.Multiply(u.Handle, v)));
         }
 
         #endregion

@@ -47,6 +47,21 @@ namespace Palmtree.Math
             return (EngineObject.Compare(Handle, v.Handle));
         }
 
+        public int CompareTo(Int32 v)
+        {
+            return (BigInt.EngineObject.Compare(Handle, v));
+        }
+
+        public int CompareTo(Int64 v)
+        {
+            return (BigInt.EngineObject.Compare(Handle, v));
+        }
+
+        public int CompareTo(BigInt v)
+        {
+            return (BigInt.EngineObject.Compare(Handle, v.Handle));
+        }
+
         int IComparable.CompareTo(object o)
         {
             if (o == null)
@@ -71,6 +86,16 @@ namespace Palmtree.Math
             return (EngineObject.Compare(u, v.Handle));
         }
 
+        public static int Compare(Int32 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Compare(u, v.Handle));
+        }
+
+        public static int Compare(Int64 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Compare(u, v.Handle));
+        }
+
         public static int Compare(UBigInt u, UInt32 v)
         {
             return (EngineObject.Compare(u.Handle, v));
@@ -84,6 +109,16 @@ namespace Palmtree.Math
         public static int Compare(UBigInt u, UBigInt v)
         {
             return (EngineObject.Compare(u.Handle, v.Handle));
+        }
+
+        public static int Compare(UBigInt u, Int32 v)
+        {
+            return (BigInt.EngineObject.Compare(u.Handle, v));
+        }
+
+        public static int Compare(UBigInt u, Int64 v)
+        {
+            return (BigInt.EngineObject.Compare(u.Handle, v));
         }
 
         public static bool operator >(UInt32 u, UBigInt v)
@@ -111,6 +146,26 @@ namespace Palmtree.Math
             return (EngineObject.Compare(u.Handle, v.Handle) > 0);
         }
 
+        public static bool operator >(Int32 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Compare(u, v.Handle) > 0);
+        }
+
+        public static bool operator >(Int64 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Compare(u, v.Handle) > 0);
+        }
+
+        public static bool operator >(UBigInt u, Int32 v)
+        {
+            return (BigInt.EngineObject.Compare(u.Handle, v) > 0);
+        }
+
+        public static bool operator >(UBigInt u, Int64 v)
+        {
+            return (BigInt.EngineObject.Compare(u.Handle, v) >0);
+        }
+
         public static bool operator >=(UInt32 u, UBigInt v)
         {
             return (EngineObject.Compare(u, v.Handle) >= 0);
@@ -134,6 +189,26 @@ namespace Palmtree.Math
         public static bool operator >=(UBigInt u, UBigInt v)
         {
             return (EngineObject.Compare(u.Handle, v.Handle) >= 0);
+        }
+
+        public static bool operator >=(Int32 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Compare(u, v.Handle) >= 0);
+        }
+
+        public static bool operator >=(Int64 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Compare(u, v.Handle) >= 0);
+        }
+
+        public static bool operator >=(UBigInt u, Int32 v)
+        {
+            return (BigInt.EngineObject.Compare(u.Handle, v) >= 0);
+        }
+
+        public static bool operator >=(UBigInt u, Int64 v)
+        {
+            return (BigInt.EngineObject.Compare(u.Handle, v) >= 0);
         }
 
         public static bool operator <(UInt32 u, UBigInt v)
@@ -161,6 +236,26 @@ namespace Palmtree.Math
             return (EngineObject.Compare(u.Handle, v.Handle) < 0);
         }
 
+        public static bool operator <(Int32 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Compare(u, v.Handle) < 0);
+        }
+
+        public static bool operator <(Int64 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Compare(u, v.Handle) < 0);
+        }
+
+        public static bool operator <(UBigInt u, Int32 v)
+        {
+            return (BigInt.EngineObject.Compare(u.Handle, v) < 0);
+        }
+
+        public static bool operator <(UBigInt u, Int64 v)
+        {
+            return (BigInt.EngineObject.Compare(u.Handle, v) < 0);
+        }
+
         public static bool operator <=(UInt32 u, UBigInt v)
         {
             return (EngineObject.Compare(u, v.Handle) <= 0);
@@ -184,6 +279,26 @@ namespace Palmtree.Math
         public static bool operator <=(UBigInt u, UBigInt v)
         {
             return (EngineObject.Compare(u.Handle, v.Handle) <= 0);
+        }
+
+        public static bool operator <=(Int32 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Compare(u, v.Handle) <= 0);
+        }
+
+        public static bool operator <=(Int64 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Compare(u, v.Handle) <= 0);
+        }
+
+        public static bool operator <=(UBigInt u, Int32 v)
+        {
+            return (BigInt.EngineObject.Compare(u.Handle, v) <= 0);
+        }
+
+        public static bool operator <=(UBigInt u, Int64 v)
+        {
+            return (BigInt.EngineObject.Compare(u.Handle, v) <= 0);
         }
 
         #endregion

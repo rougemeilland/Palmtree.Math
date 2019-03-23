@@ -51,7 +51,7 @@ namespace Palmtree.Math.CodeGen.TestData
                 Console.ReadLine();
                 return;
             }
-            var is_parallel = true;
+            var is_parallel = false;
             if (is_parallel)
             {
                 var options = new ParallelOptions();
@@ -61,7 +61,7 @@ namespace Palmtree.Math.CodeGen.TestData
             }
             else
             {
-                foreach (var plugin in plugins/*.Where(plugin => plugin.DataFileKey.StartsWith("sint."))*/)
+                foreach (var plugin in plugins/*.Where(plugin => plugin.DataFileKey.StartsWith("uint."))*/)
                     plugin.Render();
             }
         }

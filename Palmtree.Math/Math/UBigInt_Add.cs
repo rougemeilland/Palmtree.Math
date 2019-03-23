@@ -52,6 +52,21 @@ namespace Palmtree.Math
             return (new UBigInt(EngineObject.Add(Handle, v.Handle)));
         }
 
+        public BigInt Add(Int32 v)
+        {
+            return (new BigInt(BigInt.EngineObject.Add(Handle, v)));
+        }
+
+        public BigInt Add(Int64 v)
+        {
+            return (new BigInt(BigInt.EngineObject.Add(Handle, v)));
+        }
+
+        public BigInt Add(BigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.Add(Handle, v.Handle)));
+        }
+
         public static UBigInt operator ++(UBigInt x)
         {
             return (new UBigInt(EngineObject.Increment(x.Handle)));
@@ -80,6 +95,26 @@ namespace Palmtree.Math
         public static UBigInt operator +(UBigInt u, UBigInt v)
         {
             return (new UBigInt(EngineObject.Add(u.Handle, v.Handle)));
+        }
+
+        public static BigInt operator +(Int32 u, UBigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.Add(u, v.Handle)));
+        }
+
+        public static BigInt operator +(Int64 u, UBigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.Add(u, v.Handle)));
+        }
+
+        public static BigInt operator +(UBigInt u, Int32 v)
+        {
+            return (new BigInt(BigInt.EngineObject.Add(u.Handle, v)));
+        }
+
+        public static BigInt operator +(UBigInt u, Int64 v)
+        {
+            return (new BigInt(BigInt.EngineObject.Add(u.Handle, v)));
         }
 
         #endregion

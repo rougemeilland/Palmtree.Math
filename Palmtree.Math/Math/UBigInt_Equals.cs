@@ -47,6 +47,16 @@ namespace Palmtree.Math
             return (EngineObject.Equals(Handle, v.Handle));
         }
 
+        public bool Equals(Int32 v)
+        {
+            return (BigInt.EngineObject.Equals(Handle, v));
+        }
+
+        public bool Equals(Int64 v)
+        {
+            return (BigInt.EngineObject.Equals(Handle, v));
+        }
+
         public static bool operator ==(UInt32 u, UBigInt v)
         {
             return (EngineObject.Equals(u, v.Handle));
@@ -72,6 +82,26 @@ namespace Palmtree.Math
             return (EngineObject.Equals(u.Handle, v.Handle));
         }
 
+        public static bool operator ==(Int32 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool operator ==(Int64 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool operator ==(UBigInt u, Int32 v)
+        {
+            return (BigInt.EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool operator ==(UBigInt u, Int64 v)
+        {
+            return (BigInt.EngineObject.Equals(u.Handle, v));
+        }
+
         public static bool operator !=(UInt32 u, UBigInt v)
         {
             return (!EngineObject.Equals(u, v.Handle));
@@ -95,6 +125,26 @@ namespace Palmtree.Math
         public static bool operator !=(UBigInt u, UBigInt v)
         {
             return (!EngineObject.Equals(u.Handle, v.Handle));
+        }
+
+        public static bool operator !=(Int32 u, UBigInt v)
+        {
+            return (!BigInt.EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool operator !=(Int64 u, UBigInt v)
+        {
+            return (!BigInt.EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool operator !=(UBigInt u, Int32 v)
+        {
+            return (!BigInt.EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool operator !=(UBigInt u, Int64 v)
+        {
+            return (!BigInt.EngineObject.Equals(u.Handle, v));
         }
 
         public override bool Equals(object o)

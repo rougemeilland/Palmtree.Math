@@ -30,7 +30,7 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    __inline static bool CHECK_RETURN_VALUE(bool value)
+    __inline static bool EPILOGUE(bool value)
     {
         return (value);
     }
@@ -39,11 +39,11 @@ namespace Palmtree::Math::Core::Internal
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (u == 0)
-            return (CHECK_RETURN_VALUE(nv->SIGN == 0));
+            return (EPILOGUE(nv->SIGN == 0));
         else if (nv->SIGN <= 0)
-            return (CHECK_RETURN_VALUE(0));
+            return (EPILOGUE(false));
         else
-            return (CHECK_RETURN_VALUE(ep_uint.Equals(u, nv->ABS)));
+            return (EPILOGUE(ep_uint.Equals(u, nv->ABS)));
     }
 
     bool PMC_Equals_I_X(_INT32_T u, PMC_HANDLE_SINT v)
@@ -52,19 +52,46 @@ namespace Palmtree::Math::Core::Internal
         SIGN_T u_sign;
         _UINT32_T u_abs = GET_ABS_32(u, &u_sign);
         if (u_sign != nv->SIGN)
-            return (CHECK_RETURN_VALUE(0));
-        return (CHECK_RETURN_VALUE(ep_uint.Equals(u_abs, nv->ABS)));
+            return (EPILOGUE(false));
+        return (EPILOGUE(ep_uint.Equals(u_abs, nv->ABS)));
+    }
+
+    bool PMC_Equals_I_UX(_INT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    {
+        if (v == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        SIGN_T u_sign;
+        _UINT32_T u_abs = GET_ABS_32(u, &u_sign);
+        if (v->FLAGS.IS_ZERO)
+        {
+            // v == 0 の場合
+            return (EPILOGUE(u_sign == 0));
+        }
+        else
+        {
+            // v > 0 の場合
+            if (u_sign <= 0)
+            {
+                // u <= 0 の場合
+                return (EPILOGUE(false));
+            }
+            else
+            {
+                // u > 0 の場合
+                return (EPILOGUE(ep_uint.Equals(v, u_abs)));
+            }
+        }
     }
 
     bool PMC_Equals_UL_X(_UINT64_T u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (u == 0)
-            return (CHECK_RETURN_VALUE(nv->SIGN == 0));
+            return (EPILOGUE(nv->SIGN == 0));
         else if (nv->SIGN <= 0)
-            return (CHECK_RETURN_VALUE(0));
+            return (EPILOGUE(false));
         else
-            return (CHECK_RETURN_VALUE(ep_uint.Equals(u, nv->ABS)));
+            return (EPILOGUE(ep_uint.Equals(u, nv->ABS)));
     }
 
     bool PMC_Equals_L_X(_INT64_T u, PMC_HANDLE_SINT v)
@@ -73,8 +100,35 @@ namespace Palmtree::Math::Core::Internal
         SIGN_T u_sign;
         _UINT64_T u_abs = GET_ABS_64(u, &u_sign);
         if (u_sign != nv->SIGN)
-            return (CHECK_RETURN_VALUE(0));
-        return (CHECK_RETURN_VALUE(ep_uint.Equals(u_abs, nv->ABS)));
+            return (EPILOGUE(false));
+        return (EPILOGUE(ep_uint.Equals(u_abs, nv->ABS)));
+    }
+
+    bool PMC_Equals_L_UX(_INT64_T u, PMC_HANDLE_UINT v) noexcept(false)
+    {
+        if (v == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        SIGN_T u_sign;
+        _UINT64_T u_abs = GET_ABS_64(u, &u_sign);
+        if (v->FLAGS.IS_ZERO)
+        {
+            // v == 0 の場合
+            return (EPILOGUE(u_sign == 0));
+        }
+        else
+        {
+            // v > 0 の場合
+            if (u_sign <= 0)
+            {
+                // u <= 0 の場合
+                return (EPILOGUE(false));
+            }
+            else
+            {
+                // u > 0 の場合
+                return (EPILOGUE(ep_uint.Equals(v, u_abs)));
+            }
+        }
     }
 
     bool PMC_Equals_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v)
@@ -83,22 +137,22 @@ namespace Palmtree::Math::Core::Internal
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (u->FLAGS.IS_ZERO)
-            return (CHECK_RETURN_VALUE(nv->SIGN == 0));
+            return (EPILOGUE(nv->SIGN == 0));
         else if (nv->SIGN <= 0)
-            return (CHECK_RETURN_VALUE(0));
+            return (EPILOGUE(false));
         else
-            return (CHECK_RETURN_VALUE(ep_uint.Equals(u, nv->ABS)));
+            return (EPILOGUE(ep_uint.Equals(u, nv->ABS)));
     }
 
     bool PMC_Equals_X_UI(PMC_HANDLE_SINT u, _UINT32_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
         if (v == 0)
-            return (CHECK_RETURN_VALUE(nu->SIGN == 0));
+            return (EPILOGUE(nu->SIGN == 0));
         else if (nu->SIGN <= 0)
-            return (CHECK_RETURN_VALUE(0));
+            return (EPILOGUE(false));
         else
-            return (CHECK_RETURN_VALUE(ep_uint.Equals(nu->ABS, v)));
+            return (EPILOGUE(ep_uint.Equals(nu->ABS, v)));
     }
 
     bool PMC_Equals_X_I(PMC_HANDLE_SINT u, _INT32_T v)
@@ -107,19 +161,46 @@ namespace Palmtree::Math::Core::Internal
         SIGN_T v_sign;
         _UINT32_T v_abs = GET_ABS_32(v, &v_sign);
         if (nu->SIGN != v_sign)
-            return (CHECK_RETURN_VALUE(0));
-        return (CHECK_RETURN_VALUE(ep_uint.Equals(nu->ABS, v_abs)));
+            return (EPILOGUE(false));
+        return (EPILOGUE(ep_uint.Equals(nu->ABS, v_abs)));
+    }
+
+    bool PMC_Equals_UX_I(PMC_HANDLE_UINT u, _INT32_T v) noexcept(false)
+    {
+        if (u == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        SIGN_T v_sign;
+        _UINT32_T v_abs = GET_ABS_32(v, &v_sign);
+        if (u->FLAGS.IS_ZERO)
+        {
+            // u == 0 の場合
+            return (EPILOGUE(v_sign == 0));
+        }
+        else
+        {
+            // u > 0 の場合
+            if (v_sign <= 0)
+            {
+                // v <= 0 の場合
+                return (EPILOGUE(false));
+            }
+            else
+            {
+                // v > 0 の場合
+                return (EPILOGUE(ep_uint.Equals(u, v_abs)));
+            }
+        }
     }
 
     bool PMC_Equals_X_UL(PMC_HANDLE_SINT u, _UINT64_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
         if (v == 0)
-            return (CHECK_RETURN_VALUE(nu->SIGN == 0));
+            return (EPILOGUE(nu->SIGN == 0));
         else if (nu->SIGN <= 0)
-            return (CHECK_RETURN_VALUE(0));
+            return (EPILOGUE(false));
         else
-            return (CHECK_RETURN_VALUE(ep_uint.Equals(nu->ABS, v)));
+            return (EPILOGUE(ep_uint.Equals(nu->ABS, v)));
     }
 
     bool PMC_Equals_X_L(PMC_HANDLE_SINT u, _INT64_T v)
@@ -128,8 +209,35 @@ namespace Palmtree::Math::Core::Internal
         SIGN_T v_sign;
         _UINT64_T v_abs = GET_ABS_64(v, &v_sign);
         if (nu->SIGN != v_sign)
-            return (CHECK_RETURN_VALUE(0));
-        return (CHECK_RETURN_VALUE(ep_uint.Equals(nu->ABS, v_abs)));
+            return (EPILOGUE(false));
+        return (EPILOGUE(ep_uint.Equals(nu->ABS, v_abs)));
+    }
+
+    bool PMC_Equals_UX_L(PMC_HANDLE_UINT u, _INT64_T v) noexcept(false)
+    {
+        if (u == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        SIGN_T v_sign;
+        _UINT64_T v_abs = GET_ABS_64(v, &v_sign);
+        if (u->FLAGS.IS_ZERO)
+        {
+            // u == 0 の場合
+            return (EPILOGUE(v_sign == 0));
+        }
+        else
+        {
+            // u > 0 の場合
+            if (v_sign <= 0)
+            {
+                // v <= 0 の場合
+                return (EPILOGUE(false));
+            }
+            else
+            {
+                // v > 0 の場合
+                return (EPILOGUE(ep_uint.Equals(u, v_abs)));
+            }
+        }
     }
 
     bool PMC_Equals_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v)
@@ -138,11 +246,11 @@ namespace Palmtree::Math::Core::Internal
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
         if (v->FLAGS.IS_ZERO)
-            return (CHECK_RETURN_VALUE(nu->SIGN == 0));
+            return (EPILOGUE(nu->SIGN == 0));
         else if (nu->SIGN <= 0)
-            return (CHECK_RETURN_VALUE(0));
+            return (EPILOGUE(false));
         else
-            return (CHECK_RETURN_VALUE(ep_uint.Equals(nu->ABS, v)));
+            return (EPILOGUE(ep_uint.Equals(nu->ABS, v)));
     }
 
     bool PMC_Equals_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v)
@@ -150,8 +258,8 @@ namespace Palmtree::Math::Core::Internal
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (nu->SIGN != nv->SIGN)
-            return (CHECK_RETURN_VALUE(0));
-        return (CHECK_RETURN_VALUE(ep_uint.Equals(nu->ABS, nv->ABS)));
+            return (EPILOGUE(false));
+        return (EPILOGUE(ep_uint.Equals(nu->ABS, nv->ABS)));
     }
 
 }

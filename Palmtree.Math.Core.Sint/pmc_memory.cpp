@@ -215,6 +215,7 @@ namespace Palmtree::Math::Core::Internal
     {
         if (p->SIGNATURE1 != PMC_SIGNATURE || p->SIGNATURE2 != PMC_SINT_SIGNATURE)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;CheckNumber;1");
+        ep_uint.CheckHandle(p->ABS);
     }
 
     NUMBER_OBJECT_SINT* From_I_Imp(SIGN_T x_sign, _UINT32_T x_abs)
@@ -342,7 +343,6 @@ namespace Palmtree::Math::Core::Internal
     {
         NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
         __CheckNumber(np);
-        ep_uint.CheckHandle(np->ABS);
     }
 
     void PMC_Dispose_UX(PMC_HANDLE_UINT p)

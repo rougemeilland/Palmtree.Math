@@ -47,6 +47,21 @@ namespace Palmtree.Math
             return (new UBigInt(EngineObject.BitwiseAnd(Handle, v.Handle)));
         }
 
+        public UBigInt BitwiseAnd(Int32 v)
+        {
+            return (new UBigInt(BigInt.EngineObject.BitwiseAnd(Handle, v)));
+        }
+
+        public UBigInt BitwiseAnd(Int64 v)
+        {
+            return (new UBigInt(BigInt.EngineObject.BitwiseAnd(Handle, v)));
+        }
+
+        public UBigInt BitwiseAnd(BigInt v)
+        {
+            return (new UBigInt(BigInt.EngineObject.BitwiseAnd(Handle, v.Handle)));
+        }
+
         public static UInt32 operator &(UInt32 u, UBigInt v)
         {
             return (EngineObject.BitwiseAnd(u, v.Handle));
@@ -70,6 +85,26 @@ namespace Palmtree.Math
         public static UBigInt operator &(UBigInt u, UBigInt v)
         {
             return (new UBigInt(EngineObject.BitwiseAnd(u.Handle, v.Handle)));
+        }
+
+        public static UBigInt operator &(Int32 u, UBigInt v)
+        {
+            return (new UBigInt(BigInt.EngineObject.BitwiseAnd(u, v.Handle)));
+        }
+
+        public static UBigInt operator &(Int64 u, UBigInt v)
+        {
+            return (new UBigInt(BigInt.EngineObject.BitwiseAnd(u, v.Handle)));
+        }
+
+        public static UBigInt operator &(UBigInt u, Int32 v)
+        {
+            return (new UBigInt(BigInt.EngineObject.BitwiseAnd(u.Handle, v)));
+        }
+
+        public static UBigInt operator &(UBigInt u, Int64 v)
+        {
+            return (new UBigInt(BigInt.EngineObject.BitwiseAnd(u.Handle, v)));
         }
 
         #endregion

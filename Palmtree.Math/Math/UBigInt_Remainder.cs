@@ -42,9 +42,24 @@ namespace Palmtree.Math
             return (EngineObject.Remainder(Handle, v));
         }
 
+        public UInt32 Remainder(Int32 v)
+        {
+            return (BigInt.EngineObject.Remainder(Handle, v));
+        }
+
+        public UInt64 Remainder(Int64 v)
+        {
+            return (BigInt.EngineObject.Remainder(Handle, v));
+        }
+
         public UBigInt Remainder(UBigInt v)
         {
             return (new UBigInt(EngineObject.Remainder(Handle, v.Handle)));
+        }
+
+        public UBigInt Remainder(BigInt v)
+        {
+            return (new UBigInt(BigInt.EngineObject.Remainder(Handle, v.Handle)));
         }
 
         public static UInt32 operator %(UInt32 u, UBigInt v)
@@ -70,6 +85,26 @@ namespace Palmtree.Math
         public static UBigInt operator %(UBigInt u, UBigInt v)
         {
             return (new UBigInt(EngineObject.Remainder(u.Handle, v.Handle)));
+        }
+
+        public static Int32 operator %(Int32 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Remainder(u, v.Handle));
+        }
+
+        public static Int64 operator %(Int64 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Remainder(u, v.Handle));
+        }
+
+        public static UInt32 operator %(UBigInt u, Int32 v)
+        {
+            return (BigInt.EngineObject.Remainder(u.Handle, v));
+        }
+
+        public static UInt64 operator %(UBigInt u, Int64 v)
+        {
+            return (BigInt.EngineObject.Remainder(u.Handle, v));
         }
 
         #endregion

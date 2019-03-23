@@ -39,6 +39,86 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
+    static PMC_HANDLE_UINT PMC_BitwiseAnd_UX_I_Imp(PMC_HANDLE_UINT u, _INT32_T v)
+    {
+        if (u->FLAGS.IS_ZERO)
+        {
+            // u == 0 の場合
+
+            return (number_handle_uint_zero);
+        }
+        else
+        {
+            // u > 0 の場合
+
+            SIGN_T v_sign;
+            _UINT32_T v_abs = GET_ABS_32(v, &v_sign);
+            if (v_sign == 0)
+            {
+                // v == 0 の場合
+
+                return (number_handle_uint_zero);
+            }
+            else if (v_sign > 0)
+            {
+                // v > 0 の場合
+
+                _UINT32_T w_abs = ep_uint.BitwiseAnd(u, v_abs);
+                return (ep_uint.From(w_abs));
+            }
+            else
+            {
+                // v < 0 の場合
+
+                // 恒等式 -x == ~x + 1 において、x < 0 の場合 abs(x) - 1 == x~ が成り立つ。
+                // AND式 w == u & v と上式より
+                // w == u & ~(abs(v) - 1) となる
+
+                return (ep_uint.OneCompliment_And_BitwiseAnd(v_abs - 1, u));
+            }
+        }
+    }
+
+    static PMC_HANDLE_UINT PMC_BitwiseAnd_UX_L_Imp(PMC_HANDLE_UINT u, _INT64_T v)
+    {
+        if (u->FLAGS.IS_ZERO)
+        {
+            // u == 0 の場合
+
+            return (number_handle_uint_zero);
+        }
+        else
+        {
+            // u > 0 の場合
+
+            SIGN_T v_sign;
+            _UINT64_T v_abs = GET_ABS_64(v, &v_sign);
+            if (v_sign == 0)
+            {
+                // v == 0 の場合
+
+                return (number_handle_uint_zero);
+            }
+            else if (v_sign > 0)
+            {
+                // v > 0 の場合
+
+                _UINT64_T w_abs = ep_uint.BitwiseAnd(u, v_abs);
+                return (ep_uint.From(w_abs));
+            }
+            else
+            {
+                // v < 0 の場合
+
+                // 恒等式 -x == ~x + 1 において、x < 0 の場合 abs(x) - 1 == x~ が成り立つ。
+                // AND式 w == u & v と上式より
+                // w == u & ~(abs(v) - 1) となる
+
+                return (ep_uint.OneCompliment_And_BitwiseAnd(v_abs - 1, u));
+            }
+        }
+    }
+
     static _UINT32_T PMC_BitwiseAnd_X_UI_Imp(NUMBER_OBJECT_SINT* u, _UINT32_T v)
     {
         if (u->SIGN == 0)
@@ -484,6 +564,14 @@ namespace Palmtree::Math::Core::Internal
         return (EPILOGUE(root, nw));
     }
 
+    PMC_HANDLE_UINT PMC_BitwiseAnd_I_UX(_INT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    {
+        if (v == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        PMC_HANDLE_UINT nw = PMC_BitwiseAnd_UX_I_Imp(v, u);
+        return (EPILOGUE(nw));
+    }
+
     _UINT64_T PMC_BitwiseAnd_UL_X(_UINT64_T u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
@@ -497,6 +585,14 @@ namespace Palmtree::Math::Core::Internal
         ResourceHolderSINT root;
         NUMBER_OBJECT_SINT* nw = PMC_BitwiseAnd_X_L_Imp(nv, u);
         return (EPILOGUE(root, nw));
+    }
+
+    PMC_HANDLE_UINT PMC_BitwiseAnd_L_UX(_INT64_T u, PMC_HANDLE_UINT v) noexcept(false)
+    {
+        if (v == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        PMC_HANDLE_UINT nw = PMC_BitwiseAnd_UX_L_Imp(v, u);
+        return (EPILOGUE(nw));
     }
 
     PMC_HANDLE_UINT PMC_BitwiseAnd_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v)
@@ -523,6 +619,14 @@ namespace Palmtree::Math::Core::Internal
         return (EPILOGUE(root, nw));
     }
 
+    PMC_HANDLE_UINT PMC_BitwiseAnd_UX_I(PMC_HANDLE_UINT u, _INT32_T v) noexcept(false)
+    {
+        if (u == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        PMC_HANDLE_UINT nw = PMC_BitwiseAnd_UX_I_Imp(u, v);
+        return (EPILOGUE(nw));
+    }
+
     _UINT64_T PMC_BitwiseAnd_X_UL(PMC_HANDLE_SINT u, _UINT64_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
@@ -536,6 +640,14 @@ namespace Palmtree::Math::Core::Internal
         ResourceHolderSINT root;
         NUMBER_OBJECT_SINT* nw = PMC_BitwiseAnd_X_L_Imp(nu, v);
         return (EPILOGUE(root, nw));
+    }
+
+    PMC_HANDLE_UINT PMC_BitwiseAnd_UX_L(PMC_HANDLE_UINT u, _INT64_T v) noexcept(false)
+    {
+        if (u == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        PMC_HANDLE_UINT nw = PMC_BitwiseAnd_UX_L_Imp(u, v);
+        return (EPILOGUE(nw));
     }
 
     PMC_HANDLE_UINT PMC_BitwiseAnd_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v)

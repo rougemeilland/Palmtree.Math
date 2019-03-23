@@ -52,6 +52,16 @@ namespace Palmtree::Math::Core::Internal
         return (EPILOGUE(w_abs));
     }
 
+    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_I_UX(_INT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    {
+        if (v == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        SIGN_T u_sign;
+        _UINT32_T u_abs = GET_ABS_32(u, &u_sign);
+        PMC_HANDLE_UINT w_abs = ep_uint.GreatestCommonDivisor(u_abs, v);
+        return (EPILOGUE(w_abs));
+    }
+
     PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UL_X(_UINT64_T u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
@@ -65,6 +75,16 @@ namespace Palmtree::Math::Core::Internal
         SIGN_T u_sign;
         _UINT64_T u_abs = GET_ABS_64(u, &u_sign);
         PMC_HANDLE_UINT w_abs = ep_uint.GreatestCommonDivisor(u_abs, nv->ABS);
+        return (EPILOGUE(w_abs));
+    }
+
+    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_L_UX(_INT64_T u, PMC_HANDLE_UINT v) noexcept(false)
+    {
+        if (v == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        SIGN_T u_sign;
+        _UINT64_T u_abs = GET_ABS_64(u, &u_sign);
+        PMC_HANDLE_UINT w_abs = ep_uint.GreatestCommonDivisor(u_abs, v);
         return (EPILOGUE(w_abs));
     }
 
@@ -93,6 +113,16 @@ namespace Palmtree::Math::Core::Internal
         return (EPILOGUE(w_abs));
     }
 
+    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_I(PMC_HANDLE_UINT u, _INT32_T v) noexcept(false)
+    {
+        if (u == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        SIGN_T v_sign;
+        _UINT32_T v_abs = GET_ABS_32(v, &v_sign);
+        PMC_HANDLE_UINT w_abs = ep_uint.GreatestCommonDivisor(u, v_abs);
+        return (EPILOGUE(w_abs));
+    }
+
     PMC_HANDLE_UINT PMC_GreatestCommonDivisor_X_UL(PMC_HANDLE_SINT u, _UINT64_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
@@ -106,6 +136,16 @@ namespace Palmtree::Math::Core::Internal
         SIGN_T v_sign;
         _UINT64_T v_abs = GET_ABS_64(v, &v_sign);
         PMC_HANDLE_UINT w_abs = ep_uint.GreatestCommonDivisor(nu->ABS, v_abs);
+        return (EPILOGUE(w_abs));
+    }
+
+    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_L(PMC_HANDLE_UINT u, _INT64_T v) noexcept(false)
+    {
+        if (u == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
+        SIGN_T v_sign;
+        _UINT64_T v_abs = GET_ABS_64(v, &v_sign);
+        PMC_HANDLE_UINT w_abs = ep_uint.GreatestCommonDivisor(u, v_abs);
         return (EPILOGUE(w_abs));
     }
 

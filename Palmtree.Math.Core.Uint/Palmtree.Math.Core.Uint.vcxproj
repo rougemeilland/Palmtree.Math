@@ -204,8 +204,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pmc_uint_cppinterface.cpp" />
-    <ClCompile Include="cpuid.cpp" />
-    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="pmc_cpuid.cpp" />
+    <ClCompile Include="pmc_dllmain.cpp" />
     <ClCompile Include="pmc_add.cpp" />
     <ClCompile Include="pmc_bitwiseand.cpp" />
     <ClCompile Include="pmc_bitwiseor.cpp" />

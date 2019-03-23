@@ -47,6 +47,21 @@ namespace Palmtree.Math
             return (new UBigInt(EngineObject.ExclusiveOr(Handle, v.Handle)));
         }
 
+        public BigInt ExclusiveOr(Int32 v)
+        {
+            return (new BigInt(BigInt.EngineObject.ExclusiveOr(Handle, v)));
+        }
+
+        public BigInt ExclusiveOr(Int64 v)
+        {
+            return (new BigInt(BigInt.EngineObject.ExclusiveOr(Handle, v)));
+        }
+
+        public BigInt ExclusiveOr(BigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.ExclusiveOr(Handle, v.Handle)));
+        }
+
         public static UBigInt operator ^(UInt32 u, UBigInt v)
         {
             return (new UBigInt(EngineObject.ExclusiveOr(u, v.Handle)));
@@ -70,6 +85,26 @@ namespace Palmtree.Math
         public static UBigInt operator ^(UBigInt u, UBigInt v)
         {
             return (new UBigInt(EngineObject.ExclusiveOr(u.Handle, v.Handle)));
+        }
+
+        public static BigInt operator ^(Int32 u, UBigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.ExclusiveOr(u, v.Handle)));
+        }
+
+        public static BigInt operator ^(Int64 u, UBigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.ExclusiveOr(u, v.Handle)));
+        }
+
+        public static BigInt operator ^(UBigInt u, Int32 v)
+        {
+            return (new BigInt(BigInt.EngineObject.ExclusiveOr(u.Handle, v)));
+        }
+
+        public static BigInt operator ^(UBigInt u, Int64 v)
+        {
+            return (new BigInt(BigInt.EngineObject.ExclusiveOr(u.Handle, v)));
         }
 
         #endregion

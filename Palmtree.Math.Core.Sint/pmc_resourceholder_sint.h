@@ -26,8 +26,8 @@
 #pragma once
 #pragma warning(disable:4067)
 
-#ifndef PMC_RESOURCEHOLDER_UINT_H
-#define PMC_RESOURCEHOLDER_UINT_H
+#ifndef PMC_RESOURCEHOLDER_SINT_H
+#define PMC_RESOURCEHOLDER_SINT_H
 
 
 #include "pmc_resourceholder.h"

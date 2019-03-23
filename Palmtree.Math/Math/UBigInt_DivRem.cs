@@ -44,6 +44,18 @@ namespace Palmtree.Math
             return (q);
         }
 
+        public static BigInt DivRem(Int32 u, UBigInt v, out Int32 r)
+        {
+            var q_handle = BigInt.EngineObject.DivRem(u, v.Handle, out r);
+            return (new BigInt(q_handle));
+        }
+
+        public static BigInt DivRem(Int64 u, UBigInt v, out Int64 r)
+        {
+            var q_handle = BigInt.EngineObject.DivRem(u, v.Handle, out r);
+            return (new BigInt(q_handle));
+        }
+
         public static UBigInt DivRem(UBigInt u, UInt32 v, out UInt32 r)
         {
             var q = EngineObject.DivRem(u.Handle, v, out r);
@@ -58,10 +70,21 @@ namespace Palmtree.Math
 
         public static UBigInt DivRem(UBigInt u, UBigInt v, out UBigInt r)
         {
-            Core.UBigIntHandle r_handle;
-            var q_handle = EngineObject.DivRem(u.Handle, v.Handle, out r_handle);
+            var q_handle = EngineObject.DivRem(u.Handle, v.Handle, out Core.UBigIntHandle r_handle);
             r = new UBigInt(r_handle);
             return (new UBigInt(q_handle));
+        }
+
+        public static BigInt DivRem(UBigInt u, Int32 v, out UInt32 r)
+        {
+            var q_handle = BigInt.EngineObject.DivRem(u.Handle, v, out r);
+            return (new BigInt(q_handle));
+        }
+
+        public static BigInt DivRem(UBigInt u, Int64 v, out UInt64 r)
+        {
+            var q_handle = BigInt.EngineObject.DivRem(u.Handle, v, out r);
+            return (new BigInt(q_handle));
         }
 
         public UBigInt DivRem(UInt32 v, out UInt32 r)
@@ -78,10 +101,28 @@ namespace Palmtree.Math
 
         public UBigInt DivRem(UBigInt v, out UBigInt r)
         {
-            Core.UBigIntHandle r_handle;
-            var q_handle = EngineObject.DivRem(Handle, v.Handle, out r_handle);
+            var q_handle = EngineObject.DivRem(Handle, v.Handle, out Core.UBigIntHandle r_handle);
             r = new UBigInt(r_handle);
             return (new UBigInt(q_handle));
+        }
+
+        public BigInt DivRem(Int32 v, out UInt32 r)
+        {
+            var q_handle = BigInt.EngineObject.DivRem(Handle, v, out r);
+            return (new BigInt(q_handle));
+        }
+
+        public BigInt DivRem(Int64 v, out UInt64 r)
+        {
+            var q_handle = BigInt.EngineObject.DivRem(Handle, v, out r);
+            return (new BigInt(q_handle));
+        }
+
+        public BigInt DivRem(BigInt v, out UBigInt r)
+        {
+            var q_hadnle = BigInt.EngineObject.DivRem(Handle, v.Handle, out Core.UBigIntHandle r_handle);
+            r = new UBigInt(r_handle);
+            return (new BigInt(q_hadnle));
         }
 
         #endregion

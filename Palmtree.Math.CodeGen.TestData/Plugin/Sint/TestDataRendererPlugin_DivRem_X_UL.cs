@@ -30,10 +30,10 @@ using System.Numerics;
 
 namespace Palmtree.Math.CodeGen.TestData.Plugin.Sint
 {
-    class TestDataRendererPlugin_DivRem_UX_L
+    class TestDataRendererPlugin_DivRem_X_UL
         : TestDataRendererPluginBase_2_2
     {
-        public TestDataRendererPlugin_DivRem_UX_L()
+        public TestDataRendererPlugin_DivRem_X_UL()
             : base("sint", "test_data_divrem_x_ul.xml")
         {
 

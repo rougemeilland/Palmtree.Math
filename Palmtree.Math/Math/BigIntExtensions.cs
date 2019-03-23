@@ -57,11 +57,6 @@ namespace Palmtree.Math
             return (new BigInt(BigInt.EngineObject.From(u)));
         }
 
-        public static BigInt ToBigInt(this UBigInt u)
-        {
-            return (new BigInt(BigInt.EngineObject.From(u.Handle)));
-        }
-
         public static BigInt Add(this UInt32 u, BigInt v)
         {
             return (new BigInt(BigInt.EngineObject.Add(u, v.Handle)));
@@ -80,11 +75,6 @@ namespace Palmtree.Math
         public static BigInt Add(this Int64 u, BigInt v)
         {
             return (new BigInt(BigInt.EngineObject.Add(u, v.Handle)));
-        }
-
-        public static BigInt Add(this UBigInt u, BigInt v)
-        {
-            return (new BigInt(BigInt.EngineObject.Add(u.Handle, v.Handle)));
         }
 
         public static BigInt Subtruct(this UInt32 u, BigInt v)
@@ -107,11 +97,6 @@ namespace Palmtree.Math
             return (new BigInt(BigInt.EngineObject.Subtruct(u, v.Handle)));
         }
 
-        public static BigInt Subtruct(this UBigInt u, BigInt v)
-        {
-            return (new BigInt(BigInt.EngineObject.Subtruct(u.Handle, v.Handle)));
-        }
-
         public static BigInt Multiply(this UInt32 u, BigInt v)
         {
             return (new BigInt(BigInt.EngineObject.Multiply(u, v.Handle)));
@@ -132,39 +117,24 @@ namespace Palmtree.Math
             return (new BigInt(BigInt.EngineObject.Multiply(u, v.Handle)));
         }
 
-        public static BigInt Multiply(this UBigInt u, BigInt v)
-        {
-            return (new BigInt(BigInt.EngineObject.Multiply(u.Handle, v.Handle)));
-        }
-
         public static BigInt Divide(this UInt32 u, BigInt v)
         {
-            UInt32 r;
-            return (new BigInt(BigInt.EngineObject.DivRem(u, v.Handle, out r)));
+            return (new BigInt(BigInt.EngineObject.DivRem(u, v.Handle, out UInt32 r)));
         }
 
         public static BigInt Divide(this UInt64 u, BigInt v)
         {
-            UInt64 r;
-            return (new BigInt(BigInt.EngineObject.DivRem(u, v.Handle, out r)));
+            return (new BigInt(BigInt.EngineObject.DivRem(u, v.Handle, out UInt64 r)));
         }
 
         public static BigInt Divide(this Int32 u, BigInt v)
         {
-            Int32 r;
-            return (new BigInt(BigInt.EngineObject.DivRem(u, v.Handle, out r)));
+            return (new BigInt(BigInt.EngineObject.DivRem(u, v.Handle, out Int32 r)));
         }
 
         public static BigInt Divide(this Int64 u, BigInt v)
         {
-            Int64 r;
-            return (new BigInt(BigInt.EngineObject.DivRem(u, v.Handle, out r)));
-        }
-
-        public static BigInt Divide(this UBigInt u, BigInt v)
-        {
-            Core.UBigIntHandle r;
-            return (new BigInt(BigInt.EngineObject.DivRem(u.Handle, v.Handle, out r)));
+            return (new BigInt(BigInt.EngineObject.DivRem(u, v.Handle, out Int64 r)));
         }
 
         public static UInt32 Remainder(this UInt32 u, BigInt v)
@@ -187,11 +157,6 @@ namespace Palmtree.Math
             return (BigInt.EngineObject.Remainder(u, v.Handle));
         }
 
-        public static UBigInt Remainder(this UBigInt u, BigInt v)
-        {
-            return (new UBigInt(BigInt.EngineObject.Remainder(u.Handle, v.Handle)));
-        }
-
         public static BigInt DivRem(this UInt32 u, BigInt v, out UInt32 r)
         {
             return (new BigInt(BigInt.EngineObject.DivRem(u, v.Handle, out r)));
@@ -210,45 +175,6 @@ namespace Palmtree.Math
         public static BigInt DivRem(this Int64 u, BigInt v, out Int64 r)
         {
             return (new BigInt(BigInt.EngineObject.DivRem(u, v.Handle, out r)));
-        }
-
-        public static BigInt DivRem(this UBigInt u, BigInt v, out UBigInt r)
-        {
-            Core.UBigIntHandle r_handle;
-            var q_hadnle = BigInt.EngineObject.DivRem(u.Handle, v.Handle, out r_handle);
-            r = new UBigInt(r_handle);
-            return (new BigInt(q_hadnle));
-        }
-
-        // UInt32.Equals(object o) などが先にHITしてしまい、以下のオーバーロードは使用されることはないことが判明したため、廃止する。
-#if false
-        public static bool Equals(this UInt32 u, BigInt v)
-        {
-            return (BigInt.EngineObject.Equals(u, v.Handle));
-        }
-
-        public static bool Equals(this UInt64 u, BigInt v)
-        {
-            return (BigInt.EngineObject.Equals(u, v.Handle));
-        }
-#endif
-
-        // UInt32.CompareTo(object o) などが先にHITしてしまい、以下のオーバーロードは使用されることはないことが判明したため、廃止する。
-#if false
-        public static int CompareTo(this UInt32 u, BigInt v)
-        {
-            return (BigInt.EngineObject.Compare(u, v.Handle));
-        }
-
-        public static int CompareTo(this UInt64 u, BigInt v)
-        {
-            return (BigInt.EngineObject.Compare(u, v.Handle));
-        }
-#endif
-
-        public static int CompareTo(this UBigInt u, BigInt v)
-        {
-            return (BigInt.EngineObject.Compare(u.Handle, v.Handle));
         }
 
         public static UInt32 BitwiseAnd(this UInt32 u, BigInt v)
@@ -271,17 +197,22 @@ namespace Palmtree.Math
             return (new BigInt(BigInt.EngineObject.BitwiseAnd(u, v.Handle)));
         }
 
-        public static UBigInt BitwiseAnd(this UBigInt u, BigInt v)
-        {
-            return (new UBigInt(BigInt.EngineObject.BitwiseAnd(u.Handle, v.Handle)));
-        }
-
         public static BigInt BitwiseOr(this UInt32 u, BigInt v)
         {
             return (new BigInt(BigInt.EngineObject.BitwiseOr(u, v.Handle)));
         }
 
         public static BigInt BitwiseOr(this UInt64 u, BigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.BitwiseOr(u, v.Handle)));
+        }
+
+        public static BigInt BitwiseOr(this Int32 u, UBigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.BitwiseOr(u, v.Handle)));
+        }
+
+        public static BigInt BitwiseOr(this Int64 u, UBigInt v)
         {
             return (new BigInt(BigInt.EngineObject.BitwiseOr(u, v.Handle)));
         }
@@ -294,11 +225,6 @@ namespace Palmtree.Math
         public static BigInt BitwiseOr(this Int64 u, BigInt v)
         {
             return (new BigInt(BigInt.EngineObject.BitwiseOr(u, v.Handle)));
-        }
-
-        public static BigInt BitwiseOr(this UBigInt u, BigInt v)
-        {
-            return (new BigInt(BigInt.EngineObject.BitwiseOr(u.Handle, v.Handle)));
         }
 
         public static BigInt ExclusiveOr(this UInt32 u, BigInt v)
@@ -321,11 +247,6 @@ namespace Palmtree.Math
             return (new BigInt(BigInt.EngineObject.ExclusiveOr(u, v.Handle)));
         }
 
-        public static BigInt ExclusiveOr(this UBigInt u, BigInt v)
-        {
-            return (new BigInt(BigInt.EngineObject.ExclusiveOr(u.Handle, v.Handle)));
-        }
-
         public static UBigInt GreatestCommonDivisor(this UInt32 u, BigInt v)
         {
             return (new UBigInt(BigInt.EngineObject.GreatestCommonDivisor(u, v.Handle)));
@@ -344,11 +265,6 @@ namespace Palmtree.Math
         public static UBigInt GreatestCommonDivisor(this Int64 u, BigInt v)
         {
             return (new UBigInt(BigInt.EngineObject.GreatestCommonDivisor(u, v.Handle)));
-        }
-
-        public static UBigInt GreatestCommonDivisor(this UBigInt u, BigInt v)
-        {
-            return (new UBigInt(BigInt.EngineObject.GreatestCommonDivisor(u.Handle, v.Handle)));
         }
 
         #endregion
