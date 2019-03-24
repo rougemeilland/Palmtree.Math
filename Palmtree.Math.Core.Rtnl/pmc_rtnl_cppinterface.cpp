@@ -131,27 +131,27 @@ namespace Palmtree::Math::Core::Internal
 
     _UINT32_T PMC_SINT_CppInterface::ToUint32(PMC_HANDLE_SINT p) noexcept(false)
     {
-        return (PMC_To_X_UI(p));
+        return (PMC_ToUInt32_X(p));
     }
 
     _INT32_T PMC_SINT_CppInterface::ToInt32(PMC_HANDLE_SINT p) noexcept(false)
     {
-        return (PMC_To_X_I(p));
+        return (PMC_ToInt32_X(p));
     }
 
     _UINT64_T PMC_SINT_CppInterface::ToUInt64(PMC_HANDLE_SINT p) noexcept(false)
     {
-        return (PMC_To_X_UL(p));
+        return (PMC_ToUInt64_X(p));
     }
 
     _INT64_T PMC_SINT_CppInterface::ToInt64(PMC_HANDLE_SINT p) noexcept(false)
     {
-        return (PMC_To_X_L(p));
+        return (PMC_ToInt64_X(p));
     }
 
     PMC_HANDLE_UINT PMC_SINT_CppInterface::ToUBigInt(PMC_HANDLE_SINT p) noexcept(false)
     {
-        return (PMC_To_X_UX(p));
+        return (PMC_ToUBigInt_X(p));
     }
 
     PMC_HANDLE_SINT PMC_SINT_CppInterface::Negate(PMC_HANDLE_UINT x) noexcept(false)

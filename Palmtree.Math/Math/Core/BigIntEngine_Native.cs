@@ -583,13 +583,28 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_Subtruct_UI_X(UInt32 u, IntPtr v, out IntPtr w);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_Subtruct_UI_UX(UInt32 u, IntPtr v, out IntPtr w);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
         private static extern Int32 PMCCS_Subtruct_UL_X(UInt64 u, IntPtr v, out IntPtr w);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_Subtruct_UL_UX(UInt64 u, IntPtr v, out IntPtr w);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
         private static extern Int32 PMCCS_Subtruct_UX_I(IntPtr u, Int32 v, out IntPtr w);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
         private static extern Int32 PMCCS_Subtruct_UX_L(IntPtr u, Int64 v, out IntPtr w);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_Subtruct_UX_UI(IntPtr u, UInt32 v, out IntPtr w);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_Subtruct_UX_UL(IntPtr u, UInt64 v, out IntPtr w);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_Subtruct_UX_UX(IntPtr u, IntPtr v, out IntPtr w);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
         private static extern Int32 PMCCS_Subtruct_UX_X(IntPtr u, IntPtr v, out IntPtr w);
@@ -613,19 +628,19 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_Subtruct_X_X(IntPtr u, IntPtr v, out IntPtr w);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
-        private static extern Int32 PMCCS_To_X_I(IntPtr p, out Int32 o);
+        private static extern Int32 PMCCS_ToInt32_X(IntPtr p, out Int32 o);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
-        private static extern Int32 PMCCS_To_X_L(IntPtr p, out Int64 o);
+        private static extern Int32 PMCCS_ToInt64_X(IntPtr p, out Int64 o);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
-        private static extern Int32 PMCCS_To_X_UI(IntPtr p, out UInt32 o);
+        private static extern Int32 PMCCS_ToUInt32_X(IntPtr p, out UInt32 o);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
-        private static extern Int32 PMCCS_To_X_UL(IntPtr p, out UInt64 o);
+        private static extern Int32 PMCCS_ToUInt64_X(IntPtr p, out UInt64 o);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
-        private static extern Int32 PMCCS_To_X_UX(IntPtr p, out IntPtr o);
+        private static extern Int32 PMCCS_ToUBigInt_X(IntPtr p, out IntPtr o);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
         private static extern Int32 PMCCS_ToByteArray(IntPtr p, IntPtr buffer, int buffer_size, out Int32 size);

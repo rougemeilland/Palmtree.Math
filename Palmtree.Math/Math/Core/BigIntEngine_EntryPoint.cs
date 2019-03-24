@@ -1260,9 +1260,21 @@ namespace Palmtree.Math.Core
             return (new BigIntHandle(w, this));
         }
 
+        public BigIntHandle Subtruct(UInt32 u, UBigIntHandle v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_UI_UX(u, v.NativeHandle, out IntPtr w));
+            return (new BigIntHandle(w, this));
+        }
+
         public BigIntHandle Subtruct(UInt64 u, BigIntHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_UL_X(u, v.NativeHandle, out IntPtr w));
+            return (new BigIntHandle(w, this));
+        }
+
+        public BigIntHandle Subtruct(UInt64 u, UBigIntHandle v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_UL_UX(u, v.NativeHandle, out IntPtr w));
             return (new BigIntHandle(w, this));
         }
 
@@ -1332,6 +1344,24 @@ namespace Palmtree.Math.Core
             return (new BigIntHandle(w, this));
         }
 
+        public BigIntHandle Subtruct(UBigIntHandle u, UInt32 v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_UX_UI(u.NativeHandle, v, out IntPtr w));
+            return (new BigIntHandle(w, this));
+        }
+
+        public BigIntHandle Subtruct(UBigIntHandle u, UInt64 v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_UX_UL(u.NativeHandle, v, out IntPtr w));
+            return (new BigIntHandle(w, this));
+        }
+
+        public BigIntHandle Subtruct(UBigIntHandle u, UBigIntHandle v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_UX_UX(u.NativeHandle, v.NativeHandle, out IntPtr w));
+            return (new BigIntHandle(w, this));
+        }
+
         #endregion
 
         #region ToByteArray 関数
@@ -1373,31 +1403,31 @@ namespace Palmtree.Math.Core
 
         public Int32 ToInt32(BigIntHandle value)
         {
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_To_X_I(value.NativeHandle, out Int32 r));
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_ToInt32_X(value.NativeHandle, out Int32 r));
             return (r);
         }
 
         public UInt32 ToUInt32(BigIntHandle value)
         {
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_To_X_UI(value.NativeHandle, out UInt32 r));
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_ToUInt32_X(value.NativeHandle, out UInt32 r));
             return (r);
         }
 
         public Int64 ToInt64(BigIntHandle value)
         {
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_To_X_L(value.NativeHandle, out Int64 r));
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_ToInt64_X(value.NativeHandle, out Int64 r));
             return (r);
         }
 
         public UInt64 ToUInt64(BigIntHandle value)
         {
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_To_X_UL(value.NativeHandle, out UInt64 r));
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_ToUInt64_X(value.NativeHandle, out UInt64 r));
             return (r);
         }
 
         public UBigIntHandle ToUBigInt(BigIntHandle value)
         {
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_To_X_UX(value.NativeHandle, out IntPtr r));
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_ToUBigInt_X(value.NativeHandle, out IntPtr r));
             return (new UBigIntHandle(r, this));
         }
 

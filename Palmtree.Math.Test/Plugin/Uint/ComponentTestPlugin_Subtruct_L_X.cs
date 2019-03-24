@@ -37,7 +37,7 @@ namespace Palmtree.Math.Test.Plugin.Uint
         {
             var u = p1.ToUInt64().Value;
             var v = p2.ToUBigInt().Value;
-            var w = u.Subtruct(v);
+            var w = u.USubtruct(v);
             return (new UInt64DataItem(w));
         }
     }

@@ -129,7 +129,7 @@ namespace Palmtree::Math::Core::Internal
         PMC_GetStatisticsInfo(p);
     }
 
-    extern "C" PMC_STATUS_CODE __stdcall PMCCS_From_I(_UINT32_T x, PMC_HANDLE_UINT* o)
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_From_I(_INT32_T x, PMC_HANDLE_UINT* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -144,13 +144,43 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __stdcall PMCCS_From_L(_UINT64_T x, PMC_HANDLE_UINT* o)
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_From_L(_INT64_T x, PMC_HANDLE_UINT* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
             *o = PMC_From_L(x);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_From_UI(_UINT32_T x, PMC_HANDLE_UINT* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *o = PMC_From_UI(x);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_From_UL(_UINT64_T x, PMC_HANDLE_UINT* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *o = PMC_From_UL(x);
             return (PMC_STATUS_OK);
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
@@ -267,13 +297,13 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __stdcall PMCCS_To_X_I(PMC_HANDLE_UINT p, _UINT32_T* o)
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_ToInt32_UX(PMC_HANDLE_UINT p, _INT32_T* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            *o = PMC_To_X_I(p);
+            *o = PMC_ToInt32_X(p);
             return (PMC_STATUS_OK);
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
@@ -282,13 +312,43 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __stdcall PMCCS_To_X_L(PMC_HANDLE_UINT p, _UINT64_T* o)
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_ToInt64_UX(PMC_HANDLE_UINT p, _INT64_T* o)
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            *o = PMC_To_X_L(p);
+            *o = PMC_ToInt64_X(p);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_ToUInt32_UX(PMC_HANDLE_UINT p, _UINT32_T* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *o = PMC_ToUInt32_X(p);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_ToUInt64_UX(PMC_HANDLE_UINT p, _UINT64_T* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *o = PMC_ToUInt64_X(p);
             return (PMC_STATUS_OK);
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)

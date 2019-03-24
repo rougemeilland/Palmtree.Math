@@ -32,12 +32,37 @@ namespace Palmtree.Math
     {
         #region パブリックメソッド
 
+        public static UBigInt From(Int32 x)
+        {
+            return (new UBigInt(EngineObject.From(x)));
+        }
+
+        public static UBigInt From(Int64 x)
+        {
+            return (new UBigInt(EngineObject.From(x)));
+        }
+
         public static UBigInt From(UInt32 x)
         {
             return (new UBigInt(EngineObject.From(x)));
         }
 
         public static UBigInt From(UInt64 x)
+        {
+            return (new UBigInt(EngineObject.From(x)));
+        }
+
+        public static UBigInt From(BigInt x)
+        {
+            return (new UBigInt(BigInt.EngineObject.ToUBigInt(x.Handle)));
+        }
+
+        public static explicit operator UBigInt(Int32 x)
+        {
+            return (new UBigInt(EngineObject.From(x)));
+        }
+
+        public static explicit operator UBigInt(Int64 x)
         {
             return (new UBigInt(EngineObject.From(x)));
         }
@@ -52,6 +77,23 @@ namespace Palmtree.Math
             return (new UBigInt(EngineObject.From(x)));
         }
 
+#if false
+        public static explicit operator UBigInt(BigInt x)
+        {
+            return (new UBigInt(BigInt.EngineObject.ToUBigInt(x.Handle)));
+        }
+#endif
+
+        public Int32 ToInt32()
+        {
+            return (EngineObject.ToInt32(Handle));
+        }
+
+        public Int64 ToInt64()
+        {
+            return (EngineObject.ToInt64(Handle));
+        }
+
         public UInt32 ToUInt32()
         {
             return (EngineObject.ToUInt32(Handle));
@@ -62,9 +104,19 @@ namespace Palmtree.Math
             return (EngineObject.ToUInt64(Handle));
         }
 
-        public BigInt ToBigInt(UBigInt u)
+        public BigInt ToBigInt()
         {
-            return (new BigInt(BigInt.EngineObject.From(u.Handle)));
+            return (new BigInt(BigInt.EngineObject.From(Handle)));
+        }
+
+        public static explicit operator Int32(UBigInt x)
+        {
+            return (EngineObject.ToInt32(x.Handle));
+        }
+
+        public static explicit operator Int64(UBigInt x)
+        {
+            return (EngineObject.ToInt64(x.Handle));
         }
 
         public static explicit operator UInt32(UBigInt x)
@@ -77,10 +129,12 @@ namespace Palmtree.Math
             return (EngineObject.ToUInt64(x.Handle));
         }
 
+#if false
         public static explicit operator BigInt(UBigInt x)
         {
             return (new BigInt(BigInt.EngineObject.From(x.Handle)));
         }
+#endif
 
         #endregion
     }

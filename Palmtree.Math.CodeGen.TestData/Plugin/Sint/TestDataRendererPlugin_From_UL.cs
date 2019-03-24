@@ -23,22 +23,39 @@
  */
 
 
-namespace Palmtree.Math.Test.Plugin.Uint
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+
+namespace Palmtree.Math.CodeGen.TestData.Plugin.Sint
 {
-    class ComponentTestPlugin_op_Subtruct_L_X
-        : ComponentTestPluginBase_2_1
+    class TestDataRendererPlugin_From_UL
+        : TestDataRendererPluginBase_1_1
     {
-        public ComponentTestPlugin_op_Subtruct_L_X()
-            : base("uint", "op_subtruct_l_x", "test_data_subtruct_l_x.xml")
+        public TestDataRendererPlugin_From_UL()
+            : base("sint", "test_data_from_ul.xml")
         {
         }
 
-        protected override IDataItem TestFunc(IDataItem p1, IDataItem p2)
+        protected override IEnumerable<TestDataItemContainer> TestDataItems
         {
-            var u = p1.ToUInt64().Value;
-            var v = p2.ToUBigInt().Value;
-            var w = u - v;
-            return (new UInt64DataItem(w));
+            get
+            {
+                return (UInt64DataSource
+                        .Select(p1 => new
+                        {
+                            p1 = (IDataItem)new UInt64DataItem(p1),
+                            r1 = (IDataItem)new BigIntDataItem(p1),
+                        })
+                        .Zip(Enumerable.Range(0, int.MaxValue),
+                             (item, index) => new TestDataItemContainer
+                             {
+                                 Index = index,
+                                 Param1 = item.p1,
+                                 Result1 = item.r1,
+                             }));
+            }
         }
     }
 }

@@ -311,14 +311,12 @@ namespace Palmtree::Math::Core::Internal
         if (v == 0)
             return (&number_object_uint_zero);
         if (e == 0)
-            return (From_I_Imp(v));
+            return (From_UI_Imp(v));
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* _10 = From_I_Imp(10);
-        root.HookNumber(_10);
 #if _M_IX86
-        NUMBER_OBJECT_UINT* exponent_of_10 = PMC_Pow_X_I_Imp(_10, e);
+        NUMBER_OBJECT_UINT* exponent_of_10 = PMC_Pow_X_I_Imp(&number_object_uint_ten, e);
 #elif defined(_M_X64)
-        NUMBER_OBJECT_UINT* exponent_of_10 = PMC_Pow_X_L_Imp(_10, e);
+        NUMBER_OBJECT_UINT* exponent_of_10 = PMC_Pow_X_L_Imp(&number_object_uint_ten, e);
 #else
 #error unknown platform
 #endif

@@ -51,6 +51,8 @@ namespace Palmtree::Math::Core::Internal
 
         void GetStatisticsInfo(PMC_STATISTICS_INFO* p);
 
+        PMC_HANDLE_UINT From(_INT32_T x);// noexcept(false);
+        PMC_HANDLE_UINT From(_INT64_T x);// noexcept(false);
         PMC_HANDLE_UINT From(_UINT32_T x);// noexcept(false);
         PMC_HANDLE_UINT From(_UINT64_T x);// noexcept(false);
 
@@ -66,6 +68,8 @@ namespace Palmtree::Math::Core::Internal
 
         _UINT64_T GetAllocatedMemorySize();
 
+        _INT32_T ToInt32(PMC_HANDLE_UINT p) noexcept(false);
+        _INT64_T ToInt64(PMC_HANDLE_UINT p) noexcept(false);
         _UINT32_T ToUInt32(PMC_HANDLE_UINT p) noexcept(false);
         _UINT64_T ToUInt64(PMC_HANDLE_UINT p) noexcept(false);
 

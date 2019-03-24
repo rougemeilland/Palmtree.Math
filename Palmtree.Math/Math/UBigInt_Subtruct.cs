@@ -37,19 +37,34 @@ namespace Palmtree.Math
             return (new UBigInt(EngineObject.Decrement(Handle)));
         }
 
-        public UBigInt Subtruct(UInt32 v)
+        public UBigInt USubtruct(UInt32 v)
         {
             return (new UBigInt(EngineObject.Subtruct(Handle, v)));
         }
 
-        public UBigInt Subtruct(UInt64 v)
+        public UBigInt USubtruct(UInt64 v)
         {
             return (new UBigInt(EngineObject.Subtruct(Handle, v)));
         }
 
-        public UBigInt Subtruct(UBigInt v)
+        public UBigInt USubtruct(UBigInt v)
         {
             return (new UBigInt(EngineObject.Subtruct(Handle, v.Handle)));
+        }
+
+        public BigInt Subtruct(UInt32 v)
+        {
+            return (new BigInt(BigInt.EngineObject.Subtruct(Handle, v)));
+        }
+
+        public BigInt Subtruct(UInt64 v)
+        {
+            return (new BigInt(BigInt.EngineObject.Subtruct(Handle, v)));
+        }
+
+        public BigInt Subtruct(UBigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.Subtruct(Handle, v.Handle)));
         }
 
         public BigInt Subtruct(Int32 v)
@@ -72,29 +87,29 @@ namespace Palmtree.Math
             return (new UBigInt(EngineObject.Decrement(x.Handle)));
         }
 
-        public static UInt32 operator -(UInt32 u, UBigInt v)
+        public static BigInt operator -(UInt32 u, UBigInt v)
         {
-            return (EngineObject.Subtruct(u, v.Handle));
+            return (new BigInt(BigInt.EngineObject.Subtruct(u, v.Handle)));
         }
 
-        public static UInt64 operator -(UInt64 u, UBigInt v)
+        public static BigInt operator -(UInt64 u, UBigInt v)
         {
-            return (EngineObject.Subtruct(u, v.Handle));
+            return (new BigInt(BigInt.EngineObject.Subtruct(u, v.Handle)));
         }
 
-        public static UBigInt operator -(UBigInt u, UInt32 v)
+        public static BigInt operator -(UBigInt u, UInt32 v)
         {
-            return (new UBigInt(EngineObject.Subtruct(u.Handle, v)));
+            return (new BigInt(BigInt.EngineObject.Subtruct(u.Handle, v)));
         }
 
-        public static UBigInt operator -(UBigInt u, UInt64 v)
+        public static BigInt operator -(UBigInt u, UInt64 v)
         {
-            return (new UBigInt(EngineObject.Subtruct(u.Handle, v)));
+            return (new BigInt(BigInt.EngineObject.Subtruct(u.Handle, v)));
         }
 
-        public static UBigInt operator -(UBigInt u, UBigInt v)
+        public static BigInt operator -(UBigInt u, UBigInt v)
         {
-            return (new UBigInt(EngineObject.Subtruct(u.Handle, v.Handle)));
+            return (new BigInt(BigInt.EngineObject.Subtruct(u.Handle, v.Handle)));
         }
 
         public static BigInt operator -(Int32 u, UBigInt v)

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dataitems>
+  <dataitem index="0">
+    <param1 type="uint32">0</param1>
+    <result1 type="ubigint">00</result1>
+  </dataitem>
+  <dataitem index="1">
+    <param1 type="uint32">1</param1>
+    <result1 type="ubigint">01,01</result1>
+  </dataitem>
+  <dataitem index="2">
+    <param1 type="uint32">1234567890</param1>
+    <result1 type="ubigint">01,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="3">
+    <param1 type="uint32">4294967295</param1>
+    <result1 type="ubigint">01,ff,ff,ff,ff</result1>
+  </dataitem>
+</dataitems>

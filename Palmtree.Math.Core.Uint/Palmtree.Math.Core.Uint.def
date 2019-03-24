@@ -44,6 +44,8 @@ EXPORTS
 	PMCCS_FromByteArray
 	PMCCS_From_I
 	PMCCS_From_L
+	PMCCS_From_UI
+	PMCCS_From_UL
 	PMCCS_GET_HASH_CODE
 	PMCCS_GetAllocatedMemorySize
 	PMCCS_GetConfigurationSettings
@@ -83,7 +85,9 @@ EXPORTS
 	PMCCS_TimesOfExponentOf10
 	PMCCS_ToByteArray
 	PMCCS_ToString
-	PMCCS_To_X_I
-	PMCCS_To_X_L
+	PMCCS_ToInt32_UX
+	PMCCS_ToInt64_UX
+	PMCCS_ToUInt32_UX
+	PMCCS_ToUInt64_UX
 	PMCCS_TryParse
 	PMCCS_UINT_Initialize

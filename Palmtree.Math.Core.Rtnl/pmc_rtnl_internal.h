@@ -112,16 +112,20 @@ namespace Palmtree::Math::Core::Internal
 #pragma region エントリポイントに登録される関数の宣言
     extern bool PMC_RTNL_Initialize();
 
-#if false
     extern PMC_STATUS_CODE PMC_GetConfigurationSettings(const wchar_t* key, wchar_t* value_buffer, _INT32_T value_buffer_size, _INT32_T* count);
 
     extern void  PMC_GetStatisticsInfo(PMC_STATISTICS_INFO* statistics_info) noexcept(false);// 与えられた領域に現在まで採取されている統計情報を複写する。
 
-    extern PMC_HANDLE_SINT PMC_From_UI(_UINT32_T x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_From_I(_INT32_T x) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_From_UL(_UINT64_T x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_From_L(_INT64_T x) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_From_UI(_UINT32_T x) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_From_UL(_UINT64_T x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_From_UX(PMC_HANDLE_UINT x) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_From_X(PMC_HANDLE_SINT x) noexcept(false);
+
+
+#if false
+
 
     extern _INT32_T PMC_GetHashCode(PMC_HANDLE_SINT p) noexcept(false);
 
@@ -140,11 +144,11 @@ namespace Palmtree::Math::Core::Internal
 
     extern _UINT64_T PMC_GetAllocatedMemorySize() noexcept(false);
 
-    extern _UINT32_T PMC_To_X_UI(PMC_HANDLE_SINT p) noexcept(false);
-    extern _INT32_T PMC_To_X_I(PMC_HANDLE_SINT p) noexcept(false);
-    extern _UINT64_T PMC_To_X_UL(PMC_HANDLE_SINT p) noexcept(false);
-    extern _INT64_T PMC_To_X_L(PMC_HANDLE_SINT p) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_To_X_UX(PMC_HANDLE_SINT p) noexcept(false);
+    extern _UINT32_T PMC_ToUInt32_X(PMC_HANDLE_SINT p) noexcept(false);
+    extern _INT32_T PMC_ToInt32_X(PMC_HANDLE_SINT p) noexcept(false);
+    extern _UINT64_T PMC_ToUInt64_X(PMC_HANDLE_SINT p) noexcept(false);
+    extern _INT64_T PMC_ToInt64_X(PMC_HANDLE_SINT p) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_ToUBigInt_X(PMC_HANDLE_SINT p) noexcept(false);
 
     extern PMC_HANDLE_SINT PMC_Negate_UX(PMC_HANDLE_UINT x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Negate_X(PMC_HANDLE_SINT x) noexcept(false);
@@ -155,102 +159,66 @@ namespace Palmtree::Math::Core::Internal
     extern void  PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info) noexcept(false);
 
     extern PMC_STATUS_CODE PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o) noexcept(false);
+#endif
 
-    extern PMC_HANDLE_SINT PMC_Add_UI_X(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Add_I_X(_INT32_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Add_UL_X(_UINT64_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Add_L_X(_INT64_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Add_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Add_X_UI(PMC_HANDLE_SINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Add_X_I(PMC_HANDLE_SINT u, _INT32_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Add_X_UL(PMC_HANDLE_SINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Add_X_L(PMC_HANDLE_SINT u, _INT64_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Add_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Add_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
+    PMC_HANDLE_RTNL PMC_Add_I_R(_INT32_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Add_L_R(_INT64_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Add_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Add_UI_R(_UINT32_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Add_UL_R(_UINT64_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Add_UX_R(PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Add_R_I(PMC_HANDLE_RTNL u, _INT32_T v);
+    PMC_HANDLE_RTNL PMC_Add_R_L(PMC_HANDLE_RTNL u, _INT64_T v);
+    PMC_HANDLE_RTNL PMC_Add_R_X(PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v);
+    PMC_HANDLE_RTNL PMC_Add_R_UI(PMC_HANDLE_RTNL u, _UINT32_T v);
+    PMC_HANDLE_RTNL PMC_Add_R_UL(PMC_HANDLE_RTNL u, _UINT64_T v);
+    PMC_HANDLE_RTNL PMC_Add_R_UX(PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v);
+    PMC_HANDLE_RTNL PMC_Add_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v);
 
-    extern PMC_HANDLE_SINT PMC_Subtruct_UI_X(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Subtruct_I_X(_INT32_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Subtruct_UL_X(_UINT64_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Subtruct_L_X(_INT64_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Subtruct_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Subtruct_X_UI(PMC_HANDLE_SINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Subtruct_X_I(PMC_HANDLE_SINT u, _INT32_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Subtruct_X_UL(PMC_HANDLE_SINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Subtruct_X_L(PMC_HANDLE_SINT u, _INT64_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Subtruct_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Subtruct_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
+    PMC_HANDLE_RTNL PMC_Subtruct_I_R(_INT32_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Subtruct_L_R(_INT64_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Subtruct_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Subtruct_UI_R(_UINT32_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Subtruct_UL_R(_UINT64_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Subtruct_UX_R(PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Subtruct_R_I(PMC_HANDLE_RTNL u, _INT32_T v);
+    PMC_HANDLE_RTNL PMC_Subtruct_R_L(PMC_HANDLE_RTNL u, _INT64_T v);
+    PMC_HANDLE_RTNL PMC_Subtruct_R_X(PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v);
+    PMC_HANDLE_RTNL PMC_Subtruct_R_UI(PMC_HANDLE_RTNL u, _UINT32_T v);
+    PMC_HANDLE_RTNL PMC_Subtruct_R_UL(PMC_HANDLE_RTNL u, _UINT64_T v);
+    PMC_HANDLE_RTNL PMC_Subtruct_R_UX(PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v);
+    PMC_HANDLE_RTNL PMC_Subtruct_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v);
 
-    extern PMC_HANDLE_SINT PMC_Increment_X(PMC_HANDLE_SINT x) noexcept(false);
+    PMC_HANDLE_RTNL PMC_Multiply_I_R(_INT32_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Multiply_L_R(_INT64_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Multiply_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Multiply_UI_R(_UINT32_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Multiply_UL_R(_UINT64_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Multiply_UX_R(PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Multiply_R_I(PMC_HANDLE_RTNL u, _INT32_T v);
+    PMC_HANDLE_RTNL PMC_Multiply_R_L(PMC_HANDLE_RTNL u, _INT64_T v);
+    PMC_HANDLE_RTNL PMC_Multiply_R_X(PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v);
+    PMC_HANDLE_RTNL PMC_Multiply_R_UI(PMC_HANDLE_RTNL u, _UINT32_T v);
+    PMC_HANDLE_RTNL PMC_Multiply_R_UL(PMC_HANDLE_RTNL u, _UINT64_T v);
+    PMC_HANDLE_RTNL PMC_Multiply_R_UX(PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v);
+    PMC_HANDLE_RTNL PMC_Multiply_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v);
 
-    extern PMC_HANDLE_SINT PMC_Decrement_X(PMC_HANDLE_SINT x) noexcept(false);
+    PMC_HANDLE_RTNL PMC_Divide_I_R(_INT32_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Divide_L_R(_INT64_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Divide_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Divide_UI_R(_UINT32_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Divide_UL_R(_UINT64_T u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Divide_UX_R(PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v);
+    PMC_HANDLE_RTNL PMC_Divide_R_I(PMC_HANDLE_RTNL u, _INT32_T v);
+    PMC_HANDLE_RTNL PMC_Divide_R_L(PMC_HANDLE_RTNL u, _INT64_T v);
+    PMC_HANDLE_RTNL PMC_Divide_R_X(PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v);
+    PMC_HANDLE_RTNL PMC_Divide_R_UI(PMC_HANDLE_RTNL u, _UINT32_T v);
+    PMC_HANDLE_RTNL PMC_Divide_R_UL(PMC_HANDLE_RTNL u, _UINT64_T v);
+    PMC_HANDLE_RTNL PMC_Divide_R_UX(PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v);
+    PMC_HANDLE_RTNL PMC_Divide_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v);
 
-    extern PMC_HANDLE_SINT PMC_Multiply_UI_X(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Multiply_I_X(_INT32_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Multiply_UL_X(_UINT64_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Multiply_L_X(_INT64_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Multiply_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Multiply_X_UI(PMC_HANDLE_SINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Multiply_X_I(PMC_HANDLE_SINT u, _INT32_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Multiply_X_UL(PMC_HANDLE_SINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Multiply_X_L(PMC_HANDLE_SINT u, _INT64_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Multiply_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Multiply_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
 
-    extern _UINT32_T PMC_DivRem_UI_X(_UINT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q) noexcept(false);
-    extern _INT32_T PMC_DivRem_I_X(_INT32_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q) noexcept(false);
-    extern _UINT64_T PMC_DivRem_UL_X(_UINT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q) noexcept(false);
-    extern _INT64_T PMC_DivRem_L_X(_INT64_T u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_DivRem_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_DivRem_X_UI(PMC_HANDLE_SINT u, _UINT32_T v, PMC_HANDLE_SINT* q) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_DivRem_X_I(PMC_HANDLE_SINT u, _INT32_T v, PMC_HANDLE_SINT* q) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_DivRem_X_UL(PMC_HANDLE_SINT u, _UINT64_T v, PMC_HANDLE_SINT* q) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_DivRem_X_L(PMC_HANDLE_SINT u, _INT64_T v, PMC_HANDLE_SINT* q) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_DivRem_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* q) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_DivRem_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q) noexcept(false);
-
-    extern PMC_HANDLE_SINT PMC_LeftShift_X_I(PMC_HANDLE_SINT p, _INT32_T n) noexcept(false);
-
-    extern PMC_HANDLE_SINT PMC_RightShift_X_I(PMC_HANDLE_SINT p, _INT32_T n) noexcept(false);
-
-    extern PMC_HANDLE_SINT PMC_OneComplement_UX(PMC_HANDLE_UINT x) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_OneComplement_X(PMC_HANDLE_SINT x) noexcept(false);
-
-    extern _UINT32_T PMC_BitwiseAnd_UI_X(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_BitwiseAnd_I_X(_INT32_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern _UINT64_T PMC_BitwiseAnd_UL_X(_UINT64_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_BitwiseAnd_L_X(_INT64_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_BitwiseAnd_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v) noexcept(false);
-    extern _UINT32_T PMC_BitwiseAnd_X_UI(PMC_HANDLE_SINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_BitwiseAnd_X_I(PMC_HANDLE_SINT u, _INT32_T v) noexcept(false);
-    extern _UINT64_T PMC_BitwiseAnd_X_UL(PMC_HANDLE_SINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_BitwiseAnd_X_L(PMC_HANDLE_SINT u, _INT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_BitwiseAnd_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_BitwiseAnd_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
-
-    extern PMC_HANDLE_SINT PMC_BitwiseOr_UI_X(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_BitwiseOr_I_X(_INT32_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_BitwiseOr_UL_X(_UINT64_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_BitwiseOr_L_X(_INT64_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_BitwiseOr_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_BitwiseOr_X_UI(PMC_HANDLE_SINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_BitwiseOr_X_I(PMC_HANDLE_SINT u, _INT32_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_BitwiseOr_X_UL(PMC_HANDLE_SINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_BitwiseOr_X_L(PMC_HANDLE_SINT u, _INT64_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_BitwiseOr_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_BitwiseOr_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
-
-    extern PMC_HANDLE_SINT PMC_ExclusiveOr_UI_X(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_ExclusiveOr_I_X(_INT32_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_ExclusiveOr_UL_X(_UINT64_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_ExclusiveOr_L_X(_INT64_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_ExclusiveOr_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_ExclusiveOr_X_UI(PMC_HANDLE_SINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_ExclusiveOr_X_I(PMC_HANDLE_SINT u, _INT32_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_ExclusiveOr_X_UL(PMC_HANDLE_SINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_ExclusiveOr_X_L(PMC_HANDLE_SINT u, _INT64_T v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_ExclusiveOr_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_ExclusiveOr_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
-
+#if false
     extern SIGN_T PMC_Compare_UI_X(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false);
     extern SIGN_T PMC_Compare_I_X(_INT32_T u, PMC_HANDLE_SINT v) noexcept(false);
     extern SIGN_T PMC_Compare_UL_X(_UINT64_T u, PMC_HANDLE_SINT v) noexcept(false);

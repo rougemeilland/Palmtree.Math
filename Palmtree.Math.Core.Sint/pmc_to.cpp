@@ -30,7 +30,7 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    _UINT32_T PMC_To_X_UI(PMC_HANDLE_SINT p)
+    _UINT32_T PMC_ToUInt32_X(PMC_HANDLE_SINT p)
     {
         NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
         char p_sign = np->SIGN;
@@ -53,7 +53,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _INT32_T PMC_To_X_I(PMC_HANDLE_SINT p)
+    _INT32_T PMC_ToInt32_X(PMC_HANDLE_SINT p)
     {
         NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
         SIGN_T p_sign = np->SIGN;
@@ -61,7 +61,7 @@ namespace Palmtree::Math::Core::Internal
         return (GET_INT_32(p_sign, p_abs));
     }
 
-    _UINT64_T PMC_To_X_UL(PMC_HANDLE_SINT p)
+    _UINT64_T PMC_ToUInt64_X(PMC_HANDLE_SINT p)
     {
         NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
         char p_sign = np->SIGN;
@@ -84,7 +84,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _INT64_T PMC_To_X_L(PMC_HANDLE_SINT p)
+    _INT64_T PMC_ToInt64_X(PMC_HANDLE_SINT p)
     {
         NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
         SIGN_T p_sign = np->SIGN;
@@ -92,7 +92,7 @@ namespace Palmtree::Math::Core::Internal
         return (GET_INT_64(p_sign, p_abs));
     }
 
-    PMC_HANDLE_UINT PMC_To_X_UX(PMC_HANDLE_SINT p)
+    PMC_HANDLE_UINT PMC_ToUBigInt_X(PMC_HANDLE_SINT p)
     {
         NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
         char p_sign = np->SIGN;

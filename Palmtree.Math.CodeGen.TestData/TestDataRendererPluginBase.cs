@@ -200,15 +200,23 @@ namespace Palmtree.Math.CodeGen.TestData
 
         public void Render()
         {
-            var document = new XmlDocument();
+            try
+            {
+                var document = new XmlDocument();
 
-            var declaration = document.CreateXmlDeclaration("1.0", "UTF-8", null);
-            var root = document.CreateElement("dataitems");
-            document.AppendChild(declaration);
-            document.AppendChild(root);
-            foreach (var row in GetDataItemRows(document))
-                root.AppendChild(row);
-            document.Save(_data_file_path);
+                var declaration = document.CreateXmlDeclaration("1.0", "UTF-8", null);
+                var root = document.CreateElement("dataitems");
+                document.AppendChild(declaration);
+                document.AppendChild(root);
+                foreach (var row in GetDataItemRows(document))
+                    root.AppendChild(row);
+                document.Save(_data_file_path);
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(string.Format("ファイルの読み書きで例外が発生しました。: path='{0}'", _data_file_path));
+                throw ex;
+            }
         }
 
         protected static void AppendElement(XmlElement parent_element, XmlElement child_element)

@@ -112,11 +112,11 @@ namespace Palmtree::Math::Core::Internal
     extern size_t PMC_ToByteArray(PMC_HANDLE_SINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Clone_X(PMC_HANDLE_SINT x) noexcept(false);
     extern _UINT64_T PMC_GetAllocatedMemorySize() noexcept(false);
-    extern _UINT32_T PMC_To_X_UI(PMC_HANDLE_SINT p) noexcept(false);
-    extern _INT32_T PMC_To_X_I(PMC_HANDLE_SINT p) noexcept(false);
-    extern _UINT64_T PMC_To_X_UL(PMC_HANDLE_SINT p) noexcept(false);
-    extern _INT64_T PMC_To_X_L(PMC_HANDLE_SINT p) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_To_X_UX(PMC_HANDLE_SINT p) noexcept(false);
+    extern _UINT32_T PMC_ToUInt32_X(PMC_HANDLE_SINT p) noexcept(false);
+    extern _INT32_T PMC_ToInt32_X(PMC_HANDLE_SINT p) noexcept(false);
+    extern _UINT64_T PMC_ToUInt64_X(PMC_HANDLE_SINT p) noexcept(false);
+    extern _INT64_T PMC_ToInt64_X(PMC_HANDLE_SINT p) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_ToUBigInt_X(PMC_HANDLE_SINT p) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Negate_UX(PMC_HANDLE_UINT x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Negate_X(PMC_HANDLE_SINT x) noexcept(false);
     extern PMC_HANDLE_UINT PMC_Abs_X(PMC_HANDLE_SINT x) noexcept(false);
@@ -138,12 +138,18 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_SINT PMC_Add_UX_L(PMC_HANDLE_UINT u, _INT64_T v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Add_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Add_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Subtruct_UI_X(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Subtruct_I_X(_INT32_T u, PMC_HANDLE_SINT v) noexcept(false);
+
     extern PMC_HANDLE_SINT PMC_Subtruct_I_UX(_INT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Subtruct_UL_X(_UINT64_T u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_Subtruct_L_X(_INT64_T u, PMC_HANDLE_SINT v) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Subtruct_I_X(_INT32_T u, PMC_HANDLE_SINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Subtruct_L_UX(_INT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Subtruct_L_X(_INT64_T u, PMC_HANDLE_SINT v) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Subtruct_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Subtruct_UI_X(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Subtruct_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Subtruct_UL_X(_UINT64_T u, PMC_HANDLE_SINT v) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Subtruct_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Subtruct_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Subtruct_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Subtruct_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Subtruct_X_UI(PMC_HANDLE_SINT u, _UINT32_T v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Subtruct_X_I(PMC_HANDLE_SINT u, _INT32_T v) noexcept(false);
@@ -153,6 +159,7 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_SINT PMC_Subtruct_UX_L(PMC_HANDLE_UINT u, _INT64_T v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Subtruct_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Subtruct_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
+
     extern PMC_HANDLE_SINT PMC_Increment_X(PMC_HANDLE_SINT x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Decrement_X(PMC_HANDLE_SINT x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Multiply_UI_X(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false);

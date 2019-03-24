@@ -47,6 +47,7 @@ namespace Palmtree::Math::Core::Internal
     HANDLE hLocalHeap;
     NUMBER_OBJECT_UINT number_object_uint_zero;
     NUMBER_OBJECT_UINT number_object_uint_one;
+    NUMBER_OBJECT_UINT number_object_uint_ten;
     CRITICAL_SECTION mcs;
 #pragma endregion
 
@@ -1044,8 +1045,14 @@ namespace Palmtree::Math::Core::Internal
             number_object_uint_one.BLOCK[0] = 1;
             CommitNumber(&number_object_uint_one);
 
+            root.AttatchStaticNumber(&number_object_uint_ten, 1);
+            number_object_uint_ten.BLOCK[0] = 10;
+            CommitNumber(&number_object_uint_ten);
+
             root.UnlinkStatickNumber(&number_object_uint_zero);
             root.UnlinkStatickNumber(&number_object_uint_one);
+            root.UnlinkStatickNumber(&number_object_uint_ten);
+
             return (PMC_STATUS_OK);
         }
         catch (const Exception& ex)

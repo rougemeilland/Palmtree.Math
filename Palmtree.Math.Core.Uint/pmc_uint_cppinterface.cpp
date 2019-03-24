@@ -52,14 +52,24 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_GetStatisticsInfo(p));
     }
 
-    PMC_HANDLE_UINT PMC_UINT_CppInterface::From(_UINT32_T x) noexcept(false)
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::From(_INT32_T x)
     {
         return (PMC_From_I(x));
     }
 
-    PMC_HANDLE_UINT PMC_UINT_CppInterface::From(_UINT64_T x) noexcept(false)
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::From(_INT64_T x)
     {
         return (PMC_From_L(x));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::From(_UINT32_T x) noexcept(false)
+    {
+        return (PMC_From_UI(x));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::From(_UINT64_T x) noexcept(false)
+    {
+        return (PMC_From_UL(x));
     }
 
     void PMC_UINT_CppInterface::CheckHandle(PMC_HANDLE_UINT p)
@@ -97,14 +107,24 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_GetAllocatedMemorySize());
     }
 
+    _INT32_T PMC_UINT_CppInterface::ToInt32(PMC_HANDLE_UINT p) noexcept(false)
+    {
+        return (PMC_ToInt32_X(p));
+    }
+
+    _INT64_T PMC_UINT_CppInterface::ToInt64(PMC_HANDLE_UINT p) noexcept(false)
+    {
+        return (PMC_ToInt64_X(p));
+    }
+
     _UINT32_T PMC_UINT_CppInterface::ToUInt32(PMC_HANDLE_UINT p) noexcept(false)
     {
-        return (PMC_To_X_I(p));
+        return (PMC_ToUInt32_X(p));
     }
 
     _UINT64_T PMC_UINT_CppInterface::ToUInt64(PMC_HANDLE_UINT p) noexcept(false)
     {
-        return (PMC_To_X_L(p));
+        return (PMC_ToUInt64_X(p));
     }
 
     void PMC_UINT_CppInterface::InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO * info)

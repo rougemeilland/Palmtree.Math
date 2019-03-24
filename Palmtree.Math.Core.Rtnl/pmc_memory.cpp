@@ -171,11 +171,17 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static void InitializeNumber(NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator)
+    static void InitializeNumber(NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, bool f_reduce)
     {
         PMC_HANDLE_SINT new_numerator;
         PMC_HANDLE_UINT new_denominator;
-        Reduce(numerator, denominator, &new_numerator, &new_denominator);
+        if (f_reduce)
+            Reduce(numerator, denominator, &new_numerator, &new_denominator);
+        else
+        {
+            new_numerator = numerator;
+            new_denominator = denominator;
+        }
 
         ClearNumberHeader(p);
         p->SIGNATURE1 = PMC_SIGNATURE;
@@ -210,17 +216,17 @@ namespace Palmtree::Math::Core::Internal
         ep_uint.Dispose(p->DENOMINATOR);
     }
 
-    static void AttatchNumber(NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator)
+    static void AttatchNumber(NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, bool f_reduce)
     {
-        InitializeNumber(p, numerator, denominator);
+        InitializeNumber(p, numerator, denominator, f_reduce);
         p->IS_STATIC = true;
     }
 
-    static NUMBER_OBJECT_RTNL* AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator)
+    static NUMBER_OBJECT_RTNL* AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, bool f_reduce)
     {
         ResourceHolderRTNL root;
         NUMBER_OBJECT_RTNL* p = (NUMBER_OBJECT_RTNL*)root.AllocateBytes(sizeof(NUMBER_OBJECT_RTNL));
-        InitializeNumber(p, numerator, denominator);
+        InitializeNumber(p, numerator, denominator, f_reduce);
         p->IS_STATIC = false;
         root.UnlinkBytes(p);
         return (p);
@@ -523,7 +529,19 @@ namespace Palmtree::Math::Core::Internal
     NUMBER_OBJECT_RTNL * ResourceHolderRTNL::AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator)
     {
         Lock lock_obj;
-        NUMBER_OBJECT_RTNL* buffer = Palmtree::Math::Core::Internal::AllocateNumber(numerator, denominator);
+        NUMBER_OBJECT_RTNL* buffer = Palmtree::Math::Core::Internal::AllocateNumber(numerator, denominator, true);
+#ifdef _DEBUG
+        CheckBuffer(buffer);
+#endif
+        __ChainBufferTag* tag = new __DynamicNumberChainBufferTag(buffer);
+        LinkTag(tag);
+        return (buffer);
+    }
+
+    NUMBER_OBJECT_RTNL * ResourceHolderRTNL::AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, bool f_reduce)
+    {
+        Lock lock_obj;
+        NUMBER_OBJECT_RTNL* buffer = Palmtree::Math::Core::Internal::AllocateNumber(numerator, denominator, f_reduce);
 #ifdef _DEBUG
         CheckBuffer(buffer);
 #endif
@@ -639,13 +657,13 @@ namespace Palmtree::Math::Core::Internal
         tag->Unlink();
     }
 
-    void ResourceHolderRTNL::AttatchStaticNumber(NUMBER_OBJECT_RTNL * p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator)
+    void ResourceHolderRTNL::AttatchStaticNumber(NUMBER_OBJECT_RTNL * p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, bool f_reduce)
     {
         Lock lock_obj;
 #ifdef _DEBUG
         CheckBuffer(p);
 #endif
-        Palmtree::Math::Core::Internal::AttatchNumber(p, numerator, denominator);
+        Palmtree::Math::Core::Internal::AttatchNumber(p, numerator, denominator, f_reduce);
         __ChainBufferTag* tag = new __StaticNumberChainBufferTag(p);
         LinkTag(tag);
     }
@@ -777,9 +795,9 @@ namespace Palmtree::Math::Core::Internal
             PMC_HANDLE_SINT sint_minus_one = ep_sint.GetConstantValue(PMC_CONSTANT_MINUS_ONE);
             root.HookNumber(sint_minus_one);
 
-            root.AttatchStaticNumber(&number_object_rtnl_zero, sint_zero, uint_one);
-            root.AttatchStaticNumber(&number_object_rtnl_one, sint_one, uint_one);
-            root.AttatchStaticNumber(&number_object_rtnl_minus_one, sint_minus_one, uint_one);
+            root.AttatchStaticNumber(&number_object_rtnl_zero, sint_zero, uint_one, false);
+            root.AttatchStaticNumber(&number_object_rtnl_one, sint_one, uint_one, false);
+            root.AttatchStaticNumber(&number_object_rtnl_minus_one, sint_minus_one, uint_one, false);
 
             number_handle_sint_one = sint_one;
             number_handle_sint_minus_one = sint_minus_one;

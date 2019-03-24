@@ -37,6 +37,7 @@
     <ClCompile Include="pmc_initialize.cpp" />
     <ClCompile Include="pmc_memory.cpp" />
     <ClCompile Include="pmc_rtnl_cppinterface.cpp" />
+    <ClCompile Include="pmc_subtruct.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Palmtree.Math.Core.Sint\Palmtree.Math.Core.Sint.vcxproj">

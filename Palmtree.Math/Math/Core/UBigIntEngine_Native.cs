@@ -157,10 +157,16 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_FromByteArray(byte[] buffer, int count, out IntPtr value);
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
-        private static extern Int32 PMCCS_From_I(UInt32 x, out IntPtr o);
+        private static extern Int32 PMCCS_From_I(Int32 x, out IntPtr o);
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
-        private static extern Int32 PMCCS_From_L(UInt64 x, out IntPtr o);
+        private static extern Int32 PMCCS_From_L(Int64 x, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_From_UI(UInt32 x, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_From_UL(UInt64 x, out IntPtr o);
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
         private static extern Int32 PMCCS_GET_HASH_CODE(IntPtr p, out Int32 r);
@@ -283,10 +289,16 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_ToByteArray(IntPtr p, IntPtr buffer, int buffer_size, out Int32 size);
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
-        private static extern Int32 PMCCS_To_X_I(IntPtr p, out UInt32 o);
+        private static extern Int32 PMCCS_ToInt32_UX(IntPtr p, out Int32 o);
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
-        private static extern Int32 PMCCS_To_X_L(IntPtr p, out UInt64 o);
+        private static extern Int32 PMCCS_ToInt64_UX(IntPtr p, out Int64 o);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_ToUInt32_UX(IntPtr p, out UInt32 o);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_ToUInt64_UX(IntPtr p, out UInt64 o);
 
         [DllImport("Palmtree.Math.Core.Uint.dll", CharSet = CharSet.Unicode)]
         private static extern Int32 PMCCS_ToString(IntPtr x, string format, [In]PMC_NUMBER_FORMAT_INFO format_option, StringBuilder buffer, int buffer_size, out int size);

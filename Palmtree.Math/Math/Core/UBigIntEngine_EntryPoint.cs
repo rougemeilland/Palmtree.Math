@@ -87,17 +87,31 @@ namespace Palmtree.Math.Core
             return (new StatisticsInfo(buf));
         }
 
-        public UBigIntHandle From(UInt32 value)
+        public UBigIntHandle From(Int32 value)
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_From_I(value, out r));
             return (new UBigIntHandle(r, this));
         }
 
-        public UBigIntHandle From(UInt64 value)
+        public UBigIntHandle From(Int64 value)
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_From_L(value, out r));
+            return (new UBigIntHandle(r, this));
+        }
+
+        public UBigIntHandle From(UInt32 value)
+        {
+            IntPtr r;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_From_UI(value, out r));
+            return (new UBigIntHandle(r, this));
+        }
+
+        public UBigIntHandle From(UInt64 value)
+        {
+            IntPtr r;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_From_UL(value, out r));
             return (new UBigIntHandle(r, this));
         }
 
@@ -171,17 +185,31 @@ namespace Palmtree.Math.Core
             return (r);
         }
 
+        public Int32 ToInt32(UBigIntHandle value)
+        {
+            Int32 r;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_ToInt32_UX(value.NativeHandle, out r));
+            return (r);
+        }
+
+        public Int64 ToInt64(UBigIntHandle value)
+        {
+            Int64 r;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_ToInt64_UX(value.NativeHandle, out r));
+            return (r);
+        }
+
         public UInt32 ToUInt32(UBigIntHandle value)
         {
             UInt32 r;
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_To_X_I(value.NativeHandle, out r));
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_ToUInt32_UX(value.NativeHandle, out r));
             return (r);
         }
 
         public UInt64 ToUInt64(UBigIntHandle value)
         {
             UInt64 r;
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_To_X_L(value.NativeHandle, out r));
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_ToUInt64_UX(value.NativeHandle, out r));
             return (r);
         }
 

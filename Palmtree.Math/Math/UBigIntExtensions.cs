@@ -67,14 +67,24 @@ namespace Palmtree.Math
             return (new BigInt(BigInt.EngineObject.Add(u, v.Handle)));
         }
 
-        public static UInt32 Subtruct(this UInt32 u, UBigInt v)
+        public static UInt32 USubtruct(this UInt32 u, UBigInt v)
         {
             return (UBigInt.EngineObject.Subtruct(u, v.Handle));
         }
 
-        public static UInt64 Subtruct(this UInt64 u, UBigInt v)
+        public static UInt64 USubtruct(this UInt64 u, UBigInt v)
         {
             return (UBigInt.EngineObject.Subtruct(u, v.Handle));
+        }
+
+        public static BigInt Subtruct(this UInt32 u, UBigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.Subtruct(u, v.Handle)));
+        }
+
+        public static BigInt Subtruct(this UInt64 u, UBigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.Subtruct(u, v.Handle)));
         }
 
         public static BigInt Subtruct(this Int32 u, UBigInt v)

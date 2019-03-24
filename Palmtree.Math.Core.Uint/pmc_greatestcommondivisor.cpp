@@ -146,7 +146,7 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 ではない場合
 
                 // GCD は v そのものであるため、v を計算結果として返す。
-                return (From_I_Imp(v));
+                return (From_UI_Imp(v));
             }
         }
         else
@@ -228,7 +228,7 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 ではない場合
 
                 // GCD は v そのものであるため、v を計算結果として返す。
-                return (From_L_Imp(v));
+                return (From_UL_Imp(v));
             }
         }
         else

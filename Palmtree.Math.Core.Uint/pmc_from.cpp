@@ -32,7 +32,7 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    NUMBER_OBJECT_UINT* From_I_Imp(_UINT32_T x) noexcept(false)
+    NUMBER_OBJECT_UINT* From_UI_Imp(_UINT32_T x) noexcept(false)
     {
         ResourceHolderUINT root;
         NUMBER_OBJECT_UINT* o = root.AllocateNumber(sizeof(x) * 8 - _LZCNT_ALT_32(x));
@@ -42,12 +42,12 @@ namespace Palmtree::Math::Core::Internal
         return (o);
     }
 
-    NUMBER_OBJECT_UINT* From_L_Imp(_UINT64_T x) noexcept(false)
+    NUMBER_OBJECT_UINT* From_UL_Imp(_UINT64_T x) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) * 2 < sizeof(x))
         {
             // _UINT64_T を表現するのに 2 ワードでは不足する処理系には対応しない。
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;From_L_Imp;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;From_UL_Imp;1");
         }
         else if (sizeof(__UNIT_TYPE) < sizeof(x))
         {
@@ -90,23 +90,27 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_From_I(_UINT32_T x) noexcept(false)
+    PMC_HANDLE_UINT PMC_From_I(_INT32_T x) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) < sizeof(x))
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;PMC_From_I;1");
         ResourceHolderUINT root;
+        SIGN_T x_sign;
+        _UINT32_T x_abs = GET_ABS_32(x, &x_sign);
         NUMBER_OBJECT_UINT* no;
-        if (x == 0)
+        if (x_sign < 0)
+            throw OverflowException(L"符号なし32bit整数への型変換に失敗しました。");
+        else if (x_sign == 0)
             no = &number_object_uint_zero;
         else
-            no = From_I_Imp(x);
+            no = From_UL_Imp(x_abs);
         root.HookNumber(no);
         PMC_HANDLE_UINT o = GET_NUMBER_HANDLE(no);
         root.UnlinkNumber(no);
         return (o);
     }
 
-    PMC_HANDLE_UINT PMC_From_L(_UINT64_T x) noexcept(false)
+    PMC_HANDLE_UINT PMC_From_L(_INT64_T x) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) * 2 < sizeof(x))
         {
@@ -114,11 +118,50 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;PMC_From_L;1");
         }
         ResourceHolderUINT root;
+        SIGN_T x_sign;
+        _UINT64_T x_abs = GET_ABS_64(x, &x_sign);
+        NUMBER_OBJECT_UINT* no;
+        if (x_sign < 0)
+            throw OverflowException(L"符号なし32bit整数への型変換に失敗しました。");
+        else if (x_sign == 0)
+            no = &number_object_uint_zero;
+        else
+            no = From_UL_Imp(x_abs);
+        root.HookNumber(no);
+        PMC_HANDLE_UINT o = GET_NUMBER_HANDLE(no);
+        root.UnlinkNumber(no);
+        return (o);
+    }
+
+    PMC_HANDLE_UINT PMC_From_UI(_UINT32_T x) noexcept(false)
+    {
+        if (sizeof(__UNIT_TYPE) < sizeof(x))
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;PMC_From_UI;1");
+        ResourceHolderUINT root;
         NUMBER_OBJECT_UINT* no;
         if (x == 0)
             no = &number_object_uint_zero;
         else
-            no = From_L_Imp(x);
+            no = From_UI_Imp(x);
+        root.HookNumber(no);
+        PMC_HANDLE_UINT o = GET_NUMBER_HANDLE(no);
+        root.UnlinkNumber(no);
+        return (o);
+    }
+
+    PMC_HANDLE_UINT PMC_From_UL(_UINT64_T x) noexcept(false)
+    {
+        if (sizeof(__UNIT_TYPE) * 2 < sizeof(x))
+        {
+            // 32bit未満のCPUには未対応
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;PMC_From_UL;1");
+        }
+        ResourceHolderUINT root;
+        NUMBER_OBJECT_UINT* no;
+        if (x == 0)
+            no = &number_object_uint_zero;
+        else
+            no = From_UL_Imp(x);
         root.HookNumber(no);
         PMC_HANDLE_UINT o = GET_NUMBER_HANDLE(no);
         root.UnlinkNumber(no);

@@ -141,6 +141,7 @@ namespace Palmtree::Math::Core::Internal
         void UnlinkBytes(void* buffer);
 
         NUMBER_OBJECT_RTNL* AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator);
+        NUMBER_OBJECT_RTNL* AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, bool f_reduce);
         void HookNumber(NUMBER_OBJECT_RTNL* buffer);
         void HookNumber(PMC_HANDLE_SINT x);
         void HookNumber(PMC_HANDLE_UINT x);
@@ -151,7 +152,7 @@ namespace Palmtree::Math::Core::Internal
         void UnlinkNumber(NUMBER_OBJECT_RTNL* buffer);
         void UnlinkNumber(PMC_HANDLE_SINT x);
         void UnlinkNumber(PMC_HANDLE_UINT x);
-        void AttatchStaticNumber(NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator);
+        void AttatchStaticNumber(NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, bool f_reduce);
         void DetatchStaticNumber(NUMBER_OBJECT_RTNL* buffer);
         void UnlinkStatickNumber(NUMBER_OBJECT_RTNL* buffer);
     };

@@ -23,22 +23,23 @@
  */
 
 
- namespace Palmtree.Math.Test.Plugin.Uint
+using System;
+
+namespace Palmtree.Math.Test.Plugin.Sint
 {
-    class ComponentTestPlugin_op_Subtruct_X_X
-        : ComponentTestPluginBase_2_1
+    class ComponentTestPlugin_From_UL
+        : ComponentTestPluginBase_1_1
     {
-        public ComponentTestPlugin_op_Subtruct_X_X()
-            : base("uint", "op_subtruct_x_x", "test_data_subtruct_x_x.xml")
+        public ComponentTestPlugin_From_UL()
+            : base("sint", "from_ul", "test_data_from_ul.xml")
         {
         }
 
-        protected override IDataItem TestFunc(IDataItem p1, IDataItem p2)
+        protected override IDataItem TestFunc(IDataItem p1)
         {
-            var u = p1.ToUBigInt().Value;
-            var v = p2.ToUBigInt().Value;
-            var w = u - v;
-            return (new UBigIntDataItem(w));
+            var u = p1.ToUInt64().Value;
+            var w = BigInt.From(u);
+            return (new BigIntDataItem(w));
         }
     }
 }

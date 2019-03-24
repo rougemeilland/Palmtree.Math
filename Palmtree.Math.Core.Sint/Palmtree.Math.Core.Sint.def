@@ -188,9 +188,14 @@ EXPORTS
         PMCCS_Subtruct_L_UX
         PMCCS_Subtruct_L_X
         PMCCS_Subtruct_UI_X
+        PMCCS_Subtruct_UI_UX
         PMCCS_Subtruct_UL_X
+        PMCCS_Subtruct_UL_UX
         PMCCS_Subtruct_UX_I
         PMCCS_Subtruct_UX_L
+        PMCCS_Subtruct_UX_UI
+        PMCCS_Subtruct_UX_UL
+        PMCCS_Subtruct_UX_UX
         PMCCS_Subtruct_UX_X
         PMCCS_Subtruct_X_I
         PMCCS_Subtruct_X_L
@@ -198,11 +203,11 @@ EXPORTS
         PMCCS_Subtruct_X_UL
         PMCCS_Subtruct_X_UX
         PMCCS_Subtruct_X_X
-        PMCCS_To_X_I
-        PMCCS_To_X_L
-        PMCCS_To_X_UI
-        PMCCS_To_X_UL
-        PMCCS_To_X_UX
+        PMCCS_ToInt32_X
+        PMCCS_ToInt64_X
+        PMCCS_ToUInt32_X
+        PMCCS_ToUInt64_X
+        PMCCS_ToUBigInt_X
         PMCCS_ToByteArray
         PMCCS_ToString
         PMCCS_TryParse

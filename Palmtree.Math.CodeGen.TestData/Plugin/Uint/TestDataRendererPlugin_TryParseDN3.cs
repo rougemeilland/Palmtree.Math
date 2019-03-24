@@ -108,8 +108,8 @@ namespace Palmtree.Math.CodeGen.TestData.Plugin.Uint
                         .SelectMany(flag => new[] { NumberStyles.None, NumberStyles.AllowTrailingWhite }, (flag1, flag2) => flag1 | flag2)
                         .SelectMany(flag => new[] { NumberStyles.None, NumberStyles.AllowCurrencySymbol }, (flag1, flag2) => flag1 | flag2)
                         .SelectMany(flag => new[] { NumberStyles.None, NumberStyles.AllowParentheses }, (flag1, flag2) => flag1 | flag2)
-                        .SelectMany(flag => new[] { NumberStyles.None, NumberStyles.AllowThousands }, (flag1, flag2) => flag1 | flag2)
-                        .SelectMany(flag => new[] { NumberStyles.None, NumberStyles.AllowDecimalPoint }, (flag1, flag2) => flag1 | flag2));
+                        .SelectMany(flag => new[] { /*NumberStyles.None,*/ NumberStyles.AllowThousands }, (flag1, flag2) => flag1 | flag2)
+                        .SelectMany(flag => new[] { /*NumberStyles.None,*/ NumberStyles.AllowDecimalPoint }, (flag1, flag2) => flag1 | flag2));
             }
         }
 

@@ -22,23 +22,24 @@
  * THE SOFTWARE.
  */
 
- 
+
+using System;
+
 namespace Palmtree.Math.Test.Plugin.Uint
 {
-    class ComponentTestPlugin_op_Subtruct_I_X
-        : ComponentTestPluginBase_2_1
+    class ComponentTestPlugin_From_L
+        : ComponentTestPluginBase_1_1
     {
-        public ComponentTestPlugin_op_Subtruct_I_X()
-            : base("uint", "op_subtruct_i_x", "test_data_subtruct_i_x.xml")
+        public ComponentTestPlugin_From_L()
+            : base("uint", "from_l", "test_data_from_l.xml")
         {
         }
 
-        protected override IDataItem TestFunc(IDataItem p1, IDataItem p2)
+        protected override IDataItem TestFunc(IDataItem p1)
         {
-            var u = p1.ToUInt32().Value;
-            var v = p2.ToUBigInt().Value;
-            var w = u - v;
-            return (new UInt32DataItem(w));
+            var u = p1.ToInt64().Value;
+            var w = UBigInt.From(u);
+            return (new UBigIntDataItem(w));
         }
     }
 }

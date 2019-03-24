@@ -13,9 +13,10 @@ namespace Palmtree.Math.CsLauncher
     {
         static void Main(string[] args)
         {
-            Int64 u = -4294967297;
-            UBigInt v = UBigInt.One;
-            var w = v.BitwiseOr(u);
+            UInt32 u = 4294967295;
+            UBigInt v = UBigInt.Zero;
+            var w = u.Subtruct(v);
+
             Console.ReadLine();
         }
     }

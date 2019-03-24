@@ -194,7 +194,7 @@ namespace Palmtree::Math::Core::Internal
             else
             {
                 // v が 0 でない場合
-                return (From_I_Imp(v));
+                return (From_UI_Imp(v));
             }
         }
         else if (v == 0)
@@ -263,7 +263,7 @@ namespace Palmtree::Math::Core::Internal
             else
             {
                 // v が 0 でない場合
-                return (From_L_Imp(v));
+                return (From_UL_Imp(v));
             }
         }
         else if (v == 0)

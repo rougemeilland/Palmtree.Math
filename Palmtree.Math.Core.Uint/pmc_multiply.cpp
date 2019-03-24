@@ -452,7 +452,7 @@ namespace Palmtree::Math::Core::Internal
                 // y が 0 ではない場合
 
                 // 乗算結果は v に等しいため、v の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
-                return (From_I_Imp(v));
+                return (From_UI_Imp(v));
             }
         }
         else
@@ -548,7 +548,7 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 ではない場合
 
                 // 乗算結果は v に等しいため、v の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
-                return (From_L_Imp(v));
+                return (From_UL_Imp(v));
             }
         }
         else

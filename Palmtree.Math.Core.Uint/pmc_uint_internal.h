@@ -78,6 +78,9 @@ namespace Palmtree::Math::Core::Internal
     // 整数 1 のインスタンス
     extern NUMBER_OBJECT_UINT number_object_uint_one;
 
+    // 整数 10 のインスタンス
+    extern NUMBER_OBJECT_UINT number_object_uint_ten;
+
     // パフォーマンスカウンタ
     extern PMC_STATISTICS_INFO statistics_info;
 
@@ -96,11 +99,11 @@ namespace Palmtree::Math::Core::Internal
     // 与えられた NUMBER_OBJECT_UINT 構造体を複製する。p が指す NUMBER_OBJECT_UINT 構造体は 0 値であってはならない。
     extern NUMBER_OBJECT_UINT* DuplicateNumber(NUMBER_OBJECT_UINT* p);
 
-    // 32bit 整数 x から NUMBER_OBJECT_UINT 構造体を構築し、そのポインタを o が指す領域に格納して返す。x は 0 であってはならない。
-    extern NUMBER_OBJECT_UINT* From_I_Imp(_UINT32_T x) noexcept(false);
+    // 符号なし 32bit 整数 x から NUMBER_OBJECT_UINT 構造体を構築し、そのポインタを o が指す領域に格納して返す。x は 0 であってはならない。
+    extern NUMBER_OBJECT_UINT* From_UI_Imp(_UINT32_T x) noexcept(false);
 
-    // 64bit 整数 x から NUMBER_OBJECT_UINT 構造体を構築し、そのポインタを o が指す領域に格納して返す。x は 0 であってはならない。
-    extern NUMBER_OBJECT_UINT* From_L_Imp(_UINT64_T x) noexcept(false);
+    // 符号なし 64bit 整数 x から NUMBER_OBJECT_UINT 構造体を構築し、そのポインタを o が指す領域に格納して返す。x は 0 であってはならない。
+    extern NUMBER_OBJECT_UINT* From_UL_Imp(_UINT64_T x) noexcept(false);
 
     // 指定されたワード列を右にシフトして指定された領域に格納する。シフト数は 0 であってはならない。
     extern void RightShift_Imp(__UNIT_TYPE* p, __UNIT_TYPE p_word_count, __UNIT_TYPE n, __UNIT_TYPE* o, BOOL padding_zero);
@@ -219,8 +222,10 @@ namespace Palmtree::Math::Core::Internal
 
     extern void PMC_GetStatisticsInfo(PMC_STATISTICS_INFO* p);
 
-    extern PMC_HANDLE_UINT PMC_From_I(_UINT32_T x) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_From_L(_UINT64_T x) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_From_I(_INT32_T x) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_From_L(_INT64_T x) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_From_UI(_UINT32_T x) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_From_UL(_UINT64_T x) noexcept(false);
 
     extern void PMC_CheckHandle_X(PMC_HANDLE_UINT p);
     extern void PMC_Dispose_X(PMC_HANDLE_UINT p);
@@ -234,8 +239,10 @@ namespace Palmtree::Math::Core::Internal
 
     extern _UINT64_T PMC_GetAllocatedMemorySize();
 
-    extern _UINT32_T PMC_To_X_I(PMC_HANDLE_UINT p) noexcept(false);
-    extern _UINT64_T PMC_To_X_L(PMC_HANDLE_UINT p) noexcept(false);
+    extern _INT32_T PMC_ToInt32_X(PMC_HANDLE_UINT p) noexcept(false);
+    extern _INT64_T PMC_ToInt64_X(PMC_HANDLE_UINT p) noexcept(false);
+    extern _UINT32_T PMC_ToUInt32_X(PMC_HANDLE_UINT p) noexcept(false);
+    extern _UINT64_T PMC_ToUInt64_X(PMC_HANDLE_UINT p) noexcept(false);
 
     extern void PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info);
     extern size_t PMC_ToString(PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
