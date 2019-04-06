@@ -30,15 +30,26 @@ namespace Palmtree.Math.Core
     internal class RationalHandle
         : IDisposable
     {
+        private static RationalEngine _engine;
+        private static IRationalDisposable _disposable_object;
         private bool _is_disposed;
-        private IRationalDisposable _disposable_object;
 
-        public RationalHandle(IntPtr native_handle, IRationalDisposable disposable_object)
+        static RationalHandle()
+        {
+            _engine = new RationalEngine();
+            _disposable_object = _engine;
+        }
+
+        public RationalHandle()
+            : this(_engine.DefaultValueHandle)
+        {
+        }
+
+        public RationalHandle(IntPtr native_handle)
         {
             _is_disposed = false;
-            _disposable_object = disposable_object;
             NativeHandle = native_handle;
-            disposable_object.CheckHandle(native_handle);
+            _disposable_object.CheckHandle(native_handle);
         }
 
         ~RationalHandle()

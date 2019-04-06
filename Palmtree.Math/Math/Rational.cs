@@ -38,61 +38,14 @@ using System.Reflection;
 
 namespace Palmtree.Math
 {
-    public partial class Rational
+    public partial struct Rational
         : IComparable, IComparable<BigInt>, IEquatable<BigInt>, IFormattable
     {
-        #region ConfigurationDictionary の定義
-
-        private class ConfigurationDictionary
-            : IReadOnlyDictionary<string, string>
-        {
-            private IDictionary<string, string> _imp;
-
-            public ConfigurationDictionary()
-            {
-                _imp = new Dictionary<string, string>();
-            }
-
-            internal void Add(string key, string value)
-            {
-                _imp.Add(key, value);
-            }
-
-            public string this[string key] => _imp[key];
-
-            public IEnumerable<string> Keys => _imp.Keys;
-
-            public IEnumerable<string> Values => _imp.Values;
-
-            public int Count => _imp.Count;
-
-            public bool ContainsKey(string key)
-            {
-                return (_imp.ContainsKey(key));
-            }
-
-            public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
-            {
-                return (_imp.GetEnumerator());
-            }
-
-            public bool TryGetValue(string key, out string value)
-            {
-                return (_imp.TryGetValue(key, out value));
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return (GetEnumerator());
-            }
-        }
-
-
-        #endregion
-
         #region プライベートフィールド
 
+        private static object _lock_obj;
         private static Regex _tostring_standard_format_pattern;
+        private Core.RationalHandle _handle;
 
         #endregion
 
@@ -100,6 +53,7 @@ namespace Palmtree.Math
 
         static Rational()
         {
+            _lock_obj = new object();
             EngineObject = new Core.RationalEngine();
             var settings = new ConfigurationDictionary();
             foreach (var key in new[] { "COMPILER", "CONFIG", "PLATFORM", "TABLESIZE" })
@@ -112,14 +66,9 @@ namespace Palmtree.Math
             _tostring_standard_format_pattern = new Regex("^|[cefgnp]|[cdefgnprx][0-9]|[cdefgnprx][0-9][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
 
-        public Rational()
-            : this(EngineObject.Zero)
-        {
-        }
-
         internal Rational(Core.RationalHandle handle)
         {
-            Handle = handle;
+            _handle = handle;
         }
 
         #endregion
@@ -150,7 +99,18 @@ namespace Palmtree.Math
 
         internal static Core.RationalEngine EngineObject { get; private set; }
 
-        internal Core.RationalHandle Handle { get; }
+        internal Core.RationalHandle Handle
+        {
+            get
+            {
+                lock (_lock_obj)
+                {
+                    if (_handle == null)
+                        _handle = new Core.RationalHandle();
+                    return (_handle);
+                }
+            }
+        }
 
         #endregion
 

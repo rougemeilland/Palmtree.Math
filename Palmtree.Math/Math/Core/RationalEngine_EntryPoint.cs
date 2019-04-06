@@ -28,6 +28,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text;
 
+
 namespace Palmtree.Math.Core
 {
 
@@ -40,7 +41,7 @@ namespace Palmtree.Math.Core
         public RationalHandle Abs(RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Abs_R(v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         #endregion
@@ -50,79 +51,79 @@ namespace Palmtree.Math.Core
         public RationalHandle Add(Int32 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_I_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Add(Int64 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_L_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Add(BigIntHandle u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_X_R(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Add(UInt32 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_UI_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Add(UInt64 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_UL_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Add(UBigIntHandle u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_UX_R(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Add(RationalHandle u, Int32 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_R_I(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Add(RationalHandle u, Int64 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_R_L(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Add(RationalHandle u, BigIntHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_R_X(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Add(RationalHandle u, UInt32 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_R_UI(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Add(RationalHandle u, UInt64 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_R_UL(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Add(RationalHandle u, UBigIntHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_R_UX(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Add(RationalHandle u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_R_R(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         #endregion
@@ -132,7 +133,7 @@ namespace Palmtree.Math.Core
         public BigIntHandle Ceiling(RationalHandle value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Ceiling_R(value.NativeHandle, out IntPtr r));
-            return (new BigIntHandle(r, this));
+            return (new BigIntHandle(r));
         }
 
         #endregion
@@ -142,7 +143,7 @@ namespace Palmtree.Math.Core
         public RationalHandle Clone(RationalHandle value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Clone_R(value.NativeHandle, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         #endregion
@@ -234,79 +235,79 @@ namespace Palmtree.Math.Core
         public RationalHandle Divide(Int32 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Divide_I_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Divide(Int64 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Divide_L_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Divide(BigIntHandle u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Divide_X_R(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Divide(UInt32 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Divide_UI_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Divide(UInt64 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Divide_UL_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Divide(UBigIntHandle u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Divide_UX_R(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Divide(RationalHandle u, Int32 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Divide_R_I(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Divide(RationalHandle u, Int64 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Divide_R_L(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Divide(RationalHandle u, BigIntHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Divide_R_X(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Divide(RationalHandle u, UInt32 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Divide_R_UI(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Divide(RationalHandle u, UInt64 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Divide_R_UL(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Divide(RationalHandle u, UBigIntHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Divide_R_UX(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Divide(RationalHandle u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Divide_R_R(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         #endregion
@@ -398,7 +399,7 @@ namespace Palmtree.Math.Core
         public BigIntHandle Floor(RationalHandle value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Floor_R(value.NativeHandle, out IntPtr r));
-            return (new BigIntHandle(r, this));
+            return (new BigIntHandle(r));
         }
 
         #endregion
@@ -419,7 +420,7 @@ namespace Palmtree.Math.Core
         public RationalHandle FromByteArray(byte[] data)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_FromByteArray(data, data.Length, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         #endregion
@@ -429,37 +430,37 @@ namespace Palmtree.Math.Core
         public RationalHandle From(Int32 value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_From_I(value, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         public RationalHandle From(Int64 value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_From_L(value, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         public RationalHandle From(BigIntHandle value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_From_X(value.NativeHandle, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         public RationalHandle From(UInt32 value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_From_UI(value, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         public RationalHandle From(UInt64 value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_From_UL(value, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         public RationalHandle From(UBigIntHandle value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_From_UX(value.NativeHandle, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         #endregion
@@ -488,12 +489,29 @@ namespace Palmtree.Math.Core
 
         #region 定数
 
+        public IntPtr DefaultValueHandle
+        {
+            get
+            {
+                HandleResultCode((PMC_STATUS_CODE)PMCCS_GetConstantValue_I((Int32)PMC_CONSTANT_CODE.PMC_CONSTANT_ZERO, out IntPtr r));
+                return (r);
+            }
+        }
+
+        public RationalHandle Zero
+        {
+            get
+            {
+                return (new RationalHandle(DefaultValueHandle));
+            }
+        }
+
         public RationalHandle MinusOne
         {
             get
             {
                 HandleResultCode((PMC_STATUS_CODE)PMCCS_GetConstantValue_I((Int32)PMC_CONSTANT_CODE.PMC_CONSTANT_MINUS_ONE, out IntPtr r));
-                return (new RationalHandle(r, this));
+                return (new RationalHandle(r));
             }
         }
 
@@ -502,16 +520,7 @@ namespace Palmtree.Math.Core
             get
             {
                 HandleResultCode((PMC_STATUS_CODE)PMCCS_GetConstantValue_I((Int32)PMC_CONSTANT_CODE.PMC_CONSTANT_ONE, out IntPtr r));
-                return (new RationalHandle(r, this));
-            }
-        }
-
-        public RationalHandle Zero
-        {
-            get
-            {
-                HandleResultCode((PMC_STATUS_CODE)PMCCS_GetConstantValue_I((Int32)PMC_CONSTANT_CODE.PMC_CONSTANT_ZERO, out IntPtr r));
-                return (new RationalHandle(r, this));
+                return (new RationalHandle(r));
             }
         }
 
@@ -570,43 +579,43 @@ namespace Palmtree.Math.Core
         public RationalHandle Invert(Int32 value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Invert_I(value, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         public RationalHandle Invert(Int64 value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Invert_L(value, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         public RationalHandle Invert(BigIntHandle value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Invert_X(value.NativeHandle, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         public RationalHandle Invert(UInt32 value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Invert_UI(value, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         public RationalHandle Invert(UInt64 value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Invert_UL(value, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         public RationalHandle Invert(UBigIntHandle value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Invert_UX(value.NativeHandle, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         public RationalHandle Invert(RationalHandle value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Invert_R(value.NativeHandle, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         #endregion
@@ -616,79 +625,79 @@ namespace Palmtree.Math.Core
         public RationalHandle Multiply(Int32 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_I_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Multiply(Int64 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_L_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Multiply(BigIntHandle u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_X_R(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Multiply(UInt32 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_UI_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Multiply(UInt64 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_UL_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Multiply(UBigIntHandle u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_UX_R(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Multiply(RationalHandle u, Int32 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_R_I(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Multiply(RationalHandle u, Int64 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_R_L(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Multiply(RationalHandle u, BigIntHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_R_X(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Multiply(RationalHandle u, UInt32 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_R_UI(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Multiply(RationalHandle u, UInt64 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_R_UL(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Multiply(RationalHandle u, UBigIntHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_R_UX(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Multiply(RationalHandle u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_R_R(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         #endregion
@@ -698,7 +707,7 @@ namespace Palmtree.Math.Core
         public RationalHandle Negate(RationalHandle x)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Negate_R(x.NativeHandle, out IntPtr r));
-            return (new RationalHandle(r, this));
+            return (new RationalHandle(r));
         }
 
         #endregion
@@ -710,7 +719,7 @@ namespace Palmtree.Math.Core
             var native_number_style = (Int32)number_style;
             var native_number_format_info = new PMC_NUMBER_FORMAT_INFO(number_format_info ?? CultureInfo.CurrentCulture.NumberFormat);
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Parse(source, native_number_style, native_number_format_info, out IntPtr r_handle));
-            return (new RationalHandle(r_handle, this));
+            return (new RationalHandle(r_handle));
         }
 
         #endregion
@@ -721,49 +730,49 @@ namespace Palmtree.Math.Core
         {
             IntPtr v;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Pow_I_I(x, n, out v));
-            return (new RationalHandle(v, this));
+            return (new RationalHandle(v));
         }
 
         public RationalHandle Pow(Int64 x, Int32 n)
         {
             IntPtr v;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Pow_L_I(x, n, out v));
-            return (new RationalHandle(v, this));
+            return (new RationalHandle(v));
         }
 
         public RationalHandle Pow(BigIntHandle x, Int32 n)
         {
             IntPtr v;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Pow_X_I(x.NativeHandle, n, out v));
-            return (new RationalHandle(v, this));
+            return (new RationalHandle(v));
         }
 
         public RationalHandle Pow(UInt32 x, Int32 n)
         {
             IntPtr v;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Pow_UI_I(x, n, out v));
-            return (new RationalHandle(v, this));
+            return (new RationalHandle(v));
         }
 
         public RationalHandle Pow(UInt64 x, Int32 n)
         {
             IntPtr v;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Pow_UL_I(x, n, out v));
-            return (new RationalHandle(v, this));
+            return (new RationalHandle(v));
         }
 
         public RationalHandle Pow(UBigIntHandle x, Int32 n)
         {
             IntPtr v;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Pow_UX_I(x.NativeHandle, n, out v));
-            return (new RationalHandle(v, this));
+            return (new RationalHandle(v));
         }
 
         public RationalHandle Pow(RationalHandle x, Int32 n)
         {
             IntPtr v;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Pow_R_I(x.NativeHandle, n, out v));
-            return (new RationalHandle(v, this));
+            return (new RationalHandle(v));
         }
 
         #endregion
@@ -774,28 +783,28 @@ namespace Palmtree.Math.Core
         {
             var native_mode = (Int32)mode;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Round_R(u.NativeHandle, native_mode, out IntPtr w));
-            return (new BigIntHandle(w, this));
+            return (new BigIntHandle(w));
         }
 
         public BigIntHandle Round(RationalHandle u, RoundingMode mode)
         {
             var native_mode = (Int32)mode;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Round_R(u.NativeHandle, native_mode, out IntPtr w));
-            return (new BigIntHandle(w, this));
+            return (new BigIntHandle(w));
         }
 
         public RationalHandle Round(RationalHandle u, Int32 decimals, MidpointRounding mode)
         {
             var native_mode = (Int32)mode;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Round_R_I(u.NativeHandle, decimals, native_mode, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Round(RationalHandle u, int decimals, RoundingMode mode)
         {
             var native_mode = (Int32)mode;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Round_R_I(u.NativeHandle, decimals, native_mode, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         #endregion
@@ -805,79 +814,79 @@ namespace Palmtree.Math.Core
         public RationalHandle Subtruct(Int32 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_I_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Subtruct(Int64 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_L_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Subtruct(BigIntHandle u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_X_R(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Subtruct(UInt32 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_UI_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Subtruct(UInt64 u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_UL_R(u, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Subtruct(UBigIntHandle u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_UX_R(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Subtruct(RationalHandle u, Int32 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_R_I(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Subtruct(RationalHandle u, Int64 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_R_L(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Subtruct(RationalHandle u, BigIntHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_R_X(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Subtruct(RationalHandle u, UInt32 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_R_UI(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Subtruct(RationalHandle u, UInt64 v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_R_UL(u.NativeHandle, v, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Subtruct(RationalHandle u, UBigIntHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_R_UX(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         public RationalHandle Subtruct(RationalHandle u, RationalHandle v)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_R_R(u.NativeHandle, v.NativeHandle, out IntPtr w));
-            return (new RationalHandle(w, this));
+            return (new RationalHandle(w));
         }
 
         #endregion
@@ -934,7 +943,7 @@ namespace Palmtree.Math.Core
         public BigIntHandle ToBigInt(RationalHandle value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_ToBigInt_R(value.NativeHandle, out IntPtr r));
-            return (new BigIntHandle(r, this));
+            return (new BigIntHandle(r));
         }
 
         public UInt32 ToUInt32(RationalHandle value)
@@ -952,7 +961,7 @@ namespace Palmtree.Math.Core
         public UBigIntHandle ToUBigInt(RationalHandle value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_ToUBigInt_R(value.NativeHandle, out IntPtr r));
-            return (new UBigIntHandle(r, this));
+            return (new UBigIntHandle(r));
         }
 
         #endregion
@@ -969,7 +978,7 @@ namespace Palmtree.Math.Core
                 value = null;
                 return (false);
             }
-            value = new RationalHandle(value_handle, this);
+            value = new RationalHandle(value_handle);
             return (true);
         }
 

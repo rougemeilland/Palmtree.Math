@@ -25,7 +25,7 @@
 
 namespace Palmtree.Math
 {
-    partial class Rational
+    partial struct Rational
     {
         #region パブリックメソッド
 

@@ -46,6 +46,7 @@
     <Compile Include="BadBufferException.cs" />
     <Compile Include="InsufficientBufferException.cs" />
     <Compile Include="InternalErrorException.cs" />
+    <Compile Include="Math\ConfigurationDictionary.cs" />
     <Compile Include="Math\IPerformanceCounterCollection.cs" />
     <Compile Include="Math\PerformanceCounterCollection.cs" />
     <Compile Include="Math\RationalExtensions.cs" />

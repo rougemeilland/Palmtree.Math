@@ -25,9 +25,9 @@
 
 using System;
 using System.Globalization;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+
 
 namespace Palmtree.Math.Core
 {
@@ -90,28 +90,28 @@ namespace Palmtree.Math.Core
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_From_I(value, out r));
-            return (new UBigIntHandle(r, this));
+            return (new UBigIntHandle(r));
         }
 
         public UBigIntHandle From(Int64 value)
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_From_L(value, out r));
-            return (new UBigIntHandle(r, this));
+            return (new UBigIntHandle(r));
         }
 
         public UBigIntHandle From(UInt32 value)
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_From_UI(value, out r));
-            return (new UBigIntHandle(r, this));
+            return (new UBigIntHandle(r));
         }
 
         public UBigIntHandle From(UInt64 value)
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_From_UL(value, out r));
-            return (new UBigIntHandle(r, this));
+            return (new UBigIntHandle(r));
         }
 
         public void CheckHandle(UBigIntHandle value)
@@ -119,13 +119,20 @@ namespace Palmtree.Math.Core
             HandleResultCode((PMC_STATUS_CODE)PMCCS_CheckHandle_UX(value.NativeHandle));
         }
 
+        public IntPtr DefaultValueHandle
+        {
+            get
+            {
+                HandleResultCode((PMC_STATUS_CODE)PMCCS_GetConstantValue_I((Int32)PMC_CONSTANT_CODE.PMC_CONSTANT_ZERO, out IntPtr r));
+                return (r);
+            }
+        }
+
         public UBigIntHandle Zero
         {
             get
             {
-                IntPtr r;
-                HandleResultCode((PMC_STATUS_CODE)PMCCS_GetConstantValue_I((int)PMC_CONSTANT_CODE.PMC_CONSTANT_ZERO, out r));
-                return (new UBigIntHandle(r, this));
+                return (new UBigIntHandle(DefaultValueHandle));
             }
         }
 
@@ -135,7 +142,7 @@ namespace Palmtree.Math.Core
             {
                 IntPtr r;
                 HandleResultCode((PMC_STATUS_CODE)PMCCS_GetConstantValue_I((int)PMC_CONSTANT_CODE.PMC_CONSTANT_ONE, out r));
-                return (new UBigIntHandle(r, this));
+                return (new UBigIntHandle(r));
             }
         }
 
@@ -143,7 +150,7 @@ namespace Palmtree.Math.Core
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_FromByteArray(data, data.Length, out r));
-            return (new UBigIntHandle(r, this));
+            return (new UBigIntHandle(r));
         }
 
         public byte[] ToByteArray(UBigIntHandle value)
@@ -169,7 +176,7 @@ namespace Palmtree.Math.Core
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Clone_UX(value.NativeHandle, out r));
-            return (new UBigIntHandle(r, this));
+            return (new UBigIntHandle(r));
         }
 
         public UInt64 GetAllocatedMemorySize()
@@ -225,7 +232,7 @@ namespace Palmtree.Math.Core
             var native_number_format_info = new PMC_NUMBER_FORMAT_INFO(number_format_info != null ? number_format_info : CultureInfo.CurrentCulture.NumberFormat);
             IntPtr r_handle;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Parse(source, native_number_style, native_number_format_info, out r_handle));
-            return (new UBigIntHandle(r_handle, this));
+            return (new UBigIntHandle(r_handle));
         }
 
         public bool TryParse(string source, NumberStyles number_style, NumberFormatInfo number_format_info, out UBigIntHandle value)
@@ -239,7 +246,7 @@ namespace Palmtree.Math.Core
                 value = null;
                 return (false);
             }
-            value =  new UBigIntHandle(value_handle, this);
+            value =  new UBigIntHandle(value_handle);
             return (true);
         }
 
@@ -247,35 +254,35 @@ namespace Palmtree.Math.Core
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_UI_UX(u, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle Add(UInt64 u, UBigIntHandle v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_UL_UX(u, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle Add(UBigIntHandle u, UInt32 v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_UX_UI(u.NativeHandle, v, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle Add(UBigIntHandle u, UInt64 v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_UX_UL(u.NativeHandle, v, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle Add(UBigIntHandle u, UBigIntHandle v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Add_UX_UX(u.NativeHandle, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UInt32 Subtruct(UInt32 u, UBigIntHandle v)
@@ -296,56 +303,56 @@ namespace Palmtree.Math.Core
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_UX_UI(u.NativeHandle, v, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle Subtruct(UBigIntHandle u, UInt64 v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_UX_UL(u.NativeHandle, v, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle Subtruct(UBigIntHandle u, UBigIntHandle v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Subtruct_UX_UX(u.NativeHandle, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle Multiply(UInt32 u, UBigIntHandle v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_UI_UX(u, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle Multiply(UInt64 u, UBigIntHandle v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_UL_UX(u, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle Multiply(UBigIntHandle u, UInt32 v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_UX_UI(u.NativeHandle, v, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle Multiply(UBigIntHandle u, UInt64 v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_UX_UL(u.NativeHandle, v, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle Multiply(UBigIntHandle u, UBigIntHandle v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_UX_UX(u.NativeHandle, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UInt32 DivRem(UInt32 u, UBigIntHandle v, out UInt32 r)
@@ -366,14 +373,14 @@ namespace Palmtree.Math.Core
         {
             IntPtr q_handle;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_DivRem_UX_UI(u.NativeHandle, v, out q_handle, out r));
-            return (new UBigIntHandle(q_handle, this));
+            return (new UBigIntHandle(q_handle));
         }
 
         public UBigIntHandle DivRem(UBigIntHandle u, UInt64 v, out UInt64 r)
         {
             IntPtr q_handle;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_DivRem_UX_UL(u.NativeHandle, v, out q_handle, out r));
-            return (new UBigIntHandle(q_handle, this));
+            return (new UBigIntHandle(q_handle));
         }
 
         public UBigIntHandle DivRem(UBigIntHandle u, UBigIntHandle v, out UBigIntHandle r)
@@ -381,8 +388,8 @@ namespace Palmtree.Math.Core
             IntPtr q_handle;
             IntPtr r_handle;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_DivRem_UX_UX(u.NativeHandle, v.NativeHandle, out q_handle, out r_handle));
-            r = new UBigIntHandle(r_handle, this);
-            return (new UBigIntHandle(q_handle, this));
+            r = new UBigIntHandle(r_handle);
+            return (new UBigIntHandle(q_handle));
         }
 
         public UInt32 Remainder(UInt32 u, UBigIntHandle v)
@@ -417,21 +424,21 @@ namespace Palmtree.Math.Core
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Remainder_UX_UX(u.NativeHandle, v.NativeHandle, out r));
-            return (new UBigIntHandle(r, this));
+            return (new UBigIntHandle(r));
         }
 
         public UBigIntHandle RightShift(UBigIntHandle x, Int32 n)
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_RightShift_UX_I(x.NativeHandle, n, out r));
-            return (new UBigIntHandle(r, this));
+            return (new UBigIntHandle(r));
         }
 
         public UBigIntHandle LeftShift(UBigIntHandle x, Int32 n)
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_LeftShift_UX_I(x.NativeHandle, n, out r));
-            return (new UBigIntHandle(r, this));
+            return (new UBigIntHandle(r));
         }
 
         public UInt32 BitwiseAnd(UInt32 u, UBigIntHandle v)
@@ -466,77 +473,77 @@ namespace Palmtree.Math.Core
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_BitwiseAnd_UX_UX(u.NativeHandle, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle BitwiseOr(UInt32 u, UBigIntHandle v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_BitwiseOr_UI_UX(u, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle BitwiseOr(UInt64 u, UBigIntHandle v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_BitwiseOr_UL_UX(u, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle BitwiseOr(UBigIntHandle u, UInt32 v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_BitwiseOr_UX_UI(u.NativeHandle, v, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle BitwiseOr(UBigIntHandle u, UInt64 v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_BitwiseOr_UX_UL(u.NativeHandle, v, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle BitwiseOr(UBigIntHandle u, UBigIntHandle v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_BitwiseOr_UX_UX(u.NativeHandle, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle ExclusiveOr(UInt32 u, UBigIntHandle v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_ExclusiveOr_UI_UX(u, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle ExclusiveOr(UInt64 u, UBigIntHandle v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_ExclusiveOr_UL_UX(u, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle ExclusiveOr(UBigIntHandle u, UInt32 v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_ExclusiveOr_UX_UI(u.NativeHandle, v, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle ExclusiveOr(UBigIntHandle u, UInt64 v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_ExclusiveOr_UX_UL(u.NativeHandle, v, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle ExclusiveOr(UBigIntHandle u, UBigIntHandle v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_ExclusiveOr_UX_UX(u.NativeHandle, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public Int32 Compare(UInt32 u, UBigIntHandle v)
@@ -613,70 +620,70 @@ namespace Palmtree.Math.Core
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_GreatestCommonDivisor_UI_UX(u, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle GreatestCommonDivisor(UInt64 u, UBigIntHandle v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_GreatestCommonDivisor_UL_UX(u, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle GreatestCommonDivisor(UBigIntHandle u, UInt32 v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_GreatestCommonDivisor_UX_UI(u.NativeHandle, v, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle GreatestCommonDivisor(UBigIntHandle u, UInt64 v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_GreatestCommonDivisor_UX_UL(u.NativeHandle, v, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle GreatestCommonDivisor(UBigIntHandle u, UBigIntHandle v)
         {
             IntPtr w;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_GreatestCommonDivisor_UX_UX(u.NativeHandle, v.NativeHandle, out w));
-            return (new UBigIntHandle(w, this));
+            return (new UBigIntHandle(w));
         }
 
         public UBigIntHandle Pow(UInt32 x, UInt32 n)
         {
             IntPtr v;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Pow_UI_UI(x, n, out v));
-            return (new UBigIntHandle(v, this));
+            return (new UBigIntHandle(v));
         }
 
         public UBigIntHandle Pow(UInt64 x, UInt32 n)
         {
             IntPtr v;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Pow_UL_UI(x, n, out v));
-            return (new UBigIntHandle(v, this));
+            return (new UBigIntHandle(v));
         }
 
         public UBigIntHandle Pow(UBigIntHandle x, UInt32 n)
         {
             IntPtr v;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Pow_UX_UI(x.NativeHandle, n, out v));
-            return (new UBigIntHandle(v, this));
+            return (new UBigIntHandle(v));
         }
 
         public UBigIntHandle ModPow(UBigIntHandle v, UBigIntHandle e, UBigIntHandle m)
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_ModPow_UX_UX_UX(v.NativeHandle, e.NativeHandle, m.NativeHandle, out r));
-            return (new UBigIntHandle(r, this));
+            return (new UBigIntHandle(r));
         }
 
         public UBigIntHandle TimesPow(UInt32 v, UInt32 e)
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_TimesOfExponentOf10(v, e, out r));
-            return (new UBigIntHandle(r, this));
+            return (new UBigIntHandle(r));
         }
 
         public UInt32 FloorLog10(UBigIntHandle v)
@@ -690,14 +697,14 @@ namespace Palmtree.Math.Core
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Increment_UX(x.NativeHandle, out r));
-            return (new UBigIntHandle(r, this));
+            return (new UBigIntHandle(r));
         }
 
         public UBigIntHandle Decrement(UBigIntHandle x)
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Decrement_UX(x.NativeHandle, out r));
-            return (new UBigIntHandle(r, this));
+            return (new UBigIntHandle(r));
         }
 
         #endregion

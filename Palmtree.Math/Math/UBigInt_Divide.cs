@@ -28,7 +28,7 @@ using System;
 
 namespace Palmtree.Math
 {
-    partial class UBigInt
+    partial struct UBigInt
     {
         #region パブリックメソッド
 

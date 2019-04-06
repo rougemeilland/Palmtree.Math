@@ -30,15 +30,26 @@ namespace Palmtree.Math.Core
     internal class BigIntHandle
         : IDisposable
     {
+        private static BigIntEngine _engine;
+        private static IBigIntDisposable _disposable_object;
         private bool _is_disposed;
-        private IBigIntDisposable _disposable_object;
 
-        public BigIntHandle(IntPtr native_handle, IBigIntDisposable disposable_object)
+        static BigIntHandle()
+        {
+            _engine = new BigIntEngine();
+            _disposable_object = _engine;
+        }
+
+        public BigIntHandle()
+            : this(_engine.DefaultValueHandle)
+        {
+        }
+
+        public BigIntHandle(IntPtr native_handle)
         {
             _is_disposed = false;
-            _disposable_object = disposable_object;
             NativeHandle = native_handle;
-            disposable_object.CheckHandle(native_handle);
+            _disposable_object.CheckHandle(native_handle);
         }
 
         ~BigIntHandle()

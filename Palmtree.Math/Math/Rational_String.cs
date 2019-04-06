@@ -29,7 +29,7 @@ using System.Globalization;
 
 namespace Palmtree.Math
 {
-    partial class Rational
+    partial struct Rational
     {
         #region パブリックメソッド
 

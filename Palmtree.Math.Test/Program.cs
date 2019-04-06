@@ -25,11 +25,11 @@
 
 using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
+
 
 namespace Palmtree.Math.Test
 {
@@ -41,8 +41,40 @@ namespace Palmtree.Math.Test
         [HandleProcessCorruptedStateExceptions]
         static void Main(string[] args)
         {
+            定数のテスト();
             TestLoop();
             // Console.ReadLine();
+        }
+
+        private static void 定数のテスト()
+        {
+            BigInt default_value_ubigint;
+            バイト配列が等しいことの確認(default_value_ubigint.ToByteArray(), new byte[] { 0x00, 0x00 });
+            バイト配列が等しいことの確認(UBigInt.Zero.ToByteArray(), new byte[] { 0x00, 0x00 });
+            バイト配列が等しいことの確認(UBigInt.One.ToByteArray(), new byte[] { 0x01, 0x01, 0x01 });
+
+            UBigInt default_value_bigint;
+            バイト配列が等しいことの確認(default_value_bigint.ToByteArray(), new byte[] { 0x00, 0x00 });
+            バイト配列が等しいことの確認(BigInt.Zero.ToByteArray(), new byte[] { 0x00, 0x00 });
+            バイト配列が等しいことの確認(BigInt.One.ToByteArray(), new byte[] { 0x01, 0x01, 0x01 });
+            バイト配列が等しいことの確認(BigInt.MinusOne.ToByteArray(), new byte[] { 0x03, 0x01, 0x01 });
+
+            Rational default_value_rational;
+            バイト配列が等しいことの確認(default_value_rational.ToByteArray(), new byte[] { 0x10, 0x00, 0x00, 0x01, 0x01, 0x01 });
+            バイト配列が等しいことの確認(Rational.Zero.ToByteArray(), new byte[] { 0x10, 0x00, 0x00, 0x01, 0x01, 0x01 });
+            バイト配列が等しいことの確認(Rational.One.ToByteArray(), new byte[] { 0x10, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01 });
+            バイト配列が等しいことの確認(Rational.MinusOne.ToByteArray(), new byte[] { 0x10, 0x03, 0x01, 0x01, 0x01, 0x01, 0x01 });
+        }
+
+        private static void バイト配列が等しいことの確認(byte[] u, byte[] v)
+        {
+            if (u.Length != v.Length)
+                throw new ApplicationException();
+            for (var index = 0; index < u.Length; ++index)
+            {
+                if (u[index] != v[index])
+                    throw new ApplicationException();
+            }
         }
 
         private static void TestLoop()

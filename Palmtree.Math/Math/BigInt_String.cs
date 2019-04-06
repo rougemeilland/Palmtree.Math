@@ -29,7 +29,7 @@ using System.Globalization;
 
 namespace Palmtree.Math
 {
-    partial class BigInt
+    partial struct BigInt
     {
         #region パブリックメソッド
 

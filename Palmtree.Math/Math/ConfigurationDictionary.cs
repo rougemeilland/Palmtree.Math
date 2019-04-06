@@ -21,25 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
+
+
+using System.Collections;
+using System.Collections.Generic;
+
 
 namespace Palmtree.Math
 {
-    partial struct BigInt
+    internal class ConfigurationDictionary
+        : IReadOnlyDictionary<string, string>
     {
-        #region パブリックメソッド
+        private IDictionary<string, string> _imp;
 
-        public static BigInt FromByteArray(byte[] array)
+        public ConfigurationDictionary()
         {
-            return (new BigInt(EngineObject.FromByteArray(array)));
+            _imp = new Dictionary<string, string>();
         }
 
-        public byte[] ToByteArray()
+        internal void Add(string key, string value)
         {
-            return (EngineObject.ToByteArray(Handle));
+            _imp.Add(key, value);
         }
 
-        #endregion
+        public string this[string key] => _imp[key];
+
+        public IEnumerable<string> Keys => _imp.Keys;
+
+        public IEnumerable<string> Values => _imp.Values;
+
+        public int Count => _imp.Count;
+
+        public bool ContainsKey(string key)
+        {
+            return (_imp.ContainsKey(key));
+        }
+
+        public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
+        {
+            return (_imp.GetEnumerator());
+        }
+
+        public bool TryGetValue(string key, out string value)
+        {
+            return (_imp.TryGetValue(key, out value));
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return (GetEnumerator());
+        }
     }
 }
 
