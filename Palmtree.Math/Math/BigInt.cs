@@ -102,7 +102,7 @@ namespace Palmtree.Math
         {
             EngineObject = new Core.BigIntEngine();
             var settings = new ConfigurationDictionary();
-            foreach (var key in new[] { "COMPILER", "PLATFORM", "TABLESIZE" })
+            foreach (var key in new[] { "COMPILER", "CONFIG", "PLATFORM", "TABLESIZE" })
                 settings.Add(key, EngineObject.GetConfigurationSettings(key));
             ConfigurationSettings = settings;
             PerformanceCounters = new PerformanceCounterCollection();

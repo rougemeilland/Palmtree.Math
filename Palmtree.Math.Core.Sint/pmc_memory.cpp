@@ -58,13 +58,14 @@ namespace Palmtree::Math::Core::Internal
     __inline static void ClearNumberHeader(NUMBER_OBJECT_SINT* p)
     {
 #ifdef _M_IX64
-        if (sizeof(*p) == sizeof(_UINT64_T) * 4)
+        if (sizeof(*p) == sizeof(_UINT64_T) * 5)
         {
             _UINT64_T* __p = (_UINT64_T*)p;
             __p[0] = 0;
             __p[1] = 0;
             __p[2] = 0;
             __p[3] = 0;
+            __p[4] = 0;
         }
         else
         {
@@ -77,6 +78,7 @@ namespace Palmtree::Math::Core::Internal
                 __p[2] = 0;
                 __p[3] = 0;
                 __p[4] = 0;
+                __p[5] = 0;
             }
 #ifdef _M_IX64
             else if (sizeof(*p) % sizeof(_UINT64_T) == 0)
@@ -96,14 +98,15 @@ namespace Palmtree::Math::Core::Internal
     __inline static void FillNumberHeader(NUMBER_OBJECT_SINT* p)
     {
 #ifdef _M_IX64
-        if (sizeof(*p) == sizeof(_UINT64_T) * 4)
+        if (sizeof(*p) == sizeof(_UINT64_T) * 5)
         {
             _UINT64_T* __p = (_UINT64_T*)p;
             __p[0] = DEFAULT_MEMORY_DATA;
             __p[1] = DEFAULT_MEMORY_DATA;
             __p[2] = DEFAULT_MEMORY_DATA;
             __p[3] = DEFAULT_MEMORY_DATA;
-        }
+            __p[4] = DEFAULT_MEMORY_DATA;
+    }
         else
         {
 #endif
@@ -115,6 +118,7 @@ namespace Palmtree::Math::Core::Internal
                 __p[2] = (_UINT32_T)DEFAULT_MEMORY_DATA;
                 __p[3] = (_UINT32_T)DEFAULT_MEMORY_DATA;
                 __p[4] = (_UINT32_T)DEFAULT_MEMORY_DATA;
+                __p[5] = (_UINT32_T)DEFAULT_MEMORY_DATA;
             }
 #ifdef _M_IX64
             else if (sizeof(*p) % sizeof(_UINT64_T) == 0)

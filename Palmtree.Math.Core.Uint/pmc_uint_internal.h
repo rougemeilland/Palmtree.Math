@@ -76,7 +76,6 @@ namespace Palmtree::Math::Core::Internal
         _INT64_T COUNT_ALLOCATE_NUMBER_OBJECT;
         _INT64_T COUNT_ALLOCATE_NUMBER;
         _INT64_T COUNT_HOOK_NUMBER;
-        _INT64_T COUNT_USE_OBJECT_UX;
     } PMC_STATISTICS_INFO_UINT;
 #pragma endregion
 

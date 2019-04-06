@@ -50,8 +50,6 @@ namespace Palmtree::Math::Core::Internal
             return (statistics_info.COUNT_ALLOCATE_NUMBER);
         if (lstrcmpW(key, L"hooknumberux") == 0)
             return (statistics_info.COUNT_HOOK_NUMBER);
-        if (lstrcmpW(key, L"useobjectux") == 0)
-            return (statistics_info.COUNT_USE_OBJECT_UX);
         throw KeyNotFoundException(L"未知のキーが渡されました。");
     }
 

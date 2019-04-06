@@ -59,6 +59,22 @@ namespace Palmtree::Math::Core::Internal
             *count = countof(value);
             return (PMC_STATUS_OK);
         }
+        else if (lstrcmpW(key, L"CONFIG") == 0)
+        {
+#ifdef _DEBUG
+            const wchar_t value[] = L"DEBUG";
+#else
+            const wchar_t value[] = L"RELEASE";
+#endif
+            if (value_buffer != nullptr)
+            {
+                if (value_buffer_size < countof(value))
+                    return (PMC_STATUS_INSUFFICIENT_BUFFER);
+                lstrcpyW(value_buffer, value);
+            }
+            *count = countof(value);
+            return (PMC_STATUS_OK);
+        }
         else if (lstrcmpW(key, L"PLATFORM") == 0)
         {
 #ifdef _M_IX86
