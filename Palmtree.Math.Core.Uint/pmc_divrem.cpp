@@ -316,7 +316,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT64_T _DIVREM_UNIT(_UINT64_T u_hi, _UINT64_T u_lo, _UINT64_T v, _UINT64_T *r)
+    _UINT64_T __DLLEXPORT_DIVREM _DIVREM_UNIT(_UINT64_T u_hi, _UINT64_T u_lo, _UINT64_T v, _UINT64_T *r)
     {
         _UINT32_T v_hi;
         _UINT32_T v_lo = _FROMDWORDTOWORD(v, &v_hi);
@@ -332,7 +332,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT64_T _DIVREM_SINGLE_UNIT(_UINT64_T r, _UINT64_T u, _UINT64_T v, _UINT64_T *q)
+    _UINT64_T __DLLEXPORT_DIVREM _DIVREM_SINGLE_UNIT(_UINT64_T r, _UINT64_T u, _UINT64_T v, _UINT64_T *q)
     {
         _UINT64_T RR;
         *q = _DIVREM_UNIT(r, u, v, &RR);
@@ -340,9 +340,9 @@ namespace Palmtree::Math::Core::Internal
     }
 #endif
 
-    static void(*fp_DivRem_X_X)(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_len, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE* r_buf);
+    static void(*fp_DivRem_UX_UX)(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_len, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE* r_buf);
 
-    void DivRem_X_X(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE* r_buf)
+    void DivRem_UX_UX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE* r_buf)
     {
         __UNIT_TYPE* u_buf_2 = u_buf;
         __UNIT_TYPE u_count_2 = u_count;
@@ -369,11 +369,11 @@ namespace Palmtree::Math::Core::Internal
                 if (q_buf != nullptr)
                 {
                     __UNIT_TYPE r;
-                    DivRem_X_1W(u_buf_2, u_count_2, v_buf_2[0], q_buf, &r);
+                    DivRem_UX_1W(u_buf_2, u_count_2, v_buf_2[0], q_buf, &r);
                     r_buf[0] = r;
                 }
                 else
-                    r_buf[0] = Rem_X_1W(u_buf_2, u_count_2, v_buf_2[0]);
+                    r_buf[0] = Rem_UX_1W(u_buf_2, u_count_2, v_buf_2[0]);
             }
         }
         else
@@ -385,11 +385,11 @@ namespace Palmtree::Math::Core::Internal
                 _COPY_MEMORY_UNIT(r_buf, u_buf, u_count);
             }
             else
-                (*fp_DivRem_X_X)(u_buf_2, u_count_2, v_buf_2, v_count_2, work_v_buf, q_buf, r_buf);
+                (*fp_DivRem_UX_UX)(u_buf_2, u_count_2, v_buf_2, v_count_2, work_v_buf, q_buf, r_buf);
         }
     }
 
-    __UNIT_TYPE Rem_X_1W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE v)
+    __UNIT_TYPE Rem_UX_1W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE v)
     {
         // u の最上位ワードは 0 でありうることに注意すること。
         __UNIT_TYPE* up = u_buf + u_buf_len - 1;
@@ -530,7 +530,7 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    void DivRem_X_1W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE v, __UNIT_TYPE* q_buf, __UNIT_TYPE* r_buf)
+    void DivRem_UX_1W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE v, __UNIT_TYPE* q_buf, __UNIT_TYPE* r_buf)
     {
         // u の最上位ワードは 0 でありうることに注意すること。
         __UNIT_TYPE* up = u_buf + u_buf_len - 1;
@@ -728,7 +728,7 @@ namespace Palmtree::Math::Core::Internal
             return (lh_lo > rh_lo);
     }
 
-    __inline static BOOL CheckQ_X(__UNIT_TYPE q_, __UNIT_TYPE uj, __UNIT_TYPE uj_1, __UNIT_TYPE uj_2, __UNIT_TYPE v1, __UNIT_TYPE v2)
+    __inline static BOOL CheckQ_UX(__UNIT_TYPE q_, __UNIT_TYPE uj, __UNIT_TYPE uj_1, __UNIT_TYPE uj_2, __UNIT_TYPE v1, __UNIT_TYPE v2)
     {
         __UNIT_TYPE lh_mi;
         __UNIT_TYPE lh_lo = _MULTIPLYX_UNIT(v2, q_, &lh_mi);
@@ -782,7 +782,7 @@ namespace Palmtree::Math::Core::Internal
         return (q_);
     }
 
-    static __UNIT_TYPE CalculateQ_X(__UNIT_TYPE* u_buf, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_len, __UNIT_TYPE q_index)
+    static __UNIT_TYPE CalculateQ_UX(__UNIT_TYPE* u_buf, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_len, __UNIT_TYPE q_index)
     {
         __UNIT_TYPE u_index = q_index + v_buf_len;
         __UNIT_TYPE uj = u_buf[u_index];
@@ -791,10 +791,10 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE v1 = v_buf[v_buf_len - 1];
         __UNIT_TYPE v2 = v_buf[v_buf_len - 2];
         __UNIT_TYPE q_ = AsumeQ_(uj, uj_1, v1);
-        if (!CheckQ_X(q_, uj, uj_1, uj_2, v1, v2))
+        if (!CheckQ_UX(q_, uj, uj_1, uj_2, v1, v2))
             return (q_);
         --q_;
-        if (!CheckQ_X(q_, uj, uj_1, uj_2, v1, v2))
+        if (!CheckQ_UX(q_, uj, uj_1, uj_2, v1, v2))
             return (q_);
         --q_;
         return (q_);
@@ -1325,7 +1325,7 @@ namespace Palmtree::Math::Core::Internal
         DoCarry(c, u_ptr, u_buf + u_buf_len + 1 - u_ptr);
     }
 
-    static void DivRem_X_X_using_ADC_MUL(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_len, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE* r_buf)
+    static void DivRem_UX_UX_using_ADC_MUL(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_len, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE* r_buf)
     {
         // u および v の最上位ワードは 0 でありうることに注意すること。
         if (sizeof(__UNIT_TYPE) != sizeof(__UNIT_TYPE))
@@ -1382,7 +1382,7 @@ namespace Palmtree::Math::Core::Internal
             RightShift_Imp(work_u_buf, u_buf_len + 1, d_factor, work_u_buf, FALSE);
     }
 
-    static void DivRem_X_X_using_ADX_MULX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_len, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE* r_buf)
+    static void DivRem_UX_UX_using_ADX_MULX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_len, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE* r_buf)
     {
         // u の最上位ワードは 0 でありうることに注意すること。
 
@@ -1411,7 +1411,7 @@ namespace Palmtree::Math::Core::Internal
 
         for (;;)
         {
-            __UNIT_TYPE q_ = CalculateQ_X(work_u_buf, work_v_buf, v_buf_len, q_index);
+            __UNIT_TYPE q_ = CalculateQ_UX(work_u_buf, work_v_buf, v_buf_len, q_index);
 
             if (SubtructOneLineX(work_u_buf, u_buf_len, work_v_buf, v_buf_len, q_index, q_))
             {
@@ -1434,12 +1434,12 @@ namespace Palmtree::Math::Core::Internal
             RightShift_Imp(work_u_buf, u_buf_len + 1, d_factor, work_u_buf, FALSE);
     }
 
-    _UINT32_T PMC_DivRem_I_X(_UINT32_T u, PMC_HANDLE_UINT v, _UINT32_T* q) noexcept(false)
+    _UINT32_T PMC_DivRem_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v, _UINT32_T* q) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) < sizeof(u))
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_DivRem_I_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_DivRem_UI_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (nv->IS_ZERO)
@@ -1508,7 +1508,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static _UINT32_T PMC_DivRem_X_I_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v, NUMBER_OBJECT_UINT** q)
+    static _UINT32_T PMC_DivRem_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v, NUMBER_OBJECT_UINT** q)
     {
         if (v == 0)
         {
@@ -1564,7 +1564,7 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE q_bit_count = u_bit_count - v_bit_count + 1 + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには u_bit_count - v_bit_count + 1 だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                         *q = root.AllocateNumber(q_bit_count);
                         __UNIT_TYPE r_buf = 0;
-                        DivRem_X_1W(u->BLOCK, u->UNIT_WORD_COUNT, v, (*q)->BLOCK, &r_buf);
+                        DivRem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v, (*q)->BLOCK, &r_buf);
                         root.CheckNumber(*q);
                         CommitNumber(*q);
                         if ((*q)->IS_ZERO)
@@ -1578,7 +1578,7 @@ namespace Palmtree::Math::Core::Internal
                     }
                     else
                     {
-                        __UNIT_TYPE r_buf = Rem_X_1W(u->BLOCK, u->UNIT_WORD_COUNT, v);
+                        __UNIT_TYPE r_buf = Rem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v);
                         return ((_UINT32_T)r_buf);
                     }
                 }
@@ -1586,19 +1586,19 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT32_T PMC_DivRem_X_I(PMC_HANDLE_UINT u, _UINT32_T v, PMC_HANDLE_UINT* q) noexcept(false)
+    _UINT32_T PMC_DivRem_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v, PMC_HANDLE_UINT* q) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) < sizeof(v))
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_DivRem_X_I;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_DivRem_UX_I;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         ResourceHolderUINT root;
         NUMBER_OBJECT_UINT* nq;
         if (q != nullptr)
         {
-            _UINT32_T r = PMC_DivRem_X_I_Imp(nu, v, &nq);
+            _UINT32_T r = PMC_DivRem_UX_UI_Imp(nu, v, &nq);
             root.HookNumber(nq);
             *q = GET_NUMBER_HANDLE(nq);
             root.UnlinkNumber(nq);
@@ -1606,17 +1606,17 @@ namespace Palmtree::Math::Core::Internal
         }
         else
         {
-            _UINT32_T r = PMC_DivRem_X_I_Imp(nu, v, nullptr);
+            _UINT32_T r = PMC_DivRem_UX_UI_Imp(nu, v, nullptr);
             return (r);
         }
     }
 
-    _UINT64_T PMC_DivRem_L_X(_UINT64_T u, PMC_HANDLE_UINT v, _UINT64_T* q) noexcept(false)
+    _UINT64_T PMC_DivRem_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v, _UINT64_T* q) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) * 2 < sizeof(u))
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_DivRem_L_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_DivRem_UL_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (nv->IS_ZERO)
@@ -1718,7 +1718,7 @@ namespace Palmtree::Math::Core::Internal
                                     __UNIT_TYPE q_buf[] = { 0, 0, 0 };
                                     __UNIT_TYPE r_buf;
 
-                                    DivRem_X_1W(u_buf, countof(u_buf), (__UNIT_TYPE)nv->BLOCK[0], q_buf, &r_buf);
+                                    DivRem_UX_1W(u_buf, countof(u_buf), (__UNIT_TYPE)nv->BLOCK[0], q_buf, &r_buf);
 
                                     *q = _FROMWORDTODWORD((_UINT32_T)q_buf[1], (_UINT32_T)q_buf[0]);
                                     return (r_buf);
@@ -1726,7 +1726,7 @@ namespace Palmtree::Math::Core::Internal
                                 else
                                 {
                                     __UNIT_TYPE u_buf[] = { u_lo, u_hi };
-                                    __UNIT_TYPE r_buf = Rem_X_1W(u_buf, countof(u_buf), (__UNIT_TYPE)nv->BLOCK[0]);
+                                    __UNIT_TYPE r_buf = Rem_UX_1W(u_buf, countof(u_buf), (__UNIT_TYPE)nv->BLOCK[0]);
                                     return (r_buf);
                                 }
                             }
@@ -1741,7 +1741,7 @@ namespace Palmtree::Math::Core::Internal
                                     __UNIT_TYPE q_buf[] = { 0, 0, 0 };// 演算結果を格納するためには u のビット数 - v のビット数 + 1 ビットだけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                                     __UNIT_TYPE r_buf[] = { 0, 0, 0 }; // 演算結果を格納するためには v と同じ大きさだけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                                     __UNIT_TYPE work_v_buf[] = { 0, 0 };
-                                    (*fp_DivRem_X_X)(u_buf, countof(u_buf), nv->BLOCK, nv->UNIT_WORD_COUNT, work_v_buf, q_buf, r_buf);
+                                    (*fp_DivRem_UX_UX)(u_buf, countof(u_buf), nv->BLOCK, nv->UNIT_WORD_COUNT, work_v_buf, q_buf, r_buf);
                                     *q = _FROMWORDTODWORD((_UINT32_T)q_buf[1], (_UINT32_T)q_buf[0]);
                                     return (_FROMWORDTODWORD((_UINT32_T)r_buf[1], (_UINT32_T)r_buf[0]));
                                 }
@@ -1750,7 +1750,7 @@ namespace Palmtree::Math::Core::Internal
                                     __UNIT_TYPE u_buf[] = { u_lo, u_hi };
                                     __UNIT_TYPE r_buf[] = { 0, 0, 0 }; // 演算結果を格納するためには v と同じ大きさだけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                                     __UNIT_TYPE work_v_buf[] = { 0, 0 };
-                                    (*fp_DivRem_X_X)(u_buf, countof(u_buf), nv->BLOCK, nv->UNIT_WORD_COUNT, work_v_buf, nullptr, r_buf);
+                                    (*fp_DivRem_UX_UX)(u_buf, countof(u_buf), nv->BLOCK, nv->UNIT_WORD_COUNT, work_v_buf, nullptr, r_buf);
                                     return (_FROMWORDTODWORD((_UINT32_T)r_buf[1], (_UINT32_T)r_buf[0]));
                                 }
                             }
@@ -1796,7 +1796,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static _UINT64_T PMC_DivRem_X_L_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v, NUMBER_OBJECT_UINT** q)
+    static _UINT64_T PMC_DivRem_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v, NUMBER_OBJECT_UINT** q)
     {
         if (v == 0)
         {
@@ -1859,7 +1859,7 @@ namespace Palmtree::Math::Core::Internal
                                 __UNIT_TYPE q_bit_count = u_bit_count - v_bit_count + 1 + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには u_bit_count - v_bit_count + 1 だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                                 *q = root.AllocateNumber(q_bit_count);
                                 __UNIT_TYPE r_buf = 0;
-                                DivRem_X_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, (*q)->BLOCK, &r_buf);
+                                DivRem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, (*q)->BLOCK, &r_buf);
                                 root.CheckNumber(*q);
                                 CommitNumber(*q);
                                 if ((*q)->IS_ZERO)
@@ -1873,7 +1873,7 @@ namespace Palmtree::Math::Core::Internal
                             }
                             else
                             {
-                                __UNIT_TYPE r_buf = Rem_X_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo);
+                                __UNIT_TYPE r_buf = Rem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo);
                                 return (r_buf);
                             }
                         }
@@ -1909,7 +1909,7 @@ namespace Palmtree::Math::Core::Internal
                                 __UNIT_TYPE v_buf[] = { v_lo, v_hi };
                                 __UNIT_TYPE work_v_buf[] = { 0, 0 };
                                 __UNIT_TYPE* r_buf = root.AllocateBlock(r_bit_count);
-                                (*fp_DivRem_X_X)(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, sizeof(v_buf) / sizeof(v_buf[0]), work_v_buf, (*q)->BLOCK, r_buf);
+                                (*fp_DivRem_UX_UX)(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, sizeof(v_buf) / sizeof(v_buf[0]), work_v_buf, (*q)->BLOCK, r_buf);
                                 root.CheckNumber(*q);
                                 root.CheckBlock(r_buf);
                                 CommitNumber(*q);
@@ -1929,7 +1929,7 @@ namespace Palmtree::Math::Core::Internal
                                 __UNIT_TYPE v_buf[] = { v_lo, v_hi };
                                 __UNIT_TYPE work_v_buf[] = { 0, 0 };
                                 __UNIT_TYPE* r_buf = root.AllocateBlock(r_bit_count);
-                                (*fp_DivRem_X_X)(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, sizeof(v_buf) / sizeof(v_buf[0]), work_v_buf, nullptr, r_buf);
+                                (*fp_DivRem_UX_UX)(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, sizeof(v_buf) / sizeof(v_buf[0]), work_v_buf, nullptr, r_buf);
                                 root.CheckBlock(r_buf);
                                 _UINT64_T r = _FROMWORDTODWORD((_UINT32_T)r_buf[1], (_UINT32_T)r_buf[0]);
                                 root.DeallocateBlock(r_buf);
@@ -1962,7 +1962,7 @@ namespace Palmtree::Math::Core::Internal
                             __UNIT_TYPE q_bit_count = u_bit_count - v_bit_count + 1 + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには u_bit_count - v_bit_count + 1 だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                             *q = root.AllocateNumber(q_bit_count);
                             __UNIT_TYPE r_buf = 0;
-                            DivRem_X_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, (*q)->BLOCK, &r_buf);
+                            DivRem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, (*q)->BLOCK, &r_buf);
                             root.CheckNumber(*q);
                             CommitNumber(*q);
                             if ((*q)->IS_ZERO)
@@ -1976,7 +1976,7 @@ namespace Palmtree::Math::Core::Internal
                         }
                         else
                         {
-                            __UNIT_TYPE r_buf = Rem_X_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v);
+                            __UNIT_TYPE r_buf = Rem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v);
                             return (r_buf);
                         }
                     }
@@ -1986,19 +1986,19 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT64_T PMC_DivRem_X_L(PMC_HANDLE_UINT u, _UINT64_T v, PMC_HANDLE_UINT* q) noexcept(false)
+    _UINT64_T PMC_DivRem_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v, PMC_HANDLE_UINT* q) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) * 2 < sizeof(v))
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_DivRem_X_L;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_DivRem_UX_L;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         ResourceHolderUINT root;
         NUMBER_OBJECT_UINT* nq;
         if (q != nullptr)
         {
-            _UINT64_T r = PMC_DivRem_X_L_Imp(nu, v, &nq);
+            _UINT64_T r = PMC_DivRem_UX_UL_Imp(nu, v, &nq);
             root.HookNumber(nq);
             *q = GET_NUMBER_HANDLE(nq);
             root.UnlinkNumber(nq);
@@ -2006,12 +2006,12 @@ namespace Palmtree::Math::Core::Internal
         }
         else
         {
-            _UINT64_T r = PMC_DivRem_X_L_Imp(nu, v, nullptr);
+            _UINT64_T r = PMC_DivRem_UX_UL_Imp(nu, v, nullptr);
             return (r);
         }
     }
 
-    static NUMBER_OBJECT_UINT* PMC_DivRem_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT** q)
+    NUMBER_OBJECT_UINT* PMC_DivRem_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT** q)
     {
         if (u->IS_ZERO)
         {
@@ -2062,7 +2062,7 @@ namespace Palmtree::Math::Core::Internal
                         *q = root.AllocateNumber(q_bit_count);
                         __UNIT_TYPE r_bit_count = sizeof(__UNIT_TYPE) * 8;
                         NUMBER_OBJECT_UINT* r = root.AllocateNumber(r_bit_count);
-                        DivRem_X_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v->BLOCK[0], (*q)->BLOCK, r->BLOCK);
+                        DivRem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v->BLOCK[0], (*q)->BLOCK, r->BLOCK);
                         root.CheckNumber(*q);
                         root.CheckNumber(r);
                         CommitNumber(*q);
@@ -2088,7 +2088,7 @@ namespace Palmtree::Math::Core::Internal
                         ResourceHolderUINT root;
                         __UNIT_TYPE r_bit_count = sizeof(__UNIT_TYPE) * 8;
                         NUMBER_OBJECT_UINT* r = root.AllocateNumber(r_bit_count);
-                        r->BLOCK[0] = Rem_X_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v->BLOCK[0]);
+                        r->BLOCK[0] = Rem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v->BLOCK[0]);
                         root.CheckNumber(r);
                         CommitNumber(r);
                         if (r->IS_ZERO)
@@ -2112,7 +2112,7 @@ namespace Palmtree::Math::Core::Internal
                         *q = root.AllocateNumber(q_bit_count);
                         NUMBER_OBJECT_UINT* r = root.AllocateNumber(r_bit_count);
                          __UNIT_TYPE* work_v_buf = root.AllocateBlock(v->UNIT_WORD_COUNT * __UNIT_TYPE_BIT_COUNT);
-                        (*fp_DivRem_X_X)(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, (*q)->BLOCK, r->BLOCK);
+                        (*fp_DivRem_UX_UX)(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, (*q)->BLOCK, r->BLOCK);
                         root.CheckBlock(work_v_buf);
                         root.CheckNumber(*q);
                         root.CheckNumber(r);
@@ -2141,7 +2141,7 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE r_bit_count = u_bit_count + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには v_bit_count だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                         NUMBER_OBJECT_UINT* r = root.AllocateNumber(r_bit_count);
                         __UNIT_TYPE* work_v_buf = root.AllocateBlock(v->UNIT_WORD_COUNT * __UNIT_TYPE_BIT_COUNT);
-                        (*fp_DivRem_X_X)(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, nullptr, r->BLOCK);
+                        (*fp_DivRem_UX_UX)(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, nullptr, r->BLOCK);
                         root.CheckBlock(work_v_buf);
                         root.CheckNumber(r);
                         root.DeallocateBlock(work_v_buf);
@@ -2160,7 +2160,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_DivRem_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* q) noexcept(false)
+    PMC_HANDLE_UINT PMC_DivRem_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* q) noexcept(false)
     {
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
@@ -2177,7 +2177,7 @@ namespace Palmtree::Math::Core::Internal
 
         if (q != nullptr)
         {
-            nr = PMC_DivRem_X_X_Imp(nu, nv, &nq);
+            nr = PMC_DivRem_UX_UX_Imp(nu, nv, &nq);
             root.HookNumber(nq);
             root.HookNumber(nr);
             *q = GET_NUMBER_HANDLE(nq);
@@ -2188,7 +2188,7 @@ namespace Palmtree::Math::Core::Internal
         }
         else
         {
-            nr = PMC_DivRem_X_X_Imp(nu, nv, nullptr);
+            nr = PMC_DivRem_UX_UX_Imp(nu, nv, nullptr);
             root.HookNumber(nr);
             PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
             root.UnlinkNumber(nr);
@@ -2196,9 +2196,45 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    NUMBER_OBJECT_UINT* PMC_DivideExactly_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v) noexcept(false)
+    {
+        if (v->IS_ZERO)
+        {
+            // v が 0 である場合
+
+            // 0 による除算はエラーで返す
+            throw DivisionByZeroException(L"0による除算が行われようとしました。");
+        }
+        ResourceHolderUINT root;
+        NUMBER_OBJECT_UINT* q;
+        NUMBER_OBJECT_UINT* r;
+        r = PMC_DivRem_UX_UX_Imp(u, v, &q);
+        root.HookNumber(q);
+        root.HookNumber(r);
+        if (!r->IS_ZERO)
+        {
+            // 割り切れていない場合は例外とする
+            throw ArithmeticException(L"u が v で割り切れませんでした。");
+        }
+        root.UnlinkNumber(q);
+        return (q);
+    }
+
+    PMC_HANDLE_UINT PMC_DivideExactly_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
+    {
+        NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
+        ResourceHolderUINT root;
+        NUMBER_OBJECT_UINT* nq = PMC_DivideExactly_UX_UX_Imp(nu, nv);
+        root.HookNumber(nq);
+        PMC_HANDLE_UINT q = GET_NUMBER_HANDLE(nq);
+        root.UnlinkNumber(nq);
+        return (q);
+    }
+
     PMC_STATUS_CODE Initialize_DivRem(PROCESSOR_FEATURES* feature)
     {
-        fp_DivRem_X_X = feature->PROCESSOR_FEATURE_ADX && feature->PROCESSOR_FEATURE_BMI2 ? DivRem_X_X_using_ADX_MULX : DivRem_X_X_using_ADC_MUL;
+        fp_DivRem_UX_UX = feature->PROCESSOR_FEATURE_ADX && feature->PROCESSOR_FEATURE_BMI2 ? DivRem_UX_UX_using_ADX_MULX : DivRem_UX_UX_using_ADC_MUL;
         return (PMC_STATUS_OK);
     }
 

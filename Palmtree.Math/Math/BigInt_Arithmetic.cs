@@ -47,6 +47,21 @@ namespace Palmtree.Math
             return (new BigInt(EngineObject.OneComplement(Handle)));
         }
 
+        public BigInt Pow(UInt32 e)
+        {
+            return (new BigInt(EngineObject.Pow(Handle, e)));
+        }
+
+        public Rational Pow(Int32 e)
+        {
+            return (new Rational(Rational.EngineObject.Pow(Handle, e)));
+        }
+
+        public Rational Invert()
+        {
+            return (new Rational(Rational.EngineObject.Invert(Handle)));
+        }
+
         public static BigInt operator ~(BigInt x)
         {
             return (new BigInt(EngineObject.OneComplement(x.Handle)));

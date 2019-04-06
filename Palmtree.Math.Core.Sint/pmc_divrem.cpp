@@ -142,7 +142,7 @@ namespace Palmtree::Math::Core::Internal
             if (q != nullptr)
             {
                 ResourceHolderSINT root;
-                SIGN_T q_sign = PRODUCT_SIGN( u_sign, nv->SIGN);
+                SIGN_T q_sign = PRODUCT_SIGN(u_sign, nv->SIGN);
                 SIGN_T r_sign = u_sign;
                 _UINT32_T q_abs;
                 _UINT32_T r_abs = ep_uint.DivRem(u_abs, nv->ABS, &q_abs);
@@ -386,7 +386,6 @@ namespace Palmtree::Math::Core::Internal
                 root.HookNumber(q_abs);
                 NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
                 *q = GET_NUMBER_HANDLE(nq);
-                root.UnlinkNumber(q_abs);
                 root.UnlinkNumber(nq);
                 root.UnlinkNumber(r_abs);
                 return (r_abs);
@@ -426,14 +425,13 @@ namespace Palmtree::Math::Core::Internal
                 SIGN_T q_sign = nu->SIGN;
                 SIGN_T r_sign = nu->SIGN;
                 PMC_HANDLE_UINT q_abs;
-                _UINT32_T r_abs =ep_uint.DivRem(nu->ABS, v, &q_abs);
+                _UINT32_T r_abs = ep_uint.DivRem(nu->ABS, v, &q_abs);
                 root.HookNumber(q_abs);
                 NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
                 NUMBER_OBJECT_SINT* nr = From_I_Imp(r_sign, r_abs);
                 root.HookNumber(nr);
                 *q = GET_NUMBER_HANDLE(nq);
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
-                root.UnlinkNumber(q_abs);
                 root.UnlinkNumber(nq);
                 root.UnlinkNumber(nr);
                 return (r);
@@ -442,7 +440,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 ResourceHolderSINT root;
                 SIGN_T r_sign = nu->SIGN;
-                _UINT32_T r_abs =ep_uint.DivRem(nu->ABS, v, nullptr);
+                _UINT32_T r_abs = ep_uint.DivRem(nu->ABS, v, nullptr);
                 NUMBER_OBJECT_SINT* nr = From_I_Imp(r_sign, r_abs);
                 root.HookNumber(nr);
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
@@ -482,14 +480,13 @@ namespace Palmtree::Math::Core::Internal
                 SIGN_T q_sign = PRODUCT_SIGN(nu->SIGN, v_sign);
                 SIGN_T r_sign = nu->SIGN;
                 PMC_HANDLE_UINT q_abs;
-                _UINT32_T r_abs =ep_uint.DivRem(nu->ABS, v_abs, &q_abs);
+                _UINT32_T r_abs = ep_uint.DivRem(nu->ABS, v_abs, &q_abs);
                 root.HookNumber(q_abs);
                 NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
                 NUMBER_OBJECT_SINT* nr = From_I_Imp(r_sign, r_abs);
                 root.HookNumber(nr);
                 *q = GET_NUMBER_HANDLE(nq);
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
-                root.UnlinkNumber(q_abs);
                 root.UnlinkNumber(nq);
                 root.UnlinkNumber(nr);
                 return (r);
@@ -498,7 +495,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 ResourceHolderSINT root;
                 SIGN_T r_sign = nu->SIGN;
-                _UINT32_T r_abs =ep_uint.DivRem(nu->ABS, v_abs, nullptr);
+                _UINT32_T r_abs = ep_uint.DivRem(nu->ABS, v_abs, nullptr);
                 NUMBER_OBJECT_SINT* nr = From_I_Imp(r_sign, r_abs);
                 root.HookNumber(nr);
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
@@ -542,7 +539,6 @@ namespace Palmtree::Math::Core::Internal
                 root.HookNumber(q_abs);
                 NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
                 *q = GET_NUMBER_HANDLE(nq);
-                root.UnlinkNumber(q_abs);
                 root.UnlinkNumber(nq);
                 return (r_abs);
             }
@@ -581,14 +577,13 @@ namespace Palmtree::Math::Core::Internal
                 SIGN_T q_sign = nu->SIGN;
                 SIGN_T r_sign = nu->SIGN;
                 PMC_HANDLE_UINT q_abs;
-                _UINT64_T r_abs =ep_uint.DivRem(nu->ABS, v, &q_abs);
+                _UINT64_T r_abs = ep_uint.DivRem(nu->ABS, v, &q_abs);
                 root.HookNumber(q_abs);
                 NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
                 NUMBER_OBJECT_SINT* nr = From_L_Imp(r_sign, r_abs);
                 root.HookNumber(nr);
                 *q = GET_NUMBER_HANDLE(nq);
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
-                root.UnlinkNumber(q_abs);
                 root.UnlinkNumber(nq);
                 root.UnlinkNumber(nr);
                 return (r);
@@ -597,7 +592,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 ResourceHolderSINT root;
                 SIGN_T r_sign = nu->SIGN;
-                _UINT64_T r_abs =ep_uint.DivRem(nu->ABS, v, nullptr);
+                _UINT64_T r_abs = ep_uint.DivRem(nu->ABS, v, nullptr);
                 NUMBER_OBJECT_SINT* nr = From_L_Imp(r_sign, r_abs);
                 root.HookNumber(nr);
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
@@ -637,14 +632,13 @@ namespace Palmtree::Math::Core::Internal
                 SIGN_T q_sign = PRODUCT_SIGN(nu->SIGN, v_sign);
                 SIGN_T r_sign = nu->SIGN;
                 PMC_HANDLE_UINT q_abs;
-                _UINT64_T r_abs =ep_uint.DivRem(nu->ABS, v_abs, &q_abs);
+                _UINT64_T r_abs = ep_uint.DivRem(nu->ABS, v_abs, &q_abs);
                 root.HookNumber(q_abs);
                 NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
                 NUMBER_OBJECT_SINT* nr = From_L_Imp(r_sign, r_abs);
                 root.HookNumber(nr);
                 *q = GET_NUMBER_HANDLE(nq);
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
-                root.UnlinkNumber(q_abs);
                 root.UnlinkNumber(nq);
                 root.UnlinkNumber(nr);
                 return (r);
@@ -653,7 +647,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 ResourceHolderSINT root;
                 SIGN_T r_sign = nu->SIGN;
-                _UINT64_T r_abs =ep_uint.DivRem(nu->ABS, v_abs, nullptr);
+                _UINT64_T r_abs = ep_uint.DivRem(nu->ABS, v_abs, nullptr);
                 NUMBER_OBJECT_SINT* nr = From_L_Imp(r_sign, r_abs);
                 root.HookNumber(nr);
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
@@ -697,7 +691,6 @@ namespace Palmtree::Math::Core::Internal
                 root.HookNumber(q_abs);
                 NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
                 *q = GET_NUMBER_HANDLE(nq);
-                root.UnlinkNumber(q_abs);
                 root.UnlinkNumber(nq);
                 return (r_abs);
             }
@@ -745,8 +738,6 @@ namespace Palmtree::Math::Core::Internal
                 NUMBER_OBJECT_SINT* nr = root.AllocateNumber(r_sign, r_abs);
                 *q = GET_NUMBER_HANDLE(nq);
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
-                root.UnlinkNumber(q_abs);
-                root.UnlinkNumber(r_abs);
                 root.UnlinkNumber(nq);
                 root.UnlinkNumber(nr);
                 return (r);
@@ -759,7 +750,6 @@ namespace Palmtree::Math::Core::Internal
                 root.HookNumber(r_abs);
                 NUMBER_OBJECT_SINT* nr = root.AllocateNumber(r_sign, r_abs);
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
-                root.UnlinkNumber(r_abs);
                 root.UnlinkNumber(nr);
                 return (r);
             }
@@ -802,8 +792,6 @@ namespace Palmtree::Math::Core::Internal
                 NUMBER_OBJECT_SINT* nr = root.AllocateNumber(r_sign, r_abs);
                 *q = GET_NUMBER_HANDLE(nq);
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
-                root.UnlinkNumber(q_abs);
-                root.UnlinkNumber(r_abs);
                 root.UnlinkNumber(nq);
                 root.UnlinkNumber(nr);
                 return (r);
@@ -816,10 +804,43 @@ namespace Palmtree::Math::Core::Internal
                 root.HookNumber(r_abs);
                 NUMBER_OBJECT_SINT* nr = root.AllocateNumber(r_sign, r_abs);
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
-                root.UnlinkNumber(r_abs);
                 root.UnlinkNumber(nr);
                 return (r);
             }
+        }
+    }
+
+    PMC_HANDLE_SINT PMC_DivideExactly_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false)
+    {
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        if (v == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        if (v->FLAGS.IS_ZERO)
+        {
+            // v == 0 の場合
+
+            // エラーを返す
+            throw DivisionByZeroException(L"0による除算が行われようとしました。");
+        }
+        if (nu->SIGN == 0)
+        {
+            // u == 0 の場合
+
+            return (GET_NUMBER_HANDLE(&number_object_sint_zero));
+        }
+        else
+        {
+            // u != 0 の場合
+
+            ResourceHolderSINT root;
+            SIGN_T q_sign = nu->SIGN;
+            PMC_HANDLE_UINT q_abs = ep_uint.DivideExactly(nu->ABS, v);
+            root.HookNumber(q_abs);
+            NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
+            PMC_HANDLE_SINT q = GET_NUMBER_HANDLE(nq);
+            root.UnlinkNumber(q_abs);
+            root.UnlinkNumber(nq);
+            return (q);
         }
     }
 

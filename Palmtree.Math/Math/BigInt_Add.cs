@@ -67,6 +67,11 @@ namespace Palmtree.Math
             return (new BigInt(EngineObject.Add(Handle, v.Handle)));
         }
 
+        public Rational Add(Rational v)
+        {
+            return (new Rational(Rational.EngineObject.Add(Handle, v.Handle)));
+        }
+
         public static BigInt operator ++(BigInt x)
         {
             return (new BigInt(EngineObject.Increment(x.Handle)));

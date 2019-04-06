@@ -32,7 +32,7 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    static void BitwiseAnd_X_X(__UNIT_TYPE* u, __UNIT_TYPE*v, __UNIT_TYPE*w, __UNIT_TYPE w_count)
+    static void BitwiseAnd_UX_UX(__UNIT_TYPE* u, __UNIT_TYPE*v, __UNIT_TYPE*w, __UNIT_TYPE w_count)
     {
         __UNIT_TYPE count = w_count >> 5;
         while (count != 0)
@@ -142,12 +142,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT32_T PMC_BitwiseAnd_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    _UINT32_T PMC_BitwiseAnd_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(u) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_I_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_UI_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (nv->IS_ZERO)
@@ -169,12 +169,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT32_T PMC_BitwiseAnd_X_I(PMC_HANDLE_UINT u, _UINT32_T v)
+    _UINT32_T PMC_BitwiseAnd_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(v) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_X_I;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_UX_I;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         if (nu->IS_ZERO)
@@ -196,12 +196,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT64_T PMC_BitwiseAnd_L_X(_UINT64_T u, PMC_HANDLE_UINT v)
+    _UINT64_T PMC_BitwiseAnd_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(u) * 8)
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_L_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_UL_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (nv->IS_ZERO)
@@ -237,12 +237,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT64_T PMC_BitwiseAnd_X_L(PMC_HANDLE_UINT u, _UINT64_T v)
+    _UINT64_T PMC_BitwiseAnd_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(v) * 8)
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_X_L;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_UX_L;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         if (nu->IS_ZERO)
@@ -278,7 +278,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_OBJECT_UINT* PMC_BitwiseAnd_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
+    static NUMBER_OBJECT_UINT* PMC_BitwiseAnd_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->IS_ZERO)
             return (&number_object_uint_zero);
@@ -292,7 +292,7 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE w_bit_count = _MINIMUM_UNIT(u_bit_count, v_bit_count);
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
             __UNIT_TYPE w_word_count = _DIVIDE_CEILING_UNIT(w_bit_count, __UNIT_TYPE_BIT_COUNT);
-            BitwiseAnd_X_X(u->BLOCK, v->BLOCK, w->BLOCK, w_word_count);
+            BitwiseAnd_UX_UX(u->BLOCK, v->BLOCK, w->BLOCK, w_word_count);
             root.CheckNumber(w);
             CommitNumber(w);
             if (w->IS_ZERO)
@@ -305,12 +305,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
     
-    PMC_HANDLE_UINT PMC_BitwiseAnd_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_UINT PMC_BitwiseAnd_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
     {
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_BitwiseAnd_X_X_Imp(nu, nv);
+        NUMBER_OBJECT_UINT* nw = PMC_BitwiseAnd_UX_UX_Imp(nu, nv);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);

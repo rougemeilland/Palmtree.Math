@@ -1,4 +1,4 @@
-/*
+﻿/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -27,14 +27,12 @@
 #include <intrin.h>
 #include <immintrin.h>
 #include "pmc_rtnl_internal.h"
-#include "pmc_uint_cppinterface.h"
-#include "pmc_sint_cppinterface.h"
 #include "pmc_inline_func.h"
 
 namespace Palmtree::Math::Core::Internal
 {
 
-#pragma region �ÓI�ϐ��̒�`
+#pragma region 静的変数の定義
     PMC_UINT_CppInterface ep_uint;
     PMC_SINT_CppInterface ep_sint;
     static bool initialized = false;
@@ -116,11 +114,6 @@ namespace Palmtree::Math::Core::Internal
             return (false);
 
         _ZERO_MEMORY_BYTE(&nh, sizeof(nh));
-        nh.IS_EVEN = TRUE;
-        if (!handle->FLAGS.IS_EVEN)
-            return (false);
-
-        _ZERO_MEMORY_BYTE(&nh, sizeof(nh));
         nh.IS_MINUS_ONE = TRUE;
         if (!handle->FLAGS.IS_MINUS_ONE)
             return (false);
@@ -128,11 +121,6 @@ namespace Palmtree::Math::Core::Internal
         _ZERO_MEMORY_BYTE(&nh, sizeof(nh));
         nh.IS_ONE = TRUE;
         if (!handle->FLAGS.IS_ONE)
-            return (false);
-
-        _ZERO_MEMORY_BYTE(&nh, sizeof(nh));
-        nh.IS_POWER_OF_TWO = TRUE;
-        if (!handle->FLAGS.IS_POWER_OF_TWO)
             return (false);
 
         _ZERO_MEMORY_BYTE(&nh, sizeof(nh));

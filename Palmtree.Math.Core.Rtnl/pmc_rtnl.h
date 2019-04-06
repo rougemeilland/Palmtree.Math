@@ -44,8 +44,6 @@ namespace Palmtree::Math::Core::Internal
             unsigned    IS_ZERO : 1;            // 数値が 0 なら TRUE
             unsigned    IS_ONE : 1;             // 数値が 1 なら TRUE
             unsigned    IS_MINUS_ONE : 1;       // 数値が -1 なら TRUE
-            unsigned    IS_EVEN : 1;            // 数値が偶数なら TRUE
-            unsigned    IS_POWER_OF_TWO : 1;    // 数値が 2 のべき乗なら TRUE
         } FLAGS;
 #ifdef _M_IX86
         _UINT32_T __dummy;

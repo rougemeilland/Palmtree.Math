@@ -62,6 +62,11 @@ namespace Palmtree.Math
             return (new BigInt(EngineObject.Multiply(Handle, v.Handle)));
         }
 
+        public Rational Multiply(Rational v)
+        {
+            return (new Rational(Rational.EngineObject.Multiply(Handle, v.Handle)));
+        }
+
         public static BigInt operator *(Int32 u, BigInt v)
         {
             return (new BigInt(EngineObject.Multiply(u, v.Handle)));

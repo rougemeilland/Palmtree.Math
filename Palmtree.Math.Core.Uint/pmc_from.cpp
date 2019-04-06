@@ -90,7 +90,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_From_I(_INT32_T x) noexcept(false)
+    PMC_HANDLE_UINT PMC_From_UI(_INT32_T x) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) < sizeof(x))
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;PMC_From_I;1");
@@ -110,7 +110,7 @@ namespace Palmtree::Math::Core::Internal
         return (o);
     }
 
-    PMC_HANDLE_UINT PMC_From_L(_INT64_T x) noexcept(false)
+    PMC_HANDLE_UINT PMC_From_UL(_INT64_T x) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) * 2 < sizeof(x))
         {

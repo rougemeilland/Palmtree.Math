@@ -56,12 +56,12 @@ namespace Palmtree::Math::Core::Internal
             _COPY_MEMORY_UNIT(&w_buf[2], &v_buf[2], v_buf_count - 2);
     }
 
-    PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(u) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_OneCompliment_And_BitwiseAnd_I_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_OneCompliment_And_BitwiseAnd_UI_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
 
@@ -104,12 +104,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(u) * 8)
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_L_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_UL_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
 
@@ -203,12 +203,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT32_T PMC_OneCompliment_And_BitwiseAnd_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false)
+    _UINT32_T PMC_OneCompliment_And_BitwiseAnd_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(v) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_OneCompliment_And_BitwiseAnd_X_I;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_OneCompliment_And_BitwiseAnd_UX_I;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
 
@@ -233,12 +233,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT64_T PMC_OneCompliment_And_BitwiseAnd_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false)
+    _UINT64_T PMC_OneCompliment_And_BitwiseAnd_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(v) * 8)
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_L_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_bitwiseand.cpp;PMC_BitwiseAnd_UL_UX;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
 
@@ -303,7 +303,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static void OneCompliment_And_BitwiseAnd_X_X(const __UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, const __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_count, __UNIT_TYPE* w_buf)
+    static void OneCompliment_And_BitwiseAnd_UX_UX(const __UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, const __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_count, __UNIT_TYPE* w_buf)
     {
         const __UNIT_TYPE* u_ptr = u_buf;
         const __UNIT_TYPE* v_ptr = v_buf;
@@ -421,7 +421,7 @@ namespace Palmtree::Math::Core::Internal
 
     }
 
-    PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
     {
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
@@ -443,7 +443,7 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE v_bit_count = nv->UNIT_BIT_COUNT;
             __UNIT_TYPE w_bit_count = v_bit_count;
             NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
-            OneCompliment_And_BitwiseAnd_X_X(nu->BLOCK, _MINIMUM_UNIT(nu->UNIT_WORD_COUNT, nv->UNIT_WORD_COUNT), nv->BLOCK, nv->UNIT_WORD_COUNT, nw->BLOCK);
+            OneCompliment_And_BitwiseAnd_UX_UX(nu->BLOCK, _MINIMUM_UNIT(nu->UNIT_WORD_COUNT, nv->UNIT_WORD_COUNT), nv->BLOCK, nv->UNIT_WORD_COUNT, nw->BLOCK);
             root.CheckNumber(nw);
             CommitNumber(nw);
             if (nw->IS_ZERO)

@@ -105,6 +105,7 @@ namespace Palmtree.Math
             foreach (var key in new[] { "COMPILER", "PLATFORM", "TABLESIZE" })
                 settings.Add(key, EngineObject.GetConfigurationSettings(key));
             ConfigurationSettings = settings;
+            PerformanceCounters = new PerformanceCounterCollection();
             Zero = new UBigInt(EngineObject.Zero);
             One = new UBigInt(EngineObject.One);
             _tostring_standard_format_pattern = new Regex("^|[cdefgnprx]|[cdefgnprx][0-9]|[cdefgnprx][0-9][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -125,6 +126,8 @@ namespace Palmtree.Math
         #region パブリックプロパティ
 
         public static IReadOnlyDictionary<string, string> ConfigurationSettings { get; }
+
+        public static IPerformanceCounterCollection PerformanceCounters { get; }
 
         public static UBigInt Zero { get; }
 

@@ -24,8 +24,9 @@
 
 
 #include <windows.h>
-#include "pmc_resourceholder_uint.h"
 #include "pmc_uint_internal.h"
+#include "pmc_resourceholder_uint.h"
+#include "pmc_lock.h"
 #include "pmc_inline_func.h"
 
 #pragma region プラットフォーム固有の定義
@@ -60,94 +61,94 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE count = words >> 5;
         while (count != 0)
         {
-            code = _ROTATE_L_UNIT(code, 3) ^ p[0];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[1];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[2];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[3];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[4];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[5];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[6];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[7];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[8];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[9];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[10];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[11];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[12];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[13];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[14];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[15];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[16];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[17];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[18];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[19];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[20];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[21];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[22];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[23];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[24];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[25];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[26];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[27];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[28];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[29];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[30];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[31];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[0];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[1];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[2];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[3];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[4];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[5];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[6];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[7];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[8];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[9];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[10];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[11];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[12];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[13];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[14];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[15];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[16];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[17];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[18];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[19];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[20];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[21];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[22];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[23];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[24];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[25];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[26];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[27];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[28];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[29];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[30];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[31];
             p += 32;
             --count;
         }
 
         if (words & 0x10)
         {
-            code = _ROTATE_L_UNIT(code, 3) ^ p[0];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[1];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[2];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[3];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[4];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[5];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[6];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[7];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[8];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[9];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[10];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[11];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[12];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[13];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[14];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[15];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[0];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[1];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[2];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[3];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[4];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[5];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[6];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[7];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[8];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[9];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[10];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[11];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[12];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[13];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[14];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[15];
             p += 16;
         }
 
         if (words & 0x8)
         {
-            code = _ROTATE_L_UNIT(code, 3) ^ p[0];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[1];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[2];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[3];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[4];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[5];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[6];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[7];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[0];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[1];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[2];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[3];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[4];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[5];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[6];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[7];
             p += 8;
         }
 
         if (words & 0x4)
         {
-            code = _ROTATE_L_UNIT(code, 3) ^ p[0];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[1];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[2];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[3];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[0];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[1];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[2];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[3];
             p += 4;
         }
 
         if (words & 0x2)
         {
-            code = _ROTATE_L_UNIT(code, 3) ^ p[0];
-            code = _ROTATE_L_UNIT(code, 3) ^ p[1];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[0];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[1];
             p += 2;
         }
 
         if (words & 0x1)
-            code = _ROTATE_L_UNIT(code, 3) ^ p[0];
+            code = _ROTATE_UL_UNIT(code, 3) ^ p[0];
 
         return (code);
     }
@@ -155,9 +156,10 @@ namespace Palmtree::Math::Core::Internal
 
 
 #pragma region __UNIT_TYPEの配列としてメモリを獲得する関数
+
     // 多倍長整数をバイト列として格納するためのメモリ領域を獲得する。
     // 引数には格納可能な多倍長整数の合計ワード数が渡される。
-    static __UNIT_TYPE* AllocateBlock(size_t bits, __UNIT_TYPE* allocated_block_words, __UNIT_TYPE* code)
+    __UNIT_TYPE* __AllocateBlock(size_t bits, __UNIT_TYPE* allocated_block_words, __UNIT_TYPE* code)
     {
         // 実際に獲得されるメモリ領域は「引数で渡されたワード数+2」のワード数となる。
         // 最初のワードには獲得時に引数で渡されたワード数が格納される。
@@ -166,9 +168,7 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE words1 = _DIVIDE_CEILING_UNIT(bits, __UNIT_TYPE_BIT_COUNT);
         __UNIT_TYPE words2 = words1 + 2;
         __UNIT_TYPE bytes = words2 * __UNIT_TYPE_BYTE_COUNT;
-        __UNIT_TYPE* buffer = (__UNIT_TYPE*)HeapAlloc(hLocalHeap, HEAP_ZERO_MEMORY, bytes);
-        if (buffer == nullptr)
-            throw NotEnoughMemoryException(L"ヒープメモリ領域が不足しています。");
+        __UNIT_TYPE* buffer = (__UNIT_TYPE*)__AllocateHeap(bytes);
         buffer[0] = words1;
         *allocated_block_words = words1;
 #ifdef _DEBUG
@@ -198,7 +198,7 @@ namespace Palmtree::Math::Core::Internal
 
 
     // AllocateBlock によって獲得されたメモリ領域が解放される。
-    static void DeallocateBlock(__UNIT_TYPE* buffer, __UNIT_TYPE buffer_words, __UNIT_TYPE check_code)
+    void __DeallocateBlock(__UNIT_TYPE* buffer, __UNIT_TYPE buffer_words, __UNIT_TYPE check_code)
     {
         if (buffer == nullptr)
             return;
@@ -215,8 +215,7 @@ namespace Palmtree::Math::Core::Internal
         HeapFree(hLocalHeap, 0, p);
     }
 
-    // メモリ内容が正当かどうかが比較される。正当であれば復帰値として0が通知され、正当ではないのなら0以外が通知される。
-    static void CheckBlock(__UNIT_TYPE* buffer, __UNIT_TYPE count, __UNIT_TYPE code)
+    void __CheckBlock(__UNIT_TYPE* buffer, __UNIT_TYPE count, __UNIT_TYPE code)
     {
         if (buffer == nullptr)
             return;
@@ -336,7 +335,7 @@ namespace Palmtree::Math::Core::Internal
         {
             __UNIT_TYPE word_count;
             __UNIT_TYPE check_code;
-            __UNIT_TYPE* block = AllocateBlock(bit_count, &word_count, &check_code);
+            __UNIT_TYPE* block = __AllocateBlock(bit_count, &word_count, &check_code);
             ClearNumberHeader(p);
             p->SIGNATURE1 = PMC_SIGNATURE;
             p->SIGNATURE2 = PMC_UINT_SIGNATURE;
@@ -368,39 +367,41 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE block_count = p->BLOCK_COUNT;
             __UNIT_TYPE block_check_code = p->BLOCK_CHECK_CODE;
             p->BLOCK = nullptr;
-            DeallocateBlock(block, block_count, block_check_code);        }
+            __DeallocateBlock(block, block_count, block_check_code);        }
     }
 
-    static void AttatchNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count)
+    void __AttatchNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count)
     {
         InitializeNumber(p, bit_count);
         p->IS_STATIC = true;
     }
 
-    static NUMBER_OBJECT_UINT* AllocateNumber(__UNIT_TYPE bit_count)
+    NUMBER_OBJECT_UINT* __AllocateNumber(__UNIT_TYPE bit_count)
     {
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* p = (NUMBER_OBJECT_UINT*)root.AllocateBytes(sizeof(NUMBER_OBJECT_UINT));
+        NUMBER_OBJECT_UINT* p = (NUMBER_OBJECT_UINT*)root.AllocateNumberObjectUint();
         InitializeNumber(p, bit_count);
         p->IS_STATIC = false;
-        root.UnlinkBytes((void*)p);
+        root.UnlinkNumberObjectUint(p);
         return (p);
     }
 
-    static void DetatchNumber(NUMBER_OBJECT_UINT* p)
+    void __DetatchNumber(NUMBER_OBJECT_UINT* p)
     {
         if (p != nullptr && p->IS_STATIC)
             CleanUpNumber(p);
     }
 
-    static void DeallocateNumber(NUMBER_OBJECT_UINT* p)
+    void __DeallocateNumber(NUMBER_OBJECT_UINT* p)
     {
-        if (p != nullptr && !p->IS_STATIC)
-        {
-            CleanUpNumber(p);
-            FillNumberHeader(p);
-            HeapFree(hLocalHeap, 0, p);
-        }
+        Lock lock_obj;
+        if (p == nullptr || p->IS_STATIC)
+            return;
+        if (p->WORKING_COUNT > 0)
+            throw InvalidOperationException(L"演算に使用中の数値オブジェクトを解放しようとしました。");
+        CleanUpNumber(p);
+        FillNumberHeader(p);
+        HeapFree(hLocalHeap, 0, p);
     }
 
     static __UNIT_TYPE GetEffectiveBitLength(__UNIT_TYPE* p, __UNIT_TYPE word_count, __UNIT_TYPE* effective_word_count)
@@ -449,7 +450,7 @@ namespace Palmtree::Math::Core::Internal
         {
             if (p->BLOCK != nullptr)
             {
-                DeallocateBlock(p->BLOCK, p->BLOCK_COUNT, p->BLOCK_CHECK_CODE);
+                __DeallocateBlock(p->BLOCK, p->BLOCK_COUNT, p->BLOCK_CHECK_CODE);
                 p->BLOCK = nullptr;
                 p->BLOCK_COUNT = 0;
                 p->BLOCK_CHECK_CODE = 0;
@@ -489,7 +490,7 @@ namespace Palmtree::Math::Core::Internal
         if (p->SIGNATURE1 != PMC_SIGNATURE || p->SIGNATURE2 != PMC_UINT_SIGNATURE)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;CheckNumber;1");
         if (p->BLOCK != nullptr)
-            CheckBlock(p->BLOCK, p->BLOCK_COUNT, p->BLOCK_CHECK_CODE);
+            __CheckBlock(p->BLOCK, p->BLOCK_COUNT, p->BLOCK_CHECK_CODE);
         if (p->IS_COMMITTED)
         {
             if (p->IS_ZERO && !p->IS_STATIC)
@@ -513,13 +514,13 @@ namespace Palmtree::Math::Core::Internal
         if (x->IS_ZERO)
             return (&number_object_uint_zero);
         __UNIT_TYPE x_bit_count = x->UNIT_BIT_COUNT;
-        NUMBER_OBJECT_UINT* o = AllocateNumber(x_bit_count);
+        NUMBER_OBJECT_UINT* o = __AllocateNumber(x_bit_count);
         _COPY_MEMORY_UNIT(o->BLOCK, x->BLOCK, o->BLOCK_COUNT);
         CommitNumber(o);
         return (o);
     }
 
-    PMC_HANDLE_UINT PMC_GetConstantValue_I(PMC_CONSTANT_VALUE_CODE type) noexcept(false)
+    PMC_HANDLE_UINT PMC_GetConstantValue_UI(PMC_CONSTANT_VALUE_CODE type) noexcept(false)
     {
         switch (type)
         {
@@ -527,24 +528,26 @@ namespace Palmtree::Math::Core::Internal
             return (GET_NUMBER_HANDLE(&number_object_uint_zero));
         case PMC_CONSTANT_ONE:
             return (GET_NUMBER_HANDLE(&number_object_uint_one));
+        case PMC_CONSTANT_TEN:
+            return (GET_NUMBER_HANDLE(&number_object_uint_ten));
         default:
             throw ArgumentException(L"引数typeが未知の値です。");
         }
     }
 
-    void PMC_CheckHandle_X(PMC_HANDLE_UINT p)
+    void PMC_CheckHandle_UX(PMC_HANDLE_UINT p)
     {
         NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
         __CheckNumber(np);
     }
 
-    void PMC_Dispose_X(PMC_HANDLE_UINT p)
+    void PMC_Dispose_UX(PMC_HANDLE_UINT p)
     {
         NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
-        DeallocateNumber(np);
+        __DeallocateNumber(np);
     }
 
-    PMC_HANDLE_UINT PMC_Clone_X(PMC_HANDLE_UINT x) noexcept(false)
+    PMC_HANDLE_UINT PMC_Clone_UX(PMC_HANDLE_UINT x) noexcept(false)
     {
         NUMBER_OBJECT_UINT* nx = GET_NUMBER_OBJECT(x, L"x");
         ResourceHolderUINT root;
@@ -559,396 +562,20 @@ namespace Palmtree::Math::Core::Internal
         return (o);
     }
 
-#pragma endregion
-
-#pragma region チェーンされたメモリ管理
-    Lock::Lock()
+    void PMC_UseObject_UX(PMC_HANDLE_UINT x) noexcept(false)
     {
-        EnterCriticalSection(&mcs);
+        if (x == nullptr)
+            return;
+        NUMBER_OBJECT_UINT* nx = GET_NUMBER_OBJECT(x, L"x");
+        ++nx->WORKING_COUNT;
     }
 
-    Lock::~Lock()
+    void PMC_UnuseObject_UX(PMC_HANDLE_UINT x) noexcept(false)
     {
-        LeaveCriticalSection(&mcs);
-    }
-
-    ResourceHolderUINT::__GenericChainBufferTag::__GenericChainBufferTag(void * buffer)
-    {
-        _buffer = buffer;
-    }
-
-    ResourceHolderUINT::__GenericChainBufferTag::~__GenericChainBufferTag()
-    {
-    }
-
-    BOOL ResourceHolderUINT::__GenericChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void ResourceHolderUINT::__GenericChainBufferTag::Destruct()
-    {
-        HeapFree(hLocalHeap, 0, _buffer);
-    }
-
-    ResourceHolderUINT::____UNIT_TYPE_Array_ChainBufferTag::____UNIT_TYPE_Array_ChainBufferTag(__UNIT_TYPE * buffer, __UNIT_TYPE word_count, __UNIT_TYPE check_code)
-    {
-        _buffer = buffer;
-        _word_count = word_count;
-        _check_code = check_code;
-    }
-
-    ResourceHolderUINT::____UNIT_TYPE_Array_ChainBufferTag::~____UNIT_TYPE_Array_ChainBufferTag()
-    {
-    }
-
-    BOOL  ResourceHolderUINT::____UNIT_TYPE_Array_ChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void  ResourceHolderUINT::____UNIT_TYPE_Array_ChainBufferTag::Clear()
-    {
-        _ZERO_MEMORY_UNIT(_buffer, _word_count);
-    }
-
-    void  ResourceHolderUINT::____UNIT_TYPE_Array_ChainBufferTag::Check()
-    {
-        Palmtree::Math::Core::Internal::CheckBlock(_buffer, _word_count, _check_code);
-    }
-
-    void  ResourceHolderUINT::____UNIT_TYPE_Array_ChainBufferTag::Destruct()
-    {
-        Palmtree::Math::Core::Internal::DeallocateBlock(_buffer, _word_count, _check_code);
-    }
-
-    ResourceHolderUINT::__StringChainBufferTag::__StringChainBufferTag(__UNIT_TYPE * buffer, __UNIT_TYPE word_count, __UNIT_TYPE check_code)
-    {
-        _buffer = buffer;
-        _word_count = word_count;
-        _check_code = check_code;
-    }
-
-    ResourceHolderUINT::__StringChainBufferTag::~__StringChainBufferTag()
-    {
-    }
-
-    BOOL ResourceHolderUINT::__StringChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void ResourceHolderUINT::__StringChainBufferTag::Clear()
-    {
-        _ZERO_MEMORY_UNIT(_buffer, _word_count);
-    }
-
-    void ResourceHolderUINT::__StringChainBufferTag::Check()
-    {
-        Palmtree::Math::Core::Internal::CheckBlock(_buffer, _word_count, _check_code);
-    }
-
-    void ResourceHolderUINT::__StringChainBufferTag::Destruct()
-    {
-        Palmtree::Math::Core::Internal::DeallocateBlock(_buffer, _word_count, _check_code);
-    }
-
-    ResourceHolderUINT::__DynamicNumberChainBufferTag::__DynamicNumberChainBufferTag(NUMBER_OBJECT_UINT * buffer)
-    {
-        _buffer = buffer;
-    }
-
-    ResourceHolderUINT::__DynamicNumberChainBufferTag::~__DynamicNumberChainBufferTag()
-    {
-    }
-
-    BOOL  ResourceHolderUINT::__DynamicNumberChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void  ResourceHolderUINT::__DynamicNumberChainBufferTag::Check()
-    {
-        Palmtree::Math::Core::Internal::__CheckNumber(_buffer);
-    }
-
-    void  ResourceHolderUINT::__DynamicNumberChainBufferTag::Destruct()
-    {
-        Palmtree::Math::Core::Internal::DeallocateNumber(_buffer);
-    }
-
-    ResourceHolderUINT::__NumberHandleHookingChainBufferTag::__NumberHandleHookingChainBufferTag(NUMBER_OBJECT_UINT * buffer)
-    {
-        _buffer = buffer;
-    }
-
-    ResourceHolderUINT::__NumberHandleHookingChainBufferTag::~__NumberHandleHookingChainBufferTag()
-    {
-    }
-
-    BOOL  ResourceHolderUINT::__NumberHandleHookingChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void  ResourceHolderUINT::__NumberHandleHookingChainBufferTag::Check()
-    {
-    }
-
-    void  ResourceHolderUINT::__NumberHandleHookingChainBufferTag::Destruct()
-    {
-       Palmtree::Math::Core::Internal::DeallocateNumber(_buffer);
-    }
-
-    ResourceHolderUINT::__StaticNumberChainBufferTag::__StaticNumberChainBufferTag(NUMBER_OBJECT_UINT * buffer)
-    {
-        _buffer = buffer;
-    }
-
-    ResourceHolderUINT::__StaticNumberChainBufferTag::~__StaticNumberChainBufferTag()
-    {
-    }
-
-    BOOL  ResourceHolderUINT::__StaticNumberChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void  ResourceHolderUINT::__StaticNumberChainBufferTag::Check()
-    {
-    }
-
-    void  ResourceHolderUINT::__StaticNumberChainBufferTag::Destruct()
-    {
-        DetatchNumber(_buffer);
-    }
-
-    ResourceHolderUINT::ResourceHolderUINT()
-    {
-    }
-
-    ResourceHolderUINT::~ResourceHolderUINT()
-    {
-    }
-
-    void* ResourceHolderUINT::AllocateBytes(size_t size)
-    {
-        Lock lock_obj;
-        void* buffer = HeapAlloc(hLocalHeap, HEAP_ZERO_MEMORY, size);
-        if (buffer == nullptr)
-            throw NotEnoughMemoryException(L"ヒープメモリ領域が不足しています。");
-        __ChainBufferTag* tag = new __GenericChainBufferTag(buffer);
-        LinkTag(tag);
-        return (buffer);
-    }
-
-    void ResourceHolderUINT::DeallocateBytes(void * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag != nullptr)
-        {
-            tag->Unlink();
-            tag->Destruct();
-            delete tag;
-        }
-    }
-
-    void ResourceHolderUINT::UnlinkBytes(void *buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::UnlinkBytes;1");
-        tag->Unlink();
-    }
-
-    __UNIT_TYPE * ResourceHolderUINT::AllocateBlock(__UNIT_TYPE bit_count)
-    {
-        Lock lock_obj;
-        __UNIT_TYPE word_count;
-        __UNIT_TYPE check_code;
-        __UNIT_TYPE* buffer = Palmtree::Math::Core::Internal::AllocateBlock(bit_count, &word_count, &check_code);
-        __ChainBufferTag* tag = new ____UNIT_TYPE_Array_ChainBufferTag(buffer, word_count, check_code);
-        LinkTag(tag);
-        return (buffer);
-    }
-
-    void ResourceHolderUINT::ClearBlock(__UNIT_TYPE * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::ClearBlock;1");
-        tag->Clear();
-    }
-
-    void ResourceHolderUINT::DeallocateBlock(__UNIT_TYPE * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag != nullptr)
-        {
-            tag->Unlink();
-            tag->Destruct();
-            delete tag;
-        }
-    }
-
-    void ResourceHolderUINT::CheckBlock(__UNIT_TYPE * buffer)
-    {
-#ifdef _DEBUG
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::CheckBlock;1");
-        tag->Check();
-#endif
-    }
-
-    void ResourceHolderUINT::UnlinkBlock(__UNIT_TYPE * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::UnlinkBlock;1");
-        tag->Unlink();
-    }
-
-    wchar_t * ResourceHolderUINT::AllocateString(__UNIT_TYPE count)
-    {
-        Lock lock_obj;
-        __UNIT_TYPE word_count;
-        __UNIT_TYPE check_code;
-        __UNIT_TYPE* buffer = Palmtree::Math::Core::Internal::AllocateBlock(count * __UNIT_TYPE_BIT_COUNT, &word_count, &check_code);
-        __ChainBufferTag* tag = new ____UNIT_TYPE_Array_ChainBufferTag(buffer, word_count, check_code);
-        LinkTag(tag);
-        return ((wchar_t*)buffer);
-    }
-
-    void ResourceHolderUINT::ClearString(wchar_t * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::ClearString;1");
-        tag->Clear();
-    }
-
-    void ResourceHolderUINT::DeallocateString(wchar_t * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag != nullptr)
-        {
-            tag->Unlink();
-            tag->Destruct();
-            delete tag;
-        }
-    }
-
-    void ResourceHolderUINT::CheckString(wchar_t * buffer)
-    {
-#ifdef _DEBUG
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::CheckString;1");
-        tag->Check();
-#endif
-    }
-
-    void ResourceHolderUINT::UnlinkString(wchar_t * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::UnlinkBlock;1");
-        tag->Unlink();
-    }
-
-    NUMBER_OBJECT_UINT * ResourceHolderUINT::AllocateNumber(__UNIT_TYPE bit_count)
-    {
-        Lock lock_obj;
-        NUMBER_OBJECT_UINT* buffer = Palmtree::Math::Core::Internal::AllocateNumber(bit_count);
-        __ChainBufferTag* tag = new __DynamicNumberChainBufferTag(buffer);
-        LinkTag(tag);
-        return (buffer);
-    }
-
-    void ResourceHolderUINT::HookNumber(NUMBER_OBJECT_UINT * buffer)
-    {
-        Lock lock_obj;
-#ifdef _DEBUG
-        if (!buffer->IS_STATIC)
-            CheckBuffer(buffer);
-#endif
-        __ChainBufferTag* tag = new __NumberHandleHookingChainBufferTag(buffer);
-        LinkTag(tag);
-    }
-
-    void ResourceHolderUINT::DeallocateNumber(NUMBER_OBJECT_UINT * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag != nullptr)
-        {
-            tag->Unlink();
-            tag->Destruct();
-            delete tag;
-        }
-    }
-
-    void ResourceHolderUINT::CheckNumber(NUMBER_OBJECT_UINT * buffer)
-    {
-#ifdef _DEBUG
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::CheckNumber;1");
-        tag->Check();
-#endif
-    }
-
-    void ResourceHolderUINT::UnlinkNumber(NUMBER_OBJECT_UINT * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::UnlinkNumber;1");
-        tag->Unlink();
-    }
-
-    void ResourceHolderUINT::AttatchStaticNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count)
-    {
-        Lock lock_obj;
-#ifdef _DEBUG
-        CheckBuffer(p);
-#endif
-        Palmtree::Math::Core::Internal::AttatchNumber(p, bit_count);
-        __ChainBufferTag* tag = new __StaticNumberChainBufferTag(p);
-        LinkTag(tag);
-    }
-
-    void ResourceHolderUINT::DetatchStaticNumber(NUMBER_OBJECT_UINT * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag != nullptr)
-        {
-            tag->Unlink();
-            tag->Destruct();
-            delete tag;
-        }
-    }
-
-    void ResourceHolderUINT::UnlinkStatickNumber(NUMBER_OBJECT_UINT * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::UnlinkStatickNumber;1");
-        tag->Unlink();
+        if (x == nullptr)
+            return;
+        NUMBER_OBJECT_UINT* nx = GET_NUMBER_OBJECT(x, L"x");
+        --nx->WORKING_COUNT;
     }
 #pragma endregion
 
@@ -1061,7 +688,30 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    BOOL AllocateUINTHeapArea() noexcept(true)
+    void __GlobalLock(void) noexcept (true)
+    {
+        EnterCriticalSection(&mcs);
+    }
+
+    void __GlobalUnlock(void) noexcept (true)
+    {
+        LeaveCriticalSection(&mcs);
+    }
+
+    void* __AllocateHeap(size_t size) noexcept(false)
+    {
+        void* buffer = HeapAlloc(hLocalHeap, HEAP_ZERO_MEMORY, size);
+        if (buffer == nullptr)
+            throw NotEnoughMemoryException(L"ヒープメモリ領域が不足しています。");
+        return (buffer);
+    }
+
+    void __DeallocateHeap(void* buffer) noexcept(true)
+    {
+        HeapFree(hLocalHeap, 0, buffer);
+    }
+
+    bool __AllocateUINTHeapArea() noexcept(true)
     {
         hLocalHeap = HeapCreate(0, 0x1000, 0);
         if (hLocalHeap == nullptr)
@@ -1069,7 +719,7 @@ namespace Palmtree::Math::Core::Internal
         return (TRUE);
     }
 
-    void DeallocateUINTHeapArea() noexcept(true)
+    void __DeallocateUINTHeapArea() noexcept(true)
     {
         if (hLocalHeap != nullptr)
         {
@@ -1077,6 +727,7 @@ namespace Palmtree::Math::Core::Internal
             hLocalHeap = nullptr;
         }
     }
+
 }
 
 /*

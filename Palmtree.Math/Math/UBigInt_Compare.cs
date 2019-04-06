@@ -62,18 +62,30 @@ namespace Palmtree.Math
             return (BigInt.EngineObject.Compare(Handle, v.Handle));
         }
 
+        public int CompareTo(Rational v)
+        {
+            return (Rational.EngineObject.Compare(Handle, v.Handle));
+        }
+
         int IComparable.CompareTo(object o)
         {
             if (o == null)
                 return (1);
+            if (o is Int32)
+                return (BigInt.EngineObject.Compare(Handle, (Int32)o));
+            if (o is Int64)
+                return (BigInt.EngineObject.Compare(Handle, (Int64)o));
+            if (o is BigInt)
+                return (BigInt.EngineObject.Compare(Handle, ((BigInt)o).Handle));
             if (o is UInt32)
                 return (EngineObject.Compare(Handle, (UInt32)o));
-            else if (o is UInt64)
+            if (o is UInt64)
                 return (EngineObject.Compare(Handle, (UInt64)o));
-            else if (o is UBigInt)
+            if (o is UBigInt)
                 return (EngineObject.Compare(Handle, ((UBigInt)o).Handle));
-            else
-                throw new ArgumentException("UBigInt型と比較できないオブジェクトが引数に渡されました。");
+            if (o is Rational)
+                return (Rational.EngineObject.Compare(Handle, ((Rational)o).Handle));
+            throw new ArgumentException("UBigInt 型と比較できないオブジェクトが与えられました。");
         }
 
         public static int Compare(UInt32 u, UBigInt v)

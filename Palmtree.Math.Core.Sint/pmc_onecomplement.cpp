@@ -50,7 +50,6 @@ namespace Palmtree::Math::Core::Internal
             root.HookNumber(r_abs);
             NUMBER_OBJECT_SINT* nr = root.AllocateNumber(SIGN_NEGATIVE, r_abs);
             PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
-            root.UnlinkNumber(r_abs);
             root.UnlinkNumber(nr);
             return (r);
         }
@@ -77,7 +76,6 @@ namespace Palmtree::Math::Core::Internal
             root.HookNumber(r_abs);
             NUMBER_OBJECT_SINT* nr = root.AllocateNumber(SIGN_NEGATIVE, r_abs);
             PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
-            root.UnlinkNumber(r_abs);
             root.UnlinkNumber(nr);
             return (r);
         }
@@ -91,7 +89,6 @@ namespace Palmtree::Math::Core::Internal
             root.HookNumber(r_abs);
             NUMBER_OBJECT_SINT* nr = root.AllocateNumber(SIGN_POSITIVE, r_abs);
             PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
-            root.UnlinkNumber(r_abs);
             root.UnlinkNumber(nr);
             return (r);
         }

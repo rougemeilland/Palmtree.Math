@@ -82,6 +82,11 @@ namespace Palmtree.Math
             return (new BigInt(BigInt.EngineObject.Subtruct(Handle, v.Handle)));
         }
 
+        public Rational Subtruct(Rational v)
+        {
+            return (new Rational(Rational.EngineObject.Subtruct(Handle, v.Handle)));
+        }
+
         public static UBigInt operator --(UBigInt x)
         {
             return (new UBigInt(EngineObject.Decrement(x.Handle)));

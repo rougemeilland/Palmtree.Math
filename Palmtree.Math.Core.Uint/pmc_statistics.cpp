@@ -30,15 +30,29 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    PMC_STATISTICS_INFO statistics_info;
+    PMC_STATISTICS_INFO_UINT statistics_info;
 
-    // 与えられた領域に現在まで採取されている統計情報を複写する。
-    void PMC_GetStatisticsInfo(PMC_STATISTICS_INFO* buffer)
+    _UINT64_T PMC_GetPerformanceCounter(const wchar_t* key)
     {
-        buffer->COUNT_DIV32 = statistics_info.COUNT_DIV32;
-        buffer->COUNT_DIV64 = statistics_info.COUNT_DIV64;
-        buffer->COUNT_MULTI32 = statistics_info.COUNT_MULTI32;
-        buffer->COUNT_MULTI64 = statistics_info.COUNT_MULTI64;
+        if (lstrcmpW(key, L"div32count") == 0)
+            return (statistics_info.COUNT_DIV32);
+        if (lstrcmpW(key, L"div64count") == 0)
+            return (statistics_info.COUNT_DIV64);
+        if (lstrcmpW(key, L"multi32count") == 0)
+            return (statistics_info.COUNT_MULTI32);
+        if (lstrcmpW(key, L"multi32count") == 0)
+            return (statistics_info.COUNT_MULTI64);
+        if (lstrcmpW(key, L"allocateblock") == 0)
+            return (statistics_info.COUNT_ALLOCATE_BLOCK);
+        if (lstrcmpW(key, L"allocatenumberobject") == 0)
+            return (statistics_info.COUNT_ALLOCATE_NUMBER_OBJECT);
+        if (lstrcmpW(key, L"allocatenumber") == 0)
+            return (statistics_info.COUNT_ALLOCATE_NUMBER);
+        if (lstrcmpW(key, L"hooknumberux") == 0)
+            return (statistics_info.COUNT_HOOK_NUMBER);
+        if (lstrcmpW(key, L"useobjectux") == 0)
+            return (statistics_info.COUNT_USE_OBJECT_UX);
+        throw KeyNotFoundException(L"未知のキーが渡されました。");
     }
 
 }

@@ -34,7 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -108,6 +108,263 @@
     <Compile Include="Int32DataItem.cs" />
     <Compile Include="NullDataItem.cs" />
     <Compile Include="NumberFormatInfoDataItem.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_FloorLog10_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Round_R_I_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Round_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Ceiling_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Floor_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Abs_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Add_I_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Add_L_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Add_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Add_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Add_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Add_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Add_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Add_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Add_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Add_UI_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Add_UL_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Add_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Add_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Compare_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Compare_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Compare_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Compare_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Compare_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Compare_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Compare_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Compare_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Compare_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Divide_I_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Divide_L_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Divide_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Divide_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Divide_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Divide_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Divide_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Divide_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Divide_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Divide_UI_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Divide_UL_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Divide_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Divide_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Equality_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Equality_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Equality_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Equality_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Equality_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Equality_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Equality_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Equality_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Equality_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_From_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_From_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_From_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_From_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_From_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_From_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Invert_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Invert_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Invert_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Invert_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Invert_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Invert_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Invert_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Multiply_I_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Multiply_L_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Multiply_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Multiply_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Multiply_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Multiply_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Multiply_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Multiply_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Multiply_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Multiply_UI_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Multiply_UL_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Multiply_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Multiply_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Add_I_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Add_L_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Add_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Add_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Add_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Add_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Add_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Add_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Add_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Add_UI_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Add_UL_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Add_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Add_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Divide_I_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Divide_L_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Divide_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Divide_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Divide_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Divide_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Divide_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Divide_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Divide_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Divide_UI_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Divide_UL_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Divide_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Divide_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Equality_I_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Equality_L_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Equality_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Equality_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Equality_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Equality_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Equality_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Equality_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Equality_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Equality_UI_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Equality_UL_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Equality_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Equality_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThanOrEqual_I_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThanOrEqual_L_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThanOrEqual_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThanOrEqual_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThanOrEqual_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThanOrEqual_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThanOrEqual_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThanOrEqual_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThanOrEqual_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThanOrEqual_UI_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThanOrEqual_UL_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThanOrEqual_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThanOrEqual_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThan_I_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThan_L_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThan_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThan_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThan_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThan_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThan_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThan_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThan_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThan_UI_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThan_UL_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThan_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_GreaterThan_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Inequality_I_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Inequality_L_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Inequality_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Inequality_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Inequality_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Inequality_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Inequality_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Inequality_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Inequality_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Inequality_UI_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Inequality_UL_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Inequality_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Inequality_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThanOrEqual_I_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThanOrEqual_L_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThanOrEqual_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThanOrEqual_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThanOrEqual_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThanOrEqual_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThanOrEqual_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThanOrEqual_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThanOrEqual_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThanOrEqual_UI_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThanOrEqual_UL_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThanOrEqual_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThanOrEqual_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThan_I_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThan_L_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThan_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThan_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThan_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThan_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThan_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThan_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThan_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThan_UI_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThan_UL_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThan_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_LesserThan_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Multiply_I_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Multiply_L_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Multiply_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Multiply_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Multiply_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Multiply_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Multiply_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Multiply_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Multiply_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Multiply_UI_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Multiply_UL_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Multiply_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Multiply_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Subtruct_I_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Subtruct_L_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Subtruct_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Subtruct_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Subtruct_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Subtruct_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Subtruct_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Subtruct_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Subtruct_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Subtruct_UI_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Subtruct_UL_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Subtruct_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_op_Subtruct_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Parse1.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Parse2.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Parse3.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Pow_I_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Pow_L_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Pow_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Pow_UI_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Pow_UL_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Pow_UX_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Pow_X_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_static_Compare_I_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_static_Compare_L_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_static_Compare_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_static_Compare_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_static_Compare_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_static_Compare_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_static_Compare_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_static_Compare_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_static_Compare_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_static_Compare_UI_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_static_Compare_UL_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_static_Compare_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_static_Compare_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_I_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_L_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_R_L.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_R_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_R_UI.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_R_UL.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_R_UX.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_R_X.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_UI_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_UL_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_UX_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToBigInt_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToInt32_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToInt64_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToStringC.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToStringE.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToStringF.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToStringG.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToStringN.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToStringP.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToUBigInt_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToUInt32_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToUInt64_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_TryParse1.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_TryParse2.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_TryParse3.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_Add_I_UX.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_Add_L_UX.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_Add_UX_I.cs" />
@@ -178,6 +435,9 @@
     <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ToInt64_X.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ToUBigInt_X.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ToUInt32_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Pow_I_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Pow_L_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Pow_X_UI.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_ToUInt32_X.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_ToUBigInt_X.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ToUInt64_X.cs" />
@@ -622,6 +882,8 @@
     <Compile Include="Plugin\Uint\ComponentTestPlugin_op_ToBigInt_X.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_op_ToUInt32_X.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_op_ToUInt64_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Pow_I_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Pow_L_I.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_ToBigInt_UX.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_ToUInt32_UX.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_ToUInt64_UX.cs" />
@@ -652,7 +914,7 @@
     <Compile Include="Plugin\Uint\ComponentTestPlugin_ExclusiveOr_X_I.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_ExclusiveOr_X_L.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_ExclusiveOr_X_X.cs" />
-    <Compile Include="Plugin\Uint\ComponentTestPlugin_FloorLog10.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_FloorLog10_UX.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_GreatestCommonDivisor_I_X.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_GreatestCommonDivisor_L_X.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_GreatestCommonDivisor_X_I.cs" />
@@ -777,6 +1039,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BigIntDataItem.cs" />
+    <Compile Include="RationalDataItem.cs" />
     <Compile Include="UBigIntDataItem.cs" />
     <Compile Include="UInt32DataItem.cs" />
     <Compile Include="UInt64DataItem.cs" />
@@ -793,6 +1056,567 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\Rtnl\test_data_abs_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_add_i_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_add_l_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_add_r_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_add_r_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_add_r_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_add_r_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_add_r_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_add_r_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_add_r_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_add_ui_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_add_ul_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_add_ux_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_add_x_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_ceiling_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_compare_i_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_compare_l_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_compare_r_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_compare_r_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_compare_r_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_compare_r_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_compare_r_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_compare_r_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_compare_r_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_compare_ui_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_compare_ul_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_compare_ux_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_compare_x_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_divide_i_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_divide_l_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_divide_r_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_divide_r_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_divide_r_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_divide_r_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_divide_r_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_divide_r_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_divide_r_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_divide_ui_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_divide_ul_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_divide_ux_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_divide_x_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_equality_i_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_equality_l_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_equality_r_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_equality_r_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_equality_r_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_equality_r_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_equality_r_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_equality_r_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_equality_r_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_equality_ui_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_equality_ul_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_equality_ux_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_equality_x_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_floorlog10_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_floor_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_from_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_from_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_from_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_from_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_from_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_from_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthanorequal_i_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthanorequal_l_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthanorequal_r_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthanorequal_r_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthanorequal_r_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthanorequal_r_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthanorequal_r_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthanorequal_r_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthanorequal_r_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthanorequal_ui_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthanorequal_ul_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthanorequal_ux_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthanorequal_x_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthan_i_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthan_l_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthan_r_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthan_r_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthan_r_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthan_r_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthan_r_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthan_r_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthan_r_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthan_ui_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthan_ul_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthan_ux_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_greaterthan_x_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_inequality_i_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_inequality_l_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_inequality_r_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_inequality_r_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_inequality_r_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_inequality_r_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_inequality_r_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_inequality_r_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_inequality_r_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_inequality_ui_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_inequality_ul_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_inequality_ux_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_inequality_x_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_invert_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_invert_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_invert_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_invert_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_invert_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_invert_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_invert_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthanorequal_i_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthanorequal_l_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthanorequal_r_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthanorequal_r_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthanorequal_r_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthanorequal_r_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthanorequal_r_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthanorequal_r_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthanorequal_r_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthanorequal_ui_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthanorequal_ul_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthanorequal_ux_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthanorequal_x_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthan_i_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthan_l_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthan_r_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthan_r_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthan_r_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthan_r_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthan_r_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthan_r_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthan_r_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthan_ui_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthan_ul_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthan_ux_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_lesserthan_x_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_multiply_i_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_multiply_l_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_multiply_r_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_multiply_r_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_multiply_r_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_multiply_r_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_multiply_r_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_multiply_r_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_multiply_r_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_multiply_ui_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_multiply_ul_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_multiply_ux_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_multiply_x_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_parse1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_parse2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_parse3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_pow_i_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_pow_l_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_pow_r_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_pow_ui_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_pow_ul_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_pow_ux_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_pow_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_round_r_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_round_r_i_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_subtruct_i_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_subtruct_l_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_subtruct_r_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_subtruct_r_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_subtruct_r_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_subtruct_r_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_subtruct_r_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_subtruct_r_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_subtruct_r_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_subtruct_ui_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_subtruct_ul_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_subtruct_ux_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_subtruct_x_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_tobigint_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_toint32_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_toint64_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_tostringc.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_tostringe.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_tostringf.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_tostringg.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_tostringn.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_tostringp.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_toubigint_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_touint32_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_touint64_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_tryparse1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_tryparse2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_tryparse3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Sint\test_data_abs_x.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1519,6 +2343,15 @@
     <Content Include="Data\Sint\test_data_parsex.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\Sint\test_data_pow_i_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_pow_l_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_pow_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Sint\test_data_remainder_i_ux.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1804,7 +2637,7 @@
     <Content Include="Data\Uint\test_data_exclusiveor_x_x.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Uint\test_data_floorlog10.xml">
+    <Content Include="Data\Uint\test_data_floorlog10_ux.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Uint\test_data_from_i.xml">
@@ -1946,6 +2779,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Uint\test_data_parsex.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_pow_i_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_pow_l_i.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Uint\test_data_pow_x_i.xml">

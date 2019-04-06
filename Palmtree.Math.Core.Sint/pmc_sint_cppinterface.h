@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2018 Palmtree Software.
+ * Copyright 2019 Palmtree Software.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -47,9 +47,10 @@ namespace Palmtree::Math::Core::Internal
 
         bool Initialize();
 
-        PMC_STATUS_CODE GetConfigurationSettings(const wchar_t* key, wchar_t* value_buffer, _INT32_T value_buffer_size, _INT32_T* count);
+        void UseObject(PMC_HANDLE_SINT x) noexcept(false);
+        void UnuseObject(PMC_HANDLE_SINT x) noexcept(false);
 
-        void  GetStatisticsInfo(PMC_STATISTICS_INFO* statistics_info) noexcept(false);// ó^Ç¶ÇÁÇÍÇΩóÃàÊÇ…åªç›Ç‹Ç≈çÃéÊÇ≥ ÇÍÇƒÇ¢ÇÈìùåvèÓïÒÇï°é Ç∑ÇÈÅB
+        PMC_STATUS_CODE GetConfigurationSettings(const wchar_t* key, wchar_t* value_buffer, _INT32_T value_buffer_size, _INT32_T* count);
 
         PMC_HANDLE_SINT From(_INT32_T x) noexcept(false);
         PMC_HANDLE_SINT From(_INT64_T x) noexcept(false);
@@ -76,7 +77,7 @@ namespace Palmtree::Math::Core::Internal
 
         _INT32_T ToInt32(PMC_HANDLE_SINT p) noexcept(false);
         _INT64_T ToInt64(PMC_HANDLE_SINT p) noexcept(false);
-        _UINT32_T ToUint32(PMC_HANDLE_SINT p) noexcept(false);
+        _UINT32_T ToUInt32(PMC_HANDLE_SINT p) noexcept(false);
         _UINT64_T ToUInt64(PMC_HANDLE_SINT p) noexcept(false);
         PMC_HANDLE_UINT ToUBigInt(PMC_HANDLE_SINT p) noexcept(false);
 
@@ -86,9 +87,11 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_UINT Abs(PMC_HANDLE_SINT x) noexcept(false);
 
         size_t ToString(PMC_HANDLE_SINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
+        size_t ToString(PMC_HANDLE_SINT x_numerator, PMC_HANDLE_UINT x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
         void  InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info) noexcept(false);
 
         PMC_STATUS_CODE TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o) noexcept(false);
+        PMC_STATUS_CODE TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o_numerator, PMC_HANDLE_UINT* o_denominator) noexcept(false);
 
         PMC_HANDLE_SINT Add(_INT32_T u, PMC_HANDLE_UINT v) noexcept(false);
         PMC_HANDLE_SINT Add(_INT32_T u, PMC_HANDLE_SINT v) noexcept(false);
@@ -265,6 +268,50 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_UINT GreatestCommonDivisor(PMC_HANDLE_SINT u, _UINT64_T v) noexcept(false);
         PMC_HANDLE_UINT GreatestCommonDivisor(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
         PMC_HANDLE_UINT GreatestCommonDivisor(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
+
+        PMC_HANDLE_UINT FromByteArrayForRTNL(const unsigned char* buffer, size_t count, PMC_HANDLE_SINT* o_numerator) noexcept(false);
+        size_t ToByteArrayForRTNL(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator, unsigned char* buffer, size_t buffer_size) noexcept(false);
+
+        PMC_HANDLE_SINT DivideExactly(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v);
+
+        PMC_HANDLE_SINT DivideRational(_UINT32_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT* w_denominator) noexcept(false);
+        PMC_HANDLE_SINT DivideRational(_UINT64_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT* w_denominator) noexcept(false);
+        PMC_HANDLE_SINT DivideRational(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT* w_denominator) noexcept(false);
+        PMC_HANDLE_SINT DivideRational(_INT32_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT* w_denominator) noexcept(false);
+        PMC_HANDLE_SINT DivideRational(_INT64_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT* w_denominator) noexcept(false);
+        PMC_HANDLE_SINT DivideRational(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT* w_denominator) noexcept(false);
+        PMC_HANDLE_SINT DivideRational(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _UINT32_T v, PMC_HANDLE_UINT* w_denominator) noexcept(false);
+        PMC_HANDLE_SINT DivideRational(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _UINT64_T v, PMC_HANDLE_UINT* w_denominator) noexcept(false);
+        PMC_HANDLE_SINT DivideRational(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* w_denominator) noexcept(false);
+        PMC_HANDLE_SINT DivideRational(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _INT32_T v, PMC_HANDLE_UINT* w_denominator) noexcept(false);
+        PMC_HANDLE_SINT DivideRational(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _INT64_T v, PMC_HANDLE_UINT* w_denominator) noexcept(false);
+        PMC_HANDLE_SINT DivideRational(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_SINT v, PMC_HANDLE_UINT* w_denominator) noexcept(false);
+        PMC_HANDLE_SINT DivideRational(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT* w_denominator) noexcept(false);
+
+        PMC_HANDLE_SINT Round(PMC_HANDLE_SINT x_numerator, PMC_HANDLE_UINT x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode);
+        PMC_HANDLE_SINT Round(PMC_HANDLE_SINT x_numerator, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
+
+        PMC_HANDLE_SINT Pow(_INT32_T v, _UINT32_T e) noexcept(false);
+        PMC_HANDLE_SINT Pow(_INT64_T v, _UINT32_T e) noexcept(false);
+        PMC_HANDLE_SINT Pow(PMC_HANDLE_SINT v, _UINT32_T e) noexcept(false);
+        PMC_HANDLE_SINT Pow(_INT32_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+        PMC_HANDLE_SINT Pow(_INT64_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+        PMC_HANDLE_SINT Pow(PMC_HANDLE_SINT v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+        PMC_HANDLE_SINT Pow(_UINT32_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+        PMC_HANDLE_SINT Pow(_UINT64_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+        PMC_HANDLE_SINT Pow(PMC_HANDLE_UINT v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+        PMC_HANDLE_SINT Pow(PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+
+        _INT32_T FloorLog10(PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator);
+
+        PMC_HANDLE_SINT Invert(_INT32_T v, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+        PMC_HANDLE_SINT Invert(_INT64_T v, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+        PMC_HANDLE_SINT Invert(PMC_HANDLE_SINT v, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+        PMC_HANDLE_SINT Invert(_UINT32_T v, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+        PMC_HANDLE_SINT Invert(_UINT64_T v, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+        PMC_HANDLE_SINT Invert(PMC_HANDLE_UINT v, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+        PMC_HANDLE_SINT Invert(PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+
     };
 
 }

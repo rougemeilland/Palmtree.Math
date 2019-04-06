@@ -267,6 +267,16 @@ namespace Palmtree.Math
             return (new UBigInt(BigInt.EngineObject.GreatestCommonDivisor(u, v.Handle)));
         }
 
+        public static BigInt Pow(this Int32 v, UInt32 e)
+        {
+            return (new BigInt(BigInt.EngineObject.Pow(v, e)));
+        }
+
+        public static BigInt Pow(this Int64 v, UInt32 e)
+        {
+            return (new BigInt(BigInt.EngineObject.Pow(v, e)));
+        }
+
         #endregion
     }
 }

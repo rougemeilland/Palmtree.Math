@@ -1,4 +1,4 @@
-/*
+﻿/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -31,185 +31,224 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    __inline static PMC_HANDLE_SINT SubtructNumerator(SIGN_T sign, PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _UINT32_T v)
+    static NUMBER_OBJECT_RTNL* PMC_Subtruct_UI_R_Imp(_UINT32_T u, NUMBER_OBJECT_RTNL* v)
     {
+        // 分子と分母が既約であればこの加算によって共通因数は発生しないため約分は省略する。
         ResourceHolderRTNL root;
-        PMC_HANDLE_UINT t = ep_uint.Multiply(u_denominator, v);
-        root.UnlinkNumber(t);
-        PMC_HANDLE_SINT numerator = sign >= 0 ? ep_sint.Subtruct(u_numerator, t) : ep_sint.Subtruct(t, u_numerator);
-        return (numerator);
-    }
-
-    __inline static PMC_HANDLE_SINT SubtructNumerator(SIGN_T sign, PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _UINT64_T v)
-    {
-        ResourceHolderRTNL root;
-        PMC_HANDLE_UINT t = ep_uint.Multiply(u_denominator, v);
-        root.UnlinkNumber(t);
-        PMC_HANDLE_SINT numerator = sign >= 0 ? ep_sint.Subtruct(u_numerator, t) : ep_sint.Subtruct(t, u_numerator);
-        return (numerator);
-    }
-
-    __inline static PMC_HANDLE_SINT SubtructNumerator(SIGN_T sign, PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_UINT v)
-    {
-        ResourceHolderRTNL root;
-        PMC_HANDLE_UINT t = ep_uint.Multiply(u_denominator, v);
-        root.UnlinkNumber(t);
-        PMC_HANDLE_SINT numerator = sign >= 0 ? ep_sint.Subtruct(u_numerator, t) : ep_sint.Subtruct(t, u_numerator);
-        return (numerator);
-    }
-
-    __inline static PMC_HANDLE_SINT SubtructNumerator(SIGN_T sign, PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _INT32_T v)
-    {
-        ResourceHolderRTNL root;
-        PMC_HANDLE_SINT t = ep_sint.Multiply(u_denominator, v);
-        root.UnlinkNumber(t);
-        PMC_HANDLE_SINT numerator = sign >= 0 ? ep_sint.Subtruct(u_numerator, t) : ep_sint.Subtruct(t, u_numerator);
-        return (numerator);
-    }
-
-    __inline static PMC_HANDLE_SINT SubtructNumerator(SIGN_T sign, PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _INT64_T v)
-    {
-        ResourceHolderRTNL root;
-        PMC_HANDLE_SINT t = ep_sint.Multiply(u_denominator, v);
-        root.UnlinkNumber(t);
-        PMC_HANDLE_SINT numerator = sign >= 0 ? ep_sint.Subtruct(u_numerator, t) : ep_sint.Subtruct(t, u_numerator);
-        return (numerator);
-    }
-
-    __inline static PMC_HANDLE_SINT SubtructNumerator(SIGN_T sign, PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_SINT v)
-    {
-        ResourceHolderRTNL root;
-        PMC_HANDLE_SINT t = ep_sint.Multiply(u_denominator, v);
-        root.UnlinkNumber(t);
-        PMC_HANDLE_SINT numerator = sign >= 0 ? ep_sint.Subtruct(u_numerator, t) : ep_sint.Subtruct(t, u_numerator);
-        return (numerator);
-    }
-
-    __inline static PMC_HANDLE_SINT SubtructNumerator(SIGN_T sign, PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator)
-    {
-        ResourceHolderRTNL root;
-        PMC_HANDLE_SINT t1 = ep_sint.Multiply(v_denominator, u_numerator);
-        root.UnlinkNumber(t1);
-        PMC_HANDLE_SINT t2 = ep_sint.Multiply(u_denominator, v_numerator);
-        root.UnlinkNumber(t2);
-        PMC_HANDLE_SINT numerator = sign >= 0 ? ep_sint.Subtruct(t1, t2) : ep_sint.Subtruct(t2, t1);
-        return (numerator);
-    }
-
-    __inline static NUMBER_OBJECT_RTNL* ALLOCATE_NUMBER(ResourceHolderRTNL& root, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, bool f_reduce)
-    {
+        PMC_HANDLE_UINT u_numerator = ep_uint.Multiply(v->DENOMINATOR, u);
+        root.HookNumber(u_numerator);
+        PMC_HANDLE_SINT numerator = ep_sint.Subtruct( u_numerator, v->NUMERATOR);
         root.HookNumber(numerator);
+        PMC_HANDLE_UINT denominator = ep_uint.Clone(v->DENOMINATOR);
         root.HookNumber(denominator);
-        NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, denominator, f_reduce);
-        root.UnlinkNumber(numerator);
-        root.UnlinkNumber(denominator);
+        NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, denominator);
         root.UnlinkNumber(nw);
         return (nw);
     }
 
-    __inline static NUMBER_OBJECT_RTNL* ALLOCATE_NUMBER(ResourceHolderRTNL& root, PMC_HANDLE_SINT numerator)
+    static NUMBER_OBJECT_RTNL* PMC_Subtruct_UL_R_Imp(_UINT64_T u, NUMBER_OBJECT_RTNL* v)
     {
+        // 分子と分母が既約であればこの加算によって共通因数は発生しないため約分は省略する。
+        ResourceHolderRTNL root;
+        PMC_HANDLE_UINT u_numerator = ep_uint.Multiply(v->DENOMINATOR, u);
+        root.HookNumber(u_numerator);
+        PMC_HANDLE_SINT numerator = ep_sint.Subtruct(u_numerator, v->NUMERATOR);
         root.HookNumber(numerator);
-        NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, number_handle_uint_one);
-        root.UnlinkNumber(numerator);
+        PMC_HANDLE_UINT denominator = ep_uint.Clone(v->DENOMINATOR);
+        root.HookNumber(denominator);
+        NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, denominator);
         root.UnlinkNumber(nw);
         return (nw);
     }
 
-    __inline static NUMBER_OBJECT_RTNL* PMC_Subtruct_R_UI_Imp(SIGN_T sign, NUMBER_OBJECT_RTNL* u, _UINT32_T v)
+    static NUMBER_OBJECT_RTNL* PMC_Subtruct_UX_R_Imp(PMC_HANDLE_UINT u, NUMBER_OBJECT_RTNL* v)
     {
-        if (u->DENOMINATOR->FLAGS.IS_ONE)
-        {
-            ResourceHolderRTNL root;
-            return (ALLOCATE_NUMBER(root, ep_sint.Subtruct(u->NUMERATOR, v)));
-        }
-        else
-        {
-            ResourceHolderRTNL root;
-            return (ALLOCATE_NUMBER(root, SubtructNumerator(sign, u->NUMERATOR, u->DENOMINATOR, v), u->DENOMINATOR, false));
-        }
+        // 分子と分母が既約であればこの加算によって共通因数は発生しないため約分は省略する。
+        ResourceHolderRTNL root;
+        PMC_HANDLE_UINT u_numerator = ep_uint.Multiply(v->DENOMINATOR, u);
+        root.HookNumber(u_numerator);
+        PMC_HANDLE_SINT numerator = ep_sint.Subtruct(u_numerator, v->NUMERATOR);
+        root.HookNumber(numerator);
+        PMC_HANDLE_UINT denominator = ep_uint.Clone(v->DENOMINATOR);
+        root.HookNumber(denominator);
+        NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, denominator);
+        root.UnlinkNumber(nw);
+        return (nw);
     }
 
-    __inline static NUMBER_OBJECT_RTNL* PMC_Subtruct_R_UL_Imp(SIGN_T sign, NUMBER_OBJECT_RTNL* u, _UINT64_T v)
+    static NUMBER_OBJECT_RTNL* PMC_Subtruct_I_R_Imp(_INT32_T u, NUMBER_OBJECT_RTNL* v)
     {
-        if (u->DENOMINATOR->FLAGS.IS_ONE)
-        {
-            ResourceHolderRTNL root;
-            return (ALLOCATE_NUMBER(root, ep_sint.Subtruct(u->NUMERATOR, v)));
-        }
-        else
-        {
-            ResourceHolderRTNL root;
-            return (ALLOCATE_NUMBER(root, SubtructNumerator(sign, u->NUMERATOR, u->DENOMINATOR, v), u->DENOMINATOR, false));
-        }
+        // 分子と分母が既約であればこの加算によって共通因数は発生しないため約分は省略する。
+        ResourceHolderRTNL root;
+        PMC_HANDLE_SINT u_numerator = ep_sint.Multiply(v->DENOMINATOR, u);
+        root.HookNumber(u_numerator);
+        PMC_HANDLE_SINT numerator = ep_sint.Subtruct(u_numerator, v->NUMERATOR);
+        root.HookNumber(numerator);
+        PMC_HANDLE_UINT denominator = ep_uint.Clone(v->DENOMINATOR);
+        root.HookNumber(denominator);
+        NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, denominator);
+        root.UnlinkNumber(nw);
+        return (nw);
     }
 
-    __inline static NUMBER_OBJECT_RTNL* PMC_Subtruct_R_UX_Imp(SIGN_T sign, NUMBER_OBJECT_RTNL* u, PMC_HANDLE_UINT v)
+    static NUMBER_OBJECT_RTNL* PMC_Subtruct_L_R_Imp(_INT64_T u, NUMBER_OBJECT_RTNL* v)
     {
-        if (u->DENOMINATOR->FLAGS.IS_ONE)
-        {
-            ResourceHolderRTNL root;
-            return (ALLOCATE_NUMBER(root, ep_sint.Subtruct(u->NUMERATOR, v)));
-        }
-        else
-        {
-            ResourceHolderRTNL root;
-            return (ALLOCATE_NUMBER(root, SubtructNumerator(sign, u->NUMERATOR, u->DENOMINATOR, v), u->DENOMINATOR, false));
-        }
+        // 分子と分母が既約であればこの加算によって共通因数は発生しないため約分は省略する。
+        ResourceHolderRTNL root;
+        PMC_HANDLE_SINT u_numerator = ep_sint.Multiply(v->DENOMINATOR, u);
+        root.HookNumber(u_numerator);
+        PMC_HANDLE_SINT numerator = ep_sint.Subtruct(u_numerator, v->NUMERATOR);
+        root.HookNumber(numerator);
+        PMC_HANDLE_UINT denominator = ep_uint.Clone(v->DENOMINATOR);
+        root.HookNumber(denominator);
+        NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, denominator);
+        root.UnlinkNumber(nw);
+        return (nw);
     }
 
-    __inline static NUMBER_OBJECT_RTNL* PMC_Subtruct_R_I_Imp(SIGN_T sign, NUMBER_OBJECT_RTNL* u, _INT32_T v)
+    static NUMBER_OBJECT_RTNL* PMC_Subtruct_X_R_Imp(PMC_HANDLE_SINT u, NUMBER_OBJECT_RTNL* v)
     {
-        if (u->DENOMINATOR->FLAGS.IS_ONE)
-        {
-            ResourceHolderRTNL root;
-            return (ALLOCATE_NUMBER(root, ep_sint.Subtruct(u->NUMERATOR, v)));
-        }
-        else
-        {
-            ResourceHolderRTNL root;
-            return (ALLOCATE_NUMBER(root, SubtructNumerator(sign, u->NUMERATOR, u->DENOMINATOR, v), u->DENOMINATOR, false));
-        }
+        // 分子と分母が既約であればこの加算によって共通因数は発生しないため約分は省略する。
+        ResourceHolderRTNL root;
+        PMC_HANDLE_SINT u_numerator = ep_sint.Multiply(v->DENOMINATOR, u);
+        root.HookNumber(u_numerator);
+        PMC_HANDLE_SINT numerator = ep_sint.Subtruct(u_numerator, v->NUMERATOR);
+        root.HookNumber(numerator);
+        PMC_HANDLE_UINT denominator = ep_uint.Clone(v->DENOMINATOR);
+        root.HookNumber(denominator);
+        NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, denominator);
+        root.UnlinkNumber(nw);
+        return (nw);
     }
 
-    __inline static NUMBER_OBJECT_RTNL* PMC_Subtruct_R_L_Imp(SIGN_T sign, NUMBER_OBJECT_RTNL* u, _INT64_T v)
+    static NUMBER_OBJECT_RTNL* PMC_Subtruct_R_UI_Imp(NUMBER_OBJECT_RTNL* u, _UINT32_T v)
     {
-        if (u->DENOMINATOR->FLAGS.IS_ONE)
-        {
-            ResourceHolderRTNL root;
-            return (ALLOCATE_NUMBER(root, ep_sint.Subtruct(u->NUMERATOR, v)));
-        }
-        else
-        {
-            ResourceHolderRTNL root;
-            return (ALLOCATE_NUMBER(root, SubtructNumerator(sign, u->NUMERATOR, u->DENOMINATOR, v), u->DENOMINATOR, false));
-        }
+        // 分子と分母が既約であればこの加算によって共通因数は発生しないため約分は省略する。
+        ResourceHolderRTNL root;
+        PMC_HANDLE_UINT v_numerator = ep_uint.Multiply(u->DENOMINATOR, v);
+        root.HookNumber(v_numerator);
+        PMC_HANDLE_SINT numerator = ep_sint.Subtruct(u->NUMERATOR, v_numerator);
+        root.HookNumber(numerator);
+        PMC_HANDLE_UINT denominator = ep_uint.Clone(u->DENOMINATOR);
+        root.HookNumber(denominator);
+        NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, denominator);
+        root.UnlinkNumber(nw);
+        return (nw);
     }
 
-    __inline static NUMBER_OBJECT_RTNL* PMC_Subtruct_R_X_Imp(SIGN_T sign, NUMBER_OBJECT_RTNL* u, PMC_HANDLE_SINT v)
+    static NUMBER_OBJECT_RTNL* PMC_Subtruct_R_UL_Imp(NUMBER_OBJECT_RTNL* u, _UINT64_T v)
     {
-        if (u->DENOMINATOR->FLAGS.IS_ONE)
-        {
-            ResourceHolderRTNL root;
-            return (ALLOCATE_NUMBER(root, ep_sint.Subtruct(u->NUMERATOR, v)));
-        }
-        else
-        {
-            ResourceHolderRTNL root;
-            return (ALLOCATE_NUMBER(root, SubtructNumerator(sign, u->NUMERATOR, u->DENOMINATOR, v), u->DENOMINATOR, false));
-        }
+        // 分子と分母が既約であればこの加算によって共通因数は発生しないため約分は省略する。
+        ResourceHolderRTNL root;
+        PMC_HANDLE_UINT v_numerator = ep_uint.Multiply(u->DENOMINATOR, v);
+        root.HookNumber(v_numerator);
+        PMC_HANDLE_SINT numerator = ep_sint.Subtruct(u->NUMERATOR, v_numerator);
+        root.HookNumber(numerator);
+        PMC_HANDLE_UINT denominator = ep_uint.Clone(u->DENOMINATOR);
+        root.HookNumber(denominator);
+        NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, denominator);
+        root.UnlinkNumber(nw);
+        return (nw);
     }
 
-    __inline static NUMBER_OBJECT_RTNL* PMC_Subtruct_R_R_Imp(SIGN_T sign, NUMBER_OBJECT_RTNL* u, NUMBER_OBJECT_RTNL* v)
+    static NUMBER_OBJECT_RTNL* PMC_Subtruct_R_UX_Imp(NUMBER_OBJECT_RTNL* u, PMC_HANDLE_UINT v)
     {
+        // 分子と分母が既約であればこの加算によって共通因数は発生しないため約分は省略する。
+        ResourceHolderRTNL root;
+        PMC_HANDLE_UINT v_numerator = ep_uint.Multiply(u->DENOMINATOR, v);
+        root.HookNumber(v_numerator);
+        PMC_HANDLE_SINT numerator = ep_sint.Subtruct(u->NUMERATOR, v_numerator);
+        root.HookNumber(numerator);
+        PMC_HANDLE_UINT denominator = ep_uint.Clone(u->DENOMINATOR);
+        root.HookNumber(denominator);
+        NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, denominator);
+        root.UnlinkNumber(nw);
+        return (nw);
+    }
+
+    static NUMBER_OBJECT_RTNL* PMC_Subtruct_R_I_Imp(NUMBER_OBJECT_RTNL* u, _INT32_T v)
+    {
+        // 分子と分母が既約であればこの加算によって共通因数は発生しないため約分は省略する。
+        ResourceHolderRTNL root;
+        PMC_HANDLE_SINT v_numerator = ep_sint.Multiply(u->DENOMINATOR, v);
+        root.HookNumber(v_numerator);
+        PMC_HANDLE_SINT numerator = ep_sint.Subtruct(u->NUMERATOR, v_numerator);
+        root.HookNumber(numerator);
+        PMC_HANDLE_UINT denominator = ep_uint.Clone(u->DENOMINATOR);
+        root.HookNumber(denominator);
+        NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, denominator);
+        root.UnlinkNumber(nw);
+        return (nw);
+    }
+
+    static NUMBER_OBJECT_RTNL* PMC_Subtruct_R_L_Imp(NUMBER_OBJECT_RTNL* u, _INT64_T v)
+    {
+        // 分子と分母が既約であればこの加算によって共通因数は発生しないため約分は省略する。
+        ResourceHolderRTNL root;
+        PMC_HANDLE_SINT v_numerator = ep_sint.Multiply(u->DENOMINATOR, v);
+        root.HookNumber(v_numerator);
+        PMC_HANDLE_SINT numerator = ep_sint.Subtruct(u->NUMERATOR, v_numerator);
+        root.HookNumber(numerator);
+        PMC_HANDLE_UINT denominator = ep_uint.Clone(u->DENOMINATOR);
+        root.HookNumber(denominator);
+        NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, denominator);
+        root.UnlinkNumber(nw);
+        return (nw);
+    }
+
+    static NUMBER_OBJECT_RTNL* PMC_Subtruct_R_X_Imp(NUMBER_OBJECT_RTNL* u, PMC_HANDLE_SINT v)
+    {
+        // 分子と分母が既約であればこの加算によって共通因数は発生しないため約分は省略する。
+        ResourceHolderRTNL root;
+        PMC_HANDLE_SINT v_numerator = ep_sint.Multiply(u->DENOMINATOR, v);
+        root.HookNumber(v_numerator);
+        PMC_HANDLE_SINT numerator = ep_sint.Subtruct(u->NUMERATOR, v_numerator);
+        root.HookNumber(numerator);
+        PMC_HANDLE_UINT denominator = ep_uint.Clone(u->DENOMINATOR);
+        root.HookNumber(denominator);
+        NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, denominator);
+        root.UnlinkNumber(nw);
+        return (nw);
+    }
+
+    static NUMBER_OBJECT_RTNL* PMC_Subtruct_R_R_Imp(NUMBER_OBJECT_RTNL* u, NUMBER_OBJECT_RTNL* v)
+    {
+        // GCD の計算をできるだけ避けるため、明らかに約分が不要なパターンを調べる
         if (u->DENOMINATOR->FLAGS.IS_ONE)
-            return (PMC_Subtruct_R_X_Imp(INVERT_SIGN(sign), v, u->NUMERATOR));
+            return (PMC_Subtruct_X_R_Imp(u->NUMERATOR, v));
         else if (v->DENOMINATOR->FLAGS.IS_ONE)
-            return (PMC_Subtruct_R_X_Imp(sign, u, v->NUMERATOR));
+            return (PMC_Subtruct_R_X_Imp(u, v->NUMERATOR));
         else
         {
+            // ここからが約分が必要になるルート
+
             ResourceHolderRTNL root;
-            return (ALLOCATE_NUMBER(root, SubtructNumerator(sign, u->NUMERATOR, u->DENOMINATOR, v->NUMERATOR, v->DENOMINATOR), ep_uint.Multiply(u->DENOMINATOR, v->DENOMINATOR), true));
+
+            // 分子と分母を求める
+            PMC_HANDLE_SINT u_numerator = ep_sint.Multiply(u->NUMERATOR, v->DENOMINATOR);
+            root.HookNumber(u_numerator);
+            PMC_HANDLE_SINT v_numerator = ep_sint.Multiply(v->NUMERATOR, u->DENOMINATOR);
+            root.HookNumber(v_numerator);
+            PMC_HANDLE_SINT numerator = ep_sint.Subtruct(u_numerator, v_numerator);
+            root.HookNumber(numerator);
+            PMC_HANDLE_UINT denominator = ep_uint.Multiply(u->DENOMINATOR, v->DENOMINATOR);
+            root.HookNumber(denominator);
+
+            // 分子と分母の共通因数を求める
+            PMC_HANDLE_UINT gcd = ep_sint.GreatestCommonDivisor(numerator, denominator);
+            if (!gcd->FLAGS.IS_ONE)
+            {
+                // 分子と分母の GCD が 1 ではない場合 (既約ではない場合)、分子と分母をそれぞれ GCD で割って新たな分子と分母を得る。
+                numerator = DivideExactly(root, numerator, gcd);
+                root.HookNumber(numerator);
+                denominator = DivideExactly(root, denominator, gcd);
+                root.HookNumber(denominator);
+            }
+            NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, denominator);
+            root.UnlinkNumber(numerator);
+            root.UnlinkNumber(denominator);
+            root.UnlinkNumber(nw);
+            return (nw);
         }
     }
 
@@ -225,100 +264,100 @@ namespace Palmtree::Math::Core::Internal
     {
         NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Subtruct_R_I_Imp(SIGN_NEGATIVE, nv, u)));
+        return (EPILOGUE(root, PMC_Subtruct_I_R_Imp(u, nv)));
     }
 
     PMC_HANDLE_RTNL PMC_Subtruct_L_R(_INT64_T u, PMC_HANDLE_RTNL v)
     {
         NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Subtruct_R_L_Imp(SIGN_NEGATIVE, nv, u)));
+        return (EPILOGUE(root, PMC_Subtruct_L_R_Imp(u, nv)));
     }
 
     PMC_HANDLE_RTNL PMC_Subtruct_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v)
     {
         if (u == nullptr)
-            throw ArgumentNullException(L"������null���^�����Ă��܂��B", L"u");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
         NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Subtruct_R_X_Imp(SIGN_NEGATIVE, nv, u)));
+        return (EPILOGUE(root, PMC_Subtruct_X_R_Imp(u, nv)));
     }
 
     PMC_HANDLE_RTNL PMC_Subtruct_UI_R(_UINT32_T u, PMC_HANDLE_RTNL v)
     {
         NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Subtruct_R_UI_Imp(SIGN_NEGATIVE, nv, u)));
+        return (EPILOGUE(root, PMC_Subtruct_UI_R_Imp(u, nv)));
     }
 
     PMC_HANDLE_RTNL PMC_Subtruct_UL_R(_UINT64_T u, PMC_HANDLE_RTNL v)
     {
         NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Subtruct_R_UL_Imp(SIGN_NEGATIVE, nv, u)));
+        return (EPILOGUE(root, PMC_Subtruct_UL_R_Imp(u, nv)));
     }
 
     PMC_HANDLE_RTNL PMC_Subtruct_UX_R(PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v)
     {
         if (u == nullptr)
-            throw ArgumentNullException(L"������null���^�����Ă��܂��B", L"u");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
         NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Subtruct_R_UX_Imp(SIGN_NEGATIVE, nv, u)));
+        return (EPILOGUE(root, PMC_Subtruct_UX_R_Imp(u, nv)));
     }
 
     PMC_HANDLE_RTNL PMC_Subtruct_R_I(PMC_HANDLE_RTNL u, _INT32_T v)
     {
         NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
         ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Subtruct_R_I_Imp(SIGN_POSITIVE, nu, v)));
+        return (EPILOGUE(root, PMC_Subtruct_R_I_Imp(nu, v)));
     }
 
     PMC_HANDLE_RTNL PMC_Subtruct_R_L(PMC_HANDLE_RTNL u, _INT64_T v)
     {
         NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
         ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Subtruct_R_L_Imp(SIGN_POSITIVE, nu, v)));
+        return (EPILOGUE(root, PMC_Subtruct_R_L_Imp(nu, v)));
     }
 
     PMC_HANDLE_RTNL PMC_Subtruct_R_X(PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
         if (v == nullptr)
-            throw ArgumentNullException(L"������null���^�����Ă��܂��B", L"v");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
         ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Subtruct_R_X_Imp(SIGN_POSITIVE, nu, v)));
+        return (EPILOGUE(root, PMC_Subtruct_R_X_Imp(nu, v)));
     }
 
     PMC_HANDLE_RTNL PMC_Subtruct_R_UI(PMC_HANDLE_RTNL u, _UINT32_T v)
     {
         NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
         ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Subtruct_R_UI_Imp(SIGN_POSITIVE, nu, v)));
+        return (EPILOGUE(root, PMC_Subtruct_R_UI_Imp(nu, v)));
     }
 
     PMC_HANDLE_RTNL PMC_Subtruct_R_UL(PMC_HANDLE_RTNL u, _UINT64_T v)
     {
         NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
         ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Subtruct_R_UL_Imp(SIGN_POSITIVE, nu, v)));
+        return (EPILOGUE(root, PMC_Subtruct_R_UL_Imp(nu, v)));
     }
 
     PMC_HANDLE_RTNL PMC_Subtruct_R_UX(PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v)
     {
         NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
         if (v == nullptr)
-            throw ArgumentNullException(L"������null���^�����Ă��܂��B", L"v");
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
         ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Subtruct_R_UX_Imp(SIGN_POSITIVE, nu, v)));
+        return (EPILOGUE(root, PMC_Subtruct_R_UX_Imp(nu, v)));
     }
 
     PMC_HANDLE_RTNL PMC_Subtruct_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v)
     {
         NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
-        NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(u, L"v");
+        NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Subtruct_R_R_Imp(SIGN_POSITIVE, nu, nv)));
+        return (EPILOGUE(root, PMC_Subtruct_R_R_Imp(nu, nv)));
     }
 
 }

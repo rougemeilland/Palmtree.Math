@@ -24,6 +24,9 @@
 
 
 using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Numerics;
 using System.Xml;
 
 namespace Palmtree.Math.CodeGen.TestData
@@ -35,17 +38,19 @@ namespace Palmtree.Math.CodeGen.TestData
 
         public virtual bool IsNull => false;
 
-        public virtual bool IsBigInt => false;
+        public virtual bool IsUInt32 => false;
 
-        public virtual bool IsUBigInt => false;
+        public virtual bool IsUInt64 => false;
 
         public virtual bool IsInt32 => false;
 
-        public virtual bool IsUInt32 => false;
-
         public virtual bool IsInt64 => false;
 
-        public virtual bool IsUInt64 => false;
+        public virtual bool IsUBigInt => false;
+
+        public virtual bool IsBigInt => false;
+
+        public virtual bool IsRational => false;
 
         public virtual bool IsXString => false;
 
@@ -64,6 +69,11 @@ namespace Palmtree.Math.CodeGen.TestData
         }
 
         public virtual UBigIntDataItem ToUBigInt()
+        {
+            throw new InvalidCastException();
+        }
+
+        public virtual RationalDataItem ToRational()
         {
             throw new InvalidCastException();
         }
@@ -115,6 +125,52 @@ namespace Palmtree.Math.CodeGen.TestData
             element.SetAttribute("type", Type);
             return (element);
         }
+
+        protected static byte[] FromBigTintToByteArray(BigInteger value)
+        {
+            var header = value.Sign > 0 ? (byte)0x01 : value.Sign == 0 ? (byte)0x00 : (byte)0x03;
+            var abs = BigInteger.Abs(value);
+            var digits = new List<byte>();
+            while (abs > 0)
+            {
+                var digit = abs & 0xff;
+                digits.Add((byte)digit);
+                abs = abs >> 8;
+            }
+            var digits_array = digits.ToArray();
+            byte[] length_field;
+            if (digits_array.LongLength <= 0xff)
+            {
+                length_field = new[] { (byte)digits_array.LongLength };
+                header |= 0x00;
+            }
+            else if (digits_array.LongLength <= 0xffffL)
+            {
+                length_field = new[] { (byte)digits_array.LongLength, (byte)(digits_array.LongLength >> 8) };
+                header |= 0x04;
+            }
+            else if (digits_array.LongLength <= 0xffffffffL)
+            {
+                length_field = new[] { (byte)digits_array.LongLength, (byte)(digits_array.LongLength >> 8), (byte)(digits_array.LongLength >> 16), (byte)(digits_array.LongLength >> 24) };
+                header |= 0x08;
+            }
+            else
+            {
+                length_field = new[]
+                {
+                    (byte)digits_array.LongLength, (byte)(digits_array.LongLength >> 8), (byte)(digits_array.LongLength >> 16), (byte)(digits_array.LongLength >> 24),
+                    (byte)(digits_array.LongLength >> 32),(byte)(digits_array.LongLength >> 40),(byte)(digits_array.LongLength >> 48),(byte)(digits_array.LongLength >> 56),
+                };
+                header |= 0x0c;
+            }
+            return (new[] { header }.Concat(length_field).Concat(digits).ToArray());
+        }
+
+        protected static byte[] FromRationalToByteArray(BigInteger numerator, BigInteger denominator)
+        {
+            return (new[] { (byte)0x10 }.Concat(FromBigTintToByteArray(numerator).Concat(FromBigTintToByteArray(denominator))).ToArray());
+        }
+
     }
 }
 

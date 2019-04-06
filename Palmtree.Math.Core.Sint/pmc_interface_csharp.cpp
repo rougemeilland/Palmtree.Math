@@ -29,6 +29,58 @@
 namespace Palmtree::Math::Core::Internal
 {
 
+    template<typename HANDLE_T>
+    class UsingObject
+    {
+        HANDLE_T _handle;
+
+    public:
+        UsingObject(HANDLE_T handle)
+        {
+            _handle = handle;
+        }
+
+        ~UsingObject()
+        {
+        }
+    };
+
+    template<>
+    class UsingObject<PMC_HANDLE_UINT>
+    {
+        PMC_HANDLE_UINT _handle;
+
+    public:
+        UsingObject(PMC_HANDLE_UINT handle)
+        {
+            _handle = handle;
+            ep_uint.UseObject(_handle);
+        }
+
+        ~UsingObject()
+        {
+            ep_uint.UnuseObject(_handle);
+        }
+    };
+
+    template<>
+    class UsingObject<PMC_HANDLE_SINT>
+    {
+        PMC_HANDLE_SINT _handle;
+
+    public:
+        UsingObject(PMC_HANDLE_SINT handle)
+        {
+            _handle = handle;
+            PMC_UseObject_X(_handle);
+        }
+
+        ~UsingObject()
+        {
+            PMC_UnuseObject_X(_handle);
+        }
+    };
+
     extern "C" _UINT32_T __stdcall PMCCS_SINT_Initialize()
     {
         return (PMC_SINT_Initialize() ? 1 : 0);
@@ -47,6 +99,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_p(p);
             *r = p->FLAGS.IS_EVEN;
             return (PMC_STATUS_OK);
         }
@@ -64,6 +117,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_p(p);
             *r = p->FLAGS.IS_MINUS_ONE;
             return (PMC_STATUS_OK);
         }
@@ -81,6 +135,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_p(p);
             *r = p->FLAGS.IS_ONE;
             return (PMC_STATUS_OK);
         }
@@ -98,6 +153,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_p(p);
             *r = p->FLAGS.IS_POWER_OF_TWO;
             return (PMC_STATUS_OK);
         }
@@ -115,6 +171,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_p(p);
             *r = p->FLAGS.IS_ZERO;
             return (PMC_STATUS_OK);
         }
@@ -124,7 +181,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __stdcall PMCCS_GetHashCode(PMC_HANDLE_SINT p, _INT32_T* r)
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_GetHashCode_X(PMC_HANDLE_SINT p, _INT32_T* r)
     {
         if (p == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -132,6 +189,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_p(p);
             *r = PMC_GetHashCode(p);
             return (PMC_STATUS_OK);
         }
@@ -139,11 +197,6 @@ namespace Palmtree::Math::Core::Internal
         {
             return (ex.GetStatusCode());
         }
-    }
-
-    extern "C" void __stdcall PMCCS_GetStatisticsInfo(PMC_STATISTICS_INFO* p)
-    {
-        PMC_GetStatisticsInfo(p);
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_From_UI(_UINT32_T x, PMC_HANDLE_SINT* o)
@@ -214,6 +267,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_x(x);
             *o = PMC_From_UX(x);
             return (PMC_STATUS_OK);
         }
@@ -319,6 +373,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_p(p);
             size_t r = PMC_ToByteArray(p, buffer, buffer_size);
             if (r > 0x7fffffff)
                 return (PMC_STATUS_NOT_ENOUGH_MEMORY);
@@ -337,6 +392,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_x(x);
             *o = PMC_Clone_X(x);
             return (PMC_STATUS_OK);
         }
@@ -367,6 +423,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_p(p);
             *o = PMC_ToUInt32_X(p);
             return (PMC_STATUS_OK);
         }
@@ -382,6 +439,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_p(p);
             *o = PMC_ToInt32_X(p);
             return (PMC_STATUS_OK);
         }
@@ -397,6 +455,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_p(p);
             *o = PMC_ToUInt64_X(p);
             return (PMC_STATUS_OK);
         }
@@ -412,6 +471,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_p(p);
             *o = PMC_ToInt64_X(p);
             return (PMC_STATUS_OK);
         }
@@ -427,6 +487,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_p(p);
             *o = PMC_ToUBigInt_X(p);
             return (PMC_STATUS_OK);
         }
@@ -436,13 +497,14 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __stdcall PMCCS_ToString(PMC_HANDLE_SINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, _INT32_T buffer_size, _INT32_T* size)
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_ToString_X(PMC_HANDLE_SINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, _INT32_T buffer_size, _INT32_T* size)
     {
         if (size == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            size_t r = PMC_ToString(x, format, format_option, buffer, buffer_size);
+            UsingObject using_x(x);
+            size_t r = PMC_ToString_X(x, format, format_option, buffer, buffer_size);
             if (r > 0x7fffffff)
                 return (PMC_STATUS_NOT_ENOUGH_MEMORY);
             *size = (_INT32_T)r;
@@ -521,6 +583,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Add_UI_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -536,6 +599,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Add_I_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -551,6 +615,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Add_UL_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -566,6 +631,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Add_L_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -581,6 +647,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Add_UX_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -596,6 +664,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Add_X_UI(u, v);
             return (PMC_STATUS_OK);
         }
@@ -611,6 +680,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Add_X_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -626,6 +696,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Add_X_UL(u, v);
             return (PMC_STATUS_OK);
         }
@@ -641,6 +712,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Add_X_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -656,6 +728,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Add_X_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -671,6 +745,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Add_X_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -686,6 +762,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Add_I_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -701,6 +778,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Add_L_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -716,6 +794,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Add_UX_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -731,6 +810,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Add_UX_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -746,6 +826,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Subtruct_I_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -761,6 +842,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Subtruct_L_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -776,6 +858,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Subtruct_UI_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -791,6 +874,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Subtruct_UI_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -806,6 +890,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Subtruct_UL_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -821,6 +906,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Subtruct_UL_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -836,6 +922,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Subtruct_UX_UI(u, v);
             return (PMC_STATUS_OK);
         }
@@ -851,6 +938,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Subtruct_UX_UL(u, v);
             return (PMC_STATUS_OK);
         }
@@ -866,6 +954,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Subtruct_UX_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -881,6 +971,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Subtruct_UX_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -896,6 +988,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Subtruct_X_UI(u, v);
             return (PMC_STATUS_OK);
         }
@@ -911,6 +1004,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Subtruct_X_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -926,6 +1020,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Subtruct_X_UL(u, v);
             return (PMC_STATUS_OK);
         }
@@ -941,6 +1036,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Subtruct_X_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -956,6 +1052,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Subtruct_X_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -971,6 +1069,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Subtruct_X_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -986,6 +1086,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Subtruct_I_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1001,6 +1102,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Subtruct_L_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1016,6 +1118,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Subtruct_UX_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1031,6 +1134,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Subtruct_UX_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1046,6 +1150,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Multiply_UI_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1061,6 +1166,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Multiply_I_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1076,6 +1182,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Multiply_UL_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1091,6 +1198,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Multiply_L_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1106,6 +1214,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Multiply_UX_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1121,6 +1231,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Multiply_X_UI(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1136,6 +1247,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Multiply_X_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1151,6 +1263,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Multiply_X_UL(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1166,6 +1279,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Multiply_X_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1181,6 +1295,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Multiply_X_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1196,6 +1312,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Multiply_X_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1211,6 +1329,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Multiply_I_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1226,6 +1345,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Multiply_L_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1241,6 +1361,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Multiply_UX_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1256,6 +1377,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Multiply_UX_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1271,6 +1393,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *r = PMC_DivRem_UI_X(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -1286,6 +1409,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *r = PMC_DivRem_I_X(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -1301,6 +1425,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *r = PMC_DivRem_UL_X(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -1316,6 +1441,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *r = PMC_DivRem_L_X(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -1331,6 +1457,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *r = PMC_DivRem_UX_X(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -1346,6 +1474,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *r = PMC_DivRem_X_UI(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -1361,6 +1490,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *r = PMC_DivRem_X_I(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -1376,6 +1506,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *r = PMC_DivRem_X_UL(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -1391,6 +1522,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *r = PMC_DivRem_X_L(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -1406,6 +1538,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *r = PMC_DivRem_X_UX(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -1421,6 +1555,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *r = PMC_DivRem_X_X(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -1436,6 +1572,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *r = PMC_DivRem_I_UX(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -1451,6 +1588,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *r = PMC_DivRem_L_UX(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -1466,6 +1604,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *r = PMC_DivRem_UX_I(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -1481,6 +1620,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *r = PMC_DivRem_UX_L(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -1496,6 +1636,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *r = PMC_DivRem_UI_X(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1511,6 +1652,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *r = PMC_DivRem_I_X(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1526,6 +1668,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *r = PMC_DivRem_UL_X(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1541,6 +1684,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *r = PMC_DivRem_L_X(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1556,6 +1700,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *r = PMC_DivRem_UX_X(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1571,6 +1717,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *r = PMC_DivRem_X_UI(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1586,6 +1733,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *r = PMC_DivRem_X_I(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1601,6 +1749,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *r = PMC_DivRem_X_UL(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1616,6 +1765,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *r = PMC_DivRem_X_L(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1631,6 +1781,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *r = PMC_DivRem_X_UX(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1646,6 +1798,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *r = PMC_DivRem_X_X(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1661,6 +1815,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *r = PMC_DivRem_I_UX(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1676,6 +1831,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *r = PMC_DivRem_L_UX(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1691,6 +1847,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *r = PMC_DivRem_UX_I(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1706,6 +1863,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *r = PMC_DivRem_UX_L(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1721,6 +1879,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_p(p);
             *o = PMC_RightShift_X_I(p, n);
             return (PMC_STATUS_OK);
         }
@@ -1736,6 +1895,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_p(p);
             *o = PMC_LeftShift_X_I(p, n);
             return (PMC_STATUS_OK);
         }
@@ -1751,6 +1911,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_BitwiseAnd_UI_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1766,6 +1927,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_BitwiseAnd_I_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1781,6 +1943,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_BitwiseAnd_UL_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1796,6 +1959,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_BitwiseAnd_L_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1811,6 +1975,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_BitwiseAnd_UX_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1826,6 +1992,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_BitwiseAnd_X_UI(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1841,6 +2008,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_BitwiseAnd_X_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1856,6 +2024,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_BitwiseAnd_X_UL(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1871,6 +2040,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_BitwiseAnd_X_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1886,6 +2056,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_BitwiseAnd_X_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1901,6 +2073,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_BitwiseAnd_X_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1916,6 +2090,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_BitwiseAnd_I_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1931,6 +2106,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_BitwiseAnd_L_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1946,6 +2122,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_BitwiseAnd_UX_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1961,6 +2138,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_BitwiseAnd_UX_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1976,6 +2154,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_BitwiseOr_UI_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1991,6 +2170,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_BitwiseOr_I_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2006,6 +2186,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_BitwiseOr_UL_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2021,6 +2202,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_BitwiseOr_L_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2036,6 +2218,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_BitwiseOr_UX_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2051,6 +2235,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_BitwiseOr_X_UI(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2066,6 +2251,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_BitwiseOr_X_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2081,6 +2267,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_BitwiseOr_X_UL(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2096,6 +2283,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_BitwiseOr_X_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2111,6 +2299,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_BitwiseOr_X_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2126,6 +2316,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_BitwiseOr_X_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2141,6 +2333,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_BitwiseOr_I_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2156,6 +2349,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_BitwiseOr_L_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2171,6 +2365,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_BitwiseOr_UX_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2186,6 +2381,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_BitwiseOr_UX_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2201,6 +2397,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_ExclusiveOr_UI_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2216,6 +2413,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_ExclusiveOr_I_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2231,6 +2429,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_ExclusiveOr_UL_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2246,6 +2445,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_ExclusiveOr_L_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2261,6 +2461,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_ExclusiveOr_UX_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2276,6 +2478,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_ExclusiveOr_X_UI(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2291,6 +2494,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_ExclusiveOr_X_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2306,6 +2510,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_ExclusiveOr_X_UL(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2321,6 +2526,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_ExclusiveOr_X_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2336,6 +2542,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_ExclusiveOr_X_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2351,6 +2559,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_ExclusiveOr_X_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2366,6 +2576,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_ExclusiveOr_I_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2381,6 +2592,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_ExclusiveOr_L_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2396,6 +2608,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_ExclusiveOr_UX_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2411,6 +2624,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_ExclusiveOr_UX_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2426,6 +2640,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Compare_UI_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2441,6 +2656,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Compare_I_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2456,6 +2672,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Compare_UL_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2471,6 +2688,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Compare_L_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2486,6 +2704,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Compare_UX_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2501,6 +2721,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Compare_X_UI(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2516,6 +2737,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Compare_X_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2531,6 +2753,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Compare_X_UL(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2546,6 +2769,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Compare_X_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2561,6 +2785,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Compare_X_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2576,6 +2802,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Compare_X_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2591,6 +2819,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Compare_I_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2606,6 +2835,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Compare_L_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2621,6 +2851,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Compare_UX_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2636,6 +2867,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Compare_UX_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2651,6 +2883,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Equals_UI_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2666,6 +2899,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Equals_I_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2681,6 +2915,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Equals_UL_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2696,6 +2931,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Equals_L_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2711,6 +2947,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Equals_UX_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2726,6 +2964,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Equals_X_UI(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2741,6 +2980,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Equals_X_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2756,6 +2996,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Equals_X_UL(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2771,6 +3012,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Equals_X_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2786,6 +3028,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Equals_X_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2801,6 +3045,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_Equals_X_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2816,6 +3062,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Equals_I_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2831,6 +3078,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_Equals_L_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2846,6 +3094,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Equals_UX_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2861,6 +3110,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Equals_UX_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2876,6 +3126,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_GreatestCommonDivisor_UI_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2891,6 +3142,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_GreatestCommonDivisor_I_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2906,6 +3158,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_GreatestCommonDivisor_UL_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2921,6 +3174,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_GreatestCommonDivisor_L_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2936,6 +3190,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_GreatestCommonDivisor_UX_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2951,6 +3207,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_GreatestCommonDivisor_X_UI(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2966,6 +3223,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_GreatestCommonDivisor_X_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2981,6 +3239,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_GreatestCommonDivisor_X_UL(u, v);
             return (PMC_STATUS_OK);
         }
@@ -2996,6 +3255,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_GreatestCommonDivisor_X_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -3011,6 +3271,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_GreatestCommonDivisor_X_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -3026,6 +3288,8 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
+            UsingObject using_v(v);
             *w = PMC_GreatestCommonDivisor_X_X(u, v);
             return (PMC_STATUS_OK);
         }
@@ -3041,6 +3305,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_GreatestCommonDivisor_I_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -3056,6 +3321,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_v(v);
             *w = PMC_GreatestCommonDivisor_L_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -3071,6 +3337,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_GreatestCommonDivisor_UX_I(u, v);
             return (PMC_STATUS_OK);
         }
@@ -3086,6 +3353,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_GreatestCommonDivisor_UX_L(u, v);
             return (PMC_STATUS_OK);
         }
@@ -3101,6 +3369,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Abs_X(u);
             return (PMC_STATUS_OK);
         }
@@ -3116,6 +3385,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Negate_UX(u);
             return (PMC_STATUS_OK);
         }
@@ -3131,6 +3401,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_Negate_X(u);
             return (PMC_STATUS_OK);
         }
@@ -3146,6 +3417,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_OneComplement_UX(u);
             return (PMC_STATUS_OK);
         }
@@ -3161,6 +3433,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_u(u);
             *w = PMC_OneComplement_X(u);
             return (PMC_STATUS_OK);
         }
@@ -3176,6 +3449,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_x(x);
             *r = PMC_Increment_X(x);
             return (PMC_STATUS_OK);
         }
@@ -3191,7 +3465,70 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
+            UsingObject using_x(x);
             *r = PMC_Decrement_X(x);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_Pow_I_UI(_INT32_T v, _UINT32_T e, PMC_HANDLE_SINT* r) noexcept(false)
+    {
+        if (r == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *r = PMC_Pow_I_UI(v, e);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_Pow_L_UI(_INT64_T v, _UINT32_T e, PMC_HANDLE_SINT* r) noexcept(false)
+    {
+        if (r == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *r = PMC_Pow_L_UI(v, e);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_Pow_X_UI(PMC_HANDLE_SINT v, _UINT32_T e, PMC_HANDLE_SINT* r) noexcept(false)
+    {
+        if (r == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            UsingObject using_v(v);
+            *r = PMC_Pow_X_UI(v, e);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_GetPerformanceCounter(const wchar_t* key, _INT64_T* r)
+    {
+        if (r == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *r = PMC_GetPerformanceCounter(key);
             return (PMC_STATUS_OK);
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)

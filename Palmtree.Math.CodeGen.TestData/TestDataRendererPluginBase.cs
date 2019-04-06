@@ -151,6 +151,7 @@ namespace Palmtree.Math.CodeGen.TestData
                         }
                         break;
                     case "sint":
+                    case "rtnl":
                         {
                             source = new[]
                             {
@@ -178,6 +179,30 @@ namespace Palmtree.Math.CodeGen.TestData
             }
         }
 
+        protected IEnumerable<MiniRational> RationalDataSource
+        {
+            get
+            {
+                var source = new BigInteger[]
+                {
+                    BigInteger.Zero,
+                    BigInteger.One,
+                    (BigInteger.One << 32) - 1,
+                    BigInteger.One << 32,
+                    (BigInteger.One << 64) - 1,
+                    BigInteger.One << 64,
+                    BigInteger.Parse("999999999"),
+                    BigInteger.Parse("1000000000"),
+                    BigInteger.Parse("9999999999999999999"),
+                    BigInteger.Parse("10000000000000000000"),
+                };
+                return (source.SelectMany(n => new[] { n, -n })
+                        .SelectMany(n => source.Where(d => d != 0), (n, d) => new MiniRational(n, d))
+                        .Distinct(new MiniRationalComparer())
+                        .OrderBy(x => x, new MiniRationalComparer()));
+            }
+        }
+
         protected IEnumerable<Int32> BitCountDataSource
         {
             get
@@ -186,11 +211,19 @@ namespace Palmtree.Math.CodeGen.TestData
             }
         }
 
-        protected IEnumerable<UInt32> ExponentDataSource
+        protected IEnumerable<UInt32> UExponentDataSource
         {
             get
             {
                 return (new[] { 0U, 1U, 31U, 32U, 33U, 63U, 64U, 65U });
+            }
+        }
+
+        protected IEnumerable<Int32> ExponentDataSource
+        {
+            get
+            {
+                return (new[] { -5, -2, -1, 0, 1, 2, 5 });
             }
         }
 

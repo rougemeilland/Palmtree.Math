@@ -17,21 +17,57 @@ namespace Palmtree.Math.Experiment
 
             //Currency_Number_PercentによってDecimalSeparatorあるいはGeoupSeparatorが異なるカルチャはいくつか存在する();
 
-
-            var x1 = typeof(UInt32).IsSubclassOf(typeof(Exception));
-            Console.WriteLine(typeof(UInt32).Name);
-            Console.WriteLine(typeof(UInt32).FullName);
-            Console.WriteLine(typeof(ApplicationException).Name);
-            Console.WriteLine(typeof(ApplicationException).FullName);
-            var x2 = typeof(ApplicationException).IsSubclassOf(typeof(Exception));
-
-            try
+            var source = Enumerable.Range(1, 32)
+                         .SelectMany(n => new[]
+                         {
+                             new { value = (1UL << n) - 1, bit_length = n },
+                             new { value = 1UL << n, bit_length = n + 1 },
+                         });
+            var log10_2 = System.Math.Log10(2);
+            Func<int, int> ビット長の算出フィルタ = ビット長の差 => ビット長の差 > 1 ? ビット長の差 - 1 : ビット長の差 < -1 ? ビット長の差 + 1 : ビット長の差; 
+            var query = source
+                        .SelectMany(item1 => source, (item1, item2) => new
+                        {
+                            numerator = item1.value,
+                            denominator = item2.value,
+                            ビット長の差 = ビット長の算出フィルタ(item1.bit_length - item2.bit_length),
+                            Log10の真値 = System.Math.Log10((double)item1.value / item2.value),
+                        })
+                        .Select(item => new
+                        {
+                            item.numerator,
+                            item.denominator,
+                            item.ビット長の差,
+                            Log10の近似値 = item.ビット長の差 * log10_2,
+                            item.Log10の真値, 
+                        })
+                        .Select(item => new
+                        {
+                            item.numerator,
+                            item.denominator,
+                            item.ビット長の差,
+                            item.Log10の近似値,
+                            item.Log10の真値,
+                            Truncate_Log10_近似値 = System.Math.Truncate(item.Log10の近似値),
+                            Truncate_Log10_真値 = System.Math.Truncate(item.Log10の真値),
+                        })
+                        .Select(item => new
+                        {
+                            item.numerator,
+                            item.denominator,
+                            item.ビット長の差,
+                            item.Log10の近似値,
+                            item.Log10の真値,
+                            item.Truncate_Log10_近似値,
+                            item.Truncate_Log10_真値,
+                            近似値の絶対値が真値を超えている = System.Math.Abs(item.Truncate_Log10_近似値) > System.Math.Abs(item.Truncate_Log10_真値),
+                        })
+                        .OrderBy(item => item.近似値の絶対値が真値を超えている)
+                        .ThenBy(item => item.Log10の真値);
+            foreach (var item in query)
             {
-                throw new ApplicationException();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(string.Format("ex.GetType()='{0}'", ex.GetType()));
+                Console.WriteLine(string.Format("numerator={0}, denominator={1}, 近似値={2}, 真値={3}, 結果={4}",
+                                                item.numerator, item.denominator, item.Truncate_Log10_近似値, item.Truncate_Log10_真値, item.近似値の絶対値が真値を超えている ? "NG" : "OK"));
             }
 
             Console.ReadLine();

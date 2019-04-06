@@ -441,20 +441,6 @@ namespace Palmtree.Math.Core
 
         #endregion
 
-        #region Dispose 関数
-
-        public void Dispose(UBigIntHandle value)
-        {
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_Dispose_UX(value.NativeHandle));
-        }
-
-        public void Dispose(BigIntHandle value)
-        {
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_Dispose_X(value.NativeHandle));
-        }
-
-        #endregion
-
         #region DivRem 関数
 
         public BigIntHandle DivRem(Int32 u, BigIntHandle v, out Int32 r)
@@ -845,19 +831,18 @@ namespace Palmtree.Math.Core
 
         public Int32 GetHashCode(BigIntHandle value)
         {
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_GetHashCode(value.NativeHandle, out Int32 r));
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_GetHashCode_X(value.NativeHandle, out Int32 r));
             return (r);
         }
 
         #endregion
 
-        #region GetStatisticsInfo 関数
+        #region GetPerformanceCounter 関数
 
-        public StatisticsInfo GetStatisticsInfo()
+        public Int64 GetPerformanceCounter(string key)
         {
-            var buf = new PMC_STATISTICS_INFO();
-            PMCCS_GetStatisticsInfo(buf);
-            return (new StatisticsInfo(buf));
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_GetPerformanceCounter(key, out Int64 w));
+            return (w);
         }
 
         #endregion
@@ -1136,6 +1121,31 @@ namespace Palmtree.Math.Core
 
         #endregion
 
+        #region Power 関数
+
+        public BigIntHandle Pow(Int32 x, UInt32 n)
+        {
+            IntPtr v;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Pow_I_UI(x, n, out v));
+            return (new BigIntHandle(v, this));
+        }
+
+        public BigIntHandle Pow(Int64 x, UInt32 n)
+        {
+            IntPtr v;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Pow_L_UI(x, n, out v));
+            return (new BigIntHandle(v, this));
+        }
+
+        public BigIntHandle Pow(BigIntHandle x, UInt32 n)
+        {
+            IntPtr v;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Pow_X_UI(x.NativeHandle, n, out v));
+            return (new BigIntHandle(v, this));
+        }
+
+        #endregion
+
         #region Remainder 関数
 
         public Int32 Remainder(Int32 u, BigIntHandle v)
@@ -1390,10 +1400,10 @@ namespace Palmtree.Math.Core
         public string ToString(BigIntHandle value, string format, NumberFormatInfo number_format_info)
         {
             var native_number_format_info = new PMC_NUMBER_FORMAT_INFO(number_format_info ?? CultureInfo.CurrentCulture.NumberFormat);
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_GetStringCount(value.NativeHandle, format, native_number_format_info, IntPtr.Zero, 0, out Int32 string_builder_capacity));
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_GetStringCount_X(value.NativeHandle, format, native_number_format_info, IntPtr.Zero, 0, out Int32 string_builder_capacity));
             string_builder_capacity += 1; // 終端ヌル文字の分だけ増やす
             var temp_buf = new StringBuilder(string_builder_capacity);
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_ToString(value.NativeHandle, format, native_number_format_info, temp_buf, temp_buf.Capacity, out Int32 r));
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_ToString_X(value.NativeHandle, format, native_number_format_info, temp_buf, temp_buf.Capacity, out Int32 r));
             return (temp_buf.ToString());
         }
 

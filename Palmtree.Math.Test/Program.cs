@@ -24,6 +24,7 @@
 
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ExceptionServices;
@@ -34,6 +35,9 @@ namespace Palmtree.Math.Test
 {
     class Program
     {
+        private static bool _verbose = false;
+        private static bool _parallel = true;
+
         [HandleProcessCorruptedStateExceptions]
         static void Main(string[] args)
         {
@@ -50,6 +54,8 @@ namespace Palmtree.Math.Test
                           .Select(t => (IComponentTestPlugin)current_assembly.CreateInstance(t.FullName))
                           .OrderBy(p => p.DataFileSize)
                           .ToArray();
+
+            // プラグインの重複の確認
             var 重複確認用コレクション = plugins
                 .GroupBy(plugin => plugin.PluginName)
                 .Select(g => new { key = g.Key, count = g.Count() })
@@ -60,25 +66,43 @@ namespace Palmtree.Math.Test
                 Console.ReadLine();
                 return;
             }
+
+            // テスト漏れのデータファイルがないか確認
+            var base_dir = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location));
+            var data_files = Directory.EnumerateFiles(base_dir, "*.xml", SearchOption.AllDirectories)
+                        .Select(full_path => new { dir = Path.GetDirectoryName(full_path), data_file_name = Path.GetFileName(full_path) })
+                        .Select(item => new { category = Path.GetFileName(item.dir), item.data_file_name })
+                        .Select(item => (item.category + "." + item.data_file_name).ToLower())
+                        .ToDictionary(id => id, id => id);
+            foreach (var plugin in plugins)
+                data_files.Remove(plugin.DataFileID);
+
+            if (data_files.Any())
+            {
+                Console.WriteLine(string.Format("***参照されていないデータファイルがあります: {0}", string.Join(", ", data_files.Keys)));
+                Console.ReadLine();
+                return;
+            }
+
             int 合計項目数 = 0;
             int NG項目数 = 0;
             Console.WriteLine(string.Format("***UBigInt settings: {0}", string.Join(", ", UBigInt.ConfigurationSettings.Select(item => string.Format("{0}={1}", item.Key, item.Value)))));
             Console.WriteLine(string.Format("***BigInt settings: {0}", string.Join(", ", BigInt.ConfigurationSettings.Select(item => string.Format("{0}={1}", item.Key, item.Value)))));
+            Console.WriteLine(string.Format("***Rational settings: {0}", string.Join(", ", Rational.ConfigurationSettings.Select(item => string.Format("{0}={1}", item.Key, item.Value)))));
             Console.WriteLine("***test start");
-            bool parallel = false;
             var lock_obj = new object();
-            if (parallel)
+            if (_parallel)
             {
                 var options = new ParallelOptions();
                 options.MaxDegreeOfParallelism = 8;
-                Parallel.ForEach(plugins.SelectMany(plugin => plugin.TestItems).Where(test_item => TestItemFilter(test_item)), options, test_item =>
+                Parallel.ForEach(plugins.Where(plugin => PluginFilter(plugin)).SelectMany(plugin => plugin.TestItems).Where(test_item => TestItemFilter(test_item)), options, test_item =>
                 {
                     TaskAction(test_item, ref 合計項目数, ref NG項目数, lock_obj);
                 });
             }
             else
             {
-                foreach (var test_item in plugins.SelectMany(plugin => plugin.TestItems).Where(test_item => TestItemFilter(test_item)))
+                foreach (var test_item in plugins.Where(plugin => PluginFilter(plugin)).SelectMany(plugin => plugin.TestItems).Where(test_item => TestItemFilter(test_item)))
                 {
                     TaskAction(test_item, ref 合計項目数, ref NG項目数, lock_obj);
                 };
@@ -90,10 +114,16 @@ namespace Palmtree.Math.Test
                                              (double)NG項目数 / 合計項目数));
         }
 
+        private static bool PluginFilter(IComponentTestPlugin plugin)
+        {
+            //return (plugin.PluginName.StartsWith("sint.compareto_x_ul"));
+            return (true);
+        }
+
         private static bool TestItemFilter(IComponentTestItem test_item)
         {
+            //return (test_item.PluginName.Contains("than") && test_item.PluginName.Contains("_r_r"));
             return (true);
-            //return (test_item.PluginName.StartsWith("sint.bitwiseor_l_ux"));
         }
 
         [HandleProcessCorruptedStateExceptions]
@@ -102,6 +132,28 @@ namespace Palmtree.Math.Test
             string summary;
             try
             {
+                if (_verbose)
+                {
+                    lock (lock_obj)
+                    {
+                        Console.WriteLine(string.Format("***{0}-{1},{2}***", test_item.PluginName, test_item.Index, string.Join(",", new[]
+                        {
+                        UBigInt.PerformanceCounters["bigint/allocatenumber"],
+                        UBigInt.PerformanceCounters["bigint/allocatenumberobject"],
+                        UBigInt.PerformanceCounters["bigint/hooknumberux"],
+                        UBigInt.PerformanceCounters["bigint/hooknumberx"],
+                        UBigInt.PerformanceCounters["rational/allocatenumber"],
+                        UBigInt.PerformanceCounters["rational/allocatenumberobject"],
+                        UBigInt.PerformanceCounters["rational/hooknumberr"],
+                        UBigInt.PerformanceCounters["rational/hooknumberux"],
+                        UBigInt.PerformanceCounters["rational/hooknumberx"],
+                        UBigInt.PerformanceCounters["ubigint/allocateblock"],
+                        UBigInt.PerformanceCounters["ubigint/allocatenumber"],
+                        UBigInt.PerformanceCounters["ubigint/allocatenumberobject"],
+                        UBigInt.PerformanceCounters["ubigint/hooknumberux"],
+                    })));
+                    }
+                }
                 var 結果 = test_item.DoTest(out summary);
                 if (!結果)
                 {
@@ -109,6 +161,8 @@ namespace Palmtree.Math.Test
                     {
                         ++NG項目数;
                         Console.WriteLine(string.Format("NG: {0}-{1} {2}", test_item.PluginName, test_item.Index, summary));
+                        if (_verbose)
+                            Console.ReadLine();
                     }
                 }
             }

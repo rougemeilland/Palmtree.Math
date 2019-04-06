@@ -41,15 +41,15 @@ namespace Palmtree::Math::Core::Internal
         : ResourceHolder
     {
     private:
-        class __GenericChainBufferTag
+        class __NumberObjectRtnlChainBufferTag
             : public __ChainBufferTag
         {
         private:
-            void* _buffer;
+            NUMBER_OBJECT_RTNL* _buffer;
         public:
-            __GenericChainBufferTag(void* buffer);
-            virtual ~__GenericChainBufferTag();
-            virtual BOOL EqualsBufferAddress(void* buffer) override;
+            __NumberObjectRtnlChainBufferTag(NUMBER_OBJECT_RTNL* buffer);
+            virtual ~__NumberObjectRtnlChainBufferTag();
+            virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Destruct() override;
         };
 
@@ -61,7 +61,7 @@ namespace Palmtree::Math::Core::Internal
         public:
             __UINTNumberHandleHookingChainBufferTag(PMC_HANDLE_UINT x);
             virtual ~__UINTNumberHandleHookingChainBufferTag();
-            virtual BOOL EqualsBufferAddress(void* buffer) override;
+            virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
             void virtual Destruct() override;
         };
@@ -74,7 +74,7 @@ namespace Palmtree::Math::Core::Internal
         public:
             __SINTNumberHandleHookingChainBufferTag(PMC_HANDLE_SINT x);
             virtual ~__SINTNumberHandleHookingChainBufferTag();
-            virtual BOOL EqualsBufferAddress(void* buffer) override;
+            virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
             void virtual Destruct() override;
         };
@@ -87,7 +87,7 @@ namespace Palmtree::Math::Core::Internal
         public:
             __DynamicNumberChainBufferTag(NUMBER_OBJECT_RTNL* buffer);
             virtual ~__DynamicNumberChainBufferTag();
-            virtual BOOL EqualsBufferAddress(void* buffer) override;
+            virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
             void virtual Destruct() override;
         };
@@ -100,7 +100,7 @@ namespace Palmtree::Math::Core::Internal
         public:
             __NumberHandleHookingChainBufferTag(NUMBER_OBJECT_RTNL* buffer);
             virtual ~__NumberHandleHookingChainBufferTag();
-            virtual BOOL EqualsBufferAddress(void* buffer) override;
+            virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
             void virtual Destruct() override;
         };
@@ -113,7 +113,7 @@ namespace Palmtree::Math::Core::Internal
         public:
             __StaticNumberChainBufferTag(NUMBER_OBJECT_RTNL* buffer);
             virtual ~__StaticNumberChainBufferTag();
-            virtual BOOL EqualsBufferAddress(void* buffer) override;
+            virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
             void virtual Destruct() override;
         };
@@ -124,7 +124,7 @@ namespace Palmtree::Math::Core::Internal
         public:
             __RootTag();
             virtual ~__RootTag();
-            virtual BOOL EqualsBufferAddress(void* buffer) override;
+            virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Destruct() override;
 
         };
@@ -136,12 +136,11 @@ namespace Palmtree::Math::Core::Internal
         ResourceHolderRTNL();
         virtual ~ResourceHolderRTNL();
 
-        void* AllocateBytes(size_t size);
-        void DeallocateBytes(void* buffer);
-        void UnlinkBytes(void* buffer);
+        NUMBER_OBJECT_RTNL* AllocateNumberObject();
+        void DeallocateBytes(NUMBER_OBJECT_RTNL* buffer);
+        void UnlinkNumberObject(NUMBER_OBJECT_RTNL* buffer);
 
         NUMBER_OBJECT_RTNL* AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator);
-        NUMBER_OBJECT_RTNL* AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, bool f_reduce);
         void HookNumber(NUMBER_OBJECT_RTNL* buffer);
         void HookNumber(PMC_HANDLE_SINT x);
         void HookNumber(PMC_HANDLE_UINT x);
@@ -152,11 +151,17 @@ namespace Palmtree::Math::Core::Internal
         void UnlinkNumber(NUMBER_OBJECT_RTNL* buffer);
         void UnlinkNumber(PMC_HANDLE_SINT x);
         void UnlinkNumber(PMC_HANDLE_UINT x);
-        void AttatchStaticNumber(NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, bool f_reduce);
+        void AttatchStaticNumber(NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator);
         void DetatchStaticNumber(NUMBER_OBJECT_RTNL* buffer);
         void UnlinkStatickNumber(NUMBER_OBJECT_RTNL* buffer);
+
+    private:
+        void UnlinkInternalNumber(PMC_HANDLE_SINT x);
+        void UnlinkInternalNumber(PMC_HANDLE_UINT x);
     };
 
+    extern PMC_HANDLE_SINT DivideExactly(ResourceHolderRTNL& root, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v);
+    extern PMC_HANDLE_UINT DivideExactly(ResourceHolderRTNL& root, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v);
 }
 
 #endif

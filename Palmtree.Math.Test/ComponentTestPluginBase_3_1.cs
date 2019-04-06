@@ -68,11 +68,17 @@ namespace Palmtree.Math.Test
                         return (false);
                     return (true);
                 }
+                catch (AccessViolationException ex)
+                {
+                    Console.WriteLine(string.Format("例外: {0}", ex.Message));
+                    Console.WriteLine(string.Format("場所: {0}", ex.StackTrace));
+                    throw;
+                }
                 catch (Exception ex)
                 {
                     summary = string.Format("({0}) => ({1}) [{2}]",
                                             string.Join(", ", new[] { _p1, _p2, _p3 }.Select(p => p.ToSummaryString())),
-                                            string.Join(", ", new[] { _r1 }.Where(r => !r.IsNull).Select(p => p.ToSummaryString())),
+                                            string.Join(", ", new[] { _r1 }.Where(r => r != null && !r.IsNull).Select(r => r.ToSummaryString())),
                                             new ExceptionDataItem(ex.GetType(), ex.Message).ToSummaryString());
                     throw;
                 }

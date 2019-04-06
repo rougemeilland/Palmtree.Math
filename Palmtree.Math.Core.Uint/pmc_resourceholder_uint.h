@@ -38,50 +38,18 @@ namespace Palmtree::Math::Core::Internal
 {
 
     class ResourceHolderUINT
-        : ResourceHolder
+        : public ResourceHolder
     {
     private:
-        class __GenericChainBufferTag
+        class __NumberObjectUintChainBufferTag
             : public __ChainBufferTag
         {
         private:
-            void* _buffer;
+            NUMBER_OBJECT_UINT* _buffer;
         public:
-            __GenericChainBufferTag(void* buffer);
-            virtual ~__GenericChainBufferTag();
-            virtual BOOL EqualsBufferAddress(void* buffer) override;
-            void virtual Destruct() override;
-        };
-
-        class ____UNIT_TYPE_Array_ChainBufferTag
-            : public __ChainBufferTag
-        {
-        private:
-            __UNIT_TYPE* _buffer;
-            __UNIT_TYPE _word_count;
-            __UNIT_TYPE _check_code;
-        public:
-            ____UNIT_TYPE_Array_ChainBufferTag(__UNIT_TYPE* buffer, __UNIT_TYPE word_count, __UNIT_TYPE check_code);
-            virtual ~____UNIT_TYPE_Array_ChainBufferTag();
-            virtual BOOL EqualsBufferAddress(void* buffer) override;
-            void virtual Clear() override;
-            void virtual Check() override;
-            void virtual Destruct() override;
-        };
-
-        class __StringChainBufferTag
-            : public __ChainBufferTag
-        {
-        private:
-            __UNIT_TYPE* _buffer;
-            __UNIT_TYPE _word_count;
-            __UNIT_TYPE _check_code;
-        public:
-            __StringChainBufferTag(__UNIT_TYPE * buffer, __UNIT_TYPE word_count, __UNIT_TYPE check_code);
-            virtual ~__StringChainBufferTag();
-            virtual BOOL EqualsBufferAddress(void* buffer) override;
-            void virtual Clear() override;
-            void virtual Check() override;
+            __NumberObjectUintChainBufferTag(NUMBER_OBJECT_UINT* buffer);
+            virtual ~__NumberObjectUintChainBufferTag();
+            virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Destruct() override;
         };
 
@@ -93,7 +61,7 @@ namespace Palmtree::Math::Core::Internal
         public:
             __DynamicNumberChainBufferTag(NUMBER_OBJECT_UINT* buffer);
             virtual ~__DynamicNumberChainBufferTag();
-            virtual BOOL EqualsBufferAddress(void* buffer) override;
+            virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
             void virtual Destruct() override;
         };
@@ -106,7 +74,7 @@ namespace Palmtree::Math::Core::Internal
         public:
             __NumberHandleHookingChainBufferTag(NUMBER_OBJECT_UINT* buffer);
             virtual ~__NumberHandleHookingChainBufferTag();
-            virtual BOOL EqualsBufferAddress(void* buffer) override;
+            virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
             void virtual Destruct() override;
         };
@@ -119,7 +87,7 @@ namespace Palmtree::Math::Core::Internal
         public:
             __StaticNumberChainBufferTag(NUMBER_OBJECT_UINT* buffer);
             virtual ~__StaticNumberChainBufferTag();
-            virtual BOOL EqualsBufferAddress(void* buffer) override;
+            virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
             void virtual Destruct() override;
         };
@@ -130,7 +98,7 @@ namespace Palmtree::Math::Core::Internal
         public:
             __RootTag();
             virtual ~__RootTag();
-            virtual BOOL EqualsBufferAddress(void* buffer) override;
+            virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Destruct() override;
 
         };
@@ -139,21 +107,15 @@ namespace Palmtree::Math::Core::Internal
         ResourceHolderUINT();
         virtual ~ResourceHolderUINT();
 
-        void* AllocateBytes(size_t size);
-        void DeallocateBytes(void* buffer);
-        void UnlinkBytes(void* buffer);
+        NUMBER_OBJECT_UINT* AllocateNumberObjectUint();
+        void DeallocateNumberObjectUint(NUMBER_OBJECT_UINT* buffer);
+        void UnlinkNumberObjectUint(NUMBER_OBJECT_UINT* buffer);
 
         __UNIT_TYPE* AllocateBlock(__UNIT_TYPE bit_count);
         void ClearBlock(__UNIT_TYPE* buffer);
         void DeallocateBlock(__UNIT_TYPE* buffer);
         void CheckBlock(__UNIT_TYPE* buffer);
         void UnlinkBlock(__UNIT_TYPE* buffer);
-
-        wchar_t* AllocateString(__UNIT_TYPE count); // 終端ヌル文字を含めた文字数
-        void ClearString(wchar_t* buffer);
-        void DeallocateString(wchar_t* buffer);
-        void CheckString(wchar_t* buffer);
-        void UnlinkString(wchar_t* buffer);
 
         NUMBER_OBJECT_UINT* AllocateNumber(__UNIT_TYPE bit_count);
         void HookNumber(NUMBER_OBJECT_UINT* buffer);

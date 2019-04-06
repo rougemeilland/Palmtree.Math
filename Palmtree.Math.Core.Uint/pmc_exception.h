@@ -277,6 +277,44 @@ namespace Palmtree::Math::Core::Internal
         }
     };
 
+    class KeyNotFoundException
+        : public Exception
+    {
+    public:
+        KeyNotFoundException(const wchar_t* message) noexcept(true)
+            : Exception(PMC_STATUS_KEY_NOT_FOUND, message)
+        {
+        }
+
+        KeyNotFoundException(const KeyNotFoundException& p) noexcept(true)
+            : Exception(p)
+        {
+        }
+
+        virtual ~KeyNotFoundException() noexcept(true)
+        {
+        }
+    };
+
+    class InvalidOperationException
+        : public Exception
+    {
+    public:
+        InvalidOperationException(const wchar_t* message) noexcept(true)
+            : Exception(PMC_STATUS_INVALID_OPERATION, message)
+        {
+        }
+
+        InvalidOperationException(const InvalidOperationException& p) noexcept(true)
+            : Exception(p)
+        {
+        }
+
+        virtual ~InvalidOperationException() noexcept(true)
+        {
+        }
+    };
+
     class InternalErrorException
         : public Exception
     {
@@ -313,6 +351,27 @@ namespace Palmtree::Math::Core::Internal
         }
 
         virtual ~BadBufferException() noexcept(true)
+        {
+        }
+    };
+
+    class SEHException
+        : public Exception
+    {
+    private:
+        const wchar_t* _data;
+    public:
+        SEHException(const wchar_t* message) noexcept(true)
+            : Exception(PMC_STATUS_SEH, message)
+        {
+        }
+
+        SEHException(const SEHException& p) noexcept(true)
+            : Exception(p)
+        {
+        }
+
+        virtual ~SEHException() noexcept(true)
         {
         }
     };

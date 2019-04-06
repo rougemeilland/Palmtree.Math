@@ -44,7 +44,7 @@ namespace Palmtree.Math.CodeGen.TestData.Plugin.Uint
             get
             {
                 return (UBigIntDataSource
-                        .SelectMany(p1 => ExponentDataSource,
+                        .SelectMany(p1 => UExponentDataSource,
                                     (p1, p2) =>
                                     {
                                         if (p1 == 0 && p2 == 0)

@@ -50,12 +50,16 @@ namespace Palmtree::Math::Core::Internal
 #define PMC_STATUS_INSUFFICIENT_BUFFER          (-8)
 #define PMC_STATUS_NOT_ENOUGH_MEMORY            (-9)
 #define PMC_STATUS_NOT_SUPPORTED                (-10)
+#define PMC_STATUS_KEY_NOT_FOUND                (-11)
+#define PMC_STATUS_INVALID_OPERATION            (-12)
 #define PMC_STATUS_INTERNAL_ERROR               (-256)
 #define PMC_STATUS_BAD_BUFFER                   (-257)
+#define PMC_STATUS_SEH                          (-258)
 
 #define PMC_CONSTANT_ZERO       (1)
 #define PMC_CONSTANT_ONE        (2)
-#define PMC_CONSTANT_MINUS_ONE  (3)
+#define PMC_CONSTANT_TEN        (3)
+#define PMC_CONSTANT_MINUS_ONE  (4)
 
 #define PMC_NUMBER_STYLE_NONE                   (0x0000)    // スタイル要素 (先行する空白、後続の空白、桁区切り記号、小数点の記号など) を解析対象の文字列に含めることができないことを示す。
 #define PMC_NUMBER_STYLE_ALLOW_LEADING_WHITE    (0x0001)    // 先行する空白文字を解析対象の文字列に使用できることを示す。有効な空白文字の Unicode 値は、U+0009、U+000A、U+000B、U+000C、U+000D、および U+0020 である。
@@ -64,11 +68,22 @@ namespace Palmtree::Math::Core::Internal
 #define PMC_NUMBER_STYLE_ALLOW_TRAILING_SIGN    (0x0008)    // 数値文字列に後続する符号を使用できることを示す。
 #define PMC_NUMBER_STYLE_ALLOW_PARENTHESES      (0x0010)    // 数値文字列にその数値を囲む一組の括弧を使用できることを示す。括弧は解析対象の文字列が負の値を表すことを示す。
 #define PMC_NUMBER_STYLE_ALLOW_DECIMAL_POINT    (0x0020)    // 数値文字列に小数点を使用できることを示す。
-#define PMC_NUMBER_STYLE_ALLOW_THOUSANDS        (0x0040)    // 先行する空白文字を解析対象の文字列に使用できることを示す。
+#define PMC_NUMBER_STYLE_ALLOW_THOUSANDS        (0x0040)    // 数値文字列にグループ区切り文字を使用できることを示す。
+#define PMC_NUMBER_STYLE_ALLOW_EXPONENT         (0x0080)    // 数値文字列に指数表記を使用できることを示す。
 #define PMC_NUMBER_STYLE_ALLOW_CURRENCY_SYMBOL  (0x0100)    // 数字文字列に通貨記号を含めることができることを示す。
 #define PMC_NUMBER_STYLE_ALLOW_HEX_SPECIFIER    (0x0200)    // 数値文字列が16進数を表すことを示す。
 #define PMC_NUMBER_STYLE_ALLOW_SIGNED_INTEGER   (0x01000000)    // 数値文字列に負の符号または負数を示すカッコを含むことを許可する
 
+#define PMC_MIDPOINT_ROUNDING_HALF_EVEN         (0)     // 数値が 2 つの数値の中間に位置する場合、最も近い偶数方向に丸められる。
+#define PMC_MIDPOINT_ROUNDING_TO_EVEN           (0)     // 数値が 2 つの数値の中間に位置する場合、最も近い偶数方向に丸められる。
+#define PMC_MIDPOINT_ROUNDING_HALF_UP           (1)     // 数値が 2 つの数値の中間に位置する場合、0 から遠い方の近似値に丸められる。
+#define PMC_MIDPOINT_ROUNDING_AWAY_FROM_ZERO    (1)     // 数値が 2 つの数値の中間に位置する場合、0 から遠い方の近似値に丸められる。
+#define PMC_MIDPOINT_ROUNDING_CEILING           (1001)  // 正の無限大に近づくように丸められる。
+#define PMC_MIDPOINT_ROUNDING_DOWN              (1002)  // 0 に近づくように丸められる。
+#define PMC_MIDPOINT_ROUNDING_TRUNCATE          (1002)  // 0 に近づくように丸められる。
+#define PMC_MIDPOINT_ROUNDING_FLOOR             (1003)  // 負の無限大に近づくように丸められる。
+#define PMC_MIDPOINT_ROUNDING_HALF_DOWN         (1004)  // 数値が 2 つの数値の中間に位置する場合、0 から近い方の近似値に丸められる。
+#define PMC_MIDPOINT_ROUNDING_UP                (1005)  // 0 から離れるように丸められる。
 #pragma endregion
 
 
@@ -106,13 +121,7 @@ namespace Palmtree::Math::Core::Internal
 
     typedef _INT32_T PMC_NUMBER_STYLE_CODE;
 
-    typedef struct __tag_PMC_STATISTICS_INFO
-    {
-        long COUNT_MULTI64; // 32bit * 32bit => 64bitの乗算の回数
-        long COUNT_MULTI32; // 16bit * 16bit => 32bitの乗算の回数
-        long COUNT_DIV64;   // 64bit / 32bit => 32bitの除算の回数
-        long COUNT_DIV32;   // 32bit / 16bit => 16bitの除算の回数
-    } PMC_STATISTICS_INFO;
+    typedef _INT32_T PMC_MIDPOINT_ROUNDING_CODE;
 
     typedef struct __tag_PMC_DECIMAL_NUMBER_FORMAT_INFO
     {

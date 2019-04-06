@@ -91,6 +91,8 @@ namespace Palmtree.Math
 
         public string ToString(string format, IFormatProvider provider)
         {
+            if (format == null)
+                format = "G";
             if (provider == null)
                 provider = CultureInfo.CurrentCulture.NumberFormat;
             if (provider is NumberFormatInfo)

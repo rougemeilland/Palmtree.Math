@@ -1,8 +1,8 @@
-#include "pmc_uint_cppinterface.h"
+﻿#include "pmc_uint_cppinterface.h"
 /*
  * The MIT License
  *
- * Copyright 2018 Palmtree Software.
+ * Copyright 2019 Palmtree Software.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@
 
 #include "pmc_sint_internal.h"
 #include "pmc_sint_cppinterface.h"
+#include "pmc_resourceholder_sint.h"
 
 namespace Palmtree::Math::Core::Internal
 {
@@ -43,14 +44,19 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_SINT_Initialize());
     }
 
+    void PMC_SINT_CppInterface::UseObject(PMC_HANDLE_SINT x) noexcept(false)
+    {
+        PMC_UseObject_X(x);
+    }
+
+    void PMC_SINT_CppInterface::UnuseObject(PMC_HANDLE_SINT x) noexcept(false)
+    {
+        PMC_UnuseObject_X(x);
+    }
+
     PMC_STATUS_CODE PMC_SINT_CppInterface::GetConfigurationSettings(const wchar_t * key, wchar_t * value_buffer, _INT32_T value_buffer_size, _INT32_T * count)
     {
         return (PMC_GetConfigurationSettings(key, value_buffer, value_buffer_size, count));
-    }
-
-    void PMC_SINT_CppInterface::GetStatisticsInfo(PMC_STATISTICS_INFO * p)
-    {
-        return (PMC_GetStatisticsInfo(p));
     }
 
     PMC_HANDLE_SINT PMC_SINT_CppInterface::From(_UINT32_T x) noexcept(false)
@@ -128,7 +134,7 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_GetAllocatedMemorySize());
     }
 
-    _UINT32_T PMC_SINT_CppInterface::ToUint32(PMC_HANDLE_SINT p) noexcept(false)
+    _UINT32_T PMC_SINT_CppInterface::ToUInt32(PMC_HANDLE_SINT p) noexcept(false)
     {
         return (PMC_ToUInt32_X(p));
     }
@@ -170,7 +176,12 @@ namespace Palmtree::Math::Core::Internal
 
     size_t PMC_SINT_CppInterface::ToString(PMC_HANDLE_SINT x, const wchar_t * format, const PMC_NUMBER_FORMAT_INFO * format_option, wchar_t * buffer, size_t buffer_size) noexcept(false)
     {
-        return (PMC_ToString(x, format, format_option, buffer, buffer_size));
+        return (PMC_ToString_X(x, format, format_option, buffer, buffer_size));
+    }
+
+    size_t PMC_SINT_CppInterface::ToString(PMC_HANDLE_SINT x_numerator, PMC_HANDLE_UINT x_denominator, const wchar_t * format, const PMC_NUMBER_FORMAT_INFO * format_option, wchar_t * buffer, size_t buffer_size) noexcept(false)
+    {
+        return (PMC_ToString_R(x_numerator, x_denominator, format, format_option, buffer, buffer_size));
     }
 
     void PMC_SINT_CppInterface::InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO * info)
@@ -181,6 +192,11 @@ namespace Palmtree::Math::Core::Internal
     PMC_STATUS_CODE PMC_SINT_CppInterface::TryParse(const wchar_t * source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO * format_option, PMC_HANDLE_SINT * o) noexcept(false)
     {
         return (PMC_TryParse(source, number_styles, format_option, o));
+    }
+
+    PMC_STATUS_CODE PMC_SINT_CppInterface::TryParse(const wchar_t * source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO * format_option, PMC_HANDLE_SINT * o_numerator, PMC_HANDLE_UINT* o_denominator) noexcept(false)
+    {
+        return (PMC_TryParse(source, number_styles, format_option, o_numerator, o_denominator));
     }
 
     PMC_HANDLE_SINT PMC_SINT_CppInterface::Add(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false)
@@ -986,6 +1002,186 @@ namespace Palmtree::Math::Core::Internal
     PMC_HANDLE_UINT PMC_SINT_CppInterface::GreatestCommonDivisor(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false)
     {
         return (PMC_GreatestCommonDivisor_X_X(u, v));
+    }
+
+    PMC_HANDLE_UINT PMC_SINT_CppInterface::FromByteArrayForRTNL(const unsigned char * buffer, size_t count, PMC_HANDLE_SINT * o_numerator) noexcept(false)
+    {
+        return (PMC_FromByteArrayForRTNL(buffer, count, o_numerator));
+    }
+
+    size_t PMC_SINT_CppInterface::ToByteArrayForRTNL(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator, unsigned char * buffer, size_t buffer_size) noexcept(false)
+    {
+        return (PMC_ToByteArrayForRTNL(p_numerator, p_denominator, buffer, buffer_size));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v)
+    {
+        return (PMC_DivideExactly_X_X(u, v));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideRational(_UINT32_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    {
+        return (PMC_Divide_UI_R(u, v_numerator, v_denominator, w_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideRational(_UINT64_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    {
+        return (PMC_Divide_UL_R(u, v_numerator, v_denominator, w_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideRational(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    {
+        return (PMC_Divide_UX_R(u, v_numerator, v_denominator, w_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideRational(_INT32_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    {
+        return (PMC_Divide_I_R(u, v_numerator, v_denominator, w_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideRational(_INT64_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    {
+        return (PMC_Divide_L_R(u, v_numerator, v_denominator, w_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideRational(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    {
+        return (PMC_Divide_X_R(u, v_numerator, v_denominator, w_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideRational(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _UINT32_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    {
+        return (PMC_Divide_R_UI(u_numerator, u_denominator, v, w_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideRational(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _UINT64_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    {
+        return (PMC_Divide_R_UL(u_numerator, u_denominator, v, w_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideRational(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_UINT v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    {
+        return (PMC_Divide_R_UX(u_numerator, u_denominator, v, w_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideRational(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _INT32_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    {
+        return (PMC_Divide_R_I(u_numerator, u_denominator, v, w_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideRational(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _INT64_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    {
+        return (PMC_Divide_R_L(u_numerator, u_denominator, v, w_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideRational(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_SINT v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    {
+        return (PMC_Divide_R_X(u_numerator, u_denominator, v, w_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideRational(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    {
+        return (PMC_Divide_R_R(u_numerator, u_denominator, v_numerator, v_denominator, w_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Round(PMC_HANDLE_SINT x_numerator, PMC_HANDLE_UINT x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode)
+    {
+        return (PMC_Round_R(x_numerator, x_denominator, mode));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Round(PMC_HANDLE_SINT x_numerator, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT * r_denominator)
+    {
+        return (PMC_Round_R_I(x_numerator, x_denominator, decimals, mode, r_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Pow(_INT32_T v, _UINT32_T e) noexcept(false)
+    {
+        return (PMC_Pow_I_UI(v, e));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Pow(_INT64_T v, _UINT32_T e) noexcept(false)
+    {
+        return (PMC_Pow_L_UI(v, e));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Pow(PMC_HANDLE_SINT v, _UINT32_T e) noexcept(false)
+    {
+        return (PMC_Pow_X_UI(v, e));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Pow(_INT32_T v, _INT32_T e, PMC_HANDLE_UINT * r_denominator) noexcept(false)
+    {
+        return (PMC_Pow_I_I(v, e, r_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Pow(_INT64_T v, _INT32_T e, PMC_HANDLE_UINT * r_denominator) noexcept(false)
+    {
+        return (PMC_Pow_L_I(v, e, r_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Pow(PMC_HANDLE_SINT v, _INT32_T e, PMC_HANDLE_UINT * r_denominator) noexcept(false)
+    {
+        return (PMC_Pow_X_I(v, e, r_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Pow(_UINT32_T v, _INT32_T e, PMC_HANDLE_UINT * r_denominator) noexcept(false)
+    {
+        return (PMC_Pow_UI_I(v, e, r_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Pow(_UINT64_T v, _INT32_T e, PMC_HANDLE_UINT * r_denominator) noexcept(false)
+    {
+        return (PMC_Pow_UL_I(v, e, r_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Pow(PMC_HANDLE_UINT v, _INT32_T e, PMC_HANDLE_UINT * r_denominator) noexcept(false)
+    {
+        return (PMC_Pow_UX_I(v, e, r_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Pow(PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, _INT32_T e, PMC_HANDLE_UINT * r_denominator) noexcept(false)
+    {
+        return (PMC_Pow_R_I(v_numerator, v_denominator, e, r_denominator));
+    }
+
+    _INT32_T PMC_SINT_CppInterface::FloorLog10(PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator)
+    {
+        return (PMC_FloorLog10_R(v_numerator, v_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Invert(_INT32_T v, PMC_HANDLE_UINT * r_denominator) noexcept(false)
+    {
+        return (PMC_Invert_I(v, r_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Invert(_INT64_T v, PMC_HANDLE_UINT * r_denominator) noexcept(false)
+    {
+        return (PMC_Invert_L(v, r_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Invert(PMC_HANDLE_SINT v, PMC_HANDLE_UINT * r_denominator) noexcept(false)
+    {
+        return (PMC_Invert_X(v, r_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Invert(_UINT32_T v, PMC_HANDLE_UINT * r_denominator) noexcept(false)
+    {
+        return (PMC_Invert_UI(v, r_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Invert(_UINT64_T v, PMC_HANDLE_UINT * r_denominator) noexcept(false)
+    {
+        return (PMC_Invert_UL(v, r_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Invert(PMC_HANDLE_UINT v, PMC_HANDLE_UINT * r_denominator) noexcept(false)
+    {
+        return (PMC_Invert_UX(v, r_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::Invert(PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * r_denominator) noexcept(false)
+    {
+        return (PMC_Invert_R(v_numerator, v_denominator, r_denominator));
     }
 
 }

@@ -128,7 +128,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_X_I_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v)
+    static NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v)
     {
         if (u->IS_ZERO)
         {
@@ -210,7 +210,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_X_L_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
+    static NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
     {
         if (u->IS_ZERO)
         {
@@ -390,7 +390,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
+    NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->IS_ZERO)
         {
@@ -468,7 +468,8 @@ namespace Palmtree::Math::Core::Internal
                     root.DeallocateBlock(work_v_buf);
                     root.DeallocateBlock(work_u_buf);
 
-                    LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
+                    if (k > 0)
+                        LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
                     root.CheckNumber(w);
                     CommitNumber(w);
                     root.UnlinkNumber(w);
@@ -478,76 +479,76 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(u) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_I_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_UI_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_X_I_Imp(nv, u);
+        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_UX_UI_Imp(nv, u);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_X_I(PMC_HANDLE_UINT u, _UINT32_T v)
+    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(v) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_X_I;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_UX_I;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_X_I_Imp(nu, v);
+        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_UX_UI_Imp(nu, v);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_L_X(_UINT64_T u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(u) * 8)
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_L_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_UL_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_X_L_Imp(nv, u);
+        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_UX_UL_Imp(nv, u);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_X_L(PMC_HANDLE_UINT u, _UINT64_T v)
+    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(v) * 8)
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_X_L;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_UX_L;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_X_L_Imp(nu, v);
+        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_UX_UL_Imp(nu, v);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
     {
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_X_X_Imp(nu, nv);
+        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_UX_UX_Imp(nu, nv);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);

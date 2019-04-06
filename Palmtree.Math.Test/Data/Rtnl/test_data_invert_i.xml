@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dataitems>
+  <dataitem index="0">
+    <param1 type="int32">-1</param1>
+    <result1 type="rational">10,03,01,01,01,01,01</result1>
+  </dataitem>
+  <dataitem index="1">
+    <param1 type="int32">0</param1>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="2">
+    <param1 type="int32">1</param1>
+    <result1 type="rational">10,01,01,01,01,01,01</result1>
+  </dataitem>
+</dataitems>

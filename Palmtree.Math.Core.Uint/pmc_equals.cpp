@@ -31,7 +31,7 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    static bool Equals_X_I_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v)
+    static bool Equals_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v)
     {
         if (u->IS_ZERO)
         {
@@ -62,7 +62,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static bool Equals_X_L_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
+    static bool Equals_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
     {
         if (u->IS_ZERO)
         {
@@ -137,7 +137,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static bool Equals_X_X_Imp(__UNIT_TYPE* u, __UNIT_TYPE* v, __UNIT_TYPE count)
+    static bool Equals_UX_UX_Imp(__UNIT_TYPE* u, __UNIT_TYPE* v, __UNIT_TYPE count)
     {
         while (count > 0)
         {
@@ -155,51 +155,51 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    bool PMC_Equals_I_X(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    bool PMC_Equals_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(u) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_equals.cpp;PMC_Equals_I_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_equals.cpp;PMC_Equals_UI_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        return (EPILOGUE(Equals_X_I_Imp(nv, u)));
+        return (EPILOGUE(Equals_UX_UI_Imp(nv, u)));
     }
 
-    bool PMC_Equals_X_I(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false)
+    bool PMC_Equals_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(v) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_equals.cpp;PMC_Equals_X_I;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_equals.cpp;PMC_Equals_UX_I;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        return (EPILOGUE(Equals_X_I_Imp(nu, v)));
+        return (EPILOGUE(Equals_UX_UI_Imp(nu, v)));
     }
 
-    bool PMC_Equals_L_X(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false)
+    bool PMC_Equals_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(u) * 8)
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_equals.cpp;PMC_Equals_L_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_equals.cpp;PMC_Equals_UL_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        return (EPILOGUE(Equals_X_L_Imp(nv, u)));
+        return (EPILOGUE(Equals_UX_UL_Imp(nv, u)));
     }
 
-    bool PMC_Equals_X_L(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false)
+    bool PMC_Equals_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(v) * 8)
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_equals.cpp;PMC_Equals_X_L;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_equals.cpp;PMC_Equals_UX_L;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        return (EPILOGUE(Equals_X_L_Imp(nu, v)));
+        return (EPILOGUE(Equals_UX_UL_Imp(nu, v)));
     }
 
-    bool PMC_Equals_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
+    bool PMC_Equals_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
     {
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
@@ -219,7 +219,7 @@ namespace Palmtree::Math::Core::Internal
             else
             {
                 // u > 0 && v > 0 かつ u のビット長と v のビット長が等しい場合
-                return (EPILOGUE(Equals_X_X_Imp(nu->BLOCK, nv->BLOCK, nu->UNIT_WORD_COUNT)));
+                return (EPILOGUE(Equals_UX_UX_Imp(nu->BLOCK, nv->BLOCK, nu->UNIT_WORD_COUNT)));
             }
         }
     }

@@ -17,6 +17,7 @@
     <cflag on="Debug">-g</cflag>
     <cflag on="Debug">-D_DEBUG</cflag>
     <cflag on="Release">-O2</cflag>
+    <cflag>-std=c++1z</cflag>
   </cflags>
   <linker>g++</linker>
   <ldflags>

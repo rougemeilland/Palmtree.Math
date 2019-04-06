@@ -61,7 +61,7 @@ using System;
 
         public override string ToSummaryString()
         {
-            throw new ApplicationException();
+            return ("(null");
         }
     }
 }

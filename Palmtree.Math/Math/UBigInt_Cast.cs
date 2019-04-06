@@ -42,6 +42,11 @@ namespace Palmtree.Math
             return (new UBigInt(EngineObject.From(x)));
         }
 
+        public static UBigInt From(BigInt x)
+        {
+            return (new UBigInt(BigInt.EngineObject.ToUBigInt(x.Handle)));
+        }
+
         public static UBigInt From(UInt32 x)
         {
             return (new UBigInt(EngineObject.From(x)));
@@ -52,9 +57,9 @@ namespace Palmtree.Math
             return (new UBigInt(EngineObject.From(x)));
         }
 
-        public static UBigInt From(BigInt x)
+        public static UBigInt From(Rational x)
         {
-            return (new UBigInt(BigInt.EngineObject.ToUBigInt(x.Handle)));
+            return (new UBigInt(Rational.EngineObject.ToUBigInt(x.Handle)));
         }
 
         public static explicit operator UBigInt(Int32 x)
@@ -77,12 +82,10 @@ namespace Palmtree.Math
             return (new UBigInt(EngineObject.From(x)));
         }
 
-#if false
-        public static explicit operator UBigInt(BigInt x)
+        public static explicit operator UBigInt(Rational x)
         {
-            return (new UBigInt(BigInt.EngineObject.ToUBigInt(x.Handle)));
+            return (new UBigInt(Rational.EngineObject.ToUBigInt(x.Handle)));
         }
-#endif
 
         public Int32 ToInt32()
         {
@@ -92,6 +95,11 @@ namespace Palmtree.Math
         public Int64 ToInt64()
         {
             return (EngineObject.ToInt64(Handle));
+        }
+
+        public BigInt ToBigInt()
+        {
+            return (new BigInt(BigInt.EngineObject.From(Handle)));
         }
 
         public UInt32 ToUInt32()
@@ -104,9 +112,9 @@ namespace Palmtree.Math
             return (EngineObject.ToUInt64(Handle));
         }
 
-        public BigInt ToBigInt()
+        public Rational ToRational()
         {
-            return (new BigInt(BigInt.EngineObject.From(Handle)));
+            return (new Rational(Rational.EngineObject.From(Handle)));
         }
 
         public static explicit operator Int32(UBigInt x)
@@ -129,12 +137,10 @@ namespace Palmtree.Math
             return (EngineObject.ToUInt64(x.Handle));
         }
 
-#if false
-        public static explicit operator BigInt(UBigInt x)
+        public static explicit operator Rational(UBigInt x)
         {
-            return (new BigInt(BigInt.EngineObject.From(x.Handle)));
+            return (new Rational(Rational.EngineObject.From(x.Handle)));
         }
-#endif
 
         #endregion
     }

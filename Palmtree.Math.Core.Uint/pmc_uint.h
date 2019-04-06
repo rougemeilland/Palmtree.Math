@@ -39,6 +39,12 @@ namespace Palmtree::Math::Core::Internal
 #define __THROWS
 #endif
 
+#ifdef PALMTREEMATHCOREUINT_EXPORTS
+#define __DLLEXPORT_UINT __declspec(dllexport)
+#else
+#define __DLLEXPORT_UINT __declspec(dllimport)
+#endif
+
 #pragma region 型の定義
 struct __tag_PMC_HANDLE_UINT
 {

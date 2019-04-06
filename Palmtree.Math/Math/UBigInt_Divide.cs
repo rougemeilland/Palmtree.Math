@@ -67,6 +67,11 @@ namespace Palmtree.Math
             return (new BigInt(BigInt.EngineObject.DivRem(Handle, v.Handle, out Core.UBigIntHandle r)));
         }
 
+        public Rational Divide(Rational v)
+        {
+            return (new Rational(Rational.EngineObject.Divide(Handle, v.Handle)));
+        }
+
         public static UInt32 operator /(UInt32 u, UBigInt v)
         {
             var q = EngineObject.DivRem(u, v.Handle, out UInt32 r);

@@ -32,12 +32,12 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    _INT32_T PMC_ToInt32_X(PMC_HANDLE_UINT p) noexcept(false)
+    _INT32_T PMC_ToInt32_UX(PMC_HANDLE_UINT p) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) < sizeof(_UINT32_T))
         {
             // 32bit未満のCPUは未対応
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt32_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt32_UX;1");
         }
         NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
         if (np->UNIT_BIT_COUNT > sizeof(_UINT32_T) * 8)
@@ -49,12 +49,12 @@ namespace Palmtree::Math::Core::Internal
         return ((_INT32_T)np->BLOCK[0]);
     }
 
-    _INT64_T PMC_ToInt64_X(PMC_HANDLE_UINT p) noexcept(false)
+    _INT64_T PMC_ToInt64_UX(PMC_HANDLE_UINT p) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) * 2 < sizeof(_UINT64_T))
         {
             // 32bit未満のCPUは未対応
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt64_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt64_UX;1");
         }
         NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
         if (np->UNIT_BIT_COUNT > sizeof(_UINT64_T) * 8)
@@ -78,16 +78,16 @@ namespace Palmtree::Math::Core::Internal
                 return (_FROMWORDTODWORD((_UINT32_T)np->BLOCK[1], (_UINT32_T)np->BLOCK[0]));
             }
             else
-                throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt64_X;2");
+                throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt64_UX;2");
         }
     }
 
-    _UINT32_T PMC_ToUInt32_X(PMC_HANDLE_UINT p) noexcept(false)
+    _UINT32_T PMC_ToUInt32_UX(PMC_HANDLE_UINT p) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) < sizeof(_UINT32_T))
         {
             // 32bit未満のCPUは未対応
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt32_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt32_UX;1");
         }
         NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
         if (np->UNIT_BIT_COUNT > sizeof(_UINT32_T) * 8)
@@ -95,12 +95,12 @@ namespace Palmtree::Math::Core::Internal
         return (np->IS_ZERO ? 0 : (_UINT32_T)np->BLOCK[0]);
     }
 
-    _UINT64_T PMC_ToUInt64_X(PMC_HANDLE_UINT p) noexcept(false)
+    _UINT64_T PMC_ToUInt64_UX(PMC_HANDLE_UINT p) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) * 2 < sizeof(_UINT64_T))
         {
             // 32bit未満のCPUは未対応
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt64_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt64_UX;1");
         }
         NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
         if (np->UNIT_BIT_COUNT > sizeof(_UINT64_T) * 8)
@@ -120,7 +120,7 @@ namespace Palmtree::Math::Core::Internal
                 return (_FROMWORDTODWORD((_UINT32_T)np->BLOCK[1], (_UINT32_T)np->BLOCK[0]));
             }
             else
-                throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt64_X;2");
+                throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt64_UX;2");
         }
     }
 

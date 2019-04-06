@@ -62,7 +62,7 @@ namespace Palmtree::Math::Core::Internal
                 _COPY_MEMORY_UNIT(r->BLOCK, u->BLOCK, u->UNIT_WORD_COUNT);
             else
             {
-                DivRem_X_X(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, nullptr, r->BLOCK);
+                DivRem_UX_UX(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, nullptr, r->BLOCK);
                 root.CheckBlock(work_v_buf);
                 root.CheckNumber(r);
             }
@@ -122,7 +122,7 @@ namespace Palmtree::Math::Core::Internal
 
             // v2 を v % m に設定する。
 
-            DivRem_X_X(v->BLOCK, v->UNIT_WORD_COUNT, m_buf, m_count, work_v_buf, nullptr, v_2_buf);
+            DivRem_UX_UX(v->BLOCK, v->UNIT_WORD_COUNT, m_buf, m_count, work_v_buf, nullptr, v_2_buf);
             root.CheckBlock(work_v_buf);
             root.CheckBlock(v_2_buf);
             v_count = m_count;
@@ -148,12 +148,12 @@ namespace Palmtree::Math::Core::Internal
         e_mask = e_mask >> _LZCNT_ALT_UNIT(e->BLOCK[e_count - 1]);
         // e_mask は e の最上位 bit を示しているはず
         // かつ、e は 2以上であるので、同時に最下位 bit であることはあり得ない
-        _COPY_MEMORY_UNIT(work_1_buf, v_2_buf, m_count);
+        _COPY_MEMORY_UNIT(work_1_buf, v_2_buf, v_count);
 
-#ifdef _DEBUG
-        if ((e_mask & e->BLOCK[e_count - 1]) == 0)
-            *((int*)0) = 0;
-#endif
+//#ifdef _DEBUG
+//        if ((e_mask & e->BLOCK[e_count - 1]) == 0)
+//            *((int*)0) = 0;
+//#endif
 
         __UNIT_TYPE* u_ptr = work_1_buf;
         __UNIT_TYPE* v_ptr = v_2_buf;
@@ -175,7 +175,7 @@ namespace Palmtree::Math::Core::Internal
 
             // w := u * u を計算する
             root.ClearBlock(w_ptr);
-            Multiply_X_X_Imp(u_ptr, u_count, u_ptr, u_count, w_ptr);
+            Multiply_UX_UX_Imp(u_ptr, u_count, u_ptr, u_count, w_ptr);
             root.CheckBlock(work_1_buf);
             root.CheckBlock(work_2_buf);
             SwapPointer(&u_ptr, &w_ptr);
@@ -188,7 +188,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 root.ClearBlock(work_v_buf);
                 root.ClearBlock(w_ptr);
-                DivRem_X_X(u_ptr, u_count, m_buf, m_count, work_v_buf, nullptr, w_ptr);
+                DivRem_UX_UX(u_ptr, u_count, m_buf, m_count, work_v_buf, nullptr, w_ptr);
                 root.CheckBlock(work_v_buf);
                 root.CheckBlock(work_1_buf);
                 root.CheckBlock(work_2_buf);
@@ -210,7 +210,7 @@ namespace Palmtree::Math::Core::Internal
 
                 // w := u * v を計算する
                 root.ClearBlock(w_ptr);
-                Multiply_X_X_Imp(u_ptr, u_count, v_ptr, v_count, w_ptr);
+                Multiply_UX_UX_Imp(u_ptr, u_count, v_ptr, v_count, w_ptr);
                 root.CheckBlock(work_1_buf);
                 root.CheckBlock(work_2_buf);
                 SwapPointer(&u_ptr, &w_ptr);
@@ -223,7 +223,7 @@ namespace Palmtree::Math::Core::Internal
                 {
                     root.ClearBlock(work_v_buf);
                     root.ClearBlock(w_ptr);
-                    DivRem_X_X(u_ptr, u_count, m_buf, m_count, work_v_buf, nullptr, w_ptr);
+                    DivRem_UX_UX(u_ptr, u_count, m_buf, m_count, work_v_buf, nullptr, w_ptr);
                     root.CheckBlock(work_v_buf);
                     root.CheckBlock(work_1_buf);
                     root.CheckBlock(work_2_buf);
@@ -254,7 +254,7 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    static NUMBER_OBJECT_UINT* PMC_ModPow_X_X_X_Imp(NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT* e, NUMBER_OBJECT_UINT* m)
+    static NUMBER_OBJECT_UINT* PMC_ModPow_UX_UX_UX_Imp(NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT* e, NUMBER_OBJECT_UINT* m)
     {
         if (m->IS_ZERO)
         {
@@ -344,13 +344,13 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_ModPow_X_X_X(PMC_HANDLE_UINT v, PMC_HANDLE_UINT e, PMC_HANDLE_UINT m) noexcept(false)
+    PMC_HANDLE_UINT PMC_ModPow_UX_UX_UX(PMC_HANDLE_UINT v, PMC_HANDLE_UINT e, PMC_HANDLE_UINT m) noexcept(false)
     {
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         NUMBER_OBJECT_UINT* ne = GET_NUMBER_OBJECT(e, L"e");
         NUMBER_OBJECT_UINT* nm = GET_NUMBER_OBJECT(m, L"m");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nr = PMC_ModPow_X_X_X_Imp(nv, ne, nm);
+        NUMBER_OBJECT_UINT* nr = PMC_ModPow_UX_UX_UX_Imp(nv, ne, nm);
         root.HookNumber(nr);
         PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);

@@ -29,7 +29,8 @@ namespace Palmtree.Math.Core
     {
         PMC_CONSTANT_ZERO = 1,
         PMC_CONSTANT_ONE = 2,
-        PMC_CONSTANT_MINUS_ONE = 3,
+        PMC_CONSTANT_TEN = 3,
+        PMC_CONSTANT_MINUS_ONE = 4,
     }
 }
 

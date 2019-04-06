@@ -34,6 +34,9 @@
 #include "pmc_internal.h"
 
 
+#define __EFLAGS_DF    (1 << 10) // 方向フラグのビットマスク
+
+
 #ifdef __cplusplus
 namespace Palmtree::Math::Core::Internal
 {
@@ -59,9 +62,65 @@ namespace Palmtree::Math::Core::Internal
     __inline static void _COPY_MEMORY_UNIT(__UNIT_TYPE* d, const __UNIT_TYPE* s, __UNIT_TYPE count)
     {
 #ifdef _M_IX86
-        __movsd((unsigned long *)d, (unsigned long *)s, (unsigned long)count);
+        _COPY_MEMORY_32(d, s, count);
 #elif defined(_M_X64)
-        __movsq(d, s, count);
+        _COPY_MEMORY_64(d, s, count);
+#else
+#error unknown platform
+#endif
+    }
+
+    __inline static void __SET_DIRECTION_FLAG()
+    {
+#ifdef _MSC_VER
+        __writeeflags(__readeflags() | __EFLAGS_DF);
+#elif defined(__GNUC__)
+        __asm__("std");
+#else
+#error unknown compiler
+#endif
+    }
+
+    __inline static void __CLEAR_DIRECTION_FLAG()
+    {
+#ifdef _MSC_VER
+        __writeeflags(__readeflags() & ~__EFLAGS_DF);
+#elif defined(__GNUC__)
+        __asm__("cld");
+#else
+#error unknown compiler
+#endif
+    }
+
+    __inline static void _COPY_MEMORY_REV_BYTE(void* d, const void* s, size_t count)
+    {
+        __SET_DIRECTION_FLAG();
+        __movsb((unsigned char*)d + count - 1, (const unsigned char*)s + count - 1, count);
+        __CLEAR_DIRECTION_FLAG();
+    }
+
+    __inline static void _COPY_MEMORY_REV_32(_UINT32_T* d, const _UINT32_T* s, _UINT32_T count)
+    {
+        __SET_DIRECTION_FLAG();
+        __movsd((unsigned long *)(d + count - 1), (unsigned long *)(s + count - 1), (unsigned long)count);
+        __CLEAR_DIRECTION_FLAG();
+    }
+
+#ifdef _M_X64
+    __inline static void _COPY_MEMORY_REV_64(_UINT64_T* d, const _UINT64_T* s, _UINT64_T count)
+    {
+        __SET_DIRECTION_FLAG();
+        __movsq(d + count - 1, s + count - 1, count);
+        __CLEAR_DIRECTION_FLAG();
+    }
+#endif
+
+    __inline static void _COPY_MEMORY_REV_UNIT(__UNIT_TYPE* d, const __UNIT_TYPE* s, __UNIT_TYPE count)
+    {
+#ifdef _M_IX86
+        _COPY_MEMORY_REV_32(d, s, count);
+#elif defined(_M_X64)
+        _COPY_MEMORY_REV_64(d, s, count);
 #else
 #error unknown platform
 #endif
@@ -92,9 +151,9 @@ namespace Palmtree::Math::Core::Internal
     __inline static void _ZERO_MEMORY_UNIT(__UNIT_TYPE* d, __UNIT_TYPE count)
     {
 #ifdef _M_IX86
-        __stosd((unsigned long*)d, 0, (unsigned long)count);
+        _ZERO_MEMORY_32(d, count);
 #elif defined(_M_X64)
-        __stosq(d, 0, count);
+        _ZERO_MEMORY_64(d, count);
 #else
 #error unknown platform
 #endif
@@ -125,9 +184,9 @@ namespace Palmtree::Math::Core::Internal
     __inline static void _FILL_MEMORY_UNIT(__UNIT_TYPE* d, __UNIT_TYPE x, __UNIT_TYPE count)
     {
 #ifdef _M_IX86
-        __stosd((unsigned long*)d, x, (unsigned long)count);
+        _FILL_MEMORY_32(d, x, count);
 #elif defined(_M_X64)
-        __stosq(d, x, count);
+        _FILL_MEMORY_64(d, x, count);
 #else
 #error unknown platform
 #endif
@@ -248,6 +307,12 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
+#ifdef PALMTREEMATHCOREUINT_EXPORTS
+#define __DLLEXPORT_DIVREM __declspec(dllexport)
+#else
+#define __DLLEXPORT_DIVREM __declspec(dllimport)
+#endif
+
     // ワード除算関数。一般的な用途向けである。
 #ifdef _MSC_VER
 #ifdef _M_IX86
@@ -259,7 +324,7 @@ namespace Palmtree::Math::Core::Internal
         return ((_UINT32_T)(t / v));
     }
 #elif defined(_M_X64)
-    extern __UNIT_TYPE _DIVREM_UNIT(__UNIT_TYPE u_high, __UNIT_TYPE u_low, __UNIT_TYPE v, __UNIT_TYPE *r);
+    extern __UNIT_TYPE __DLLEXPORT_DIVREM _DIVREM_UNIT(__UNIT_TYPE u_high, __UNIT_TYPE u_low, __UNIT_TYPE v, __UNIT_TYPE *r);
 #else
 #error unknown platform
 #endif
@@ -291,7 +356,7 @@ namespace Palmtree::Math::Core::Internal
         return ((_UINT32_T)(t % v));
     }
 #elif defined(_M_X64)
-    extern __UNIT_TYPE _DIVREM_SINGLE_UNIT(__UNIT_TYPE r, __UNIT_TYPE u, __UNIT_TYPE v, __UNIT_TYPE *q);
+    extern __UNIT_TYPE __DLLEXPORT_DIVREM _DIVREM_SINGLE_UNIT(__UNIT_TYPE r, __UNIT_TYPE u, __UNIT_TYPE v, __UNIT_TYPE *q);
 #else
 #error unknown platform
 #endif
@@ -322,7 +387,7 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    __inline static __UNIT_TYPE _ROTATE_L_UNIT(__UNIT_TYPE x, int count)
+    __inline static __UNIT_TYPE _ROTATE_UL_UNIT(__UNIT_TYPE x, int count)
     {
 #ifdef _M_IX86
         return (_rotl(x, count));
@@ -449,31 +514,13 @@ namespace Palmtree::Math::Core::Internal
 
     __inline static int _LZCNT_ALT_UNIT(__UNIT_TYPE x)
     {
-        if (x == 0)
-            return (sizeof(x) * 8);
 #ifdef _M_IX86
-        DWORD pos;
-#ifdef _MSC_VER
-        _BitScanReverse(&pos, x);
-#elif defined(__GNUC__)
-        __asm__("bsrl %1, %0" : "=r"(pos) : "rm"(x));
-#else
-#error unknown compiler
-#endif
+        return (_LZCNT_ALT_32(x));
 #elif defined(_M_X64)
-#ifdef _MSC_VER
-        DWORD pos;
-        _BitScanReverse64(&pos, x);
-#elif defined(__GNUC__)
-        _UINT64_T pos;
-        __asm__("bsrq %1, %0" : "=r"(pos) : "rm"(x));
-#else
-#error unknown compiler
-#endif
+        return (_LZCNT_ALT_64(x));
 #else
 #error unknown platform
 #endif
-        return (sizeof(x) * 8 - 1 - pos);
     }
 
     __inline static int _TZCNT_UNIT(__UNIT_TYPE x)
@@ -556,18 +603,9 @@ namespace Palmtree::Math::Core::Internal
     __inline static __UNIT_TYPE _REVERSE_BIT_ORDER_UNIT(__UNIT_TYPE x)
     {
 #ifdef _M_IX86
-        x = ((x & 0x55555555U) << 1) | ((x & 0xaaaaaaaaU) >> 1);
-        x = ((x & 0x33333333U) << 2) | ((x & 0xccccccccU) >> 2);
-        x = ((x & 0x0f0f0f0fU) << 4) | ((x & 0xf0f0f0f0U) >> 4);
-        x = ((x & 0x00ff00ffU) << 8) | ((x & 0xff00ff00U) >> 8);
-        x = (x << 16) | (x >> 16);
+        return (_REVERSE_BIT_ORDER_32(x));
 #elif defined(_M_X64)
-        x = ((x & 0x5555555555555555UL) << 1) | ((x & 0xaaaaaaaaaaaaaaaaUL) >> 1);
-        x = ((x & 0x3333333333333333UL) << 2) | ((x & 0xccccccccccccccccUL) >> 2);
-        x = ((x & 0x0f0f0f0f0f0f0f0fUL) << 4) | ((x & 0xf0f0f0f0f0f0f0f0UL) >> 4);
-        x = ((x & 0x00ff00ff00ff00ffUL) << 8) | ((x & 0xff00ff00ff00ff00UL) >> 8);
-        x = ((x & 0x0000ffff0000ffffUL) << 16) | ((x & 0xffff0000ffff0000UL) >> 16);
-        x = (x << 32) | (x >> 32);
+        return (_REVERSE_BIT_ORDER_64(x));
 #else
 #error unknown platform
 #endif

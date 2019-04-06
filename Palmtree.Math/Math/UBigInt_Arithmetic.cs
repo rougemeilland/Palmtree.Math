@@ -37,6 +37,16 @@ namespace Palmtree.Math
             return (new UBigInt(EngineObject.Pow(Handle, e)));
         }
 
+        public Rational Pow(Int32 e)
+        {
+            return (new Rational(Rational.EngineObject.Pow(Handle, e)));
+        }
+
+        public Rational Invert()
+        {
+            return (new Rational(Rational.EngineObject.Invert(Handle)));
+        }
+
         public UBigInt ModPow(UBigInt e, UBigInt m)
         {
             return (new UBigInt(EngineObject.ModPow(Handle, e.Handle, m.Handle)));

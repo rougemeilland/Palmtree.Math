@@ -44,7 +44,10 @@ namespace Palmtree.Math.Test
             PluginName = string.Format("{0}.{1}", category, plugin_name);
             _data_file_path = Path.Combine(Path.GetDirectoryName(typeof(ComponentTestPluginBase).Assembly.Location), "Data", category, data_file_name);
             DataFileSize = new FileInfo(_data_file_path).Length;
+            DataFileID = (category + "." + data_file_name).ToLower();
         }
+
+        public string DataFileID { get; }
 
         public long DataFileSize { get; }
 

@@ -27,6 +27,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
+
 namespace Palmtree.Math.Core
 {
     partial class BigIntEngine
@@ -394,7 +395,10 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_GetConstantValue_I(Int32 type, out IntPtr value);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
-        private static extern Int32 PMCCS_GetHashCode(IntPtr p, out Int32 r);
+        private static extern Int32 PMCCS_GetHashCode_X(IntPtr p, out Int32 r);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll", CharSet = CharSet.Unicode)]
+        private static extern Int32 PMCCS_GetPerformanceCounter(string key, out Int64 value);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
         private static extern Int32 PMCCS_GreatestCommonDivisor_I_UX(Int32 u, IntPtr v, out IntPtr w);
@@ -518,6 +522,15 @@ namespace Palmtree.Math.Core
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
         private static extern Int32 PMCCS_OneComplement_X(IntPtr u, out IntPtr w);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_Pow_I_UI(Int32 x, UInt32 n, out IntPtr v);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_Pow_L_UI(Int64 x, UInt32 n, out IntPtr v);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_Pow_X_UI(IntPtr x, UInt32 n, out IntPtr v);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
         private static extern Int32 PMCCS_Remainder_I_UX(Int32 u, IntPtr v, out Int32 r);
@@ -648,9 +661,6 @@ namespace Palmtree.Math.Core
         [DllImport("Palmtree.Math.Core.Sint.dll")]
         private static extern UInt32 PMCCS_SINT_Initialize();
 
-        [DllImport("Palmtree.Math.Core.Sint.dll")]
-        private static extern void PMCCS_GetStatisticsInfo([Out]PMC_STATISTICS_INFO p);
-
         [DllImport("Palmtree.Math.Core.Sint.dll", CharSet = CharSet.Unicode)]
         private static extern Int32 PMCCS_GetConfigurationSettings(string key, StringBuilder value_buffer, int value_buffer_size, out Int32 count);
 
@@ -658,7 +668,7 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_Parse(string source, int number_styles, [In]PMC_NUMBER_FORMAT_INFO format_option, out IntPtr o);
 
         [DllImport("Palmtree.Math.Core.Sint.dll", CharSet = CharSet.Unicode)]
-        private static extern Int32 PMCCS_ToString(IntPtr x, string format, [In]PMC_NUMBER_FORMAT_INFO format_option, StringBuilder buffer, int buffer_size, out int size);
+        private static extern Int32 PMCCS_ToString_X(IntPtr x, string format, [In]PMC_NUMBER_FORMAT_INFO format_option, StringBuilder buffer, int buffer_size, out int size);
 
         [DllImport("Palmtree.Math.Core.Sint.dll", CharSet = CharSet.Unicode)]
         private static extern Int32 PMCCS_TryParse(string source, int number_styles, [In]PMC_NUMBER_FORMAT_INFO format_option, out IntPtr o);
@@ -666,8 +676,8 @@ namespace Palmtree.Math.Core
         [DllImport("Palmtree.Math.Core.Sint.dll", CharSet = CharSet.Unicode, EntryPoint = "PMCCS_GetConfigurationSettings")]
         private static extern Int32 PMCCS_GetConfigurationSettingCount(string key, IntPtr value_buffer, int value_buffer_size, out Int32 count);
 
-        [DllImport("Palmtree.Math.Core.Sint.dll", CharSet = CharSet.Unicode, EntryPoint = "PMCCS_ToString")]
-        private static extern Int32 PMCCS_GetStringCount(IntPtr x, string format, [In]PMC_NUMBER_FORMAT_INFO format_option, IntPtr buffer, int buffer_size, out int size);
+        [DllImport("Palmtree.Math.Core.Sint.dll", CharSet = CharSet.Unicode, EntryPoint = "PMCCS_ToString_X")]
+        private static extern Int32 PMCCS_GetStringCount_X(IntPtr x, string format, [In]PMC_NUMBER_FORMAT_INFO format_option, IntPtr buffer, int buffer_size, out int size);
 
         #endregion
     }

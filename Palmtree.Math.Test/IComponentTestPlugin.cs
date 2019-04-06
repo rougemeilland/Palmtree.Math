@@ -30,6 +30,7 @@ namespace Palmtree.Math.Test
     interface IComponentTestPlugin
     {
         string PluginName { get; }
+        string DataFileID { get; }
         long DataFileSize { get; }
         IEnumerable<IComponentTestItem> TestItems { get; }
     }

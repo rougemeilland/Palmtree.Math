@@ -37,6 +37,8 @@ namespace Palmtree.Math.Test
 
         public virtual bool IsNull => false;
 
+        public virtual bool IsRational => false;
+
         public virtual bool IsBigInt => false;
 
         public virtual bool IsUBigInt => false;
@@ -82,6 +84,12 @@ namespace Palmtree.Math.Test
                         var bytes = text.Split(',').Select(x => byte.Parse(x, NumberStyles.HexNumber)).ToArray();
                         var p = UBigInt.FromByteArray(bytes);
                         return (new UBigIntDataItem(p));
+                    }
+                case "rational":
+                    {
+                        var bytes = text.Split(',').Select(x => byte.Parse(x, NumberStyles.HexNumber)).ToArray();
+                        var p = Rational.FromByteArray(bytes);
+                        return (new RationalDataItem(p));
                     }
                 case "string":
                     return (new XStringDataItem(text));
@@ -219,6 +227,11 @@ namespace Palmtree.Math.Test
         }
 
         public virtual NullDataItem ToNull()
+        {
+            throw new InvalidCastException();
+        }
+
+        public virtual RationalDataItem ToRational()
         {
             throw new InvalidCastException();
         }

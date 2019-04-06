@@ -30,155 +30,74 @@
 #define PMC_RESOURCEHOLDER_H
 
 
-#include "pmc_exception.h"
+#include "pmc_uint.h"
 
 
 namespace Palmtree::Math::Core::Internal
 {
 
-    class Lock
+    class __DLLEXPORT_UINT ResourceHolder
     {
     public:
-        Lock();
-        ~Lock();
-    };
-
-    class ResourceHolder
-    {
-    protected:
-        class __ChainBufferTag
+        class __DLLEXPORT_UINT __ChainBufferTag
         {
         private:
             __ChainBufferTag* _next;
             __ChainBufferTag* _prev;
 
         public:
-            __ChainBufferTag()
-            {
-                _next = this;
-                _prev = this;
-            }
-
-            virtual ~__ChainBufferTag()
-            {
-                Unlink();
-            }
-
-            void Link(__ChainBufferTag* tag)
-            {
-                tag->_next = _next;
-                tag->_prev = this;
-                tag->_next->_prev = tag;
-                tag->_prev->_next = tag;
-            }
-
-            void Unlink()
-            {
-                if (_next != this)
-                {
-                    _next->_prev = _prev;
-                    _prev->_next = _next;
-                    _next = this;
-                    _prev = this;
-                }
-            }
-
-            __ChainBufferTag* Next()
-            {
-                return (_next);
-            }
-
-            __ChainBufferTag* Prev()
-            {
-                return (_prev);
-            }
-
-            virtual BOOL EqualsBufferAddress(void* buffer) = 0;
-
-            void virtual Clear()
-            {
-            }
-
-            void virtual Check()
-            {
-            }
-
+            __ChainBufferTag();
+            virtual ~__ChainBufferTag();
+            void Link(__ChainBufferTag* tag);
+            void Unlink();
+            __ChainBufferTag* Next();
+            __ChainBufferTag* Prev();
+            virtual bool EqualsBufferAddress(void* buffer) = 0;
+            void virtual Clear();
+            void virtual Check();
             virtual void Destruct() = 0;
         };
 
-        class __RootTag
+        class __DLLEXPORT_UINT __RootTag
             : public __ChainBufferTag
         {
         public:
-            __RootTag()
-            {
-            }
-
-            virtual ~__RootTag()
-            {
-            }
-
-            virtual BOOL EqualsBufferAddress(void* buffer) override
-            {
-                throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_resourceholder.h;ResourceHolder::__RootTag::EqualsBufferAddress;1");
-            }
-
-            void virtual Destruct() override
-            {
-            }
+            __RootTag();
+            virtual ~__RootTag();
+            virtual bool EqualsBufferAddress(void* buffer) override;
+            void virtual Destruct() override;
         };
+
+#ifdef PALMTREEMATHCOREUINT_EXPORTS
+#endif
 
     private:
         __RootTag _root_tag;
 
     protected:
-        ResourceHolder()
-        {
-        }
+        ResourceHolder();
 
     public:
-        virtual ~ResourceHolder()
-        {
-            Lock lock_obj;
-            while (_root_tag.Next() != &_root_tag)
-            {
-                __ChainBufferTag* tag = _root_tag.Next();
-                tag->Unlink();
-                tag->Destruct();
-                delete tag;
-            }
-        }
+        virtual ~ResourceHolder();
+
+        wchar_t* AllocateString(size_t count); // 終端ヌル文字を含めた文字数
+        void ClearString(wchar_t* buffer);
+        void DeallocateString(wchar_t* buffer);
+        void CheckString(wchar_t* buffer);
+        void UnlinkString(wchar_t* buffer);
 
     protected:
-        void LinkTag(__ChainBufferTag* tag)
-        {
-            _root_tag.Link(tag);
-        }
+        void LinkTag(__ChainBufferTag* tag);
 
-        __ChainBufferTag* FindTag(void* buffer)
-        {
-            for (__ChainBufferTag* tag = _root_tag.Next(); tag != &_root_tag; tag = tag->Next())
-            {
-                if (tag->EqualsBufferAddress(buffer))
-                    return (tag);
-            }
-            return (nullptr);
-        }
+        __ChainBufferTag* FindTag(void* buffer);
 
-#ifdef _DEBUG
-        void CheckBuffer(void* buffer)
-        {
-            void* found_tag = FindTag(buffer);
-            if (found_tag != nullptr)
-                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_resourceholder.h;ResourceHolder::CheckBuffer;1");
-        }
-#endif
+        void NotExists(void* buffer);
 
     };
 
 }
 
-#endif//PMC_RESOURCEHOLDER_H
+#endif
  
  
  /*

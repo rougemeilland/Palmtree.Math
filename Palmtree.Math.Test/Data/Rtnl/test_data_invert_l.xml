@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dataitems>
+  <dataitem index="0">
+    <param1 type="int64">-4294967297</param1>
+    <result1 type="rational">10,03,01,01,01,05,01,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="1">
+    <param1 type="int64">-4294967296</param1>
+    <result1 type="rational">10,03,01,01,01,05,00,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="2">
+    <param1 type="int64">-4294967295</param1>
+    <result1 type="rational">10,03,01,01,01,04,ff,ff,ff,ff</result1>
+  </dataitem>
+  <dataitem index="3">
+    <param1 type="int64">-1</param1>
+    <result1 type="rational">10,03,01,01,01,01,01</result1>
+  </dataitem>
+  <dataitem index="4">
+    <param1 type="int64">0</param1>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="5">
+    <param1 type="int64">1</param1>
+    <result1 type="rational">10,01,01,01,01,01,01</result1>
+  </dataitem>
+  <dataitem index="6">
+    <param1 type="int64">4294967295</param1>
+    <result1 type="rational">10,01,01,01,01,04,ff,ff,ff,ff</result1>
+  </dataitem>
+  <dataitem index="7">
+    <param1 type="int64">4294967296</param1>
+    <result1 type="rational">10,01,01,01,01,05,00,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="8">
+    <param1 type="int64">4294967297</param1>
+    <result1 type="rational">10,01,01,01,01,05,01,00,00,00,01</result1>
+  </dataitem>
+</dataitems>

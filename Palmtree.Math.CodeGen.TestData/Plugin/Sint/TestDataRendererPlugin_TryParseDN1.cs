@@ -38,7 +38,6 @@ namespace Palmtree.Math.CodeGen.TestData.Plugin.Sint
         public TestDataRendererPlugin_TryParseDN1()
             : base("sint", "test_data_tryparsedn1.xml")
         {
-
         }
 
         private IEnumerable<string> StringDataSource

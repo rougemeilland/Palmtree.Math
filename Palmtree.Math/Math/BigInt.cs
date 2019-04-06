@@ -105,6 +105,7 @@ namespace Palmtree.Math
             foreach (var key in new[] { "COMPILER", "PLATFORM", "TABLESIZE" })
                 settings.Add(key, EngineObject.GetConfigurationSettings(key));
             ConfigurationSettings = settings;
+            PerformanceCounters = new PerformanceCounterCollection();
             MinusOne = new BigInt(EngineObject.MinusOne);
             One = new BigInt(EngineObject.One);
             Zero = new BigInt(EngineObject.Zero);
@@ -126,6 +127,8 @@ namespace Palmtree.Math
         #region パブリックプロパティ
 
         public static IReadOnlyDictionary<string, string> ConfigurationSettings { get; }
+
+        public static IPerformanceCounterCollection PerformanceCounters { get; }
 
         public static BigInt MinusOne { get; }
 

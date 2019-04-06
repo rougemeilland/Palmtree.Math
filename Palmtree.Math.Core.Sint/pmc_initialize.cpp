@@ -145,11 +145,14 @@ namespace Palmtree::Math::Core::Internal
 
             if (!ep_uint.Initialize())
                 return (false);
-            
-            //            CopyUINTEntryPointStructure(&ep_uint, ep);
-//            CopyUINTEntryPointStructure(&entry_points.UINT_ENTRY_POINTS, ep);
 
             if (Initialize_Memory() != PMC_STATUS_OK)
+                return (false);
+
+            if (Initialize_Parse() != PMC_STATUS_OK)
+                return (false);
+
+            if (Initialize_ToString() != PMC_STATUS_OK)
                 return (false);
 
             initialized = true;

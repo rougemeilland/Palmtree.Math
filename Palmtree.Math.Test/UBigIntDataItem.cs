@@ -33,7 +33,7 @@ namespace Palmtree.Math.Test
     {
         private string _serialized_text;
 
-        public UBigIntDataItem(string serialized_text)
+        private UBigIntDataItem(string serialized_text)
         {
             _serialized_text = serialized_text;
         }

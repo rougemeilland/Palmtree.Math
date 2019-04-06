@@ -33,11 +33,27 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pmc_add.cpp" />
+    <ClCompile Include="pmc_bytes.cpp" />
+    <ClCompile Include="pmc_compare.cpp" />
+    <ClCompile Include="pmc_divide.cpp" />
     <ClCompile Include="pmc_dllmain.cpp" />
+    <ClCompile Include="pmc_equals.cpp" />
+    <ClCompile Include="pmc_from.cpp" />
     <ClCompile Include="pmc_initialize.cpp" />
+    <ClCompile Include="pmc_interface_csharp.cpp" />
+    <ClCompile Include="pmc_invert.cpp" />
+    <ClCompile Include="pmc_log.cpp" />
     <ClCompile Include="pmc_memory.cpp" />
+    <ClCompile Include="pmc_multiply.cpp" />
+    <ClCompile Include="pmc_parse.cpp" />
+    <ClCompile Include="pmc_pow.cpp" />
+    <ClCompile Include="pmc_resourceholder_rtnl.cpp" />
+    <ClCompile Include="pmc_round.cpp" />
     <ClCompile Include="pmc_rtnl_cppinterface.cpp" />
+    <ClCompile Include="pmc_statistics.cpp" />
+    <ClCompile Include="pmc_tostring.cpp" />
     <ClCompile Include="pmc_subtruct.cpp" />
+    <ClCompile Include="pmc_to.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Palmtree.Math.Core.Sint\Palmtree.Math.Core.Sint.vcxproj">
@@ -46,6 +62,9 @@
     <ProjectReference Include="..\Palmtree.Math.Core.Uint\Palmtree.Math.Core.Uint.vcxproj">
       <Project>{2b4d6366-1dd5-4e4d-920b-8fdddf1aaab9}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="mymakefile.xml" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -134,6 +153,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AssemblerOutput>All</AssemblerOutput>
+      <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -154,6 +174,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AssemblerOutput>All</AssemblerOutput>
+      <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -176,6 +197,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AssemblerOutput>All</AssemblerOutput>
+      <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -200,6 +222,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AssemblerOutput>All</AssemblerOutput>
+      <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

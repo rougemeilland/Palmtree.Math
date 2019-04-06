@@ -2,34 +2,34 @@
 <dataitems>
   <dataitem index="0">
     <param1 type="uint64">0</param1>
-    <result1 type="ubigint">00</result1>
+    <result1 type="ubigint">00,00</result1>
   </dataitem>
   <dataitem index="1">
     <param1 type="uint64">1</param1>
-    <result1 type="ubigint">01,01</result1>
+    <result1 type="ubigint">01,01,01</result1>
   </dataitem>
   <dataitem index="2">
     <param1 type="uint64">1234567890</param1>
-    <result1 type="ubigint">01,d2,02,96,49</result1>
+    <result1 type="ubigint">01,04,d2,02,96,49</result1>
   </dataitem>
   <dataitem index="3">
     <param1 type="uint64">4294967295</param1>
-    <result1 type="ubigint">01,ff,ff,ff,ff</result1>
+    <result1 type="ubigint">01,04,ff,ff,ff,ff</result1>
   </dataitem>
   <dataitem index="4">
     <param1 type="uint64">4294967296</param1>
-    <result1 type="ubigint">01,00,00,00,00,01</result1>
+    <result1 type="ubigint">01,05,00,00,00,00,01</result1>
   </dataitem>
   <dataitem index="5">
     <param1 type="uint64">9999999999</param1>
-    <result1 type="ubigint">01,ff,e3,0b,54,02</result1>
+    <result1 type="ubigint">01,05,ff,e3,0b,54,02</result1>
   </dataitem>
   <dataitem index="6">
     <param1 type="uint64">12345678901234567890</param1>
-    <result1 type="ubigint">01,d2,0a,1f,eb,8c,a9,54,ab</result1>
+    <result1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</result1>
   </dataitem>
   <dataitem index="7">
     <param1 type="uint64">18446744073709551615</param1>
-    <result1 type="ubigint">01,ff,ff,ff,ff,ff,ff,ff,ff</result1>
+    <result1 type="ubigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</result1>
   </dataitem>
 </dataitems>

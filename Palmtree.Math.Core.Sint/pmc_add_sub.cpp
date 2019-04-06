@@ -35,7 +35,6 @@ namespace Palmtree::Math::Core::Internal
     {
         root.HookNumber(w_abs);
         NUMBER_OBJECT_SINT* w = root.AllocateNumber(w_sign, w_abs);
-        root.UnlinkNumber(w_abs);
         root.UnlinkNumber(w);
         return (w);
     }
@@ -1243,7 +1242,6 @@ namespace Palmtree::Math::Core::Internal
         root.HookNumber(r_abs);
         NUMBER_OBJECT_SINT* nr= root.AllocateNumber(r_sign, r_abs);
         PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
-        root.UnlinkNumber(r_abs);
         root.UnlinkNumber(nr);
         return (r);
     }

@@ -70,17 +70,7 @@ namespace Palmtree.Math.CodeGen.TestData
 
         protected override string SerializeValue()
         {
-            var sign = Value.Sign > 0 ? (byte)0x01 : Value.Sign == 0 ? (byte)0x00 : (byte)0x03;
-            var abs = BigInteger.Abs(Value);
-            var digits = new List<byte>();
-            digits.Add(sign);
-            while (abs > 0)
-            {
-                var digit = abs & 0xff;
-                digits.Add((byte)digit);
-                abs = abs >> 8;
-            }
-            return (string.Join(",", digits.Select(n => string.Format("{0:x02}", n))));
+            return (string.Join(",", FromBigTintToByteArray(Value).Select(n => string.Format("{0:x02}", n))));
         }
     }
 }

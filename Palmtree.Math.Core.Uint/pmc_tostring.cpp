@@ -185,14 +185,7 @@ namespace Palmtree::Math::Core::Internal
             }
 
         protected:
-#if false
-            virtual int GetDefaultPrecisionValue()
-            {
-                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;Formatter::GetDefaultPrecisionValue;1");
-            }
-#else
             virtual int GetDefaultPrecisionValue() = 0;
-#endif
 
             virtual void FormatInternally(NUMBER_OBJECT_UINT* x_abs, StringWriter* writer)
             {
@@ -202,7 +195,7 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE _10n_based_number_buf_count = ConvertAs10nBasedNumber(x_abs, _10n_based_number_buf);
                 __UNIT_TYPE simple_number_sequence_buf_size = digit_count_on_word * _10n_based_number_buf_count + 1;
                 wchar_t* simple_number_sequence = root.AllocateString(simple_number_sequence_buf_size);
-                wchar_t* top_of_simple_number_sequence = ConstructSimpleNumberSequence(_10n_based_number_buf, _10n_based_number_buf_count, simple_number_sequence, simple_number_sequence_buf_size);
+                wchar_t* top_of_simple_number_sequence = ConstructIntegerPartNumberSequence(_10n_based_number_buf, _10n_based_number_buf_count, simple_number_sequence, simple_number_sequence_buf_size);
                 root.DeallocateBlock(_10n_based_number_buf);
                 FormatNumberSequence(top_of_simple_number_sequence, writer);
                 root.DeallocateString(simple_number_sequence);
@@ -234,7 +227,7 @@ namespace Palmtree::Math::Core::Internal
                 {
                     root.ClearBlock(q_ptr);
                     __UNIT_TYPE r_value;
-                    DivRem_X_1W(u_ptr, work_u_count, _10n_base_number, q_ptr, &r_value);
+                    DivRem_UX_1W(u_ptr, work_u_count, _10n_base_number, q_ptr, &r_value);
                     root.CheckBlock(q_ptr);
                     *r_ptr++ = r_value;
                     __UNIT_TYPE* temp = u_ptr;
@@ -246,7 +239,7 @@ namespace Palmtree::Math::Core::Internal
                 return (r_ptr - r_buf);
             }
 
-            wchar_t* ConstructSimpleNumberSequence(__UNIT_TYPE* in_buf, __UNIT_TYPE in_buf_count, wchar_t* out_buf, size_t out_buf_count)
+            wchar_t* ConstructIntegerPartNumberSequence(__UNIT_TYPE* in_buf, __UNIT_TYPE in_buf_count, wchar_t* out_buf, size_t out_buf_count)
             {
                 ReverseStringWriter simple_number_sequence_writer(out_buf, out_buf_count);
 
@@ -254,16 +247,16 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE in_count = in_buf_count - 1;
                 while (in_count != 0)
                 {
-                    WriteTrailingWord(&simple_number_sequence_writer, *in_ptr);
+                    WriteIntPartTrailingWord(&simple_number_sequence_writer, *in_ptr);
                     ++in_ptr;
                     --in_count;
                 }
-                WriteLeadingOneWord(&simple_number_sequence_writer, *in_ptr);
+                WriteIntPartLeadingOneWord(&simple_number_sequence_writer, *in_ptr);
                 return (simple_number_sequence_writer.GetString());
             }
 
             // 最上位のワードを文字列化する。(途中で x が 0 になった場合は中断する)
-            void WriteLeadingOneWord(StringWriter* writer, __UNIT_TYPE x)
+            void WriteIntPartLeadingOneWord(StringWriter* writer, __UNIT_TYPE x)
             {
                 __UNIT_TYPE r;
                 do
@@ -280,7 +273,7 @@ namespace Palmtree::Math::Core::Internal
             }
 
             // 上位から 2 ワード目以降を文字列化する。(途中で x が 0 になっても続行する)
-            void WriteTrailingWord(StringWriter* writer, __UNIT_TYPE x)
+            void WriteIntPartTrailingWord(StringWriter* writer, __UNIT_TYPE x)
             {
                 __UNIT_TYPE r;
                 if (sizeof(__UNIT_TYPE) >= sizeof(_UINT64_T))
@@ -624,12 +617,12 @@ namespace Palmtree::Math::Core::Internal
             virtual void FormatInternally(NUMBER_OBJECT_UINT* x_abs, StringWriter* writer) override
             {
                 ResourceHolderUINT root;
-                size_t digit_count = (size_t)PMC_Floor_Log10_Imp(x_abs) + 1;
+                size_t digit_count = (size_t)PMC_FloorLog10_UX_Imp(x_abs) + 1;
                 if (digit_count >= (size_t)(_precision + 2))
                 {
-                    NUMBER_OBJECT_UINT* fraction_number = PMC_TimesOfExponentOf10_Imp(5, digit_count - _precision - 2);
+                    NUMBER_OBJECT_UINT* fraction_number = PMC_TimesOfExponentOf10_Imp(5, (_UINT32_T)(digit_count - _precision - 2));
                     root.HookNumber(fraction_number);
-                    NUMBER_OBJECT_UINT* x2 = PMC_Add_X_X_Imp(x_abs, fraction_number);
+                    NUMBER_OBJECT_UINT* x2 = PMC_Add_UX_UX_Imp(x_abs, fraction_number);
                     root.HookNumber(x2);
                     Formatter::FormatInternally(x2, writer);
                 }
@@ -852,7 +845,7 @@ namespace Palmtree::Math::Core::Internal
             virtual void FormatInternally(NUMBER_OBJECT_UINT* x_abs, StringWriter* writer) override
             {
                 ResourceHolderUINT root;
-                NUMBER_OBJECT_UINT* x2_abs = PMC_Multiply_X_I_Imp(x_abs, 100);
+                NUMBER_OBJECT_UINT* x2_abs = PMC_Multiply_UX_UI_Imp(x_abs, 100);
                 root.HookNumber(x2_abs);
                 Formatter::FormatInternally(x2_abs, writer);
             }
@@ -1080,53 +1073,53 @@ namespace Palmtree::Math::Core::Internal
             unsigned int count = __UNIT_TYPE_BIT_COUNT / 4;
             if (skip_digit_len > 0)
             {
-                x = _ROTATE_L_UNIT(x, 4 * skip_digit_len);
+                x = _ROTATE_UL_UNIT(x, 4 * skip_digit_len);
                 count -= skip_digit_len;
             }
             if (count & 0x10)
             {
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
             }
             if (count & 0x8)
             {
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
             }
             if (count & 0x4)
             {
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
             }
             if (count & 0x2)
             {
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
             }
             if (count & 0x1)
             {
-                x = _ROTATE_L_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
+                x = _ROTATE_UL_UNIT(x, 4); writer->Write(digit_table[x & 0x0f]);
             }
         }
 
@@ -1380,7 +1373,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    size_t PMC_ToString(PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false)
+    size_t PMC_ToString_UX(PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false)
     {
         NUMBER_OBJECT_UINT* nx = GET_NUMBER_OBJECT(x, L"x");
         if (format_option == nullptr)

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -30,9 +30,19 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    void PMC_GetStatisticsInfo(PMC_STATISTICS_INFO* statistics_info)
+    PMC_STATISTICS_INFO_SINT statistics_info;
+
+    _UINT64_T PMC_GetPerformanceCounter(const wchar_t* key)
     {
-        ep_uint.GetStatisticsInfo(statistics_info);
+        if (lstrcmpW(key, L"allocatenumberobject") == 0)
+            return (statistics_info.COUNT_ALLOCATE_NUMBER_OBJECT);
+        if (lstrcmpW(key, L"allocatenumber") == 0)
+            return (statistics_info.COUNT_ALLOCATE_NUMBER);
+        if (lstrcmpW(key, L"hooknumberx") == 0)
+            return (statistics_info.COUNT_HOOK_NUMBER_X);
+        if (lstrcmpW(key, L"hooknumberux") == 0)
+            return (statistics_info.COUNT_HOOK_NUMBER_UX);
+        throw KeyNotFoundException(L"未知のキーが渡されました。");
     }
 
 }

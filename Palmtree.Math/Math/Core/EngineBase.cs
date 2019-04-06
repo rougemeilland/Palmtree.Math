@@ -24,8 +24,10 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+
 
 namespace Palmtree.Math.Core
 {
@@ -86,10 +88,16 @@ namespace Palmtree.Math.Core
                     throw new InsufficientMemoryException();
                 case PMC_STATUS_CODE.PMC_STATUS_NOT_SUPPORTED:
                     throw new NotSupportedException();
+                case PMC_STATUS_CODE.PMC_STATUS_KEY_NOT_FOUND:
+                    throw new KeyNotFoundException();
+                case PMC_STATUS_CODE.PMC_STATUS_INVALID_OPERATION:
+                    throw new InvalidOperationException();
                 case PMC_STATUS_CODE.PMC_STATUS_INTERNAL_ERROR:
                     throw new InternalErrorException();
                 case PMC_STATUS_CODE.PMC_STATUS_BAD_BUFFER:
                     throw new BadBufferException();
+                case PMC_STATUS_CODE.PMC_STATUS_SEH:
+                    throw new SEHException();
                 default:
                     throw new InternalErrorException(string.Format("未知の例外が発生しました。: code={0}", result_code));
             }

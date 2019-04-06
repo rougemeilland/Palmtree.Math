@@ -34,7 +34,6 @@ namespace Palmtree::Math::Core::Internal
     {
         root.HookNumber(w_abs);
         NUMBER_OBJECT_SINT* w = root.AllocateNumber(w_sign, w_abs);
-        root.UnlinkNumber(w_abs);
         root.UnlinkNumber(w);
         return (w);
     }

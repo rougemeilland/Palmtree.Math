@@ -51,10 +51,19 @@ namespace Palmtree::Math::Core::Internal
 
         _UINT32_T       SIGNATURE1;             // テーブルを識別するためのデータ1
         _UINT32_T       SIGNATURE2;             // テーブルを識別するためのデータ2
+        __UNIT_TYPE     WORKING_COUNT;          // この数値オブジェクトを参照して演算中のスレッドの数
 
         PMC_HANDLE_UINT ABS;                    // 数値の絶対値を表すハンドル
         SIGN_T          SIGN;                   // 数値の符号
     } NUMBER_OBJECT_SINT;
+
+    typedef struct __tag_PMC_STATISTICS_INFO_SINT
+    {
+        _INT64_T COUNT_ALLOCATE_NUMBER_OBJECT;
+        _INT64_T COUNT_ALLOCATE_NUMBER;
+        _INT64_T COUNT_HOOK_NUMBER_X;
+        _INT64_T COUNT_HOOK_NUMBER_UX;
+    } PMC_STATISTICS_INFO_SINT;
 #pragma endregion
 
 
@@ -77,9 +86,34 @@ namespace Palmtree::Math::Core::Internal
     // 符号なし整数 1 のインスタンス
     extern PMC_HANDLE_UINT number_handle_uint_one;
 
-    extern BOOL AllocateSINTHeapArea();
-    extern void DeallocateSINTHeapArea();
+    // 符号なし整数 10 のインスタンス
+    extern PMC_HANDLE_UINT number_handle_uint_ten;
+
+    // パフォーマンスカウンタ
+    extern PMC_STATISTICS_INFO_SINT statistics_info;
+
+    // 内部ヒープメモリ領域を獲得する。
+    extern bool __AllocateSINTHeapArea(void) noexcept(true);
+
+    // 内部ヒープメモリ領域を解放する。
+    extern void __DeallocateSINTHeapArea(void) noexcept(true);
+
+    //// 内部ヒープメモリ領域から指定サイズのメモリを獲得する。
+    extern void* __AllocateHeap(size_t size) noexcept(false);
+
+    //// 指定されたアドレスのメモリを解放する。
+    extern void __DeallocateHeap(void* buffer) noexcept(true);
+
+    extern void __AttatchNumber(NUMBER_OBJECT_SINT* p, SIGN_T sign, PMC_HANDLE_UINT abs);
+
+    extern NUMBER_OBJECT_SINT* __AllocateNumber(SIGN_T sign, PMC_HANDLE_UINT abs);
+
+    extern  void __DetatchNumber(NUMBER_OBJECT_SINT* p);
+
+    extern  void __DeallocateNumber(NUMBER_OBJECT_SINT* p);
+
     extern void __CheckNumber(NUMBER_OBJECT_SINT* p) noexcept(false);
+
     extern NUMBER_OBJECT_SINT* DuplicateNumber_X(NUMBER_OBJECT_SINT* x);
     extern NUMBER_OBJECT_SINT* NegateNumber_X(NUMBER_OBJECT_SINT* x);
     extern NUMBER_OBJECT_SINT* From_I_Imp(SIGN_T x_sign, _UINT32_T x_abs);
@@ -90,13 +124,17 @@ namespace Palmtree::Math::Core::Internal
 
 #pragma region 初期化関数の宣言
     extern PMC_STATUS_CODE Initialize_Memory(void);
+    extern PMC_STATUS_CODE Initialize_Parse(void);
+    extern PMC_STATUS_CODE Initialize_ToString(void);
 #pragma endregion
 
 
 #pragma region エントリポイントに登録される関数の宣言
     extern bool PMC_SINT_Initialize();
+    extern void PMC_UseObject_X(PMC_HANDLE_SINT x) noexcept(false);
+    extern void PMC_UnuseObject_X(PMC_HANDLE_SINT x) noexcept(false);
     extern PMC_STATUS_CODE PMC_GetConfigurationSettings(const wchar_t* key, wchar_t* value_buffer, _INT32_T value_buffer_size, _INT32_T* count);
-    extern void  PMC_GetStatisticsInfo(PMC_STATISTICS_INFO* statistics_info) noexcept(false);
+    extern _UINT64_T PMC_GetPerformanceCounter(const wchar_t* key);
     extern PMC_HANDLE_SINT PMC_From_UI(_UINT32_T x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_From_I(_INT32_T x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_From_UL(_UINT64_T x) noexcept(false);
@@ -120,9 +158,11 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_SINT PMC_Negate_UX(PMC_HANDLE_UINT x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Negate_X(PMC_HANDLE_SINT x) noexcept(false);
     extern PMC_HANDLE_UINT PMC_Abs_X(PMC_HANDLE_SINT x) noexcept(false);
-    extern size_t PMC_ToString(PMC_HANDLE_SINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
+    extern size_t PMC_ToString_X(PMC_HANDLE_SINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
+    extern size_t PMC_ToString_R(PMC_HANDLE_SINT x_numerator, PMC_HANDLE_UINT x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
     extern void  PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info) noexcept(false);
     extern PMC_STATUS_CODE PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o) noexcept(false);
+    extern PMC_STATUS_CODE PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o_numerator, PMC_HANDLE_UINT* o_denominator) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Add_UI_X(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Add_I_X(_INT32_T u, PMC_HANDLE_SINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Add_I_UX(_INT32_T u, PMC_HANDLE_UINT v) noexcept(false);
@@ -138,7 +178,6 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_SINT PMC_Add_UX_L(PMC_HANDLE_UINT u, _INT64_T v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Add_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Add_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
-
     extern PMC_HANDLE_SINT PMC_Subtruct_I_UX(_INT32_T u, PMC_HANDLE_UINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Subtruct_I_X(_INT32_T u, PMC_HANDLE_SINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Subtruct_L_UX(_INT64_T u, PMC_HANDLE_UINT v) noexcept(false);
@@ -159,7 +198,6 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_SINT PMC_Subtruct_UX_L(PMC_HANDLE_UINT u, _INT64_T v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Subtruct_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Subtruct_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
-
     extern PMC_HANDLE_SINT PMC_Increment_X(PMC_HANDLE_SINT x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Decrement_X(PMC_HANDLE_SINT x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Multiply_UI_X(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false);
@@ -192,6 +230,7 @@ namespace Palmtree::Math::Core::Internal
     extern _UINT64_T PMC_DivRem_UX_L(PMC_HANDLE_UINT u, _INT64_T v, PMC_HANDLE_SINT* q) noexcept(false);
     extern PMC_HANDLE_SINT PMC_DivRem_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* q) noexcept(false);
     extern PMC_HANDLE_SINT PMC_DivRem_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_DivideExactly_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_LeftShift_X_I(PMC_HANDLE_SINT p, _INT32_T n) noexcept(false);
     extern PMC_HANDLE_SINT PMC_RightShift_X_I(PMC_HANDLE_SINT p, _INT32_T n) noexcept(false);
     extern PMC_HANDLE_SINT PMC_OneComplement_UX(PMC_HANDLE_UINT x) noexcept(false);
@@ -286,6 +325,42 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_L(PMC_HANDLE_UINT u, _INT64_T v) noexcept(false);
     extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
     extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_FromByteArrayForRTNL(const unsigned char * buffer, size_t count, PMC_HANDLE_SINT * o_numerator) noexcept(false);
+    extern size_t PMC_ToByteArrayForRTNL(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator, unsigned char * buffer, size_t buffer_size) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Round_R(PMC_HANDLE_SINT x_numerator, PMC_HANDLE_UINT x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode);
+    extern PMC_HANDLE_SINT PMC_Round_R_I(PMC_HANDLE_SINT x_numerator, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
+    extern PMC_HANDLE_SINT PMC_Pow_I_UI(_INT32_T v, _UINT32_T e) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Pow_L_UI(_INT64_T v, _UINT32_T e) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Pow_X_UI(PMC_HANDLE_SINT v, _UINT32_T e) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Pow_I_I(_INT32_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Pow_L_I(_INT64_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Pow_X_I(PMC_HANDLE_SINT v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Pow_UI_I(_UINT32_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Pow_UL_I(_UINT64_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Pow_UX_I(PMC_HANDLE_UINT v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Pow_R_I(PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+    extern _INT32_T PMC_FloorLog10_R(PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator);
+    extern PMC_HANDLE_SINT PMC_Divide_UI_R(_UINT32_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Divide_UL_R(_UINT64_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Divide_UX_R(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Divide_I_R(_INT32_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Divide_L_R(_INT64_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Divide_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Divide_R_UI(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _UINT32_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Divide_R_UL(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _UINT64_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Divide_R_UX(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_UINT v, PMC_HANDLE_UINT * w_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Divide_R_I(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _INT32_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Divide_R_L(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _INT64_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Divide_R_X(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_SINT v, PMC_HANDLE_UINT * w_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Divide_R_R(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Invert_I(_INT32_T v, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Invert_L(_INT64_T v, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Invert_X(PMC_HANDLE_SINT v, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Invert_UI(_UINT32_T v, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Invert_UL(_UINT64_T v, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Invert_UX(PMC_HANDLE_UINT v, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_Invert_R(PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT* r_denominator) noexcept(false);
+
 #pragma endregion
 
 #pragma region インライン関数の定義

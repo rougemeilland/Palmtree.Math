@@ -32,6 +32,13 @@
 
 namespace Palmtree::Math::Core::Internal
 {
+#ifdef _M_IX86
+    const int word_digit_count = 9;
+#elif defined(_M_X64)
+    const int word_digit_count = 19;
+#else
+#error unknown platform
+#endif
 
     static PMC_NUMBER_FORMAT_INFO default_number_format_option;
     static __UNIT_TYPE* (*fp_MultiplyAndAdd)(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE x);
@@ -549,18 +556,24 @@ namespace Palmtree::Math::Core::Internal
         return (state.ParseAsDecimalNumberString());
     }
 
-    static __UNIT_TYPE BuildLeading1WordFromDecimalString(wchar_t* in_ptr, __UNIT_TYPE count)
+    static __UNIT_TYPE BuildLeading1WordFromDecimalString(const wchar_t* in_ptr, __UNIT_TYPE count)
     {
         __UNIT_TYPE x = 0;
         while (count > 0)
         {
             x = x * 10 + ParseDecimalDigit(*in_ptr++);
             --count;
+#ifdef ENABLED_PERFORMANCE_COUNTER
+            if (sizeof(x) == sizeof(_UINT32_T))
+                IncrementMULTI32Counter();
+            else
+                IncrementMULTI64Counter();
+#endif
         }
         return (x);
     }
 
-    static __UNIT_TYPE Build1WordFromDecimalString(wchar_t* in_ptr)
+    static __UNIT_TYPE Build1WordFromDecimalString(const wchar_t* in_ptr)
     {
         __UNIT_TYPE x = ParseDecimalDigit(*in_ptr++);
         if (sizeof(__UNIT_TYPE) >= sizeof(_UINT64_T))
@@ -575,6 +588,12 @@ namespace Palmtree::Math::Core::Internal
             x = x * 10 + ParseDecimalDigit(*in_ptr++);
             x = x * 10 + ParseDecimalDigit(*in_ptr++);
             x = x * 10 + ParseDecimalDigit(*in_ptr++);
+#ifdef ENABLED_PERFORMANCE_COUNTER
+            if (sizeof(x) == sizeof(_UINT32_T))
+                AddToMULTI32Counter(10);
+            else
+                AddToMULTI64Counter(10);
+#endif
         }
         if (sizeof(__UNIT_TYPE) >= sizeof(_UINT32_T))
         {
@@ -583,22 +602,40 @@ namespace Palmtree::Math::Core::Internal
             x = x * 10 + ParseDecimalDigit(*in_ptr++);
             x = x * 10 + ParseDecimalDigit(*in_ptr++);
             x = x * 10 + ParseDecimalDigit(*in_ptr++);
+#ifdef ENABLED_PERFORMANCE_COUNTER
+            if (sizeof(x) == sizeof(_UINT32_T))
+                AddToMULTI32Counter(5);
+            else
+                AddToMULTI64Counter(5);
+#endif
         }
         if (sizeof(__UNIT_TYPE) >= sizeof(_UINT16_T))
         {
             x = x * 10 + ParseDecimalDigit(*in_ptr++);
             x = x * 10 + ParseDecimalDigit(*in_ptr++);
+#ifdef ENABLED_PERFORMANCE_COUNTER
+            if (sizeof(x) == sizeof(_UINT32_T))
+                AddToMULTI32Counter(2);
+            else
+                AddToMULTI64Counter(2);
+#endif
         }
         if (sizeof(__UNIT_TYPE) >= sizeof(_BYTE_T))
         {
             x = x * 10 + ParseDecimalDigit(*in_ptr++);
+#ifdef ENABLED_PERFORMANCE_COUNTER
+            if (sizeof(x) == sizeof(_UINT32_T))
+                IncrementMULTI32Counter();
+            else
+                IncrementMULTI64Counter();
+#endif
         }
         return (x);
     }
 
     // 16進数の数値を表す文字列から整数部を抽出する。
     // 10進整数を表す文字列を、word_digit_count 毎に 1 ワードずつ分割してバイナリー化し、out_buf に格納する。
-    static void BuildBinaryFromDecimalString(wchar_t* source, __UNIT_TYPE* out_buf, __UNIT_TYPE* out_buf_count)
+    static void BuildBinaryFromDecimalString(const wchar_t* source, __UNIT_TYPE* out_buf, __UNIT_TYPE* out_buf_count)
     {
 #ifdef _M_IX86
         int word_digit_count = 9;
@@ -607,7 +644,7 @@ namespace Palmtree::Math::Core::Internal
 #else
 #error unknown platform
 #endif
-        wchar_t* in_ptr = source;
+        const wchar_t* in_ptr = source;
         __UNIT_TYPE* out_ptr = out_buf;
         __UNIT_TYPE source_count = lstrlenW(source);
         int r = source_count % word_digit_count;
@@ -961,16 +998,32 @@ namespace Palmtree::Math::Core::Internal
         _COPY_MEMORY_UNIT(out_buf, work_buf, work_buf_count);
     }
 
+    static NUMBER_OBJECT_UINT* PMC_AToL_Imp(const wchar_t* source)
+    {
+        ResourceHolderUINT root;
+        // 整数部を 10^word_digit_count を基数としたバイト列に変換する
+        __UNIT_TYPE* bin_buf = root.AllocateBlock(_DIVIDE_CEILING_SIZE(lstrlenW(source), word_digit_count) * __UNIT_TYPE_BIT_COUNT);
+        __UNIT_TYPE bin_buf_count;
+        BuildBinaryFromDecimalString(source, bin_buf, &bin_buf_count);
+
+        // 10^word_digit_count を基数としたバイト列を 10 を基数としたバイト列に変換する
+        __UNIT_TYPE o_bit_count = bin_buf_count * __UNIT_TYPE_BIT_COUNT;
+        NUMBER_OBJECT_UINT* nr = root.AllocateNumber(o_bit_count);
+        ConvertCardinalNumber(bin_buf, bin_buf_count, nr->BLOCK);
+        root.CheckNumber(nr);
+        CommitNumber(nr);
+
+        if (nr->IS_ZERO)
+        {
+            nr = &number_object_uint_zero;
+            root.HookNumber(nr);
+        }
+        root.UnlinkNumber(nr);
+        return (nr);
+    }
+
     static PMC_STATUS_CODE TryParseDN(const wchar_t* source, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_abs)
     {
-#ifdef _M_IX86
-        int word_digit_count = 9;
-#elif defined(_M_X64)
-        int word_digit_count = 19;
-#else
-#error unknown platform
-#endif
-
         ResourceHolderUINT root;
 
         __UNIT_TYPE source_len = lstrlenW(source);
@@ -1057,27 +1110,8 @@ namespace Palmtree::Math::Core::Internal
         // 小数部は捨てる
         root.DeallocateString(frac_part_buf);
 
-        // 整数部を 10^word_digit_count を基数としたバイト列に変換する
-        __UNIT_TYPE* bin_buf = root.AllocateBlock(_DIVIDE_CEILING_SIZE(lstrlenW(int_part_buf), word_digit_count) * __UNIT_TYPE_BIT_COUNT);
-        __UNIT_TYPE bin_buf_count;
-        BuildBinaryFromDecimalString(int_part_buf, bin_buf, &bin_buf_count);
-        root.CheckBlock(bin_buf);
-        root.DeallocateString(int_part_buf);
+        *o_abs = PMC_AToL_Imp(int_part_buf);
 
-        // 10^word_digit_count を基数としたバイト列を 10 を基数としたバイト列に変換する
-        __UNIT_TYPE o_bit_count = bin_buf_count * __UNIT_TYPE_BIT_COUNT;
-        *o_abs = root.AllocateNumber(o_bit_count);
-        ConvertCardinalNumber(bin_buf, bin_buf_count, (*o_abs)->BLOCK);
-        root.CheckNumber(*o_abs);
-        root.DeallocateBlock(bin_buf);
-        CommitNumber(*o_abs);
-        if ((*o_abs)->IS_ZERO)
-        {
-            root.DeallocateNumber(*o_abs);
-            *o_abs = &number_object_uint_zero;
-        }
-        else
-            root.UnlinkNumber(*o_abs);
 #ifdef _DEBUG
         if (*o_sign != 0 && *o_sign != 1 && *o_sign != -1)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_parse.cpp;TryParseDN;1");
@@ -1268,6 +1302,33 @@ namespace Palmtree::Math::Core::Internal
         }
         root.UnlinkNumber(*o_abs);
         return (PMC_STATUS_OK);
+    }
+
+    __UNIT_TYPE PMC_AToI(const wchar_t* source)
+    {
+        __UNIT_TYPE x = 0;
+        while (*source != L'\0')
+        {
+            x = x * 10 + ParseDecimalDigit(*source);
+            ++source;
+#ifdef ENABLED_PERFORMANCE_COUNTER
+            if (sizeof(x) == sizeof(_UINT32_T))
+                IncrementMULTI32Counter();
+            else
+                IncrementMULTI64Counter();
+#endif
+        }
+        return (x);
+    }
+
+    PMC_HANDLE_UINT PMC_AToL(const wchar_t* source)
+    {
+        ResourceHolderUINT root;
+        NUMBER_OBJECT_UINT* nr = PMC_AToL_Imp(source);
+        root.HookNumber(nr);
+        PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
+        root.UnlinkNumber(nr);
+        return (r);
     }
 
     PMC_STATUS_CODE PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_UINT* o) noexcept(false)

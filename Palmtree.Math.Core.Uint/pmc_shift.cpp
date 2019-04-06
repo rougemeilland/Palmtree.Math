@@ -177,7 +177,7 @@ namespace Palmtree::Math::Core::Internal
         if (n_lshift_bit_count == 0)
         {
             // シフト数がちょうどワード境界分であれば単にワード単位のデータ移動のみ行う。
-            _COPY_MEMORY_UNIT(op + n_word_count, pp, p_count);
+            _COPY_MEMORY_REV_UNIT(op + n_word_count, pp, p_count);
             if (padding_zero)
                 _ZERO_MEMORY_UNIT(op, n_word_count);
         }
@@ -302,7 +302,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_OBJECT_UINT* PMC_RightShift_X_I_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T n)
+    static NUMBER_OBJECT_UINT* PMC_RightShift_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T n)
     {
         if (u->IS_ZERO)
             return (&number_object_uint_zero);
@@ -327,7 +327,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_OBJECT_UINT* PMC_LeftShift_X_I_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T n)
+    NUMBER_OBJECT_UINT* PMC_LeftShift_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T n)
     {
         if (u->IS_ZERO)
             return (&number_object_uint_zero);
@@ -347,36 +347,36 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_RightShift_X_I(PMC_HANDLE_UINT u, _INT32_T n) noexcept(false)
+    PMC_HANDLE_UINT PMC_RightShift_UX_I(PMC_HANDLE_UINT u, _INT32_T n) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(n) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_shift.cpp;PMC_RightShift_X_I;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_shift.cpp;PMC_RightShift_UX_I;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         ResourceHolderUINT root;
         SIGN_T n_sign;
         _UINT32_T n_abs = GET_ABS_32(n, &n_sign);
-        NUMBER_OBJECT_UINT* nw = n_sign >= 0 ? PMC_RightShift_X_I_Imp(nu, n_abs) : PMC_LeftShift_X_I_Imp(nu, n_abs);
+        NUMBER_OBJECT_UINT* nw = n_sign >= 0 ? PMC_RightShift_UX_UI_Imp(nu, n_abs) : PMC_LeftShift_UX_UI_Imp(nu, n_abs);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    PMC_HANDLE_UINT PMC_LeftShift_X_I(PMC_HANDLE_UINT u, _INT32_T n) noexcept(false)
+    PMC_HANDLE_UINT PMC_LeftShift_UX_I(PMC_HANDLE_UINT u, _INT32_T n) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(n) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_LeftShift_X_I;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_LeftShift_UX_I;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         ResourceHolderUINT root;
         SIGN_T n_sign;
         _UINT32_T n_abs = GET_ABS_32(n, &n_sign);
-        NUMBER_OBJECT_UINT* nw = n_sign >= 0 ? PMC_LeftShift_X_I_Imp(nu, n_abs) : PMC_RightShift_X_I_Imp(nu, n_abs);
+        NUMBER_OBJECT_UINT* nw = n_sign >= 0 ? PMC_LeftShift_UX_UI_Imp(nu, n_abs) : PMC_RightShift_UX_UI_Imp(nu, n_abs);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);

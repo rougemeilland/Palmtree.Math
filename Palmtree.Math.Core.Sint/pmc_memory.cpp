@@ -25,8 +25,9 @@
 
 #include <windows.h>
 #include "pmc_sint_internal.h"
-#include "pmc_inline_func.h"
 #include "pmc_resourceholder_sint.h"
+#include "pmc_lock.h"
+#include "pmc_inline_func.h"
 
 
 #pragma region プラットフォーム固有の定義
@@ -45,12 +46,12 @@ namespace Palmtree::Math::Core::Internal
 
 #pragma region 静的変数の定義
     static HANDLE hLocalHeap;
-    static CRITICAL_SECTION mcs;
     NUMBER_OBJECT_SINT number_object_sint_zero;
     NUMBER_OBJECT_SINT number_object_sint_one;
     NUMBER_OBJECT_SINT number_object_sint_minus_one;
     PMC_HANDLE_UINT number_handle_uint_zero;
     PMC_HANDLE_UINT number_handle_uint_one;
+    PMC_HANDLE_UINT number_handle_uint_ten;
 #pragma endregion
 
 
@@ -179,33 +180,36 @@ namespace Palmtree::Math::Core::Internal
         ep_uint.Dispose(p->ABS);
     }
 
-    static void AttatchNumber(NUMBER_OBJECT_SINT* p, SIGN_T sign, PMC_HANDLE_UINT abs)
+    void __AttatchNumber(NUMBER_OBJECT_SINT* p, SIGN_T sign, PMC_HANDLE_UINT abs)
     {
         InitializeNumber(p, sign, abs);
         p->IS_STATIC = TRUE;
     }
 
-    static NUMBER_OBJECT_SINT* AllocateNumber(SIGN_T sign, PMC_HANDLE_UINT abs)
+    NUMBER_OBJECT_SINT* __AllocateNumber(SIGN_T sign, PMC_HANDLE_UINT abs)
     {
         ResourceHolderSINT root;
-        NUMBER_OBJECT_SINT* p = (NUMBER_OBJECT_SINT*)root.AllocateBytes(sizeof(NUMBER_OBJECT_SINT));
+        NUMBER_OBJECT_SINT* p = root.AllocateNumberObjectSint();
         InitializeNumber(p, sign, abs);
         p->IS_STATIC = FALSE;
-        root.UnlinkBytes(p);
+        root.UnlinkNumberObjectSint(p);
         return (p);
     }
 
-    static void DetatchNumber(NUMBER_OBJECT_SINT* p)
+    void __DetatchNumber(NUMBER_OBJECT_SINT* p)
     {
         if (p == nullptr || !p->IS_STATIC)
             return;
         CleanUpNumber(p);
     }
 
-    static void DeallocateNumber(NUMBER_OBJECT_SINT* p)
+    void __DeallocateNumber(NUMBER_OBJECT_SINT* p)
     {
+        Lock lock_obj;
         if (p == nullptr || p->IS_STATIC)
             return;
+        if (p->WORKING_COUNT > 0)
+            throw InvalidOperationException(L"演算に使用中の数値オブジェクトを解放しようとしました。");
         CleanUpNumber(p);
         FillNumberHeader(p);
         HeapFree(hLocalHeap, 0, p);
@@ -228,7 +232,6 @@ namespace Palmtree::Math::Core::Internal
             PMC_HANDLE_UINT o_abs = ep_uint.From(x_abs);
             root.HookNumber(o_abs);
             NUMBER_OBJECT_SINT* o = root.AllocateNumber(x_sign, o_abs);
-            root.UnlinkNumber(o_abs);
             root.UnlinkNumber(o);
             return (o);
         }
@@ -245,7 +248,6 @@ namespace Palmtree::Math::Core::Internal
             PMC_HANDLE_UINT o_abs = ep_uint.From(x_abs);
             root.HookNumber(o_abs);
             NUMBER_OBJECT_SINT* o = root.AllocateNumber(x_sign, o_abs);
-            root.UnlinkNumber(o_abs);
             root.UnlinkNumber(o);
             return (o);
         }
@@ -261,7 +263,6 @@ namespace Palmtree::Math::Core::Internal
             PMC_HANDLE_UINT new_x = ep_uint.Clone(x);
             root.HookNumber(new_x);
             NUMBER_OBJECT_SINT* w = root.AllocateNumber(sign, new_x);
-            root.UnlinkNumber(new_x);
             root.UnlinkNumber(w);
             return (w);
         }
@@ -353,306 +354,24 @@ namespace Palmtree::Math::Core::Internal
     void PMC_Dispose_X(PMC_HANDLE_SINT p)
     {
         NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
-        DeallocateNumber(np);
+        __DeallocateNumber(np);
     }
 
-#pragma region チェーンされたメモリ管理
-    Lock::Lock()
+    void PMC_UseObject_X(PMC_HANDLE_SINT x) noexcept(false)
     {
-        EnterCriticalSection(&mcs);
+        if (x == nullptr)
+            return;
+        NUMBER_OBJECT_SINT* nx = GET_NUMBER_OBJECT(x, L"x");
+        ++nx->WORKING_COUNT;
     }
 
-    Lock::~Lock()
+    void PMC_UnuseObject_X(PMC_HANDLE_SINT x) noexcept(false)
     {
-        LeaveCriticalSection(&mcs);
+        if (x == nullptr)
+            return;
+        NUMBER_OBJECT_SINT* nx = GET_NUMBER_OBJECT(x, L"x");
+        --nx->WORKING_COUNT;
     }
-
-    ResourceHolderSINT::__GenericChainBufferTag::__GenericChainBufferTag(void * buffer)
-    {
-        _buffer = buffer;
-    }
-
-    ResourceHolderSINT::__GenericChainBufferTag::~__GenericChainBufferTag()
-    {
-    }
-
-    BOOL ResourceHolderSINT::__GenericChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void ResourceHolderSINT::__GenericChainBufferTag::Destruct()
-    {
-        HeapFree(hLocalHeap, 0, _buffer);
-#ifdef _LOG_MEMORY
-        {
-            wprintf(L"0x%08lx: delete header 0x%016llx\n", GetCurrentThreadId(), (unsigned long long)_buffer);
-        }
-#endif
-    }
-
-    ResourceHolderSINT::__UINTNumberHandleHookingChainBufferTag::__UINTNumberHandleHookingChainBufferTag(PMC_HANDLE_UINT x)
-    {
-        _buffer = x;
-    }
-
-    ResourceHolderSINT::__UINTNumberHandleHookingChainBufferTag::~__UINTNumberHandleHookingChainBufferTag()
-    {
-    }
-
-    BOOL ResourceHolderSINT::__UINTNumberHandleHookingChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void ResourceHolderSINT::__UINTNumberHandleHookingChainBufferTag::Check()
-    {
-    }
-
-    void ResourceHolderSINT::__UINTNumberHandleHookingChainBufferTag::Destruct()
-    {
-        Palmtree::Math::Core::Internal::ep_uint.Dispose(_buffer);
-    }
-
-    ResourceHolderSINT::__DynamicNumberChainBufferTag::__DynamicNumberChainBufferTag(NUMBER_OBJECT_SINT * buffer)
-    {
-        _buffer = buffer;
-    }
-
-    ResourceHolderSINT::__DynamicNumberChainBufferTag::~__DynamicNumberChainBufferTag()
-    {
-    }
-
-    BOOL  ResourceHolderSINT::__DynamicNumberChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void  ResourceHolderSINT::__DynamicNumberChainBufferTag::Check()
-    {
-        Palmtree::Math::Core::Internal::__CheckNumber(_buffer);
-    }
-
-    void  ResourceHolderSINT::__DynamicNumberChainBufferTag::Destruct()
-    {
-        Palmtree::Math::Core::Internal::DeallocateNumber(_buffer);
-    }
-
-    ResourceHolderSINT::__NumberHandleHookingChainBufferTag::__NumberHandleHookingChainBufferTag(NUMBER_OBJECT_SINT * buffer)
-    {
-        _buffer = buffer;
-    }
-
-    ResourceHolderSINT::__NumberHandleHookingChainBufferTag::~__NumberHandleHookingChainBufferTag()
-    {
-    }
-
-    BOOL  ResourceHolderSINT::__NumberHandleHookingChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void  ResourceHolderSINT::__NumberHandleHookingChainBufferTag::Check()
-    {
-    }
-
-    void  ResourceHolderSINT::__NumberHandleHookingChainBufferTag::Destruct()
-    {
-        Palmtree::Math::Core::Internal::DeallocateNumber(_buffer);
-    }
-
-    ResourceHolderSINT::__StaticNumberChainBufferTag::__StaticNumberChainBufferTag(NUMBER_OBJECT_SINT * buffer)
-    {
-        _buffer = buffer;
-    }
-
-    ResourceHolderSINT::__StaticNumberChainBufferTag::~__StaticNumberChainBufferTag()
-    {
-    }
-
-    BOOL  ResourceHolderSINT::__StaticNumberChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void  ResourceHolderSINT::__StaticNumberChainBufferTag::Check()
-    {
-    }
-
-    void  ResourceHolderSINT::__StaticNumberChainBufferTag::Destruct()
-    {
-        DetatchNumber(_buffer);
-    }
-
-    ResourceHolderSINT::ResourceHolderSINT()
-    {
-    }
-
-    ResourceHolderSINT::~ResourceHolderSINT()
-    {
-    }
-
-    void* ResourceHolderSINT::AllocateBytes(size_t size)
-    {
-        Lock lock_obj;
-        void* buffer = HeapAlloc(hLocalHeap, HEAP_ZERO_MEMORY, size);
-        if (buffer == nullptr)
-            throw NotEnoughMemoryException(L"ヒープメモリ領域が不足しています。");
-#ifdef _LOG_MEMORY
-        {
-            wprintf(L"0x%08lx: new header 0x%016llx\n", GetCurrentThreadId(), (unsigned long long)buffer);
-        }
-#endif
-        __ChainBufferTag* tag = new __GenericChainBufferTag(buffer);
-        LinkTag(tag);
-        return (buffer);
-    }
-
-    void ResourceHolderSINT::DeallocateBytes(void * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag != nullptr)
-        {
-            tag->Unlink();
-            tag->Destruct();
-            delete tag;
-        }
-    }
-
-    void ResourceHolderSINT::UnlinkBytes(void *buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkBytes;1");
-        tag->Unlink();
-    }
-
-    NUMBER_OBJECT_SINT * ResourceHolderSINT::AllocateNumber(SIGN_T sign, PMC_HANDLE_UINT abs)
-    {
-#ifdef _DEBUG
-        if (sign == SIGN_ZERO && !abs->FLAGS.IS_ZERO)
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;ResourceHolderSINT::AllocateNumber;1");
-#endif
-        Lock lock_obj;
-        NUMBER_OBJECT_SINT* buffer = Palmtree::Math::Core::Internal::AllocateNumber(sign, abs);
-#ifdef _DEBUG
-        CheckBuffer(buffer);
-#endif
-        __ChainBufferTag* tag = new __DynamicNumberChainBufferTag(buffer);
-        LinkTag(tag);
-        return (buffer);
-    }
-
-    void ResourceHolderSINT::HookNumber(NUMBER_OBJECT_SINT * buffer)
-    {
-        Lock lock_obj;
-#ifdef _DEBUG
-        if (!buffer->IS_STATIC)
-            CheckBuffer(buffer);
-#endif
-        __ChainBufferTag* tag = new __NumberHandleHookingChainBufferTag(buffer);
-        LinkTag(tag);
-    }
-
-    void ResourceHolderSINT::HookNumber(PMC_HANDLE_UINT x)
-    {
-        Lock lock_obj;
-#ifdef _DEBUG
-        if (!x->FLAGS.IS_STATIC)
-             CheckBuffer(x);
-#endif
-        __ChainBufferTag* tag = new __UINTNumberHandleHookingChainBufferTag(x);
-        LinkTag(tag);
-    }
-
-    void ResourceHolderSINT::DeallocateNumber(NUMBER_OBJECT_SINT * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag != nullptr)
-        {
-            tag->Unlink();
-            tag->Destruct();
-            delete tag;
-        }
-    }
-
-    void ResourceHolderSINT::DeallocateNumber(PMC_HANDLE_UINT x)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(x);
-        if (tag != nullptr)
-        {
-            tag->Unlink();
-            tag->Destruct();
-            delete tag;
-        }
-    }
-
-    void ResourceHolderSINT::CheckNumber(NUMBER_OBJECT_SINT * buffer)
-    {
-#ifdef _DEBUG
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderSINT::CheckNumber;1");
-        tag->Check();
-#endif
-    }
-
-    void ResourceHolderSINT::UnlinkNumber(NUMBER_OBJECT_SINT * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkNumber;1");
-        tag->Unlink();
-    }
-
-    void ResourceHolderSINT::UnlinkNumber(PMC_HANDLE_UINT x)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(x);
-        if (tag == nullptr)
-            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkNumber;1");
-        tag->Unlink();
-    }
-
-    void ResourceHolderSINT::AttatchStaticNumber(NUMBER_OBJECT_SINT * p, SIGN_T sign, PMC_HANDLE_UINT abs)
-    {
-        Lock lock_obj;
-#ifdef _DEBUG
-        CheckBuffer(p);
-#endif
-        Palmtree::Math::Core::Internal::AttatchNumber(p, sign, abs);
-        __ChainBufferTag* tag = new __StaticNumberChainBufferTag(p);
-        LinkTag(tag);
-    }
-
-    void ResourceHolderSINT::DetatchStaticNumber(NUMBER_OBJECT_SINT * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag != nullptr)
-        {
-            tag->Unlink();
-            tag->Destruct();
-            delete tag;
-        }
-    }
-
-    void ResourceHolderSINT::UnlinkStatickNumber(NUMBER_OBJECT_SINT * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkStatickNumber;1");
-        tag->Unlink();
-    }
-#pragma endregion
-
 #pragma region ヒープメモリ関連関数
 
     static BOOL GetAllocatedMemorySize_Imp(_UINT64_T* size)
@@ -740,25 +459,24 @@ namespace Palmtree::Math::Core::Internal
 
     PMC_STATUS_CODE Initialize_Memory(void)
     {
-        InitializeCriticalSection(&mcs);
-
         ResourceHolderSINT root;
 
         try
         {
-            PMC_HANDLE_UINT uint_zero = ep_uint.GetConstantValue(PMC_CONSTANT_ZERO);
-            root.HookNumber(uint_zero);
-            PMC_HANDLE_UINT uint_one = ep_uint.GetConstantValue(PMC_CONSTANT_ONE);
-            root.HookNumber(uint_one);
-            root.AttatchStaticNumber(&number_object_sint_zero, SIGN_ZERO, uint_zero);
-            root.AttatchStaticNumber(&number_object_sint_one, SIGN_POSITIVE, uint_one);
-            root.AttatchStaticNumber(&number_object_sint_minus_one, SIGN_NEGATIVE, uint_one);
+            number_handle_uint_zero = ep_uint.GetConstantValue(PMC_CONSTANT_ZERO);
+            root.HookNumber(number_handle_uint_zero);
+            number_handle_uint_one = ep_uint.GetConstantValue(PMC_CONSTANT_ONE);
+            root.HookNumber(number_handle_uint_one);
+            number_handle_uint_ten = ep_uint.From(10U);
+            root.HookNumber(number_handle_uint_ten);
 
-            number_handle_uint_one = uint_one;
-            number_handle_uint_zero = uint_zero;
+            root.AttatchStaticNumber(&number_object_sint_zero, SIGN_ZERO, number_handle_uint_zero);
+            root.AttatchStaticNumber(&number_object_sint_one, SIGN_POSITIVE, number_handle_uint_one);
+            root.AttatchStaticNumber(&number_object_sint_minus_one, SIGN_NEGATIVE, number_handle_uint_one);
 
-            root.UnlinkNumber(uint_zero);
-            root.UnlinkNumber(uint_one);
+            root.UnlinkNumber(number_handle_uint_zero);
+            root.UnlinkNumber(number_handle_uint_one);
+            root.UnlinkNumber(number_handle_uint_ten);
             root.UnlinkStatickNumber(&number_object_sint_zero);
             root.UnlinkStatickNumber(&number_object_sint_one);
             root.UnlinkStatickNumber(&number_object_sint_minus_one);
@@ -769,12 +487,22 @@ namespace Palmtree::Math::Core::Internal
         {
             return (ex.GetStatusCode());
         }
-
-
-
     }
 
-    BOOL AllocateSINTHeapArea()
+    void* __AllocateHeap(size_t size) noexcept(false)
+    {
+        void* buffer = HeapAlloc(hLocalHeap, HEAP_ZERO_MEMORY, size);
+        if (buffer == nullptr)
+            throw NotEnoughMemoryException(L"ヒープメモリ領域が不足しています。");
+        return (buffer);
+    }
+
+    void __DeallocateHeap(void* buffer) noexcept(true)
+    {
+        HeapFree(hLocalHeap, 0, buffer);
+    }
+
+    bool __AllocateSINTHeapArea() noexcept(true)
     {
         hLocalHeap = HeapCreate(0, 0x1000, 0);
         if (hLocalHeap == nullptr)
@@ -782,7 +510,7 @@ namespace Palmtree::Math::Core::Internal
         return (TRUE);
     }
 
-    void DeallocateSINTHeapArea()
+    void __DeallocateSINTHeapArea() noexcept(true)
     {
         if (hLocalHeap != nullptr)
         {

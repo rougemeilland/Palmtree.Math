@@ -1,4 +1,4 @@
-/*
+﻿/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -35,19 +35,19 @@ namespace Palmtree::Math::Core::Internal
         BOOL result = TRUE;
         switch (dwReason)
         {
-        case DLL_PROCESS_ATTACH: // DLL���v���Z�X�̃A�h���X��ԂɃ}�b�s���O���ꂽ�B
-            if (!AllocateRTNLHeapArea())
+        case DLL_PROCESS_ATTACH: // DLLがプロセスのアドレス空間にマッピングされた。
+            if (!__AllocateRTNLHeapArea())
                 result = FALSE;
             break;
 
-        case DLL_THREAD_ATTACH: // �X���b�h���쐬����悤�Ƃ��Ă���B
+        case DLL_THREAD_ATTACH: // スレッドが作成されようとしている。
             break;
 
-        case DLL_THREAD_DETACH: // �X���b�h���j������悤�Ƃ��Ă���B
+        case DLL_THREAD_DETACH: // スレッドが破棄されようとしている。
             break;
 
-        case DLL_PROCESS_DETACH: // DLL�̃}�b�s���O����������悤�Ƃ��Ă���B
-            DeallocateRTNLHeapArea();
+        case DLL_PROCESS_DETACH: // DLLのマッピングが解除されようとしている。
+            __DeallocateRTNLHeapArea();
             break;
         default:
             result = FALSE;

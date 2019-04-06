@@ -46,12 +46,12 @@ namespace Palmtree.Math.Core
 
         void IUBigIntDisposable.CheckHandle(IntPtr handle)
         {
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_CheckHandle_X(handle));
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_CheckHandle_UX(handle));
         }
 
         void IUBigIntDisposable.Dispose(IntPtr handle)
         {
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_Dispose_X(handle));
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Dispose_UX(handle));
         }
 
         #endregion

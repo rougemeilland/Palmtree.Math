@@ -31,18 +31,24 @@ namespace Palmtree.Math.CodeGen.TestData
     {
         string Type { get; }
         NullDataItem ToNull();
-        UBigIntDataItem ToUBigInt();
-        Int32DataItem ToInt32();
         UInt32DataItem ToUInt32();
         UInt64DataItem ToUInt64();
+        Int32DataItem ToInt32();
+        Int64DataItem ToInt64();
+        UBigIntDataItem ToUBigInt();
+        BigIntDataItem ToBigInt();
+        RationalDataItem ToRational();
         XStringDataItem ToXString();
         NumberFormatInfoDataItem ToNumberFormatInfo();
         ExceptionDataItem ToException();
         bool IsNull { get; }
-        bool IsUBigInt { get; }
-        bool IsInt32 { get; }
         bool IsUInt32 { get; }
         bool IsUInt64 { get; }
+        bool IsInt32 { get; }
+        bool IsInt64 { get; }
+        bool IsUBigInt { get; }
+        bool IsBigInt { get; }
+        bool IsRational { get; }
         bool IsXString { get; }
         bool IsNumberFormatInfo { get; }
         bool IsException { get; }

@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -25,11 +25,12 @@
 
 #include <windows.h>
 #include "pmc_rtnl_internal.h"
-#include "pmc_inline_func.h"
 #include "pmc_resourceholder_rtnl.h"
+#include "pmc_lock.h"
+#include "pmc_inline_func.h"
 
 
-#pragma region ƒvƒ‰ƒbƒgƒtƒH[ƒ€ŒÅ—L‚Ì’è‹`
+#pragma region ãƒ—ãƒ©ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒ å›ºæœ‰ã®å®šç¾©
 #ifdef _M_IX86
 #define	DEFAULT_MEMORY_DATA (0xcccccccc)
 #elif defined(_M_X64)
@@ -43,9 +44,8 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-#pragma region Ã“I•Ï”‚Ì’è‹`
+#pragma region é™çš„å¤‰æ•°ã®å®šç¾©
     static HANDLE hLocalHeap;
-    static CRITICAL_SECTION mcs;
     NUMBER_OBJECT_RTNL number_object_rtnl_zero;
     NUMBER_OBJECT_RTNL number_object_rtnl_one;
     NUMBER_OBJECT_RTNL number_object_rtnl_minus_one;
@@ -133,80 +133,54 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    static void Reduce(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, PMC_HANDLE_SINT* new_numerator, PMC_HANDLE_UINT* new_denominator)
+    static void InitializeNumber(NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator)
     {
         if (denominator->FLAGS.IS_ZERO)
-            throw DivisionByZeroException(L"”’l‚Ì•ª•ê‚ª 0 ‚Å‚·B");
-
-        ResourceHolderRTNL root;
-        root.HookNumber(numerator);
-        root.HookNumber(denominator);
-        PMC_HANDLE_UINT gcd = ep_sint.GreatestCommonDivisor(numerator, denominator);
-        root.HookNumber(gcd);
-        if (gcd->FLAGS.IS_ONE)
         {
-            root.UnlinkNumber(numerator);
-            root.UnlinkNumber(denominator);
-            *new_numerator = numerator;
-            *new_denominator = denominator;
+            // åˆ†æ¯ãŒ 0 ã®å ´åˆ
+            throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;InitializeNumber;1");
+        }
+#ifdef _DEBUG
+        if (numerator->FLAGS.IS_ZERO)
+        {
+            if (!denominator->FLAGS.IS_ONE)
+            {
+                // åˆ†å­ãŒ 0 ã§ã‹ã¤åˆ†æ¯ãŒ 1 ã§ã¯ãªã„å ´åˆ â‡’ 0 ã®å ´åˆã¯ åˆ†æ¯ã¯ 1 ã§ãªã‘ã‚Œã°ãªã‚‰ãªã„ã€‚
+                throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;InitializeNumber;2");
+            }
         }
         else
         {
-            PMC_HANDLE_UINT temp_r1 = ep_uint.DivRem(denominator, gcd, new_denominator);
-            root.HookNumber(*new_denominator);
-            root.HookNumber(temp_r1);
-            if (!temp_r1->FLAGS.IS_ZERO)
-                throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;InitializeNumber;1");
-
-            PMC_HANDLE_SINT temp_r2 = ep_sint.DivRem(numerator, gcd, new_numerator);
-            root.HookNumber(*new_numerator);
-            root.HookNumber(temp_r2);
-            if (!temp_r2->FLAGS.IS_ZERO)
-                throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;InitializeNumber;1");
-
-            root.DeallocateNumber(numerator);
-            root.DeallocateNumber(denominator);
-            root.UnlinkNumber(*new_numerator);
-            root.UnlinkNumber(*new_denominator);
+            ResourceHolderRTNL root;
+            PMC_HANDLE_UINT gcd = ep_sint.GreatestCommonDivisor(numerator, denominator);
+            root.HookNumber(gcd);
+            if (!gcd->FLAGS.IS_ONE)
+            {
+                // åˆ†å­ã¨åˆ†æ¯ã¯æ—¢ç´„ã§ãªã‘ã‚Œã°ãªã‚‰ãªã„ã€‚
+                throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;InitializeNumber;3");
+            }
         }
-    }
-
-    static void InitializeNumber(NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, bool f_reduce)
-    {
-        PMC_HANDLE_SINT new_numerator;
-        PMC_HANDLE_UINT new_denominator;
-        if (f_reduce)
-            Reduce(numerator, denominator, &new_numerator, &new_denominator);
-        else
-        {
-            new_numerator = numerator;
-            new_denominator = denominator;
-        }
-
-        ClearNumberHeader(p);
+#endif
+            ClearNumberHeader(p);
         p->SIGNATURE1 = PMC_SIGNATURE;
         p->SIGNATURE2 = PMC_RTNL_SIGNATURE;
-        p->NUMERATOR = new_numerator;
-        p->DENOMINATOR = new_denominator;
+        p->NUMERATOR = numerator;
+        p->DENOMINATOR = denominator;
         if (p->DENOMINATOR->FLAGS.IS_ONE)
         {
-            // •ª•ê‚ª 1 ‚Å‚ ‚éê‡
+            // åˆ†æ¯ãŒ 1 ã§ã‚ã‚‹å ´åˆ
             p->IS_INT = true;
-            p->IS_EVEN = p->NUMERATOR->FLAGS.IS_EVEN;
             p->IS_MINUS_ONE = p->NUMERATOR->FLAGS.IS_MINUS_ONE;
             p->IS_ONE = p->NUMERATOR->FLAGS.IS_ONE;
-            p->IS_POWER_OF_TWO = p->NUMERATOR->FLAGS.IS_POWER_OF_TWO;
             p->IS_ZERO = p->NUMERATOR->FLAGS.IS_ZERO;
         }
         else
         {
-            // •ª•ê‚ª 1 ‚Å‚Í‚È‚¢ê‡
+            // åˆ†æ¯ãŒ 1 ã§ã¯ãªã„å ´åˆ
             p->IS_INT = false;
-            p->IS_ZERO = false;
-            p->IS_ONE = false;
             p->IS_MINUS_ONE = false;
-            p->IS_EVEN = false;
-            p->IS_POWER_OF_TWO = false;
+            p->IS_ONE = false;
+            p->IS_ZERO = false;
         }
     }
 
@@ -216,33 +190,36 @@ namespace Palmtree::Math::Core::Internal
         ep_uint.Dispose(p->DENOMINATOR);
     }
 
-    static void AttatchNumber(NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, bool f_reduce)
+    void __AttatchNumber(NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator)
     {
-        InitializeNumber(p, numerator, denominator, f_reduce);
+        InitializeNumber(p, numerator, denominator);
         p->IS_STATIC = true;
     }
 
-    static NUMBER_OBJECT_RTNL* AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, bool f_reduce)
+    NUMBER_OBJECT_RTNL* __AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator)
     {
         ResourceHolderRTNL root;
-        NUMBER_OBJECT_RTNL* p = (NUMBER_OBJECT_RTNL*)root.AllocateBytes(sizeof(NUMBER_OBJECT_RTNL));
-        InitializeNumber(p, numerator, denominator, f_reduce);
+        NUMBER_OBJECT_RTNL* p = root.AllocateNumberObject();
+        InitializeNumber(p, numerator, denominator);
         p->IS_STATIC = false;
-        root.UnlinkBytes(p);
+        root.UnlinkNumberObject(p);
         return (p);
     }
 
-    static void DetatchNumber(NUMBER_OBJECT_RTNL* p)
+    void __DetatchNumber(NUMBER_OBJECT_RTNL* p)
     {
         if (p == nullptr || !p->IS_STATIC)
             return;
         CleanUpNumber(p);
     }
 
-    static void DeallocateNumber(NUMBER_OBJECT_RTNL* p)
+    void __DeallocateNumber(NUMBER_OBJECT_RTNL* p)
     {
+        Lock lock_obj;
         if (p == nullptr || p->IS_STATIC)
             return;
+        if (p->WORKING_COUNT > 0)
+            throw InvalidOperationException(L"æ¼”ç®—ã«ä½¿ç”¨ä¸­ã®æ•°å€¤ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è§£æ”¾ã—ã‚ˆã†ã¨ã—ã¾ã—ãŸã€‚");
         CleanUpNumber(p);
         FillNumberHeader(p);
         HeapFree(hLocalHeap, 0, p);
@@ -251,7 +228,7 @@ namespace Palmtree::Math::Core::Internal
     void __CheckNumber(NUMBER_OBJECT_RTNL* p) noexcept(false)
     {
         if (p->SIGNATURE1 != PMC_SIGNATURE || p->SIGNATURE2 != PMC_RTNL_SIGNATURE)
-            throw BadBufferException(L"ƒƒ‚ƒŠ—Ìˆæ‚Ì•s®‡‚ğŒŸo‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;CheckNumber;1");
+            throw BadBufferException(L"ãƒ¡ãƒ¢ãƒªé ˜åŸŸã®ä¸æ•´åˆã‚’æ¤œå‡ºã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;CheckNumber;1");
         ep_sint.CheckHandle(p->NUMERATOR);
         ep_uint.CheckHandle(p->DENOMINATOR);
     }
@@ -266,8 +243,6 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_UINT new_denominator = ep_uint.Clone(x->DENOMINATOR);
         root.HookNumber(new_denominator);
         NUMBER_OBJECT_RTNL* w = root.AllocateNumber(new_numerator, new_denominator);
-        root.UnlinkNumber(new_numerator);
-        root.UnlinkNumber(new_denominator);
         root.UnlinkNumber(w);
         return (w);
     }
@@ -283,7 +258,7 @@ namespace Palmtree::Math::Core::Internal
         case PMC_CONSTANT_MINUS_ONE:
             return (GET_NUMBER_HANDLE(&number_object_rtnl_minus_one));
         default:
-            throw ArgumentException(L"ˆø”type‚ª–¢’m‚Ì’l‚Å‚·B");
+            throw ArgumentException(L"å¼•æ•°typeãŒæœªçŸ¥ã®å€¤ã§ã™ã€‚");
         }
     }
 
@@ -293,6 +268,37 @@ namespace Palmtree::Math::Core::Internal
         ResourceHolderRTNL root;
         NUMBER_OBJECT_RTNL* nr = DuplicateNumber_R(nx);
         root.HookNumber(nr);
+        PMC_HANDLE_RTNL r = GET_NUMBER_HANDLE(nr);
+        root.UnlinkNumber(nr);
+        return (r);
+    }
+
+    PMC_HANDLE_RTNL PMC_Negate_R(PMC_HANDLE_RTNL x) noexcept(false)
+    {
+        NUMBER_OBJECT_RTNL* nx = GET_NUMBER_OBJECT(x, L"x");
+        ResourceHolderRTNL root;
+        PMC_HANDLE_SINT nr_numerator = ep_sint.Negate(nx->NUMERATOR);
+        root.HookNumber(nr_numerator);
+        PMC_HANDLE_UINT nr_denominator = ep_uint.Clone(nx->DENOMINATOR);
+        root.HookNumber(nr_denominator);
+        NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(nr_numerator, nr_denominator);
+        root.HookNumber(nr);
+        PMC_HANDLE_RTNL r = GET_NUMBER_HANDLE(nr);
+        root.UnlinkNumber(nr);
+        return (r);
+    }
+
+    PMC_HANDLE_RTNL PMC_Abs_R(PMC_HANDLE_RTNL x) noexcept(false)
+    {
+        NUMBER_OBJECT_RTNL* nx = GET_NUMBER_OBJECT(x, L"x");
+        ResourceHolderRTNL root;
+        PMC_HANDLE_UINT nr_numerator_abs = ep_sint.Abs(nx->NUMERATOR);
+        root.HookNumber(nr_numerator_abs);
+        PMC_HANDLE_SINT nr_numerator = ep_sint.From(nr_numerator_abs);
+        root.HookNumber(nr_numerator);
+        PMC_HANDLE_UINT nr_denominator = ep_uint.Clone(nx->DENOMINATOR);
+        root.HookNumber(nr_denominator);
+        NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(nr_numerator, nr_denominator);
         PMC_HANDLE_RTNL r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);
         return (r);
@@ -324,373 +330,28 @@ namespace Palmtree::Math::Core::Internal
         ep_sint.Dispose(p);
     }
 
-    void PMC_Dispose_X(PMC_HANDLE_RTNL p)
+    void PMC_Dispose_R(PMC_HANDLE_RTNL p)
     {
         NUMBER_OBJECT_RTNL* np = GET_NUMBER_OBJECT(p, L"p");
-        DeallocateNumber(np);
+       __DeallocateNumber(np);
     }
 
-#pragma region ƒ`ƒF[ƒ“‚³‚ê‚½ƒƒ‚ƒŠŠÇ—
-    Lock::Lock()
+    void PMC_UseObject_R(PMC_HANDLE_RTNL x) noexcept(false)
     {
-        EnterCriticalSection(&mcs);
+        if (x == nullptr)
+            return;
+        NUMBER_OBJECT_RTNL* nx = GET_NUMBER_OBJECT(x, L"x");
+        ++nx->WORKING_COUNT;
     }
 
-    Lock::~Lock()
+    void PMC_UnuseObject_R(PMC_HANDLE_RTNL x) noexcept(false)
     {
-        LeaveCriticalSection(&mcs);
+        if (x == nullptr)
+            return;
+        NUMBER_OBJECT_RTNL* nx = GET_NUMBER_OBJECT(x, L"x");
+        --nx->WORKING_COUNT;
     }
-
-    ResourceHolderRTNL::__GenericChainBufferTag::__GenericChainBufferTag(void * buffer)
-    {
-        _buffer = buffer;
-    }
-
-    ResourceHolderRTNL::__GenericChainBufferTag::~__GenericChainBufferTag()
-    {
-    }
-
-    BOOL ResourceHolderRTNL::__GenericChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void ResourceHolderRTNL::__GenericChainBufferTag::Destruct()
-    {
-        HeapFree(hLocalHeap, 0, _buffer);
-#ifdef _LOG_MEMORY
-        {
-            wprintf(L"0x%08lx: delete header 0x%016llx\n", GetCurrentThreadId(), (unsigned long long)_buffer);
-        }
-#endif
-    }
-
-    ResourceHolderRTNL::__UINTNumberHandleHookingChainBufferTag::__UINTNumberHandleHookingChainBufferTag(PMC_HANDLE_UINT x)
-    {
-        _buffer = x;
-    }
-
-    ResourceHolderRTNL::__UINTNumberHandleHookingChainBufferTag::~__UINTNumberHandleHookingChainBufferTag()
-    {
-    }
-
-    BOOL ResourceHolderRTNL::__UINTNumberHandleHookingChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void ResourceHolderRTNL::__UINTNumberHandleHookingChainBufferTag::Check()
-    {
-    }
-
-    void ResourceHolderRTNL::__UINTNumberHandleHookingChainBufferTag::Destruct()
-    {
-        Palmtree::Math::Core::Internal::ep_uint.Dispose(_buffer);
-    }
-
-    ResourceHolderRTNL::__SINTNumberHandleHookingChainBufferTag::__SINTNumberHandleHookingChainBufferTag(PMC_HANDLE_SINT x)
-    {
-        _buffer = x;
-    }
-
-    ResourceHolderRTNL::__SINTNumberHandleHookingChainBufferTag::~__SINTNumberHandleHookingChainBufferTag()
-    {
-    }
-
-    BOOL ResourceHolderRTNL::__SINTNumberHandleHookingChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void ResourceHolderRTNL::__SINTNumberHandleHookingChainBufferTag::Check()
-    {
-    }
-
-    void ResourceHolderRTNL::__SINTNumberHandleHookingChainBufferTag::Destruct()
-    {
-        Palmtree::Math::Core::Internal::ep_sint.Dispose(_buffer);
-    }
-
-    ResourceHolderRTNL::__DynamicNumberChainBufferTag::__DynamicNumberChainBufferTag(NUMBER_OBJECT_RTNL * buffer)
-    {
-        _buffer = buffer;
-    }
-
-    ResourceHolderRTNL::__DynamicNumberChainBufferTag::~__DynamicNumberChainBufferTag()
-    {
-    }
-
-    BOOL  ResourceHolderRTNL::__DynamicNumberChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void  ResourceHolderRTNL::__DynamicNumberChainBufferTag::Check()
-    {
-        Palmtree::Math::Core::Internal::__CheckNumber(_buffer);
-    }
-
-    void  ResourceHolderRTNL::__DynamicNumberChainBufferTag::Destruct()
-    {
-        Palmtree::Math::Core::Internal::DeallocateNumber(_buffer);
-    }
-
-    ResourceHolderRTNL::__NumberHandleHookingChainBufferTag::__NumberHandleHookingChainBufferTag(NUMBER_OBJECT_RTNL * buffer)
-    {
-        _buffer = buffer;
-    }
-
-    ResourceHolderRTNL::__NumberHandleHookingChainBufferTag::~__NumberHandleHookingChainBufferTag()
-    {
-    }
-
-    BOOL  ResourceHolderRTNL::__NumberHandleHookingChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void  ResourceHolderRTNL::__NumberHandleHookingChainBufferTag::Check()
-    {
-    }
-
-    void  ResourceHolderRTNL::__NumberHandleHookingChainBufferTag::Destruct()
-    {
-        Palmtree::Math::Core::Internal::DeallocateNumber(_buffer);
-    }
-
-    ResourceHolderRTNL::__StaticNumberChainBufferTag::__StaticNumberChainBufferTag(NUMBER_OBJECT_RTNL * buffer)
-    {
-        _buffer = buffer;
-    }
-
-    ResourceHolderRTNL::__StaticNumberChainBufferTag::~__StaticNumberChainBufferTag()
-    {
-    }
-
-    BOOL  ResourceHolderRTNL::__StaticNumberChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void  ResourceHolderRTNL::__StaticNumberChainBufferTag::Check()
-    {
-    }
-
-    void  ResourceHolderRTNL::__StaticNumberChainBufferTag::Destruct()
-    {
-        DetatchNumber(_buffer);
-    }
-
-    ResourceHolderRTNL::ResourceHolderRTNL()
-    {
-    }
-
-    ResourceHolderRTNL::~ResourceHolderRTNL()
-    {
-    }
-
-    void* ResourceHolderRTNL::AllocateBytes(size_t size)
-    {
-        Lock lock_obj;
-        void* buffer = HeapAlloc(hLocalHeap, HEAP_ZERO_MEMORY, size);
-        if (buffer == nullptr)
-            throw NotEnoughMemoryException(L"ƒq[ƒvƒƒ‚ƒŠ—Ìˆæ‚ª•s‘«‚µ‚Ä‚¢‚Ü‚·B");
-#ifdef _LOG_MEMORY
-        {
-            wprintf(L"0x%08lx: new header 0x%016llx\n", GetCurrentThreadId(), (unsigned long long)buffer);
-        }
-#endif
-        __ChainBufferTag* tag = new __GenericChainBufferTag(buffer);
-        LinkTag(tag);
-        return (buffer);
-    }
-
-    void ResourceHolderRTNL::DeallocateBytes(void * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag != nullptr)
-        {
-            tag->Unlink();
-            tag->Destruct();
-            delete tag;
-        }
-    }
-
-    void ResourceHolderRTNL::UnlinkBytes(void *buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"ƒƒ‚ƒŠ—Ìˆæ‚Ì•s®‡‚ğŒŸo‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;ResourceHolderRTNL::UnlinkBytes;1");
-        tag->Unlink();
-    }
-
-    NUMBER_OBJECT_RTNL * ResourceHolderRTNL::AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator)
-    {
-        Lock lock_obj;
-        NUMBER_OBJECT_RTNL* buffer = Palmtree::Math::Core::Internal::AllocateNumber(numerator, denominator, true);
-#ifdef _DEBUG
-        CheckBuffer(buffer);
-#endif
-        __ChainBufferTag* tag = new __DynamicNumberChainBufferTag(buffer);
-        LinkTag(tag);
-        return (buffer);
-    }
-
-    NUMBER_OBJECT_RTNL * ResourceHolderRTNL::AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, bool f_reduce)
-    {
-        Lock lock_obj;
-        NUMBER_OBJECT_RTNL* buffer = Palmtree::Math::Core::Internal::AllocateNumber(numerator, denominator, f_reduce);
-#ifdef _DEBUG
-        CheckBuffer(buffer);
-#endif
-        __ChainBufferTag* tag = new __DynamicNumberChainBufferTag(buffer);
-        LinkTag(tag);
-        return (buffer);
-    }
-
-    void ResourceHolderRTNL::HookNumber(NUMBER_OBJECT_RTNL * buffer)
-    {
-        Lock lock_obj;
-#ifdef _DEBUG
-        if (!buffer->IS_STATIC)
-            CheckBuffer(buffer);
-#endif
-        __ChainBufferTag* tag = new __NumberHandleHookingChainBufferTag(buffer);
-        LinkTag(tag);
-    }
-
-    void ResourceHolderRTNL::HookNumber(PMC_HANDLE_SINT x)
-    {
-        Lock lock_obj;
-#ifdef _DEBUG
-        if (!x->FLAGS.IS_STATIC)
-            CheckBuffer(x);
-#endif
-        __ChainBufferTag* tag = new __SINTNumberHandleHookingChainBufferTag(x);
-        LinkTag(tag);
-    }
-
-    void ResourceHolderRTNL::HookNumber(PMC_HANDLE_UINT x)
-    {
-        Lock lock_obj;
-#ifdef _DEBUG
-        if (!x->FLAGS.IS_STATIC)
-            CheckBuffer(x);
-#endif
-        __ChainBufferTag* tag = new __UINTNumberHandleHookingChainBufferTag(x);
-        LinkTag(tag);
-    }
-
-    void ResourceHolderRTNL::DeallocateNumber(NUMBER_OBJECT_RTNL * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag != nullptr)
-        {
-            tag->Unlink();
-            tag->Destruct();
-            delete tag;
-        }
-    }
-
-    void ResourceHolderRTNL::DeallocateNumber(PMC_HANDLE_SINT x)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(x);
-        if (tag != nullptr)
-        {
-            tag->Unlink();
-            tag->Destruct();
-            delete tag;
-        }
-    }
-
-    void ResourceHolderRTNL::DeallocateNumber(PMC_HANDLE_UINT x)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(x);
-        if (tag != nullptr)
-        {
-            tag->Unlink();
-            tag->Destruct();
-            delete tag;
-        }
-    }
-
-    void ResourceHolderRTNL::CheckNumber(NUMBER_OBJECT_RTNL * buffer)
-    {
-#ifdef _DEBUG
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"ƒƒ‚ƒŠ—Ìˆæ‚Ì•s®‡‚ğŒŸo‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;ResourceHolderRTNL::CheckNumber;1");
-        tag->Check();
-#endif
-    }
-
-    void ResourceHolderRTNL::UnlinkNumber(NUMBER_OBJECT_RTNL * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"ƒƒ‚ƒŠ—Ìˆæ‚Ì•s®‡‚ğŒŸo‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;ResourceHolderRTNL::UnlinkNumber;1");
-        tag->Unlink();
-    }
-
-    void ResourceHolderRTNL::UnlinkNumber(PMC_HANDLE_SINT x)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(x);
-        if (tag == nullptr)
-            throw BadBufferException(L"ƒƒ‚ƒŠ—Ìˆæ‚Ì•s®‡‚ğŒŸo‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;ResourceHolderRTNL::UnlinkNumber;1");
-        tag->Unlink();
-    }
-
-    void ResourceHolderRTNL::UnlinkNumber(PMC_HANDLE_UINT x)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(x);
-        if (tag == nullptr)
-            throw BadBufferException(L"ƒƒ‚ƒŠ—Ìˆæ‚Ì•s®‡‚ğŒŸo‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;ResourceHolderRTNL::UnlinkNumber;1");
-        tag->Unlink();
-    }
-
-    void ResourceHolderRTNL::AttatchStaticNumber(NUMBER_OBJECT_RTNL * p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator, bool f_reduce)
-    {
-        Lock lock_obj;
-#ifdef _DEBUG
-        CheckBuffer(p);
-#endif
-        Palmtree::Math::Core::Internal::AttatchNumber(p, numerator, denominator, f_reduce);
-        __ChainBufferTag* tag = new __StaticNumberChainBufferTag(p);
-        LinkTag(tag);
-    }
-
-    void ResourceHolderRTNL::DetatchStaticNumber(NUMBER_OBJECT_RTNL * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag != nullptr)
-        {
-            tag->Unlink();
-            tag->Destruct();
-            delete tag;
-        }
-    }
-
-    void ResourceHolderRTNL::UnlinkStatickNumber(NUMBER_OBJECT_RTNL * buffer)
-    {
-        Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
-        if (tag == nullptr)
-            throw BadBufferException(L"ƒƒ‚ƒŠ—Ìˆæ‚Ì•s®‡‚ğŒŸo‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;ResourceHolderRTNL::UnlinkStatickNumber;1");
-        tag->Unlink();
-    }
-#pragma endregion
-
-#pragma region ƒq[ƒvƒƒ‚ƒŠŠÖ˜AŠÖ”
+#pragma region ãƒ’ãƒ¼ãƒ—ãƒ¡ãƒ¢ãƒªé–¢é€£é–¢æ•°
 
     static BOOL GetAllocatedMemorySize_Imp(_UINT64_T* size)
     {
@@ -756,13 +417,13 @@ namespace Palmtree::Math::Core::Internal
     _UINT64_T PMC_GetAllocatedMemorySize() noexcept(false)
     {
         if (!HeapLock(hLocalHeap))
-            throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;GetAllocatedMemorySize;1");
+            throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;GetAllocatedMemorySize;1");
         _UINT64_T size;
         BOOL result = GetAllocatedMemorySize_Imp(&size);
         if (!HeapUnlock(hLocalHeap))
-            throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;GetAllocatedMemorySize;2");
+            throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;GetAllocatedMemorySize;2");
         if (!result)
-            throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_memory.cpp;GetAllocatedMemorySize;3");
+            throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_memory.cpp;GetAllocatedMemorySize;3");
         return (size);
     }
 
@@ -777,8 +438,6 @@ namespace Palmtree::Math::Core::Internal
 
     PMC_STATUS_CODE Initialize_Memory(void)
     {
-        InitializeCriticalSection(&mcs);
-
         ResourceHolderRTNL root;
 
         try
@@ -795,9 +454,9 @@ namespace Palmtree::Math::Core::Internal
             PMC_HANDLE_SINT sint_minus_one = ep_sint.GetConstantValue(PMC_CONSTANT_MINUS_ONE);
             root.HookNumber(sint_minus_one);
 
-            root.AttatchStaticNumber(&number_object_rtnl_zero, sint_zero, uint_one, false);
-            root.AttatchStaticNumber(&number_object_rtnl_one, sint_one, uint_one, false);
-            root.AttatchStaticNumber(&number_object_rtnl_minus_one, sint_minus_one, uint_one, false);
+            root.AttatchStaticNumber(&number_object_rtnl_zero, sint_zero, uint_one);
+            root.AttatchStaticNumber(&number_object_rtnl_one, sint_one, uint_one);
+            root.AttatchStaticNumber(&number_object_rtnl_minus_one, sint_minus_one, uint_one);
 
             number_handle_sint_one = sint_one;
             number_handle_sint_minus_one = sint_minus_one;
@@ -824,7 +483,20 @@ namespace Palmtree::Math::Core::Internal
 
     }
 
-    BOOL AllocateRTNLHeapArea()
+    void* __AllocateHeap(size_t size) noexcept(false)
+    {
+        void* buffer = HeapAlloc(hLocalHeap, HEAP_ZERO_MEMORY, size);
+        if (buffer == nullptr)
+            throw NotEnoughMemoryException(L"ãƒ’ãƒ¼ãƒ—ãƒ¡ãƒ¢ãƒªé ˜åŸŸãŒä¸è¶³ã—ã¦ã„ã¾ã™ã€‚");
+        return (buffer);
+    }
+
+    void __DeallocateHeap(void* buffer) noexcept(true)
+    {
+        HeapFree(hLocalHeap, 0, buffer);
+    }
+
+    bool __AllocateRTNLHeapArea() noexcept(true)
     {
         hLocalHeap = HeapCreate(0, 0x1000, 0);
         if (hLocalHeap == nullptr)
@@ -832,7 +504,7 @@ namespace Palmtree::Math::Core::Internal
         return (TRUE);
     }
 
-    void DeallocateRTNLHeapArea()
+    void __DeallocateRTNLHeapArea() noexcept(true)
     {
         if (hLocalHeap != nullptr)
         {

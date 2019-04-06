@@ -86,7 +86,7 @@ namespace Palmtree::Math::Core::Internal
     }
 
 
-    static void Add_X_1W(__UNIT_TYPE* u_ptr, __UNIT_TYPE u_count, __UNIT_TYPE v, __UNIT_TYPE* w_ptr, __UNIT_TYPE w_count)
+    static void Add_UX_1W(__UNIT_TYPE* u_ptr, __UNIT_TYPE u_count, __UNIT_TYPE v, __UNIT_TYPE* w_ptr, __UNIT_TYPE w_count)
     {
         char c;
 
@@ -99,7 +99,7 @@ namespace Palmtree::Math::Core::Internal
         DoCarry(c, u_ptr, u_count, w_ptr, w_count);
     }
 
-    static void Add_X_2W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, __UNIT_TYPE* w_buf, __UNIT_TYPE w_count)
+    static void Add_UX_2W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, __UNIT_TYPE* w_buf, __UNIT_TYPE w_count)
     {
         __UNIT_TYPE* up = u_buf;
         __UNIT_TYPE* wp = w_buf;
@@ -294,7 +294,7 @@ namespace Palmtree::Math::Core::Internal
         DoCarry(c, up, u_count - v_count, wp, w_count - v_count);
     }
 
-    static NUMBER_OBJECT_UINT* PMC_Increment_X_Imp(NUMBER_OBJECT_UINT* x)
+    NUMBER_OBJECT_UINT* PMC_Increment_UX_Imp(NUMBER_OBJECT_UINT* x)
     {
         if (x->IS_ZERO)
         {
@@ -320,18 +320,18 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_Increment_X(PMC_HANDLE_UINT x)
+    PMC_HANDLE_UINT PMC_Increment_UX(PMC_HANDLE_UINT x)
     {
         NUMBER_OBJECT_UINT* nx = GET_NUMBER_OBJECT(x, L"x");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_Increment_X_Imp(nx);
+        NUMBER_OBJECT_UINT* nw = PMC_Increment_UX_Imp(nx);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    static NUMBER_OBJECT_UINT* PMC_Add_X_I_Imp(NUMBER_OBJECT_UINT* nu, _UINT32_T v)
+    static NUMBER_OBJECT_UINT* PMC_Add_UX_UI_Imp(NUMBER_OBJECT_UINT* nu, _UINT32_T v)
     {
         if (nu->IS_ZERO)
         {
@@ -373,7 +373,7 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v);
                 __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                 NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
-                Add_X_1W(nu->BLOCK, nu->UNIT_WORD_COUNT, v, nw->BLOCK, nw->BLOCK_COUNT);
+                Add_UX_1W(nu->BLOCK, nu->UNIT_WORD_COUNT, v, nw->BLOCK, nw->BLOCK_COUNT);
                 root.CheckNumber(nw);
                 CommitNumber(nw);
                 root.UnlinkNumber(nw);
@@ -382,39 +382,39 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_Add_I_X(_UINT32_T u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_UINT PMC_Add_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(u) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_I_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_UI_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw =  PMC_Add_X_I_Imp(nv, u);
+        NUMBER_OBJECT_UINT* nw =  PMC_Add_UX_UI_Imp(nv, u);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    PMC_HANDLE_UINT PMC_Add_X_I(PMC_HANDLE_UINT u, _UINT32_T v)
+    PMC_HANDLE_UINT PMC_Add_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(v) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_X_I;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_UX_I;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_Add_X_I_Imp(nu, v);
+        NUMBER_OBJECT_UINT* nw = PMC_Add_UX_UI_Imp(nu, v);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    static NUMBER_OBJECT_UINT* PMC_Add_X_L_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
+    static NUMBER_OBJECT_UINT* PMC_Add_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
     {
         if (u->IS_ZERO)
         {
@@ -466,7 +466,7 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE v_bit_count = sizeof(v_lo) * 8 - _LZCNT_ALT_32(v_lo);
                         __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
-                        Add_X_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, w->BLOCK, w->BLOCK_COUNT);
+                        Add_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, w->BLOCK, w->BLOCK_COUNT);
                         root.CheckNumber(w);
                         CommitNumber(w);
                         root.UnlinkNumber(w);
@@ -480,7 +480,7 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v_hi);
                         __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
-                        Add_X_2W(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK, w->BLOCK_COUNT);
+                        Add_UX_2W(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK, w->BLOCK_COUNT);
                         root.CheckNumber(w);
                         CommitNumber(w);
                         root.UnlinkNumber(w);
@@ -496,7 +496,7 @@ namespace Palmtree::Math::Core::Internal
                     __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)v);
                     __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
-                    Add_X_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, w->BLOCK, w->BLOCK_COUNT);
+                    Add_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, w->BLOCK, w->BLOCK_COUNT);
                     root.CheckNumber(w);
                     CommitNumber(w);
                     root.UnlinkNumber(w);
@@ -506,39 +506,39 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_Add_L_X(_UINT64_T u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_UINT PMC_Add_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(u) * 8)
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_L_X;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_UL_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_Add_X_L_Imp(nv, u);
+        NUMBER_OBJECT_UINT* nw = PMC_Add_UX_UL_Imp(nv, u);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    PMC_HANDLE_UINT PMC_Add_X_L(PMC_HANDLE_UINT u, _UINT64_T v)
+    PMC_HANDLE_UINT PMC_Add_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(v) * 8)
         {
             // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_X_L;1");
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_UX_L;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_Add_X_L_Imp(nu, v);
+        NUMBER_OBJECT_UINT* nw = PMC_Add_UX_UL_Imp(nu, v);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    NUMBER_OBJECT_UINT* PMC_Add_X_X_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
+    NUMBER_OBJECT_UINT* PMC_Add_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->IS_ZERO)
         {
@@ -567,12 +567,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_Add_X_X(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_UINT PMC_Add_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
     {
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_Add_X_X_Imp(nu, nv);
+        NUMBER_OBJECT_UINT* nw = PMC_Add_UX_UX_Imp(nu, nv);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);

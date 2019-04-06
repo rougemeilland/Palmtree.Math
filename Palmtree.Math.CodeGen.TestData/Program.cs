@@ -24,6 +24,8 @@
 
 
 using System;
+using System.Globalization;
+using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
@@ -34,6 +36,13 @@ namespace Palmtree.Math.CodeGen.TestData
     {
         static void Main(string[] args)
         {
+#if true
+            var u = -BigInteger.Parse("10000000000000000", NumberStyles.HexNumber);
+            var v = new MiniRational(-BigInteger.Parse("10000000000000000", NumberStyles.HexNumber), 1);
+            var w = u / v;
+#endif
+
+            var lock_obj = new object();
             var current_assembly = typeof(Program).Assembly;
             var interface_name = typeof(ITestDataRendererPlugin).FullName;
             var plugins = current_assembly.GetTypes()
@@ -56,13 +65,25 @@ namespace Palmtree.Math.CodeGen.TestData
             {
                 var options = new ParallelOptions();
                 options.MaxDegreeOfParallelism = 8;
-                var lock_obj = new object();
-                Parallel.ForEach(plugins/*.Where(plugin => plugin.DataFileName.StartsWith("test_data_tostring"))*/, options, plugin => plugin.Render());
+                Parallel.ForEach(plugins/*.Where(plugin => plugin.DataFileName.StartsWith("test_data_tostring"))*/, options, plugin =>
+                {
+                    lock (lock_obj)
+                    {
+                        Console.WriteLine(string.Format("{0}...", plugin.DataFileKey));
+                    }
+                    plugin.Render();
+                });
             }
             else
             {
-                foreach (var plugin in plugins/*.Where(plugin => plugin.DataFileKey.StartsWith("uint."))*/)
+                foreach (var plugin in plugins/*.Where(plugin => plugin.DataFileKey.StartsWith("rtnl.test_data_tostringe"))*/)
+                {
+                    lock (lock_obj)
+                    {
+                        Console.WriteLine(string.Format("{0}...", plugin.DataFileKey));
+                    }
                     plugin.Render();
+                }
             }
         }
     }
