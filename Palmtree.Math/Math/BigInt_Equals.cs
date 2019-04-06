@@ -62,6 +62,81 @@ namespace Palmtree.Math
             return (EngineObject.Equals(Handle, v.Handle));
         }
 
+        public static bool Equals(Int32 u,  BigInt v)
+        {
+            return (EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool Equals(Int32 u, UBigInt v)
+        {
+            return (EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool Equals(Int64 u, BigInt v)
+        {
+            return (EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool Equals(Int64 u, UBigInt v)
+        {
+            return (EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool Equals(UInt32 u, BigInt v)
+        {
+            return (EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool Equals(UInt64 u, BigInt v)
+        {
+            return (EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool Equals(UBigInt u, Int32 v)
+        {
+            return (EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool Equals(UBigInt u, Int64 v)
+        {
+            return (EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool Equals(UBigInt u, BigInt v)
+        {
+            return (EngineObject.Equals(u.Handle, v.Handle));
+        }
+
+        public static bool Equals(BigInt u, Int32 v)
+        {
+            return (EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool Equals(BigInt u, Int64 v)
+        {
+            return (EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool Equals(BigInt u, UInt32 v)
+        {
+            return (EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool Equals(BigInt u, UInt64 v)
+        {
+            return (EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool Equals(BigInt u, UBigInt v)
+        {
+            return (EngineObject.Equals(u.Handle, v.Handle));
+        }
+
+        public static bool Equals(BigInt u, BigInt v)
+        {
+            return (EngineObject.Equals(u.Handle, v.Handle));
+        }
+
         public static bool operator ==(UInt32 u, BigInt v)
         {
             return (EngineObject.Equals(u, v.Handle));

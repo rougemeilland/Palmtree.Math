@@ -23,22 +23,23 @@
  */
 
 
-namespace Palmtree.Math.Test.Plugin.Sint
+using System;
+
+namespace Palmtree.Math.Test.Plugin.Rtnl
 {
-    class ComponentTestPlugin_Equals_UX_X
-        : ComponentTestPluginBase_2_1
+    class ComponentTestPlugin_static_Invert_UX
+        : ComponentTestPluginBase_1_1
     {
-        public ComponentTestPlugin_Equals_UX_X()
-            : base("sint", "equals_ux_x", "test_data_equality_ux_x.xml")
+        public ComponentTestPlugin_static_Invert_UX()
+            : base("rtnl", "static_invert_ux", "test_data_invert_ux.xml")
         {
         }
 
-        protected override IDataItem TestFunc(IDataItem p1, IDataItem p2)
+        protected override IDataItem TestFunc(IDataItem p1)
         {
             var u = p1.ToUBigInt().Value;
-            var v = p2.ToBigInt().Value;
-            var w = u.Equals(v);
-            return (new UInt32DataItem(w ? 1U : 0U));
+            var w = Rational.Invert(u);
+            return (new RationalDataItem(w));
         }
     }
 }

@@ -52,9 +52,79 @@ namespace Palmtree.Math
             return (new Rational(EngineObject.Pow(Handle, e)));
         }
 
+        public static Rational Pow(Int32 v, Int32 e)
+        {
+            return (new Rational(EngineObject.Pow(v, e)));
+        }
+
+        public static Rational Pow(Int64 v, Int32 e)
+        {
+            return (new Rational(EngineObject.Pow(v, e)));
+        }
+
+        public static Rational Pow(BigInt v, Int32 e)
+        {
+            return (new Rational(EngineObject.Pow(v.Handle, e)));
+        }
+
+        public static Rational Pow(UInt32 v, Int32 e)
+        {
+            return (new Rational(EngineObject.Pow(v, e)));
+        }
+
+        public static Rational Pow(UInt64 v, Int32 e)
+        {
+            return (new Rational(EngineObject.Pow(v, e)));
+        }
+
+        public static Rational Pow(UBigInt v, Int32 e)
+        {
+            return (new Rational(EngineObject.Pow(v.Handle, e)));
+        }
+
+        public static Rational Pow(Rational v, Int32 e)
+        {
+            return (new Rational(EngineObject.Pow(v.Handle, e)));
+        }
+
         public Rational Invert()
         {
             return (new Rational(EngineObject.Invert(Handle)));
+        }
+
+        public static Rational Invert(Int32 u)
+        {
+            return (new Rational(EngineObject.Invert(u)));
+        }
+
+        public static Rational Invert(Int64 u)
+        {
+            return (new Rational(EngineObject.Invert(u)));
+        }
+
+        public static Rational Invert(BigInt u)
+        {
+            return (new Rational(EngineObject.Invert(u.Handle)));
+        }
+
+        public static Rational Invert(UInt32 u)
+        {
+            return (new Rational(EngineObject.Invert(u)));
+        }
+
+        public static Rational Invert(UInt64 u)
+        {
+            return (new Rational(EngineObject.Invert(u)));
+        }
+
+        public static Rational Invert(UBigInt u)
+        {
+            return (new Rational(EngineObject.Invert(u.Handle)));
+        }
+
+        public static Rational Invert(Rational u)
+        {
+            return (new Rational(EngineObject.Invert(u.Handle)));
         }
 
         public Rational Negate()

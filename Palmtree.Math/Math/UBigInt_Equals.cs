@@ -57,6 +57,51 @@ namespace Palmtree.Math
             return (BigInt.EngineObject.Equals(Handle, v));
         }
 
+        public static bool Equals(Int32 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool Equals(Int64 u, UBigInt v)
+        {
+            return (BigInt.EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool Equals(UInt32 u, UBigInt v)
+        {
+            return (EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool Equals(UInt64 u, UBigInt v)
+        {
+            return (EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool Equals(UBigInt u, Int32 v)
+        {
+            return (BigInt.EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool Equals(UBigInt u, Int64 v)
+        {
+            return (BigInt.EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool Equals(UBigInt u, UInt32 v)
+        {
+            return (EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool Equals(UBigInt u, UInt64 v)
+        {
+            return (EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool Equals(UBigInt u, UBigInt v)
+        {
+            return (EngineObject.Equals(u.Handle, v.Handle));
+        }
+
         public static bool operator ==(UInt32 u, UBigInt v)
         {
             return (EngineObject.Equals(u, v.Handle));

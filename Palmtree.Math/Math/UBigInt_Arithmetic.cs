@@ -42,6 +42,26 @@ namespace Palmtree.Math
             return (new Rational(Rational.EngineObject.Pow(Handle, e)));
         }
 
+        public static UBigInt Pow(UInt32 v, UInt32 e)
+        {
+            return (new UBigInt(EngineObject.Pow(v, e)));
+        }
+
+        public static UBigInt Pow(UInt64 v, UInt32 e)
+        {
+            return (new UBigInt(EngineObject.Pow(v, e)));
+        }
+
+        public static UBigInt Pow(UBigInt v, UInt32 e)
+        {
+            return (new UBigInt(EngineObject.Pow(v.Handle, e)));
+        }
+
+        public static Rational Pow(UBigInt v, Int32 e)
+        {
+            return (new Rational(Rational.EngineObject.Pow(v.Handle, e)));
+        }
+
         public Rational Invert()
         {
             return (new Rational(Rational.EngineObject.Invert(Handle)));

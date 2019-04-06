@@ -52,6 +52,21 @@ namespace Palmtree.Math
             return (new BigInt(EngineObject.Pow(Handle, e)));
         }
 
+        public static BigInt Pow(Int32 v, UInt32 e)
+        {
+            return (new BigInt(EngineObject.Pow(v, e)));
+        }
+
+        public static BigInt Pow(Int64 v, UInt32 e)
+        {
+            return (new BigInt(EngineObject.Pow(v, e)));
+        }
+
+        public static BigInt Pow(BigInt v, UInt32 e)
+        {
+            return (new BigInt(EngineObject.Pow(v.Handle, e)));
+        }
+
         public Rational Pow(Int32 e)
         {
             return (new Rational(Rational.EngineObject.Pow(Handle, e)));

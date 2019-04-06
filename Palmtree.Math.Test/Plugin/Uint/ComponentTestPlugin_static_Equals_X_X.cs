@@ -23,21 +23,23 @@
  */
 
 
-namespace Palmtree.Math.Test.Plugin.Sint
+using System;
+
+namespace Palmtree.Math.Test.Plugin.Uint
 {
-    class ComponentTestPlugin_Equals_UX_X
+    class ComponentTestPlugin_static_Equals_X_X
         : ComponentTestPluginBase_2_1
     {
-        public ComponentTestPlugin_Equals_UX_X()
-            : base("sint", "equals_ux_x", "test_data_equality_ux_x.xml")
+        public ComponentTestPlugin_static_Equals_X_X()
+            : base("uint", "static_equals_x_x", "test_data_equality_x_x.xml")
         {
         }
 
         protected override IDataItem TestFunc(IDataItem p1, IDataItem p2)
         {
             var u = p1.ToUBigInt().Value;
-            var v = p2.ToBigInt().Value;
-            var w = u.Equals(v);
+            var v = p2.ToUBigInt().Value;
+            var w = UBigInt.Equals(u, v);
             return (new UInt32DataItem(w ? 1U : 0U));
         }
     }

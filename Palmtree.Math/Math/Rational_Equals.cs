@@ -67,6 +67,71 @@ namespace Palmtree.Math
             return (EngineObject.Equals(Handle, v.Handle));
         }
 
+        public static bool Equals(Int32 u,  Rational v)
+        {
+            return (EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool Equals(Int64 u, Rational v)
+        {
+            return (EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool Equals(BigInt u, Rational v)
+        {
+            return (EngineObject.Equals(u.Handle, v.Handle));
+        }
+
+        public static bool Equals(UInt32 u, Rational v)
+        {
+            return (EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool Equals(UInt64 u, Rational v)
+        {
+            return (EngineObject.Equals(u, v.Handle));
+        }
+
+        public static bool Equals(UBigInt u, Rational v)
+        {
+            return (EngineObject.Equals(u.Handle, v.Handle));
+        }
+
+        public static bool Equals(Rational u, Int32 v)
+        {
+            return (EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool Equals(Rational u, Int64 v)
+        {
+            return (EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool Equals(Rational u, BigInt v)
+        {
+            return (EngineObject.Equals(u.Handle, v.Handle));
+        }
+
+        public static bool Equals(Rational u, UInt32 v)
+        {
+            return (EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool Equals(Rational u, UInt64 v)
+        {
+            return (EngineObject.Equals(u.Handle, v));
+        }
+
+        public static bool Equals(Rational u, UBigInt v)
+        {
+            return (EngineObject.Equals(u.Handle, v.Handle));
+        }
+
+        public static bool Equals(Rational u, Rational v)
+        {
+            return (EngineObject.Equals(u.Handle, v.Handle));
+        }
+
         public static bool operator ==(Int32 u, Rational v)
         {
             return (EngineObject.Equals(u, v.Handle));
