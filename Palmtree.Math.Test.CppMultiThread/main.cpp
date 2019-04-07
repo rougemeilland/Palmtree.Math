@@ -137,9 +137,9 @@ namespace Palmtree::Math::Core::Internal
                         }
                         else
                         {
-                            PMC_HANDLE_UINT v = ep_uint.FromByteArray(data_items[v_index].Data, data_items[v_index].DataCount);
-                            PMC_HANDLE_UINT e = ep_uint.FromByteArray(data_items[e_index].Data, data_items[e_index].DataCount);
-                            PMC_HANDLE_UINT m = ep_uint.FromByteArray(data_items[m_index].Data, data_items[m_index].DataCount);
+                            PMC_HANDLE_UINT v = ep_uint.FromByteArray_UINT(data_items[v_index].Data, data_items[v_index].DataCount);
+                            PMC_HANDLE_UINT e = ep_uint.FromByteArray_UINT(data_items[e_index].Data, data_items[e_index].DataCount);
+                            PMC_HANDLE_UINT m = ep_uint.FromByteArray_UINT(data_items[m_index].Data, data_items[m_index].DataCount);
                             PMC_HANDLE_UINT r = ep_uint.ModPow(v, e, m);
                             unsigned char r_buf[256];
                             ep_uint.ToByteArray(r, r_buf, countof(r_buf));

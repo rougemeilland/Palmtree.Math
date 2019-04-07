@@ -44,7 +44,10 @@ namespace Palmtree.Math.CodeGen.TestData.Plugin.Sint
             get
             {
                 return (new[] { 0L, 12L, 12345L, 123456789L }
-                        .Select(value => new BigInteger(value)));
+                    .SelectMany(value => new[] { value, -value })
+                    .Distinct()
+                    .OrderBy(value => value)
+                    .Select(value => new BigInteger(value)));
             }
         }
 

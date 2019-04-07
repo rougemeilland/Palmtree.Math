@@ -86,7 +86,7 @@ OBJS = ../build/x64_Release/pmc_add_sub.o ../build/x64_Release/pmc_bitwiseand.o 
 	mkdir -p ../build/x64_Release
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DPALMTREEMATHCORESINT_EXPORTS -O2 -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Uint/ -o ../build/x64_Release/pmc_onecomplement.o ../pmc_onecomplement.cpp
 
-../build/x64_Release/pmc_parse.o: ../pmc_parse.cpp  ../../Palmtree.Math.Core.Uint/pmc.h  ../../Palmtree.Math.Core.Uint/pmc_uint.h  ../../Palmtree.Math.Core.Uint/pmc_cpuid.h  ../pmc_sint.h  ../../Palmtree.Math.Core.Uint/pmc_internal.h  ../../Palmtree.Math.Core.Uint/pmc_exception.h  ../../Palmtree.Math.Core.Uint/pmc_uint_cppinterface.h  ../../Palmtree.Math.Core.Uint/pmc_resourceholder.h  ../pmc_sint_internal.h  ../pmc_resourceholder_sint.h  ../../Palmtree.Math.Core.Uint/pmc_stringio.h  ../../Palmtree.Math.Core.Uint/pmc_inline_func.h  ../mymakefile.xml
+../build/x64_Release/pmc_parse.o: ../pmc_parse.cpp  ../../Palmtree.Math.Core.Uint/pmc.h  ../../Palmtree.Math.Core.Uint/pmc_uint.h  ../../Palmtree.Math.Core.Uint/pmc_cpuid.h  ../pmc_sint.h  ../../Palmtree.Math.Core.Uint/pmc_internal.h  ../../Palmtree.Math.Core.Uint/pmc_exception.h  ../../Palmtree.Math.Core.Uint/pmc_uint_cppinterface.h  ../../Palmtree.Math.Core.Uint/pmc_resourceholder.h  ../pmc_sint_internal.h  ../pmc_resourceholder_sint.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Release
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DPALMTREEMATHCORESINT_EXPORTS -O2 -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Uint/ -o ../build/x64_Release/pmc_parse.o ../pmc_parse.cpp
 
@@ -118,7 +118,7 @@ OBJS = ../build/x64_Release/pmc_add_sub.o ../build/x64_Release/pmc_bitwiseand.o 
 	mkdir -p ../build/x64_Release
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DPALMTREEMATHCORESINT_EXPORTS -O2 -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Uint/ -o ../build/x64_Release/pmc_to.o ../pmc_to.cpp
 
-../build/x64_Release/pmc_tostring.o: ../pmc_tostring.cpp  ../../Palmtree.Math.Core.Uint/pmc.h  ../../Palmtree.Math.Core.Uint/pmc_uint.h  ../../Palmtree.Math.Core.Uint/pmc_cpuid.h  ../pmc_sint.h  ../../Palmtree.Math.Core.Uint/pmc_internal.h  ../../Palmtree.Math.Core.Uint/pmc_exception.h  ../../Palmtree.Math.Core.Uint/pmc_uint_cppinterface.h  ../../Palmtree.Math.Core.Uint/pmc_resourceholder.h  ../pmc_sint_internal.h  ../pmc_resourceholder_sint.h  ../../Palmtree.Math.Core.Uint/pmc_stringio.h  ../../Palmtree.Math.Core.Uint/pmc_inline_func.h  ../mymakefile.xml
+../build/x64_Release/pmc_tostring.o: ../pmc_tostring.cpp  ../../Palmtree.Math.Core.Uint/pmc.h  ../../Palmtree.Math.Core.Uint/pmc_uint.h  ../../Palmtree.Math.Core.Uint/pmc_cpuid.h  ../pmc_sint.h  ../../Palmtree.Math.Core.Uint/pmc_internal.h  ../../Palmtree.Math.Core.Uint/pmc_exception.h  ../../Palmtree.Math.Core.Uint/pmc_uint_cppinterface.h  ../../Palmtree.Math.Core.Uint/pmc_resourceholder.h  ../pmc_sint_internal.h  ../pmc_resourceholder_sint.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Release
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DPALMTREEMATHCORESINT_EXPORTS -O2 -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Uint/ -o ../build/x64_Release/pmc_tostring.o ../pmc_tostring.cpp
 

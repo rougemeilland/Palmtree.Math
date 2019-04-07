@@ -321,7 +321,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            *value = PMC_FromByteArray(buffer, count);
+            *value = PMC_FromByteArray_UINT(buffer, count);
             return (PMC_STATUS_OK);
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
@@ -337,7 +337,7 @@ namespace Palmtree::Math::Core::Internal
         try
         {
             UsingObject using_p(p);
-            size_t r = PMC_ToByteArray(p, buffer, buffer_size);
+            size_t r = PMC_ToByteArray_UX(p, buffer, buffer_size);
             if (r > 0x7fffffff)
                 return (PMC_STATUS_NOT_ENOUGH_MEMORY);
             *size = (_INT32_T)r;
@@ -480,7 +480,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_ERROR);
         try
         {
-            return (PMC_TryParse(source, number_styles, format_option, o));
+            return (PMC_TryParse_UINT(source, number_styles, format_option, o));
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
@@ -506,7 +506,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_ERROR);
         try
         {
-            PMC_STATUS_CODE err = PMC_TryParse(source, number_styles, format_option, o);
+            PMC_STATUS_CODE err = PMC_TryParse_UINT(source, number_styles, format_option, o);
             switch (err)
             {
             case PMC_STATUS_FORMAT_ERROR:
@@ -1518,21 +1518,6 @@ namespace Palmtree::Math::Core::Internal
             UsingObject using_e(e);
             UsingObject using_m(m);
             *r = PMC_ModPow_UX_UX_UX_SEH(v, e, m);
-            return (PMC_STATUS_OK);
-        }
-        catch (const Palmtree::Math::Core::Internal::Exception& ex)
-        {
-            return (ex.GetStatusCode());
-        }
-    }
-
-    extern "C" PMC_STATUS_CODE __stdcall PMCCS_TimesOfExponentOf10(_UINT32_T v, _UINT32_T e, PMC_HANDLE_UINT* r)
-    {
-        if (r == nullptr)
-            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
-        try
-        {
-            *r = PMC_TimesOfExponentOf10(v, e);
             return (PMC_STATUS_OK);
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)

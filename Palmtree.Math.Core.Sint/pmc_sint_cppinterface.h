@@ -68,7 +68,7 @@ namespace Palmtree::Math::Core::Internal
 
         PMC_HANDLE_SINT GetConstantValue(PMC_CONSTANT_VALUE_CODE type) noexcept(false);
 
-        PMC_HANDLE_SINT FromByteArray(const unsigned char* buffer, size_t count) noexcept(false);
+        PMC_HANDLE_SINT FromByteArray_SINT(const unsigned char* buffer, size_t count) noexcept(false);
         size_t ToByteArray(PMC_HANDLE_SINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
 
         PMC_HANDLE_SINT Clone(PMC_HANDLE_SINT x) noexcept(false);
@@ -90,8 +90,8 @@ namespace Palmtree::Math::Core::Internal
         size_t ToString(PMC_HANDLE_SINT x_numerator, PMC_HANDLE_UINT x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
         void  InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info) noexcept(false);
 
-        PMC_STATUS_CODE TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o) noexcept(false);
-        PMC_STATUS_CODE TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o_numerator, PMC_HANDLE_UINT* o_denominator) noexcept(false);
+        PMC_STATUS_CODE TryParse_SINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o) noexcept(false);
+        PMC_STATUS_CODE TryParse_RTNL(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o_numerator, PMC_HANDLE_UINT* o_denominator) noexcept(false);
 
         PMC_HANDLE_SINT Add(_INT32_T u, PMC_HANDLE_UINT v) noexcept(false);
         PMC_HANDLE_SINT Add(_INT32_T u, PMC_HANDLE_SINT v) noexcept(false);
@@ -269,8 +269,8 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_UINT GreatestCommonDivisor(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
         PMC_HANDLE_UINT GreatestCommonDivisor(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
 
-        PMC_HANDLE_UINT FromByteArrayForRTNL(const unsigned char* buffer, size_t count, PMC_HANDLE_SINT* o_numerator) noexcept(false);
-        size_t ToByteArrayForRTNL(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator, unsigned char* buffer, size_t buffer_size) noexcept(false);
+        PMC_HANDLE_UINT FromByteArray_RTNL(const unsigned char* buffer, size_t count, PMC_HANDLE_SINT* o_numerator) noexcept(false);
+        size_t ToByteArray(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator, unsigned char* buffer, size_t buffer_size) noexcept(false);
 
         PMC_HANDLE_SINT DivideExactly(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v);
 

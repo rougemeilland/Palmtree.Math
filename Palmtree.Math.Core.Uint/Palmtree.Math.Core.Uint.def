@@ -83,7 +83,6 @@ EXPORTS
 	PMCCS_Subtruct_UX_UI
 	PMCCS_Subtruct_UX_UL
 	PMCCS_Subtruct_UX_UX
-	PMCCS_TimesOfExponentOf10
 	PMCCS_ToByteArray
 	PMCCS_ToString_UX
 	PMCCS_ToInt32_UX

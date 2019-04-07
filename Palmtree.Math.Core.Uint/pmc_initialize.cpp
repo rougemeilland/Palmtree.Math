@@ -191,7 +191,7 @@ namespace Palmtree::Math::Core::Internal
                 return (false);
             if (Initialize_ToString(&feature) != PMC_STATUS_OK)
                 return (false);
-            if (Initialize_Parse(&feature) != PMC_STATUS_OK)
+            if (Initialize_AToI(&feature) != PMC_STATUS_OK)
                 return (false);
             if (Initialize_GreatestCommonDivisor(&feature) != PMC_STATUS_OK)
                 return (false);

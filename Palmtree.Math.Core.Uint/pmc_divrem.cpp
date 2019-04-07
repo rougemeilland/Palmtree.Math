@@ -1508,7 +1508,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static _UINT32_T PMC_DivRem_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v, NUMBER_OBJECT_UINT** q)
+    _UINT32_T PMC_DivRem_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v, NUMBER_OBJECT_UINT** q)
     {
         if (v == 0)
         {
@@ -1796,7 +1796,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static _UINT64_T PMC_DivRem_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v, NUMBER_OBJECT_UINT** q)
+    _UINT64_T PMC_DivRem_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v, NUMBER_OBJECT_UINT** q)
     {
         if (v == 0)
         {
@@ -1943,7 +1943,6 @@ namespace Palmtree::Math::Core::Internal
                     // _UINT64_T が 1 ワードで表現できる場合
 
                     // x と y の商・剰余を計算する
-                    __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
                     __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)v);
                     if (u_bit_count < v_bit_count)
                     {

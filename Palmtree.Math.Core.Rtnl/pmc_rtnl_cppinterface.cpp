@@ -128,14 +128,14 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_GetConstantValue_I(type));
     }
 
-    PMC_HANDLE_RTNL PMC_RTNL_CppInterface::FromByteArray(const unsigned char * buffer, size_t count) noexcept(false)
+    PMC_HANDLE_RTNL PMC_RTNL_CppInterface::FromByteArray_RTNL(const unsigned char * buffer, size_t count) noexcept(false)
     {
-        return (PMC_FromByteArray(buffer, count));
+        return (PMC_FromByteArray_RTNL(buffer, count));
     }
 
     size_t PMC_RTNL_CppInterface::ToByteArray(PMC_HANDLE_RTNL p, unsigned char * buffer, size_t buffer_size) noexcept(false)
     {
-        return (PMC_ToByteArray(p, buffer, buffer_size));
+        return (PMC_ToByteArray_R(p, buffer, buffer_size));
     }
 
     PMC_HANDLE_RTNL PMC_RTNL_CppInterface::Clone(PMC_HANDLE_RTNL x) noexcept(false)
@@ -198,9 +198,9 @@ namespace Palmtree::Math::Core::Internal
         PMC_InitializeNumberFormatInfo(info);
     }
 
-    PMC_STATUS_CODE PMC_RTNL_CppInterface::TryParse(const wchar_t * source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO * format_option, PMC_HANDLE_RTNL * o) noexcept(false)
+    PMC_STATUS_CODE PMC_RTNL_CppInterface::TryParse_RTNL(const wchar_t * source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO * format_option, PMC_HANDLE_RTNL * o) noexcept(false)
     {
-        return (PMC_TryParse(source, number_styles, format_option, o));
+        return (PMC_TryParse_RTNL(source, number_styles, format_option, o));
     }
 
     PMC_HANDLE_RTNL PMC_RTNL_CppInterface::Add(_UINT32_T u, PMC_HANDLE_RTNL v) noexcept(false)

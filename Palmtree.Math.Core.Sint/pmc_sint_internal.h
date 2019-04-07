@@ -124,8 +124,6 @@ namespace Palmtree::Math::Core::Internal
 
 #pragma region 初期化関数の宣言
     extern PMC_STATUS_CODE Initialize_Memory(void);
-    extern PMC_STATUS_CODE Initialize_Parse(void);
-    extern PMC_STATUS_CODE Initialize_ToString(void);
 #pragma endregion
 
 
@@ -146,8 +144,8 @@ namespace Palmtree::Math::Core::Internal
     extern void  PMC_Dispose_UX(PMC_HANDLE_UINT p) noexcept(false);
     extern void  PMC_Dispose_X(PMC_HANDLE_SINT p) noexcept(false);
     extern PMC_HANDLE_SINT PMC_GetConstantValue_I(PMC_CONSTANT_VALUE_CODE type) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_FromByteArray(const unsigned char* buffer, size_t count) noexcept(false);
-    extern size_t PMC_ToByteArray(PMC_HANDLE_SINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_FromByteArray_SINT(const unsigned char* buffer, size_t count) noexcept(false);
+    extern size_t PMC_ToByteArray_X(PMC_HANDLE_SINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Clone_X(PMC_HANDLE_SINT x) noexcept(false);
     extern _UINT64_T PMC_GetAllocatedMemorySize() noexcept(false);
     extern _UINT32_T PMC_ToUInt32_X(PMC_HANDLE_SINT p) noexcept(false);
@@ -161,8 +159,8 @@ namespace Palmtree::Math::Core::Internal
     extern size_t PMC_ToString_X(PMC_HANDLE_SINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
     extern size_t PMC_ToString_R(PMC_HANDLE_SINT x_numerator, PMC_HANDLE_UINT x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
     extern void  PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info) noexcept(false);
-    extern PMC_STATUS_CODE PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o) noexcept(false);
-    extern PMC_STATUS_CODE PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o_numerator, PMC_HANDLE_UINT* o_denominator) noexcept(false);
+    extern PMC_STATUS_CODE PMC_TryParse_SINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o) noexcept(false);
+    extern PMC_STATUS_CODE PMC_TryParse_RTNL(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o_numerator, PMC_HANDLE_UINT* o_denominator) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Add_UI_X(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Add_I_X(_INT32_T u, PMC_HANDLE_SINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Add_I_UX(_INT32_T u, PMC_HANDLE_UINT v) noexcept(false);
@@ -325,8 +323,8 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_L(PMC_HANDLE_UINT u, _INT64_T v) noexcept(false);
     extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
     extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_FromByteArrayForRTNL(const unsigned char * buffer, size_t count, PMC_HANDLE_SINT * o_numerator) noexcept(false);
-    extern size_t PMC_ToByteArrayForRTNL(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator, unsigned char * buffer, size_t buffer_size) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_FromByteArray_RTNL(const unsigned char * buffer, size_t count, PMC_HANDLE_SINT * o_numerator) noexcept(false);
+    extern size_t PMC_ToByteArray_R(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator, unsigned char * buffer, size_t buffer_size) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Round_R(PMC_HANDLE_SINT x_numerator, PMC_HANDLE_UINT x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode);
     extern PMC_HANDLE_SINT PMC_Round_R_I(PMC_HANDLE_SINT x_numerator, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
     extern PMC_HANDLE_SINT PMC_Pow_I_UI(_INT32_T v, _UINT32_T e) noexcept(false);

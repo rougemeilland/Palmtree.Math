@@ -114,14 +114,14 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_GetConstantValue_I(type));
     }
 
-    PMC_HANDLE_SINT PMC_SINT_CppInterface::FromByteArray(const unsigned char * buffer, size_t count) noexcept(false)
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::FromByteArray_SINT(const unsigned char * buffer, size_t count) noexcept(false)
     {
-        return (PMC_FromByteArray(buffer, count));
+        return (PMC_FromByteArray_SINT(buffer, count));
     }
 
     size_t PMC_SINT_CppInterface::ToByteArray(PMC_HANDLE_SINT p, unsigned char * buffer, size_t buffer_size) noexcept(false)
     {
-        return (PMC_ToByteArray(p, buffer, buffer_size));
+        return (PMC_ToByteArray_X(p, buffer, buffer_size));
     }
 
     PMC_HANDLE_SINT PMC_SINT_CppInterface::Clone(PMC_HANDLE_SINT x) noexcept(false)
@@ -189,14 +189,14 @@ namespace Palmtree::Math::Core::Internal
         PMC_InitializeNumberFormatInfo(info);
     }
 
-    PMC_STATUS_CODE PMC_SINT_CppInterface::TryParse(const wchar_t * source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO * format_option, PMC_HANDLE_SINT * o) noexcept(false)
+    PMC_STATUS_CODE PMC_SINT_CppInterface::TryParse_SINT(const wchar_t * source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO * format_option, PMC_HANDLE_SINT * o) noexcept(false)
     {
-        return (PMC_TryParse(source, number_styles, format_option, o));
+        return (PMC_TryParse_SINT(source, number_styles, format_option, o));
     }
 
-    PMC_STATUS_CODE PMC_SINT_CppInterface::TryParse(const wchar_t * source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO * format_option, PMC_HANDLE_SINT * o_numerator, PMC_HANDLE_UINT* o_denominator) noexcept(false)
+    PMC_STATUS_CODE PMC_SINT_CppInterface::TryParse_RTNL(const wchar_t * source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO * format_option, PMC_HANDLE_SINT * o_numerator, PMC_HANDLE_UINT* o_denominator) noexcept(false)
     {
-        return (PMC_TryParse(source, number_styles, format_option, o_numerator, o_denominator));
+        return (PMC_TryParse_RTNL(source, number_styles, format_option, o_numerator, o_denominator));
     }
 
     PMC_HANDLE_SINT PMC_SINT_CppInterface::Add(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false)
@@ -1004,14 +1004,14 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_GreatestCommonDivisor_X_X(u, v));
     }
 
-    PMC_HANDLE_UINT PMC_SINT_CppInterface::FromByteArrayForRTNL(const unsigned char * buffer, size_t count, PMC_HANDLE_SINT * o_numerator) noexcept(false)
+    PMC_HANDLE_UINT PMC_SINT_CppInterface::FromByteArray_RTNL(const unsigned char * buffer, size_t count, PMC_HANDLE_SINT * o_numerator) noexcept(false)
     {
-        return (PMC_FromByteArrayForRTNL(buffer, count, o_numerator));
+        return (PMC_FromByteArray_RTNL(buffer, count, o_numerator));
     }
 
-    size_t PMC_SINT_CppInterface::ToByteArrayForRTNL(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator, unsigned char * buffer, size_t buffer_size) noexcept(false)
+    size_t PMC_SINT_CppInterface::ToByteArray(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator, unsigned char * buffer, size_t buffer_size) noexcept(false)
     {
-        return (PMC_ToByteArrayForRTNL(p_numerator, p_denominator, buffer, buffer_size));
+        return (PMC_ToByteArray_R(p_numerator, p_denominator, buffer, buffer_size));
     }
 
     PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v)

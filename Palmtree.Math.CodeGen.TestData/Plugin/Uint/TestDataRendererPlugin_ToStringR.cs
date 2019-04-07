@@ -28,6 +28,7 @@ using System.Globalization;
 using System.Linq;
 using System.Numerics;
 
+
 namespace Palmtree.Math.CodeGen.TestData.Plugin.Uint
 {
     class TestDataRendererPlugin_ToStringR
@@ -43,8 +44,7 @@ namespace Palmtree.Math.CodeGen.TestData.Plugin.Uint
         {
             get
             {
-                return (new[] { 0L, 12L, 12345L, 123456789L }
-                        .Select(value => new BigInteger(value)));
+                return (new[] { 0UL, 12UL, 12345UL, 123456789UL }.Select(n => (BigInteger)n));
             }
         }
 

@@ -448,34 +448,6 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    NUMBER_OBJECT_UINT* PMC_TimesOfExponentOf10_Imp(_UINT32_T v, _UINT32_T e)
-    {
-        if (v == 0)
-            return (&number_object_uint_zero);
-        if (e == 0)
-            return (From_UI_Imp(v));
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* exponent_of_10 = PMC_Pow_UX_UI_Imp(&number_object_uint_ten, e);
-        if (v == 1)
-            return (exponent_of_10);
-        else
-        {
-            root.HookNumber(exponent_of_10);
-            NUMBER_OBJECT_UINT* x_times_of_exponent_of_10 = PMC_Multiply_UX_UI_Imp(exponent_of_10, v);
-            return (x_times_of_exponent_of_10);
-        }
-    }
-
-    PMC_HANDLE_UINT PMC_TimesOfExponentOf10(_UINT32_T v, _UINT32_T e)
-    {
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nr = PMC_TimesOfExponentOf10_Imp(v, e);
-        root.HookNumber(nr);
-        PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
-        root.UnlinkNumber(nr);
-        return (r);
-    }
-
     PMC_HANDLE_UINT PMC_Pow10_UI(_UINT32_T n)
     {
         ResourceHolderUINT root;

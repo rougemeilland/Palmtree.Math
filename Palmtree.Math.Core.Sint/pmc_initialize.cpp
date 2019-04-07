@@ -165,12 +165,6 @@ namespace Palmtree::Math::Core::Internal
             if (Initialize_Memory() != PMC_STATUS_OK)
                 return (false);
 
-            if (Initialize_Parse() != PMC_STATUS_OK)
-                return (false);
-
-            if (Initialize_ToString() != PMC_STATUS_OK)
-                return (false);
-
             initialized = true;
         }
 

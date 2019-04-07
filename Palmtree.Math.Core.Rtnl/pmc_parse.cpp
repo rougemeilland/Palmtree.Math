@@ -30,12 +30,12 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    PMC_STATUS_CODE PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_RTNL* o) noexcept(false)
+    PMC_STATUS_CODE PMC_TryParse_RTNL(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_RTNL* o) noexcept(false)
     {
         ResourceHolderRTNL root;
         PMC_HANDLE_SINT o_numerator;
         PMC_HANDLE_UINT o_denominator;
-        PMC_STATUS_CODE result = ep_sint.TryParse(source, number_styles, format_option, &o_numerator, &o_denominator);
+        PMC_STATUS_CODE result = ep_sint.TryParse_RTNL(source, number_styles, format_option, &o_numerator, &o_denominator);
         if (result != PMC_STATUS_OK)
             return (result);
         root.HookNumber(o_numerator);

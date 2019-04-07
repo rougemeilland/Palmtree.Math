@@ -415,19 +415,19 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static PMC_HANDLE_RTNL PMC_FromByteArray_SEH(const unsigned char* buffer, _INT32_T count)
+    static PMC_HANDLE_RTNL PMC_FromByteArray_RTNL_SEH(const unsigned char* buffer, _INT32_T count)
     {
 #ifdef _MSC_VER
         __try
         {
-            return (PMC_FromByteArray(buffer, count));
+            return (PMC_FromByteArray_RTNL(buffer, count));
         }
         __except (DumpSEHInfo(GetExceptionInformation()))
         {
             throw SEHException(L"ハードウェア例外を検出しました。");
         }
 #else
-        return (PMC_FromByteArray(buffer, count));
+        return (PMC_FromByteArray_RTNL(buffer, count));
 #endif
     }
 
@@ -437,7 +437,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            *value = PMC_FromByteArray_SEH(buffer, count);
+            *value = PMC_FromByteArray_RTNL_SEH(buffer, count);
             return (PMC_STATUS_OK);
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
@@ -451,14 +451,14 @@ namespace Palmtree::Math::Core::Internal
 #ifdef _MSC_VER
         __try
         {
-            return (PMC_ToByteArray(p, buffer, buffer_size));
+            return (PMC_ToByteArray_R(p, buffer, buffer_size));
         }
         __except (DumpSEHInfo(GetExceptionInformation()))
         {
             throw SEHException(L"ハードウェア例外を検出しました。");
         }
 #else
-        return (PMC_ToByteArray(p, buffer, buffer_size));
+        return (PMC_ToByteArray_R(p, buffer, buffer_size));
 #endif
     }
 
@@ -645,7 +645,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_ERROR);
         try
         {
-            return (PMC_TryParse(source, number_styles, format_option, o));
+            return (PMC_TryParse_RTNL(source, number_styles, format_option, o));
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
@@ -671,7 +671,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_ERROR);
         try
         {
-            PMC_STATUS_CODE err = PMC_TryParse(source, number_styles, format_option, o);
+            PMC_STATUS_CODE err = PMC_TryParse_RTNL(source, number_styles, format_option, o);
             switch (err)
             {
             case PMC_STATUS_FORMAT_ERROR:

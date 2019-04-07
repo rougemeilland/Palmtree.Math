@@ -358,7 +358,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            *value = PMC_FromByteArray(buffer, count);
+            *value = PMC_FromByteArray_SINT(buffer, count);
             return (PMC_STATUS_OK);
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
@@ -374,7 +374,7 @@ namespace Palmtree::Math::Core::Internal
         try
         {
             UsingObject using_p(p);
-            size_t r = PMC_ToByteArray(p, buffer, buffer_size);
+            size_t r = PMC_ToByteArray_X(p, buffer, buffer_size);
             if (r > 0x7fffffff)
                 return (PMC_STATUS_NOT_ENOUGH_MEMORY);
             *size = (_INT32_T)r;
@@ -534,7 +534,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_ERROR);
         try
         {
-            return (PMC_TryParse(source, number_styles | PMC_NUMBER_STYLE_ALLOW_SIGNED_INTEGER, format_option, o));
+            return (PMC_TryParse_SINT(source, number_styles, format_option, o));
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
@@ -560,7 +560,7 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_ERROR);
         try
         {
-            PMC_STATUS_CODE err = PMC_TryParse(source, number_styles | PMC_NUMBER_STYLE_ALLOW_SIGNED_INTEGER, format_option, o);
+            PMC_STATUS_CODE err = PMC_TryParse_SINT(source, number_styles, format_option, o);
             switch (err)
             {
             case PMC_STATUS_FORMAT_ERROR:

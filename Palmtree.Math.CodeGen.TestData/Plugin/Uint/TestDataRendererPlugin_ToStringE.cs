@@ -23,10 +23,11 @@
  */
 
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Numerics;
+
 
 namespace Palmtree.Math.CodeGen.TestData.Plugin.Uint
 {
@@ -39,12 +40,11 @@ namespace Palmtree.Math.CodeGen.TestData.Plugin.Uint
 
         }
 
-        private IEnumerable<BigInteger> NumberDataSource
+        private IEnumerable<UInt64> NumberDataSource
         {
             get
             {
-                return (new[] { 0L, 12L, 12345L, 123456789L, 999999999L }
-                        .Select(value => new BigInteger(value)));
+                return (new[] { 0UL, 12UL, 12345UL, 123456789UL, 999999999UL });
             }
         }
 

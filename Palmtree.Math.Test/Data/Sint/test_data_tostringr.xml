@@ -1,192 +1,336 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <dataitems>
   <dataitem index="0">
-    <param1 type="bigint">00,00</param1>
+    <param1 type="bigint">03,04,15,cd,5b,07</param1>
     <param2 type="string">r</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
-    <result1 type="string">0</result1>
+    <result1 type="string">-123456789</result1>
   </dataitem>
   <dataitem index="1">
-    <param1 type="bigint">00,00</param1>
+    <param1 type="bigint">03,04,15,cd,5b,07</param1>
     <param2 type="string">r0</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
-    <result1 type="string">0</result1>
+    <result1 type="string">-123456789</result1>
   </dataitem>
   <dataitem index="2">
-    <param1 type="bigint">00,00</param1>
+    <param1 type="bigint">03,04,15,cd,5b,07</param1>
     <param2 type="string">r5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
-    <result1 type="string">0</result1>
+    <result1 type="string">-123456789</result1>
   </dataitem>
   <dataitem index="3">
-    <param1 type="bigint">00,00</param1>
+    <param1 type="bigint">03,04,15,cd,5b,07</param1>
     <param2 type="string">r10</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
-    <result1 type="string">0</result1>
+    <result1 type="string">-123456789</result1>
   </dataitem>
   <dataitem index="4">
-    <param1 type="bigint">00,00</param1>
+    <param1 type="bigint">03,04,15,cd,5b,07</param1>
     <param2 type="string">R</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
-    <result1 type="string">0</result1>
+    <result1 type="string">-123456789</result1>
   </dataitem>
   <dataitem index="5">
-    <param1 type="bigint">00,00</param1>
+    <param1 type="bigint">03,04,15,cd,5b,07</param1>
     <param2 type="string">R0</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
-    <result1 type="string">0</result1>
+    <result1 type="string">-123456789</result1>
   </dataitem>
   <dataitem index="6">
-    <param1 type="bigint">00,00</param1>
+    <param1 type="bigint">03,04,15,cd,5b,07</param1>
     <param2 type="string">R5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
-    <result1 type="string">0</result1>
+    <result1 type="string">-123456789</result1>
   </dataitem>
   <dataitem index="7">
+    <param1 type="bigint">03,04,15,cd,5b,07</param1>
+    <param2 type="string">R10</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-123456789</result1>
+  </dataitem>
+  <dataitem index="8">
+    <param1 type="bigint">03,02,39,30</param1>
+    <param2 type="string">r</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12345</result1>
+  </dataitem>
+  <dataitem index="9">
+    <param1 type="bigint">03,02,39,30</param1>
+    <param2 type="string">r0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12345</result1>
+  </dataitem>
+  <dataitem index="10">
+    <param1 type="bigint">03,02,39,30</param1>
+    <param2 type="string">r5</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12345</result1>
+  </dataitem>
+  <dataitem index="11">
+    <param1 type="bigint">03,02,39,30</param1>
+    <param2 type="string">r10</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12345</result1>
+  </dataitem>
+  <dataitem index="12">
+    <param1 type="bigint">03,02,39,30</param1>
+    <param2 type="string">R</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12345</result1>
+  </dataitem>
+  <dataitem index="13">
+    <param1 type="bigint">03,02,39,30</param1>
+    <param2 type="string">R0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12345</result1>
+  </dataitem>
+  <dataitem index="14">
+    <param1 type="bigint">03,02,39,30</param1>
+    <param2 type="string">R5</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12345</result1>
+  </dataitem>
+  <dataitem index="15">
+    <param1 type="bigint">03,02,39,30</param1>
+    <param2 type="string">R10</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12345</result1>
+  </dataitem>
+  <dataitem index="16">
+    <param1 type="bigint">03,01,0c</param1>
+    <param2 type="string">r</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12</result1>
+  </dataitem>
+  <dataitem index="17">
+    <param1 type="bigint">03,01,0c</param1>
+    <param2 type="string">r0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12</result1>
+  </dataitem>
+  <dataitem index="18">
+    <param1 type="bigint">03,01,0c</param1>
+    <param2 type="string">r5</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12</result1>
+  </dataitem>
+  <dataitem index="19">
+    <param1 type="bigint">03,01,0c</param1>
+    <param2 type="string">r10</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12</result1>
+  </dataitem>
+  <dataitem index="20">
+    <param1 type="bigint">03,01,0c</param1>
+    <param2 type="string">R</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12</result1>
+  </dataitem>
+  <dataitem index="21">
+    <param1 type="bigint">03,01,0c</param1>
+    <param2 type="string">R0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12</result1>
+  </dataitem>
+  <dataitem index="22">
+    <param1 type="bigint">03,01,0c</param1>
+    <param2 type="string">R5</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12</result1>
+  </dataitem>
+  <dataitem index="23">
+    <param1 type="bigint">03,01,0c</param1>
+    <param2 type="string">R10</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-12</result1>
+  </dataitem>
+  <dataitem index="24">
+    <param1 type="bigint">00,00</param1>
+    <param2 type="string">r</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0</result1>
+  </dataitem>
+  <dataitem index="25">
+    <param1 type="bigint">00,00</param1>
+    <param2 type="string">r0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0</result1>
+  </dataitem>
+  <dataitem index="26">
+    <param1 type="bigint">00,00</param1>
+    <param2 type="string">r5</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0</result1>
+  </dataitem>
+  <dataitem index="27">
+    <param1 type="bigint">00,00</param1>
+    <param2 type="string">r10</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0</result1>
+  </dataitem>
+  <dataitem index="28">
+    <param1 type="bigint">00,00</param1>
+    <param2 type="string">R</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0</result1>
+  </dataitem>
+  <dataitem index="29">
+    <param1 type="bigint">00,00</param1>
+    <param2 type="string">R0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0</result1>
+  </dataitem>
+  <dataitem index="30">
+    <param1 type="bigint">00,00</param1>
+    <param2 type="string">R5</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0</result1>
+  </dataitem>
+  <dataitem index="31">
     <param1 type="bigint">00,00</param1>
     <param2 type="string">R10</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">0</result1>
   </dataitem>
-  <dataitem index="8">
+  <dataitem index="32">
     <param1 type="bigint">01,01,0c</param1>
     <param2 type="string">r</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12</result1>
   </dataitem>
-  <dataitem index="9">
+  <dataitem index="33">
     <param1 type="bigint">01,01,0c</param1>
     <param2 type="string">r0</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12</result1>
   </dataitem>
-  <dataitem index="10">
+  <dataitem index="34">
     <param1 type="bigint">01,01,0c</param1>
     <param2 type="string">r5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12</result1>
   </dataitem>
-  <dataitem index="11">
+  <dataitem index="35">
     <param1 type="bigint">01,01,0c</param1>
     <param2 type="string">r10</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12</result1>
   </dataitem>
-  <dataitem index="12">
+  <dataitem index="36">
     <param1 type="bigint">01,01,0c</param1>
     <param2 type="string">R</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12</result1>
   </dataitem>
-  <dataitem index="13">
+  <dataitem index="37">
     <param1 type="bigint">01,01,0c</param1>
     <param2 type="string">R0</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12</result1>
   </dataitem>
-  <dataitem index="14">
+  <dataitem index="38">
     <param1 type="bigint">01,01,0c</param1>
     <param2 type="string">R5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12</result1>
   </dataitem>
-  <dataitem index="15">
+  <dataitem index="39">
     <param1 type="bigint">01,01,0c</param1>
     <param2 type="string">R10</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12</result1>
   </dataitem>
-  <dataitem index="16">
+  <dataitem index="40">
     <param1 type="bigint">01,02,39,30</param1>
     <param2 type="string">r</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12345</result1>
   </dataitem>
-  <dataitem index="17">
+  <dataitem index="41">
     <param1 type="bigint">01,02,39,30</param1>
     <param2 type="string">r0</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12345</result1>
   </dataitem>
-  <dataitem index="18">
+  <dataitem index="42">
     <param1 type="bigint">01,02,39,30</param1>
     <param2 type="string">r5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12345</result1>
   </dataitem>
-  <dataitem index="19">
+  <dataitem index="43">
     <param1 type="bigint">01,02,39,30</param1>
     <param2 type="string">r10</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12345</result1>
   </dataitem>
-  <dataitem index="20">
+  <dataitem index="44">
     <param1 type="bigint">01,02,39,30</param1>
     <param2 type="string">R</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12345</result1>
   </dataitem>
-  <dataitem index="21">
+  <dataitem index="45">
     <param1 type="bigint">01,02,39,30</param1>
     <param2 type="string">R0</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12345</result1>
   </dataitem>
-  <dataitem index="22">
+  <dataitem index="46">
     <param1 type="bigint">01,02,39,30</param1>
     <param2 type="string">R5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12345</result1>
   </dataitem>
-  <dataitem index="23">
+  <dataitem index="47">
     <param1 type="bigint">01,02,39,30</param1>
     <param2 type="string">R10</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">12345</result1>
   </dataitem>
-  <dataitem index="24">
+  <dataitem index="48">
     <param1 type="bigint">01,04,15,cd,5b,07</param1>
     <param2 type="string">r</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">123456789</result1>
   </dataitem>
-  <dataitem index="25">
+  <dataitem index="49">
     <param1 type="bigint">01,04,15,cd,5b,07</param1>
     <param2 type="string">r0</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">123456789</result1>
   </dataitem>
-  <dataitem index="26">
+  <dataitem index="50">
     <param1 type="bigint">01,04,15,cd,5b,07</param1>
     <param2 type="string">r5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">123456789</result1>
   </dataitem>
-  <dataitem index="27">
+  <dataitem index="51">
     <param1 type="bigint">01,04,15,cd,5b,07</param1>
     <param2 type="string">r10</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">123456789</result1>
   </dataitem>
-  <dataitem index="28">
+  <dataitem index="52">
     <param1 type="bigint">01,04,15,cd,5b,07</param1>
     <param2 type="string">R</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">123456789</result1>
   </dataitem>
-  <dataitem index="29">
+  <dataitem index="53">
     <param1 type="bigint">01,04,15,cd,5b,07</param1>
     <param2 type="string">R0</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">123456789</result1>
   </dataitem>
-  <dataitem index="30">
+  <dataitem index="54">
     <param1 type="bigint">01,04,15,cd,5b,07</param1>
     <param2 type="string">R5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
     <result1 type="string">123456789</result1>
   </dataitem>
-  <dataitem index="31">
+  <dataitem index="55">
     <param1 type="bigint">01,04,15,cd,5b,07</param1>
     <param2 type="string">R10</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>

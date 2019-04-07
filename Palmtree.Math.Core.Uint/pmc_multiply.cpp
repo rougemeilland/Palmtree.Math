@@ -524,7 +524,7 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static NUMBER_OBJECT_UINT* PMC_Multiply_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
+    NUMBER_OBJECT_UINT* PMC_Multiply_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
     {
         if (u->IS_ZERO)
         {

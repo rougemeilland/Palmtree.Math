@@ -194,8 +194,17 @@ namespace Palmtree::Math::Core::Internal
     // 多倍長整数と整数の乗算を行う。
     extern NUMBER_OBJECT_UINT* PMC_Multiply_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v);
 
+    // 多倍長整数と整数の乗算を行う。
+    extern NUMBER_OBJECT_UINT* PMC_Multiply_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v);
+
     // 多倍長整数と多倍長整数の乗算を行う。
     extern NUMBER_OBJECT_UINT* PMC_Multiply_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v);
+
+    // 多倍長整数と整数の除算を行う。
+    extern _UINT32_T PMC_DivRem_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v, NUMBER_OBJECT_UINT** q);
+
+    // 多倍長整数と整数の除算を行う。
+    extern _UINT64_T PMC_DivRem_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v, NUMBER_OBJECT_UINT** q);
 
     // 多倍長整数と多倍長整数の除算を行う。
     extern NUMBER_OBJECT_UINT* PMC_DivRem_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT** q);
@@ -218,24 +227,20 @@ namespace Palmtree::Math::Core::Internal
     // 10 のべき乗を計算する。
     extern NUMBER_OBJECT_UINT* PMC_Pow10_UI_Imp(_UINT32_T n);
 
-        // v * 10^e を計算する。
-    extern NUMBER_OBJECT_UINT* PMC_TimesOfExponentOf10_Imp(_UINT32_T v, _UINT32_T e);
+    // mode で指定された方法により、符号が省略された有理数 x の小数以下を decimals 桁に丸める。
+    extern NUMBER_OBJECT_UINT* PMC_Round_R_Imp(NUMBER_OBJECT_UINT* x_numerator_abs, NUMBER_OBJECT_UINT* x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, NUMBER_OBJECT_UINT** r_denominator);
+    
+    // mode で指定された方法により、有理数 x の小数以下を decimals 桁に丸める。
+    extern NUMBER_OBJECT_UINT* PMC_Round_R_Imp(SIGN_T x_numerator_sign, NUMBER_OBJECT_UINT* x_numerator_abs, NUMBER_OBJECT_UINT* x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, NUMBER_OBJECT_UINT** r_denominator);
 
     // 常用対数の整数部を計算する
     extern _UINT32_T PMC_FloorLog10_UX_Imp(NUMBER_OBJECT_UINT* v);
 
-    // mode で指定された方法により、符号が省略された有理数 x を小数以下を 0 桁に丸める。
-    extern PMC_HANDLE_UINT PMC_RoundZero_R(PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode);
+    // 常用対数の整数部を計算する
+    extern _INT32_T PMC_FloorLog10_R_Imp(NUMBER_OBJECT_UINT* v_numerator, NUMBER_OBJECT_UINT* v_denominator);
 
-    // mode で指定された方法により、有理数 x を小数以下を 0 桁に丸める。
-    extern PMC_HANDLE_UINT PMC_RoundZero_R(SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode);
-
-    // mode で指定された方法により、符号が省略された有理数 x の小数以下を decimals 桁に丸める。
-    extern PMC_HANDLE_UINT PMC_Round_R(PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
-
-    // mode で指定された方法により、有理数 x の小数以下を decimals 桁に丸める。
-    extern PMC_HANDLE_UINT PMC_Round_R(SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
-
+    // 単純数字列の解析を行う。
+    extern NUMBER_OBJECT_UINT* PMC_AToL_Imp(const wchar_t* source);
 #pragma endregion
 
 
@@ -288,8 +293,8 @@ namespace Palmtree::Math::Core::Internal
     // 文字列化の実装の初期化処理を行う。
     extern PMC_STATUS_CODE Initialize_ToString(PROCESSOR_FEATURES* feature);
 
-    // 文字列解析の実装の初期化処理を行う。
-    extern PMC_STATUS_CODE Initialize_Parse(PROCESSOR_FEATURES* feature);
+    // 低レベル文字列解析の実装の初期化処理を行う。
+    extern PMC_STATUS_CODE Initialize_AToI(PROCESSOR_FEATURES* feature);
 
     // 最大公約数の計算の実装の初期化処理を行う。
     extern PMC_STATUS_CODE Initialize_GreatestCommonDivisor(PROCESSOR_FEATURES* feature);
@@ -325,8 +330,8 @@ namespace Palmtree::Math::Core::Internal
 
     extern PMC_HANDLE_UINT PMC_GetConstantValue_UI(PMC_CONSTANT_VALUE_CODE type) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_FromByteArray(const unsigned char* buffer, size_t count) noexcept(false);
-    extern size_t PMC_ToByteArray(PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_FromByteArray_UINT(const unsigned char* buffer, size_t count) noexcept(false);
+    extern size_t PMC_ToByteArray_UX(PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
 
     extern PMC_HANDLE_UINT PMC_Clone_UX(PMC_HANDLE_UINT x) noexcept(false);
 
@@ -339,7 +344,7 @@ namespace Palmtree::Math::Core::Internal
 
     extern void PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info);
     extern size_t PMC_ToString_UX(PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
-    extern PMC_STATUS_CODE PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_UINT* o) noexcept(false);
+    extern PMC_STATUS_CODE PMC_TryParse_UINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_UINT* o) noexcept(false);
     extern PMC_HANDLE_UINT PMC_AToL(const wchar_t* source);
 #ifdef _M_IX86
     extern _UINT32_T PMC_AToI(const wchar_t* source);
@@ -433,17 +438,23 @@ namespace Palmtree::Math::Core::Internal
         
     extern PMC_HANDLE_UINT PMC_ModPow_UX_UX_UX(PMC_HANDLE_UINT v, PMC_HANDLE_UINT e, PMC_HANDLE_UINT m) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_TimesOfExponentOf10(_UINT32_T v, _UINT32_T e);
-
     extern _UINT32_T PMC_FloorLog10_UX(PMC_HANDLE_UINT v);
     extern _INT32_T PMC_FloorLog10_R(PMC_HANDLE_UINT v_numerator, PMC_HANDLE_UINT v_denominator);
 
-    extern PMC_HANDLE_UINT PMC_FromByteArrayForSINT(const unsigned char* buffer, size_t count, SIGN_T* o_sign) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_FromByteArrayForRTNL(const unsigned char* buffer, size_t count, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs) noexcept(false);
-    extern size_t PMC_ToByteArrayForSINT(SIGN_T p_sign, PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
-    extern size_t PMC_ToByteArrayForRTNL(SIGN_T p_numerator_sign, PMC_HANDLE_UINT p_numerator_abs, PMC_HANDLE_UINT p_denominator, unsigned char* buffer, size_t buffer_size) noexcept(false);
-    extern PMC_STATUS_CODE PMC_TryParseForSINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, PMC_HANDLE_UINT* o_abs) noexcept(false);
-    extern size_t PMC_ToStringForSINT(SIGN_T x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
+    extern PMC_HANDLE_UINT PMC_RoundZero_R(PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode);
+    extern PMC_HANDLE_UINT PMC_RoundZero_R(SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode);
+
+    extern PMC_HANDLE_UINT PMC_Round_R(PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
+    extern PMC_HANDLE_UINT PMC_Round_R(SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
+
+    extern PMC_HANDLE_UINT PMC_FromByteArray_SINT(const unsigned char* buffer, size_t count, SIGN_T* o_sign) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_FromByteArray_RTNL(const unsigned char* buffer, size_t count, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs) noexcept(false);
+    extern size_t PMC_ToByteArray_X(SIGN_T p_sign, PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
+    extern size_t PMC_ToByteArray_R(SIGN_T p_numerator_sign, PMC_HANDLE_UINT p_numerator_abs, PMC_HANDLE_UINT p_denominator, unsigned char* buffer, size_t buffer_size) noexcept(false);
+    extern PMC_STATUS_CODE PMC_TryParse_SINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, PMC_HANDLE_UINT* o_abs) noexcept(false);
+    extern PMC_STATUS_CODE PMC_TryParse_RTNL(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs, PMC_HANDLE_UINT* o_denominator) noexcept(false);
+    extern size_t PMC_ToString_X(SIGN_T x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
+    extern size_t PMC_ToString_R(SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
 
     extern void PMC_InternalTest();
 #pragma endregion

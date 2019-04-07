@@ -71,7 +71,7 @@ namespace Palmtree::Math::Core::Internal
 
         PMC_HANDLE_RTNL GetConstantValue(PMC_CONSTANT_VALUE_CODE type) noexcept(false);
 
-        PMC_HANDLE_RTNL FromByteArray(const unsigned char* buffer, size_t count) noexcept(false);
+        PMC_HANDLE_RTNL FromByteArray_RTNL(const unsigned char* buffer, size_t count) noexcept(false);
         size_t ToByteArray(PMC_HANDLE_RTNL p, unsigned char* buffer, size_t buffer_size) noexcept(false);
 
         PMC_HANDLE_RTNL Clone(PMC_HANDLE_RTNL x) noexcept(false);
@@ -92,7 +92,7 @@ namespace Palmtree::Math::Core::Internal
         size_t ToString(PMC_HANDLE_RTNL x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
         void  InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info) noexcept(false);
 
-        PMC_STATUS_CODE TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_RTNL* o) noexcept(false);
+        PMC_STATUS_CODE TryParse_RTNL(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_RTNL* o) noexcept(false);
 
         PMC_HANDLE_RTNL Add(_INT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
         PMC_HANDLE_RTNL Add(_INT64_T u, PMC_HANDLE_RTNL v) noexcept(false);

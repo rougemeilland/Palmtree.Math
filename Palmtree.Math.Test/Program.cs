@@ -148,7 +148,7 @@ namespace Palmtree.Math.Test
 
         private static bool PluginFilter(IComponentTestPlugin plugin)
         {
-            //return (plugin.PluginName.StartsWith("sint.compareto_x_ul"));
+            //return (plugin.PluginName.Contains("sint.tryparsex"));
             return (true);
         }
 

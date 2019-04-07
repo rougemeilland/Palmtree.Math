@@ -57,7 +57,7 @@ namespace Palmtree::Math::Core::Internal
             if (diff > 0x7fffffffU)
                 throw ArgumentOutOfRangeException(L"与えられた数値が計算可能な範囲を超えています。");
             _INT32_T result_value = (_INT32_T)floor(diff * log10_2);
-            NUMBER_OBJECT_UINT* ten_n = PMC_Pow_UX_UI_Imp(&number_object_uint_ten, result_value);
+            NUMBER_OBJECT_UINT* ten_n = PMC_Pow10_UI_Imp(result_value);
             root.HookNumber(ten_n);
             NUMBER_OBJECT_UINT* v_denominator_times_ten_n = PMC_Multiply_UX_UX_Imp(v_denominator, ten_n);
             root.HookNumber(v_denominator_times_ten_n);
@@ -84,7 +84,7 @@ namespace Palmtree::Math::Core::Internal
             if (diff > 0x7fffffffU)
                 throw ArgumentOutOfRangeException(L"与えられた数値が計算可能な範囲を超えています。");
             _INT32_T result_value = -(_INT32_T)floor(diff * log10_2);
-            NUMBER_OBJECT_UINT* ten_n = PMC_Pow_UX_UI_Imp(&number_object_uint_ten, -result_value);
+            NUMBER_OBJECT_UINT* ten_n = PMC_Pow10_UI_Imp(-result_value);
             root.HookNumber(ten_n);
             NUMBER_OBJECT_UINT* v_numerator_times_ten_n = PMC_Multiply_UX_UX_Imp(v_numerator, ten_n);
             root.HookNumber(v_numerator_times_ten_n);

@@ -97,14 +97,14 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_GetConstantValue_UI(type));
     }
 
-    PMC_HANDLE_UINT PMC_UINT_CppInterface::FromByteArray(const unsigned char * buffer, size_t count) noexcept(false)
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::FromByteArray_UINT(const unsigned char * buffer, size_t count) noexcept(false)
     {
-        return (PMC_FromByteArray(buffer, count));
+        return (PMC_FromByteArray_UINT(buffer, count));
     }
 
     size_t PMC_UINT_CppInterface::ToByteArray(PMC_HANDLE_UINT p, unsigned char * buffer, size_t buffer_size) noexcept(false)
     {
-        return (PMC_ToByteArray(p, buffer, buffer_size));
+        return (PMC_ToByteArray_UX(p, buffer, buffer_size));
     }
 
     PMC_HANDLE_UINT PMC_UINT_CppInterface::Clone(PMC_HANDLE_UINT x) noexcept(false)
@@ -147,9 +147,9 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_ToString_UX(x, format, format_option, buffer, buffer_size));
     }
 
-    PMC_STATUS_CODE PMC_UINT_CppInterface::TryParse(const wchar_t * source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO * format_option, PMC_HANDLE_UINT * o) noexcept(false)
+    PMC_STATUS_CODE PMC_UINT_CppInterface::TryParse_UINT(const wchar_t * source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO * format_option, PMC_HANDLE_UINT * o) noexcept(false)
     {
-        return (PMC_TryParse(source, number_styles, format_option, o));
+        return (PMC_TryParse_UINT(source, number_styles, format_option, o));
     }
 
     PMC_HANDLE_UINT PMC_UINT_CppInterface::AToL(const wchar_t * source)
@@ -491,11 +491,6 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_ModPow_UX_UX_UX(v, e, m));
     }
 
-    PMC_HANDLE_UINT PMC_UINT_CppInterface::TimesOfExponentOf10(_UINT32_T v, _UINT32_T e)
-    {
-        return (PMC_TimesOfExponentOf10(v, e));
-    }
-
     _UINT32_T PMC_UINT_CppInterface::FloorLog10(PMC_HANDLE_UINT v)
     {
         return (PMC_FloorLog10_UX(v));
@@ -526,34 +521,44 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_Round_R(x_numerator_sign, x_numerator_abs, x_denominator, decimals, mode, r_denominator));
     }
 
-    PMC_HANDLE_UINT PMC_UINT_CppInterface::FromByteArrayForSINT(const unsigned char * buffer, size_t count, SIGN_T * o_sign) noexcept(false)
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::FromByteArray_SINT(const unsigned char * buffer, size_t count, SIGN_T * o_sign) noexcept(false)
     {
-        return (PMC_FromByteArrayForSINT(buffer, count, o_sign));
+        return (PMC_FromByteArray_SINT(buffer, count, o_sign));
     }
 
-    PMC_HANDLE_UINT PMC_UINT_CppInterface::FromByteArrayForRTNL(const unsigned char * buffer, size_t count, SIGN_T * o_numerator_sign, PMC_HANDLE_UINT * o_numerator_abs) noexcept(false)
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::FromByteArray_RTNL(const unsigned char * buffer, size_t count, SIGN_T * o_numerator_sign, PMC_HANDLE_UINT * o_numerator_abs) noexcept(false)
     {
-        return (PMC_FromByteArrayForRTNL(buffer, count, o_numerator_sign, o_numerator_abs));
+        return (PMC_FromByteArray_RTNL(buffer, count, o_numerator_sign, o_numerator_abs));
     }
 
-    size_t PMC_UINT_CppInterface::ToByteArrayForSINT(SIGN_T p_sign, PMC_HANDLE_UINT p_abs, unsigned char * buffer, size_t buffer_size) noexcept(false)
+    size_t PMC_UINT_CppInterface::ToByteArray(SIGN_T p_sign, PMC_HANDLE_UINT p_abs, unsigned char * buffer, size_t buffer_size) noexcept(false)
     {
-        return (PMC_ToByteArrayForSINT(p_sign, p_abs, buffer, buffer_size));
+        return (PMC_ToByteArray_X(p_sign, p_abs, buffer, buffer_size));
     }
 
-    size_t PMC_UINT_CppInterface::ToByteArrayForRTNL(SIGN_T p_numerator_sign, PMC_HANDLE_UINT p_numerator_abs, PMC_HANDLE_UINT p_denominator, unsigned char * buffer, size_t buffer_size) noexcept(false)
+    size_t PMC_UINT_CppInterface::ToByteArray(SIGN_T p_numerator_sign, PMC_HANDLE_UINT p_numerator_abs, PMC_HANDLE_UINT p_denominator, unsigned char * buffer, size_t buffer_size) noexcept(false)
     {
-        return (PMC_ToByteArrayForRTNL(p_numerator_sign, p_numerator_abs, p_denominator, buffer, buffer_size));
+        return (PMC_ToByteArray_R(p_numerator_sign, p_numerator_abs, p_denominator, buffer, buffer_size));
     }
 
-    PMC_STATUS_CODE PMC_UINT_CppInterface::TryParseForSINT(const wchar_t * source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO * format_option, SIGN_T * o_sign, PMC_HANDLE_UINT * o_abs) noexcept(false)
+    PMC_STATUS_CODE PMC_UINT_CppInterface::TryParse_SINT(const wchar_t * source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO * format_option, SIGN_T * o_sign, PMC_HANDLE_UINT * o_abs) noexcept(false)
     {
-        return (PMC_TryParseForSINT(source, number_styles, format_option, o_sign, o_abs));
+        return (PMC_TryParse_SINT(source, number_styles, format_option, o_sign, o_abs));
     }
 
-    size_t PMC_UINT_CppInterface::ToStringForSINT(SIGN_T x_sign, PMC_HANDLE_UINT x_abs, const wchar_t * format, const PMC_NUMBER_FORMAT_INFO * format_option, wchar_t * buffer, size_t buffer_size)
+    PMC_STATUS_CODE PMC_UINT_CppInterface::TryParse_RTNL(const wchar_t * source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO * format_option, SIGN_T * o_numerator_sign, PMC_HANDLE_UINT * o_numerator_abs, PMC_HANDLE_UINT * o_denominator) noexcept(false)
     {
-        return (PMC_ToStringForSINT(x_sign, x_abs, format, format_option, buffer, buffer_size));
+        return (PMC_TryParse_RTNL(source, number_styles, format_option, o_numerator_sign, o_numerator_abs, o_denominator));
+    }
+
+    size_t PMC_UINT_CppInterface::ToString(SIGN_T x_sign, PMC_HANDLE_UINT x_abs, const wchar_t * format, const PMC_NUMBER_FORMAT_INFO * format_option, wchar_t * buffer, size_t buffer_size)
+    {
+        return (PMC_ToString_X(x_sign, x_abs, format, format_option, buffer, buffer_size));
+    }
+
+    size_t PMC_UINT_CppInterface::ToString(SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, const wchar_t * format, const PMC_NUMBER_FORMAT_INFO * format_option, wchar_t * buffer, size_t buffer_size)
+    {
+        return (PMC_ToString_R(x_numerator_sign, x_numerator_abs, x_denominator, format, format_option, buffer, buffer_size));
     }
 
     PMC_HANDLE_UINT PMC_UINT_CppInterface::DivideExactly(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)

@@ -286,9 +286,6 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_Subtruct_UX_UX(IntPtr u, IntPtr v, out IntPtr w);
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
-        private static extern Int32 PMCCS_TimesOfExponentOf10(UInt32 v, UInt32 e, out IntPtr r);
-
-        [DllImport("Palmtree.Math.Core.Uint.dll")]
         private static extern Int32 PMCCS_ToByteArray(IntPtr p, IntPtr buffer, int buffer_size, out Int32 size);
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]

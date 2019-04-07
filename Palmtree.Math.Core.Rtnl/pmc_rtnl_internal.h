@@ -161,8 +161,8 @@ namespace Palmtree::Math::Core::Internal
 
     extern PMC_HANDLE_RTNL PMC_GetConstantValue_I(PMC_CONSTANT_VALUE_CODE type) noexcept(false);
 
-    extern PMC_HANDLE_RTNL PMC_FromByteArray(const unsigned char* buffer, size_t count) noexcept(false);
-    extern size_t PMC_ToByteArray(PMC_HANDLE_RTNL p, unsigned char* buffer, size_t buffer_size) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_FromByteArray_RTNL(const unsigned char* buffer, size_t count) noexcept(false);
+    extern size_t PMC_ToByteArray_R(PMC_HANDLE_RTNL p, unsigned char* buffer, size_t buffer_size) noexcept(false);
 
     extern PMC_HANDLE_RTNL PMC_Clone_R(PMC_HANDLE_RTNL x) noexcept(false);
 
@@ -182,7 +182,7 @@ namespace Palmtree::Math::Core::Internal
     extern size_t PMC_ToString_R(PMC_HANDLE_RTNL x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
     extern void  PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info) noexcept(false);
 
-    extern PMC_STATUS_CODE PMC_TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_RTNL* o) noexcept(false);
+    extern PMC_STATUS_CODE PMC_TryParse_RTNL(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_RTNL* o) noexcept(false);
 
     extern PMC_HANDLE_RTNL PMC_Add_I_R(_INT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
     extern PMC_HANDLE_RTNL PMC_Add_L_R(_INT64_T u, PMC_HANDLE_RTNL v) noexcept(false);

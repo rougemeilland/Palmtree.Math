@@ -240,6 +240,7 @@
     <Compile Include="Plugin\Sint\TestDataRendererPlugin_Pow_X_UI.cs" />
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_Pow_I_I.cs" />
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_Pow_L_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringR.cs" />
     <Compile Include="RationalDataItem.cs" />
     <Compile Include="BigIntegerComparer.cs" />
     <Compile Include="DataItem.cs" />
@@ -659,7 +660,6 @@
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringG.cs" />
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringN.cs" />
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringP.cs" />
-    <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringR.cs" />
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringX.cs" />
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_TryParseDN1.cs" />
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_TryParseDN2.cs" />

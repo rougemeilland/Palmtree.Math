@@ -56,7 +56,7 @@ namespace Palmtree::Math::Core::Internal
 
         PMC_HANDLE_UINT GetConstantValue(PMC_CONSTANT_VALUE_CODE type) noexcept(false);
 
-        PMC_HANDLE_UINT FromByteArray(const unsigned char* buffer, size_t count) noexcept(false);
+        PMC_HANDLE_UINT FromByteArray_UINT(const unsigned char* buffer, size_t count) noexcept(false);
         size_t ToByteArray(PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
 
         PMC_HANDLE_UINT Clone(PMC_HANDLE_UINT x) noexcept(false);
@@ -70,7 +70,7 @@ namespace Palmtree::Math::Core::Internal
 
         void InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info);
         size_t ToString(PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
-        PMC_STATUS_CODE TryParse(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_UINT* o) noexcept(false);
+        PMC_STATUS_CODE TryParse_UINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_UINT* o) noexcept(false);
         PMC_HANDLE_UINT AToL(const wchar_t* source);
 #ifdef _M_IX86
         _UINT32_T AToI(const wchar_t* source);
@@ -172,13 +172,16 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_UINT Round(PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
         PMC_HANDLE_UINT Round(SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
 
-        PMC_HANDLE_UINT FromByteArrayForSINT(const unsigned char* buffer, size_t count, SIGN_T* o_sign) noexcept(false);
-        PMC_HANDLE_UINT FromByteArrayForRTNL(const unsigned char* buffer, size_t count, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs) noexcept(false);
-        size_t ToByteArrayForSINT(SIGN_T p_sign, PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
-        size_t ToByteArrayForRTNL(SIGN_T p_numerator_sign, PMC_HANDLE_UINT p_numerator_abs, PMC_HANDLE_UINT p_denominator, unsigned char* buffer, size_t buffer_size) noexcept(false);
-        PMC_STATUS_CODE TryParseForSINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, PMC_HANDLE_UINT* o_abs) noexcept(false);
-        size_t ToStringForSINT(SIGN_T x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
         PMC_HANDLE_UINT DivideExactly(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v);
+
+        PMC_HANDLE_UINT FromByteArray_SINT(const unsigned char* buffer, size_t count, SIGN_T* o_sign) noexcept(false);
+        PMC_HANDLE_UINT FromByteArray_RTNL(const unsigned char* buffer, size_t count, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs) noexcept(false);
+        size_t ToByteArray(SIGN_T p_sign, PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
+        size_t ToByteArray(SIGN_T p_numerator_sign, PMC_HANDLE_UINT p_numerator_abs, PMC_HANDLE_UINT p_denominator, unsigned char* buffer, size_t buffer_size) noexcept(false);
+        PMC_STATUS_CODE TryParse_SINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, PMC_HANDLE_UINT* o_abs) noexcept(false);
+        PMC_STATUS_CODE TryParse_RTNL(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs, PMC_HANDLE_UINT* o_denominator) noexcept(false);
+        size_t ToString(SIGN_T x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
+        size_t ToString(SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
 
         void InternalTest();
     };

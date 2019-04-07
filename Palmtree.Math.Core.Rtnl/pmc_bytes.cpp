@@ -30,13 +30,13 @@
 
 namespace Palmtree::Math::Core::Internal
 {
-    PMC_HANDLE_RTNL PMC_FromByteArray(const unsigned char* buffer, size_t count)
+    PMC_HANDLE_RTNL PMC_FromByteArray_RTNL(const unsigned char* buffer, size_t count)
     {
         if (buffer == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"buffer");
         ResourceHolderRTNL root;
         PMC_HANDLE_SINT o_numerator;
-        PMC_HANDLE_UINT o_denominator = ep_sint.FromByteArrayForRTNL(buffer, count, &o_numerator);
+        PMC_HANDLE_UINT o_denominator = ep_sint.FromByteArray_RTNL(buffer, count, &o_numerator);
         root.HookNumber(o_numerator);
         root.HookNumber(o_denominator);
         NUMBER_OBJECT_RTNL* no = root.AllocateNumber(o_numerator, o_denominator);
@@ -45,10 +45,10 @@ namespace Palmtree::Math::Core::Internal
         return (o);
     }
 
-    size_t PMC_ToByteArray(PMC_HANDLE_RTNL p, unsigned char* buffer, size_t buffer_size)
+    size_t PMC_ToByteArray_R(PMC_HANDLE_RTNL p, unsigned char* buffer, size_t buffer_size)
     {
         NUMBER_OBJECT_RTNL* np = GET_NUMBER_OBJECT(p, L"p");
-        size_t count = ep_sint.ToByteArrayForRTNL(np->NUMERATOR, np->DENOMINATOR, buffer, buffer_size);
+        size_t count = ep_sint.ToByteArray(np->NUMERATOR, np->DENOMINATOR, buffer, buffer_size);
         return (count);
     }
 }

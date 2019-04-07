@@ -142,7 +142,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_FromByteArrayForRTNL(const unsigned char* buffer, size_t count, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs) noexcept(false)
+    PMC_HANDLE_UINT PMC_FromByteArray_RTNL(const unsigned char* buffer, size_t count, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs) noexcept(false)
     {
         if (buffer == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"buffer");
@@ -182,7 +182,7 @@ namespace Palmtree::Math::Core::Internal
         return (o_denominator_abs);
     }
 
-    PMC_HANDLE_UINT PMC_FromByteArrayForSINT(const unsigned char* buffer, size_t count, SIGN_T* o_sign) noexcept(false)
+    PMC_HANDLE_UINT PMC_FromByteArray_SINT(const unsigned char* buffer, size_t count, SIGN_T* o_sign) noexcept(false)
     {
         if (buffer == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"buffer");
@@ -199,7 +199,7 @@ namespace Palmtree::Math::Core::Internal
         return (o_abs);
     }
 
-    PMC_HANDLE_UINT PMC_FromByteArray(const unsigned char* buffer, size_t count) noexcept(false)
+    PMC_HANDLE_UINT PMC_FromByteArray_UINT(const unsigned char* buffer, size_t count) noexcept(false)
     {
         if (buffer == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"buffer");
@@ -287,7 +287,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    size_t PMC_ToByteArray_Imp(SIGN_T p_sign, PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false)
+    static size_t PMC_ToByteArray_Imp(SIGN_T p_sign, PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false)
     {
         NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
         size_t expected_abs_buffer_size = np->IS_ZERO ? 0 : _DIVIDE_CEILING_SIZE(np->UNIT_BIT_COUNT, 8);
@@ -322,7 +322,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    size_t PMC_ToByteArrayForRTNL(SIGN_T p_numerator_sign, PMC_HANDLE_UINT p_numerator_abs, PMC_HANDLE_UINT p_denominator, unsigned char* buffer, size_t buffer_size) noexcept(false)
+    size_t PMC_ToByteArray_R(SIGN_T p_numerator_sign, PMC_HANDLE_UINT p_numerator_abs, PMC_HANDLE_UINT p_denominator, unsigned char* buffer, size_t buffer_size) noexcept(false)
     {
         NUMBER_OBJECT_UINT* np_numerator_abs = GET_NUMBER_OBJECT(p_numerator_abs, L"p_numerator_abs");
         NUMBER_OBJECT_UINT* np_denominator = GET_NUMBER_OBJECT(p_denominator, L"p_denominator");
@@ -342,7 +342,7 @@ namespace Palmtree::Math::Core::Internal
         return (next_ptr - buffer);
     }
 
-    size_t PMC_ToByteArrayForSINT(SIGN_T p_sign, PMC_HANDLE_UINT p_abs, unsigned char* buffer, size_t buffer_size) noexcept(false)
+    size_t PMC_ToByteArray_X(SIGN_T p_sign, PMC_HANDLE_UINT p_abs, unsigned char* buffer, size_t buffer_size) noexcept(false)
     {
         NUMBER_OBJECT_UINT* np_numerator_abs = GET_NUMBER_OBJECT(p_abs, L"p_abs");
         size_t expected_total_size = PMC_ToByteArray_Imp(p_sign, p_abs, nullptr, 0);
@@ -356,7 +356,7 @@ namespace Palmtree::Math::Core::Internal
         return (next_ptr - buffer);
     }
 
-    size_t PMC_ToByteArray(PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size)
+    size_t PMC_ToByteArray_UX(PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size)
     {
         NUMBER_OBJECT_UINT* np_numerator_abs = GET_NUMBER_OBJECT(p, L"p");
         size_t expected_total_size = PMC_ToByteArray_Imp(SIGN_POSITIVE, p, nullptr, 0);

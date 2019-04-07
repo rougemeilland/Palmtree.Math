@@ -31,7 +31,7 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    static NUMBER_OBJECT_UINT* PMC_Round_R_Imp(ResourceHolderUINT& root, PMC_MIDPOINT_ROUNDING_CODE mode, SIGN_T r_numerator_sign, NUMBER_OBJECT_UINT* r_numerator_abs, NUMBER_OBJECT_UINT* frac_part_numerator, NUMBER_OBJECT_UINT* frac_part_denominator)
+    static NUMBER_OBJECT_UINT* Round_R_Imp(ResourceHolderUINT& root, PMC_MIDPOINT_ROUNDING_CODE mode, SIGN_T r_numerator_sign, NUMBER_OBJECT_UINT* r_numerator_abs, NUMBER_OBJECT_UINT* frac_part_numerator, NUMBER_OBJECT_UINT* frac_part_denominator)
     {
         if (frac_part_numerator->IS_ZERO)
             return (r_numerator_abs);
@@ -104,6 +104,64 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    NUMBER_OBJECT_UINT* PMC_Round_R_Imp(SIGN_T x_numerator_sign, NUMBER_OBJECT_UINT* nx_numerator_abs, NUMBER_OBJECT_UINT* nx_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, NUMBER_OBJECT_UINT** r_denominator)
+    {
+        if (decimals >= 0)
+        {
+            ResourceHolderUINT root;
+            NUMBER_OBJECT_UINT* nr_denominator = PMC_Pow10_UI_Imp(decimals);
+            root.HookNumber(nr_denominator);
+            nx_numerator_abs = PMC_Multiply_UX_UX_Imp(nx_numerator_abs, nr_denominator);
+            root.HookNumber(nx_numerator_abs);
+            NUMBER_OBJECT_UINT* nr_numerator_abs;
+            NUMBER_OBJECT_UINT* frac_part_numerator = PMC_DivRem_UX_UX_Imp(nx_numerator_abs, nx_denominator, &nr_numerator_abs);
+            root.HookNumber(nr_numerator_abs);
+            root.HookNumber(frac_part_numerator);
+            nr_numerator_abs = Round_R_Imp(root, mode, x_numerator_sign, nr_numerator_abs, frac_part_numerator, nx_denominator);
+            NUMBER_OBJECT_UINT* gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(nr_numerator_abs, nr_denominator);
+            if (!gcd->IS_ONE)
+            {
+                nr_numerator_abs = PMC_DivideExactly_UX_UX_Imp(nr_numerator_abs, gcd);
+                root.HookNumber(nr_numerator_abs);
+                nr_denominator = PMC_DivideExactly_UX_UX_Imp(nr_denominator, gcd);
+                root.HookNumber(nr_denominator);
+            }
+            PMC_HANDLE_UINT r_numerator_abs = GET_NUMBER_HANDLE(nr_numerator_abs);
+            *r_denominator = nr_denominator;
+            root.UnlinkNumber(nr_numerator_abs);
+            root.UnlinkNumber(nr_denominator);
+            return (nr_numerator_abs);
+        }
+        else
+        {
+            ResourceHolderUINT root;
+            NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(-decimals);
+            root.HookNumber(factor);
+            NUMBER_OBJECT_UINT* frac_part_denominator = PMC_Multiply_UX_UX_Imp(nx_denominator, factor);
+            root.HookNumber(frac_part_denominator);
+            NUMBER_OBJECT_UINT* nr_numerator_abs;
+            NUMBER_OBJECT_UINT* frac_part_numerator = PMC_DivRem_UX_UX_Imp(nx_numerator_abs, frac_part_denominator, &nr_numerator_abs);
+            root.HookNumber(nr_numerator_abs);
+            root.HookNumber(frac_part_numerator);
+            nr_numerator_abs = Round_R_Imp(root, mode, x_numerator_sign, nr_numerator_abs, frac_part_numerator, frac_part_denominator);
+            nr_numerator_abs = PMC_Multiply_UX_UX_Imp(nr_numerator_abs, factor);
+            root.HookNumber(nr_numerator_abs);
+            PMC_HANDLE_UINT r_numerator_abs = GET_NUMBER_HANDLE(nr_numerator_abs);
+            *r_denominator = &number_object_uint_one;
+            root.UnlinkNumber(nr_numerator_abs);
+            return (nr_numerator_abs);
+        }
+    }
+
+    NUMBER_OBJECT_UINT* PMC_Round_R_Imp(NUMBER_OBJECT_UINT* x_numerator_abs, NUMBER_OBJECT_UINT* x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, NUMBER_OBJECT_UINT** r_denominator)
+    {
+        // x の符号が不明なので、PMC_MIDPOINT_ROUNDING_CEILING と PMC_MIDPOINT_ROUNDING_FLOOR は使用不可能
+        if (mode == PMC_MIDPOINT_ROUNDING_CEILING || mode == PMC_MIDPOINT_ROUNDING_FLOOR)
+            throw ArgumentException(L"mode に PMC_MIDPOINT_ROUNDING_CEILING または PMC_MIDPOINT_ROUNDING_FLOOR を指定できません。");
+
+        return (PMC_Round_R_Imp(SIGN_POSITIVE, x_numerator_abs, x_denominator, decimals, mode, r_denominator));
+    }
+
     // mode で指定された方法により、符号が省略された有理数 x を小数以下を 0 桁に丸める。
     PMC_HANDLE_UINT PMC_RoundZero_R(PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode)
     {
@@ -124,7 +182,7 @@ namespace Palmtree::Math::Core::Internal
         NUMBER_OBJECT_UINT* frac_part_numerator = PMC_DivRem_UX_UX_Imp(nx_numerator_abs, nx_denominator, &nr_abs);
         root.HookNumber(nr_abs);
         root.HookNumber(frac_part_numerator);
-        nr_abs = PMC_Round_R_Imp(root, mode, x_numerator_sign, nr_abs, frac_part_numerator, nx_denominator);
+        nr_abs = Round_R_Imp(root, mode, x_numerator_sign, nr_abs, frac_part_numerator, nx_denominator);
         PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr_abs);
         root.UnlinkNumber(nr_abs);
         return (r);
@@ -145,51 +203,16 @@ namespace Palmtree::Math::Core::Internal
     {
         NUMBER_OBJECT_UINT* nx_numerator_abs = GET_NUMBER_OBJECT(x_numerator_abs, L"x_numerator_abs");
         NUMBER_OBJECT_UINT* nx_denominator = GET_NUMBER_OBJECT(x_denominator, L"x_denominator");
-        if (decimals >= 0)
-        {
-            ResourceHolderUINT root;
-            NUMBER_OBJECT_UINT* nr_denominator = PMC_Pow10_UI_Imp( decimals);
-            root.HookNumber(nr_denominator);
-            nx_numerator_abs = PMC_Multiply_UX_UX_Imp(nx_numerator_abs, nr_denominator);
-            root.HookNumber(nx_numerator_abs);
-            NUMBER_OBJECT_UINT* nr_numerator_abs;
-            NUMBER_OBJECT_UINT* frac_part_numerator = PMC_DivRem_UX_UX_Imp(nx_numerator_abs, nx_denominator, &nr_numerator_abs);
-            root.HookNumber(nr_numerator_abs);
-            root.HookNumber(frac_part_numerator);
-            nr_numerator_abs = PMC_Round_R_Imp(root, mode, x_numerator_sign, nr_numerator_abs, frac_part_numerator, nx_denominator);
-            NUMBER_OBJECT_UINT* gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(nr_numerator_abs, nr_denominator);
-            if (!gcd->IS_ONE)
-            {
-                nr_numerator_abs = PMC_DivideExactly_UX_UX_Imp(nr_numerator_abs, gcd);
-                root.HookNumber(nr_numerator_abs);
-                nr_denominator = PMC_DivideExactly_UX_UX_Imp(nr_denominator, gcd);
-                root.HookNumber(nr_denominator);
-            }
-            PMC_HANDLE_UINT r_numerator_abs = GET_NUMBER_HANDLE(nr_numerator_abs);
-            *r_denominator = GET_NUMBER_HANDLE(nr_denominator);
-            root.UnlinkNumber(nr_numerator_abs);
-            root.UnlinkNumber(nr_denominator);
-            return (r_numerator_abs);
-        }
-        else
-        {
-            ResourceHolderUINT root;
-            NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(-decimals);
-            root.HookNumber(factor);
-            NUMBER_OBJECT_UINT* frac_part_denominator = PMC_Multiply_UX_UX_Imp(nx_denominator, factor);
-            root.HookNumber(frac_part_denominator);
-            NUMBER_OBJECT_UINT* nr_numerator_abs;
-            NUMBER_OBJECT_UINT* frac_part_numerator = PMC_DivRem_UX_UX_Imp(nx_numerator_abs, frac_part_denominator, &nr_numerator_abs);
-            root.HookNumber(nr_numerator_abs);
-            root.HookNumber(frac_part_numerator);
-            nr_numerator_abs = PMC_Round_R_Imp(root, mode, x_numerator_sign, nr_numerator_abs, frac_part_numerator, frac_part_denominator);
-            nr_numerator_abs = PMC_Multiply_UX_UX_Imp(nr_numerator_abs, factor);
-            root.HookNumber(nr_numerator_abs);
-            PMC_HANDLE_UINT r_numerator_abs = GET_NUMBER_HANDLE(nr_numerator_abs);
-            *r_denominator = GET_NUMBER_HANDLE(&number_object_uint_one);
-            root.UnlinkNumber(nr_numerator_abs);
-            return (r_numerator_abs);
-        }
+        ResourceHolderUINT root;
+        NUMBER_OBJECT_UINT* nr_denominator;
+        NUMBER_OBJECT_UINT* nr_numerator_abs = PMC_Round_R_Imp(x_numerator_sign, nx_numerator_abs, nx_denominator, decimals, mode, &nr_denominator);
+        root.HookNumber(nr_denominator);
+        root.HookNumber(nr_numerator_abs);
+        PMC_HANDLE_UINT r_numerator_abs = GET_NUMBER_HANDLE(nr_numerator_abs);
+        *r_denominator = GET_NUMBER_HANDLE(nr_denominator);
+        root.UnlinkNumber(nr_numerator_abs);
+        root.UnlinkNumber(nr_denominator);
+        return (r_numerator_abs);
     }
 
 }

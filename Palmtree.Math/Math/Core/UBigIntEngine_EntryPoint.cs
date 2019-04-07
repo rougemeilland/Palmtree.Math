@@ -679,13 +679,6 @@ namespace Palmtree.Math.Core
             return (new UBigIntHandle(r));
         }
 
-        public UBigIntHandle TimesPow(UInt32 v, UInt32 e)
-        {
-            IntPtr r;
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_TimesOfExponentOf10(v, e, out r));
-            return (new UBigIntHandle(r));
-        }
-
         public UInt32 FloorLog10(UBigIntHandle v)
         {
             UInt32 r;
