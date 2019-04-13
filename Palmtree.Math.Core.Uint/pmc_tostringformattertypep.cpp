@@ -41,13 +41,13 @@ namespace Palmtree::Math::Core::Internal
         return (specified_precision >= 0 ? specified_precision : _number_format_info->Percent.DecimalDigits);
     }
 
-    void ToStringFormatterTypeP::WriteZeroValue(StringWriter * writer)
+    void ToStringFormatterTypeP::WriteZeroValue(StringWriter& writer)
     {
-        writer->Write(L'0');
+        writer.Write(L'0');
         if (_precision > 0)
         {
-            writer->Write(_number_format_info->Currency.DecimalSeparator);
-            writer->Write(L'0', _precision);
+            writer.Write(_number_format_info->Currency.DecimalSeparator);
+            writer.Write(L'0', _precision);
         }
     }
 
@@ -71,7 +71,7 @@ namespace Palmtree::Math::Core::Internal
         root.UnlinkNumber(*r_denominator);
     }
 
-    void ToStringFormatterTypeP::WritePrefix(SIGN_T x_sign, StringWriter * writer)
+    void ToStringFormatterTypeP::WritePrefix(SIGN_T x_sign, StringWriter& writer)
     {
         if (x_sign >= 0)
         {
@@ -83,11 +83,11 @@ namespace Palmtree::Math::Core::Internal
             case 1:
                 break;
             case 2:
-                writer->Write(_number_format_info->PercentSymbol);
+                writer.Write(_number_format_info->PercentSymbol);
                 break;
             case 3:
-                writer->Write(_number_format_info->PercentSymbol);
-                writer->Write(L' ');
+                writer.Write(_number_format_info->PercentSymbol);
+                writer.Write(L' ');
                 break;
             }
         }
@@ -97,41 +97,41 @@ namespace Palmtree::Math::Core::Internal
             {
             case 0:
             default:
-                writer->Write(_number_format_info->NegativeSign);
+                writer.Write(_number_format_info->NegativeSign);
                 break;
             case 1:
-                writer->Write(_number_format_info->NegativeSign);
+                writer.Write(_number_format_info->NegativeSign);
                 break;
             case 2:
-                writer->Write(_number_format_info->NegativeSign);
-                writer->Write(_number_format_info->PercentSymbol);
+                writer.Write(_number_format_info->NegativeSign);
+                writer.Write(_number_format_info->PercentSymbol);
                 break;
             case 3:
-                writer->Write(_number_format_info->PercentSymbol);
-                writer->Write(_number_format_info->NegativeSign);
+                writer.Write(_number_format_info->PercentSymbol);
+                writer.Write(_number_format_info->NegativeSign);
                 break;
             case 4:
-                writer->Write(_number_format_info->PercentSymbol);
+                writer.Write(_number_format_info->PercentSymbol);
                 break;
             case 5:
                 break;
             case 6:
                 break;
             case 7:
-                writer->Write(_number_format_info->NegativeSign);
-                writer->Write(_number_format_info->PercentSymbol);
-                writer->Write(L' ');
+                writer.Write(_number_format_info->NegativeSign);
+                writer.Write(_number_format_info->PercentSymbol);
+                writer.Write(L' ');
                 break;
             case 8:
                 break;
             case 9:
-                writer->Write(_number_format_info->PercentSymbol);
-                writer->Write(L' ');
+                writer.Write(_number_format_info->PercentSymbol);
+                writer.Write(L' ');
                 break;
             case 10:
-                writer->Write(_number_format_info->PercentSymbol);
-                writer->Write(L' ');
-                writer->Write(_number_format_info->NegativeSign);
+                writer.Write(_number_format_info->PercentSymbol);
+                writer.Write(L' ');
+                writer.Write(_number_format_info->NegativeSign);
                 break;
             case 11:
                 break;
@@ -139,24 +139,23 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    void ToStringFormatterTypeP::FormatNumberSequence(const wchar_t * int_part, const wchar_t * frac_part, _INT32_T exp, StringWriter * writer)
+    void ToStringFormatterTypeP::FormatNumberSequence(const wchar_t * int_part, const wchar_t * frac_part, _INT32_T exp, StringWriter& writer)
     {
         ResourceHolderUINT root;
         ReverseStringReader r_reader(int_part);
         size_t work_buf_len = lstrlenW(int_part) * 2 + 1 + _precision + 1;
         wchar_t* work_buf = root.AllocateString(work_buf_len);
         ReverseStringWriter r_writer(work_buf, work_buf_len);
-        ThousandSeparatedStringWriter t_writer(&r_writer, _format_type, _number_format_info);
-        while (r_reader.PeekChar() != L'\0')
-            t_writer.Write(r_reader.ReadChar());
-        writer->Write(t_writer.GetString());
+        ThousandSeparatedStringWriter t_writer(r_writer, _format_type, *_number_format_info);
+        t_writer.Write(r_reader);
+        writer.Write(t_writer.GetString());
         if (_precision > 0 && frac_part[0] != L'\0')
         {
-            writer->Write(_number_format_info->Percent.DecimalSeparator);
-            writer->Write(frac_part);
+            writer.Write(_number_format_info->Percent.DecimalSeparator);
+            writer.Write(frac_part);
         }
     }
-    void ToStringFormatterTypeP::WriteSuffix(SIGN_T x_sign, StringWriter * writer)
+    void ToStringFormatterTypeP::WriteSuffix(SIGN_T x_sign, StringWriter& writer)
     {
         if (x_sign >= 0)
         {
@@ -164,11 +163,11 @@ namespace Palmtree::Math::Core::Internal
             {
             case 0:
             default:
-                writer->Write(L' ');
-                writer->Write(_number_format_info->PercentSymbol);
+                writer.Write(L' ');
+                writer.Write(_number_format_info->PercentSymbol);
                 break;
             case 1:
-                writer->Write(_number_format_info->PercentSymbol);
+                writer.Write(_number_format_info->PercentSymbol);
                 break;
             case 2:
                 break;
@@ -182,43 +181,43 @@ namespace Palmtree::Math::Core::Internal
             {
             case 0:
             default:
-                writer->Write(L' ');
-                writer->Write(_number_format_info->PercentSymbol);
+                writer.Write(L' ');
+                writer.Write(_number_format_info->PercentSymbol);
                 break;
             case 1:
-                writer->Write(_number_format_info->PercentSymbol);
+                writer.Write(_number_format_info->PercentSymbol);
                 break;
             case 2:
                 break;
             case 3:
                 break;
             case 4:
-                writer->Write(_number_format_info->NegativeSign);
+                writer.Write(_number_format_info->NegativeSign);
                 break;
             case 5:
-                writer->Write(_number_format_info->NegativeSign);
-                writer->Write(_number_format_info->PercentSymbol);
+                writer.Write(_number_format_info->NegativeSign);
+                writer.Write(_number_format_info->PercentSymbol);
                 break;
             case 6:
-                writer->Write(_number_format_info->PercentSymbol);
-                writer->Write(_number_format_info->NegativeSign);
+                writer.Write(_number_format_info->PercentSymbol);
+                writer.Write(_number_format_info->NegativeSign);
                 break;
             case 7:
                 break;
             case 8:
-                writer->Write(L' ');
-                writer->Write(_number_format_info->PercentSymbol);
-                writer->Write(_number_format_info->NegativeSign);
+                writer.Write(L' ');
+                writer.Write(_number_format_info->PercentSymbol);
+                writer.Write(_number_format_info->NegativeSign);
                 break;
             case 9:
-                writer->Write(_number_format_info->NegativeSign);
+                writer.Write(_number_format_info->NegativeSign);
                 break;
             case 10:
                 break;
             case 11:
-                writer->Write(_number_format_info->NegativeSign);
-                writer->Write(L' ');
-                writer->Write(_number_format_info->PercentSymbol);
+                writer.Write(_number_format_info->NegativeSign);
+                writer.Write(L' ');
+                writer.Write(_number_format_info->PercentSymbol);
                 break;
             }
         }

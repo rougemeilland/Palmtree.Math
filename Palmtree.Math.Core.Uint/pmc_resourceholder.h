@@ -31,6 +31,7 @@
 
 
 #include "pmc_uint.h"
+#include "pmc_bidirectionallistheader.h"
 
 
 namespace Palmtree::Math::Core::Internal
@@ -40,18 +41,12 @@ namespace Palmtree::Math::Core::Internal
     {
     public:
         class __DLLEXPORT_UINT __ChainBufferTag
+            : public BidirectionalListHeader< __ChainBufferTag>
         {
-        private:
-            __ChainBufferTag* _next;
-            __ChainBufferTag* _prev;
-
         public:
             __ChainBufferTag();
             virtual ~__ChainBufferTag();
             void Link(__ChainBufferTag* tag);
-            void Unlink();
-            __ChainBufferTag* Next();
-            __ChainBufferTag* Prev();
             virtual bool EqualsBufferAddress(void* buffer) = 0;
             void virtual Clear();
             void virtual Check();

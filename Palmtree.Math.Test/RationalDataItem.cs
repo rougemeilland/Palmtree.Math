@@ -43,11 +43,11 @@ namespace Palmtree.Math.Test
         {
         }
 
-        public override string Type => "ubigint";
+        public override string Type => "rational";
 
         public Rational Value => Rational.FromByteArray(_serialized_text.Split(',').Select(x => byte.Parse(x, NumberStyles.HexNumber)).ToArray());
 
-        public override bool IsUBigInt => true;
+        public override bool IsRational => true;
 
         public override RationalDataItem ToRational()
         {

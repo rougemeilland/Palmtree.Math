@@ -84,6 +84,16 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_From_UX(x));
     }
 
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::From(DECIMAL x, PMC_HANDLE_UINT * o_denominator) noexcept(false)
+    {
+        return (PMC_From_DECIMAL(x, o_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::From(double x, PMC_HANDLE_UINT * o_denominator) noexcept(false)
+    {
+        return (PMC_From_DOUBLE(x, o_denominator));
+    }
+
     _INT32_T PMC_SINT_CppInterface::GetHashCode(PMC_HANDLE_SINT p) noexcept(false)
     {
         return (PMC_GetHashCode(p));
@@ -157,6 +167,16 @@ namespace Palmtree::Math::Core::Internal
     PMC_HANDLE_UINT PMC_SINT_CppInterface::ToUBigInt(PMC_HANDLE_SINT p) noexcept(false)
     {
         return (PMC_ToUBigInt_X(p));
+    }
+
+    DECIMAL PMC_SINT_CppInterface::ToDecimal(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
+    {
+        return (PMC_ToDecimal_R(p_numerator, p_denominator));
+    }
+
+    double PMC_SINT_CppInterface::ToDouble(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
+    {
+        return (PMC_ToDouble_R(p_numerator, p_denominator));
     }
 
     PMC_HANDLE_SINT PMC_SINT_CppInterface::Negate(PMC_HANDLE_UINT x) noexcept(false)

@@ -119,6 +119,7 @@ namespace Palmtree::Math::Core::Internal
             root.HookNumber(frac_part_numerator);
             nr_numerator_abs = Round_R_Imp(root, mode, x_numerator_sign, nr_numerator_abs, frac_part_numerator, nx_denominator);
             NUMBER_OBJECT_UINT* gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(nr_numerator_abs, nr_denominator);
+            root.HookNumber(gcd);
             if (!gcd->IS_ONE)
             {
                 nr_numerator_abs = PMC_DivideExactly_UX_UX_Imp(nr_numerator_abs, gcd);

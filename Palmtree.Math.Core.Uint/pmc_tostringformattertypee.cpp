@@ -48,16 +48,16 @@ namespace Palmtree::Math::Core::Internal
         return (specified_precision >= 0 ? specified_precision : 6);
     }
 
-    void ToStringFormatterTypeE::WriteZeroValue(StringWriter * writer)
+    void ToStringFormatterTypeE::WriteZeroValue(StringWriter& writer)
     {
-        writer->Write(L'0');
+        writer.Write(L'0');
         if (_precision > 0)
         {
-            writer->Write(_number_format_info->Number.DecimalSeparator);
-            writer->Write(L'0', _precision);
+            writer.Write(_number_format_info->Number.DecimalSeparator);
+            writer.Write(L'0', _precision);
         }
-        writer->Write(_format_type);
-        writer->Write(L"+000");
+        writer.Write(_format_type);
+        writer.Write(L"+000");
     }
 
     void ToStringFormatterTypeE::RoundValue(NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, NUMBER_OBJECT_UINT** r_numerator, NUMBER_OBJECT_UINT** r_denominator, _INT32_T * exp)
@@ -99,32 +99,32 @@ namespace Palmtree::Math::Core::Internal
         root.UnlinkNumber(*r_denominator);
     }
 
-    inline void ToStringFormatterTypeE::WritePrefix(SIGN_T x_sign, StringWriter * writer)
+    inline void ToStringFormatterTypeE::WritePrefix(SIGN_T x_sign, StringWriter& writer)
     {
         if (x_sign < 0)
-            writer->Write(_number_format_info->NegativeSign);
+            writer.Write(_number_format_info->NegativeSign);
     }
 
-    void ToStringFormatterTypeE::FormatNumberSequence(const wchar_t * int_part, const wchar_t * frac_part, _INT32_T exp, StringWriter * writer)
+    void ToStringFormatterTypeE::FormatNumberSequence(const wchar_t * int_part, const wchar_t * frac_part, _INT32_T exp, StringWriter& writer)
     {
 #ifdef _DEBUG
         if (lstrlenW(int_part) != 1)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_tostring.cpp;FormatterTypeE::FormatNumberSequence;1");
 #endif
-        writer->Write(int_part);
+        writer.Write(int_part);
         if (_precision > 0 && frac_part[0] != L'\0')
         {
-            writer->Write(_number_format_info->Number.DecimalSeparator);
-            writer->Write(frac_part);
+            writer.Write(_number_format_info->Number.DecimalSeparator);
+            writer.Write(frac_part);
         }
-        writer->Write(_format_type); // 'e' or 'E'
+        writer.Write(_format_type); // 'e' or 'E'
         if (exp >= 0)
         {
-            writer->Write(_number_format_info->PositiveSign);
+            writer.Write(_number_format_info->PositiveSign);
         }
         else
         {
-            writer->Write(_number_format_info->NegativeSign);
+            writer.Write(_number_format_info->NegativeSign);
             exp = -exp;
         }
 
@@ -141,10 +141,10 @@ namespace Palmtree::Math::Core::Internal
 #error unknown platform
 #endif
         wsprintfW(exp_buf, L"%03d", exp);
-        writer->Write(exp_buf);
+        writer.Write(exp_buf);
     }
 
-    void ToStringFormatterTypeE::WriteSuffix(SIGN_T x_sign, StringWriter * writer)
+    void ToStringFormatterTypeE::WriteSuffix(SIGN_T x_sign, StringWriter& writer)
     {
     }
 

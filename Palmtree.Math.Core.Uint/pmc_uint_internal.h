@@ -218,6 +218,9 @@ namespace Palmtree::Math::Core::Internal
     // 多倍長整数を左シフトする。
     NUMBER_OBJECT_UINT* PMC_LeftShift_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T n);
 
+    // 多倍長整数を右シフトする。
+    NUMBER_OBJECT_UINT* PMC_RightShift_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T n);
+
     // 多倍長整数と多倍長整数の最大公約数を計算する。
     extern NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v);
 
@@ -238,9 +241,6 @@ namespace Palmtree::Math::Core::Internal
 
     // 常用対数の整数部を計算する
     extern _INT32_T PMC_FloorLog10_R_Imp(NUMBER_OBJECT_UINT* v_numerator, NUMBER_OBJECT_UINT* v_denominator);
-
-    // 単純数字列の解析を行う。
-    extern NUMBER_OBJECT_UINT* PMC_AToL_Imp(const wchar_t* source);
 #pragma endregion
 
 
@@ -324,6 +324,8 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_UINT PMC_From_UL(_INT64_T x) noexcept(false);
     extern PMC_HANDLE_UINT PMC_From_UI(_UINT32_T x) noexcept(false);
     extern PMC_HANDLE_UINT PMC_From_UL(_UINT64_T x) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_From_DECIMAL(DECIMAL x, SIGN_T* o_sign, PMC_HANDLE_UINT* o_denominator) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_From_DOUBLE(double x, SIGN_T* o_sign, PMC_HANDLE_UINT* o_denominator) noexcept(false);
 
     extern void PMC_CheckHandle_UX(PMC_HANDLE_UINT p);
     extern void PMC_Dispose_UX(PMC_HANDLE_UINT p);
@@ -341,18 +343,12 @@ namespace Palmtree::Math::Core::Internal
     extern _INT64_T PMC_ToInt64_UX(PMC_HANDLE_UINT p) noexcept(false);
     extern _UINT32_T PMC_ToUInt32_UX(PMC_HANDLE_UINT p) noexcept(false);
     extern _UINT64_T PMC_ToUInt64_UX(PMC_HANDLE_UINT p) noexcept(false);
+    extern DECIMAL PMC_ToDecimal_R(SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false);
+    extern double PMC_ToDouble_R(SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false);
 
     extern void PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info);
     extern size_t PMC_ToString_UX(PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
     extern PMC_STATUS_CODE PMC_TryParse_UINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_UINT* o) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_AToL(const wchar_t* source);
-#ifdef _M_IX86
-    extern _UINT32_T PMC_AToI(const wchar_t* source);
-#elif defined(_M_X64)
-    extern _UINT64_T PMC_AToI(const wchar_t* source);
-#else
-#error unknown platform
-#endif
 
     extern PMC_HANDLE_UINT PMC_Add_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
     extern PMC_HANDLE_UINT PMC_Add_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);

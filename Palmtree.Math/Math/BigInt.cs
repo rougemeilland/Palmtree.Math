@@ -44,7 +44,7 @@ namespace Palmtree.Math
         #region プライベートフィールド
 
         private static object _lock_obj;
-        private static Regex _tostring_standard_format_pattern;
+        //private static Regex _tostring_standard_format_pattern;
         private Core.BigIntHandle _handle;
 
         #endregion
@@ -63,7 +63,7 @@ namespace Palmtree.Math
             MinusOne = new BigInt(EngineObject.MinusOne);
             One = new BigInt(EngineObject.One);
             Zero = new BigInt(EngineObject.Zero);
-            _tostring_standard_format_pattern = new Regex("^|[cdefgnprx]|[cdefgnprx][0-9]|[cdefgnprx][0-9][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            //_tostring_standard_format_pattern = new Regex("^|[cdefgnprx]|[cdefgnprx][0-9]|[cdefgnprx][0-9][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
 
         internal BigInt(Core.BigIntHandle handle)

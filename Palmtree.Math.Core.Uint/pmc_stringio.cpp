@@ -30,14 +30,30 @@
 
 namespace Palmtree::Math::Core::Internal
 {
-    StringReader::StringReader()
-        : StringReader(nullptr)
+    StringReader::StringReader(const wchar_t * p, const wchar_t* limit)
     {
+        if (p == nullptr)
+            throw ArgumentNullException(L"引数に null が与えられました。", L"p");
+        if (limit == nullptr)
+            throw ArgumentNullException(L"引数に null が与えられました。", L"limit");
+        _p = p;
+        _limit = limit;
+    }
+
+    StringReader::StringReader(const StringReader & p)
+    {
+        _p = p._p;
+        _limit = p._limit;
     }
 
     StringReader::StringReader(const wchar_t * p)
+        : StringReader(p, p + lstrlenW(p))
     {
-        _p = p;
+    }
+
+    StringReader::StringReader(const wchar_t * p, size_t length)
+        : StringReader(p, p + length)
+    {
     }
 
     wchar_t StringReader::ReadChar()
@@ -58,19 +74,21 @@ namespace Palmtree::Math::Core::Internal
 
     wchar_t StringReader::PeekChar()
     {
+        if (_p >= _limit)
+            return (L'\0');
         return (*_p);
     }
 
     void StringReader::Progress()
     {
-        if (*_p == L'\0')
+        if (_p >= _limit  || *_p == L'\0')
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_stringio.h;StringReader::Progress;1");
         ++_p;
     }
 
     int StringReader::StartsWith(const wchar_t * str)
     {
-        return (StartsWith(_p, str));
+        return (StartsWith(_p, _limit, str));
     }
 
     void StringReader::SkipSpace()
@@ -95,7 +113,7 @@ namespace Palmtree::Math::Core::Internal
 
     void StringReader::SkipString(const wchar_t * str)
     {
-        if (!StartsWith(_p, str))
+        if (!StartsWith(_p, _limit, str))
         {
             // str で始まっていないにもかかわらず、strをスキップしようとした。
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_stringio.h;StringReader::SkipString;1");
@@ -103,11 +121,11 @@ namespace Palmtree::Math::Core::Internal
         _p += lstrlenW(str);
     }
 
-    int StringReader::StartsWith(const wchar_t * a, const wchar_t * b)
+    int StringReader::StartsWith(const wchar_t * a, const wchar_t* a_limit, const wchar_t * b)
     {
         while (*b != L'\0')
         {
-            if (*a != *b)
+            if (a >= a_limit || *a != *b)
                 return (0);
             ++a;
             ++b;
@@ -116,34 +134,37 @@ namespace Palmtree::Math::Core::Internal
     }
 
     ReverseStringReader::ReverseStringReader(const wchar_t * p)
-        : StringReader(nullptr)
+        : StringReader(p + lstrlenW(p) - 1, p)
     {
-        _start = p;
-        _p = p + lstrlenW(p) - 1;
+    }
+
+    ReverseStringReader::ReverseStringReader(const wchar_t * p, size_t length)
+        : StringReader(p + length - 1, p)
+    {
     }
 
     wchar_t ReverseStringReader::PeekChar()
     {
-        if (_p < _start)
+        if (_p < _limit)
             return (L'\0');
         return (*_p);
     }
 
     void ReverseStringReader::Progress()
     {
-        if (_p < _start)
+        if (_p < _limit)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_stringio.h;ReverseStringReader::Progress;1");
         --_p;
     }
 
     int ReverseStringReader::StartsWith(const wchar_t * str)
     {
-        return (StartsWith(_p, _start, str));
+        return (StartsWith(_p, _limit, str));
     }
 
     void ReverseStringReader::SkipString(const wchar_t * str)
     {
-        if (!StartsWith(_p, _start, str))
+        if (!StartsWith(_p, _limit, str))
         {
             // str で始まっていないにもかかわらず、strをスキップしようとした。
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_stringio.h;ReverseStringReader::SkipString;1");
@@ -151,11 +172,11 @@ namespace Palmtree::Math::Core::Internal
         _p -= lstrlenW(str);
     }
 
-    int ReverseStringReader::StartsWith(const wchar_t * a, const wchar_t * eoa, const wchar_t * b)
+    int ReverseStringReader::StartsWith(const wchar_t * a, const wchar_t * a_limit, const wchar_t * b)
     {
         while (*b != L'\0')
         {
-            if (a < eoa || *a != *b)
+            if (a < a_limit || *a != *b)
                 return (0);
             --a;
             ++b;
@@ -165,6 +186,13 @@ namespace Palmtree::Math::Core::Internal
 
     StringWriter::StringWriter(wchar_t * p, wchar_t * sob, wchar_t * eob)
     {
+        if (p != nullptr)
+        {
+            if (sob == nullptr)
+                throw ArgumentNullException(L"引数に null が与えられました。", L"sob");
+            if (eob == nullptr)
+                throw ArgumentNullException(L"引数に null が与えられました。", L"eob");
+        }
         _p = p;
         _sob = sob;
         _eob = eob;
@@ -174,6 +202,14 @@ namespace Palmtree::Math::Core::Internal
     StringWriter::StringWriter(wchar_t * buffer, size_t size)
         : StringWriter(buffer, buffer, buffer != nullptr ? buffer + size : nullptr)
     {
+    }
+
+    StringWriter::StringWriter(const StringWriter & p)
+    {
+        _p = p._p;
+        _sob = p._sob;
+        _eob = p._eob;
+        _written = p._written;
     }
 
     void StringWriter::Write(wchar_t c)
@@ -204,6 +240,22 @@ namespace Palmtree::Math::Core::Internal
             Write(*str);
             ++str;
         }
+    }
+
+    void StringWriter::Write(const wchar_t * ptr, size_t count)
+    {
+        while (count > 0)
+        {
+            Write(*ptr);
+            ++ptr;
+            --count;
+        }
+    }
+
+    void StringWriter::Write(StringReader & reader)
+    {
+        while (reader.PeekChar() != L'\0')
+            Write(reader.ReadChar());
     }
 
     wchar_t * StringWriter::GetString()
@@ -240,6 +292,16 @@ namespace Palmtree::Math::Core::Internal
     {
         const wchar_t* p = str + lstrlenW(str);
         while (p > str)
+        {
+            --p;
+            Write(*p);
+        }
+    }
+
+    void ReverseStringWriter::Write(const wchar_t * ptr, size_t count)
+    {
+        const wchar_t* p = ptr + count;
+        while (p > ptr)
         {
             --p;
             Write(*p);

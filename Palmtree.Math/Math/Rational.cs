@@ -44,7 +44,7 @@ namespace Palmtree.Math
         #region プライベートフィールド
 
         private static object _lock_obj;
-        private static Regex _tostring_standard_format_pattern;
+        //private static Regex _tostring_standard_format_pattern;
         private Core.RationalHandle _handle;
 
         #endregion
@@ -63,7 +63,7 @@ namespace Palmtree.Math
             MinusOne = new Rational(EngineObject.MinusOne);
             One = new Rational(EngineObject.One);
             Zero = new Rational(EngineObject.Zero);
-            _tostring_standard_format_pattern = new Regex("^|[cefgnp]|[cdefgnprx][0-9]|[cdefgnprx][0-9][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            //_tostring_standard_format_pattern = new Regex("^|[cefgnp]|[cdefgnprx][0-9]|[cdefgnprx][0-9][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
 
         internal Rational(Core.RationalHandle handle)

@@ -32,6 +32,8 @@
 namespace Palmtree::Math::Core::Internal
 {
 
+    static NUMBER_OBJECT_UINT number_object_uint_decimal_max;
+
     _INT32_T PMC_ToInt32_UX(PMC_HANDLE_UINT p) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) < sizeof(_UINT32_T))
@@ -124,9 +126,318 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    DECIMAL PMC_ToDecimal_R(SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
+    {
+        NUMBER_OBJECT_UINT* np_numerator = GET_NUMBER_OBJECT(p_numerator, L"p_numerator");
+        NUMBER_OBJECT_UINT* np_denominator = GET_NUMBER_OBJECT(p_denominator, L"p_denominator");
+
+        if (np_numerator->IS_ZERO)
+        {
+            // p == 0 の場合
+
+            DECIMAL r = { 0, 0, 0, 0, 0 };
+            return (r);
+        }
+        else
+        {
+            // p > 0 の場合
+
+            ResourceHolderUINT root;
+
+            // 最大値のチェック
+            NUMBER_OBJECT_UINT* t = PMC_Multiply_UX_UX_Imp(&number_object_uint_decimal_max, np_denominator);
+            root.HookNumber(t);
+            // decimal.max >= p * 10^scale を満たす最大の scale を求める
+            _INT32_T max_scale = PMC_FloorLog10_R_Imp(t, np_numerator);
+            if (max_scale < 0)
+                throw OverflowException(L"decimal への型変換に失敗しました。");
+            if (max_scale >= 29)
+                max_scale = 28;
+
+            _INT32_T scale = 0;
+            while (scale < max_scale && !np_denominator->IS_ONE)
+            {
+                // scale が最大値に達しておらず、かつ分母が 1 ではない場合
+
+                // p に 10 を掛ける
+                np_numerator = PMC_Multiply_UX_UI_Imp(np_numerator, 10);
+                root.HookNumber(np_numerator);
+
+                // p を約分する
+                NUMBER_OBJECT_UINT* gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(np_numerator, np_denominator);
+                root.HookNumber(gcd);
+                if (!gcd->IS_ONE)
+                {
+                    // GCD が 1 ではない (== 既約ではない) 場合
+
+                    // 分子と分母を GCD で割る
+                    np_numerator = PMC_DivideExactly_UX_UX_Imp(np_numerator, gcd);
+                    root.HookNumber(np_numerator);
+                    np_denominator = PMC_DivideExactly_UX_UX_Imp(np_denominator, gcd);
+                    root.HookNumber(np_denominator);
+                }
+                ++scale;
+            }
+
+            // p を整数部と小数部に分ける
+            NUMBER_OBJECT_UINT* p_int_part;
+            NUMBER_OBJECT_UINT* p_frac_part_numerator = PMC_DivRem_UX_UX_Imp(np_numerator, np_denominator, &p_int_part);
+            root.HookNumber(p_int_part);
+            root.HookNumber(p_frac_part_numerator);
+            NUMBER_OBJECT_UINT* p_frac_part_denominator = np_denominator;
+
+            // p の小数部と 1/2 を比較し、その結果により整数部を丸める
+            p_frac_part_numerator = PMC_LeftShift_UX_UI_Imp(p_frac_part_numerator, 1);
+            root.HookNumber(p_frac_part_numerator);
+            _INT32_T c = PMC_Compare_UX_UX_Imp(p_frac_part_numerator, p_frac_part_denominator);
+            if (c > 0)
+            {
+                // 小数部が 1/2 より大きい場合
+                p_int_part = PMC_Increment_UX_Imp(p_int_part);
+                root.HookNumber(p_int_part);
+            }
+            else if (c < 0)
+            {
+                // 小数部が 1/2 より小さい場合
+            }
+            else
+            {
+                // 小数部が 1/2 に等しい場合
+                if (p_int_part->IS_EVEN)
+                {
+                    // 整数部が偶数である場合
+                }
+                else
+                {
+                    // 整数部が奇数である場合
+                    p_int_part = PMC_Increment_UX_Imp(p_int_part);
+                    root.HookNumber(p_int_part);
+                }
+            }
+
+            // 復帰値を組み立てる
+
+            DECIMAL r;
+            r.RESERVED = 0;
+            r.SIGN = p_sign < 0 ? 0x80 : 0x00;
+            r.SCALE = scale;
+#ifdef _M_IX86
+            switch (p_int_part->UNIT_WORD_COUNT)
+            {
+            case 0:
+                r.LO_64 = 0;
+                r.HI_32 = 0;
+                break;
+            case 1:
+                r.LO_64 = p_int_part->BLOCK[0];
+                r.HI_32 = 0;
+                break;
+            case 2:
+                r.LO_64 = _FROMWORDTODWORD(p_int_part->BLOCK[1], p_int_part->BLOCK[0]);
+                r.HI_32 = 0;
+                break;
+            default:
+                r.LO_64 = _FROMWORDTODWORD(p_int_part->BLOCK[1], p_int_part->BLOCK[0]);
+                r.HI_32 = p_int_part->BLOCK[2];
+                break;
+            }
+#elif defined (_M_X64)
+            switch (p_int_part->UNIT_WORD_COUNT)
+            {
+            case 0:
+                r.LO_64 = 0;
+                r.HI_32 = 0;
+                break;
+            case 1:
+                r.LO_64 = p_int_part->BLOCK[0];
+                r.HI_32 = 0;
+                break;
+            default:
+                r.LO_64 = p_int_part->BLOCK[0];
+                r.HI_32 = (_UINT32_T)p_int_part->BLOCK[1];
+                break;
+            }
+#else
+#error unknown platform
+#endif
+
+            return (r);
+        }
+    }
+
+    double PMC_ToDouble_R(SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
+    {
+        NUMBER_OBJECT_UINT* np_numerator = GET_NUMBER_OBJECT(p_numerator, L"p_numerator");
+        NUMBER_OBJECT_UINT* np_denominator = GET_NUMBER_OBJECT(p_denominator, L"p_denominator");
+
+        if (np_numerator->IS_ZERO)
+        {
+            // p == 0 の場合
+            return (0.0);
+        }
+
+        // p > 0 の場合
+
+        ResourceHolderUINT root;
+
+        if (np_numerator->UNIT_BIT_COUNT > 0x7fffffff)
+            throw OverflowException(L"double への型変換に失敗しました。");
+        if (np_denominator->UNIT_BIT_COUNT > 0x7fffffff)
+            throw OverflowException(L"double への型変換に失敗しました。");
+        _INT32_T scale = (_INT32_T)(np_numerator->UNIT_BIT_COUNT - np_denominator->UNIT_BIT_COUNT);
+        if (scale > 0)
+        {
+            np_denominator = PMC_LeftShift_UX_UI_Imp(np_denominator, scale);
+            root.HookNumber(np_denominator);
+        }
+        else if (scale < 0)
+        {
+            np_numerator = PMC_LeftShift_UX_UI_Imp(np_numerator, -scale);
+            root.HookNumber(np_numerator);
+        }
+        else
+        {
+            // nop
+        }
+        if (PMC_Compare_UX_UX_Imp(np_numerator, np_denominator) < 0)
+        {
+            np_numerator = PMC_LeftShift_UX_UI_Imp(np_numerator, 1);
+            root.HookNumber(np_numerator);
+            --scale;
+        }
+
+        // この時点で、1 <= np < 2 が成立する。(仮数部は必ず 1bit)
+
+        // 更に、np を 52bit だけ左シフトする。
+        np_numerator = PMC_LeftShift_UX_UI_Imp(np_numerator, 52);
+        root.HookNumber(np_numerator);
+
+        NUMBER_OBJECT_UINT* int_part;
+        NUMBER_OBJECT_UINT* frac_part_numerator = PMC_DivRem_UX_UX_Imp(np_numerator, np_denominator, &int_part);
+        root.HookNumber(int_part);
+        root.HookNumber(frac_part_numerator);
+        NUMBER_OBJECT_UINT* frac_part_denominator = np_denominator;
+
+        // この時点で int_part は 53bit (doubleの有効桁数) あるはず。
+        if (int_part->UNIT_BIT_COUNT != 53)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_to.cpp;PMC_ToDouble_R;1");
+
+        // 小数部と 1/2 の比較を行い、その結果によって整数部の丸めの方法を選ぶ
+        frac_part_numerator = PMC_LeftShift_UX_UI_Imp(frac_part_numerator, 1);
+        root.HookNumber(frac_part_numerator);
+        int c = PMC_Compare_UX_UX_Imp(frac_part_numerator, frac_part_denominator);
+        if (c > 0)
+        {
+            // 小数部が 1/2 を超えている場合
+
+            // 整数部をインクリメントする
+            int_part = PMC_Increment_UX_Imp(int_part);
+            root.HookNumber(int_part);
+        }
+        else if (c < 0)
+        {
+            // 小数部が 1/2 に満たない場合
+
+            // nop
+        }
+        else
+        {
+            // 小数部が 1/2 に等しい場合
+
+            if (int_part->IS_EVEN)
+            {
+                // 整数部が偶数である場合
+
+                // nop
+            }
+            else
+            {
+                // 整数部が奇数である場合
+
+                int_part = PMC_Increment_UX_Imp(int_part);
+                root.HookNumber(int_part);
+            }
+        }
+
+        // int_part が丸めにより 54 bit になっている場合は 1bit だけ右シフトする。
+        if (int_part->UNIT_BIT_COUNT > 53)
+        {
+            int_part = PMC_RightShift_UX_UI_Imp(int_part, 1);
+            root.HookNumber(int_part);
+            ++scale;
+        }
+
+        // この時点で int_part はちょうど 53bit の整数である。
+
+        // 仮数部の取得
+#ifdef _M_IX86
+        _UINT64_T mantissa_ulong = _FROMWORDTODWORD(int_part->BLOCK[1], int_part->BLOCK[0]);
+#elif defined (_M_X64)
+        _UINT64_T mantissa_ulong = int_part->BLOCK[0];
+#else
+#error unknown platform
+#endif
+
+        // 復帰値の作成
+        _UINT64_T result;
+        if (scale > 1023)
+        {
+            // double で表現するには数値の絶対値が大きすぎる場合
+
+            // 無限大を返す。
+            result = 0x7ff0000000000000;
+            if (p_sign < 0)
+                result = result | 0x8000000000000000;
+        }
+        else if (scale < -1022)
+        {
+            // double で表現するには数値の絶対値が小さすぎる場合
+
+            // 非正規化数を返す
+            result = 0x0000000000000001;
+            if (p_sign < 0)
+                result = result | 0x8000000000000000;
+        }
+        else
+        {
+            // double で表現できる場合
+            result = mantissa_ulong & 0x000fffffffffffff;
+            result = result | (((_UINT64_T)scale + 1023) << 52);
+            if (p_sign < 0)
+                result = result | 0x8000000000000000;
+        }
+
+        return (*(double*)&result);
+    }
+
     PMC_STATUS_CODE Initialize_To(PROCESSOR_FEATURES *feature)
     {
-        return (PMC_STATUS_OK);
+
+        ResourceHolderUINT root;
+
+        try
+        {
+            root.AttatchStaticNumber(&number_object_uint_decimal_max, 96);
+#ifdef _M_IX86
+            number_object_uint_decimal_max.BLOCK[0] = 0xffffffff;
+            number_object_uint_decimal_max.BLOCK[1] = 0xffffffff;
+            number_object_uint_decimal_max.BLOCK[2] = 0xffffffff;
+#elif defined (_M_X64)
+            number_object_uint_decimal_max.BLOCK[0] = 0xffffffffffffffff;
+            number_object_uint_decimal_max.BLOCK[1] = 0x00000000ffffffff;
+#else
+#error unknown platform
+#endif
+            CommitNumber(&number_object_uint_decimal_max);
+
+            root.UnlinkStatickNumber(&number_object_uint_decimal_max);
+
+            return (PMC_STATUS_OK);
+        }
+        catch (const Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
     }
 
 }

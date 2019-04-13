@@ -199,7 +199,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderRTNL::UnlinkBytes;1");
-        tag->Unlink();
         delete tag;
     }
 
@@ -254,7 +253,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag != nullptr)
         {
-            tag->Unlink();
             tag->Destruct();
             delete tag;
         }
@@ -266,7 +264,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(x);
         if (tag != nullptr)
         {
-            tag->Unlink();
             tag->Destruct();
             delete tag;
         }
@@ -278,7 +275,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(x);
         if (tag != nullptr)
         {
-            tag->Unlink();
             tag->Destruct();
             delete tag;
         }
@@ -303,7 +299,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderRTNL::UnlinkNumber;1");
-        tag->Unlink();
         delete tag;
     }
 
@@ -313,7 +308,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(x);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderRTNL::UnlinkNumber;1");
-        tag->Unlink();
         delete tag;
     }
 
@@ -323,7 +317,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(x);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderRTNL::UnlinkNumber;1");
-        tag->Unlink();
         delete tag;
     }
 
@@ -344,7 +337,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag != nullptr)
         {
-            tag->Unlink();
             tag->Destruct();
             delete tag;
         }
@@ -356,7 +348,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderRTNL::UnlinkStatickNumber;1");
-        tag->Unlink();
         delete tag;
     }
 
@@ -365,7 +356,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(x);
         if (tag != nullptr)
         {
-            tag->Unlink();
             delete tag;
         }
     }
@@ -375,7 +365,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(x);
         if (tag != nullptr)
         {
-            tag->Unlink();
             delete tag;
         }
     }

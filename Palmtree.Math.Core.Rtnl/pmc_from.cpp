@@ -23,7 +23,7 @@
  */
 
 
-#include <windows.h>
+#include <math.h>
 #include "pmc_rtnl_internal.h"
 #include "pmc_resourceholder_rtnl.h"
 
@@ -79,6 +79,37 @@ namespace Palmtree::Math::Core::Internal
             throw ArgumentNullException(L"引数にnullが与えられています。", L"x");
         ResourceHolderRTNL root;
         return (EPILOGUE(root, ep_sint.Clone(x)));
+    }
+
+    PMC_HANDLE_RTNL PMC_From_DECIMAL(DECIMAL x) noexcept(false)
+    {
+        ResourceHolderRTNL root;
+
+        PMC_HANDLE_UINT r_denominator;
+        PMC_HANDLE_SINT r_numerator = ep_sint.From(x, &r_denominator);
+        root.HookNumber(r_numerator);
+        root.HookNumber(r_denominator);
+        NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(r_numerator, r_denominator);
+        PMC_HANDLE_RTNL r = GET_NUMBER_HANDLE(nr);
+        root.UnlinkNumber(nr);
+        return (r);
+    }
+
+    PMC_HANDLE_RTNL PMC_From_DOUBLE(double x) noexcept(false)
+    {
+        if (!isfinite(x))
+            throw OverflowException(L"与えられた数値が無限大または NAN のため変換できません。");
+
+        ResourceHolderRTNL root;
+
+        PMC_HANDLE_UINT r_denominator;
+        PMC_HANDLE_SINT r_numerator = ep_sint.From(x, &r_denominator);
+        root.HookNumber(r_numerator);
+        root.HookNumber(r_denominator);
+        NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(r_numerator, r_denominator);
+        PMC_HANDLE_RTNL r = GET_NUMBER_HANDLE(nr);
+        root.UnlinkNumber(nr);
+        return (r);
     }
 
 }

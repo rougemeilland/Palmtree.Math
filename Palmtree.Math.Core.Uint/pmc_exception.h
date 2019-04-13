@@ -321,6 +321,7 @@ namespace Palmtree::Math::Core::Internal
     public:
         InternalErrorException(const wchar_t* message, const wchar_t* data) noexcept(true)
             : Exception(PMC_STATUS_INTERNAL_ERROR, message, data)
+
         {
         }
 

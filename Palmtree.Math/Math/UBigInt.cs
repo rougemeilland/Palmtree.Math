@@ -44,7 +44,7 @@ namespace Palmtree.Math
         #region プライベートフィールド
 
         private static object _lock_obj;
-        private static Regex _tostring_standard_format_pattern;
+        //private static Regex _tostring_standard_format_pattern;
         private Core.UBigIntHandle _handle;
 
         #endregion
@@ -62,7 +62,7 @@ namespace Palmtree.Math
             PerformanceCounters = new PerformanceCounterCollection();
             Zero = new UBigInt(EngineObject.Zero);
             One = new UBigInt(EngineObject.One);
-            _tostring_standard_format_pattern = new Regex("^|[cdefgnprx]|[cdefgnprx][0-9]|[cdefgnprx][0-9][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            //_tostring_standard_format_pattern = new Regex("^|[cdefgnprx]|[cdefgnprx][0-9]|[cdefgnprx][0-9][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
 
         internal UBigInt(Core.UBigIntHandle handle)

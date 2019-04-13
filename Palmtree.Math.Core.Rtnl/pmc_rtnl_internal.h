@@ -148,6 +148,8 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_RTNL PMC_From_UL(_UINT64_T x) noexcept(false);
     extern PMC_HANDLE_RTNL PMC_From_UX(PMC_HANDLE_UINT x) noexcept(false);
     extern PMC_HANDLE_RTNL PMC_From_X(PMC_HANDLE_SINT x) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_From_DECIMAL(DECIMAL x) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_From_DOUBLE(double x) noexcept(false);
 
     extern _INT32_T PMC_GetHashCode(PMC_HANDLE_RTNL p) noexcept(false);
 
@@ -174,6 +176,8 @@ namespace Palmtree::Math::Core::Internal
     extern _INT64_T PMC_ToInt64_R(PMC_HANDLE_RTNL p) noexcept(false);
     extern PMC_HANDLE_UINT PMC_ToUBigInt_R(PMC_HANDLE_RTNL p) noexcept(false);
     extern PMC_HANDLE_SINT PMC_ToBigInt_R(PMC_HANDLE_RTNL p) noexcept(false);
+    extern DECIMAL PMC_ToDecimal_R(PMC_HANDLE_RTNL p) noexcept(false);
+    extern double PMC_ToDouble_R(PMC_HANDLE_RTNL p) noexcept(false);
 
     extern PMC_HANDLE_RTNL PMC_Negate_R(PMC_HANDLE_RTNL x) noexcept(false);
 

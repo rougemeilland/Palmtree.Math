@@ -41,19 +41,19 @@ namespace Palmtree::Math::Core::Internal
         return (specified_precision >= 0 ? specified_precision : 0);
     }
 
-    void ToStringFormatterTypeD::WriteZeroValue(StringWriter * writer)
+    void ToStringFormatterTypeD::WriteZeroValue(StringWriter& writer)
     {
-        writer->Write(L'0', _precision < 1 ? 1 : _precision);
+        writer.Write(L'0', _precision < 1 ? 1 : _precision);
     }
 
-    void ToStringFormatterTypeD::WritePrefix(SIGN_T x_sign, StringWriter * writer)
+    void ToStringFormatterTypeD::WritePrefix(SIGN_T x_sign, StringWriter& writer)
     {
         if (x_sign >= 0)
         {
         }
         else
         {
-            writer->Write(_number_format_info->NegativeSign);
+            writer.Write(_number_format_info->NegativeSign);
         }
     }
 
@@ -62,15 +62,15 @@ namespace Palmtree::Math::Core::Internal
         return (0);
     }
 
-    void ToStringFormatterTypeD::FormatNumberSequence(const wchar_t * int_part, const wchar_t * frac_part, _INT32_T exp, StringWriter * writer)
+    void ToStringFormatterTypeD::FormatNumberSequence(const wchar_t * int_part, const wchar_t * frac_part, _INT32_T exp, StringWriter& writer)
     {
         int digit_count = lstrlenW(int_part);
         if (digit_count < _precision)
-            writer->Write(L'0', _precision - digit_count);
-        writer->Write(int_part);
+            writer.Write(L'0', _precision - digit_count);
+        writer.Write(int_part);
     }
 
-    void ToStringFormatterTypeD::WriteSuffix(SIGN_T x_sign, StringWriter * writer)
+    void ToStringFormatterTypeD::WriteSuffix(SIGN_T x_sign, StringWriter& writer)
     {
     }
 

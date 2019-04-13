@@ -31,6 +31,8 @@ namespace Palmtree.Math.CodeGen.TestData
     {
         string Type { get; }
         NullDataItem ToNull();
+        DecimalDataItem ToDecimal();
+        DoubleDataItem ToDouble();
         UInt32DataItem ToUInt32();
         UInt64DataItem ToUInt64();
         Int32DataItem ToInt32();
@@ -42,6 +44,8 @@ namespace Palmtree.Math.CodeGen.TestData
         NumberFormatInfoDataItem ToNumberFormatInfo();
         ExceptionDataItem ToException();
         bool IsNull { get; }
+        bool IsDecimal { get; }
+        bool IsDouble { get; }
         bool IsUInt32 { get; }
         bool IsUInt64 { get; }
         bool IsInt32 { get; }

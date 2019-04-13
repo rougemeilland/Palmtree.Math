@@ -40,33 +40,33 @@ namespace Palmtree::Math::Core::Internal
         return (specified_precision >= 0 ? specified_precision : _number_format_info->Number.DecimalDigits);
     }
 
-    void ToStringFormatterTypeF::WriteZeroValue(StringWriter * writer)
+    void ToStringFormatterTypeF::WriteZeroValue(StringWriter& writer)
     {
-        writer->Write(L'0');
+        writer.Write(L'0');
         if (_precision > 0)
         {
-            writer->Write(_number_format_info->Number.DecimalSeparator);
-            writer->Write(L'0', _precision);
+            writer.Write(_number_format_info->Number.DecimalSeparator);
+            writer.Write(L'0', _precision);
         }
     }
 
-    void ToStringFormatterTypeF::WritePrefix(SIGN_T x_sign, StringWriter * writer)
+    void ToStringFormatterTypeF::WritePrefix(SIGN_T x_sign, StringWriter& writer)
     {
         if (x_sign < 0)
-            writer->Write(_number_format_info->NegativeSign);
+            writer.Write(_number_format_info->NegativeSign);
     }
 
-    void ToStringFormatterTypeF::FormatNumberSequence(const wchar_t * int_part, const wchar_t * frac_part, _INT32_T exp, StringWriter * writer)
+    void ToStringFormatterTypeF::FormatNumberSequence(const wchar_t * int_part, const wchar_t * frac_part, _INT32_T exp, StringWriter& writer)
     {
-        writer->Write(int_part);
+        writer.Write(int_part);
         if (_precision > 0 && frac_part[0] != L'\0')
         {
-            writer->Write(_number_format_info->Number.DecimalSeparator);
-            writer->Write(frac_part);
+            writer.Write(_number_format_info->Number.DecimalSeparator);
+            writer.Write(frac_part);
         }
     }
 
-    void ToStringFormatterTypeF::WriteSuffix(SIGN_T x_sign, StringWriter * writer)
+    void ToStringFormatterTypeF::WriteSuffix(SIGN_T x_sign, StringWriter& writer)
     {
     }
 

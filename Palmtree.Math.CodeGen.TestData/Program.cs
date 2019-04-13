@@ -36,10 +36,12 @@ namespace Palmtree.Math.CodeGen.TestData
     {
         static void Main(string[] args)
         {
+
 #if true
-            var u = -BigInteger.Parse("10000000000000000", NumberStyles.HexNumber);
-            var v = new MiniRational(-BigInteger.Parse("10000000000000000", NumberStyles.HexNumber), 1);
-            var w = u / v;
+            // 10,03,04,00,ca,9a,3b,01,08,ff,ff,e7,89,04,23,c7,8a
+
+            var m = new MiniRational(0x3b9aca00, 0x8ac7230489e7ffff);
+            var d = m.ToDecimal();
 #endif
 
             var lock_obj = new object();
@@ -76,7 +78,7 @@ namespace Palmtree.Math.CodeGen.TestData
             }
             else
             {
-                foreach (var plugin in plugins/*.Where(plugin => plugin.DataFileKey.StartsWith("rtnl.test_data_tostringe"))*/)
+                foreach (var plugin in plugins/*.Where(plugin => plugin.DataFileKey.Contains("to") || plugin.DataFileKey.Contains("from"))*/)
                 {
                     lock (lock_obj)
                     {

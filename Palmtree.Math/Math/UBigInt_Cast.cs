@@ -32,6 +32,16 @@ namespace Palmtree.Math
     {
         #region パブリックメソッド
 
+        public static UBigInt From(decimal x)
+        {
+            return (new UBigInt(Rational.EngineObject.ToUBigInt(Rational.EngineObject.From(x))));
+        }
+
+        public static UBigInt From(double x)
+        {
+            return (new UBigInt(Rational.EngineObject.ToUBigInt(Rational.EngineObject.From(x))));
+        }
+
         public static UBigInt From(Int32 x)
         {
             return (new UBigInt(EngineObject.From(x)));
@@ -62,6 +72,16 @@ namespace Palmtree.Math
             return (new UBigInt(Rational.EngineObject.ToUBigInt(x.Handle)));
         }
 
+        public static explicit operator UBigInt(decimal x)
+        {
+            return (new UBigInt(Rational.EngineObject.ToUBigInt(Rational.EngineObject.From(x))));
+        }
+
+        public static explicit operator UBigInt(double x)
+        {
+            return (new UBigInt(Rational.EngineObject.ToUBigInt(Rational.EngineObject.From(x))));
+        }
+
         public static explicit operator UBigInt(Int32 x)
         {
             return (new UBigInt(EngineObject.From(x)));
@@ -85,6 +105,16 @@ namespace Palmtree.Math
         public static explicit operator UBigInt(Rational x)
         {
             return (new UBigInt(Rational.EngineObject.ToUBigInt(x.Handle)));
+        }
+
+        public decimal ToDecimal()
+        {
+            return (Rational.EngineObject.ToDecimal(Rational.EngineObject.From(Handle)));
+        }
+
+        public double ToDouble()
+        {
+            return (Rational.EngineObject.ToDouble(Rational.EngineObject.From(Handle)));
         }
 
         public Int32 ToInt32()
@@ -115,6 +145,16 @@ namespace Palmtree.Math
         public Rational ToRational()
         {
             return (new Rational(Rational.EngineObject.From(Handle)));
+        }
+
+        public static explicit operator decimal(UBigInt x)
+        {
+            return (Rational.EngineObject.ToDecimal(Rational.EngineObject.From(x.Handle)));
+        }
+
+        public static explicit operator double(UBigInt x)
+        {
+            return (Rational.EngineObject.ToDouble(Rational.EngineObject.From(x.Handle)));
         }
 
         public static explicit operator Int32(UBigInt x)

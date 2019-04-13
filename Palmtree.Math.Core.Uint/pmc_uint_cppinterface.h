@@ -46,10 +46,12 @@ namespace Palmtree::Math::Core::Internal
 
         PMC_STATUS_CODE GetConfigurationSettings(const wchar_t* key, wchar_t* value_buffer, _INT32_T value_buffer_size, _INT32_T* count);
 
-        PMC_HANDLE_UINT From(_INT32_T x);// noexcept(false);
-        PMC_HANDLE_UINT From(_INT64_T x);// noexcept(false);
-        PMC_HANDLE_UINT From(_UINT32_T x);// noexcept(false);
-        PMC_HANDLE_UINT From(_UINT64_T x);// noexcept(false);
+        PMC_HANDLE_UINT From(_INT32_T x);
+        PMC_HANDLE_UINT From(_INT64_T x);
+        PMC_HANDLE_UINT From(_UINT32_T x);
+        PMC_HANDLE_UINT From(_UINT64_T x);
+        PMC_HANDLE_UINT From(DECIMAL x, SIGN_T* o_sign, PMC_HANDLE_UINT* o_denominator);
+        PMC_HANDLE_UINT From(double x, SIGN_T* o_sign, PMC_HANDLE_UINT* o_denominator);
 
         void CheckHandle(PMC_HANDLE_UINT p);
         void Dispose(PMC_HANDLE_UINT p);
@@ -67,6 +69,8 @@ namespace Palmtree::Math::Core::Internal
         _INT64_T ToInt64(PMC_HANDLE_UINT p) noexcept(false);
         _UINT32_T ToUInt32(PMC_HANDLE_UINT p) noexcept(false);
         _UINT64_T ToUInt64(PMC_HANDLE_UINT p) noexcept(false);
+        DECIMAL ToDecimal(SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false);
+        double ToDouble(SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false);
 
         void InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info);
         size_t ToString(PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);

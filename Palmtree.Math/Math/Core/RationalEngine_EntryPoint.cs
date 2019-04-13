@@ -427,6 +427,18 @@ namespace Palmtree.Math.Core
 
         #region From 関数
 
+        public RationalHandle From(decimal value)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_From_DECIMAL(value, out IntPtr r));
+            return (new RationalHandle(r));
+        }
+
+        public RationalHandle From(double value)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_From_DOUBLE(value, out IntPtr r));
+            return (new RationalHandle(r));
+        }
+
         public RationalHandle From(Int32 value)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_From_I(value, out IntPtr r));
@@ -927,6 +939,18 @@ namespace Palmtree.Math.Core
         #endregion
 
         #region To 関数
+
+        public decimal ToDecimal(RationalHandle value)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_ToDecimal_R(value.NativeHandle, out decimal r));
+            return (r);
+        }
+
+        public double ToDouble(RationalHandle value)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_ToDouble_R(value.NativeHandle, out double r));
+            return (r);
+        }
 
         public Int32 ToInt32(RationalHandle value)
         {

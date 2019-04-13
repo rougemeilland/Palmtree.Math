@@ -31,6 +31,8 @@ namespace Palmtree.Math.Test
     {
         string Type { get; }
         NullDataItem ToNull();
+        DecimalDataItem ToDecimal();
+        DoubleDataItem ToDouble();
         RationalDataItem ToRational();
         BigIntDataItem ToBigInt();
         UBigIntDataItem ToUBigInt();
@@ -42,6 +44,8 @@ namespace Palmtree.Math.Test
         NumberFormatInfoDataItem ToNumberFormatInfo();
         ExceptionDataItem ToException();
         bool IsNull { get; }
+        bool IsDouble { get; }
+        bool IsDecimal { get; }
         bool IsRational { get; }
         bool IsBigInt { get; }
         bool IsUBigInt { get; }

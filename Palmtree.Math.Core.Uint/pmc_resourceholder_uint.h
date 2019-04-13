@@ -92,17 +92,6 @@ namespace Palmtree::Math::Core::Internal
             void virtual Destruct() override;
         };
 
-        class __RootTag
-            : public __ChainBufferTag
-        {
-        public:
-            __RootTag();
-            virtual ~__RootTag();
-            virtual bool EqualsBufferAddress(void* buffer) override;
-            void virtual Destruct() override;
-
-        };
-
     public:
         ResourceHolderUINT();
         virtual ~ResourceHolderUINT();

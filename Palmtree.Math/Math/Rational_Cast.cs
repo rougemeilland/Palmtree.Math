@@ -32,6 +32,16 @@ namespace Palmtree.Math
     {
         #region パブリックメソッド
 
+        public static Rational From(decimal x)
+        {
+            return (new Rational(EngineObject.From(x)));
+        }
+
+        public static Rational From(double x)
+        {
+            return (new Rational(EngineObject.From(x)));
+        }
+
         public static Rational From(Int32 x)
         {
             return (new Rational(EngineObject.From(x)));
@@ -60,6 +70,16 @@ namespace Palmtree.Math
         public static Rational From(UBigInt x)
         {
             return (new Rational(EngineObject.From(x.Handle)));
+        }
+
+        public static explicit operator Rational(decimal x)
+        {
+            return (new Rational(EngineObject.From(x)));
+        }
+
+        public static explicit operator Rational(double x)
+        {
+            return (new Rational(EngineObject.From(x)));
         }
 
         public static explicit operator Rational(Int32 x)
@@ -92,6 +112,16 @@ namespace Palmtree.Math
             return (new Rational(EngineObject.From(x.Handle)));
         }
 
+        public decimal ToDecimal()
+        {
+            return (EngineObject.ToDecimal(Handle));
+        }
+
+        public double ToDouble()
+        {
+            return (EngineObject.ToDouble(Handle));
+        }
+
         public Int32 ToInt32()
         {
             return (EngineObject.ToInt32(Handle));
@@ -120,6 +150,16 @@ namespace Palmtree.Math
         public UBigInt ToUBigInt()
         {
             return (new UBigInt(EngineObject.ToUBigInt(Handle)));
+        }
+
+        public static explicit operator decimal(Rational x)
+        {
+            return (EngineObject.ToDecimal(x.Handle));
+        }
+
+        public static explicit operator double(Rational x)
+        {
+            return (EngineObject.ToDouble(x.Handle));
         }
 
         public static explicit operator Int32(Rational x)

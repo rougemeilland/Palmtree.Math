@@ -23,7 +23,7 @@
  */
 
 
-#include "pmc_uint_internal.h"
+#include "pmc_string.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_parser.h"
 #include "pmc_inline_func.h"

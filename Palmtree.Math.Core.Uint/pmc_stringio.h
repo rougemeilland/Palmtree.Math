@@ -38,12 +38,17 @@ namespace Palmtree::Math::Core::Internal
     {
     protected:
         const wchar_t* _p;
+        const wchar_t* _limit;
 
     protected:
-        StringReader();
+        StringReader(const wchar_t* p, const wchar_t* limit);
+
+    private:
+        StringReader(const StringReader& p);
 
     public:
         StringReader(const wchar_t* p);
+        StringReader(const wchar_t* p, size_t length);
         wchar_t ReadChar();
         wchar_t ReadChar(wchar_t default_char);
         virtual wchar_t PeekChar();
@@ -53,25 +58,28 @@ namespace Palmtree::Math::Core::Internal
         virtual void SkipString(const wchar_t* str);
 
     private:
-        static int StartsWith(const wchar_t* a, const wchar_t* b);
+        static int StartsWith(const wchar_t* a, const wchar_t* a_limit, const wchar_t* b);
 
     };
 
     class __DLLEXPORT_UINT ReverseStringReader
         : public StringReader
     {
-    private:
-        const wchar_t* _start;
-
     public:
         ReverseStringReader(const wchar_t* p);
+        ReverseStringReader(const wchar_t* p, size_t length);
+
+    private:
+        ReverseStringReader(const ReverseStringReader& p);
+
+    public:
         virtual wchar_t PeekChar();
         virtual  void Progress();
         virtual int StartsWith(const wchar_t* str);
         virtual void SkipString(const wchar_t* str);
 
     private:
-        static int StartsWith(const wchar_t* a, const wchar_t* eoa, const wchar_t* b);
+        static int StartsWith(const wchar_t* a, const wchar_t* a_limit, const wchar_t* b);
 
     };
 
@@ -87,9 +95,16 @@ namespace Palmtree::Math::Core::Internal
 
     public:
         StringWriter(wchar_t* buffer, size_t size);
+
+    private:
+        StringWriter(const StringWriter& p);
+
+    public:
         virtual void Write(wchar_t c);
         void Write(wchar_t c, size_t count);
         virtual void Write(const wchar_t* str);
+        virtual void Write(const wchar_t* ptr, size_t count);
+        void Write(StringReader& reader);
         virtual wchar_t* GetString();
         size_t GetLength();
         bool IsBufferAssigned();
@@ -100,8 +115,15 @@ namespace Palmtree::Math::Core::Internal
     {
     public:
         ReverseStringWriter(wchar_t* buffer, size_t size);
+
+    private:
+        ReverseStringWriter(const ReverseStringWriter& p);
+
+    public:
+        using StringWriter::Write; // ←これを追加しないと、StringWriter::Writeが ReverseStringWriter::Write により隠蔽されて不可視となってしまう。(不可視判定は名前のみで行われパラメタは反映されない)
         virtual void Write(wchar_t c) override;
         virtual void Write(const wchar_t* str) override;
+        virtual void Write(const wchar_t* ptr, size_t count) override;
         virtual wchar_t* GetString() override;
     };
 

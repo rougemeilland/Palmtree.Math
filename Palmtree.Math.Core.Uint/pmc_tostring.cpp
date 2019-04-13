@@ -26,6 +26,7 @@
 #include "pmc_uint_internal.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_stringio.h"
+#include "pmc_tostringformattercustom.h"
 #include "pmc_tostringformattertypec.h"
 #include "pmc_tostringformattertyped.h"
 #include "pmc_tostringformattertypee.h"
@@ -45,7 +46,7 @@ namespace Palmtree::Math::Core::Internal
     {
         StringWriter writer(buffer, buffer_size);
         ToStringFormatterTypeC formatter(precision, format_option);
-        formatter.Format(x_sign, x_numerator, x_denominator, &writer);
+        formatter.Format(x_sign, x_numerator, x_denominator, writer);
         return (writer.GetLength());
     }
 
@@ -53,7 +54,7 @@ namespace Palmtree::Math::Core::Internal
     {
         StringWriter writer(buffer, buffer_size);
         ToStringFormatterTypeD formatter(precision, format_option);
-        formatter.Format(x_sign, x_numerator, &number_object_uint_one, &writer);
+        formatter.Format(x_sign, x_numerator, &number_object_uint_one, writer);
         return (writer.GetLength());
     }
 
@@ -61,7 +62,7 @@ namespace Palmtree::Math::Core::Internal
     {
         StringWriter writer(buffer, buffer_size);
         ToStringFormatterTypeE formatter(format_type, precision, format_option);
-        formatter.Format(x_sign, x_numerator, x_denominator, &writer);
+        formatter.Format(x_sign, x_numerator, x_denominator, writer);
         return (writer.GetLength());
     }
 
@@ -69,7 +70,7 @@ namespace Palmtree::Math::Core::Internal
     {
         StringWriter writer(buffer, buffer_size);
         ToStringFormatterTypeF formatter(format_type, precision, format_option);
-        formatter.Format(x_sign, x_numerator, x_denominator, &writer);
+        formatter.Format(x_sign, x_numerator, x_denominator, writer);
         return (writer.GetLength());
     }
 
@@ -77,7 +78,7 @@ namespace Palmtree::Math::Core::Internal
     {
         StringWriter writer(buffer, buffer_size);
         ToStringFormatterTypeG formatter(format_type, precision, format_option);
-        formatter.Format(x_sign, x_numerator, x_denominator, &writer);
+        formatter.Format(x_sign, x_numerator, x_denominator, writer);
         return (writer.GetLength());
     }
 
@@ -85,7 +86,7 @@ namespace Palmtree::Math::Core::Internal
     {
         StringWriter writer(buffer, buffer_size);
         ToStringFormatterTypeN formatter(precision, format_option);
-        formatter.Format(x_sign, x_numerator, x_denominator, &writer);
+        formatter.Format(x_sign, x_numerator, x_denominator, writer);
         return (writer.GetLength());
     }
 
@@ -94,7 +95,7 @@ namespace Palmtree::Math::Core::Internal
     {
         StringWriter writer(buffer, buffer_size);
         ToStringFormatterTypeP formatter(precision, format_option);
-        formatter.Format(x_sign, x_numerator, x_denominator, &writer);
+        formatter.Format(x_sign, x_numerator, x_denominator, writer);
         return (writer.GetLength());
     }
 
@@ -102,13 +103,16 @@ namespace Palmtree::Math::Core::Internal
     {
         StringWriter writer(buffer, buffer_size);
         ToStringFormatterTypeX formatter(format_type, precision, format_option);
-        formatter.Format(x_sign, x_abs, &writer);
+        formatter.Format(x_sign, x_abs, writer);
         return (writer.GetLength());
     }
 
     static size_t ToStringCustom(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
-        throw FormatException(L"書式に誤りがあります。");
+        StringWriter writer(buffer, buffer_size);
+        CustomFormat::ToStringFormatterCustom formatter(format, format_option);
+        formatter.Format(x_sign, x_numerator, x_denominator, writer);
+        return (writer.GetLength());
     }
 
     __inline static bool __IS_ALPHA(wchar_t c)
@@ -170,7 +174,11 @@ namespace Palmtree::Math::Core::Internal
         wchar_t format_type;
         int precision;
         if (!ParseStandardFormat(format, &format_type, &precision))
+        {
+            if (x_denominator == nullptr)
+                x_denominator = &number_object_uint_one;
             return (ToStringCustom(x_numerator_sign, x_numerator_abs, x_denominator, format, format_option, buffer, buffer_size));
+        }
         else
         {
             switch (format_type)

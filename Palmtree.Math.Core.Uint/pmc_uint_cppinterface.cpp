@@ -29,6 +29,7 @@
 
 #include "pmc_uint_internal.h"
 #include "pmc_resourceholder_uint.h"
+#include "pmc_string.h"
 
 
 namespace Palmtree::Math::Core::Internal
@@ -80,6 +81,16 @@ namespace Palmtree::Math::Core::Internal
     PMC_HANDLE_UINT PMC_UINT_CppInterface::From(_UINT64_T x) noexcept(false)
     {
         return (PMC_From_UL(x));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::From(DECIMAL x, SIGN_T * o_sign, PMC_HANDLE_UINT * o_denominator)
+    {
+        return (PMC_From_DECIMAL(x, o_sign, o_denominator));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::From(double x, SIGN_T * o_sign, PMC_HANDLE_UINT * o_denominator)
+    {
+        return (PMC_From_DOUBLE(x, o_sign, o_denominator));
     }
 
     void PMC_UINT_CppInterface::CheckHandle(PMC_HANDLE_UINT p)
@@ -135,6 +146,16 @@ namespace Palmtree::Math::Core::Internal
     _UINT64_T PMC_UINT_CppInterface::ToUInt64(PMC_HANDLE_UINT p) noexcept(false)
     {
         return (PMC_ToUInt64_UX(p));
+    }
+
+    DECIMAL PMC_UINT_CppInterface::ToDecimal(SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
+    {
+        return (PMC_ToDecimal_R(p_sign, p_numerator, p_denominator));
+    }
+
+    double PMC_UINT_CppInterface::ToDouble(SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
+    {
+        return (PMC_ToDouble_R(p_sign, p_numerator, p_denominator));
     }
 
     void PMC_UINT_CppInterface::InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO * info)

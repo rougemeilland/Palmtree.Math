@@ -118,12 +118,17 @@ namespace Palmtree.Math
 
         private static string ToString(Core.RationalHandle handle, string format, NumberFormatInfo provider)
         {
+#if false
             if (_tostring_standard_format_pattern.IsMatch(format))
                 return (EngineObject.ToString(handle, format, provider));
             else
                 return (ToStringCustomFormat(handle, format, provider));
+#else
+            return (EngineObject.ToString(handle, format, provider));
+#endif
         }
 
+#if false
         private static string ToStringCustomFormat(Core.RationalHandle handle, string format, NumberFormatInfo provider)
         {
             // 【実験結果】
@@ -145,9 +150,11 @@ namespace Palmtree.Math
 
             throw new NotSupportedException();
         }
+#endif
 
         #endregion
     }
+
 }
 
 

@@ -57,6 +57,8 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_SINT From(_UINT32_T x) noexcept(false);
         PMC_HANDLE_SINT From(_UINT64_T x) noexcept(false);
         PMC_HANDLE_SINT From(PMC_HANDLE_UINT x) noexcept(false);
+        PMC_HANDLE_SINT From(DECIMAL x, PMC_HANDLE_UINT* o_denominator) noexcept(false);
+        PMC_HANDLE_SINT From(double x, PMC_HANDLE_UINT* o_denominator) noexcept(false);
 
         _INT32_T GetHashCode(PMC_HANDLE_SINT p) noexcept(false);
 
@@ -80,6 +82,8 @@ namespace Palmtree::Math::Core::Internal
         _UINT32_T ToUInt32(PMC_HANDLE_SINT p) noexcept(false);
         _UINT64_T ToUInt64(PMC_HANDLE_SINT p) noexcept(false);
         PMC_HANDLE_UINT ToUBigInt(PMC_HANDLE_SINT p) noexcept(false);
+        DECIMAL ToDecimal(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false);
+        double ToDouble(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false);
 
         PMC_HANDLE_SINT Negate(PMC_HANDLE_UINT x) noexcept(false);
         PMC_HANDLE_SINT Negate(PMC_HANDLE_SINT x) noexcept(false);

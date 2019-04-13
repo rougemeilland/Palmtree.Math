@@ -23,7 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,7 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -99,6 +99,7 @@
     <Compile Include="ComponentTestPluginBase_3_1.cs" />
     <Compile Include="ComponentTestPluginBase_3_2.cs" />
     <Compile Include="DataItem.cs" />
+    <Compile Include="DoubleDataItem.cs" />
     <Compile Include="ExceptionDataItem.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="IComponentTestItem.cs" />
@@ -109,6 +110,8 @@
     <Compile Include="NullDataItem.cs" />
     <Compile Include="NumberFormatInfoDataItem.cs" />
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_FloorLog10_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_From_DOUBLE.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_From_DECIMAL.cs" />
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Round_R_I_I.cs" />
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Round_R_I.cs" />
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Ceiling_R.cs" />
@@ -377,6 +380,8 @@
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_UL_R.cs" />
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_UX_R.cs" />
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_Subtruct_X_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToDouble_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToDecimal_R.cs" />
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToBigInt_R.cs" />
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToInt32_R.cs" />
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToInt64_R.cs" />
@@ -1092,6 +1097,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BigIntDataItem.cs" />
+    <Compile Include="DecimalDataItem.cs" />
     <Compile Include="RationalDataItem.cs" />
     <Compile Include="UBigIntDataItem.cs" />
     <Compile Include="UInt32DataItem.cs" />
@@ -1275,6 +1281,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Rtnl\test_data_floor_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_from_decimal.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_from_double.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Rtnl\test_data_from_i.xml">
@@ -1626,6 +1638,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Rtnl\test_data_tobigint_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_todecimal_r.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_todouble_r.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Rtnl\test_data_toint32_r.xml">

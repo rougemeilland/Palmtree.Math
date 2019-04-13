@@ -179,6 +179,14 @@ namespace Palmtree.Math.CodeGen.TestData
             }
         }
 
+        protected virtual IEnumerable<MiniRational> AdditionalRationalDataSource
+        {
+            get
+            {
+                return (new MiniRational[0]);
+            }
+        }
+
         protected IEnumerable<MiniRational> RationalDataSource
         {
             get
@@ -198,6 +206,7 @@ namespace Palmtree.Math.CodeGen.TestData
                 };
                 return (source.SelectMany(n => new[] { n, -n })
                         .SelectMany(n => source.Where(d => d != 0), (n, d) => new MiniRational(n, d))
+                        .Concat(AdditionalRationalDataSource)
                         .Distinct(new MiniRationalComparer())
                         .OrderBy(x => x, new MiniRationalComparer()));
             }

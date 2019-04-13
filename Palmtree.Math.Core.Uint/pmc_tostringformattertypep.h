@@ -43,11 +43,11 @@ namespace Palmtree::Math::Core::Internal
 
     protected:
         virtual int GetDefaultPrecisionValue(int specified_precision) override;
-        virtual void WriteZeroValue(StringWriter * writer) override;
+        virtual void WriteZeroValue(StringWriter& writer) override;
         virtual void RoundValue(NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, NUMBER_OBJECT_UINT** r_numerator, NUMBER_OBJECT_UINT** r_denominator, _INT32_T* exp);
-        virtual void WritePrefix(SIGN_T x_sign, StringWriter * writer) override;
-        virtual void FormatNumberSequence(const wchar_t* int_part, const wchar_t* frac_part, _INT32_T exp, StringWriter* writer) override;
-        virtual void WriteSuffix(SIGN_T x_sign, StringWriter * writer) override;
+        virtual void WritePrefix(SIGN_T x_sign, StringWriter& writer) override;
+        virtual void FormatNumberSequence(const wchar_t* int_part, const wchar_t* frac_part, _INT32_T exp, StringWriter& writer) override;
+        virtual void WriteSuffix(SIGN_T x_sign, StringWriter& writer) override;
 
     };
 

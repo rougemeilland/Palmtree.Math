@@ -41,17 +41,17 @@ namespace Palmtree::Math::Core::Internal
         return (specified_precision >= 0 ? specified_precision : _number_format_info->Number.DecimalDigits);
     }
 
-    void ToStringFormatterTypeN::WriteZeroValue(StringWriter * writer)
+    void ToStringFormatterTypeN::WriteZeroValue(StringWriter& writer)
     {
-        writer->Write(L'0');
+        writer.Write(L'0');
         if (_precision > 0)
         {
-            writer->Write(_number_format_info->Number.DecimalSeparator);
-            writer->Write(L'0', _precision);
+            writer.Write(_number_format_info->Number.DecimalSeparator);
+            writer.Write(L'0', _precision);
         }
     }
 
-    void ToStringFormatterTypeN::WritePrefix(SIGN_T x_sign, StringWriter * writer)
+    void ToStringFormatterTypeN::WritePrefix(SIGN_T x_sign, StringWriter& writer)
     {
         if (x_sign >= 0)
         {
@@ -61,15 +61,15 @@ namespace Palmtree::Math::Core::Internal
             switch (_number_format_info->Number.NegativePattern)
             {
             case 0:
-                writer->Write(L'(');
+                writer.Write(L'(');
                 break;
             case 1:
             default:
-                writer->Write(_number_format_info->NegativeSign);
+                writer.Write(_number_format_info->NegativeSign);
                 break;
             case 2:
-                writer->Write(_number_format_info->NegativeSign);
-                writer->Write(L' ');
+                writer.Write(_number_format_info->NegativeSign);
+                writer.Write(L' ');
                 break;
             case 3:
                 break;
@@ -79,25 +79,24 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    void ToStringFormatterTypeN::FormatNumberSequence(const wchar_t * int_part, const wchar_t * frac_part, _INT32_T exp, StringWriter * writer)
+    void ToStringFormatterTypeN::FormatNumberSequence(const wchar_t * int_part, const wchar_t * frac_part, _INT32_T exp, StringWriter& writer)
     {
         ResourceHolderUINT root;
         ReverseStringReader r_reader(int_part);
         size_t work_buf_len = lstrlenW(int_part) * 2 + 1 + _precision + 1;
         wchar_t* work_buf = root.AllocateString(work_buf_len);
         ReverseStringWriter r_writer(work_buf, work_buf_len);
-        ThousandSeparatedStringWriter t_writer(&r_writer, _format_type, _number_format_info);
-        while (r_reader.PeekChar() != L'\0')
-            t_writer.Write(r_reader.ReadChar());
-        writer->Write(t_writer.GetString());
+        ThousandSeparatedStringWriter t_writer(r_writer, _format_type, *_number_format_info);
+        t_writer.Write(r_reader);
+        writer.Write(t_writer.GetString());
         if (_precision > 0 && frac_part[0] != L'\0')
         {
-            writer->Write(_number_format_info->Number.DecimalSeparator);
-            writer->Write(frac_part);
+            writer.Write(_number_format_info->Number.DecimalSeparator);
+            writer.Write(frac_part);
         }
     }
 
-    void ToStringFormatterTypeN::WriteSuffix(SIGN_T x_sign, StringWriter * writer)
+    void ToStringFormatterTypeN::WriteSuffix(SIGN_T x_sign, StringWriter& writer)
     {
         if (x_sign >= 0)
         {
@@ -107,7 +106,7 @@ namespace Palmtree::Math::Core::Internal
             switch (_number_format_info->Number.NegativePattern)
             {
             case 0:
-                writer->Write(L')');
+                writer.Write(L')');
                 break;
             case 1:
             default:
@@ -115,11 +114,11 @@ namespace Palmtree::Math::Core::Internal
             case 2:
                 break;
             case 3:
-                writer->Write(_number_format_info->NegativeSign);
+                writer.Write(_number_format_info->NegativeSign);
                 break;
             case 4:
-                writer->Write(L' ');
-                writer->Write(_number_format_info->NegativeSign);
+                writer.Write(L' ');
+                writer.Write(_number_format_info->NegativeSign);
                 break;
             }
         }

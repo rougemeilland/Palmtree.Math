@@ -34,43 +34,18 @@
 namespace Palmtree::Math::Core::Internal
 {
      ResourceHolder::__ChainBufferTag::__ChainBufferTag()
+         : BidirectionalListHeader< ResourceHolder::__ChainBufferTag>(this)
      {
-         _next = this;
-         _prev = this;
      }
 
      ResourceHolder::__ChainBufferTag::~__ChainBufferTag()
      {
-         Unlink();
+         Remove();
      }
 
      void ResourceHolder::__ChainBufferTag::Link(__ChainBufferTag * tag)
      {
-         tag->_next = _next;
-         tag->_prev = this;
-         tag->_next->_prev = tag;
-         tag->_prev->_next = tag;
-     }
-
-     void ResourceHolder::__ChainBufferTag::Unlink()
-     {
-         if (_next != this)
-         {
-             _next->_prev = _prev;
-             _prev->_next = _next;
-             _next = this;
-             _prev = this;
-         }
-     }
-
-     ResourceHolder::__ChainBufferTag * ResourceHolder::__ChainBufferTag::Next()
-     {
-         return (_next);
-     }
-
-     ResourceHolder::__ChainBufferTag * ResourceHolder::__ChainBufferTag::Prev()
-     {
-         return (_prev);
+         AddAffter(tag);
      }
 
      void ResourceHolder::__ChainBufferTag::Clear()
@@ -108,7 +83,6 @@ namespace Palmtree::Math::Core::Internal
          while (_root_tag.Next() != &_root_tag)
          {
              __ChainBufferTag* tag = _root_tag.Next();
-             tag->Unlink();
              tag->Destruct();
              delete tag;
          }
@@ -140,7 +114,6 @@ namespace Palmtree::Math::Core::Internal
          __ChainBufferTag* tag = FindTag(buffer);
          if (tag != nullptr)
          {
-             tag->Unlink();
              tag->Destruct();
              delete tag;
          }
@@ -163,7 +136,6 @@ namespace Palmtree::Math::Core::Internal
          __ChainBufferTag* tag = FindTag(buffer);
          if (tag == nullptr)
              throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::UnlinkBlock;1");
-         tag->Unlink();
          delete tag;
      }
 

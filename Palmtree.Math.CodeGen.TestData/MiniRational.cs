@@ -12,35 +12,31 @@ namespace Palmtree.Math.CodeGen.TestData
     {
         static MiniRational()
         {
+            var r = new MiniRational(-1, BigInteger.Parse("2000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", NumberStyles.AllowHexSpecifier));
+            var d = r.ToDouble();
         }
 
         public MiniRational(decimal x)
         {
-            var n = x;
-            var d = 1UL;
-            var count = 32;
-            while (System.Math.Ceiling(n) != System.Math.Floor(n))
-            {
-                n *= 10000;
-                d *= 10000;
-                --count;
-                if (count <= 0)
-                    throw new ApplicationException();
-            }
-            var numerator = (BigInteger)n;
-            var denominator = (BigInteger)d;
-            var gcd = BigInteger.GreatestCommonDivisor(BigInteger.Abs(numerator), denominator);
-            numerator /= gcd;
-            denominator /= gcd;
-            Numerator = numerator;
-            Denominator = denominator;
+            var bits = decimal.GetBits(x);
+            var n = ((BigInteger)(UInt32)bits[2] << 64) | ((BigInteger)(UInt32)bits[1] << 32) | (BigInteger)(UInt32)bits[0];
+            if ((bits[3] & 0x80000000) != 0)
+                n = -n;
+            var d = BigInteger.Pow(10, (byte)((bits[3] >> 16) & 0x7f));
+            Numerator = n;
+            Denominator = d;
+            var gcd = BigInteger.GreatestCommonDivisor(BigInteger.Abs(Numerator), Denominator);
+            Numerator /= gcd;
+            Denominator /= gcd;
+            if (Denominator <= 0)
+                throw new ApplicationException();
         }
 
         public MiniRational(double x)
         {
             var n = x;
-            var d = 1UL;
-            var count = 32;
+            var d = BigInteger.One;
+            var count = 200;
             while (System.Math.Ceiling(n) != System.Math.Floor(n))
             {
                 n *= 256;
@@ -56,6 +52,8 @@ namespace Palmtree.Math.CodeGen.TestData
             denominator /= gcd;
             Numerator = numerator;
             Denominator = denominator;
+            if (Denominator <= 0)
+                throw new ApplicationException();
         }
 
         public MiniRational(BigInteger numerator, BigInteger denominator)
@@ -72,6 +70,8 @@ namespace Palmtree.Math.CodeGen.TestData
             denominator /= gcd;
             Numerator = numerator;
             Denominator = denominator;
+            if (Denominator <= 0)
+                throw new ApplicationException();
         }
 
         public MiniRational Abs()
@@ -259,6 +259,131 @@ namespace Palmtree.Math.CodeGen.TestData
             var r = ToBigInt_Imp(this);
             if (r < 0)
                 throw new OverflowException();
+            return (r);
+        }
+
+        public decimal ToDecimal()
+        {
+            if (Numerator == 0)
+                return (0m);
+            var sign = Numerator.Sign;
+            var n = BigInteger.Abs( Numerator) * BigInteger.Pow(10, 28);
+            var d = Denominator;
+            var scale = 28;
+            var limit = (BigInteger.One << 96) - 1;
+            while (scale > 0 && n > d * limit)
+            {
+                --scale;
+                if (n % 10 == 0)
+                    n /= 10;
+                else
+                    d *= 10;
+            }
+            if (n > d * limit)
+                throw new OverflowException();
+            // この時点で 0 <= scale <= 127 かつ 0 < n/d <= limit
+            var int_part = n / d;
+            var frac_part_n = n % d;
+            var frac_part_d = d;
+            var frac_part_n2 = frac_part_n * 2;
+            if (frac_part_n2 > frac_part_d)
+                ++int_part;
+            else if (frac_part_n2 < frac_part_d)
+            {
+            }
+            else
+            {
+                if (int_part.IsEven)
+                {
+                }
+                else
+                {
+                    ++int_part;
+                }
+            }
+            if (int_part > limit)
+                throw new OverflowException();
+
+            while (int_part % 10 == 0 && scale > 0)
+            {
+                int_part /= 10;
+                --scale;
+            }
+
+            return (new decimal((int)(uint)(int_part & 0xffffffff),
+                                (int)(uint)((int_part >> 32) & 0xffffffff),
+                                (int)(uint)((int_part >> 64) & 0xffffffff),
+                                sign < 0,
+                                (byte)scale));
+        }
+
+        public double ToDouble()
+        {
+            var sign = Numerator.Sign;
+            var n = BigInteger.Abs( Numerator) << 1022;
+            var d = Denominator;
+            var scale = -1022;
+            while (n.IsEven && d.IsEven)
+            {
+                n >>= 1;
+                d >>= 1;
+            }
+            if (n < d)
+            {
+                // 非正規化数を返・・・したいのだが c# では非正規化数は表現できないので、0を返す。大丈夫か？
+                return (0d);
+            }
+            while (scale < 1023 && n >= 2 * d)
+            {
+                if (n.IsEven)
+                    n >>= 1;
+                else
+                    d <<= 1;
+                ++scale;
+            }
+            if (n >= 2 * d)
+                return (sign < 0 ? double.NegativeInfinity : double.PositiveInfinity);
+            var int_part = (n << 52) / d;
+            var frac_part_n = (n << 52) % d;
+            var frac_part_d = d;
+            // 整数部の丸め
+            if (frac_part_n * 2 > frac_part_d)
+            {
+                ++int_part;
+            }
+            else if (frac_part_n * 2 < frac_part_d)
+            {
+            }
+            else
+            {
+                if (int_part.IsEven)
+                {
+                }
+                else
+                {
+                    ++int_part;
+                }
+            }
+            if (int_part >= (BigInteger.One << 53))
+            {
+                int_part >>= 1;
+                ++scale;
+            }
+            if (int_part < (BigInteger.One << 52) || int_part >= (BigInteger.One << 53))
+                throw new ApplicationException(string.Format("エラー: Numerator={0}, Denominator={1}", Numerator, Denominator));
+            if (scale > 1023 || scale < -1022)
+                throw new ApplicationException();
+            scale -= 52;
+            var r = (double)int_part;
+            if (scale > 0)
+                r *= (double)(BigInteger.One << scale);
+            else if (scale < 0)
+                r /= (double)(BigInteger.One << -scale);
+            else
+            {
+            }
+            if (sign < 0)
+                r = -r;
             return (r);
         }
 

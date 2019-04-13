@@ -85,6 +85,34 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
+    PMC_HANDLE_SINT PMC_From_DECIMAL(DECIMAL x, PMC_HANDLE_UINT * o_denominator) noexcept(false)
+    {
+        ResourceHolderSINT root;
+        SIGN_T o_sign;
+        PMC_HANDLE_UINT o_numerator_abs = ep_uint.From(x, &o_sign, o_denominator);
+        root.HookNumber(o_numerator_abs);
+        root.HookNumber(*o_denominator);
+        NUMBER_OBJECT_SINT* no_numerator = root.AllocateNumber(o_numerator_abs->FLAGS.IS_ZERO ? SIGN_ZERO : o_sign, o_numerator_abs);
+        PMC_HANDLE_SINT o_numerator = GET_NUMBER_HANDLE(no_numerator);
+        root.UnlinkNumber(no_numerator);
+        root.UnlinkNumber(*o_denominator);
+        return (o_numerator);
+    }
+
+    PMC_HANDLE_SINT PMC_From_DOUBLE(double x, PMC_HANDLE_UINT * o_denominator) noexcept(false)
+    {
+        ResourceHolderSINT root;
+        SIGN_T o_sign;
+        PMC_HANDLE_UINT o_numerator_abs = ep_uint.From(x, &o_sign, o_denominator);
+        root.HookNumber(o_numerator_abs);
+        root.HookNumber(*o_denominator);
+        NUMBER_OBJECT_SINT* no_numerator = root.AllocateNumber(o_numerator_abs->FLAGS.IS_ZERO ? SIGN_ZERO : o_sign, o_numerator_abs);
+        PMC_HANDLE_SINT o_numerator = GET_NUMBER_HANDLE(no_numerator);
+        root.UnlinkNumber(no_numerator);
+        root.UnlinkNumber(*o_denominator);
+        return (o_numerator);
+    }
+
 }
 
 

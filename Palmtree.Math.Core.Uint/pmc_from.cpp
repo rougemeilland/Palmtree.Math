@@ -168,6 +168,209 @@ namespace Palmtree::Math::Core::Internal
         return (o);
     }
 
+    static NUMBER_OBJECT_UINT* PMC_From_DECIMAL_Imp(DECIMAL x, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_denominator) noexcept(false)
+    {
+        if (x.HI_32 == 0 && x.LO_64 == 0)
+        {
+            *o_sign = SIGN_ZERO;
+            *o_denominator = &number_object_uint_one;
+            return (&number_object_uint_zero);
+        }
+
+        ResourceHolderUINT root;
+
+        *o_sign = x.SIGN != 0 ? SIGN_NEGATIVE : SIGN_POSITIVE;
+        __UNIT_TYPE x_bit_length = (sizeof(x.HI_32) + sizeof(x.LO_64)) * 8;
+        NUMBER_OBJECT_UINT* o_numerator = root.AllocateNumber(x_bit_length);
+#ifdef _M_IX86
+        _UINT32_T x_lo_hi;
+        _UINT32_T x_lo_lo = _FROMDWORDTOWORD(x.LO_64, &x_lo_hi);
+        o_numerator->BLOCK[0] = x_lo_lo;
+        o_numerator->BLOCK[1] = x_lo_hi;
+        o_numerator->BLOCK[2] = x.HI_32;
+#elif defined(_M_X64)
+        o_numerator->BLOCK[0] = x.LO_64;
+        o_numerator->BLOCK[1] = x.HI_32;
+#else
+#error unknown platform
+#endif
+        CommitNumber(o_numerator);
+        *o_denominator = PMC_Pow10_UI_Imp(x.SCALE);
+        root.HookNumber(*o_denominator);
+        NUMBER_OBJECT_UINT* gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(o_numerator, *o_denominator);
+        root.HookNumber(gcd);
+        if (!gcd->IS_ONE)
+        {
+            o_numerator = PMC_DivideExactly_UX_UX_Imp(o_numerator, gcd);
+            root.HookNumber(o_numerator);
+            *o_denominator = PMC_DivideExactly_UX_UX_Imp(*o_denominator, gcd);
+            root.HookNumber(*o_denominator);
+        }
+        root.UnlinkNumber(o_numerator);
+        root.UnlinkNumber(*o_denominator);
+        return (o_numerator);
+    }
+
+    PMC_HANDLE_UINT PMC_From_DECIMAL(DECIMAL x, SIGN_T* o_sign, PMC_HANDLE_UINT* o_denominator) noexcept(false)
+    {
+        ResourceHolderUINT root;
+        NUMBER_OBJECT_UINT* no_denominator;
+        NUMBER_OBJECT_UINT* no_numerator = PMC_From_DECIMAL_Imp(x, o_sign, &no_denominator);
+        root.HookNumber(no_numerator);
+        root.HookNumber(no_denominator);
+        PMC_HANDLE_UINT o_numerator = GET_NUMBER_HANDLE(no_numerator);
+        *o_denominator = GET_NUMBER_HANDLE(no_denominator);
+        root.UnlinkNumber(no_numerator);
+        root.UnlinkNumber(no_denominator);
+        return (o_numerator);
+    }
+
+    static NUMBER_OBJECT_UINT* PMC_From_DOUBLE_Imp(double x, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_denominator) noexcept(false)
+    {
+        _UINT64_T x_raw_bits = *(_UINT64_T*)&x;
+        _UINT64_T x_mantissa_part = x_raw_bits & 0x000fffffffffffff;
+        _UINT16_T x_exponent_part = ((_UINT16_T)(x_raw_bits >> 52) & (_UINT16_T)0x7ff);
+        _BYTE_T x_sign_part = (_BYTE_T)(x_raw_bits >> 63) & (_BYTE_T)0x01;
+
+        if (x_exponent_part == 0)
+        {
+            if (x_mantissa_part == 0)
+            {
+                // x が 0 である場合
+
+                *o_sign = SIGN_ZERO;
+                *o_denominator = &number_object_uint_one;
+                return (&number_object_uint_zero);
+            }
+            else
+            {
+                // x が非正規化数 (非常に 0 に近い数) である場合
+
+                *o_sign = SIGN_ZERO;
+                *o_denominator = &number_object_uint_one;
+                return (&number_object_uint_zero);
+            }
+        }
+        else if (x_exponent_part == 0x7ff)
+        {
+            if (x_mantissa_part == 0)
+            {
+                // x が無限大である場合
+
+                throw OverflowException(L"与えられた数値が無限大または NAN のため変換できません。");
+            }
+            else
+            {
+                // x が NAN である場合
+
+                throw OverflowException(L"与えられた数値が無限大または NAN のため変換できません。");
+            }
+        }
+        else
+        {
+            ResourceHolderUINT root;
+
+            // 符号の作成
+            *o_sign = x_sign_part != 0 ? SIGN_NEGATIVE : SIGN_POSITIVE;
+
+            // 分子の作成
+            __UNIT_TYPE x_bit_length = 53;
+            NUMBER_OBJECT_UINT* o_numerator = root.AllocateNumber(x_bit_length);
+            _UINT64_T mantissa_value = x_mantissa_part | 0x0010000000000000;
+            _INT16_T exponent_value = (_INT16_T)x_exponent_part - 1023 - 52;
+#ifdef _M_IX86
+            _UINT32_T mantissa_value_hi;
+            _UINT32_T mantissa_value_lo = _FROMDWORDTOWORD(mantissa_value, &mantissa_value_hi);
+
+            // mantissa_value の最下位 bit が 0 の場合は、連続する 0 のビット数分だけ mantissa_value を右シフトし、更に exponent_value に加える
+            if (mantissa_value_lo == 0)
+            {
+                // 仮数部の下位 32bit が 0 である場合
+
+                mantissa_value_lo = mantissa_value_hi;
+                mantissa_value_hi = 0;
+                exponent_value += 32;
+
+                int zero_count = _TZCNT_ALT_UNIT(mantissa_value_lo);
+                if (zero_count > 0)
+                {
+                    mantissa_value_lo >>= zero_count;
+                    exponent_value += zero_count;
+                }
+
+            }
+            else
+            {
+                // 仮数部の下位 32bit が 0 ではない場合
+
+                int zero_count = _TZCNT_ALT_UNIT(mantissa_value_lo);
+                if (zero_count > 0)
+                {
+                    mantissa_value_lo = (mantissa_value_lo >> zero_count) | (mantissa_value_hi << (32 - zero_count));
+                    mantissa_value_hi = (mantissa_value_hi >> zero_count);
+                    exponent_value += zero_count;
+                }
+            }
+            o_numerator->BLOCK[0] = mantissa_value_lo;
+            o_numerator->BLOCK[1] = mantissa_value_hi;
+
+#elif defined(_M_X64)
+            // mantissa_value の最下位 bit が 0 の場合は、連続する 0 のビット数分だけ mantissa_value を右シフトし、更に exponent_value に加える
+            int zero_count = _TZCNT_ALT_UNIT(mantissa_value);
+            if (zero_count > 0)
+            {
+                mantissa_value >>= zero_count;
+                exponent_value += zero_count;
+            }
+            o_numerator->BLOCK[0] = mantissa_value;
+#else
+#error unknown platform
+#endif
+            CommitNumber(o_numerator);
+            // この時点で分子は奇数になっている
+
+            // 分母の作成
+            *o_denominator = &number_object_uint_one;
+            root.HookNumber(*o_denominator);
+
+            // 指数を分子/分母に反映させる
+            if (exponent_value > 0)
+            {
+                o_numerator = PMC_LeftShift_UX_UI_Imp(o_numerator, exponent_value);
+                root.HookNumber(o_numerator);
+            }
+            else if (exponent_value < 0)
+            {
+                *o_denominator = PMC_LeftShift_UX_UI_Imp(*o_denominator, -exponent_value);
+                root.HookNumber(*o_denominator);
+            }
+            else
+            {
+                // nop
+            }
+
+            // 分子は奇数で、分母は2の累乗であり、分子と分母は既約であるため、約分は不要である
+
+            root.UnlinkNumber(o_numerator);
+            root.UnlinkNumber(*o_denominator);
+            return (o_numerator);
+        }
+    }
+
+    PMC_HANDLE_UINT PMC_From_DOUBLE(double x, SIGN_T* o_sign, PMC_HANDLE_UINT* o_denominator) noexcept(false)
+    {
+        ResourceHolderUINT root;
+        NUMBER_OBJECT_UINT* no_denominator;
+        NUMBER_OBJECT_UINT* no_numerator = PMC_From_DOUBLE_Imp(x, o_sign, &no_denominator);
+        root.HookNumber(no_numerator);
+        root.HookNumber(no_denominator);
+        PMC_HANDLE_UINT o_numerator = GET_NUMBER_HANDLE(no_numerator);
+        *o_denominator = GET_NUMBER_HANDLE(no_denominator);
+        root.UnlinkNumber(no_numerator);
+        root.UnlinkNumber(no_denominator);
+        return (o_numerator);
+    }
+
     PMC_STATUS_CODE Initialize_From(PROCESSOR_FEATURES *feature)
     {
         return (PMC_STATUS_OK);

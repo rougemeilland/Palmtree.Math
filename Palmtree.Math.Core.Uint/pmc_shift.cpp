@@ -302,7 +302,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_OBJECT_UINT* PMC_RightShift_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T n)
+    NUMBER_OBJECT_UINT* PMC_RightShift_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T n)
     {
         if (u->IS_ZERO)
             return (&number_object_uint_zero);

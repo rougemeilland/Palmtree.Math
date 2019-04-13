@@ -37,6 +37,10 @@ namespace Palmtree.Math.Test
 
         public virtual bool IsNull => false;
 
+        public virtual bool IsDecimal => false;
+
+        public virtual bool IsDouble => false;
+
         public virtual bool IsRational => false;
 
         public virtual bool IsBigInt => false;
@@ -73,6 +77,10 @@ namespace Palmtree.Math.Test
                     return (new Int64DataItem(Int64.Parse(text)));
                 case "uint64":
                     return (new UInt64DataItem(UInt64.Parse(text)));
+                case "decimal":
+                    return (new DecimalDataItem(decimal.Parse(text)));
+                case "double":
+                    return (new DoubleDataItem(double.Parse(text)));
                 case "bigint":
                     {
                         var bytes = text.Split(',').Select(x => byte.Parse(x, NumberStyles.HexNumber)).ToArray();
@@ -262,6 +270,16 @@ namespace Palmtree.Math.Test
         }
 
         public virtual UInt64DataItem ToUInt64()
+        {
+            throw new InvalidCastException();
+        }
+
+        public virtual DecimalDataItem ToDecimal()
+        {
+            throw new InvalidCastException();
+        }
+
+        public virtual DoubleDataItem ToDouble()
         {
             throw new InvalidCastException();
         }

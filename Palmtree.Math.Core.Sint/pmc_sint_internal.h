@@ -138,6 +138,8 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_SINT PMC_From_UL(_UINT64_T x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_From_L(_INT64_T x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_From_UX(PMC_HANDLE_UINT x) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_From_DECIMAL(DECIMAL x, PMC_HANDLE_UINT* o_denominator) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_From_DOUBLE(double x, PMC_HANDLE_UINT* o_denominator) noexcept(false);
     extern _INT32_T PMC_GetHashCode(PMC_HANDLE_SINT p) noexcept(false);
     extern void  PMC_CheckHandle_UX(PMC_HANDLE_UINT p) noexcept(false);
     extern void  PMC_CheckHandle_X(PMC_HANDLE_SINT p) noexcept(false);
@@ -152,6 +154,8 @@ namespace Palmtree::Math::Core::Internal
     extern _INT32_T PMC_ToInt32_X(PMC_HANDLE_SINT p) noexcept(false);
     extern _UINT64_T PMC_ToUInt64_X(PMC_HANDLE_SINT p) noexcept(false);
     extern _INT64_T PMC_ToInt64_X(PMC_HANDLE_SINT p) noexcept(false);
+    extern DECIMAL PMC_ToDecimal_R(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false);
+    extern double PMC_ToDouble_R(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false);
     extern PMC_HANDLE_UINT PMC_ToUBigInt_X(PMC_HANDLE_SINT p) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Negate_UX(PMC_HANDLE_UINT x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Negate_X(PMC_HANDLE_SINT x) noexcept(false);

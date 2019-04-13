@@ -45,12 +45,12 @@ namespace Palmtree::Math::Core::Internal
         const wchar_t* _character_set;
     public:
         ToStringFormatterTypeX(wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* number_format_info);
-        void Format(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, StringWriter* writer);
+        void Format(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, StringWriter& writer);
 
     protected:
         int GetDefaultPrecisionValue(int specified_precision);
-        void WriteZeroValue(StringWriter * writer);
-        void WriteValue(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, StringWriter* writer);
+        void WriteZeroValue(StringWriter& writer);
+        void WriteValue(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, StringWriter& writer);
     };
 }
 

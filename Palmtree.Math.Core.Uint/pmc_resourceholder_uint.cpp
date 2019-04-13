@@ -151,7 +151,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag != nullptr)
         {
-            tag->Unlink();
             tag->Destruct();
             delete tag;
         }
@@ -163,7 +162,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::UnlinkBytes;1");
-        tag->Unlink();
         delete tag;
     }
 
@@ -193,7 +191,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag != nullptr)
         {
-            tag->Unlink();
             tag->Destruct();
             delete tag;
         }
@@ -216,7 +213,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::UnlinkBlock;1");
-        tag->Unlink();
         delete tag;
     }
 
@@ -247,7 +243,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag != nullptr)
         {
-            tag->Unlink();
             tag->Destruct();
             delete tag;
         }
@@ -270,7 +265,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::UnlinkNumber;1");
-        tag->Unlink();
         delete tag;
     }
 
@@ -291,7 +285,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag != nullptr)
         {
-            tag->Unlink();
             tag->Destruct();
             delete tag;
         }
@@ -303,7 +296,6 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::UnlinkStatickNumber;1");
-        tag->Unlink();
         delete tag;
     }
 

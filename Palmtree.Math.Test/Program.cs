@@ -36,7 +36,7 @@ namespace Palmtree.Math.Test
     class Program
     {
         private static bool _verbose = false;
-        private static bool _parallel = true;
+        private static bool _parallel = false;
 
         [HandleProcessCorruptedStateExceptions]
         static void Main(string[] args)
@@ -148,13 +148,13 @@ namespace Palmtree.Math.Test
 
         private static bool PluginFilter(IComponentTestPlugin plugin)
         {
-            //return (plugin.PluginName.Contains("sint.tryparsex"));
+            //return (plugin.PluginName.StartsWith("rtnl.from_double"));
             return (true);
         }
 
         private static bool TestItemFilter(IComponentTestItem test_item)
         {
-            //return (test_item.PluginName.Contains("than") && test_item.PluginName.Contains("_r_r"));
+            //return (test_item.Index == 2);
             return (true);
         }
 

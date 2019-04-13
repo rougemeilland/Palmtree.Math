@@ -46,11 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DoubleDataItem.cs" />
+    <Compile Include="DecimalDataItem.cs" />
     <Compile Include="MiniRationalComparer.cs" />
     <Compile Include="MiniRational.cs" />
     <Compile Include="Plugin\Rtnl\TestDataRendererPlugin_Floorlog10_R.cs" />
+    <Compile Include="Plugin\Rtnl\TestDataRendererPlugin_From_DOUBLE.cs" />
+    <Compile Include="Plugin\Rtnl\TestDataRendererPlugin_From_DECIMAL.cs" />
     <Compile Include="Plugin\Rtnl\TestDataRendererPlugin_Invert_R.cs" />
     <Compile Include="Plugin\Rtnl\TestDataRendererPlugin_Pow_R_I.cs" />
+    <Compile Include="Plugin\Rtnl\TestDataRendererPlugin_ToDouble_R.cs" />
+    <Compile Include="Plugin\Rtnl\TestDataRendererPlugin_ToDecimal_R.cs" />
     <Compile Include="Plugin\Rtnl\TestDataRendererPlugin_TryParse1.cs" />
     <Compile Include="Plugin\Rtnl\TestDataRendererPlugin_TryParse2.cs" />
     <Compile Include="Plugin\Rtnl\TestDataRendererPlugin_TryParse3.cs" />

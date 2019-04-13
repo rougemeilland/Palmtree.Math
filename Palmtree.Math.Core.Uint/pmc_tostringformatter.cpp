@@ -25,6 +25,7 @@
 
 #include "pmc_tostringformatter.h"
 #include "pmc_resourceholder_uint.h"
+#include "pmc_string.h"
 #include "pmc_inline_func.h"
 
 
@@ -38,7 +39,7 @@ namespace Palmtree::Math::Core::Internal
         _omitted_trailing_sequential_zero = false;
     }
 
-    void ToStringFormatter::Format(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, StringWriter * writer)
+    void ToStringFormatter::Format(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, StringWriter& writer)
     {
         _precision = GetDefaultPrecisionValue(_precision);
 
@@ -84,7 +85,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    void ToStringFormatter::FormatInternally(NUMBER_OBJECT_UINT * x_numerator, NUMBER_OBJECT_UINT * x_denominator, _INT32_T exp, StringWriter * writer)
+    void ToStringFormatter::FormatInternally(NUMBER_OBJECT_UINT * x_numerator, NUMBER_OBJECT_UINT * x_denominator, _INT32_T exp, StringWriter& writer)
     {
         ResourceHolderUINT root;
         NUMBER_OBJECT_UINT* frac_part_denominator = x_denominator;
@@ -128,68 +129,14 @@ namespace Palmtree::Math::Core::Internal
     wchar_t * ToStringFormatter::ConstructIntegerPartNumberSequence(NUMBER_OBJECT_UINT* int_part, wchar_t * out_buf, size_t out_buf_count)
     {
         ReverseStringWriter simple_number_sequence_writer(out_buf, out_buf_count);
-
-        while (true)
-        {
-#ifdef _M_IX86
-            __UNIT_TYPE data = PMC_DivRem_UX_UI_Imp(int_part, _10n_base_number, &int_part);
-#elif defined(_M_X64)
-            __UNIT_TYPE data = PMC_DivRem_UX_UL_Imp(int_part, _10n_base_number, &int_part);
-#else
-#error unknown platform
-#endif
-            if (int_part->IS_ZERO)
-            {
-                WriteIntPartLeadingOneWord(&simple_number_sequence_writer, data);
-                break;
-            }
-            WriteIntPartTrailingWord(&simple_number_sequence_writer, data);
-        }
+        PMC_LToA_Imp(int_part, simple_number_sequence_writer);
         return (simple_number_sequence_writer.GetString());
     }
 
     void ToStringFormatter::ConstructFractionPartNumberSequence(NUMBER_OBJECT_UINT* frac_part_numerator, NUMBER_OBJECT_UINT* frac_part_denominator, size_t max_fraction_part_length, wchar_t * out_buf, size_t out_buf_count)
     {
         StringWriter simple_number_sequence_writer(out_buf, out_buf_count);
-        ResourceHolderUINT root;
-
-        size_t fraction_part_length = max_fraction_part_length;
-
-        while (!frac_part_numerator->IS_ZERO)
-        {
-#ifdef _M_IX86
-            frac_part_numerator = PMC_Multiply_UX_UI_Imp(frac_part_numerator, _10n_base_number);
-#elif defined(_M_X64)
-            frac_part_numerator = PMC_Multiply_UX_UL_Imp(frac_part_numerator, _10n_base_number);
-#else
-#error unknown platform
-#endif
-            root.HookNumber(frac_part_numerator);
-            NUMBER_OBJECT_UINT* digit;
-            frac_part_numerator = PMC_DivRem_UX_UX_Imp(frac_part_numerator, frac_part_denominator, &digit);
-            root.HookNumber(digit);
-            root.HookNumber(frac_part_numerator);
-
-            if (fraction_part_length >= digit_count_on_word)
-            {
-                // digit を digit_count_on_word 桁の 10 進整数として数字列を書き込む
-                if (digit->UNIT_WORD_COUNT > 1)
-                    throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_tostringformatter.cpp;ConstructFractionPartNumberSequence;1");
-                __UNIT_TYPE digit_word = digit->BLOCK[0];
-                WriteFracPartLeadingWord(&simple_number_sequence_writer, digit_word);
-                fraction_part_length -= digit_count_on_word;
-            }
-            else
-            {
-                // digit を digit_count_on_word 桁の 10 進整数として、上位から fraction_part_length 桁だけ数字列を書き込む
-                if (digit->UNIT_WORD_COUNT > 1)
-                    throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_tostringformatter.cpp;ConstructFractionPartNumberSequence;2");
-                __UNIT_TYPE digit_word = digit->BLOCK[0];
-                WriteFracPartTrailingOneWord(&simple_number_sequence_writer, digit_word, fraction_part_length);
-                fraction_part_length = 0;
-                break;
-            }
-        }
+        PMC_FToA_Imp(frac_part_numerator, frac_part_denominator, max_fraction_part_length, simple_number_sequence_writer);
         if (_omitted_trailing_sequential_zero)
         {
             // 末尾の連続する 0 を削除する指定がされている場合は削除する
@@ -203,269 +150,12 @@ namespace Palmtree::Math::Core::Internal
         else
         {
             // fraction_part_length 桁だけ '0' で埋める
-            simple_number_sequence_writer.Write(L'0', fraction_part_length);
+            size_t written_digit_count = lstrlenW(out_buf);
+            if (written_digit_count < max_fraction_part_length)
+                simple_number_sequence_writer.Write(L'0', max_fraction_part_length - written_digit_count);
         }
     }
 
-    // 整数部の最上位のワードを文字列化する。(途中で x が 0 になった場合は中断する)
-
-    void ToStringFormatter::WriteIntPartLeadingOneWord(StringWriter * writer, __UNIT_TYPE x)
-    {
-        __UNIT_TYPE r;
-        do
-        {
-            x = _DIVREM_UNIT(0, x, 10, &r);
-            WriteDigit(writer, (_UINT32_T)r);
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(r) == sizeof(_UINT64_T))
-                IncrementDIV64Counter();
-            else
-                IncrementDIV32Counter();
-#endif
-        } while (x != 0);
-    }
-
-    // 整数部の上位から 2 ワード目以降を文字列化する。(途中で x が 0 になっても続行する)
-
-    void ToStringFormatter::WriteIntPartTrailingWord(StringWriter * writer, __UNIT_TYPE x)
-    {
-        __UNIT_TYPE r;
-        if (sizeof(__UNIT_TYPE) >= sizeof(_UINT64_T))
-        {
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(r) == sizeof(_UINT64_T))
-                AddToDIV64Counter(10);
-            else
-                AddToDIV32Counter(10);
-#endif
-        }
-        if (sizeof(__UNIT_TYPE) >= sizeof(_UINT32_T))
-        {
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(r) == sizeof(_UINT64_T))
-                AddToDIV64Counter(5);
-            else
-                AddToDIV32Counter(5);
-#endif
-        }
-        if (sizeof(__UNIT_TYPE) >= sizeof(_UINT16_T))
-        {
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(r) == sizeof(_UINT64_T))
-                AddToDIV64Counter(2);
-            else
-                AddToDIV32Counter(2);
-#endif
-        }
-        if (sizeof(__UNIT_TYPE) >= sizeof(_BYTE_T))
-        {
-            x = _DIVREM_UNIT(0, x, 10, &r); WriteDigit(writer, (_UINT32_T)r);
-            WriteDigit(writer, (_UINT32_T)x);
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(r) == sizeof(_UINT64_T))
-                IncrementDIV64Counter();
-            else
-                IncrementDIV32Counter();
-#endif
-        }
-    }
-
-    // 小数部の最下位のワードを文字列化する。(count 桁で打ち切る)
-
-    void ToStringFormatter::WriteFracPartTrailingOneWord(StringWriter * writer, __UNIT_TYPE x, size_t count)
-    {
-        __UNIT_TYPE q;
-#if _M_X64
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 1000000000000000000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 100000000000000000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 10000000000000000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 1000000000000000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 100000000000000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 10000000000000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 1000000000000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 100000000000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 10000000000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 1000000000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 100000000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 10000000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 1000000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 100000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 10000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 1000UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 100UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 10UL, &x); WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-        if (count <= 0) return; q = x; WriteDigit(writer, (_UINT32_T)q); --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            IncrementDIV64Counter();
-        else
-            IncrementDIV32Counter();
-#endif
-    }
-
-    // 小数部の最下位ワード以外のワードを文字列化する。(digit_count_on_word 桁だけ続ける)
-
-    inline void ToStringFormatter::WriteFracPartLeadingWord(StringWriter * writer, __UNIT_TYPE x)
-    {
-        __UNIT_TYPE q;
-#if _M_X64
-        q = _DIVREM_UNIT(0, x, 1000000000000000000U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 100000000000000000U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 10000000000000000U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 1000000000000000U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 100000000000000U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 10000000000000U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 1000000000000U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 100000000000U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 10000000000U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 1000000000U, &x); WriteDigit(writer, (_UINT32_T)q);
-#endif
-        q = _DIVREM_UNIT(0, x, 100000000U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 10000000U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 1000000U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 100000U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 10000U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 1000U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 100U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = _DIVREM_UNIT(0, x, 10U, &x); WriteDigit(writer, (_UINT32_T)q);
-        q = x; WriteDigit(writer, (_UINT32_T)q);
-#ifdef ENABLED_PERFORMANCE_COUNTER
-        if (sizeof(q) == sizeof(_UINT64_T))
-            AddToDIV64Counter((int)digit_count_on_word);
-        else
-            AddToDIV32Counter((int)digit_count_on_word);
-#endif
-    }
-    inline void ToStringFormatter::WriteDigit(StringWriter * writer, _UINT32_T d)
-    {
-        writer->Write(L'0' + d);
-    }
 }
 
 /*

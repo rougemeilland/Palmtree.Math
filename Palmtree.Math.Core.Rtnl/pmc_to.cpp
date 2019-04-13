@@ -103,6 +103,18 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
+    DECIMAL PMC_ToDecimal_R(PMC_HANDLE_RTNL p) noexcept(false)
+    {
+        NUMBER_OBJECT_RTNL* np = GET_NUMBER_OBJECT(p, L"p");
+        return (ep_sint.ToDecimal(np->NUMERATOR, np->DENOMINATOR));
+    }
+
+    double PMC_ToDouble_R(PMC_HANDLE_RTNL p) noexcept(false)
+    {
+        NUMBER_OBJECT_RTNL* np = GET_NUMBER_OBJECT(p, L"p");
+        return (ep_sint.ToDouble(np->NUMERATOR, np->DENOMINATOR));
+    }
+
 
 }
 

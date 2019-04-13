@@ -38,6 +38,10 @@ namespace Palmtree.Math.CodeGen.TestData
 
         public virtual bool IsNull => false;
 
+        public virtual bool IsDecimal => false;
+
+        public virtual bool IsDouble => false;
+
         public virtual bool IsUInt32 => false;
 
         public virtual bool IsUInt64 => false;
@@ -59,6 +63,16 @@ namespace Palmtree.Math.CodeGen.TestData
         public virtual bool IsException => false;
 
         public virtual NullDataItem ToNull()
+        {
+            throw new InvalidCastException();
+        }
+
+        public virtual DecimalDataItem ToDecimal()
+        {
+            throw new InvalidCastException();
+        }
+
+        public virtual DoubleDataItem ToDouble()
         {
             throw new InvalidCastException();
         }

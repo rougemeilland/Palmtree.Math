@@ -32,6 +32,16 @@ namespace Palmtree.Math
     {
         #region パブリックメソッド
 
+        public static BigInt From(decimal x)
+        {
+            return (new BigInt(Rational.EngineObject.ToBigInt(Rational.EngineObject.From(x))));
+        }
+
+        public static BigInt From(double x)
+        {
+            return (new BigInt(Rational.EngineObject.ToBigInt(Rational.EngineObject.From(x))));
+        }
+
         public static BigInt From(Int32 x)
         {
             return (new BigInt(EngineObject.From(x)));
@@ -60,6 +70,16 @@ namespace Palmtree.Math
         public static BigInt From(Rational x)
         {
             return (new BigInt(Rational.EngineObject.ToBigInt(x.Handle)));
+        }
+
+        public static explicit operator BigInt(decimal x)
+        {
+            return (new BigInt(Rational.EngineObject.ToBigInt(Rational.EngineObject.From(x))));
+        }
+
+        public static explicit operator BigInt(double x)
+        {
+            return (new BigInt(Rational.EngineObject.ToBigInt(Rational.EngineObject.From(x))));
         }
 
         public static explicit operator BigInt(Int32 x)
@@ -92,6 +112,16 @@ namespace Palmtree.Math
             return (new BigInt(Rational.EngineObject.ToBigInt(x.Handle)));
         }
 
+        public decimal ToDecimal()
+        {
+            return (Rational.EngineObject.ToDecimal(Rational.EngineObject.From(Handle)));
+        }
+
+        public double ToDouble()
+        {
+            return (Rational.EngineObject.ToDouble(Rational.EngineObject.From(Handle)));
+        }
+
         public Int32 ToInt32()
         {
             return (EngineObject.ToInt32(Handle));
@@ -120,6 +150,16 @@ namespace Palmtree.Math
         public Rational ToRational()
         {
             return (new Rational(Rational.EngineObject.From(Handle)));
+        }
+
+        public static explicit operator decimal(BigInt x)
+        {
+            return (Rational.EngineObject.ToDecimal(Rational.EngineObject.From(x.Handle)));
+        }
+
+        public static explicit operator double(BigInt x)
+        {
+            return (Rational.EngineObject.ToDouble(Rational.EngineObject.From(x.Handle)));
         }
 
         public static explicit operator Int32(BigInt x)

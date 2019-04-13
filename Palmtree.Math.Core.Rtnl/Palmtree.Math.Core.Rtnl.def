@@ -65,6 +65,8 @@ EXPORTS
 	PMCCS_FloorLog10_R
 	PMCCS_Floor_R
 	PMCCS_FromByteArray
+	PMCCS_From_DECIMAL
+	PMCCS_From_DOUBLE
 	PMCCS_From_I
 	PMCCS_From_L
 	PMCCS_From_UI
@@ -123,6 +125,8 @@ EXPORTS
 	PMCCS_Subtruct_X_R
 	PMCCS_ToBigInt_R
 	PMCCS_ToByteArray
+	PMCCS_ToDecimal_R
+	PMCCS_ToDouble_R
 	PMCCS_ToInt32_R
 	PMCCS_ToInt64_R
 	PMCCS_ToString_R

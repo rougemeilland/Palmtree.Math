@@ -26,6 +26,7 @@
 #include "pmc_uint_internal.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_parser.h"
+#include "pmc_string.h"
 #include "pmc_parserstate.h"
 #include "pmc_inline_func.h"
 
@@ -199,6 +200,7 @@ namespace Palmtree::Math::Core::Internal
 
             // o を約分する
             NUMBER_OBJECT_UINT* o_gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(t_frac_part_numerator, t_frac_part_denominator);
+            root.HookNumber(o_gcd);
             if (!o_gcd->IS_ONE)
             {
                 t_frac_part_numerator = PMC_DivideExactly_UX_UX_Imp(t_frac_part_numerator, o_gcd);
@@ -473,6 +475,7 @@ namespace Palmtree::Math::Core::Internal
 
         // 分子と分母の GCD を計算する
         NUMBER_OBJECT_UINT* gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(no_numerator_abs, no_denominator);
+        root.HookNumber(gcd);
         if (!gcd->IS_ONE)
         {
             // GCDが 1 ではない(==分子と分母が既約ではない)場合、分子と分母をそれぞれ GCD で割る

@@ -152,6 +152,14 @@ namespace Palmtree::Math::Core::Internal
         SIGN_NEGATIVE = -1,
     } SIGN_T;
 
+    typedef struct __tag_DECIMAL
+    {
+        _UINT16_T   RESERVED;
+        _BYTE_T     SCALE;
+        _BYTE_T     SIGN;
+        _UINT32_T   HI_32;
+        _UINT64_T   LO_64;
+    } DECIMAL;  
 #pragma endregion
 
 

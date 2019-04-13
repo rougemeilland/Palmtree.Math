@@ -48,7 +48,7 @@ namespace Palmtree::Math::Core::Internal
         ~UsingObject()
         {
         }
-};
+    };
 
     template<>
     class UsingObject<PMC_HANDLE_UINT>
@@ -239,6 +239,36 @@ namespace Palmtree::Math::Core::Internal
         {
             UsingObject using_p(p);
             *r = PMC_GetHashCode(p);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_From_DECIMAL(DECIMAL x, PMC_HANDLE_RTNL* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *o = PMC_From_DECIMAL(x);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_From_DOUBLE(double x, PMC_HANDLE_RTNL* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *o = PMC_From_DOUBLE(x);
             return (PMC_STATUS_OK);
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
@@ -600,6 +630,38 @@ namespace Palmtree::Math::Core::Internal
         {
             UsingObject using_p(p);
             *o = PMC_ToUBigInt_R(p);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_ToDecimal_R(PMC_HANDLE_RTNL p, DECIMAL* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            UsingObject using_p(p);
+            *o = PMC_ToDecimal_R(p);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_ToDouble_R(PMC_HANDLE_RTNL p, double* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            UsingObject using_p(p);
+            *o = PMC_ToDouble_R(p);
             return (PMC_STATUS_OK);
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)

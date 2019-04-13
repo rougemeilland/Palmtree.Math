@@ -36,9 +36,14 @@ namespace Palmtree.Math.CodeGen.TestData.Plugin.Rtnl
 
         static TestDataRendererPlugin_Floorlog10_R()
         {
+        }
+
+        public TestDataRendererPlugin_Floorlog10_R()
+            : base("rtnl", "test_data_floorlog10_r.xml")
+        {
             if (FloorLog10(10m) != 1)
                 throw new ApplicationException();
-            if (FloorLog10(new MiniRational( 1.9m)) != 0)
+            if (FloorLog10(new MiniRational(1.9m)) != 0)
                 throw new ApplicationException();
             if (FloorLog10(1.1m) != 0)
                 throw new ApplicationException();
@@ -50,12 +55,6 @@ namespace Palmtree.Math.CodeGen.TestData.Plugin.Rtnl
                 throw new ApplicationException();
             if (FloorLog10(0.09m) != -2)
                 throw new ApplicationException();
-        }
-
-        public TestDataRendererPlugin_Floorlog10_R()
-            : base("rtnl", "test_data_floorlog10_r.xml")
-        {
-
         }
 
         private static Int32 FloorLog10(MiniRational x)

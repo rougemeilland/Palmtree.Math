@@ -115,6 +115,22 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    DECIMAL PMC_ToDecimal_R(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
+    {
+        NUMBER_OBJECT_SINT* np_numerator = GET_NUMBER_OBJECT(p_numerator, L"p_numerator");
+        if (p_denominator == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"p_denominator");
+        return (ep_uint.ToDecimal(np_numerator->SIGN, np_numerator->ABS, p_denominator));
+    }
+
+    double PMC_ToDouble_R(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
+    {
+        NUMBER_OBJECT_SINT* np_numerator = GET_NUMBER_OBJECT(p_numerator, L"p_numerator");
+        if (p_denominator == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"p_denominator");
+        return (ep_uint.ToDouble(np_numerator->SIGN, np_numerator->ABS, p_denominator));
+    }
+
 }
 
 /*

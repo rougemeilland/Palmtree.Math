@@ -226,6 +226,12 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_FromByteArray(byte[] buffer, int count, out IntPtr value);
 
         [DllImport("Palmtree.Math.Core.Rtnl.dll")]
+        private static extern Int32 PMCCS_From_DOUBLE(double x, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Rtnl.dll")]
+        private static extern Int32 PMCCS_From_DECIMAL(decimal x, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Rtnl.dll")]
         private static extern Int32 PMCCS_From_I(Int32 x, out IntPtr o);
 
         [DllImport("Palmtree.Math.Core.Rtnl.dll")]
@@ -410,6 +416,12 @@ namespace Palmtree.Math.Core
 
         [DllImport("Palmtree.Math.Core.Rtnl.dll")]
         private static extern Int32 PMCCS_ToByteArray(IntPtr p, IntPtr buffer, int buffer_size, out Int32 size);
+
+        [DllImport("Palmtree.Math.Core.Rtnl.dll")]
+        private static extern Int32 PMCCS_ToDecimal_R(IntPtr p, out decimal o);
+
+        [DllImport("Palmtree.Math.Core.Rtnl.dll")]
+        private static extern Int32 PMCCS_ToDouble_R(IntPtr p, out double o);
 
         [DllImport("Palmtree.Math.Core.Rtnl.dll")]
         private static extern Int32 PMCCS_ToInt32_R(IntPtr p, out Int32 o);
