@@ -294,7 +294,7 @@ namespace Palmtree::Math::Core::Internal
         DoCarry(c, up, u_count - v_count, wp, w_count - v_count);
     }
 
-    NUMBER_OBJECT_UINT* PMC_Increment_UX_Imp(NUMBER_OBJECT_UINT* x)
+    NUMBER_OBJECT_UINT* PMC_Increment_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* x)
     {
         if (x->IS_ZERO)
         {
@@ -308,30 +308,30 @@ namespace Palmtree::Math::Core::Internal
             // x が 0 ではない場合
 
             // x + 1 を計算する
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             __UNIT_TYPE x_bit_count = x->UNIT_BIT_COUNT;
             __UNIT_TYPE w_bit_count = x_bit_count + 1;
             NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
             DoCarry(1, x->BLOCK, x->UNIT_WORD_COUNT, nw->BLOCK, nw->BLOCK_COUNT);
             root.CheckNumber(nw);
-            CommitNumber(nw);
+            CommitNumber(tc, nw);
             root.UnlinkNumber(nw);
             return (nw);
         }
     }
 
-    PMC_HANDLE_UINT PMC_Increment_UX(PMC_HANDLE_UINT x)
+    PMC_HANDLE_UINT PMC_Increment_UX(ThreadContext& tc, PMC_HANDLE_UINT x)
     {
         NUMBER_OBJECT_UINT* nx = GET_NUMBER_OBJECT(x, L"x");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_Increment_UX_Imp(nx);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw = PMC_Increment_UX_Imp(tc, nx);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    static NUMBER_OBJECT_UINT* PMC_Add_UX_UI_Imp(NUMBER_OBJECT_UINT* nu, _UINT32_T v)
+    static NUMBER_OBJECT_UINT* PMC_Add_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* nu, _UINT32_T v)
     {
         if (nu->IS_ZERO)
         {
@@ -349,7 +349,7 @@ namespace Palmtree::Math::Core::Internal
                 // y が 0 ではない場合
 
                 // 加算結果となる y の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
-                return (From_UI_Imp(v));
+                return (From_UI_Imp(tc, v));
             }
         }
         else
@@ -361,28 +361,28 @@ namespace Palmtree::Math::Core::Internal
                 // y が 0 である場合
 
                 // 加算結果となる x の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
-                return (DuplicateNumber(nu));
+                return (DuplicateNumber(tc, nu));
             }
             else
             {
                 // x と y がともに 0 ではない場合
 
                 // x と y の和を計算する
-                ResourceHolderUINT root;
+                ResourceHolderUINT root(tc);
                 __UNIT_TYPE u_bit_count = nu->UNIT_BIT_COUNT;
                 __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v);
                 __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                 NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
                 Add_UX_1W(nu->BLOCK, nu->UNIT_WORD_COUNT, v, nw->BLOCK, nw->BLOCK_COUNT);
                 root.CheckNumber(nw);
-                CommitNumber(nw);
+                CommitNumber(tc, nw);
                 root.UnlinkNumber(nw);
                 return (nw);
             }
         }
     }
 
-    PMC_HANDLE_UINT PMC_Add_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_UINT PMC_Add_UI_UX(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_UINT v)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(u) * 8)
         {
@@ -390,15 +390,15 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_UI_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw =  PMC_Add_UX_UI_Imp(nv, u);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw =  PMC_Add_UX_UI_Imp(tc, nv, u);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    PMC_HANDLE_UINT PMC_Add_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v)
+    PMC_HANDLE_UINT PMC_Add_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(v) * 8)
         {
@@ -406,15 +406,15 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_UX_I;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_Add_UX_UI_Imp(nu, v);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw = PMC_Add_UX_UI_Imp(tc, nu, v);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    static NUMBER_OBJECT_UINT* PMC_Add_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
+    static NUMBER_OBJECT_UINT* PMC_Add_UX_UL_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT64_T v)
     {
         if (u->IS_ZERO)
         {
@@ -432,7 +432,7 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 ではない場合
 
                 // 加算結果となる v の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
-                return (From_UL_Imp(v));
+                return (From_UL_Imp(tc, v));
             }
         }
         else
@@ -444,7 +444,7 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 である場合
 
                 // 加算結果となる u の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
-                return (DuplicateNumber(u));
+                return (DuplicateNumber(tc, u));
             }
             else
             {
@@ -462,13 +462,13 @@ namespace Palmtree::Math::Core::Internal
                     {
                         // v の値が 32bit で表現可能な場合
 
-                        ResourceHolderUINT root;
+                        ResourceHolderUINT root(tc);
                         __UNIT_TYPE v_bit_count = sizeof(v_lo) * 8 - _LZCNT_ALT_32(v_lo);
                         __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                         Add_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, w->BLOCK, w->BLOCK_COUNT);
                         root.CheckNumber(w);
-                        CommitNumber(w);
+                        CommitNumber(tc, w);
                         root.UnlinkNumber(w);
                         return (w);
                     }
@@ -476,13 +476,13 @@ namespace Palmtree::Math::Core::Internal
                     {
                         // v の値が 32bit では表現できない場合
 
-                        ResourceHolderUINT root;
+                        ResourceHolderUINT root(tc);
                         __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v_hi);
                         __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                         Add_UX_2W(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK, w->BLOCK_COUNT);
                         root.CheckNumber(w);
-                        CommitNumber(w);
+                        CommitNumber(tc, w);
                         root.UnlinkNumber(w);
                         return (w);
                     }
@@ -491,14 +491,14 @@ namespace Palmtree::Math::Core::Internal
                 {
                     // _UINT64_T が 1 ワードで表現できる場合
 
-                    ResourceHolderUINT root;
+                    ResourceHolderUINT root(tc);
                     __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
                     __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)v);
                     __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                     Add_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, w->BLOCK, w->BLOCK_COUNT);
                     root.CheckNumber(w);
-                    CommitNumber(w);
+                    CommitNumber(tc, w);
                     root.UnlinkNumber(w);
                     return (w);
                 }
@@ -506,7 +506,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_Add_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_UINT PMC_Add_UL_UX(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_UINT v)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(u) * 8)
         {
@@ -514,15 +514,15 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_UL_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_Add_UX_UL_Imp(nv, u);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw = PMC_Add_UX_UL_Imp(tc, nv, u);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    PMC_HANDLE_UINT PMC_Add_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v)
+    PMC_HANDLE_UINT PMC_Add_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(v) * 8)
         {
@@ -530,49 +530,49 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_Add_UX_L;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_Add_UX_UL_Imp(nu, v);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw = PMC_Add_UX_UL_Imp(tc, nu, v);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    NUMBER_OBJECT_UINT* PMC_Add_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
+    NUMBER_OBJECT_UINT* PMC_Add_UX_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->IS_ZERO)
         {
             if (v->IS_ZERO)
                 return (&number_object_uint_zero);
             else
-                return (DuplicateNumber(v));
+                return (DuplicateNumber(tc, v));
         }
         else
         {
             if (v->IS_ZERO)
-                return (DuplicateNumber(u));
+                return (DuplicateNumber(tc, u));
             else
             {
-                ResourceHolderUINT root;
+                ResourceHolderUINT root(tc);
                 __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
                 __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
                 __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 (*fp_Add_Imp)(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
                 root.CheckNumber(w);
-                CommitNumber(w);
+                CommitNumber(tc, w);
                 root.UnlinkNumber(w);
                 return (w);
             }
         }
     }
 
-    PMC_HANDLE_UINT PMC_Add_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_UINT PMC_Add_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
     {
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_Add_UX_UX_Imp(nu, nv);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw = PMC_Add_UX_UX_Imp(tc, nu, nv);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);

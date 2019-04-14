@@ -13,6 +13,7 @@
 #include "pmc_uint_cppinterface.h"
 #include "pmc_sint_cppinterface.h"
 #include "pmc_rtnl_cppinterface.h"
+#include "pmc_threadcontext.h"
 
 #define countof(x)  (sizeof(x)/sizeof(*(x)))
 
@@ -118,6 +119,8 @@ namespace Palmtree::Math::Core::Internal
             cv.wait(lk, [&] { return (ready); });
         }
 
+        ThreadContext tc;
+
         for (int count = 0; count < 16; ++count)
         {
 
@@ -137,16 +140,16 @@ namespace Palmtree::Math::Core::Internal
                         }
                         else
                         {
-                            PMC_HANDLE_UINT v = ep_uint.FromByteArray_UINT(data_items[v_index].Data, data_items[v_index].DataCount);
-                            PMC_HANDLE_UINT e = ep_uint.FromByteArray_UINT(data_items[e_index].Data, data_items[e_index].DataCount);
-                            PMC_HANDLE_UINT m = ep_uint.FromByteArray_UINT(data_items[m_index].Data, data_items[m_index].DataCount);
-                            PMC_HANDLE_UINT r = ep_uint.ModPow(v, e, m);
+                            PMC_HANDLE_UINT v = ep_uint.FromByteArray_UINT(tc, data_items[v_index].Data, data_items[v_index].DataCount);
+                            PMC_HANDLE_UINT e = ep_uint.FromByteArray_UINT(tc, data_items[e_index].Data, data_items[e_index].DataCount);
+                            PMC_HANDLE_UINT m = ep_uint.FromByteArray_UINT(tc, data_items[m_index].Data, data_items[m_index].DataCount);
+                            PMC_HANDLE_UINT r = ep_uint.ModPow(tc, v, e, m);
                             unsigned char r_buf[256];
                             ep_uint.ToByteArray(r, r_buf, countof(r_buf));
-                            ep_uint.Dispose(v);
-                            ep_uint.Dispose(e);
-                            ep_uint.Dispose(m);
-                            ep_uint.Dispose(r);
+                            ep_uint.Dispose(tc, v);
+                            ep_uint.Dispose(tc, e);
+                            ep_uint.Dispose(tc, m);
+                            ep_uint.Dispose(tc, r);
                             ++total_count;
                         }
                     }

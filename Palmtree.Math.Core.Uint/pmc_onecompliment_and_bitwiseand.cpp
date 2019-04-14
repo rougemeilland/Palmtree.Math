@@ -56,7 +56,7 @@ namespace Palmtree::Math::Core::Internal
             _COPY_MEMORY_UNIT(&w_buf[2], &v_buf[2], v_buf_count - 2);
     }
 
-    PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_UI_UX(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(u) * 8)
         {
@@ -75,8 +75,8 @@ namespace Palmtree::Math::Core::Internal
         else if (u == 0)
         {
             // u が 0 である場合
-            ResourceHolderUINT root;
-            NUMBER_OBJECT_UINT* nr = DuplicateNumber(nv);
+            ResourceHolderUINT root(tc);
+            NUMBER_OBJECT_UINT* nr = DuplicateNumber(tc, nv);
             root.HookNumber(nr);
             PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
             root.UnlinkNumber(nr);
@@ -86,13 +86,13 @@ namespace Palmtree::Math::Core::Internal
         {
             // u と v がともに 0 ではない場合
 
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             __UNIT_TYPE v_bit_count = nv->UNIT_BIT_COUNT;
             __UNIT_TYPE w_bit_count = v_bit_count;
             NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
             OneCompliment_And_BitwiseAnd_1W(u, nv->BLOCK, nv->UNIT_WORD_COUNT, nw->BLOCK);
             root.CheckNumber(nw);
-            CommitNumber(nw);
+            CommitNumber(tc, nw);
             if (nw->IS_ZERO)
             {
                 root.DeallocateNumber(nw);
@@ -104,7 +104,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_UL_UX(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(u) * 8)
         {
@@ -123,8 +123,8 @@ namespace Palmtree::Math::Core::Internal
         else if (u == 0)
         {
             // u が 0 である場合
-            ResourceHolderUINT root;
-            NUMBER_OBJECT_UINT* nr = DuplicateNumber(nv);
+            ResourceHolderUINT root(tc);
+            NUMBER_OBJECT_UINT* nr = DuplicateNumber(tc, nv);
             root.HookNumber(nr);
             PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
             root.UnlinkNumber(nr);
@@ -144,13 +144,13 @@ namespace Palmtree::Math::Core::Internal
                 {
                     // u の値が 32bit で表現可能な場合
 
-                    ResourceHolderUINT root;
+                    ResourceHolderUINT root(tc);
                     __UNIT_TYPE v_bit_count = nv->UNIT_BIT_COUNT;
                     __UNIT_TYPE w_bit_count = v_bit_count;
                     NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
                     OneCompliment_And_BitwiseAnd_1W(u_lo, nv->BLOCK, nv->UNIT_WORD_COUNT, nw->BLOCK);
                     root.CheckNumber(nw);
-                    CommitNumber(nw);
+                    CommitNumber(tc, nw);
                     if (nw->IS_ZERO)
                     {
                         root.DeallocateNumber(nw);
@@ -164,13 +164,13 @@ namespace Palmtree::Math::Core::Internal
                 {
                     // u の値が 32bit では表現できない場合
 
-                    ResourceHolderUINT root;
+                    ResourceHolderUINT root(tc);
                     __UNIT_TYPE v_bit_count = nv->UNIT_BIT_COUNT;
                     __UNIT_TYPE w_bit_count = v_bit_count;
                     NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
                     OneCompliment_And_BitwiseAnd_2W(u_hi, u_lo, nv->BLOCK, nv->UNIT_WORD_COUNT, nw->BLOCK);
                     root.CheckNumber(nw);
-                    CommitNumber(nw);
+                    CommitNumber(tc, nw);
                     if (nw->IS_ZERO)
                     {
                         root.DeallocateNumber(nw);
@@ -184,14 +184,14 @@ namespace Palmtree::Math::Core::Internal
             else
             {
                 // _UINT64_T が 1 ワードで表現できる場合
-                ResourceHolderUINT root;
+                ResourceHolderUINT root(tc);
                 //__UNIT_TYPE u_bit_count = sizeof(u) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)u);
                 __UNIT_TYPE v_bit_count = nv->UNIT_BIT_COUNT;
                 __UNIT_TYPE w_bit_count = v_bit_count;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 OneCompliment_And_BitwiseAnd_1W((__UNIT_TYPE)u, nv->BLOCK, nv->UNIT_WORD_COUNT, w->BLOCK);
                 root.CheckNumber(w);
-                CommitNumber(w);
+                CommitNumber(tc, w);
                 if (w->IS_ZERO)
                 {
                     root.DeallocateNumber(w);
@@ -421,15 +421,15 @@ namespace Palmtree::Math::Core::Internal
 
     }
 
-    PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
     {
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         if (nu->IS_ZERO)
         {
-            ResourceHolderUINT root;
-            NUMBER_OBJECT_UINT* nr = DuplicateNumber(nv);
+            ResourceHolderUINT root(tc);
+            NUMBER_OBJECT_UINT* nr = DuplicateNumber(tc, nv);
             root.HookNumber(nr);
             PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
             root.UnlinkNumber(nr);
@@ -439,13 +439,13 @@ namespace Palmtree::Math::Core::Internal
             return (GET_NUMBER_HANDLE(&number_object_uint_zero));
         else
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             __UNIT_TYPE v_bit_count = nv->UNIT_BIT_COUNT;
             __UNIT_TYPE w_bit_count = v_bit_count;
             NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
             OneCompliment_And_BitwiseAnd_UX_UX(nu->BLOCK, _MINIMUM_UNIT(nu->UNIT_WORD_COUNT, nv->UNIT_WORD_COUNT), nv->BLOCK, nv->UNIT_WORD_COUNT, nw->BLOCK);
             root.CheckNumber(nw);
-            CommitNumber(nw);
+            CommitNumber(tc, nw);
             if (nw->IS_ZERO)
             {
                 root.DeallocateNumber(nw);

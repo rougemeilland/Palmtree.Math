@@ -181,7 +181,7 @@ namespace Palmtree::Math::Core::Internal
         DoBorrow(c, up, u_count - v_count, wp, w_count - v_count);
     }
 
-    static NUMBER_OBJECT_UINT* PMC_Decrement_UX_Imp(NUMBER_OBJECT_UINT* x)
+    static NUMBER_OBJECT_UINT* PMC_Decrement_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* x)
     {
         if (x->IS_ZERO)
         {
@@ -195,13 +195,13 @@ namespace Palmtree::Math::Core::Internal
             // x が 0 ではない場合
 
             // x - 1 を計算する
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             __UNIT_TYPE x_bit_count = x->UNIT_BIT_COUNT;
             __UNIT_TYPE w_bit_count = x_bit_count;
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
             DoBorrow(1, x->BLOCK, x->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
             root.CheckNumber(w);
-            CommitNumber(w);
+            CommitNumber(tc, w);
             if (w->IS_ZERO)
             {
                 root.DeallocateNumber(w);
@@ -213,11 +213,11 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_Decrement_UX(PMC_HANDLE_UINT x) noexcept(false)
+    PMC_HANDLE_UINT PMC_Decrement_UX(ThreadContext& tc, PMC_HANDLE_UINT x) noexcept(false)
     {
         NUMBER_OBJECT_UINT* nx = GET_NUMBER_OBJECT(x, L"x");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_Decrement_UX_Imp(nx);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw = PMC_Decrement_UX_Imp(tc, nx);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
@@ -293,7 +293,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_OBJECT_UINT* PMC_Subtruct_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v)
+    static NUMBER_OBJECT_UINT* PMC_Subtruct_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT32_T v)
     {
         if (u->IS_ZERO)
         {
@@ -323,7 +323,7 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 である場合
 
                 // 演算結果となる x の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
-                return (DuplicateNumber(u));
+                return (DuplicateNumber(tc, u));
             }
             else
             {
@@ -339,12 +339,12 @@ namespace Palmtree::Math::Core::Internal
                 }
                 else
                 {
-                    ResourceHolderUINT root;
+                    ResourceHolderUINT root(tc);
                     __UNIT_TYPE w_bit_count = u_bit_count;
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                     Subtruct_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK, w->BLOCK_COUNT);
                     root.CheckNumber(w);
-                    CommitNumber(w);
+                    CommitNumber(tc, w);
                     if (w->IS_ZERO)
                     {
                         root.DeallocateNumber(w);
@@ -358,7 +358,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_Subtruct_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false)
+    PMC_HANDLE_UINT PMC_Subtruct_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(v) * 8)
         {
@@ -366,8 +366,8 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_subtruct.cpp;PMC_Subtruct_UX_I;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_Subtruct_UX_UI_Imp(nu, v);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw = PMC_Subtruct_UX_UI_Imp(tc, nu, v);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
@@ -532,7 +532,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_OBJECT_UINT* PMC_Subtruct_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
+    static NUMBER_OBJECT_UINT* PMC_Subtruct_UX_UL_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT64_T v)
     {
         if (u->IS_ZERO)
         {
@@ -562,7 +562,7 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 である場合
 
                 // 演算結果となる x の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
-                return (DuplicateNumber(u));
+                return (DuplicateNumber(tc, u));
             }
             else
             {
@@ -587,12 +587,12 @@ namespace Palmtree::Math::Core::Internal
                         }
                         else
                         {
-                            ResourceHolderUINT root;
+                            ResourceHolderUINT root(tc);
                             __UNIT_TYPE w_bit_count = u_bit_count;
                             NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                             Subtruct_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, w->BLOCK, w->BLOCK_COUNT);
                             root.CheckNumber(w);
-                            CommitNumber(w);
+                            CommitNumber(tc, w);
                             if (w->IS_ZERO)
                             {
                                 root.DeallocateNumber(w);
@@ -606,7 +606,7 @@ namespace Palmtree::Math::Core::Internal
                     else
                     {
                         // y の値が 32bit では表現できない場合
-                        ResourceHolderUINT root;
+                        ResourceHolderUINT root(tc);
                         __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v_hi);
                         if (u_bit_count < v_bit_count)
                         {
@@ -617,7 +617,7 @@ namespace Palmtree::Math::Core::Internal
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                         Subtruct_UX_2W(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK, w->BLOCK_COUNT);
                         root.CheckNumber(w);
-                        CommitNumber(w);
+                        CommitNumber(tc, w);
                         if (w->IS_ZERO)
                         {
                             root.DeallocateNumber(w);
@@ -631,7 +631,7 @@ namespace Palmtree::Math::Core::Internal
                 else
                 {
                     // _UINT64_T が 1 ワードで表現できる場合
-                    ResourceHolderUINT root;
+                    ResourceHolderUINT root(tc);
                     __UNIT_TYPE x_bit_count = u->UNIT_BIT_COUNT;
                     __UNIT_TYPE y_bit_count = sizeof(v) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)v);
                     if (x_bit_count < y_bit_count)
@@ -643,7 +643,7 @@ namespace Palmtree::Math::Core::Internal
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                     Subtruct_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, w->BLOCK, w->BLOCK_COUNT);
                     root.CheckNumber(w);
-                    CommitNumber(w);
+                    CommitNumber(tc, w);
                     if (w->IS_ZERO)
                     {
                         root.DeallocateNumber(w);
@@ -657,7 +657,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_Subtruct_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false)
+    PMC_HANDLE_UINT PMC_Subtruct_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(v) * 8)
         {
@@ -665,15 +665,15 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_subtruct.cpp;PMC_Subtruct_UX_L;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_Subtruct_UX_UL_Imp(nu, v);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw = PMC_Subtruct_UX_UL_Imp(tc, nu, v);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    static NUMBER_OBJECT_UINT* PMC_Subtruct_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
+    static NUMBER_OBJECT_UINT* PMC_Subtruct_UX_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->IS_ZERO)
         {
@@ -701,14 +701,14 @@ namespace Palmtree::Math::Core::Internal
                 // y が 0 である場合
 
                 // 演算結果となる x の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
-                return (DuplicateNumber(u));
+                return (DuplicateNumber(tc, u));
             }
             else
             {
                 // x と y がともに 0 ではない場合
 
                 // x と y の差を計算する
-                ResourceHolderUINT root;
+                ResourceHolderUINT root(tc);
                 __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
                 __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
                 if (u_bit_count < v_bit_count)
@@ -720,7 +720,7 @@ namespace Palmtree::Math::Core::Internal
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 Subtruct_Imp(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
                 root.CheckNumber(w);
-                CommitNumber(w);
+                CommitNumber(tc, w);
                 if (w->IS_ZERO)
                 {
                     root.DeallocateNumber(w);
@@ -733,12 +733,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_Subtruct_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_Subtruct_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
     {
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_Subtruct_UX_UX_Imp(nu, nv);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw = PMC_Subtruct_UX_UX_Imp(tc, nu, nv);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);

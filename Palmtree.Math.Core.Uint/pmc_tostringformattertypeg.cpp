@@ -29,16 +29,16 @@
 
 namespace Palmtree::Math::Core::Internal
 {
-    SIGN_T Compare_R_UI(NUMBER_OBJECT_UINT* u_numerator, NUMBER_OBJECT_UINT* u_denominator, _UINT32_T v)
+    SIGN_T Compare_R_UI(ThreadContext& tc, NUMBER_OBJECT_UINT* u_numerator, NUMBER_OBJECT_UINT* u_denominator, _UINT32_T v)
     {
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* v2 = PMC_Multiply_UX_UI_Imp(u_denominator, v);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* v2 = PMC_Multiply_UX_UI_Imp(tc, u_denominator, v);
         root.HookNumber(v2);
         return (PMC_Compare_UX_UX_Imp(u_numerator, v2));
     }
 
-    ToStringFormatterTypeG::ToStringFormatterTypeG(wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO * number_format_info)
-        : ToStringFormatter(format_type, precision, number_format_info)
+    ToStringFormatterTypeG::ToStringFormatterTypeG(ThreadContext& tc, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO * number_format_info)
+        : ToStringFormatter(tc, format_type, precision, number_format_info)
     {
         _omitted_trailing_sequential_zero = true;
         _is_exponential_format = true;
@@ -56,9 +56,9 @@ namespace Palmtree::Math::Core::Internal
 
     void ToStringFormatterTypeG::RoundValue(NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, NUMBER_OBJECT_UINT** r_numerator, NUMBER_OBJECT_UINT** r_denominator, _INT32_T* exp)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(_tc);
         // 最上位桁が 1 の位になるように 10 のべき乗をかけるあるいは割って、桁をずらす。
-        *exp = PMC_FloorLog10_R_Imp(x_numerator, x_denominator);
+        *exp = PMC_FloorLog10_R_Imp(_tc, x_numerator, x_denominator);
         if (*exp == 0)
         {
             *r_numerator = x_numerator;
@@ -66,31 +66,33 @@ namespace Palmtree::Math::Core::Internal
         }
         else if (*exp > 0)
         {
-            NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(*exp);
+            NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, *exp);
+            root.HookNumber(factor);
             *r_numerator = x_numerator;
-            *r_denominator = PMC_Multiply_UX_UX_Imp(x_denominator, factor);
+            *r_denominator = PMC_Multiply_UX_UX_Imp(_tc, x_denominator, factor);
             root.HookNumber(*r_denominator);
         }
         else
         {
-            NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(-*exp);
-            *r_numerator = PMC_Multiply_UX_UX_Imp(x_numerator, factor);
+            NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, -*exp);
+            root.HookNumber(factor);
+            *r_numerator = PMC_Multiply_UX_UX_Imp(_tc, x_numerator, factor);
             root.HookNumber(*r_numerator);
             *r_denominator = x_denominator;
         }
 #if _DEBUG
         // この時点で数値は1以上10未満であるはず
-        if (Compare_R_UI(*r_numerator, *r_denominator, 1U) < 0 || Compare_R_UI(*r_numerator, *r_denominator, 10U) >= 0)
+        if (Compare_R_UI(_tc, *r_numerator, *r_denominator, 1U) < 0 || Compare_R_UI(_tc, *r_numerator, *r_denominator, 10U) >= 0)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_tostring.cpp;FormatterTypeG::RoundValue;1");
 #endif
         // 桁を丸める
-        *r_numerator = PMC_Round_R_Imp(*r_numerator, *r_denominator, _precision - 1, PMC_MIDPOINT_ROUNDING_HALF_EVEN, r_denominator);
+        *r_numerator = PMC_Round_R_Imp(_tc, *r_numerator, *r_denominator, _precision - 1, PMC_MIDPOINT_ROUNDING_HALF_EVEN, r_denominator);
         root.HookNumber(*r_numerator);
         root.HookNumber(*r_denominator);
         // 桁を丸めた結果繰り上がりによって最上位桁が 10 の位になってしまった場合は、更に 1 桁だけ桁をずらす
-        if (Compare_R_UI(*r_numerator, *r_denominator, 10U) >= 0)
+        if (Compare_R_UI(_tc, *r_numerator, *r_denominator, 10U) >= 0)
         {
-            *r_denominator = PMC_Multiply_UX_UI_Imp(*r_denominator, 10U);
+            *r_denominator = PMC_Multiply_UX_UI_Imp(_tc, *r_denominator, 10U);
             root.HookNumber(*r_denominator);
             *exp = *exp + 1;
         }
@@ -104,33 +106,34 @@ namespace Palmtree::Math::Core::Internal
             }
             else if (*exp > 0)
             {
-                NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(*exp);
-                *r_numerator = PMC_Multiply_UX_UX_Imp(*r_numerator, factor);
+                NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, *exp);
+                root.HookNumber(factor);
+                *r_numerator = PMC_Multiply_UX_UX_Imp(_tc, *r_numerator, factor);
                 root.HookNumber(*r_numerator);
                 *exp = 0;
             }
             else
             {
-                NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(-*exp);
-                *r_denominator = PMC_Multiply_UX_UX_Imp(*r_denominator, factor);
+                NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, -*exp);
+                root.HookNumber(factor);
+                *r_denominator = PMC_Multiply_UX_UX_Imp(_tc, *r_denominator, factor);
                 root.HookNumber(*r_denominator);
                 *exp = 0;
             }
         }
         // 分子と分母の最大公約数を求める
-        NUMBER_OBJECT_UINT* gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(*r_numerator, *r_denominator);
+        NUMBER_OBJECT_UINT* gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(_tc, *r_numerator, *r_denominator);
         root.HookNumber(gcd);
         if (!gcd->IS_ONE)
         {
             // 最大公約数が 1 ではない (既約ではない) 場合
 
             // 分子と分母をそれぞれ最大公約数で割る
-            *r_numerator = PMC_DivideExactly_UX_UX_Imp(*r_numerator, gcd);
+            *r_numerator = PMC_DivideExactly_UX_UX_Imp(_tc, *r_numerator, gcd);
             root.HookNumber(*r_numerator);
-            *r_denominator = PMC_DivideExactly_UX_UX_Imp(*r_denominator, gcd);
+            *r_denominator = PMC_DivideExactly_UX_UX_Imp(_tc, *r_denominator, gcd);
             root.HookNumber(*r_denominator);
         }
-
         root.UnlinkNumber(*r_numerator);
         root.UnlinkNumber(*r_denominator);
     }

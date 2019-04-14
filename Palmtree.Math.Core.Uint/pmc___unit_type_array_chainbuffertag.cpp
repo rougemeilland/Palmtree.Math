@@ -30,7 +30,8 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    ____UNIT_TYPE_Array_ChainBufferTag::____UNIT_TYPE_Array_ChainBufferTag(__UNIT_TYPE * buffer, __UNIT_TYPE word_count, __UNIT_TYPE check_code)
+    ____UNIT_TYPE_Array_ChainBufferTag::____UNIT_TYPE_Array_ChainBufferTag(ThreadContext& tc, __UNIT_TYPE * buffer, __UNIT_TYPE word_count, __UNIT_TYPE check_code)
+        : _tc(tc)
     {
         _buffer = buffer;
         _word_count = word_count;
@@ -60,7 +61,7 @@ namespace Palmtree::Math::Core::Internal
 
     void  ____UNIT_TYPE_Array_ChainBufferTag::____UNIT_TYPE_Array_ChainBufferTag::Destruct()
     {
-        Palmtree::Math::Core::Internal::__DeallocateBlock(_buffer, _word_count, _check_code);
+        Palmtree::Math::Core::Internal::__DeallocateBlock(_tc, _buffer, _word_count, _check_code);
     }
 
 }

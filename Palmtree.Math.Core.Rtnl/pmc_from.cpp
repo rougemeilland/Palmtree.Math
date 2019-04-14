@@ -41,52 +41,52 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    PMC_HANDLE_RTNL PMC_From_I(_INT32_T x) noexcept(false)
+    PMC_HANDLE_RTNL PMC_From_I(ThreadContext& tc, _INT32_T x) noexcept(false)
     {
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, ep_sint.From(x)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, ep_sint.From(tc, x)));
     }
 
-    PMC_HANDLE_RTNL PMC_From_L(_INT64_T x) noexcept(false)
+    PMC_HANDLE_RTNL PMC_From_L(ThreadContext& tc, _INT64_T x) noexcept(false)
     {
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, ep_sint.From(x)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, ep_sint.From(tc, x)));
     }
 
-    PMC_HANDLE_RTNL PMC_From_UI(_UINT32_T x) noexcept(false)
+    PMC_HANDLE_RTNL PMC_From_UI(ThreadContext& tc, _UINT32_T x) noexcept(false)
     {
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, ep_sint.From(x)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, ep_sint.From(tc, x)));
     }
 
-    PMC_HANDLE_RTNL PMC_From_UL(_UINT64_T x) noexcept(false)
+    PMC_HANDLE_RTNL PMC_From_UL(ThreadContext& tc, _UINT64_T x) noexcept(false)
     {
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, ep_sint.From(x)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, ep_sint.From(tc, x)));
     }
 
-    PMC_HANDLE_RTNL PMC_From_UX(PMC_HANDLE_UINT x) noexcept(false)
+    PMC_HANDLE_RTNL PMC_From_UX(ThreadContext& tc, PMC_HANDLE_UINT x) noexcept(false)
     {
         if (x == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"x");
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, ep_sint.From(x)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, ep_sint.From(tc, x)));
     }
 
-    PMC_HANDLE_RTNL PMC_From_X(PMC_HANDLE_SINT x) noexcept(false)
+    PMC_HANDLE_RTNL PMC_From_X(ThreadContext& tc, PMC_HANDLE_SINT x) noexcept(false)
     {
         if (x == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"x");
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, ep_sint.Clone(x)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, ep_sint.Clone(tc, x)));
     }
 
-    PMC_HANDLE_RTNL PMC_From_DECIMAL(DECIMAL x) noexcept(false)
+    PMC_HANDLE_RTNL PMC_From_DECIMAL(ThreadContext& tc, DECIMAL x) noexcept(false)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
 
         PMC_HANDLE_UINT r_denominator;
-        PMC_HANDLE_SINT r_numerator = ep_sint.From(x, &r_denominator);
+        PMC_HANDLE_SINT r_numerator = ep_sint.From(tc, x, &r_denominator);
         root.HookNumber(r_numerator);
         root.HookNumber(r_denominator);
         NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(r_numerator, r_denominator);
@@ -95,15 +95,15 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    PMC_HANDLE_RTNL PMC_From_DOUBLE(double x) noexcept(false)
+    PMC_HANDLE_RTNL PMC_From_DOUBLE(ThreadContext& tc, double x) noexcept(false)
     {
         if (!isfinite(x))
             throw OverflowException(L"与えられた数値が無限大または NAN のため変換できません。");
 
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
 
         PMC_HANDLE_UINT r_denominator;
-        PMC_HANDLE_SINT r_numerator = ep_sint.From(x, &r_denominator);
+        PMC_HANDLE_SINT r_numerator = ep_sint.From(tc, x, &r_denominator);
         root.HookNumber(r_numerator);
         root.HookNumber(r_denominator);
         NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(r_numerator, r_denominator);

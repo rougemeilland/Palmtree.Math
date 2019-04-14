@@ -128,7 +128,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v)
+    static NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT32_T v)
     {
         if (u->IS_ZERO)
         {
@@ -146,7 +146,7 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 ではない場合
 
                 // GCD は v そのものであるため、v を計算結果として返す。
-                return (From_UI_Imp(v));
+                return (From_UI_Imp(tc, v));
             }
         }
         else
@@ -158,21 +158,21 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 である場合
 
                 // GCD は u そのものであるため、u を計算結果として返す。
-                return (DuplicateNumber(u));
+                return (DuplicateNumber(tc, u));
             }
             else
             {
                 // u と v がともに 0 ではない場合
                 // u と v の GCD を計算する
 
-                ResourceHolderUINT root;
+                ResourceHolderUINT root(tc);
                 if (u->UNIT_WORD_COUNT <= 1)
                 {
                     // u と v がともに 1 ワードで表現できる場合
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
                     w->BLOCK[0] = GreatestCommonDivisor_1W_Imp(u->BLOCK[0], v);
                     root.CheckNumber(w);
-                    CommitNumber(w);
+                    CommitNumber(tc, w);
                     root.UnlinkNumber(w);
                     return (w);
                 }
@@ -202,7 +202,7 @@ namespace Palmtree::Math::Core::Internal
                     root.DeallocateBlock(work_u_buf);
                     LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
                     root.CheckNumber(w);
-                    CommitNumber(w);
+                    CommitNumber(tc, w);
                     root.UnlinkNumber(w);
                     return (w);
                 }
@@ -210,7 +210,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
+    static NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_UX_UL_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT64_T v)
     {
         if (u->IS_ZERO)
         {
@@ -228,7 +228,7 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 ではない場合
 
                 // GCD は v そのものであるため、v を計算結果として返す。
-                return (From_UL_Imp(v));
+                return (From_UL_Imp(tc, v));
             }
         }
         else
@@ -240,7 +240,7 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 である場合
 
                 // GCD は u そのものであるため、u を計算結果として返す。
-                return (DuplicateNumber(u));
+                return (DuplicateNumber(tc, u));
             }
             else
             {
@@ -257,14 +257,14 @@ namespace Palmtree::Math::Core::Internal
                     if (v_hi == 0)
                     {
                         // v の値が 32bit で表現可能な場合
-                        ResourceHolderUINT root;
+                        ResourceHolderUINT root(tc);
                         if (u->UNIT_WORD_COUNT <= 1)
                         {
                             // u と v がともに 1 ワードで表現できる場合
                             NUMBER_OBJECT_UINT* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
                             w->BLOCK[0] = GreatestCommonDivisor_1W_Imp(u->BLOCK[0], v_lo);
                             root.CheckNumber(w);
-                            CommitNumber(w);
+                            CommitNumber(tc, w);
                             root.UnlinkNumber(w);
                             return (w);
                         }
@@ -296,7 +296,7 @@ namespace Palmtree::Math::Core::Internal
 
                             LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
                             root.CheckNumber(w);
-                            CommitNumber(w);
+                            CommitNumber(tc, w);
                             root.UnlinkNumber(w);
                             return (w);
                         }
@@ -304,7 +304,7 @@ namespace Palmtree::Math::Core::Internal
                     else
                     {
                         // y の値が 32bit では表現できない場合
-                        ResourceHolderUINT root;
+                        ResourceHolderUINT root(tc);
                         __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v_hi);
                         __UNIT_TYPE work_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count);
                         __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_bit_count);
@@ -333,7 +333,7 @@ namespace Palmtree::Math::Core::Internal
 
                         LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
                         root.CheckNumber(w);
-                        CommitNumber(w);
+                        CommitNumber(tc, w);
                         root.UnlinkNumber(w);
                         return (w);
                     }
@@ -341,14 +341,14 @@ namespace Palmtree::Math::Core::Internal
                 else
                 {
                     // _UINT64_T が 1 ワードで表現できる場合
-                    ResourceHolderUINT root;
+                    ResourceHolderUINT root(tc);
                     if (u->UNIT_WORD_COUNT <= 1)
                     {
                         // u と v がともに 1 ワードで表現できる場合
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
                         w->BLOCK[0] = GreatestCommonDivisor_1W_Imp(u->BLOCK[0], (__UNIT_TYPE)v);
                         root.CheckNumber(w);
-                        CommitNumber(w);
+                        CommitNumber(tc, w);
                         root.UnlinkNumber(w);
                         return (w);
                     }
@@ -381,7 +381,7 @@ namespace Palmtree::Math::Core::Internal
 
                         LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
                         root.CheckNumber(w);
-                        CommitNumber(w);
+                        CommitNumber(tc, w);
                         root.UnlinkNumber(w);
                         return (w);
                     }
@@ -390,7 +390,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
+    NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_UX_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->IS_ZERO)
         {
@@ -408,7 +408,7 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 ではない場合
 
                 // GCD は v そのものであるため、v を計算結果として返す。
-                return (DuplicateNumber(v));
+                return (DuplicateNumber(tc, v));
             }
         }
         else
@@ -420,14 +420,14 @@ namespace Palmtree::Math::Core::Internal
                 // v が 0 である場合
 
                 // GCD は u そのものであるため、u を計算結果として返す。
-                return (DuplicateNumber(u));
+                return (DuplicateNumber(tc, u));
             }
             else
             {
                 // u と v がともに 0 ではない場合
 
                 // u と v の GCD を計算する
-                ResourceHolderUINT root;
+                ResourceHolderUINT root(tc);
                 __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
                 __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
                 __UNIT_TYPE work_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count);
@@ -437,7 +437,7 @@ namespace Palmtree::Math::Core::Internal
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
                     w->BLOCK[0] = GreatestCommonDivisor_1W_Imp(u->BLOCK[0], v->BLOCK[0]);
                     root.CheckNumber(w);
-                    CommitNumber(w);
+                    CommitNumber(tc, w);
                     root.UnlinkNumber(w);
                     return (w);
                 }
@@ -471,7 +471,7 @@ namespace Palmtree::Math::Core::Internal
                     if (k > 0)
                         LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
                     root.CheckNumber(w);
-                    CommitNumber(w);
+                    CommitNumber(tc, w);
                     root.UnlinkNumber(w);
                     return (w);
                 }
@@ -479,7 +479,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UI_UX(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(u) * 8)
         {
@@ -487,15 +487,15 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_UI_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_UX_UI_Imp(nv, u);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_UX_UI_Imp(tc, nv, u);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v)
+    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(v) * 8)
         {
@@ -503,15 +503,15 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_UX_I;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_UX_UI_Imp(nu, v);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_UX_UI_Imp(tc, nu, v);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UL_UX(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_UINT v)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(u) * 8)
         {
@@ -519,15 +519,15 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_UL_UX;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_UX_UL_Imp(nv, u);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_UX_UL_Imp(tc, nv, u);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v)
+    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(v) * 8)
         {
@@ -535,20 +535,20 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_greatestcommondivisor.cpp;PMC_GreatestCommonDivisor_UX_L;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_UX_UL_Imp(nu, v);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_UX_UL_Imp(tc, nu, v);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
     {
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_UX_UX_Imp(nu, nv);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw = PMC_GreatestCommonDivisor_UX_UX_Imp(tc, nu, nv);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);

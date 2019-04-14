@@ -31,65 +31,65 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    PMC_HANDLE_SINT PMC_From_UI(_UINT32_T x)
+    PMC_HANDLE_SINT PMC_From_UI(ThreadContext& tc, _UINT32_T x)
     {
-        ResourceHolderSINT root;
-        NUMBER_OBJECT_SINT* nr = From_I_Imp(SIGN_POSITIVE, x);
+        ResourceHolderSINT root(tc);
+        NUMBER_OBJECT_SINT* nr = From_I_Imp(tc, SIGN_POSITIVE, x);
         root.HookNumber(nr);
         PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);
         return (r);
     }
 
-    PMC_HANDLE_SINT PMC_From_I(_INT32_T x)
+    PMC_HANDLE_SINT PMC_From_I(ThreadContext& tc, _INT32_T x)
     {
-        ResourceHolderSINT root;
+        ResourceHolderSINT root(tc);
         SIGN_T x_sign;
         _UINT32_T x_abs = GET_ABS_32(x, &x_sign);
-        NUMBER_OBJECT_SINT* nr = From_I_Imp(x_sign, x_abs);
+        NUMBER_OBJECT_SINT* nr = From_I_Imp(tc, x_sign, x_abs);
         root.HookNumber(nr);
         PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);
         return (r);
     }
 
-    PMC_HANDLE_SINT PMC_From_UL(_UINT64_T x)
+    PMC_HANDLE_SINT PMC_From_UL(ThreadContext& tc, _UINT64_T x)
     {
-        ResourceHolderSINT root;
-        NUMBER_OBJECT_SINT* nr = From_L_Imp(SIGN_POSITIVE, x);
+        ResourceHolderSINT root(tc);
+        NUMBER_OBJECT_SINT* nr = From_L_Imp(tc, SIGN_POSITIVE, x);
         root.HookNumber(nr);
         PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);
         return (r);
     }
 
-    PMC_HANDLE_SINT PMC_From_L(_INT64_T x)
+    PMC_HANDLE_SINT PMC_From_L(ThreadContext& tc, _INT64_T x)
     {
-        ResourceHolderSINT root;
+        ResourceHolderSINT root(tc);
         SIGN_T x_sign;
         _UINT64_T x_abs = GET_ABS_64(x, &x_sign);
-        NUMBER_OBJECT_SINT* nr = From_L_Imp(x_sign, x_abs);
+        NUMBER_OBJECT_SINT* nr = From_L_Imp(tc, x_sign, x_abs);
         root.HookNumber(nr);
         PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);
         return (r);
     }
 
-    PMC_HANDLE_SINT PMC_From_UX(PMC_HANDLE_UINT x)
+    PMC_HANDLE_SINT PMC_From_UX(ThreadContext& tc, PMC_HANDLE_UINT x)
     {
-        ResourceHolderSINT root;
-        NUMBER_OBJECT_SINT* nr = From_X_Imp(SIGN_POSITIVE, x);
+        ResourceHolderSINT root(tc);
+        NUMBER_OBJECT_SINT* nr = From_X_Imp(tc, SIGN_POSITIVE, x);
         root.HookNumber(nr);
         PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);
         return (r);
     }
 
-    PMC_HANDLE_SINT PMC_From_DECIMAL(DECIMAL x, PMC_HANDLE_UINT * o_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_From_DECIMAL(ThreadContext& tc, DECIMAL x, PMC_HANDLE_UINT * o_denominator) noexcept(false)
     {
-        ResourceHolderSINT root;
+        ResourceHolderSINT root(tc);
         SIGN_T o_sign;
-        PMC_HANDLE_UINT o_numerator_abs = ep_uint.From(x, &o_sign, o_denominator);
+        PMC_HANDLE_UINT o_numerator_abs = ep_uint.From(tc, x, &o_sign, o_denominator);
         root.HookNumber(o_numerator_abs);
         root.HookNumber(*o_denominator);
         NUMBER_OBJECT_SINT* no_numerator = root.AllocateNumber(o_numerator_abs->FLAGS.IS_ZERO ? SIGN_ZERO : o_sign, o_numerator_abs);
@@ -99,11 +99,11 @@ namespace Palmtree::Math::Core::Internal
         return (o_numerator);
     }
 
-    PMC_HANDLE_SINT PMC_From_DOUBLE(double x, PMC_HANDLE_UINT * o_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_From_DOUBLE(ThreadContext& tc, double x, PMC_HANDLE_UINT * o_denominator) noexcept(false)
     {
-        ResourceHolderSINT root;
+        ResourceHolderSINT root(tc);
         SIGN_T o_sign;
-        PMC_HANDLE_UINT o_numerator_abs = ep_uint.From(x, &o_sign, o_denominator);
+        PMC_HANDLE_UINT o_numerator_abs = ep_uint.From(tc, x, &o_sign, o_denominator);
         root.HookNumber(o_numerator_abs);
         root.HookNumber(*o_denominator);
         NUMBER_OBJECT_SINT* no_numerator = root.AllocateNumber(o_numerator_abs->FLAGS.IS_ZERO ? SIGN_ZERO : o_sign, o_numerator_abs);

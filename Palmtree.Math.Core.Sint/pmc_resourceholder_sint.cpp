@@ -24,13 +24,15 @@
 
 
 #include "pmc_resourceholder_sint.h"
+#include "pmc_threadcontext.h"
 #include "pmc_lock.h"
 
 
 namespace Palmtree::Math::Core::Internal
 {
 
-    ResourceHolderSINT::__NumberObjectSintChainBufferTag::__NumberObjectSintChainBufferTag(void * buffer)
+    ResourceHolderSINT::__NumberObjectSintChainBufferTag::__NumberObjectSintChainBufferTag(ThreadContext& tc, void * buffer)
+        : _tc(tc)
     {
         _buffer = buffer;
         ++statistics_info.COUNT_ALLOCATE_NUMBER_OBJECT;
@@ -49,9 +51,11 @@ namespace Palmtree::Math::Core::Internal
     void ResourceHolderSINT::__NumberObjectSintChainBufferTag::Destruct()
     {
         __DeallocateHeap(_buffer);
+        _tc.DecrementTypeAAllocationCount();
     }
 
-    ResourceHolderSINT::__UINTNumberHandleHookingChainBufferTag::__UINTNumberHandleHookingChainBufferTag(PMC_HANDLE_UINT x)
+    ResourceHolderSINT::__UINTNumberHandleHookingChainBufferTag::__UINTNumberHandleHookingChainBufferTag(ThreadContext& tc, PMC_HANDLE_UINT x)
+        : _tc(tc)
     {
         _buffer = x;
         ++statistics_info.COUNT_HOOK_NUMBER_UX;
@@ -73,10 +77,11 @@ namespace Palmtree::Math::Core::Internal
 
     void ResourceHolderSINT::__UINTNumberHandleHookingChainBufferTag::Destruct()
     {
-        Palmtree::Math::Core::Internal::ep_uint.Dispose(_buffer);
+        Palmtree::Math::Core::Internal::ep_uint.Dispose(_tc, _buffer);
     }
 
-    ResourceHolderSINT::__DynamicNumberChainBufferTag::__DynamicNumberChainBufferTag(NUMBER_OBJECT_SINT * buffer)
+    ResourceHolderSINT::__DynamicNumberChainBufferTag::__DynamicNumberChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_SINT * buffer)
+        : _tc(tc)
     {
         _buffer = buffer;
         ++statistics_info.COUNT_ALLOCATE_NUMBER;
@@ -99,10 +104,11 @@ namespace Palmtree::Math::Core::Internal
 
     void  ResourceHolderSINT::__DynamicNumberChainBufferTag::Destruct()
     {
-        Palmtree::Math::Core::Internal::__DeallocateNumber(_buffer);
+        Palmtree::Math::Core::Internal::__DeallocateNumber(_tc, _buffer);
     }
 
-    ResourceHolderSINT::__NumberHandleHookingChainBufferTag::__NumberHandleHookingChainBufferTag(NUMBER_OBJECT_SINT * buffer)
+    ResourceHolderSINT::__NumberHandleHookingChainBufferTag::__NumberHandleHookingChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_SINT * buffer)
+        : _tc(tc)
     {
         _buffer = buffer;
         ++statistics_info.COUNT_HOOK_NUMBER_X;
@@ -124,10 +130,11 @@ namespace Palmtree::Math::Core::Internal
 
     void  ResourceHolderSINT::__NumberHandleHookingChainBufferTag::Destruct()
     {
-        Palmtree::Math::Core::Internal::__DeallocateNumber(_buffer);
+        Palmtree::Math::Core::Internal::__DeallocateNumber(_tc, _buffer);
     }
 
-    ResourceHolderSINT::__StaticNumberChainBufferTag::__StaticNumberChainBufferTag(NUMBER_OBJECT_SINT * buffer)
+    ResourceHolderSINT::__StaticNumberChainBufferTag::__StaticNumberChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_SINT * buffer)
+        : _tc(tc)
     {
         _buffer = buffer;
     }
@@ -147,10 +154,11 @@ namespace Palmtree::Math::Core::Internal
 
     void  ResourceHolderSINT::__StaticNumberChainBufferTag::Destruct()
     {
-        __DetatchNumber(_buffer);
+        __DetatchNumber(_tc, _buffer);
     }
 
-    ResourceHolderSINT::ResourceHolderSINT()
+    ResourceHolderSINT::ResourceHolderSINT(ThreadContext& tc)
+        : ResourceHolder(tc)
     {
     }
 
@@ -162,7 +170,9 @@ namespace Palmtree::Math::Core::Internal
     {
         Lock lock_obj;
         NUMBER_OBJECT_SINT* buffer = (NUMBER_OBJECT_SINT*)__AllocateHeap(sizeof(NUMBER_OBJECT_SINT));
-        __ChainBufferTag* tag = new __NumberObjectSintChainBufferTag(buffer);
+        _tc.IncrementTypeAAllocationCount();
+        __ChainBufferTag* tag = new __NumberObjectSintChainBufferTag(_tc, buffer);
+        _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);
         return (buffer);
     }
@@ -175,6 +185,7 @@ namespace Palmtree::Math::Core::Internal
         {
             tag->Destruct();
             delete tag;
+            _tc.DecrementTypeBAllocationCount();
         }
     }
 
@@ -185,6 +196,7 @@ namespace Palmtree::Math::Core::Internal
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkNumberObjectSint;1");
         delete tag;
+        _tc.DecrementTypeBAllocationCount();
     }
 
     NUMBER_OBJECT_SINT * ResourceHolderSINT::AllocateNumber(SIGN_T sign, PMC_HANDLE_UINT abs)
@@ -194,11 +206,12 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;ResourceHolderSINT::AllocateNumber;1");
 #endif
         Lock lock_obj;
-        NUMBER_OBJECT_SINT* buffer = Palmtree::Math::Core::Internal::__AllocateNumber(sign, abs);
+        NUMBER_OBJECT_SINT* buffer = Palmtree::Math::Core::Internal::__AllocateNumber(_tc, sign, abs);
 #ifdef _DEBUG
         NotExists(buffer);
 #endif
-        __ChainBufferTag* tag = new __DynamicNumberChainBufferTag(buffer);
+        __ChainBufferTag* tag = new __DynamicNumberChainBufferTag(_tc, buffer);
+        _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);
         return (buffer);
     }
@@ -210,7 +223,8 @@ namespace Palmtree::Math::Core::Internal
         if (!buffer->IS_STATIC)
             NotExists(buffer);
 #endif
-        __ChainBufferTag* tag = new __NumberHandleHookingChainBufferTag(buffer);
+        __ChainBufferTag* tag = new __NumberHandleHookingChainBufferTag(_tc, buffer);
+        _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);
     }
 
@@ -221,7 +235,8 @@ namespace Palmtree::Math::Core::Internal
         if (!x->FLAGS.IS_STATIC)
             NotExists(x);
 #endif
-        __ChainBufferTag* tag = new __UINTNumberHandleHookingChainBufferTag(x);
+        __ChainBufferTag* tag = new __UINTNumberHandleHookingChainBufferTag(_tc, x);
+        _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);
     }
 
@@ -233,6 +248,7 @@ namespace Palmtree::Math::Core::Internal
         {
             tag->Destruct();
             delete tag;
+            _tc.DecrementTypeBAllocationCount();
         }
     }
 
@@ -244,6 +260,7 @@ namespace Palmtree::Math::Core::Internal
         {
             tag->Destruct();
             delete tag;
+            _tc.DecrementTypeBAllocationCount();
         }
     }
 
@@ -266,6 +283,7 @@ namespace Palmtree::Math::Core::Internal
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkNumber;1");
         delete tag;
+        _tc.DecrementTypeBAllocationCount();
     }
 
     void ResourceHolderSINT::UnlinkNumber(PMC_HANDLE_UINT x)
@@ -275,6 +293,7 @@ namespace Palmtree::Math::Core::Internal
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkNumber;1");
         delete tag;
+        _tc.DecrementTypeBAllocationCount();
     }
 
     void ResourceHolderSINT::AttatchStaticNumber(NUMBER_OBJECT_SINT * p, SIGN_T sign, PMC_HANDLE_UINT abs)
@@ -284,7 +303,8 @@ namespace Palmtree::Math::Core::Internal
         NotExists(p);
 #endif
         Palmtree::Math::Core::Internal::__AttatchNumber(p, sign, abs);
-        __ChainBufferTag* tag = new __StaticNumberChainBufferTag(p);
+        __ChainBufferTag* tag = new __StaticNumberChainBufferTag(_tc, p);
+        _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);
     }
 
@@ -296,6 +316,7 @@ namespace Palmtree::Math::Core::Internal
         {
             tag->Destruct();
             delete tag;
+            _tc.DecrementTypeBAllocationCount();
         }
     }
 
@@ -306,6 +327,7 @@ namespace Palmtree::Math::Core::Internal
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderSINT::UnlinkStatickNumber;1");
         delete tag;
+        _tc.DecrementTypeBAllocationCount();
     }
 
     void ResourceHolderSINT::UnlinkInternalNumber(PMC_HANDLE_UINT x)
@@ -314,6 +336,7 @@ namespace Palmtree::Math::Core::Internal
         if (tag != nullptr)
         {
             delete tag;
+            _tc.DecrementTypeBAllocationCount();
         }
     }
 

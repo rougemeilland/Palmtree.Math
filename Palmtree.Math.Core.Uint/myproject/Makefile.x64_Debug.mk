@@ -4,7 +4,7 @@ clean:
 	rm -f ../../dist/Debug/x64/Palmtree.Math.Core.Uint.dll ../build/x64_Debug/Palmtree.Math.Core.Uint.map
 	rm -r -f ../build/x64_Debug
 
-OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_Debug/pmc_bitwiseand.o ../build/x64_Debug/pmc_bitwiseor.o ../build/x64_Debug/pmc_bytes.o ../build/x64_Debug/pmc_compare.o ../build/x64_Debug/pmc_cpuid.o ../build/x64_Debug/pmc_divrem.o ../build/x64_Debug/pmc_dllmain.o ../build/x64_Debug/pmc_equals.o ../build/x64_Debug/pmc_exclusiveor.o ../build/x64_Debug/pmc_from.o ../build/x64_Debug/pmc_greatestcommondivisor.o ../build/x64_Debug/pmc_initialize.o ../build/x64_Debug/pmc_interface_csharp.o ../build/x64_Debug/pmc_internaltest.o ../build/x64_Debug/pmc_itoa.o ../build/x64_Debug/pmc_lock.o ../build/x64_Debug/pmc_log.o ../build/x64_Debug/pmc_memory.o ../build/x64_Debug/pmc_modpow.o ../build/x64_Debug/pmc_multiply.o ../build/x64_Debug/pmc_onecompliment_and_bitwiseand.o ../build/x64_Debug/pmc_parse.o ../build/x64_Debug/pmc_parserstate.o ../build/x64_Debug/pmc_pow.o ../build/x64_Debug/pmc_resourceholder.o ../build/x64_Debug/pmc_resourceholder_uint.o ../build/x64_Debug/pmc_round.o ../build/x64_Debug/pmc_shift.o ../build/x64_Debug/pmc_statistics.o ../build/x64_Debug/pmc_stringio.o ../build/x64_Debug/pmc_subtruct.o ../build/x64_Debug/pmc_thousandseparatedstringwriter.o ../build/x64_Debug/pmc_to.o ../build/x64_Debug/pmc_tostring.o ../build/x64_Debug/pmc_tostringformatter.o ../build/x64_Debug/pmc_tostringformattercustom.o ../build/x64_Debug/pmc_tostringformattertypec.o ../build/x64_Debug/pmc_tostringformattertyped.o ../build/x64_Debug/pmc_tostringformattertypee.o ../build/x64_Debug/pmc_tostringformattertypef.o ../build/x64_Debug/pmc_tostringformattertypeg.o ../build/x64_Debug/pmc_tostringformattertypen.o ../build/x64_Debug/pmc_tostringformattertypep.o ../build/x64_Debug/pmc_tostringformattertypex.o ../build/x64_Debug/pmc_uint_cppinterface.o ../build/x64_Debug/pmc___unit_type_array_chainbuffertag.o ../build/x64_Debug/version.o
+OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_Debug/pmc_bitwiseand.o ../build/x64_Debug/pmc_bitwiseor.o ../build/x64_Debug/pmc_bytes.o ../build/x64_Debug/pmc_compare.o ../build/x64_Debug/pmc_cpuid.o ../build/x64_Debug/pmc_divrem.o ../build/x64_Debug/pmc_dllmain.o ../build/x64_Debug/pmc_equals.o ../build/x64_Debug/pmc_exclusiveor.o ../build/x64_Debug/pmc_from.o ../build/x64_Debug/pmc_greatestcommondivisor.o ../build/x64_Debug/pmc_initialize.o ../build/x64_Debug/pmc_interface_csharp.o ../build/x64_Debug/pmc_internaltest.o ../build/x64_Debug/pmc_itoa.o ../build/x64_Debug/pmc_lock.o ../build/x64_Debug/pmc_log.o ../build/x64_Debug/pmc_memory.o ../build/x64_Debug/pmc_modpow.o ../build/x64_Debug/pmc_multiply.o ../build/x64_Debug/pmc_onecompliment_and_bitwiseand.o ../build/x64_Debug/pmc_parse.o ../build/x64_Debug/pmc_parserstate.o ../build/x64_Debug/pmc_pow.o ../build/x64_Debug/pmc_resourceholder.o ../build/x64_Debug/pmc_resourceholder_uint.o ../build/x64_Debug/pmc_round.o ../build/x64_Debug/pmc_shift.o ../build/x64_Debug/pmc_statistics.o ../build/x64_Debug/pmc_stringio.o ../build/x64_Debug/pmc_subtruct.o ../build/x64_Debug/pmc_thousandseparatedstringwriter.o ../build/x64_Debug/pmc_threadcontext.o ../build/x64_Debug/pmc_to.o ../build/x64_Debug/pmc_tostring.o ../build/x64_Debug/pmc_tostringformatter.o ../build/x64_Debug/pmc_tostringformattercustom.o ../build/x64_Debug/pmc_tostringformattertypec.o ../build/x64_Debug/pmc_tostringformattertyped.o ../build/x64_Debug/pmc_tostringformattertypee.o ../build/x64_Debug/pmc_tostringformattertypef.o ../build/x64_Debug/pmc_tostringformattertypeg.o ../build/x64_Debug/pmc_tostringformattertypen.o ../build/x64_Debug/pmc_tostringformattertypep.o ../build/x64_Debug/pmc_tostringformattertypex.o ../build/x64_Debug/pmc_uint_cppinterface.o ../build/x64_Debug/pmc___unit_type_array_chainbuffertag.o ../build/x64_Debug/version.o
 
 ../../dist/Debug/x64/Palmtree.Math.Core.Uint.dll: $(OBJS) ../Palmtree.Math.Core.Uint.def
 	mkdir -p ../../dist/Debug/x64
@@ -66,7 +66,7 @@ OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_D
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x64_Debug/pmc_initialize.o ../pmc_initialize.cpp
 
-../build/x64_Debug/pmc_interface_csharp.o: ../pmc_interface_csharp.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../mymakefile.xml
+../build/x64_Debug/pmc_interface_csharp.o: ../pmc_interface_csharp.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_threadcontext.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x64_Debug/pmc_interface_csharp.o ../pmc_interface_csharp.cpp
 
@@ -86,7 +86,7 @@ OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_D
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x64_Debug/pmc_log.o ../pmc_log.cpp
 
-../build/x64_Debug/pmc_memory.o: ../pmc_memory.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_resourceholder_uint.h  ../pmc_lock.h  ../pmc_inline_func.h  ../mymakefile.xml
+../build/x64_Debug/pmc_memory.o: ../pmc_memory.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_resourceholder_uint.h  ../pmc_lock.h  ../pmc_threadcontext.h  ../pmc_inline_func.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x64_Debug/pmc_memory.o ../pmc_memory.cpp
 
@@ -114,11 +114,11 @@ OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_D
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x64_Debug/pmc_pow.o ../pmc_pow.cpp
 
-../build/x64_Debug/pmc_resourceholder.o: ../pmc_resourceholder.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_lock.h  ../pmc_inline_func.h  ../pmc___unit_type_array_chainbuffertag.h  ../mymakefile.xml
+../build/x64_Debug/pmc_resourceholder.o: ../pmc_resourceholder.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_threadcontext.h  ../pmc_lock.h  ../pmc_inline_func.h  ../pmc___unit_type_array_chainbuffertag.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x64_Debug/pmc_resourceholder.o ../pmc_resourceholder.cpp
 
-../build/x64_Debug/pmc_resourceholder_uint.o: ../pmc_resourceholder_uint.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_resourceholder_uint.h  ../pmc_lock.h  ../pmc___unit_type_array_chainbuffertag.h  ../pmc_inline_func.h  ../mymakefile.xml
+../build/x64_Debug/pmc_resourceholder_uint.o: ../pmc_resourceholder_uint.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_resourceholder_uint.h  ../pmc_threadcontext.h  ../pmc_lock.h  ../pmc___unit_type_array_chainbuffertag.h  ../pmc_inline_func.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x64_Debug/pmc_resourceholder_uint.o ../pmc_resourceholder_uint.cpp
 
@@ -146,7 +146,11 @@ OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_D
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x64_Debug/pmc_thousandseparatedstringwriter.o ../pmc_thousandseparatedstringwriter.cpp
 
-../build/x64_Debug/pmc_to.o: ../pmc_to.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_resourceholder_uint.h  ../pmc_inline_func.h  ../mymakefile.xml
+../build/x64_Debug/pmc_threadcontext.o: ../pmc_threadcontext.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_threadcontext.h  ../pmc_exception.h  ../mymakefile.xml
+	mkdir -p ../build/x64_Debug
+	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x64_Debug/pmc_threadcontext.o ../pmc_threadcontext.cpp
+
+../build/x64_Debug/pmc_to.o: ../pmc_to.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_resourceholder_uint.h  ../pmc_threadcontext.h  ../pmc_inline_func.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x64_Debug/pmc_to.o ../pmc_to.cpp
 
@@ -154,11 +158,11 @@ OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_D
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x64_Debug/pmc_tostring.o ../pmc_tostring.cpp
 
-../build/x64_Debug/pmc_tostringformatter.o: ../pmc_tostringformatter.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_stringio.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_thousandseparatedstringwriter.h  ../pmc_tostringformatter.h  ../pmc_resourceholder_uint.h  ../pmc_string.h  ../pmc_inline_func.h  ../mymakefile.xml
+../build/x64_Debug/pmc_tostringformatter.o: ../pmc_tostringformatter.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_stringio.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_thousandseparatedstringwriter.h  ../pmc_tostringformatter.h  ../pmc_resourceholder_uint.h  ../pmc_threadcontext.h  ../pmc_string.h  ../pmc_inline_func.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x64_Debug/pmc_tostringformatter.o ../pmc_tostringformatter.cpp
 
-../build/x64_Debug/pmc_tostringformattercustom.o: ../pmc_tostringformattercustom.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_resourceholder_uint.h  ../pmc_stringio.h  ../pmc_tostringformattercustom.h  ../pmc_thousandseparatedstringwriter.h  ../mymakefile.xml
+../build/x64_Debug/pmc_tostringformattercustom.o: ../pmc_tostringformattercustom.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_resourceholder_uint.h  ../pmc_stringio.h  ../pmc_tostringformattercustom.h  ../pmc_threadcontext.h  ../pmc_thousandseparatedstringwriter.h  ../pmc_lock.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x64_Debug/pmc_tostringformattercustom.o ../pmc_tostringformattercustom.cpp
 

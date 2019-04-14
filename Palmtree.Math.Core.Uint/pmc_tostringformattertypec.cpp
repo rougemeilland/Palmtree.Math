@@ -30,8 +30,8 @@
 
 namespace Palmtree::Math::Core::Internal
 {
-    ToStringFormatterTypeC::ToStringFormatterTypeC(int precision, const PMC_NUMBER_FORMAT_INFO * number_format_info)
-        : ToStringFormatter(L'C', precision, number_format_info)
+    ToStringFormatterTypeC::ToStringFormatterTypeC(ThreadContext& tc, int precision, const PMC_NUMBER_FORMAT_INFO * number_format_info)
+        : ToStringFormatter(tc, L'C', precision, number_format_info)
     {
     }
     
@@ -135,7 +135,7 @@ namespace Palmtree::Math::Core::Internal
     
     void ToStringFormatterTypeC::FormatNumberSequence(const wchar_t * int_part, const wchar_t * frac_part, _INT32_T exp, StringWriter& writer)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(_tc);
         ReverseStringReader r_reader(int_part);
         size_t work_buf_len = lstrlenW(int_part) * 2 + 1 + _precision + 1;
         wchar_t* work_buf = root.AllocateString(work_buf_len);

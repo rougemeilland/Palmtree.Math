@@ -77,7 +77,7 @@ namespace Palmtree::Math::Core::Internal
         _COPY_MEMORY_UNIT(r_buf, u_ptr, u_count);
     }
 
-    NUMBER_OBJECT_UINT* PMC_Pow_UI_UI_Imp(_UINT32_T v, _UINT32_T e) noexcept(false)
+    NUMBER_OBJECT_UINT* PMC_Pow_UI_UI_Imp(ThreadContext& tc, _UINT32_T v, _UINT32_T e) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(v) * 8)
         {
@@ -125,14 +125,14 @@ namespace Palmtree::Math::Core::Internal
                 // e が 1 である場合
 
                 // 計算結果の v を返す
-                return (From_UI_Imp(v));
+                return (From_UI_Imp(tc, v));
             }
             else
             {
                 // v と e がともに 2 以上である場合
 
                 // v の e 乗を計算する
-                ResourceHolderUINT root;
+                ResourceHolderUINT root(tc);
                 __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v);
 
                 // べき乗の計算結果のビット長が論理的な限界を超えると思われる場合、エラーを返す
@@ -151,14 +151,14 @@ namespace Palmtree::Math::Core::Internal
                 root.CheckBlock(work1_buf);
                 root.CheckBlock(work2_buf);
                 root.CheckNumber(r);
-                CommitNumber(r);
+                CommitNumber(tc, r);
                 root.UnlinkNumber(r);
                 return (r);
             }
         }
     }
 
-    NUMBER_OBJECT_UINT* PMC_Pow_UL_UI_Imp(_UINT64_T v, _UINT32_T e) noexcept(false)
+    NUMBER_OBJECT_UINT* PMC_Pow_UL_UI_Imp(ThreadContext& tc, _UINT64_T v, _UINT32_T e) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT * 2 < sizeof(v) * 8)
         {
@@ -206,14 +206,14 @@ namespace Palmtree::Math::Core::Internal
                 // e が 1 である場合
 
                 // 計算結果の v を返す
-                return (From_UL_Imp(v));
+                return (From_UL_Imp(tc, v));
             }
             else
             {
                 // v と e がともに 2 以上である場合
 
                 // v の e 乗を計算する
-                ResourceHolderUINT root;
+                ResourceHolderUINT root(tc);
 
                 __UNIT_TYPE v_bit_count;
                 __UNIT_TYPE* v_buf;
@@ -273,14 +273,14 @@ namespace Palmtree::Math::Core::Internal
                 root.CheckBlock(work1_buf);
                 root.CheckBlock(work2_buf);
                 root.CheckNumber(r);
-                CommitNumber(r);
+                CommitNumber(tc, r);
                 root.UnlinkNumber(r);
                 return (r);
             }
         }
     }
 
-    NUMBER_OBJECT_UINT* PMC_Pow_UX_UI_Imp(NUMBER_OBJECT_UINT* v, _UINT32_T e) noexcept(false)
+    NUMBER_OBJECT_UINT* PMC_Pow_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* v, _UINT32_T e) noexcept(false)
     {
         if (v->IS_ZERO)
         {
@@ -323,14 +323,14 @@ namespace Palmtree::Math::Core::Internal
                 // e が 1 である場合
 
                 // 計算結果の v を返す
-                return (DuplicateNumber(v));
+                return (DuplicateNumber(tc, v));
             }
             else
             {
                 // v と e がともに 2 以上である場合
 
                 // v の e 乗を計算する
-                ResourceHolderUINT root;
+                ResourceHolderUINT root(tc);
                 __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
 
                 // べき乗の計算結果のビット長が論理的な限界を超えると思われる場合、エラーを返す
@@ -346,14 +346,14 @@ namespace Palmtree::Math::Core::Internal
                 root.CheckBlock(work1_buf);
                 root.CheckBlock(work2_buf);
                 root.CheckNumber(r);
-                CommitNumber(r);
+                CommitNumber(tc, r);
                 root.UnlinkNumber(r);
                 return (r);
             }
         }
     }
 
-    NUMBER_OBJECT_UINT* PMC_Pow10_UI_Imp(_UINT32_T n)
+    NUMBER_OBJECT_UINT* PMC_Pow10_UI_Imp(ThreadContext& tc, _UINT32_T n)
     {
         switch (n)
         {
@@ -362,77 +362,77 @@ namespace Palmtree::Math::Core::Internal
         case 1:
             return (&number_object_uint_ten);
         case 2:
-            return (From_UI_Imp(100U));
+            return (From_UI_Imp(tc, 100U));
         case 3:
-            return (From_UI_Imp(1000U));
+            return (From_UI_Imp(tc, 1000U));
         case 4:
-            return (From_UI_Imp(10000U));
+            return (From_UI_Imp(tc, 10000U));
         case 5:
-            return (From_UI_Imp(100000U));
+            return (From_UI_Imp(tc, 100000U));
         case 6:
-            return (From_UI_Imp(1000000U));
+            return (From_UI_Imp(tc, 1000000U));
         case 7:
-            return (From_UI_Imp(10000000U));
+            return (From_UI_Imp(tc, 10000000U));
         case 8:
-            return (From_UI_Imp(100000000U));
+            return (From_UI_Imp(tc, 100000000U));
         case 9:
-            return (From_UI_Imp(1000000000U));
+            return (From_UI_Imp(tc, 1000000000U));
         case 10:
-            return (From_UL_Imp(10000000000U));
+            return (From_UL_Imp(tc, 10000000000U));
         case 11:
-            return (From_UL_Imp(100000000000U));
+            return (From_UL_Imp(tc, 100000000000U));
         case 12:
-            return (From_UL_Imp(1000000000000U));
+            return (From_UL_Imp(tc, 1000000000000U));
         case 13:
-            return (From_UL_Imp(10000000000000U));
+            return (From_UL_Imp(tc, 10000000000000U));
         case 14:
-            return (From_UL_Imp(100000000000000U));
+            return (From_UL_Imp(tc, 100000000000000U));
         case 15:
-            return (From_UL_Imp(1000000000000000U));
+            return (From_UL_Imp(tc, 1000000000000000U));
         case 16:
-            return (From_UL_Imp(10000000000000000U));
+            return (From_UL_Imp(tc, 10000000000000000U));
         case 17:
-            return (From_UL_Imp(100000000000000000U));
+            return (From_UL_Imp(tc, 100000000000000000U));
         case 18:
-            return (From_UL_Imp(1000000000000000000U));
+            return (From_UL_Imp(tc, 1000000000000000000U));
         case 19:
-            return (From_UL_Imp(10000000000000000000U));
+            return (From_UL_Imp(tc, 10000000000000000000U));
         default:
-            return (PMC_Pow_UX_UI_Imp(&number_object_uint_ten, n));
+            return (PMC_Pow_UX_UI_Imp(tc, &number_object_uint_ten, n));
         }
     }
 
-    PMC_HANDLE_UINT PMC_Pow_UI_UI(_UINT32_T v, _UINT32_T e) noexcept(false)
+    PMC_HANDLE_UINT PMC_Pow_UI_UI(ThreadContext& tc, _UINT32_T v, _UINT32_T e) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(e) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_pow.cpp;PMC_Pow_UX_UI;1");
         }
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nr = PMC_Pow_UI_UI_Imp(v, e);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nr = PMC_Pow_UI_UI_Imp(tc, v, e);
         root.HookNumber(nr);
         PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);
         return (r);
     }
 
-    PMC_HANDLE_UINT PMC_Pow_UL_UI(_UINT64_T v, _UINT32_T e) noexcept(false)
+    PMC_HANDLE_UINT PMC_Pow_UL_UI(ThreadContext& tc, _UINT64_T v, _UINT32_T e) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(e) * 8)
         {
             // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_pow.cpp;PMC_Pow_UX_UI;1");
         }
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nr = PMC_Pow_UL_UI_Imp(v, e);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nr = PMC_Pow_UL_UI_Imp(tc, v, e);
         root.HookNumber(nr);
         PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);
         return (r);
     }
 
-    PMC_HANDLE_UINT PMC_Pow_UX_UI(PMC_HANDLE_UINT v, _UINT32_T e) noexcept(false)
+    PMC_HANDLE_UINT PMC_Pow_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT v, _UINT32_T e) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(e) * 8)
         {
@@ -440,18 +440,18 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_pow.cpp;PMC_Pow_UX_UI;1");
         }
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nr = PMC_Pow_UX_UI_Imp(nv, e);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nr = PMC_Pow_UX_UI_Imp(tc, nv, e);
         root.HookNumber(nr);
         PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);
         return (r);
     }
 
-    PMC_HANDLE_UINT PMC_Pow10_UI(_UINT32_T n)
+    PMC_HANDLE_UINT PMC_Pow10_UI(ThreadContext& tc, _UINT32_T n)
     {
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nr = PMC_Pow10_UI_Imp(n);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nr = PMC_Pow10_UI_Imp(tc, n);
         root.HookNumber(nr);
         PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);

@@ -30,7 +30,7 @@
 
 namespace Palmtree::Math::Core::Internal
 {
-    PMC_HANDLE_SINT PMC_OneComplement_UX(PMC_HANDLE_UINT x) noexcept(false)
+    PMC_HANDLE_SINT PMC_OneComplement_UX(ThreadContext& tc, PMC_HANDLE_UINT x) noexcept(false)
     {
         if (x == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"x");
@@ -45,8 +45,8 @@ namespace Palmtree::Math::Core::Internal
         else
         {
             // x > 0 の場合
-            ResourceHolderSINT root;
-            PMC_HANDLE_UINT r_abs = ep_uint.Increment(x);
+            ResourceHolderSINT root(tc);
+            PMC_HANDLE_UINT r_abs = ep_uint.Increment(tc, x);
             root.HookNumber(r_abs);
             NUMBER_OBJECT_SINT* nr = root.AllocateNumber(SIGN_NEGATIVE, r_abs);
             PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
@@ -55,7 +55,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_OneComplement_X(PMC_HANDLE_SINT x) noexcept(false)
+    PMC_HANDLE_SINT PMC_OneComplement_X(ThreadContext& tc, PMC_HANDLE_SINT x) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nx = GET_NUMBER_OBJECT(x, L"x");
 
@@ -71,8 +71,8 @@ namespace Palmtree::Math::Core::Internal
             // x > 0 の場合
 
             // abs(x) == x なので、x~ == -(abs(x) + 1) である。
-            ResourceHolderSINT root;
-            PMC_HANDLE_UINT r_abs = ep_uint.Increment(nx->ABS);
+            ResourceHolderSINT root(tc);
+            PMC_HANDLE_UINT r_abs = ep_uint.Increment(tc, nx->ABS);
             root.HookNumber(r_abs);
             NUMBER_OBJECT_SINT* nr = root.AllocateNumber(SIGN_NEGATIVE, r_abs);
             PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
@@ -84,8 +84,8 @@ namespace Palmtree::Math::Core::Internal
             // x < 0 の場合
 
             // abs(x) == -x なので、x~ == abs(x) - 1 である。
-            ResourceHolderSINT root;
-            PMC_HANDLE_UINT r_abs = ep_uint.Decrement(nx->ABS);
+            ResourceHolderSINT root(tc);
+            PMC_HANDLE_UINT r_abs = ep_uint.Decrement(tc, nx->ABS);
             root.HookNumber(r_abs);
             NUMBER_OBJECT_SINT* nr = root.AllocateNumber(SIGN_POSITIVE, r_abs);
             PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);

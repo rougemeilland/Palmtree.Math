@@ -35,9 +35,9 @@ namespace Palmtree::Math::Core::Internal
 
     void PMC_InternalTest()
     {
-#if defined(_DEBUG)
+#if defined(_DEBUG) && defined(DO_SELF_TEST)
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -56,7 +56,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 0
             unsigned char v_array[] = { 0x00 };
@@ -72,7 +72,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 0
             unsigned char v_array[] = { 0x00 };
@@ -88,7 +88,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -100,7 +100,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -112,7 +112,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -131,7 +131,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 1
             unsigned char v_array[] = { 0x01,0x01 };
@@ -147,7 +147,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 1
             unsigned char v_array[] = { 0x01,0x01 };
@@ -163,7 +163,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -175,7 +175,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -187,7 +187,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -206,7 +206,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 1234567890
             unsigned char v_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
@@ -222,7 +222,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 1234567890
             unsigned char v_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
@@ -238,7 +238,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -250,7 +250,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -262,7 +262,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -281,7 +281,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 4294967295
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff };
@@ -297,7 +297,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 4294967295
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff };
@@ -313,7 +313,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -325,7 +325,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -337,7 +337,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -356,7 +356,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 4294967296
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
@@ -372,7 +372,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 4294967296
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
@@ -388,7 +388,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -400,7 +400,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -419,7 +419,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 9999999999
             unsigned char v_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
@@ -435,7 +435,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 9999999999
             unsigned char v_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
@@ -451,7 +451,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -463,7 +463,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -482,7 +482,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 12345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
@@ -498,7 +498,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 12345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
@@ -514,7 +514,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -526,7 +526,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -545,7 +545,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 18446744073709551615
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
@@ -561,7 +561,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 18446744073709551615
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
@@ -577,7 +577,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -589,7 +589,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -608,7 +608,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 18446744073709551616
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
@@ -624,7 +624,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 18446744073709551616
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
@@ -640,7 +640,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -659,7 +659,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 99999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
@@ -675,7 +675,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 99999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
@@ -691,7 +691,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -710,7 +710,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 1234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
@@ -726,7 +726,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 1234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
@@ -742,7 +742,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -761,7 +761,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 9999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
@@ -777,7 +777,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 9999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
@@ -793,7 +793,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -812,7 +812,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
@@ -828,7 +828,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
@@ -844,7 +844,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -863,7 +863,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
@@ -879,7 +879,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
@@ -895,7 +895,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -914,7 +914,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
@@ -930,7 +930,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
@@ -946,7 +946,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 0
             unsigned char u_array[] = { 0x00 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -965,7 +965,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 0U;
             // v = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
@@ -981,7 +981,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 0UL;
             // v = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
@@ -997,7 +997,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1016,7 +1016,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 0
             unsigned char v_array[] = { 0x00 };
@@ -1032,7 +1032,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 0
             unsigned char v_array[] = { 0x00 };
@@ -1048,7 +1048,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1060,7 +1060,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1072,7 +1072,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1091,7 +1091,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 1
             unsigned char v_array[] = { 0x01,0x01 };
@@ -1107,7 +1107,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 1
             unsigned char v_array[] = { 0x01,0x01 };
@@ -1123,7 +1123,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1135,7 +1135,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1147,7 +1147,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1166,7 +1166,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 1234567890
             unsigned char v_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
@@ -1182,7 +1182,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 1234567890
             unsigned char v_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
@@ -1198,7 +1198,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1210,7 +1210,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1222,7 +1222,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1241,7 +1241,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 4294967295
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff };
@@ -1257,7 +1257,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 4294967295
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff };
@@ -1273,7 +1273,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1285,7 +1285,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1297,7 +1297,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1316,7 +1316,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 4294967296
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
@@ -1332,7 +1332,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 4294967296
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
@@ -1348,7 +1348,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1360,7 +1360,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1379,7 +1379,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 9999999999
             unsigned char v_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
@@ -1395,7 +1395,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 9999999999
             unsigned char v_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
@@ -1411,7 +1411,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1423,7 +1423,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1442,7 +1442,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 12345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
@@ -1458,7 +1458,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 12345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
@@ -1474,7 +1474,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1486,7 +1486,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1505,7 +1505,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 18446744073709551615
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
@@ -1521,7 +1521,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 18446744073709551615
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
@@ -1537,7 +1537,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1549,7 +1549,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1568,7 +1568,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 18446744073709551616
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
@@ -1584,7 +1584,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 18446744073709551616
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
@@ -1600,7 +1600,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1619,7 +1619,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 99999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
@@ -1635,7 +1635,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 99999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
@@ -1651,7 +1651,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1670,7 +1670,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 1234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
@@ -1686,7 +1686,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 1234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
@@ -1702,7 +1702,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1721,7 +1721,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 9999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
@@ -1737,7 +1737,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 9999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
@@ -1753,7 +1753,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1772,7 +1772,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
@@ -1788,7 +1788,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
@@ -1804,7 +1804,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1823,7 +1823,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
@@ -1839,7 +1839,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
@@ -1855,7 +1855,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1874,7 +1874,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
@@ -1890,7 +1890,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
@@ -1906,7 +1906,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1
             unsigned char u_array[] = { 0x01,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1925,7 +1925,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1U;
             // v = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
@@ -1941,7 +1941,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1UL;
             // v = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
@@ -1957,7 +1957,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -1976,7 +1976,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 0
             unsigned char v_array[] = { 0x00 };
@@ -1992,7 +1992,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 0
             unsigned char v_array[] = { 0x00 };
@@ -2008,7 +2008,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2020,7 +2020,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2032,7 +2032,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2051,7 +2051,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 1
             unsigned char v_array[] = { 0x01,0x01 };
@@ -2067,7 +2067,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 1
             unsigned char v_array[] = { 0x01,0x01 };
@@ -2083,7 +2083,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2095,7 +2095,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2107,7 +2107,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2126,7 +2126,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 1234567890
             unsigned char v_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
@@ -2142,7 +2142,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 1234567890
             unsigned char v_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
@@ -2158,7 +2158,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2170,7 +2170,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2182,7 +2182,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2201,7 +2201,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 4294967295
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff };
@@ -2217,7 +2217,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 4294967295
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff };
@@ -2233,7 +2233,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2245,7 +2245,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2257,7 +2257,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2276,7 +2276,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 4294967296
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
@@ -2292,7 +2292,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 4294967296
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
@@ -2308,7 +2308,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2320,7 +2320,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2339,7 +2339,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 9999999999
             unsigned char v_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
@@ -2355,7 +2355,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 9999999999
             unsigned char v_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
@@ -2371,7 +2371,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2383,7 +2383,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2402,7 +2402,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 12345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
@@ -2418,7 +2418,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 12345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
@@ -2434,7 +2434,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2446,7 +2446,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2465,7 +2465,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 18446744073709551615
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
@@ -2481,7 +2481,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 18446744073709551615
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
@@ -2497,7 +2497,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2509,7 +2509,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2528,7 +2528,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 18446744073709551616
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
@@ -2544,7 +2544,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 18446744073709551616
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
@@ -2560,7 +2560,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2579,7 +2579,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 99999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
@@ -2595,7 +2595,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 99999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
@@ -2611,7 +2611,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2630,7 +2630,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 1234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
@@ -2646,7 +2646,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 1234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
@@ -2662,7 +2662,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2681,7 +2681,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 9999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
@@ -2697,7 +2697,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 9999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
@@ -2713,7 +2713,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2732,7 +2732,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
@@ -2748,7 +2748,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
@@ -2764,7 +2764,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2783,7 +2783,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
@@ -2799,7 +2799,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
@@ -2815,7 +2815,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2834,7 +2834,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
@@ -2850,7 +2850,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
@@ -2866,7 +2866,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890
             unsigned char u_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2885,7 +2885,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 1234567890U;
             // v = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
@@ -2901,7 +2901,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 1234567890UL;
             // v = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
@@ -2917,7 +2917,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2936,7 +2936,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 0
             unsigned char v_array[] = { 0x00 };
@@ -2952,7 +2952,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 0
             unsigned char v_array[] = { 0x00 };
@@ -2968,7 +2968,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2980,7 +2980,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -2992,7 +2992,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3011,7 +3011,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 1
             unsigned char v_array[] = { 0x01,0x01 };
@@ -3027,7 +3027,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 1
             unsigned char v_array[] = { 0x01,0x01 };
@@ -3043,7 +3043,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3055,7 +3055,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3067,7 +3067,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3086,7 +3086,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 1234567890
             unsigned char v_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
@@ -3102,7 +3102,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 1234567890
             unsigned char v_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
@@ -3118,7 +3118,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3130,7 +3130,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3142,7 +3142,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3161,7 +3161,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 4294967295
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff };
@@ -3177,7 +3177,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 4294967295
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff };
@@ -3193,7 +3193,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3205,7 +3205,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3217,7 +3217,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3236,7 +3236,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 4294967296
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
@@ -3252,7 +3252,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 4294967296
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
@@ -3268,7 +3268,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3280,7 +3280,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3299,7 +3299,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 9999999999
             unsigned char v_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
@@ -3315,7 +3315,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 9999999999
             unsigned char v_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
@@ -3331,7 +3331,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3343,7 +3343,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3362,7 +3362,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 12345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
@@ -3378,7 +3378,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 12345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
@@ -3394,7 +3394,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3406,7 +3406,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3425,7 +3425,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 18446744073709551615
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
@@ -3441,7 +3441,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 18446744073709551615
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
@@ -3457,7 +3457,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3469,7 +3469,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3488,7 +3488,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 18446744073709551616
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
@@ -3504,7 +3504,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 18446744073709551616
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
@@ -3520,7 +3520,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3539,7 +3539,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 99999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
@@ -3555,7 +3555,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 99999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
@@ -3571,7 +3571,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3590,7 +3590,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 1234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
@@ -3606,7 +3606,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 1234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
@@ -3622,7 +3622,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3641,7 +3641,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 9999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
@@ -3657,7 +3657,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 9999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
@@ -3673,7 +3673,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3692,7 +3692,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
@@ -3708,7 +3708,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
@@ -3724,7 +3724,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3743,7 +3743,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
@@ -3759,7 +3759,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
@@ -3775,7 +3775,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3794,7 +3794,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
@@ -3810,7 +3810,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
@@ -3826,7 +3826,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967295
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3845,7 +3845,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT32_T u = 4294967295U;
             // v = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
@@ -3861,7 +3861,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967295UL;
             // v = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
@@ -3877,7 +3877,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3896,7 +3896,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 0
             unsigned char v_array[] = { 0x00 };
@@ -3912,7 +3912,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3924,7 +3924,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3936,7 +3936,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3955,7 +3955,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 1
             unsigned char v_array[] = { 0x01,0x01 };
@@ -3971,7 +3971,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3983,7 +3983,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -3995,7 +3995,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4014,7 +4014,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 1234567890
             unsigned char v_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
@@ -4030,7 +4030,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4042,7 +4042,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4054,7 +4054,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4073,7 +4073,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 4294967295
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff };
@@ -4089,7 +4089,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4101,7 +4101,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4113,7 +4113,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4132,7 +4132,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 4294967296
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
@@ -4148,7 +4148,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4160,7 +4160,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4179,7 +4179,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 9999999999
             unsigned char v_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
@@ -4195,7 +4195,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4207,7 +4207,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4226,7 +4226,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 12345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
@@ -4242,7 +4242,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4254,7 +4254,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4273,7 +4273,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 18446744073709551615
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
@@ -4289,7 +4289,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4301,7 +4301,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4320,7 +4320,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 18446744073709551616
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
@@ -4336,7 +4336,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4355,7 +4355,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 99999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
@@ -4371,7 +4371,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4390,7 +4390,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 1234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
@@ -4406,7 +4406,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4425,7 +4425,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 9999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
@@ -4441,7 +4441,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4460,7 +4460,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
@@ -4476,7 +4476,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4495,7 +4495,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
@@ -4511,7 +4511,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4530,7 +4530,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
@@ -4546,7 +4546,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 4294967296
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4565,7 +4565,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 4294967296UL;
             // v = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
@@ -4581,7 +4581,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4600,7 +4600,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 0
             unsigned char v_array[] = { 0x00 };
@@ -4616,7 +4616,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4628,7 +4628,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4640,7 +4640,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4659,7 +4659,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 1
             unsigned char v_array[] = { 0x01,0x01 };
@@ -4675,7 +4675,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4687,7 +4687,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4699,7 +4699,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4718,7 +4718,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 1234567890
             unsigned char v_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
@@ -4734,7 +4734,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4746,7 +4746,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4758,7 +4758,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4777,7 +4777,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 4294967295
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff };
@@ -4793,7 +4793,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4805,7 +4805,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4817,7 +4817,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4836,7 +4836,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 4294967296
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
@@ -4852,7 +4852,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4864,7 +4864,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4883,7 +4883,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 9999999999
             unsigned char v_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
@@ -4899,7 +4899,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4911,7 +4911,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4930,7 +4930,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 12345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
@@ -4946,7 +4946,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4958,7 +4958,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -4977,7 +4977,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 18446744073709551615
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
@@ -4993,7 +4993,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5005,7 +5005,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5024,7 +5024,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 18446744073709551616
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
@@ -5040,7 +5040,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5059,7 +5059,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 99999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
@@ -5075,7 +5075,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5094,7 +5094,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 1234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
@@ -5110,7 +5110,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5129,7 +5129,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 9999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
@@ -5145,7 +5145,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5164,7 +5164,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
@@ -5180,7 +5180,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5199,7 +5199,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
@@ -5215,7 +5215,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5234,7 +5234,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
@@ -5250,7 +5250,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999
             unsigned char u_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5269,7 +5269,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 9999999999UL;
             // v = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
@@ -5285,7 +5285,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5304,7 +5304,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 0
             unsigned char v_array[] = { 0x00 };
@@ -5320,7 +5320,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5332,7 +5332,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5344,7 +5344,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5363,7 +5363,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 1
             unsigned char v_array[] = { 0x01,0x01 };
@@ -5379,7 +5379,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5391,7 +5391,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5403,7 +5403,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5422,7 +5422,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 1234567890
             unsigned char v_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
@@ -5438,7 +5438,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5450,7 +5450,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5462,7 +5462,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5481,7 +5481,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 4294967295
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff };
@@ -5497,7 +5497,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5509,7 +5509,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5521,7 +5521,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5540,7 +5540,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 4294967296
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
@@ -5556,7 +5556,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5568,7 +5568,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5587,7 +5587,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 9999999999
             unsigned char v_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
@@ -5603,7 +5603,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5615,7 +5615,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5634,7 +5634,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 12345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
@@ -5650,7 +5650,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5662,7 +5662,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5681,7 +5681,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 18446744073709551615
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
@@ -5697,7 +5697,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5709,7 +5709,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5728,7 +5728,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 18446744073709551616
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
@@ -5744,7 +5744,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5763,7 +5763,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 99999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
@@ -5779,7 +5779,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5798,7 +5798,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 1234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
@@ -5814,7 +5814,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5833,7 +5833,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 9999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
@@ -5849,7 +5849,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5868,7 +5868,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
@@ -5884,7 +5884,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5903,7 +5903,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
@@ -5919,7 +5919,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5938,7 +5938,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
@@ -5954,7 +5954,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -5973,7 +5973,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 12345678901234567890UL;
             // v = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
@@ -5989,7 +5989,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6008,7 +6008,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 0
             unsigned char v_array[] = { 0x00 };
@@ -6024,7 +6024,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6036,7 +6036,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6048,7 +6048,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6067,7 +6067,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 1
             unsigned char v_array[] = { 0x01,0x01 };
@@ -6083,7 +6083,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6095,7 +6095,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6107,7 +6107,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6126,7 +6126,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 1234567890
             unsigned char v_array[] = { 0x01,0xd2,0x02,0x96,0x49 };
@@ -6142,7 +6142,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6154,7 +6154,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6166,7 +6166,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6185,7 +6185,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 4294967295
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff };
@@ -6201,7 +6201,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6213,7 +6213,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6225,7 +6225,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6244,7 +6244,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 4294967296
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x01 };
@@ -6260,7 +6260,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6272,7 +6272,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6291,7 +6291,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 9999999999
             unsigned char v_array[] = { 0x01,0xff,0xe3,0x0b,0x54,0x02 };
@@ -6307,7 +6307,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6319,7 +6319,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6338,7 +6338,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 12345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x1f,0xeb,0x8c,0xa9,0x54,0xab };
@@ -6354,7 +6354,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6366,7 +6366,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6385,7 +6385,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 18446744073709551615
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
@@ -6401,7 +6401,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6413,7 +6413,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6432,7 +6432,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 18446744073709551616
             unsigned char v_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
@@ -6448,7 +6448,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6467,7 +6467,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 99999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
@@ -6483,7 +6483,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6502,7 +6502,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 1234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
@@ -6518,7 +6518,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6537,7 +6537,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 9999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
@@ -6553,7 +6553,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6572,7 +6572,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
@@ -6588,7 +6588,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6607,7 +6607,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
@@ -6623,7 +6623,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6642,7 +6642,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char v_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
@@ -6658,7 +6658,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551615
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6677,7 +6677,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             _UINT64_T u = 18446744073709551615UL;
             // v = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char v_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
@@ -6693,7 +6693,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6712,7 +6712,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6724,7 +6724,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6736,7 +6736,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6755,7 +6755,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6767,7 +6767,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6779,7 +6779,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6798,7 +6798,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6810,7 +6810,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6822,7 +6822,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6841,7 +6841,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6853,7 +6853,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6865,7 +6865,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6884,7 +6884,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6896,7 +6896,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6915,7 +6915,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6927,7 +6927,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6946,7 +6946,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6958,7 +6958,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6977,7 +6977,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -6989,7 +6989,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7008,7 +7008,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7027,7 +7027,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7046,7 +7046,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7065,7 +7065,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7084,7 +7084,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7103,7 +7103,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7122,7 +7122,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 18446744073709551616
             unsigned char u_array[] = { 0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7141,7 +7141,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7160,7 +7160,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7172,7 +7172,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7184,7 +7184,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7203,7 +7203,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7215,7 +7215,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7227,7 +7227,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7246,7 +7246,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7258,7 +7258,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7270,7 +7270,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7289,7 +7289,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7301,7 +7301,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7313,7 +7313,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7332,7 +7332,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7344,7 +7344,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7363,7 +7363,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7375,7 +7375,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7394,7 +7394,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7406,7 +7406,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7425,7 +7425,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7437,7 +7437,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7456,7 +7456,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7475,7 +7475,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7494,7 +7494,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7513,7 +7513,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7532,7 +7532,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7551,7 +7551,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7570,7 +7570,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0x0f,0x63,0x2d,0x5e,0xc7,0x6b,0x05 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7589,7 +7589,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7608,7 +7608,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7620,7 +7620,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7632,7 +7632,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7651,7 +7651,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7663,7 +7663,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7675,7 +7675,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7694,7 +7694,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7706,7 +7706,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7718,7 +7718,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7737,7 +7737,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7749,7 +7749,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7761,7 +7761,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7780,7 +7780,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7792,7 +7792,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7811,7 +7811,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7823,7 +7823,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7842,7 +7842,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7854,7 +7854,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7873,7 +7873,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7885,7 +7885,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7904,7 +7904,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7923,7 +7923,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7942,7 +7942,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7961,7 +7961,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7980,7 +7980,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -7999,7 +7999,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8018,7 +8018,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0x5f,0xbc,0xac,0xb8,0xf3,0xdb,0xc0,0x75,0x20,0xc9,0xa0,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8037,7 +8037,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8056,7 +8056,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8068,7 +8068,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8080,7 +8080,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8099,7 +8099,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8111,7 +8111,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8123,7 +8123,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8142,7 +8142,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8154,7 +8154,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8166,7 +8166,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8185,7 +8185,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8197,7 +8197,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8209,7 +8209,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8228,7 +8228,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8240,7 +8240,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8259,7 +8259,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8271,7 +8271,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8290,7 +8290,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8302,7 +8302,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8321,7 +8321,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8333,7 +8333,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8352,7 +8352,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8371,7 +8371,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8390,7 +8390,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8409,7 +8409,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8428,7 +8428,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8447,7 +8447,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8466,7 +8466,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0x60,0xf5,0xb9,0xab,0xbf,0xa4,0x5c,0xc3,0xf1,0x29,0x63,0x1d };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8485,7 +8485,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8504,7 +8504,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8516,7 +8516,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8528,7 +8528,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8547,7 +8547,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8559,7 +8559,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8571,7 +8571,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8590,7 +8590,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8602,7 +8602,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8614,7 +8614,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8633,7 +8633,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8645,7 +8645,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8657,7 +8657,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8676,7 +8676,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8688,7 +8688,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8707,7 +8707,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8719,7 +8719,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8738,7 +8738,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8750,7 +8750,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8769,7 +8769,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8781,7 +8781,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8800,7 +8800,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8819,7 +8819,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8838,7 +8838,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8857,7 +8857,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8876,7 +8876,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8895,7 +8895,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8914,7 +8914,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 12345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x29,0xcb,0x1d,0xa1,0x6a,0x6d,0x15,0x7f,0x09,0xb4,0x68,0x92,0xad,0x31,0x8f,0x22,0x3c,0xb6,0x3c,0xa2,0x8e,0x9e,0x6a };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8933,7 +8933,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8952,7 +8952,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8964,7 +8964,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8976,7 +8976,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -8995,7 +8995,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9007,7 +9007,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9019,7 +9019,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9038,7 +9038,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9050,7 +9050,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9062,7 +9062,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9081,7 +9081,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9093,7 +9093,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9105,7 +9105,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9124,7 +9124,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9136,7 +9136,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9155,7 +9155,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9167,7 +9167,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9186,7 +9186,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9198,7 +9198,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9217,7 +9217,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9229,7 +9229,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9248,7 +9248,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9267,7 +9267,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9286,7 +9286,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9305,7 +9305,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9324,7 +9324,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9343,7 +9343,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9362,7 +9362,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 99999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xc0,0xce,0x64,0x27,0xa2,0x63,0xca,0x18,0xa4,0xef,0x25,0x7b,0xd1,0xcd,0x70,0xef,0xdf,0x6b,0x1f,0x3e,0xea,0x9d,0x5f,0x03 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9381,7 +9381,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9400,7 +9400,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9412,7 +9412,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9424,7 +9424,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9443,7 +9443,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9455,7 +9455,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9467,7 +9467,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9486,7 +9486,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9498,7 +9498,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9510,7 +9510,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9529,7 +9529,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9541,7 +9541,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9553,7 +9553,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9572,7 +9572,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9584,7 +9584,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9603,7 +9603,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9615,7 +9615,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9634,7 +9634,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9646,7 +9646,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9665,7 +9665,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9677,7 +9677,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9696,7 +9696,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9715,7 +9715,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9734,7 +9734,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9753,7 +9753,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9772,7 +9772,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9791,7 +9791,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9810,7 +9810,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
             unsigned char u_array[] = { 0x01,0xd2,0x0a,0x3f,0xce,0x96,0xf1,0xcf,0xac,0x4b,0xf1,0x7b,0xef,0x61,0x11,0x3d,0x24,0x5e,0x93,0xa9,0x88,0x45,0x42,0x21,0xdb,0x9c,0x0c,0x9b,0xde,0xc4,0x1f,0xc6,0x58,0xcf,0xf4,0x5a,0xd1,0xcc,0xd6,0xfc,0xc7,0xa6,0x32,0x88,0xea,0x83,0x91,0xc5,0x0a,0xa6,0x20,0x1d,0x29,0xa6,0xc5,0x44,0x75,0x6f,0xc3,0x13,0x88,0x06,0x32,0xa1,0x47,0xae,0x67,0x01 };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9829,7 +9829,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9848,7 +9848,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9860,7 +9860,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9872,7 +9872,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9891,7 +9891,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9903,7 +9903,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9915,7 +9915,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9934,7 +9934,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9946,7 +9946,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9958,7 +9958,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9977,7 +9977,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -9989,7 +9989,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10001,7 +10001,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10020,7 +10020,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10032,7 +10032,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10051,7 +10051,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10063,7 +10063,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10082,7 +10082,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10094,7 +10094,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10113,7 +10113,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10125,7 +10125,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10144,7 +10144,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10163,7 +10163,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10182,7 +10182,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10201,7 +10201,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10220,7 +10220,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10239,7 +10239,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));
@@ -10258,7 +10258,7 @@ namespace Palmtree::Math::Core::Internal
                 throw InternalErrorException(L"", L"");
         }
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             // u = 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
             unsigned char u_array[] = { 0x01,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x80,0x2d,0xc3,0xfb,0xf4,0xd0,0x22,0x52,0x50,0x28,0x0f,0xb7,0xf3,0xf2,0x13,0x57,0x13,0x14,0x42,0xdc,0x7d,0x5d,0x39,0xd6,0x99,0x19,0x59,0xf8,0x1c,0x38,0x92,0x00,0xd6,0x14,0xb3,0x86,0xb9,0x77,0xa5,0x7a,0x61,0xfe,0xb7,0x12,0x6a,0x61,0x0b };
             PMC_HANDLE_UINT u = PMC_FromByteArray_UINT(u_array, countof(u_array));

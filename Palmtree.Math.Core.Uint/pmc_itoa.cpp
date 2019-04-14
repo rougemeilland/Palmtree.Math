@@ -124,17 +124,20 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    void PMC_LToA_Imp(NUMBER_OBJECT_UINT* int_part, ReverseStringWriter& writer)
+    void PMC_LToA_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* int_part, ReverseStringWriter& writer)
     {
+        ResourceHolderUINT root(tc);
+
         while (true)
         {
 #ifdef _M_IX86
-            __UNIT_TYPE data = PMC_DivRem_UX_UI_Imp(int_part, _10n_base_number, &int_part);
+            __UNIT_TYPE data = PMC_DivRem_UX_UI_Imp(tc, int_part, _10n_base_number, &int_part);
 #elif defined(_M_X64)
-            __UNIT_TYPE data = PMC_DivRem_UX_UL_Imp(int_part, _10n_base_number, &int_part);
+            __UNIT_TYPE data = PMC_DivRem_UX_UL_Imp(tc, int_part, _10n_base_number, &int_part);
 #else
 #error unknown platform
 #endif
+            root.HookNumber(int_part);
             if (int_part->IS_ZERO)
             {
                 PMC_ItoA(data, writer);
@@ -319,24 +322,24 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    void PMC_FToA_Imp(NUMBER_OBJECT_UINT* frac_part_numerator, NUMBER_OBJECT_UINT* frac_part_denominator, size_t max_fraction_part_length, StringWriter& simple_number_sequence_writer)
+    void PMC_FToA_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* frac_part_numerator, NUMBER_OBJECT_UINT* frac_part_denominator, size_t max_fraction_part_length, StringWriter& simple_number_sequence_writer)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
 
         size_t fraction_part_length = max_fraction_part_length;
 
         while (!frac_part_numerator->IS_ZERO)
         {
 #ifdef _M_IX86
-            frac_part_numerator = PMC_Multiply_UX_UI_Imp(frac_part_numerator, _10n_base_number);
+            frac_part_numerator = PMC_Multiply_UX_UI_Imp(tc, frac_part_numerator, _10n_base_number);
 #elif defined(_M_X64)
-            frac_part_numerator = PMC_Multiply_UX_UL_Imp(frac_part_numerator, _10n_base_number);
+            frac_part_numerator = PMC_Multiply_UX_UL_Imp(tc, frac_part_numerator, _10n_base_number);
 #else
 #error unknown platform
 #endif
             root.HookNumber(frac_part_numerator);
             NUMBER_OBJECT_UINT* digit;
-            frac_part_numerator = PMC_DivRem_UX_UX_Imp(frac_part_numerator, frac_part_denominator, &digit);
+            frac_part_numerator = PMC_DivRem_UX_UX_Imp(tc, frac_part_numerator, frac_part_denominator, &digit);
             root.HookNumber(digit);
             root.HookNumber(frac_part_numerator);
 

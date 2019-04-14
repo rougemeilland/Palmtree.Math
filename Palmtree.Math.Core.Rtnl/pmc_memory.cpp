@@ -26,6 +26,7 @@
 #include <windows.h>
 #include "pmc_rtnl_internal.h"
 #include "pmc_resourceholder_rtnl.h"
+#include "pmc_threadcontext.h"
 #include "pmc_lock.h"
 #include "pmc_inline_func.h"
 
@@ -137,7 +138,7 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    static void InitializeNumber(NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator)
+    static void InitializeNumber(ThreadContext& tc, NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator)
     {
         if (denominator->FLAGS.IS_ZERO)
         {
@@ -155,8 +156,8 @@ namespace Palmtree::Math::Core::Internal
         }
         else
         {
-            ResourceHolderRTNL root;
-            PMC_HANDLE_UINT gcd = ep_sint.GreatestCommonDivisor(numerator, denominator);
+            ResourceHolderRTNL root(tc);
+            PMC_HANDLE_UINT gcd = ep_sint.GreatestCommonDivisor(tc, numerator, denominator);
             root.HookNumber(gcd);
             if (!gcd->FLAGS.IS_ONE)
             {
@@ -188,45 +189,46 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static void CleanUpNumber(NUMBER_OBJECT_RTNL* p)
+    static void CleanUpNumber(ThreadContext& tc, NUMBER_OBJECT_RTNL* p)
     {
-        ep_sint.Dispose(p->NUMERATOR);
-        ep_uint.Dispose(p->DENOMINATOR);
+        ep_sint.Dispose(tc, p->NUMERATOR);
+        ep_uint.Dispose(tc, p->DENOMINATOR);
     }
 
-    void __AttatchNumber(NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator)
+    void __AttatchNumber(ThreadContext& tc, NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator)
     {
-        InitializeNumber(p, numerator, denominator);
+        InitializeNumber(tc, p, numerator, denominator);
         p->IS_STATIC = true;
     }
 
-    NUMBER_OBJECT_RTNL* __AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator)
+    NUMBER_OBJECT_RTNL* __AllocateNumber(ThreadContext& tc, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         NUMBER_OBJECT_RTNL* p = root.AllocateNumberObject();
-        InitializeNumber(p, numerator, denominator);
+        InitializeNumber(tc, p, numerator, denominator);
         p->IS_STATIC = false;
         root.UnlinkNumberObject(p);
         return (p);
     }
 
-    void __DetatchNumber(NUMBER_OBJECT_RTNL* p)
+    void __DetatchNumber(ThreadContext& tc, NUMBER_OBJECT_RTNL* p)
     {
         if (p == nullptr || !p->IS_STATIC)
             return;
-        CleanUpNumber(p);
+        CleanUpNumber(tc, p);
     }
 
-    void __DeallocateNumber(NUMBER_OBJECT_RTNL* p)
+    void __DeallocateNumber(ThreadContext& tc, NUMBER_OBJECT_RTNL* p)
     {
         Lock lock_obj;
         if (p == nullptr || p->IS_STATIC)
             return;
         if (p->WORKING_COUNT > 0)
             throw InvalidOperationException(L"演算に使用中の数値オブジェクトを解放しようとしました。");
-        CleanUpNumber(p);
+        CleanUpNumber(tc, p);
         FillNumberHeader(p);
-        HeapFree(hLocalHeap, 0, p);
+        __DeallocateHeap(p);
+        tc.DecrementTypeAAllocationCount();
     }
 
     void __CheckNumber(NUMBER_OBJECT_RTNL* p) noexcept(false)
@@ -237,14 +239,14 @@ namespace Palmtree::Math::Core::Internal
         ep_uint.CheckHandle(p->DENOMINATOR);
     }
 
-    NUMBER_OBJECT_RTNL* DuplicateNumber_R(NUMBER_OBJECT_RTNL* x)
+    NUMBER_OBJECT_RTNL* DuplicateNumber_R(ThreadContext& tc, NUMBER_OBJECT_RTNL* x)
     {
         if (x->IS_STATIC)
             return (x);
-        ResourceHolderRTNL root;
-        PMC_HANDLE_SINT new_numerator = ep_sint.Clone(x->NUMERATOR);
+        ResourceHolderRTNL root(tc);
+        PMC_HANDLE_SINT new_numerator = ep_sint.Clone(tc, x->NUMERATOR);
         root.HookNumber(new_numerator);
-        PMC_HANDLE_UINT new_denominator = ep_uint.Clone(x->DENOMINATOR);
+        PMC_HANDLE_UINT new_denominator = ep_uint.Clone(tc, x->DENOMINATOR);
         root.HookNumber(new_denominator);
         NUMBER_OBJECT_RTNL* w = root.AllocateNumber(new_numerator, new_denominator);
         root.UnlinkNumber(w);
@@ -266,24 +268,24 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_RTNL PMC_Clone_R(PMC_HANDLE_RTNL x)
+    PMC_HANDLE_RTNL PMC_Clone_R(ThreadContext& tc, PMC_HANDLE_RTNL x)
     {
         NUMBER_OBJECT_RTNL* nx = GET_NUMBER_OBJECT(x, L"x");
-        ResourceHolderRTNL root;
-        NUMBER_OBJECT_RTNL* nr = DuplicateNumber_R(nx);
+        ResourceHolderRTNL root(tc);
+        NUMBER_OBJECT_RTNL* nr = DuplicateNumber_R(tc, nx);
         root.HookNumber(nr);
         PMC_HANDLE_RTNL r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);
         return (r);
     }
 
-    PMC_HANDLE_RTNL PMC_Negate_R(PMC_HANDLE_RTNL x) noexcept(false)
+    PMC_HANDLE_RTNL PMC_Negate_R(ThreadContext& tc, PMC_HANDLE_RTNL x) noexcept(false)
     {
         NUMBER_OBJECT_RTNL* nx = GET_NUMBER_OBJECT(x, L"x");
-        ResourceHolderRTNL root;
-        PMC_HANDLE_SINT nr_numerator = ep_sint.Negate(nx->NUMERATOR);
+        ResourceHolderRTNL root(tc);
+        PMC_HANDLE_SINT nr_numerator = ep_sint.Negate(tc, nx->NUMERATOR);
         root.HookNumber(nr_numerator);
-        PMC_HANDLE_UINT nr_denominator = ep_uint.Clone(nx->DENOMINATOR);
+        PMC_HANDLE_UINT nr_denominator = ep_uint.Clone(tc, nx->DENOMINATOR);
         root.HookNumber(nr_denominator);
         NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(nr_numerator, nr_denominator);
         root.HookNumber(nr);
@@ -292,30 +294,20 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    PMC_HANDLE_RTNL PMC_Abs_R(PMC_HANDLE_RTNL x) noexcept(false)
+    PMC_HANDLE_RTNL PMC_Abs_R(ThreadContext& tc, PMC_HANDLE_RTNL x) noexcept(false)
     {
         NUMBER_OBJECT_RTNL* nx = GET_NUMBER_OBJECT(x, L"x");
-        ResourceHolderRTNL root;
-        PMC_HANDLE_UINT nr_numerator_abs = ep_sint.Abs(nx->NUMERATOR);
+        ResourceHolderRTNL root(tc);
+        PMC_HANDLE_UINT nr_numerator_abs = ep_sint.Abs(tc, nx->NUMERATOR);
         root.HookNumber(nr_numerator_abs);
-        PMC_HANDLE_SINT nr_numerator = ep_sint.From(nr_numerator_abs);
+        PMC_HANDLE_SINT nr_numerator = ep_sint.From(tc, nr_numerator_abs);
         root.HookNumber(nr_numerator);
-        PMC_HANDLE_UINT nr_denominator = ep_uint.Clone(nx->DENOMINATOR);
+        PMC_HANDLE_UINT nr_denominator = ep_uint.Clone(tc, nx->DENOMINATOR);
         root.HookNumber(nr_denominator);
         NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(nr_numerator, nr_denominator);
         PMC_HANDLE_RTNL r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);
         return (r);
-    }
-
-    void PMC_CheckHandle_UX(PMC_HANDLE_UINT p)
-    {
-        ep_uint.CheckHandle(p);
-    }
-
-    void PMC_CheckHandle_X(PMC_HANDLE_SINT p)
-    {
-        ep_sint.CheckHandle(p);
     }
 
     void PMC_CheckHandle_R(PMC_HANDLE_RTNL p)
@@ -324,20 +316,18 @@ namespace Palmtree::Math::Core::Internal
         __CheckNumber(np);
     }
 
-    void PMC_Dispose_UX(PMC_HANDLE_UINT p)
-    {
-        ep_uint.Dispose(p);
-    }
-
-    void PMC_Dispose_X(PMC_HANDLE_SINT p)
-    {
-        ep_sint.Dispose(p);
-    }
-
-    void PMC_Dispose_R(PMC_HANDLE_RTNL p)
+    void PMC_Dispose_R(ThreadContext& tc, PMC_HANDLE_RTNL p)
     {
         NUMBER_OBJECT_RTNL* np = GET_NUMBER_OBJECT(p, L"p");
-       __DeallocateNumber(np);
+       __DeallocateNumber(tc, np);
+    }
+
+    _INT32_T PMC_GetBufferCount_R(PMC_HANDLE_RTNL p) noexcept(false)
+    {
+        NUMBER_OBJECT_RTNL* np = GET_NUMBER_OBJECT(p, L"p");
+        if (np->IS_STATIC)
+            return (0);
+        return (1 + ep_sint.GetBufferCount(np->NUMERATOR) + ep_uint.GetBufferCount(np->DENOMINATOR));
     }
 
     void PMC_UseObject_R(PMC_HANDLE_RTNL x) noexcept(false)
@@ -355,6 +345,7 @@ namespace Palmtree::Math::Core::Internal
         NUMBER_OBJECT_RTNL* nx = GET_NUMBER_OBJECT(x, L"x");
         --nx->WORKING_COUNT;
     }
+
 #pragma region ヒープメモリ関連関数
 
     static BOOL GetAllocatedMemorySize_Imp(_UINT64_T* size)
@@ -442,7 +433,9 @@ namespace Palmtree::Math::Core::Internal
 
     PMC_STATUS_CODE Initialize_Memory(void)
     {
-        ResourceHolderRTNL root;
+        ThreadContext tc;
+
+        ResourceHolderRTNL root(tc);
 
         try
         {

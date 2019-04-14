@@ -30,7 +30,7 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    PMC_HANDLE_SINT PMC_Divide_UI_R(_UINT32_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Divide_UI_R(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nv_numerator = GET_NUMBER_OBJECT(v_numerator, L"v_numerator");
         if (v_denominator == nullptr)
@@ -39,24 +39,25 @@ namespace Palmtree::Math::Core::Internal
             throw DivisionByZeroException(L"0 による除算が行われようとしました。");
         else
         {
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
 
             // 分子の符号を求める
             SIGN_T numerator_sign = nv_numerator->SIGN;
 
             // 分子と分母を求める
-            PMC_HANDLE_UINT numerator_abs = ep_uint.Multiply(u, v_denominator);
+            PMC_HANDLE_UINT numerator_abs = ep_uint.Multiply(tc, u, v_denominator);
             root.HookNumber(numerator_abs);
             PMC_HANDLE_UINT denominator = nv_numerator->ABS;
 
             // 分子と分母を約分する
-            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(numerator_abs, denominator);
+            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(tc, numerator_abs, denominator);
+            root.HookNumber(gcd);
             if (gcd->FLAGS.IS_ONE)
             {
                 // GCD == 1 の場合 (分子と分母が互いに素であった場合)
 
                 // denominator を複製する
-                denominator = ep_uint.Clone(denominator);
+                denominator = ep_uint.Clone(tc, denominator);
                 root.HookNumber(denominator);
             }
             else
@@ -64,9 +65,9 @@ namespace Palmtree::Math::Core::Internal
                 // GCD != 1 の場合 (分子と分母が互いに素でなかった場合)
 
                 // 分子と分母をそれぞれ GCD で割る
-                numerator_abs = ep_uint.DivideExactly(numerator_abs, gcd);
+                numerator_abs = ep_uint.DivideExactly(tc, numerator_abs, gcd);
                 root.HookNumber(numerator_abs);
-                denominator = ep_uint.DivideExactly(denominator, gcd);
+                denominator = ep_uint.DivideExactly(tc, denominator, gcd);
                 root.HookNumber(denominator);
             }
             NUMBER_OBJECT_SINT* numerator = root.AllocateNumber(numerator_sign, numerator_abs);
@@ -78,7 +79,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Divide_UL_R(_UINT64_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Divide_UL_R(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nv_numerator = GET_NUMBER_OBJECT(v_numerator, L"v_numerator");
         if (v_denominator == nullptr)
@@ -87,24 +88,25 @@ namespace Palmtree::Math::Core::Internal
             throw DivisionByZeroException(L"0 による除算が行われようとしました。");
         else
         {
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
 
             // 分子の符号を求める
             SIGN_T numerator_sign = nv_numerator->SIGN;
 
             // 分子と分母を求める
-            PMC_HANDLE_UINT numerator_abs = ep_uint.Multiply(u, v_denominator);
+            PMC_HANDLE_UINT numerator_abs = ep_uint.Multiply(tc, u, v_denominator);
             root.HookNumber(numerator_abs);
             PMC_HANDLE_UINT denominator = nv_numerator->ABS;
 
             // 分子と分母を約分する
-            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(numerator_abs, denominator);
+            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(tc, numerator_abs, denominator);
+            root.HookNumber(gcd);
             if (gcd->FLAGS.IS_ONE)
             {
                 // GCD == 1 の場合 (分子と分母が互いに素であった場合)
 
                 // denominator を複製する
-                denominator = ep_uint.Clone(denominator);
+                denominator = ep_uint.Clone(tc, denominator);
                 root.HookNumber(denominator);
             }
             else
@@ -112,9 +114,9 @@ namespace Palmtree::Math::Core::Internal
                 // GCD != 1 の場合 (分子と分母が互いに素でなかった場合)
 
                 // 分子と分母をそれぞれ GCD で割る
-                numerator_abs = ep_uint.DivideExactly(numerator_abs, gcd);
+                numerator_abs = ep_uint.DivideExactly(tc, numerator_abs, gcd);
                 root.HookNumber(numerator_abs);
-                denominator = ep_uint.DivideExactly(denominator, gcd);
+                denominator = ep_uint.DivideExactly(tc, denominator, gcd);
                 root.HookNumber(denominator);
             }
             NUMBER_OBJECT_SINT* numerator = root.AllocateNumber(numerator_sign, numerator_abs);
@@ -126,7 +128,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Divide_UX_R(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Divide_UX_R(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
     {
         if (u == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
@@ -137,24 +139,25 @@ namespace Palmtree::Math::Core::Internal
             throw DivisionByZeroException(L"0 による除算が行われようとしました。");
         else
         {
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
 
             // 分子の符号を求める
             SIGN_T numerator_sign = nv_numerator->SIGN;
 
             // 分子と分母を求める
-            PMC_HANDLE_UINT numerator_abs = ep_uint.Multiply(u, v_denominator);
+            PMC_HANDLE_UINT numerator_abs = ep_uint.Multiply(tc, u, v_denominator);
             root.HookNumber(numerator_abs);
             PMC_HANDLE_UINT denominator = nv_numerator->ABS;
 
             // 分子と分母を約分する
-            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(numerator_abs, denominator);
+            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(tc, numerator_abs, denominator);
+            root.HookNumber(gcd);
             if (gcd->FLAGS.IS_ONE)
             {
                 // GCD == 1 の場合 (分子と分母が互いに素であった場合)
 
                 // denominator を複製する
-                denominator = ep_uint.Clone(denominator);
+                denominator = ep_uint.Clone(tc, denominator);
                 root.HookNumber(denominator);
             }
             else
@@ -162,9 +165,9 @@ namespace Palmtree::Math::Core::Internal
                 // GCD != 1 の場合 (分子と分母が互いに素でなかった場合)
 
                 // 分子と分母をそれぞれ GCD で割る
-                numerator_abs = ep_uint.DivideExactly(numerator_abs, gcd);
+                numerator_abs = ep_uint.DivideExactly(tc, numerator_abs, gcd);
                 root.HookNumber(numerator_abs);
-                denominator = ep_uint.DivideExactly(denominator, gcd);
+                denominator = ep_uint.DivideExactly(tc, denominator, gcd);
                 root.HookNumber(denominator);
             }
             NUMBER_OBJECT_SINT* numerator = root.AllocateNumber(numerator_sign, numerator_abs);
@@ -176,7 +179,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Divide_I_R(_INT32_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Divide_I_R(ThreadContext& tc, _INT32_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nv_numerator = GET_NUMBER_OBJECT(v_numerator, L"v_numerator");
         if (v_denominator == nullptr)
@@ -185,7 +188,7 @@ namespace Palmtree::Math::Core::Internal
             throw DivisionByZeroException(L"0 による除算が行われようとしました。");
         else
         {
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
 
             SIGN_T u_sign;
             _UINT32_T u_abs = GET_ABS_32(u, &u_sign);
@@ -194,18 +197,19 @@ namespace Palmtree::Math::Core::Internal
             SIGN_T numerator_sign = PRODUCT_SIGN(u_sign, nv_numerator->SIGN);
 
             // 分子と分母を求める
-            PMC_HANDLE_UINT numerator_abs = ep_uint.Multiply(u_abs, v_denominator);
+            PMC_HANDLE_UINT numerator_abs = ep_uint.Multiply(tc, u_abs, v_denominator);
             root.HookNumber(numerator_abs);
             PMC_HANDLE_UINT denominator = nv_numerator->ABS;
 
             // 分子と分母を約分する
-            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(numerator_abs, denominator);
+            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(tc, numerator_abs, denominator);
+            root.HookNumber(gcd);
             if (gcd->FLAGS.IS_ONE)
             {
                 // GCD == 1 の場合 (分子と分母が互いに素であった場合)
 
                 // denominator を複製する
-                denominator = ep_uint.Clone(denominator);
+                denominator = ep_uint.Clone(tc, denominator);
                 root.HookNumber(denominator);
             }
             else
@@ -213,9 +217,9 @@ namespace Palmtree::Math::Core::Internal
                 // GCD != 1 の場合 (分子と分母が互いに素でなかった場合)
 
                 // 分子と分母をそれぞれ GCD で割る
-                numerator_abs = ep_uint.DivideExactly(numerator_abs, gcd);
+                numerator_abs = ep_uint.DivideExactly(tc, numerator_abs, gcd);
                 root.HookNumber(numerator_abs);
-                denominator = ep_uint.DivideExactly(denominator, gcd);
+                denominator = ep_uint.DivideExactly(tc, denominator, gcd);
                 root.HookNumber(denominator);
             }
             NUMBER_OBJECT_SINT* numerator = root.AllocateNumber(numerator_sign, numerator_abs);
@@ -227,7 +231,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Divide_L_R(_INT64_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Divide_L_R(ThreadContext& tc, _INT64_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nv_numerator = GET_NUMBER_OBJECT(v_numerator, L"v_numerator");
         if (v_denominator == nullptr)
@@ -236,7 +240,7 @@ namespace Palmtree::Math::Core::Internal
             throw DivisionByZeroException(L"0 による除算が行われようとしました。");
         else
         {
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
 
             SIGN_T u_sign;
             _UINT64_T u_abs = GET_ABS_64(u, &u_sign);
@@ -245,18 +249,19 @@ namespace Palmtree::Math::Core::Internal
             SIGN_T numerator_sign = PRODUCT_SIGN(u_sign, nv_numerator->SIGN);
 
             // 分子と分母を求める
-            PMC_HANDLE_UINT numerator_abs = ep_uint.Multiply(u_abs, v_denominator);
+            PMC_HANDLE_UINT numerator_abs = ep_uint.Multiply(tc, u_abs, v_denominator);
             root.HookNumber(numerator_abs);
             PMC_HANDLE_UINT denominator = nv_numerator->ABS;
 
             // 分子と分母を約分する
-            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(numerator_abs, denominator);
+            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(tc, numerator_abs, denominator);
+            root.HookNumber(gcd);
             if (gcd->FLAGS.IS_ONE)
             {
                 // GCD == 1 の場合 (分子と分母が互いに素であった場合)
 
                 // denominator を複製する
-                denominator = ep_uint.Clone(denominator);
+                denominator = ep_uint.Clone(tc, denominator);
                 root.HookNumber(denominator);
             }
             else
@@ -264,9 +269,9 @@ namespace Palmtree::Math::Core::Internal
                 // GCD != 1 の場合 (分子と分母が互いに素でなかった場合)
 
                 // 分子と分母をそれぞれ GCD で割る
-                numerator_abs = ep_uint.DivideExactly(numerator_abs, gcd);
+                numerator_abs = ep_uint.DivideExactly(tc, numerator_abs, gcd);
                 root.HookNumber(numerator_abs);
-                denominator = ep_uint.DivideExactly(denominator, gcd);
+                denominator = ep_uint.DivideExactly(tc, denominator, gcd);
                 root.HookNumber(denominator);
             }
             NUMBER_OBJECT_SINT* numerator = root.AllocateNumber(numerator_sign, numerator_abs);
@@ -278,7 +283,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Divide_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Divide_X_R(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_SINT* nv_numerator = GET_NUMBER_OBJECT(v_numerator, L"v_numerator");
@@ -288,24 +293,25 @@ namespace Palmtree::Math::Core::Internal
             throw DivisionByZeroException(L"0 による除算が行われようとしました。");
         else
         {
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
 
             // 分子の符号を求める
             SIGN_T numerator_sign = PRODUCT_SIGN(nu->SIGN, nv_numerator->SIGN);
 
             // 分子と分母を求める
-            PMC_HANDLE_UINT numerator_abs = ep_uint.Multiply(nu->ABS, v_denominator);
+            PMC_HANDLE_UINT numerator_abs = ep_uint.Multiply(tc, nu->ABS, v_denominator);
             root.HookNumber(numerator_abs);
             PMC_HANDLE_UINT denominator = nv_numerator->ABS;
 
             // 分子と分母を約分する
-            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(numerator_abs, denominator);
+            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(tc, numerator_abs, denominator);
+            root.HookNumber(gcd);
             if (gcd->FLAGS.IS_ONE)
             {
                 // GCD == 1 の場合 (分子と分母が互いに素であった場合)
 
                 // denominator を複製する
-                denominator = ep_uint.Clone(denominator);
+                denominator = ep_uint.Clone(tc, denominator);
                 root.HookNumber(denominator);
             }
             else
@@ -313,9 +319,9 @@ namespace Palmtree::Math::Core::Internal
                 // GCD != 1 の場合 (分子と分母が互いに素でなかった場合)
 
                 // 分子と分母をそれぞれ GCD で割る
-                numerator_abs = ep_uint.DivideExactly(numerator_abs, gcd);
+                numerator_abs = ep_uint.DivideExactly(tc, numerator_abs, gcd);
                 root.HookNumber(numerator_abs);
-                denominator = ep_uint.DivideExactly(denominator, gcd);
+                denominator = ep_uint.DivideExactly(tc, denominator, gcd);
                 root.HookNumber(denominator);
             }
             NUMBER_OBJECT_SINT* numerator = root.AllocateNumber(numerator_sign, numerator_abs);
@@ -327,7 +333,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Divide_R_UI(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _UINT32_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Divide_R_UI(ThreadContext& tc, PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _UINT32_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nu_numerator = GET_NUMBER_OBJECT(u_numerator, L"u_numerator");
         if (u_denominator == nullptr)
@@ -336,24 +342,25 @@ namespace Palmtree::Math::Core::Internal
             throw DivisionByZeroException(L"0 による除算が行われようとしました。");
         else
         {
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
 
             // 分子の符号を求める
             SIGN_T numerator_sign = nu_numerator->SIGN;
 
             // 分子と分母を求める
             PMC_HANDLE_UINT numerator_abs = nu_numerator->ABS;
-            PMC_HANDLE_UINT denominator = ep_uint.Multiply(u_denominator, v);
+            PMC_HANDLE_UINT denominator = ep_uint.Multiply(tc, u_denominator, v);
             root.HookNumber(denominator);
 
             // 分子と分母を約分する
-            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(numerator_abs, denominator);
+            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(tc, numerator_abs, denominator);
+            root.HookNumber(gcd);
             if (gcd->FLAGS.IS_ONE)
             {
                 // GCD == 1 の場合 (分子と分母が互いに素であった場合)
 
                 // numerator_abs を複製する
-                numerator_abs = ep_uint.Clone(numerator_abs);
+                numerator_abs = ep_uint.Clone(tc, numerator_abs);
                 root.HookNumber(numerator_abs);
             }
             else
@@ -361,9 +368,9 @@ namespace Palmtree::Math::Core::Internal
                 // GCD != 1 の場合 (分子と分母が互いに素でなかった場合)
 
                 // 分子と分母をそれぞれ GCD で割る
-                numerator_abs = ep_uint.DivideExactly(numerator_abs, gcd);
+                numerator_abs = ep_uint.DivideExactly(tc, numerator_abs, gcd);
                 root.HookNumber(numerator_abs);
-                denominator = ep_uint.DivideExactly(denominator, gcd);
+                denominator = ep_uint.DivideExactly(tc, denominator, gcd);
                 root.HookNumber(denominator);
             }
             NUMBER_OBJECT_SINT* numerator = root.AllocateNumber(numerator_sign, numerator_abs);
@@ -375,7 +382,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Divide_R_UL(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _UINT64_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Divide_R_UL(ThreadContext& tc, PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _UINT64_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nu_numerator = GET_NUMBER_OBJECT(u_numerator, L"u_numerator");
         if (u_denominator == nullptr)
@@ -384,24 +391,25 @@ namespace Palmtree::Math::Core::Internal
             throw DivisionByZeroException(L"0 による除算が行われようとしました。");
         else
         {
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
 
             // 分子の符号を求める
             SIGN_T numerator_sign = nu_numerator->SIGN;
 
             // 分子と分母を求める
             PMC_HANDLE_UINT numerator_abs = nu_numerator->ABS;
-            PMC_HANDLE_UINT denominator = ep_uint.Multiply(u_denominator, v);
+            PMC_HANDLE_UINT denominator = ep_uint.Multiply(tc, u_denominator, v);
             root.HookNumber(denominator);
 
             // 分子と分母を約分する
-            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(numerator_abs, denominator);
+            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(tc, numerator_abs, denominator);
+            root.HookNumber(gcd);
             if (gcd->FLAGS.IS_ONE)
             {
                 // GCD == 1 の場合 (分子と分母が互いに素であった場合)
 
                 // numerator_abs を複製する
-                numerator_abs = ep_uint.Clone(numerator_abs);
+                numerator_abs = ep_uint.Clone(tc, numerator_abs);
                 root.HookNumber(numerator_abs);
             }
             else
@@ -409,9 +417,9 @@ namespace Palmtree::Math::Core::Internal
                 // GCD != 1 の場合 (分子と分母が互いに素でなかった場合)
 
                 // 分子と分母をそれぞれ GCD で割る
-                numerator_abs = ep_uint.DivideExactly(numerator_abs, gcd);
+                numerator_abs = ep_uint.DivideExactly(tc, numerator_abs, gcd);
                 root.HookNumber(numerator_abs);
-                denominator = ep_uint.DivideExactly(denominator, gcd);
+                denominator = ep_uint.DivideExactly(tc, denominator, gcd);
                 root.HookNumber(denominator);
             }
             NUMBER_OBJECT_SINT* numerator = root.AllocateNumber(numerator_sign, numerator_abs);
@@ -423,7 +431,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Divide_R_UX(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_UINT v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Divide_R_UX(ThreadContext& tc, PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_UINT v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nu_numerator = GET_NUMBER_OBJECT(u_numerator, L"u_numerator");
         if (u_denominator == nullptr)
@@ -434,24 +442,25 @@ namespace Palmtree::Math::Core::Internal
             throw DivisionByZeroException(L"0 による除算が行われようとしました。");
         else
         {
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
 
             // 分子の符号を求める
             SIGN_T numerator_sign = nu_numerator->SIGN;
 
             // 分子と分母を求める
             PMC_HANDLE_UINT numerator_abs = nu_numerator->ABS;
-            PMC_HANDLE_UINT denominator = ep_uint.Multiply(u_denominator, v);
+            PMC_HANDLE_UINT denominator = ep_uint.Multiply(tc, u_denominator, v);
             root.HookNumber(denominator);
 
             // 分子と分母を約分する
-            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(numerator_abs, denominator);
+            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(tc, numerator_abs, denominator);
+            root.HookNumber(gcd);
             if (gcd->FLAGS.IS_ONE)
             {
                 // GCD == 1 の場合 (分子と分母が互いに素であった場合)
 
                 // numerator_abs を複製する
-                numerator_abs = ep_uint.Clone(numerator_abs);
+                numerator_abs = ep_uint.Clone(tc, numerator_abs);
                 root.HookNumber(numerator_abs);
             }
             else
@@ -459,9 +468,9 @@ namespace Palmtree::Math::Core::Internal
                 // GCD != 1 の場合 (分子と分母が互いに素でなかった場合)
 
                 // 分子と分母をそれぞれ GCD で割る
-                numerator_abs = ep_uint.DivideExactly(numerator_abs, gcd);
+                numerator_abs = ep_uint.DivideExactly(tc, numerator_abs, gcd);
                 root.HookNumber(numerator_abs);
-                denominator = ep_uint.DivideExactly(denominator, gcd);
+                denominator = ep_uint.DivideExactly(tc, denominator, gcd);
                 root.HookNumber(denominator);
             }
             NUMBER_OBJECT_SINT* numerator = root.AllocateNumber(numerator_sign, numerator_abs);
@@ -473,7 +482,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Divide_R_I(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _INT32_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Divide_R_I(ThreadContext& tc, PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _INT32_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nu_numerator = GET_NUMBER_OBJECT(u_numerator, L"u_numerator");
         if (u_denominator == nullptr)
@@ -482,7 +491,7 @@ namespace Palmtree::Math::Core::Internal
             throw DivisionByZeroException(L"0 による除算が行われようとしました。");
         else
         {
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
 
             SIGN_T v_sign;
             _UINT32_T v_abs = GET_ABS_32(v, &v_sign);
@@ -492,17 +501,18 @@ namespace Palmtree::Math::Core::Internal
 
             // 分子と分母を求める
             PMC_HANDLE_UINT numerator_abs = nu_numerator->ABS;
-            PMC_HANDLE_UINT denominator = ep_uint.Multiply(u_denominator, v_abs);
+            PMC_HANDLE_UINT denominator = ep_uint.Multiply(tc, u_denominator, v_abs);
             root.HookNumber(denominator);
 
             // 分子と分母を約分する
-            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(numerator_abs, denominator);
+            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(tc, numerator_abs, denominator);
+            root.HookNumber(gcd);
             if (gcd->FLAGS.IS_ONE)
             {
                 // GCD == 1 の場合 (分子と分母が互いに素であった場合)
 
                 // numerator_abs を複製する
-                numerator_abs = ep_uint.Clone(numerator_abs);
+                numerator_abs = ep_uint.Clone(tc, numerator_abs);
                 root.HookNumber(numerator_abs);
             }
             else
@@ -510,9 +520,9 @@ namespace Palmtree::Math::Core::Internal
                 // GCD != 1 の場合 (分子と分母が互いに素でなかった場合)
 
                 // 分子と分母をそれぞれ GCD で割る
-                numerator_abs = ep_uint.DivideExactly(numerator_abs, gcd);
+                numerator_abs = ep_uint.DivideExactly(tc, numerator_abs, gcd);
                 root.HookNumber(numerator_abs);
-                denominator = ep_uint.DivideExactly(denominator, gcd);
+                denominator = ep_uint.DivideExactly(tc, denominator, gcd);
                 root.HookNumber(denominator);
             }
             NUMBER_OBJECT_SINT* numerator = root.AllocateNumber(numerator_sign, numerator_abs);
@@ -524,7 +534,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Divide_R_L(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _INT64_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Divide_R_L(ThreadContext& tc, PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, _INT64_T v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nu_numerator = GET_NUMBER_OBJECT(u_numerator, L"u_numerator");
         if (u_denominator == nullptr)
@@ -533,7 +543,7 @@ namespace Palmtree::Math::Core::Internal
             throw DivisionByZeroException(L"0 による除算が行われようとしました。");
         else
         {
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
 
             SIGN_T v_sign;
             _UINT64_T v_abs = GET_ABS_64(v, &v_sign);
@@ -543,17 +553,18 @@ namespace Palmtree::Math::Core::Internal
 
             // 分子と分母を求める
             PMC_HANDLE_UINT numerator_abs = nu_numerator->ABS;
-            PMC_HANDLE_UINT denominator = ep_uint.Multiply(u_denominator, v_abs);
+            PMC_HANDLE_UINT denominator = ep_uint.Multiply(tc, u_denominator, v_abs);
             root.HookNumber(denominator);
 
             // 分子と分母を約分する
-            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(numerator_abs, denominator);
+            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(tc, numerator_abs, denominator);
+            root.HookNumber(gcd);
             if (gcd->FLAGS.IS_ONE)
             {
                 // GCD == 1 の場合 (分子と分母が互いに素であった場合)
 
                 // numerator_abs を複製する
-                numerator_abs = ep_uint.Clone(numerator_abs);
+                numerator_abs = ep_uint.Clone(tc, numerator_abs);
                 root.HookNumber(numerator_abs);
             }
             else
@@ -561,9 +572,9 @@ namespace Palmtree::Math::Core::Internal
                 // GCD != 1 の場合 (分子と分母が互いに素でなかった場合)
 
                 // 分子と分母をそれぞれ GCD で割る
-                numerator_abs = ep_uint.DivideExactly(numerator_abs, gcd);
+                numerator_abs = ep_uint.DivideExactly(tc, numerator_abs, gcd);
                 root.HookNumber(numerator_abs);
-                denominator = ep_uint.DivideExactly(denominator, gcd);
+                denominator = ep_uint.DivideExactly(tc, denominator, gcd);
                 root.HookNumber(denominator);
             }
             NUMBER_OBJECT_SINT* numerator = root.AllocateNumber(numerator_sign, numerator_abs);
@@ -575,7 +586,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Divide_R_X(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_SINT v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Divide_R_X(ThreadContext& tc, PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_SINT v, PMC_HANDLE_UINT * w_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nu_numerator = GET_NUMBER_OBJECT(u_numerator, L"u_numerator");
         if (u_denominator == nullptr)
@@ -585,24 +596,25 @@ namespace Palmtree::Math::Core::Internal
             throw DivisionByZeroException(L"0 による除算が行われようとしました。");
         else
         {
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
 
             // 分子の符号を求める
             SIGN_T numerator_sign = PRODUCT_SIGN(nu_numerator->SIGN, nv->SIGN);
 
             // 分子と分母を求める
             PMC_HANDLE_UINT numerator_abs = nu_numerator->ABS;
-            PMC_HANDLE_UINT denominator = ep_uint.Multiply(u_denominator, nv->ABS);
+            PMC_HANDLE_UINT denominator = ep_uint.Multiply(tc, u_denominator, nv->ABS);
             root.HookNumber(denominator);
 
             // 分子と分母を約分する
-            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(numerator_abs, denominator);
+            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(tc, numerator_abs, denominator);
+            root.HookNumber(gcd);
             if (gcd->FLAGS.IS_ONE)
             {
                 // GCD == 1 の場合 (分子と分母が互いに素であった場合)
 
                 // numerator_abs を複製する
-                numerator_abs = ep_uint.Clone(numerator_abs);
+                numerator_abs = ep_uint.Clone(tc, numerator_abs);
                 root.HookNumber(numerator_abs);
             }
             else
@@ -610,9 +622,9 @@ namespace Palmtree::Math::Core::Internal
                 // GCD != 1 の場合 (分子と分母が互いに素でなかった場合)
 
                 // 分子と分母をそれぞれ GCD で割る
-                numerator_abs = ep_uint.DivideExactly(numerator_abs, gcd);
+                numerator_abs = ep_uint.DivideExactly(tc, numerator_abs, gcd);
                 root.HookNumber(numerator_abs);
-                denominator = ep_uint.DivideExactly(denominator, gcd);
+                denominator = ep_uint.DivideExactly(tc, denominator, gcd);
                 root.HookNumber(denominator);
             }
             NUMBER_OBJECT_SINT* numerator = root.AllocateNumber(numerator_sign, numerator_abs);
@@ -624,7 +636,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Divide_R_R(PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Divide_R_R(ThreadContext& tc, PMC_HANDLE_SINT u_numerator, PMC_HANDLE_UINT u_denominator, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nu_numerator = GET_NUMBER_OBJECT(u_numerator, L"u_numerator");
         if (u_denominator == nullptr)
@@ -636,27 +648,28 @@ namespace Palmtree::Math::Core::Internal
             throw DivisionByZeroException(L"0 による除算が行われようとしました。");
         else
         {
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
 
             // 分子の符号を求める
             SIGN_T numerator_sign = PRODUCT_SIGN(nu_numerator->SIGN, nv_numerator->SIGN);
 
             // 分子と分母を求める
-            PMC_HANDLE_UINT numerator_abs = ep_uint.Multiply(v_denominator, nu_numerator->ABS);
+            PMC_HANDLE_UINT numerator_abs = ep_uint.Multiply(tc, v_denominator, nu_numerator->ABS);
             root.HookNumber(numerator_abs);
-            PMC_HANDLE_UINT denominator = ep_uint.Multiply(u_denominator, nv_numerator->ABS);
+            PMC_HANDLE_UINT denominator = ep_uint.Multiply(tc, u_denominator, nv_numerator->ABS);
             root.HookNumber(denominator);
 
             // 分子と分母を約分する
-            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(numerator_abs, denominator);
+            PMC_HANDLE_UINT gcd = ep_uint.GreatestCommonDivisor(tc, numerator_abs, denominator);
+            root.HookNumber(gcd);
             if (!gcd->FLAGS.IS_ONE)
             {
                 // GCD != 1 の場合 (分子と分母が互いに素でなかった場合)
 
                 // 分子と分母をそれぞれ GCD で割る
-                numerator_abs = ep_uint.DivideExactly(numerator_abs, gcd);
+                numerator_abs = ep_uint.DivideExactly(tc, numerator_abs, gcd);
                 root.HookNumber(numerator_abs);
-                denominator = ep_uint.DivideExactly(denominator, gcd);
+                denominator = ep_uint.DivideExactly(tc, denominator, gcd);
                 root.HookNumber(denominator);
             }
             NUMBER_OBJECT_SINT* numerator = root.AllocateNumber(numerator_sign, numerator_abs);

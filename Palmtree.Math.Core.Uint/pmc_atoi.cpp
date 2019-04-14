@@ -454,9 +454,9 @@ namespace Palmtree::Math::Core::Internal
         *out_buf_count = out_ptr - out_buf;
     }
 
-    static void ConvertCardinalNumber(__UNIT_TYPE* in_buf, __UNIT_TYPE in_buf_count, __UNIT_TYPE* out_buf)
+    static void ConvertCardinalNumber(ThreadContext& tc, __UNIT_TYPE* in_buf, __UNIT_TYPE in_buf_count, __UNIT_TYPE* out_buf)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         __UNIT_TYPE* work_buf = root.AllocateBlock(__UNIT_TYPE_BIT_COUNT * (in_buf_count + 1));
         __UNIT_TYPE work_buf_count = 1;
         work_buf[0] = in_buf[0];
@@ -473,9 +473,9 @@ namespace Palmtree::Math::Core::Internal
         _COPY_MEMORY_UNIT(out_buf, work_buf, work_buf_count);
     }
 
-    NUMBER_OBJECT_UINT* PMC_AToL_Imp(const wchar_t* source)
+    NUMBER_OBJECT_UINT* PMC_AToL_Imp(ThreadContext& tc, const wchar_t* source)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         // 整数部を 10^word_digit_count を基数としたバイト列に変換する
         __UNIT_TYPE* bin_buf = root.AllocateBlock(_DIVIDE_CEILING_SIZE(lstrlenW(source), digit_count_on_word) * __UNIT_TYPE_BIT_COUNT);
         __UNIT_TYPE bin_buf_count;
@@ -484,9 +484,9 @@ namespace Palmtree::Math::Core::Internal
         // 10^word_digit_count を基数としたバイト列を 10 を基数としたバイト列に変換する
         __UNIT_TYPE o_bit_count = bin_buf_count * __UNIT_TYPE_BIT_COUNT;
         NUMBER_OBJECT_UINT* nr = root.AllocateNumber(o_bit_count);
-        ConvertCardinalNumber(bin_buf, bin_buf_count, nr->BLOCK);
+        ConvertCardinalNumber(tc, bin_buf, bin_buf_count, nr->BLOCK);
         root.CheckNumber(nr);
-        CommitNumber(nr);
+        CommitNumber(tc, nr);
 
         if (nr->IS_ZERO)
         {
@@ -514,10 +514,10 @@ namespace Palmtree::Math::Core::Internal
         return (x);
     }
 
-    PMC_HANDLE_UINT PMC_AToL(const wchar_t* source)
+    PMC_HANDLE_UINT PMC_AToL(ThreadContext& tc, const wchar_t* source)
     {
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nr = PMC_AToL_Imp(source);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nr = PMC_AToL_Imp(tc, source);
         root.HookNumber(nr);
         PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);

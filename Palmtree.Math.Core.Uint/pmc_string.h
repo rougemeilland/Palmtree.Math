@@ -40,13 +40,13 @@ namespace Palmtree::Math::Core::Internal
     //
 
     // 整数値を文字列化する
-    extern void PMC_LToA_Imp(NUMBER_OBJECT_UINT* int_part, ReverseStringWriter& writer);
+    extern void PMC_LToA_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* int_part, ReverseStringWriter& writer);
 
     // 数字のみから構成された文字列を整数化する
-    extern NUMBER_OBJECT_UINT* PMC_AToL_Imp(const wchar_t* source);
+    extern NUMBER_OBJECT_UINT* PMC_AToL_Imp(ThreadContext& tc, const wchar_t* source);
 
     // 数字のみから構成された文字列を整数化する
-    extern PMC_HANDLE_UINT PMC_AToL(const wchar_t* source);
+    extern PMC_HANDLE_UINT PMC_AToL(ThreadContext& tc, const wchar_t* source);
 
 #ifdef _M_IX86
     // 短い整数値を文字列化する
@@ -65,7 +65,7 @@ namespace Palmtree::Math::Core::Internal
 #endif
 
     // 小数値を文字列化する
-    extern void PMC_FToA_Imp(NUMBER_OBJECT_UINT* frac_part_numerator, NUMBER_OBJECT_UINT* frac_part_denominator, size_t max_fraction_part_length, StringWriter& simple_number_sequence_writer);
+    extern void PMC_FToA_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* frac_part_numerator, NUMBER_OBJECT_UINT* frac_part_denominator, size_t max_fraction_part_length, StringWriter& simple_number_sequence_writer);
 
 }
 

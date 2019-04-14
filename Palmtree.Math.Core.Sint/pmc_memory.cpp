@@ -26,6 +26,7 @@
 #include <windows.h>
 #include "pmc_sint_internal.h"
 #include "pmc_resourceholder_sint.h"
+#include "pmc_threadcontext.h"
 #include "pmc_lock.h"
 #include "pmc_inline_func.h"
 
@@ -179,9 +180,9 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    static void CleanUpNumber(NUMBER_OBJECT_SINT* p)
+    static void CleanUpNumber(ThreadContext& tc, NUMBER_OBJECT_SINT* p)
     {
-        ep_uint.Dispose(p->ABS);
+        ep_uint.Dispose(tc, p->ABS);
     }
 
     void __AttatchNumber(NUMBER_OBJECT_SINT* p, SIGN_T sign, PMC_HANDLE_UINT abs)
@@ -190,9 +191,9 @@ namespace Palmtree::Math::Core::Internal
         p->IS_STATIC = TRUE;
     }
 
-    NUMBER_OBJECT_SINT* __AllocateNumber(SIGN_T sign, PMC_HANDLE_UINT abs)
+    NUMBER_OBJECT_SINT* __AllocateNumber(ThreadContext& tc, SIGN_T sign, PMC_HANDLE_UINT abs)
     {
-        ResourceHolderSINT root;
+        ResourceHolderSINT root(tc);
         NUMBER_OBJECT_SINT* p = root.AllocateNumberObjectSint();
         InitializeNumber(p, sign, abs);
         p->IS_STATIC = FALSE;
@@ -200,23 +201,24 @@ namespace Palmtree::Math::Core::Internal
         return (p);
     }
 
-    void __DetatchNumber(NUMBER_OBJECT_SINT* p)
+    void __DetatchNumber(ThreadContext& tc, NUMBER_OBJECT_SINT* p)
     {
         if (p == nullptr || !p->IS_STATIC)
             return;
-        CleanUpNumber(p);
+        CleanUpNumber(tc, p);
     }
 
-    void __DeallocateNumber(NUMBER_OBJECT_SINT* p)
+    void __DeallocateNumber(ThreadContext& tc, NUMBER_OBJECT_SINT* p)
     {
         Lock lock_obj;
         if (p == nullptr || p->IS_STATIC)
             return;
         if (p->WORKING_COUNT > 0)
             throw InvalidOperationException(L"演算に使用中の数値オブジェクトを解放しようとしました。");
-        CleanUpNumber(p);
+        CleanUpNumber(tc, p);
         FillNumberHeader(p);
-        HeapFree(hLocalHeap, 0, p);
+        __DeallocateHeap(p);
+        tc.DecrementTypeAAllocationCount();
     }
 
     void __CheckNumber(NUMBER_OBJECT_SINT* p) noexcept(false)
@@ -226,14 +228,14 @@ namespace Palmtree::Math::Core::Internal
         ep_uint.CheckHandle(p->ABS);
     }
 
-    NUMBER_OBJECT_SINT* From_I_Imp(SIGN_T x_sign, _UINT32_T x_abs)
+    NUMBER_OBJECT_SINT* From_I_Imp(ThreadContext& tc, SIGN_T x_sign, _UINT32_T x_abs)
     {
         if (x_abs == 0)
             return (&number_object_sint_zero);
         else
         {
-            ResourceHolderSINT root;
-            PMC_HANDLE_UINT o_abs = ep_uint.From(x_abs);
+            ResourceHolderSINT root(tc);
+            PMC_HANDLE_UINT o_abs = ep_uint.From(tc, x_abs);
             root.HookNumber(o_abs);
             NUMBER_OBJECT_SINT* o = root.AllocateNumber(x_sign, o_abs);
             root.UnlinkNumber(o);
@@ -242,14 +244,14 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_STATUS_OK);
     }
 
-    NUMBER_OBJECT_SINT* From_L_Imp(SIGN_T x_sign, _UINT64_T x_abs)
+    NUMBER_OBJECT_SINT* From_L_Imp(ThreadContext& tc, SIGN_T x_sign, _UINT64_T x_abs)
     {
         if (x_abs == 0)
             return (&number_object_sint_zero);
         else
         {
-            ResourceHolderSINT root;
-            PMC_HANDLE_UINT o_abs = ep_uint.From(x_abs);
+            ResourceHolderSINT root(tc);
+            PMC_HANDLE_UINT o_abs = ep_uint.From(tc, x_abs);
             root.HookNumber(o_abs);
             NUMBER_OBJECT_SINT* o = root.AllocateNumber(x_sign, o_abs);
             root.UnlinkNumber(o);
@@ -257,14 +259,14 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    NUMBER_OBJECT_SINT* From_X_Imp(SIGN_T sign, PMC_HANDLE_UINT x)
+    NUMBER_OBJECT_SINT* From_X_Imp(ThreadContext& tc, SIGN_T sign, PMC_HANDLE_UINT x)
     {
         if (x->FLAGS.IS_ZERO)
             return (&number_object_sint_zero);
         else
         {
-            ResourceHolderSINT root;
-            PMC_HANDLE_UINT new_x = ep_uint.Clone(x);
+            ResourceHolderSINT root(tc);
+            PMC_HANDLE_UINT new_x = ep_uint.Clone(tc, x);
             root.HookNumber(new_x);
             NUMBER_OBJECT_SINT* w = root.AllocateNumber(sign, new_x);
             root.UnlinkNumber(w);
@@ -272,16 +274,16 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    NUMBER_OBJECT_SINT* DuplicateNumber_X(NUMBER_OBJECT_SINT* x)
+    NUMBER_OBJECT_SINT* DuplicateNumber_X(ThreadContext& tc, NUMBER_OBJECT_SINT* x)
     {
         if (x->IS_STATIC)
             return (x);
-        return (From_X_Imp(x->SIGN, x->ABS));
+        return (From_X_Imp(tc, x->SIGN, x->ABS));
     }
 
-    NUMBER_OBJECT_SINT* NegateNumber_X(NUMBER_OBJECT_SINT* x)
+    NUMBER_OBJECT_SINT* NegateNumber_X(ThreadContext& tc, NUMBER_OBJECT_SINT* x)
     {
-        return (From_X_Imp(INVERT_SIGN(x->SIGN), x->ABS));
+        return (From_X_Imp(tc, INVERT_SIGN(x->SIGN), x->ABS));
     }
 
     PMC_HANDLE_SINT PMC_GetConstantValue_I(PMC_CONSTANT_VALUE_CODE type)
@@ -299,49 +301,44 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Negate_X(PMC_HANDLE_SINT x)
+    PMC_HANDLE_SINT PMC_Negate_X(ThreadContext& tc, PMC_HANDLE_SINT x)
     {
         NUMBER_OBJECT_SINT* nx = GET_NUMBER_OBJECT(x, L"x");
-        ResourceHolderSINT root;
-        NUMBER_OBJECT_SINT* nr = NegateNumber_X(nx);
+        ResourceHolderSINT root(tc);
+        NUMBER_OBJECT_SINT* nr = NegateNumber_X(tc, nx);
         root.HookNumber(nr);
         PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);
         return (r);
     }
 
-    PMC_HANDLE_SINT PMC_Negate_UX(PMC_HANDLE_UINT x)
+    PMC_HANDLE_SINT PMC_Negate_UX(ThreadContext& tc, PMC_HANDLE_UINT x)
     {
         if (x == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"x");
-        ResourceHolderSINT root;
-        NUMBER_OBJECT_SINT* nr = From_X_Imp(SIGN_NEGATIVE, x);
+        ResourceHolderSINT root(tc);
+        NUMBER_OBJECT_SINT* nr = From_X_Imp(tc, SIGN_NEGATIVE, x);
         root.HookNumber(nr);
         PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);
         return (r);
     }
 
-    PMC_HANDLE_UINT PMC_Abs_X(PMC_HANDLE_SINT x)
+    PMC_HANDLE_UINT PMC_Abs_X(ThreadContext& tc, PMC_HANDLE_SINT x)
     {
         NUMBER_OBJECT_SINT* nx = GET_NUMBER_OBJECT(x, L"x");
-        return (ep_uint.Clone(nx->ABS));
+        return (ep_uint.Clone(tc, nx->ABS));
     }
 
-    PMC_HANDLE_SINT PMC_Clone_X(PMC_HANDLE_SINT x)
+    PMC_HANDLE_SINT PMC_Clone_X(ThreadContext& tc, PMC_HANDLE_SINT x)
     {
         NUMBER_OBJECT_SINT* nx = GET_NUMBER_OBJECT(x, L"x");
-        ResourceHolderSINT root;
-        NUMBER_OBJECT_SINT* nr = nx->IS_ZERO ? &number_object_sint_zero : DuplicateNumber_X(nx);
+        ResourceHolderSINT root(tc);
+        NUMBER_OBJECT_SINT* nr = nx->IS_ZERO ? &number_object_sint_zero : DuplicateNumber_X(tc, nx);
         root.HookNumber(nr);
         PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);
         return (r);
-    }
-
-    void PMC_CheckHandle_UX(PMC_HANDLE_UINT p)
-    {
-        ep_uint.CheckHandle(p);
     }
 
     void PMC_CheckHandle_X(PMC_HANDLE_SINT p)
@@ -350,15 +347,18 @@ namespace Palmtree::Math::Core::Internal
         __CheckNumber(np);
     }
 
-    void PMC_Dispose_UX(PMC_HANDLE_UINT p)
-    {
-        ep_uint.Dispose(p);
-    }
-
-    void PMC_Dispose_X(PMC_HANDLE_SINT p)
+    void PMC_Dispose_X(ThreadContext& tc, PMC_HANDLE_SINT p)
     {
         NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
-        __DeallocateNumber(np);
+        __DeallocateNumber(tc, np);
+    }
+
+    _INT32_T PMC_GetBufferCount_X(PMC_HANDLE_SINT p) noexcept(false)
+    {
+        NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
+        if (np->IS_STATIC)
+            return (0);
+        return (1 + ep_uint.GetBufferCount(np->ABS));
     }
 
     void PMC_UseObject_X(PMC_HANDLE_SINT x) noexcept(false)
@@ -463,7 +463,9 @@ namespace Palmtree::Math::Core::Internal
 
     PMC_STATUS_CODE Initialize_Memory(void)
     {
-        ResourceHolderSINT root;
+        ThreadContext tc;
+
+        ResourceHolderSINT root(tc);
 
         try
         {
@@ -471,7 +473,7 @@ namespace Palmtree::Math::Core::Internal
             root.HookNumber(number_handle_uint_zero);
             number_handle_uint_one = ep_uint.GetConstantValue(PMC_CONSTANT_ONE);
             root.HookNumber(number_handle_uint_one);
-            number_handle_uint_ten = ep_uint.From(10U);
+            number_handle_uint_ten = ep_uint.From(tc, 10U);
             root.HookNumber(number_handle_uint_ten);
 
             root.AttatchStaticNumber(&number_object_sint_zero, SIGN_ZERO, number_handle_uint_zero);

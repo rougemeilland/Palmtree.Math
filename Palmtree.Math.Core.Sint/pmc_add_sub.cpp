@@ -39,7 +39,7 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static NUMBER_OBJECT_SINT* AddU_X_I_Imp(SIGN_T sign, PMC_HANDLE_UINT u, _UINT32_T v)
+    static NUMBER_OBJECT_SINT* AddU_X_I_Imp(ThreadContext& tc, SIGN_T sign, PMC_HANDLE_UINT u, _UINT32_T v)
     {
 #ifdef _DEBUG
         if (u->FLAGS.IS_ZERO)
@@ -47,12 +47,12 @@ namespace Palmtree::Math::Core::Internal
         if (v == 0)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_add_sub.cpp;AddU_X_I_Imp;2");
 #endif
-        ResourceHolderSINT root;
-        PMC_HANDLE_UINT w_abs = ep_uint.Add(u, v);
+        ResourceHolderSINT root(tc);
+        PMC_HANDLE_UINT w_abs = ep_uint.Add(tc, u, v);
         return (ALLOCATE_NUMBER(root, sign, w_abs));
     }
 
-    static NUMBER_OBJECT_SINT* AddU_X_L_Imp(SIGN_T sign, PMC_HANDLE_UINT u, _UINT64_T v)
+    static NUMBER_OBJECT_SINT* AddU_X_L_Imp(ThreadContext& tc, SIGN_T sign, PMC_HANDLE_UINT u, _UINT64_T v)
     {
 #ifdef _DEBUG
         if (u->FLAGS.IS_ZERO)
@@ -60,12 +60,12 @@ namespace Palmtree::Math::Core::Internal
         if (v == 0)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_add_sub.cpp;AddU_X_L_Imp;2");
 #endif
-        ResourceHolderSINT root;
-        PMC_HANDLE_UINT w_abs = ep_uint.Add(u, v);
+        ResourceHolderSINT root(tc);
+        PMC_HANDLE_UINT w_abs = ep_uint.Add(tc, u, v);
         return (ALLOCATE_NUMBER(root, sign, w_abs));
     }
 
-    static NUMBER_OBJECT_SINT* AddU_X_X_Imp(SIGN_T sign, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
+    static NUMBER_OBJECT_SINT* AddU_X_X_Imp(ThreadContext& tc, SIGN_T sign, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
     {
 #ifdef _DEBUG
         if (u->FLAGS.IS_ZERO)
@@ -73,12 +73,12 @@ namespace Palmtree::Math::Core::Internal
         if (v->FLAGS.IS_ZERO)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_add_sub.cpp;AddU_X_X_Imp;2");
 #endif
-        ResourceHolderSINT root;
-        PMC_HANDLE_UINT w_abs = ep_uint.Add(u, v);
+        ResourceHolderSINT root(tc);
+        PMC_HANDLE_UINT w_abs = ep_uint.Add(tc, u, v);
         return (ALLOCATE_NUMBER(root, sign, w_abs));
     }
 
-    static NUMBER_OBJECT_SINT* SubtructU_X_I_Imp(SIGN_T sign, PMC_HANDLE_UINT u, _UINT32_T v)
+    static NUMBER_OBJECT_SINT* SubtructU_X_I_Imp(ThreadContext& tc, SIGN_T sign, PMC_HANDLE_UINT u, _UINT32_T v)
     {
 #ifdef _DEBUG
         if (u->FLAGS.IS_ZERO)
@@ -92,8 +92,8 @@ namespace Palmtree::Math::Core::Internal
             // abs(u) > abs(v) の場合
 
             // abs(u) - abs(v) を返す
-            ResourceHolderSINT root;
-            PMC_HANDLE_UINT w_abs = ep_uint.Subtruct(u, v);
+            ResourceHolderSINT root(tc);
+            PMC_HANDLE_UINT w_abs = ep_uint.Subtruct(tc, u, v);
             return (ALLOCATE_NUMBER(root, sign, w_abs));
         }
         else if (c == 0)
@@ -108,15 +108,15 @@ namespace Palmtree::Math::Core::Internal
             // abs(u) < abs(v) の場合
 
             // - (abs(v) - abs(u)) を返す
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
             _UINT32_T t = ep_uint.Subtruct(v, u);
-            PMC_HANDLE_UINT w_abs = ep_uint.From(t);
+            PMC_HANDLE_UINT w_abs = ep_uint.From(tc, t);
             return (ALLOCATE_NUMBER(root, INVERT_SIGN(sign), w_abs));
         }
         return (PMC_STATUS_OK);
     }
 
-    static NUMBER_OBJECT_SINT* SubtructU_X_L_Imp(SIGN_T sign, PMC_HANDLE_UINT u, _UINT64_T v)
+    static NUMBER_OBJECT_SINT* SubtructU_X_L_Imp(ThreadContext& tc, SIGN_T sign, PMC_HANDLE_UINT u, _UINT64_T v)
     {
 #ifdef _DEBUG
         if (u->FLAGS.IS_ZERO)
@@ -130,8 +130,8 @@ namespace Palmtree::Math::Core::Internal
             // abs(u) > abs(v) の場合
 
             // abs(u) - abs(v) を返す
-            ResourceHolderSINT root;
-            PMC_HANDLE_UINT w_abs = ep_uint.Subtruct(u, v);
+            ResourceHolderSINT root(tc);
+            PMC_HANDLE_UINT w_abs = ep_uint.Subtruct(tc, u, v);
             return (ALLOCATE_NUMBER(root, sign, w_abs));
         }
         else if (c == 0)
@@ -146,15 +146,15 @@ namespace Palmtree::Math::Core::Internal
             // abs(u) < abs(v) の場合
 
             // - (abs(v) - abs(u)) を返す
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
             _UINT64_T t = ep_uint.Subtruct(v, u);
-            PMC_HANDLE_UINT w_abs = ep_uint.From(t);
+            PMC_HANDLE_UINT w_abs = ep_uint.From(tc, t);
             return (ALLOCATE_NUMBER(root, INVERT_SIGN(sign), w_abs));
         }
         return (PMC_STATUS_OK);
     }
 
-    static NUMBER_OBJECT_SINT* SubtructU_X_X_Imp(SIGN_T sign, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
+    static NUMBER_OBJECT_SINT* SubtructU_X_X_Imp(ThreadContext& tc, SIGN_T sign, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
     {
 #ifdef _DEBUG
         if (u->FLAGS.IS_ZERO)
@@ -168,8 +168,8 @@ namespace Palmtree::Math::Core::Internal
             // abs(u) > abs(v) の場合
 
             // abs(u) - abs(v) を返す
-            ResourceHolderSINT root;
-            PMC_HANDLE_UINT w_abs = ep_uint.Subtruct(u, v);
+            ResourceHolderSINT root(tc);
+            PMC_HANDLE_UINT w_abs = ep_uint.Subtruct(tc, u, v);
             return (ALLOCATE_NUMBER(root, sign, w_abs));
         }
         else if (c == 0)
@@ -184,14 +184,14 @@ namespace Palmtree::Math::Core::Internal
             // abs(u) < abs(v) の場合
 
             // - (abs(v) - abs(u)) を返す
-            ResourceHolderSINT root;
-            PMC_HANDLE_UINT w_abs = ep_uint.Subtruct(v, u);
+            ResourceHolderSINT root(tc);
+            PMC_HANDLE_UINT w_abs = ep_uint.Subtruct(tc, v, u);
             return (ALLOCATE_NUMBER(root, INVERT_SIGN(sign), w_abs));
         }
         return (PMC_STATUS_OK);
     }
 
-    static NUMBER_OBJECT_SINT* Add_UX_I_Imp(PMC_HANDLE_UINT u, _INT32_T v)
+    static NUMBER_OBJECT_SINT* Add_UX_I_Imp(ThreadContext& tc, PMC_HANDLE_UINT u, _INT32_T v)
     {
         SIGN_T v_sign;
         _UINT32_T v_abs = GET_ABS_32(v, &v_sign);
@@ -209,7 +209,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v != 0 の場合
 
-                return (From_I_Imp(v_sign, v_abs));
+                return (From_I_Imp(tc, v_sign, v_abs));
             }
         }
         else
@@ -220,24 +220,24 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(SIGN_POSITIVE, u));
+                return (From_X_Imp(tc, SIGN_POSITIVE, u));
             }
             else if (v_sign > 0)
             {
                 // v > 0 の場合
 
-                return (AddU_X_I_Imp(SIGN_POSITIVE, u, v_abs));
+                return (AddU_X_I_Imp(tc, SIGN_POSITIVE, u, v_abs));
             }
             else
             {
                 // v < 0 の場合
 
-                return (SubtructU_X_I_Imp(SIGN_POSITIVE, u, v_abs));
+                return (SubtructU_X_I_Imp(tc, SIGN_POSITIVE, u, v_abs));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Add_UX_L_Imp(PMC_HANDLE_UINT u, _INT64_T v)
+    static NUMBER_OBJECT_SINT* Add_UX_L_Imp(ThreadContext& tc, PMC_HANDLE_UINT u, _INT64_T v)
     {
         SIGN_T v_sign;
         _UINT64_T v_abs = GET_ABS_64(v, &v_sign);
@@ -255,7 +255,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v != 0 の場合
 
-                return (From_L_Imp(v_sign, v_abs));
+                return (From_L_Imp(tc, v_sign, v_abs));
             }
         }
         else
@@ -266,24 +266,24 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(SIGN_POSITIVE, u));
+                return (From_X_Imp(tc, SIGN_POSITIVE, u));
             }
             else if (v_sign > 0)
             {
                 // v > 0 の場合
 
-                return (AddU_X_L_Imp(SIGN_POSITIVE, u, v_abs));
+                return (AddU_X_L_Imp(tc, SIGN_POSITIVE, u, v_abs));
             }
             else
             {
                 // v < 0 の場合
 
-                return (SubtructU_X_L_Imp(SIGN_POSITIVE, u, v_abs));
+                return (SubtructU_X_L_Imp(tc, SIGN_POSITIVE, u, v_abs));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Add_X_UI_Imp(NUMBER_OBJECT_SINT* u, _UINT32_T v)
+    static NUMBER_OBJECT_SINT* Add_X_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_SINT* u, _UINT32_T v)
     {
         if (u->SIGN == 0)
         {
@@ -299,7 +299,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v > 0 の場合
 
-                return (From_I_Imp(SIGN_POSITIVE, v));
+                return (From_I_Imp(tc, SIGN_POSITIVE, v));
             }
         }
         else if (u->SIGN > 0)
@@ -310,13 +310,13 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (DuplicateNumber_X(u));
+                return (DuplicateNumber_X(tc, u));
             }
             else
             {
                 // v > 0 の場合
 
-                return (AddU_X_I_Imp(SIGN_POSITIVE, u->ABS, v));
+                return (AddU_X_I_Imp(tc, SIGN_POSITIVE, u->ABS, v));
             }
         }
         else
@@ -327,18 +327,18 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (DuplicateNumber_X(u));
+                return (DuplicateNumber_X(tc, u));
             }
             else
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_I_Imp(SIGN_NEGATIVE, u->ABS, v));
+                return (SubtructU_X_I_Imp(tc, SIGN_NEGATIVE, u->ABS, v));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Add_X_I_Imp(NUMBER_OBJECT_SINT* u, _INT32_T v)
+    static NUMBER_OBJECT_SINT* Add_X_I_Imp(ThreadContext& tc, NUMBER_OBJECT_SINT* u, _INT32_T v)
     {
         SIGN_T v_sign;
         _UINT32_T v_abs = GET_ABS_32(v, &v_sign);
@@ -356,7 +356,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v != 0 の場合
 
-                return (From_I_Imp(v_sign, v_abs));
+                return (From_I_Imp(tc, v_sign, v_abs));
             }
         }
         else if (u->SIGN > 0)
@@ -367,19 +367,19 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (DuplicateNumber_X(u));
+                return (DuplicateNumber_X(tc, u));
             }
             else if (v_sign > 0)
             {
                 // v > 0 の場合
 
-                return (AddU_X_I_Imp(SIGN_POSITIVE, u->ABS, v_abs));
+                return (AddU_X_I_Imp(tc, SIGN_POSITIVE, u->ABS, v_abs));
             }
             else
             {
                 // v < 0 の場合
 
-                return (SubtructU_X_I_Imp(SIGN_POSITIVE, u->ABS, v_abs));
+                return (SubtructU_X_I_Imp(tc, SIGN_POSITIVE, u->ABS, v_abs));
             }
         }
         else
@@ -390,24 +390,24 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (DuplicateNumber_X(u));
+                return (DuplicateNumber_X(tc, u));
             }
             else if (v_sign > 0)
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_I_Imp(SIGN_NEGATIVE, u->ABS, v_abs));
+                return (SubtructU_X_I_Imp(tc, SIGN_NEGATIVE, u->ABS, v_abs));
             }
             else
             {
                 // v < 0 の場合
 
-                return (AddU_X_I_Imp(SIGN_NEGATIVE, u->ABS, v_abs));
+                return (AddU_X_I_Imp(tc, SIGN_NEGATIVE, u->ABS, v_abs));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Add_X_UL_Imp(NUMBER_OBJECT_SINT* u, _UINT64_T v)
+    static NUMBER_OBJECT_SINT* Add_X_UL_Imp(ThreadContext& tc, NUMBER_OBJECT_SINT* u, _UINT64_T v)
     {
         if (u->SIGN == 0)
         {
@@ -423,7 +423,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v > 0 の場合
 
-                return (From_L_Imp(SIGN_POSITIVE, v));
+                return (From_L_Imp(tc, SIGN_POSITIVE, v));
             }
         }
         else if (u->SIGN > 0)
@@ -434,13 +434,13 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (DuplicateNumber_X(u));
+                return (DuplicateNumber_X(tc, u));
             }
             else
             {
                 // v > 0 の場合
 
-                return (AddU_X_L_Imp(SIGN_POSITIVE, u->ABS, v));
+                return (AddU_X_L_Imp(tc, SIGN_POSITIVE, u->ABS, v));
             }
         }
         else
@@ -451,18 +451,18 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (DuplicateNumber_X(u));
+                return (DuplicateNumber_X(tc, u));
             }
             else
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_L_Imp(SIGN_NEGATIVE, u->ABS, v));
+                return (SubtructU_X_L_Imp(tc, SIGN_NEGATIVE, u->ABS, v));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Add_X_L_Imp(NUMBER_OBJECT_SINT* u, _INT64_T v)
+    static NUMBER_OBJECT_SINT* Add_X_L_Imp(ThreadContext& tc, NUMBER_OBJECT_SINT* u, _INT64_T v)
     {
         SIGN_T v_sign;
         _UINT64_T v_abs = GET_ABS_64(v, &v_sign);
@@ -480,7 +480,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v != 0 の場合
 
-                return (From_L_Imp(v_sign, v_abs));
+                return (From_L_Imp(tc, v_sign, v_abs));
             }
         }
         else if (u->SIGN > 0)
@@ -491,19 +491,19 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (DuplicateNumber_X(u));
+                return (DuplicateNumber_X(tc, u));
             }
             else if (v_sign > 0)
             {
                 // v > 0 の場合
 
-                return (AddU_X_L_Imp(SIGN_POSITIVE, u->ABS, v_abs));
+                return (AddU_X_L_Imp(tc, SIGN_POSITIVE, u->ABS, v_abs));
             }
             else
             {
                 // v < 0 の場合
 
-                return (SubtructU_X_L_Imp(SIGN_POSITIVE, u->ABS, v_abs));
+                return (SubtructU_X_L_Imp(tc, SIGN_POSITIVE, u->ABS, v_abs));
             }
         }
         else
@@ -514,24 +514,24 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (DuplicateNumber_X(u));
+                return (DuplicateNumber_X(tc, u));
             }
             else if (v_sign > 0)
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_L_Imp(SIGN_NEGATIVE, u->ABS, v_abs));
+                return (SubtructU_X_L_Imp(tc, SIGN_NEGATIVE, u->ABS, v_abs));
             }
             else
             {
                 // v < 0 の場合
 
-                return (AddU_X_L_Imp(SIGN_NEGATIVE, u->ABS, v_abs));
+                return (AddU_X_L_Imp(tc, SIGN_NEGATIVE, u->ABS, v_abs));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Add_X_UX_Imp(NUMBER_OBJECT_SINT* u, PMC_HANDLE_UINT v)
+    static NUMBER_OBJECT_SINT* Add_X_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_SINT* u, PMC_HANDLE_UINT v)
     {
         if (u->SIGN == 0)
         {
@@ -547,7 +547,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v > 0 の場合
 
-                return (From_X_Imp(SIGN_POSITIVE, v));
+                return (From_X_Imp(tc, SIGN_POSITIVE, v));
             }
         }
         else if (u->SIGN > 0)
@@ -558,13 +558,13 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (DuplicateNumber_X(u));
+                return (DuplicateNumber_X(tc, u));
             }
             else
             {
                 // v > 0 の場合
 
-                return (AddU_X_X_Imp(SIGN_POSITIVE, u->ABS, v));
+                return (AddU_X_X_Imp(tc, SIGN_POSITIVE, u->ABS, v));
             }
         }
         else
@@ -575,18 +575,18 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (DuplicateNumber_X(u));
+                return (DuplicateNumber_X(tc, u));
             }
             else
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_X_Imp(SIGN_NEGATIVE, u->ABS, v));
+                return (SubtructU_X_X_Imp(tc, SIGN_NEGATIVE, u->ABS, v));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Add_X_X_Imp(NUMBER_OBJECT_SINT* u, NUMBER_OBJECT_SINT* v)
+    static NUMBER_OBJECT_SINT* Add_X_X_Imp(ThreadContext& tc, NUMBER_OBJECT_SINT* u, NUMBER_OBJECT_SINT* v)
     {
         if (u->SIGN == 0)
         {
@@ -602,7 +602,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v != 0 の場合
 
-                return (DuplicateNumber_X(v));
+                return (DuplicateNumber_X(tc, v));
             }
         }
         else if (u->SIGN > 0)
@@ -613,19 +613,19 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (DuplicateNumber_X(u));
+                return (DuplicateNumber_X(tc, u));
             }
             else if (v->SIGN > 0)
             {
                 // v > 0 の場合
 
-                return (AddU_X_X_Imp(SIGN_POSITIVE, u->ABS, v->ABS));
+                return (AddU_X_X_Imp(tc, SIGN_POSITIVE, u->ABS, v->ABS));
             }
             else
             {
                 // v < 0 の場合
 
-                return (SubtructU_X_X_Imp(SIGN_POSITIVE, u->ABS, v->ABS));
+                return (SubtructU_X_X_Imp(tc, SIGN_POSITIVE, u->ABS, v->ABS));
             }
         }
         else
@@ -636,24 +636,24 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (DuplicateNumber_X(u));
+                return (DuplicateNumber_X(tc, u));
             }
             else if (v->SIGN > 0)
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_X_Imp(SIGN_NEGATIVE, u->ABS, v->ABS));
+                return (SubtructU_X_X_Imp(tc, SIGN_NEGATIVE, u->ABS, v->ABS));
             }
             else
             {
                 // v < 0 の場合
 
-                return (AddU_X_X_Imp(SIGN_NEGATIVE, u->ABS, v->ABS));
+                return (AddU_X_X_Imp(tc, SIGN_NEGATIVE, u->ABS, v->ABS));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Subtruct_UX_I_Imp(SIGN_T sign, PMC_HANDLE_UINT u, _INT32_T v)
+    static NUMBER_OBJECT_SINT* Subtruct_UX_I_Imp(ThreadContext& tc, SIGN_T sign, PMC_HANDLE_UINT u, _INT32_T v)
     {
         SIGN_T v_sign;
         _UINT32_T v_abs = GET_ABS_32(v, &v_sign);
@@ -671,7 +671,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v != 0 の場合
 
-                return (From_I_Imp(INVERT_SIGN(PRODUCT_SIGN(sign, v_sign)), v_abs));
+                return (From_I_Imp(tc, INVERT_SIGN(PRODUCT_SIGN(sign, v_sign)), v_abs));
             }
         }
         else
@@ -682,24 +682,24 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(sign, u));
+                return (From_X_Imp(tc, sign, u));
             }
             else if (v_sign > 0)
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_I_Imp(sign, u, v_abs));
+                return (SubtructU_X_I_Imp(tc, sign, u, v_abs));
             }
             else
             {
                 // v < 0 の場合
 
-                return (AddU_X_I_Imp(sign, u, v_abs));
+                return (AddU_X_I_Imp(tc, sign, u, v_abs));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Subtruct_UX_L_Imp(SIGN_T sign, PMC_HANDLE_UINT u, _INT64_T v)
+    static NUMBER_OBJECT_SINT* Subtruct_UX_L_Imp(ThreadContext& tc, SIGN_T sign, PMC_HANDLE_UINT u, _INT64_T v)
     {
         SIGN_T v_sign;
         _UINT64_T v_abs = GET_ABS_64(v, &v_sign);
@@ -717,7 +717,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v != 0 の場合
 
-                return (From_L_Imp(INVERT_SIGN(PRODUCT_SIGN(sign, v_sign)), v_abs));
+                return (From_L_Imp(tc, INVERT_SIGN(PRODUCT_SIGN(sign, v_sign)), v_abs));
             }
         }
         else
@@ -728,24 +728,24 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(sign, u));
+                return (From_X_Imp(tc, sign, u));
             }
             else if (v_sign > 0)
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_L_Imp(sign, u, v_abs));
+                return (SubtructU_X_L_Imp(tc, sign, u, v_abs));
             }
             else
             {
                 // v < 0 の場合
 
-                return (AddU_X_L_Imp(sign, u, v_abs));
+                return (AddU_X_L_Imp(tc, sign, u, v_abs));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Subtruct_UX_UI_Imp(SIGN_T sign, PMC_HANDLE_UINT u, _UINT32_T v)
+    static NUMBER_OBJECT_SINT* Subtruct_UX_UI_Imp(ThreadContext& tc, SIGN_T sign, PMC_HANDLE_UINT u, _UINT32_T v)
     {
         if (u->FLAGS.IS_ZERO)
         {
@@ -761,7 +761,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v > 0 の場合
 
-                return (From_I_Imp(INVERT_SIGN(sign), v));
+                return (From_I_Imp(tc, INVERT_SIGN(sign), v));
             }
         }
         else
@@ -772,18 +772,18 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(sign, u));
+                return (From_X_Imp(tc, sign, u));
             }
             else
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_I_Imp(sign, u, v));
+                return (SubtructU_X_I_Imp(tc, sign, u, v));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Subtruct_UX_UL_Imp(SIGN_T sign, PMC_HANDLE_UINT u, _UINT64_T v)
+    static NUMBER_OBJECT_SINT* Subtruct_UX_UL_Imp(ThreadContext& tc, SIGN_T sign, PMC_HANDLE_UINT u, _UINT64_T v)
     {
         if (u->FLAGS.IS_ZERO)
         {
@@ -799,7 +799,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v > 0 の場合
 
-                return (From_L_Imp(INVERT_SIGN(sign), v));
+                return (From_L_Imp(tc, INVERT_SIGN(sign), v));
             }
         }
         else
@@ -810,18 +810,18 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(sign, u));
+                return (From_X_Imp(tc, sign, u));
             }
             else
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_L_Imp(sign, u, v));
+                return (SubtructU_X_L_Imp(tc, sign, u, v));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Subtruct_UX_UX_Imp(SIGN_T sign, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
+    static NUMBER_OBJECT_SINT* Subtruct_UX_UX_Imp(ThreadContext& tc, SIGN_T sign, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
     {
         if (u->FLAGS.IS_ZERO)
         {
@@ -837,7 +837,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v > 0 の場合
 
-                return (From_X_Imp(INVERT_SIGN(sign), v));
+                return (From_X_Imp(tc, INVERT_SIGN(sign), v));
             }
         }
         else
@@ -848,18 +848,18 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(sign, u));
+                return (From_X_Imp(tc, sign, u));
             }
             else
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_X_Imp(sign, u, v));
+                return (SubtructU_X_X_Imp(tc, sign, u, v));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Subtruct_X_UI_Imp(SIGN_T sign, NUMBER_OBJECT_SINT* u, _UINT32_T v)
+    static NUMBER_OBJECT_SINT* Subtruct_X_UI_Imp(ThreadContext& tc, SIGN_T sign, NUMBER_OBJECT_SINT* u, _UINT32_T v)
     {
         if (u->SIGN == 0)
         {
@@ -875,7 +875,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v > 0 の場合
 
-                return (From_I_Imp(INVERT_SIGN(sign), v));
+                return (From_I_Imp(tc, INVERT_SIGN(sign), v));
             }
         }
         else if (u->SIGN > 0)
@@ -886,13 +886,13 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(sign, u->ABS));
+                return (From_X_Imp(tc, sign, u->ABS));
             }
             else
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_I_Imp(sign, u->ABS, v));
+                return (SubtructU_X_I_Imp(tc, sign, u->ABS, v));
             }
         }
         else
@@ -903,18 +903,18 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(INVERT_SIGN(sign), u->ABS));
+                return (From_X_Imp(tc, INVERT_SIGN(sign), u->ABS));
             }
             else
             {
                 // v > 0 の場合
 
-                return (AddU_X_I_Imp(INVERT_SIGN(sign), u->ABS, v));
+                return (AddU_X_I_Imp(tc, INVERT_SIGN(sign), u->ABS, v));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Subtruct_X_I_Imp(SIGN_T sign, NUMBER_OBJECT_SINT* u, _INT32_T v)
+    static NUMBER_OBJECT_SINT* Subtruct_X_I_Imp(ThreadContext& tc, SIGN_T sign, NUMBER_OBJECT_SINT* u, _INT32_T v)
     {
         SIGN_T v_sign;
         _UINT32_T v_abs = GET_ABS_32(v, &v_sign);
@@ -932,7 +932,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v != 0 の場合
 
-                return (From_I_Imp(INVERT_SIGN(PRODUCT_SIGN(sign, v_sign)), v_abs));
+                return (From_I_Imp(tc, INVERT_SIGN(PRODUCT_SIGN(sign, v_sign)), v_abs));
             }
         }
         else if (u->SIGN > 0)
@@ -943,19 +943,19 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(sign, u->ABS));
+                return (From_X_Imp(tc, sign, u->ABS));
             }
             else if (v_sign > 0)
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_I_Imp(sign, u->ABS, v_abs));
+                return (SubtructU_X_I_Imp(tc, sign, u->ABS, v_abs));
             }
             else
             {
                 // v < 0 の場合
 
-                return (AddU_X_I_Imp(sign, u->ABS, v_abs));
+                return (AddU_X_I_Imp(tc, sign, u->ABS, v_abs));
             }
         }
         else
@@ -966,24 +966,24 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(INVERT_SIGN(sign), u->ABS));
+                return (From_X_Imp(tc, INVERT_SIGN(sign), u->ABS));
             }
             else if (v_sign > 0)
             {
                 // v > 0 の場合
 
-                return (AddU_X_I_Imp(INVERT_SIGN(sign), u->ABS, v_abs));
+                return (AddU_X_I_Imp(tc, INVERT_SIGN(sign), u->ABS, v_abs));
             }
             else
             {
                 // v < 0 の場合
 
-                return (SubtructU_X_I_Imp(INVERT_SIGN(sign), u->ABS, v_abs));
+                return (SubtructU_X_I_Imp(tc, INVERT_SIGN(sign), u->ABS, v_abs));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Subtruct_X_UL_Imp(SIGN_T sign, NUMBER_OBJECT_SINT* u, _UINT64_T v)
+    static NUMBER_OBJECT_SINT* Subtruct_X_UL_Imp(ThreadContext& tc, SIGN_T sign, NUMBER_OBJECT_SINT* u, _UINT64_T v)
     {
         if (u->SIGN == 0)
         {
@@ -999,7 +999,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v > 0 の場合
 
-                return (From_L_Imp(INVERT_SIGN(sign), v));
+                return (From_L_Imp(tc, INVERT_SIGN(sign), v));
             }
         }
         else if (u->SIGN > 0)
@@ -1010,13 +1010,13 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(sign, u->ABS));
+                return (From_X_Imp(tc, sign, u->ABS));
             }
             else
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_L_Imp(sign, u->ABS, v));
+                return (SubtructU_X_L_Imp(tc, sign, u->ABS, v));
             }
         }
         else
@@ -1027,18 +1027,18 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(INVERT_SIGN(sign), u->ABS));
+                return (From_X_Imp(tc, INVERT_SIGN(sign), u->ABS));
             }
             else
             {
                 // v > 0 の場合
 
-                return (AddU_X_L_Imp(INVERT_SIGN(sign), u->ABS, v));
+                return (AddU_X_L_Imp(tc, INVERT_SIGN(sign), u->ABS, v));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Subtruct_X_L_Imp(SIGN_T sign, NUMBER_OBJECT_SINT* u, _INT64_T v)
+    static NUMBER_OBJECT_SINT* Subtruct_X_L_Imp(ThreadContext& tc, SIGN_T sign, NUMBER_OBJECT_SINT* u, _INT64_T v)
     {
         SIGN_T v_sign;
         _UINT64_T v_abs = GET_ABS_64(v, &v_sign);
@@ -1056,7 +1056,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v != 0 の場合
 
-                return (From_L_Imp(INVERT_SIGN(PRODUCT_SIGN(sign, v_sign)), v_abs));
+                return (From_L_Imp(tc, INVERT_SIGN(PRODUCT_SIGN(sign, v_sign)), v_abs));
             }
         }
         else if (u->SIGN > 0)
@@ -1067,19 +1067,19 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(sign, u->ABS));
+                return (From_X_Imp(tc, sign, u->ABS));
             }
             else if (v_sign > 0)
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_L_Imp(sign, u->ABS, v_abs));
+                return (SubtructU_X_L_Imp(tc, sign, u->ABS, v_abs));
             }
             else
             {
                 // v < 0 の場合
 
-                return (AddU_X_L_Imp(sign, u->ABS, v_abs));
+                return (AddU_X_L_Imp(tc, sign, u->ABS, v_abs));
             }
         }
         else
@@ -1090,24 +1090,24 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(INVERT_SIGN(sign), u->ABS));
+                return (From_X_Imp(tc, INVERT_SIGN(sign), u->ABS));
             }
             else if (v_sign > 0)
             {
                 // v > 0 の場合
 
-                return (AddU_X_L_Imp(INVERT_SIGN(sign), u->ABS, v_abs));
+                return (AddU_X_L_Imp(tc, INVERT_SIGN(sign), u->ABS, v_abs));
             }
             else
             {
                 // v < 0 の場合
 
-                return (SubtructU_X_L_Imp(INVERT_SIGN(sign), u->ABS, v_abs));
+                return (SubtructU_X_L_Imp(tc, INVERT_SIGN(sign), u->ABS, v_abs));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Subtruct_X_UX_Imp(SIGN_T sign, NUMBER_OBJECT_SINT* u, PMC_HANDLE_UINT v)
+    static NUMBER_OBJECT_SINT* Subtruct_X_UX_Imp(ThreadContext& tc, SIGN_T sign, NUMBER_OBJECT_SINT* u, PMC_HANDLE_UINT v)
     {
         if (u->SIGN == 0)
         {
@@ -1123,7 +1123,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v > 0 の場合
 
-                return (From_X_Imp(INVERT_SIGN(sign), v));
+                return (From_X_Imp(tc, INVERT_SIGN(sign), v));
             }
         }
         else if (u->SIGN > 0)
@@ -1134,13 +1134,13 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(sign, u->ABS));
+                return (From_X_Imp(tc, sign, u->ABS));
             }
             else
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_X_Imp(sign, u->ABS, v));
+                return (SubtructU_X_X_Imp(tc, sign, u->ABS, v));
             }
         }
         else
@@ -1151,18 +1151,18 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(INVERT_SIGN(sign), u->ABS));
+                return (From_X_Imp(tc, INVERT_SIGN(sign), u->ABS));
             }
             else
             {
                 // v > 0 の場合
 
-                return (AddU_X_X_Imp(INVERT_SIGN(sign), u->ABS, v));
+                return (AddU_X_X_Imp(tc, INVERT_SIGN(sign), u->ABS, v));
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* Subtruct_X_X_Imp(SIGN_T sign, NUMBER_OBJECT_SINT* u, NUMBER_OBJECT_SINT* v)
+    static NUMBER_OBJECT_SINT* Subtruct_X_X_Imp(ThreadContext& tc, SIGN_T sign, NUMBER_OBJECT_SINT* u, NUMBER_OBJECT_SINT* v)
     {
         if (u->SIGN == 0)
         {
@@ -1178,7 +1178,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v != 0 の場合
 
-                return (From_X_Imp(INVERT_SIGN(PRODUCT_SIGN(sign, v->SIGN)), v->ABS));
+                return (From_X_Imp(tc, INVERT_SIGN(PRODUCT_SIGN(sign, v->SIGN)), v->ABS));
             }
         }
         else if (u->SIGN > 0)
@@ -1189,19 +1189,19 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(sign, u->ABS));
+                return (From_X_Imp(tc, sign, u->ABS));
             }
             else if (v->SIGN > 0)
             {
                 // v > 0 の場合
 
-                return (SubtructU_X_X_Imp(sign, u->ABS, v->ABS));
+                return (SubtructU_X_X_Imp(tc, sign, u->ABS, v->ABS));
             }
             else
             {
                 // v < 0 の場合
 
-                return (AddU_X_X_Imp(sign, u->ABS, v->ABS));
+                return (AddU_X_X_Imp(tc, sign, u->ABS, v->ABS));
             }
         }
         else
@@ -1212,19 +1212,19 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v == 0 の場合
 
-                return (From_X_Imp(INVERT_SIGN(sign), u->ABS));
+                return (From_X_Imp(tc, INVERT_SIGN(sign), u->ABS));
             }
             else if (v->SIGN > 0)
             {
                 // v > 0 の場合
 
-                return (AddU_X_X_Imp(INVERT_SIGN(sign), u->ABS, v->ABS));
+                return (AddU_X_X_Imp(tc, INVERT_SIGN(sign), u->ABS, v->ABS));
             }
             else
             {
                 // v < 0 の場合
 
-                return (SubtructU_X_X_Imp(INVERT_SIGN(sign), u->ABS, v->ABS));
+                return (SubtructU_X_X_Imp(tc, INVERT_SIGN(sign), u->ABS, v->ABS));
             }
         }
     }
@@ -1246,277 +1246,277 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    PMC_HANDLE_SINT PMC_Add_I_UX(_INT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_SINT PMC_Add_I_UX(ThreadContext& tc, _INT32_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Add_UX_I_Imp(v, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Add_UX_I_Imp(tc, v, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Add_I_X(_INT32_T u, PMC_HANDLE_SINT v) noexcept(false)
+    PMC_HANDLE_SINT PMC_Add_I_X(ThreadContext& tc, _INT32_T u, PMC_HANDLE_SINT v) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Add_X_I_Imp(nv, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Add_X_I_Imp(tc, nv, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Add_L_X(_INT64_T u, PMC_HANDLE_SINT v) noexcept(false)
+    PMC_HANDLE_SINT PMC_Add_L_X(ThreadContext& tc, _INT64_T u, PMC_HANDLE_SINT v) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Add_X_L_Imp(nv, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Add_X_L_Imp(tc, nv, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Add_L_UX(_INT64_T u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_SINT PMC_Add_L_UX(ThreadContext& tc, _INT64_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Add_UX_L_Imp(v, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Add_UX_L_Imp(tc, v, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Add_UI_X(_UINT32_T u, PMC_HANDLE_SINT v) noexcept(false)
+    PMC_HANDLE_SINT PMC_Add_UI_X(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_SINT v) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Add_X_UI_Imp(nv, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Add_X_UI_Imp(tc, nv, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Add_UL_X(_UINT64_T u, PMC_HANDLE_SINT v) noexcept(false)
+    PMC_HANDLE_SINT PMC_Add_UL_X(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_SINT v) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Add_X_UL_Imp(nv, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Add_X_UL_Imp(tc, nv, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Add_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v)
+    PMC_HANDLE_SINT PMC_Add_UX_X(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_SINT v)
     {
         if (u == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Add_X_UX_Imp(nv, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Add_X_UX_Imp(tc, nv, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Add_UX_I(PMC_HANDLE_UINT u, _INT32_T v) noexcept(false)
+    PMC_HANDLE_SINT PMC_Add_UX_I(ThreadContext& tc, PMC_HANDLE_UINT u, _INT32_T v) noexcept(false)
     {
         if (u == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Add_UX_I_Imp(u, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Add_UX_I_Imp(tc, u, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Add_UX_L(PMC_HANDLE_UINT u, _INT64_T v) noexcept(false)
+    PMC_HANDLE_SINT PMC_Add_UX_L(ThreadContext& tc, PMC_HANDLE_UINT u, _INT64_T v) noexcept(false)
     {
         if (u == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Add_UX_L_Imp(u, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Add_UX_L_Imp(tc, u, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Add_X_UI(PMC_HANDLE_SINT u, _UINT32_T v)
+    PMC_HANDLE_SINT PMC_Add_X_UI(ThreadContext& tc, PMC_HANDLE_SINT u, _UINT32_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Add_X_UI_Imp(nu, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Add_X_UI_Imp(tc, nu, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Add_X_I(PMC_HANDLE_SINT u, _INT32_T v)
+    PMC_HANDLE_SINT PMC_Add_X_I(ThreadContext& tc, PMC_HANDLE_SINT u, _INT32_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Add_X_I_Imp(nu, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Add_X_I_Imp(tc, nu, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Add_X_UL(PMC_HANDLE_SINT u, _UINT64_T v)
+    PMC_HANDLE_SINT PMC_Add_X_UL(ThreadContext& tc, PMC_HANDLE_SINT u, _UINT64_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Add_X_UL_Imp(nu, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Add_X_UL_Imp(tc, nu, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Add_X_L(PMC_HANDLE_SINT u, _INT64_T v)
+    PMC_HANDLE_SINT PMC_Add_X_L(ThreadContext& tc, PMC_HANDLE_SINT u, _INT64_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Add_X_L_Imp(nu, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Add_X_L_Imp(tc, nu, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Add_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_SINT PMC_Add_X_UX(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Add_X_UX_Imp(nu, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Add_X_UX_Imp(tc, nu, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Add_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v)
+    PMC_HANDLE_SINT PMC_Add_X_X(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Add_X_X_Imp(nu, nv)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Add_X_X_Imp(tc, nu, nv)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_I_UX(_INT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_SINT PMC_Subtruct_I_UX(ThreadContext& tc, _INT32_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_UX_I_Imp(SIGN_NEGATIVE, v, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_UX_I_Imp(tc, SIGN_NEGATIVE, v, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_I_X(_INT32_T u, PMC_HANDLE_SINT v)
+    PMC_HANDLE_SINT PMC_Subtruct_I_X(ThreadContext& tc, _INT32_T u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_X_I_Imp(SIGN_NEGATIVE, nv, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_X_I_Imp(tc, SIGN_NEGATIVE, nv, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_L_UX(_INT64_T u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_SINT PMC_Subtruct_L_UX(ThreadContext& tc, _INT64_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_UX_L_Imp(SIGN_NEGATIVE, v, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_UX_L_Imp(tc, SIGN_NEGATIVE, v, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_L_X(_INT64_T u, PMC_HANDLE_SINT v)
+    PMC_HANDLE_SINT PMC_Subtruct_L_X(ThreadContext& tc, _INT64_T u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_X_L_Imp(SIGN_NEGATIVE, nv, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_X_L_Imp(tc, SIGN_NEGATIVE, nv, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_SINT PMC_Subtruct_UI_UX(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_UINT v)
     {
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_UX_UI_Imp(SIGN_NEGATIVE, v, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_UX_UI_Imp(tc, SIGN_NEGATIVE, v, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_UI_X(_UINT32_T u, PMC_HANDLE_SINT v)
+    PMC_HANDLE_SINT PMC_Subtruct_UI_X(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_X_UI_Imp(SIGN_NEGATIVE, nv, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_X_UI_Imp(tc, SIGN_NEGATIVE, nv, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_SINT PMC_Subtruct_UL_UX(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_UINT v)
     {
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_UX_UL_Imp(SIGN_NEGATIVE, v, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_UX_UL_Imp(tc, SIGN_NEGATIVE, v, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_UL_X(_UINT64_T u, PMC_HANDLE_SINT v)
+    PMC_HANDLE_SINT PMC_Subtruct_UL_X(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_X_UL_Imp(SIGN_NEGATIVE, nv, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_X_UL_Imp(tc, SIGN_NEGATIVE, nv, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v)
+    PMC_HANDLE_SINT PMC_Subtruct_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v)
     {
         if (u == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_UX_UI_Imp(SIGN_POSITIVE, u, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_UX_UI_Imp(tc, SIGN_POSITIVE, u, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v)
+    PMC_HANDLE_SINT PMC_Subtruct_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v)
     {
         if (u == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_UX_UL_Imp(SIGN_POSITIVE, u, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_UX_UL_Imp(tc, SIGN_POSITIVE, u, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_SINT PMC_Subtruct_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
     {
         if (u == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_UX_UX_Imp(SIGN_POSITIVE, u, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_UX_UX_Imp(tc, SIGN_POSITIVE, u, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v)
+    PMC_HANDLE_SINT PMC_Subtruct_UX_X(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_SINT v)
     {
         if (u == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_X_UX_Imp(SIGN_NEGATIVE, nv, u)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_X_UX_Imp(tc, SIGN_NEGATIVE, nv, u)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_X_UI(PMC_HANDLE_SINT u, _UINT32_T v)
+    PMC_HANDLE_SINT PMC_Subtruct_X_UI(ThreadContext& tc, PMC_HANDLE_SINT u, _UINT32_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_X_UI_Imp(SIGN_POSITIVE, nu, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_X_UI_Imp(tc, SIGN_POSITIVE, nu, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_X_I(PMC_HANDLE_SINT u, _INT32_T v)
+    PMC_HANDLE_SINT PMC_Subtruct_X_I(ThreadContext& tc, PMC_HANDLE_SINT u, _INT32_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_X_I_Imp(SIGN_POSITIVE, nu, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_X_I_Imp(tc, SIGN_POSITIVE, nu, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_UX_I(PMC_HANDLE_UINT u, _INT32_T v) noexcept(false)
+    PMC_HANDLE_SINT PMC_Subtruct_UX_I(ThreadContext& tc, PMC_HANDLE_UINT u, _INT32_T v) noexcept(false)
     {
         if (u == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_UX_I_Imp(SIGN_POSITIVE, u, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_UX_I_Imp(tc, SIGN_POSITIVE, u, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_X_UL(PMC_HANDLE_SINT u, _UINT64_T v)
+    PMC_HANDLE_SINT PMC_Subtruct_X_UL(ThreadContext& tc, PMC_HANDLE_SINT u, _UINT64_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_X_UL_Imp(SIGN_POSITIVE, nu, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_X_UL_Imp(tc, SIGN_POSITIVE, nu, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_X_L(PMC_HANDLE_SINT u, _INT64_T v)
+    PMC_HANDLE_SINT PMC_Subtruct_X_L(ThreadContext& tc, PMC_HANDLE_SINT u, _INT64_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_X_L_Imp(SIGN_POSITIVE, nu, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_X_L_Imp(tc, SIGN_POSITIVE, nu, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_UX_L(PMC_HANDLE_UINT u, _INT64_T v) noexcept(false)
+    PMC_HANDLE_SINT PMC_Subtruct_UX_L(ThreadContext& tc, PMC_HANDLE_UINT u, _INT64_T v) noexcept(false)
     {
         if (u == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_UX_L_Imp(SIGN_POSITIVE, u, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_UX_L_Imp(tc, SIGN_POSITIVE, u, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_SINT PMC_Subtruct_X_UX(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_X_UX_Imp(SIGN_POSITIVE, nu, v)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_X_UX_Imp(tc, SIGN_POSITIVE, nu, v)));
     }
 
-    PMC_HANDLE_SINT PMC_Subtruct_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v)
+    PMC_HANDLE_SINT PMC_Subtruct_X_X(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, Subtruct_X_X_Imp(SIGN_POSITIVE, nu, nv)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, Subtruct_X_X_Imp(tc, SIGN_POSITIVE, nu, nv)));
     }
 
-    PMC_HANDLE_SINT PMC_Increment_X(PMC_HANDLE_SINT x) noexcept(false)
+    PMC_HANDLE_SINT PMC_Increment_X(ThreadContext& tc, PMC_HANDLE_SINT x) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nx = GET_NUMBER_OBJECT(x, L"x");
         if (nx->SIGN == 0)
@@ -1531,20 +1531,20 @@ namespace Palmtree::Math::Core::Internal
             // u > 0 の場合
 
             // abs(u) + 1 を返す
-            ResourceHolderSINT root;
-            return (EPILOGUE(root, SIGN_POSITIVE, ep_uint.Increment(nx->ABS)));
+            ResourceHolderSINT root(tc);
+            return (EPILOGUE(root, SIGN_POSITIVE, ep_uint.Increment(tc, nx->ABS)));
         }
         else
         {
             // u < 0 の場合
 
             // - abs(u) + 1 を返す
-            ResourceHolderSINT root;
-            return (EPILOGUE(root, SIGN_NEGATIVE, ep_uint.Decrement(nx->ABS)));
+            ResourceHolderSINT root(tc);
+            return (EPILOGUE(root, SIGN_NEGATIVE, ep_uint.Decrement(tc, nx->ABS)));
         }
     }
 
-    PMC_HANDLE_SINT PMC_Decrement_X(PMC_HANDLE_SINT x) noexcept(false)
+    PMC_HANDLE_SINT PMC_Decrement_X(ThreadContext& tc, PMC_HANDLE_SINT x) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nx = GET_NUMBER_OBJECT(x, L"x");
         if (nx->SIGN == 0)
@@ -1559,16 +1559,16 @@ namespace Palmtree::Math::Core::Internal
             // u > 0 の場合
 
             // abs(u) - 1 を返す
-            ResourceHolderSINT root;
-            return (EPILOGUE(root, SIGN_POSITIVE, ep_uint.Decrement(nx->ABS)));
+            ResourceHolderSINT root(tc);
+            return (EPILOGUE(root, SIGN_POSITIVE, ep_uint.Decrement(tc, nx->ABS)));
         }
         else
         {
             // u < 0 の場合
 
             // - abs(u) - 1 を返す
-            ResourceHolderSINT root;
-            return (EPILOGUE(root, SIGN_NEGATIVE, ep_uint.Increment(nx->ABS)));
+            ResourceHolderSINT root(tc);
+            return (EPILOGUE(root, SIGN_NEGATIVE, ep_uint.Increment(tc, nx->ABS)));
         }
     }
 

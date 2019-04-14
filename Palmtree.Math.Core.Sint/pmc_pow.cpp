@@ -31,7 +31,7 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    PMC_HANDLE_SINT PMC_Pow_I_UI(_INT32_T v, _UINT32_T e) noexcept(false)
+    PMC_HANDLE_SINT PMC_Pow_I_UI(ThreadContext& tc, _INT32_T v, _UINT32_T e) noexcept(false)
     {
         SIGN_T v_sign;
         _UINT32_T v_abs = GET_ABS_32(v, &v_sign);
@@ -66,9 +66,9 @@ namespace Palmtree::Math::Core::Internal
             {
                 // e > 0 の場合
 
-                ResourceHolderSINT root;
+                ResourceHolderSINT root(tc);
                 SIGN_T r_sign = v_sign < 0 && (e & 1) ? SIGN_NEGATIVE : SIGN_POSITIVE;
-                PMC_HANDLE_UINT r_abs = ep_uint.Pow(v_abs, e);
+                PMC_HANDLE_UINT r_abs = ep_uint.Pow(tc, v_abs, e);
                 root.HookNumber(r_abs);
                 NUMBER_OBJECT_SINT* nr = root.AllocateNumber(r_sign, r_abs);
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
@@ -78,7 +78,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Pow_L_UI(_INT64_T v, _UINT32_T e) noexcept(false)
+    PMC_HANDLE_SINT PMC_Pow_L_UI(ThreadContext& tc, _INT64_T v, _UINT32_T e) noexcept(false)
     {
         SIGN_T v_sign;
         _UINT64_T v_abs = GET_ABS_64(v, &v_sign);
@@ -113,9 +113,9 @@ namespace Palmtree::Math::Core::Internal
             {
                 // e > 0 の場合
 
-                ResourceHolderSINT root;
+                ResourceHolderSINT root(tc);
                 SIGN_T r_sign = v_sign < 0 && (e & 1) ? SIGN_NEGATIVE : SIGN_POSITIVE;
-                PMC_HANDLE_UINT r_abs = ep_uint.Pow(v_abs, e);
+                PMC_HANDLE_UINT r_abs = ep_uint.Pow(tc, v_abs, e);
                 root.HookNumber(r_abs);
                 NUMBER_OBJECT_SINT* nr = root.AllocateNumber(r_sign, r_abs);
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
@@ -125,7 +125,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Pow_X_UI(PMC_HANDLE_SINT v, _UINT32_T e) noexcept(false)
+    PMC_HANDLE_SINT PMC_Pow_X_UI(ThreadContext& tc, PMC_HANDLE_SINT v, _UINT32_T e) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
         if (nv->SIGN == 0)
@@ -159,9 +159,9 @@ namespace Palmtree::Math::Core::Internal
             {
                 // e > 0 の場合
 
-                ResourceHolderSINT root;
+                ResourceHolderSINT root(tc);
                 SIGN_T r_sign = nv->SIGN < 0 && (e & 1) ? SIGN_NEGATIVE : SIGN_POSITIVE;
-                PMC_HANDLE_UINT r_abs = ep_uint.Pow(nv->ABS, e);
+                PMC_HANDLE_UINT r_abs = ep_uint.Pow(tc, nv->ABS, e);
                 root.HookNumber(r_abs);
                 NUMBER_OBJECT_SINT* nr = root.AllocateNumber(r_sign, r_abs);
                 PMC_HANDLE_SINT r = GET_NUMBER_HANDLE(nr);
@@ -171,7 +171,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Pow_I_I(_INT32_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Pow_I_I(ThreadContext& tc, _INT32_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false)
     {
         SIGN_T v_sign;
         _UINT32_T v_abs = GET_ABS_32(v, &v_sign);
@@ -181,9 +181,9 @@ namespace Palmtree::Math::Core::Internal
         {
             // e >= 0 の場合
 
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
             SIGN_T r_numerator_sign = v_sign < 0 && (e_abs & 1) ? SIGN_NEGATIVE : SIGN_POSITIVE;
-            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(v_abs, e_abs);
+            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(tc, v_abs, e_abs);
             root.HookNumber(r_numerator_abs);
             *r_denominator = number_handle_uint_one;
             root.HookNumber(*r_denominator);
@@ -198,9 +198,9 @@ namespace Palmtree::Math::Core::Internal
 
             if (v_sign == 0)
                 throw DivisionByZeroException(L"0 の逆数は未定義です。");
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
             SIGN_T r_numerator_sign = v_sign < 0 && (e_abs & 1) ? SIGN_NEGATIVE : SIGN_POSITIVE;
-            *r_denominator = ep_uint.Pow(v_abs, e_abs);
+            *r_denominator = ep_uint.Pow(tc, v_abs, e_abs);
             root.HookNumber(*r_denominator);
             NUMBER_OBJECT_SINT* nr_numerator = r_numerator_sign >= 0 ? &number_object_sint_one : &number_object_sint_minus_one;
             PMC_HANDLE_SINT r_numerator = GET_NUMBER_HANDLE(nr_numerator);
@@ -209,7 +209,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Pow_L_I(_INT64_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Pow_L_I(ThreadContext& tc, _INT64_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false)
     {
         SIGN_T v_sign;
         _UINT64_T v_abs = GET_ABS_64(v, &v_sign);
@@ -219,9 +219,9 @@ namespace Palmtree::Math::Core::Internal
         {
             // e >= 0 の場合
 
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
             SIGN_T r_numerator_sign = v_sign < 0 && (e_abs & 1) ? SIGN_NEGATIVE : SIGN_POSITIVE;
-            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(v_abs, e_abs);
+            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(tc, v_abs, e_abs);
             root.HookNumber(r_numerator_abs);
             *r_denominator = number_handle_uint_one;
             root.HookNumber(*r_denominator);
@@ -236,9 +236,9 @@ namespace Palmtree::Math::Core::Internal
 
             if (v_sign == 0)
                 throw DivisionByZeroException(L"0 の逆数は未定義です。");
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
             SIGN_T r_numerator_sign = v_sign < 0 && (e_abs & 1) ? SIGN_NEGATIVE : SIGN_POSITIVE;
-            *r_denominator = ep_uint.Pow(v_abs, e_abs);
+            *r_denominator = ep_uint.Pow(tc, v_abs, e_abs);
             root.HookNumber(*r_denominator);
             NUMBER_OBJECT_SINT* nr_numerator = r_numerator_sign >= 0 ? &number_object_sint_one : &number_object_sint_minus_one;
             PMC_HANDLE_SINT r_numerator = GET_NUMBER_HANDLE(nr_numerator);
@@ -247,7 +247,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Pow_X_I(PMC_HANDLE_SINT v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Pow_X_I(ThreadContext& tc, PMC_HANDLE_SINT v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
         SIGN_T e_sign;
@@ -256,9 +256,9 @@ namespace Palmtree::Math::Core::Internal
         {
             // e >= 0 の場合
 
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
             SIGN_T r_numerator_sign = nv->SIGN < 0 && (e_abs & 1) ? SIGN_NEGATIVE : SIGN_POSITIVE;
-            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(nv->ABS, e_abs);
+            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(tc, nv->ABS, e_abs);
             root.HookNumber(r_numerator_abs);
             *r_denominator = number_handle_uint_one;
             root.HookNumber(*r_denominator);
@@ -273,9 +273,9 @@ namespace Palmtree::Math::Core::Internal
 
             if (nv->IS_ZERO)
                 throw DivisionByZeroException(L"0 の逆数は未定義です。");
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
             SIGN_T r_numerator_sign = nv->SIGN < 0 && (e_abs & 1) ? SIGN_NEGATIVE : SIGN_POSITIVE;
-            *r_denominator = ep_uint.Pow(nv->ABS, e_abs);
+            *r_denominator = ep_uint.Pow(tc, nv->ABS, e_abs);
             root.HookNumber(*r_denominator);
             NUMBER_OBJECT_SINT* nr_numerator = r_numerator_sign >= 0 ? &number_object_sint_one : &number_object_sint_minus_one;
             PMC_HANDLE_SINT r_numerator = GET_NUMBER_HANDLE(nr_numerator);
@@ -284,7 +284,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Pow_UI_I(_UINT32_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Pow_UI_I(ThreadContext& tc, _UINT32_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false)
     {
         SIGN_T e_sign;
         _UINT32_T e_abs = GET_ABS_32(e, &e_sign);
@@ -292,9 +292,9 @@ namespace Palmtree::Math::Core::Internal
         {
             // e >= 0 の場合
 
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
             SIGN_T r_numerator_sign = SIGN_POSITIVE;
-            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(v, e_abs);
+            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(tc, v, e_abs);
             root.HookNumber(r_numerator_abs);
             *r_denominator = number_handle_uint_one;
             NUMBER_OBJECT_SINT* nr_numerator = root.AllocateNumber(r_numerator_sign, r_numerator_abs);
@@ -308,8 +308,8 @@ namespace Palmtree::Math::Core::Internal
 
             if (v == 0)
                 throw DivisionByZeroException(L"0 の逆数は未定義です。");
-            ResourceHolderSINT root;
-            *r_denominator = ep_uint.Pow(v, e_abs);
+            ResourceHolderSINT root(tc);
+            *r_denominator = ep_uint.Pow(tc, v, e_abs);
             root.HookNumber(*r_denominator);
             PMC_HANDLE_SINT r_numerator = GET_NUMBER_HANDLE(&number_object_sint_one);
             root.UnlinkNumber(*r_denominator);
@@ -317,7 +317,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Pow_UL_I(_UINT64_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Pow_UL_I(ThreadContext& tc, _UINT64_T v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false)
     {
         SIGN_T e_sign;
         _UINT32_T e_abs = GET_ABS_32(e, &e_sign);
@@ -325,9 +325,9 @@ namespace Palmtree::Math::Core::Internal
         {
             // e >= 0 の場合
 
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
             SIGN_T r_numerator_sign = SIGN_POSITIVE;
-            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(v, e_abs);
+            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(tc, v, e_abs);
             root.HookNumber(r_numerator_abs);
             *r_denominator = number_handle_uint_one;
             NUMBER_OBJECT_SINT* nr_numerator = root.AllocateNumber(r_numerator_sign, r_numerator_abs);
@@ -341,8 +341,8 @@ namespace Palmtree::Math::Core::Internal
 
             if (v == 0)
                 throw DivisionByZeroException(L"0 の逆数は未定義です。");
-            ResourceHolderSINT root;
-            *r_denominator = ep_uint.Pow(v, e_abs);
+            ResourceHolderSINT root(tc);
+            *r_denominator = ep_uint.Pow(tc, v, e_abs);
             root.HookNumber(*r_denominator);
             PMC_HANDLE_SINT r_numerator = GET_NUMBER_HANDLE(&number_object_sint_one);
             root.UnlinkNumber(*r_denominator);
@@ -350,7 +350,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Pow_UX_I(PMC_HANDLE_UINT v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Pow_UX_I(ThreadContext& tc, PMC_HANDLE_UINT v, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false)
     {
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
@@ -360,9 +360,9 @@ namespace Palmtree::Math::Core::Internal
         {
             // e >= 0 の場合
 
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
             SIGN_T r_numerator_sign = SIGN_POSITIVE;
-            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(v, e_abs);
+            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(tc, v, e_abs);
             root.HookNumber(r_numerator_abs);
             *r_denominator = number_handle_uint_one;
             NUMBER_OBJECT_SINT* nr_numerator = root.AllocateNumber(r_numerator_sign, r_numerator_abs);
@@ -376,8 +376,8 @@ namespace Palmtree::Math::Core::Internal
 
             if (v->FLAGS.IS_ZERO)
                 throw DivisionByZeroException(L"0 の逆数は未定義です。");
-            ResourceHolderSINT root;
-            *r_denominator = ep_uint.Pow(v, e_abs);
+            ResourceHolderSINT root(tc);
+            *r_denominator = ep_uint.Pow(tc, v, e_abs);
             root.HookNumber(*r_denominator);
             PMC_HANDLE_SINT r_numerator = GET_NUMBER_HANDLE(&number_object_sint_one);
             root.UnlinkNumber(*r_denominator);
@@ -385,7 +385,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_SINT PMC_Pow_R_I(PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false)
+    PMC_HANDLE_SINT PMC_Pow_R_I(ThreadContext& tc, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, _INT32_T e, PMC_HANDLE_UINT* r_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* nv_numerator = GET_NUMBER_OBJECT(v_numerator, L"v_numerator");
         if (v_denominator == nullptr)
@@ -396,11 +396,11 @@ namespace Palmtree::Math::Core::Internal
         {
             // e >= 0 の場合
 
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
             SIGN_T r_numerator_sign = nv_numerator->SIGN < 0 && (e_abs & 1) ? SIGN_NEGATIVE : SIGN_POSITIVE;
-            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(nv_numerator->ABS, e_abs);
+            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(tc, nv_numerator->ABS, e_abs);
             root.HookNumber(r_numerator_abs);
-            *r_denominator = ep_uint.Pow(v_denominator, e_abs);
+            *r_denominator = ep_uint.Pow(tc, v_denominator, e_abs);
             root.HookNumber(*r_denominator);
             NUMBER_OBJECT_SINT* nr_numerator = root.AllocateNumber(r_numerator_sign, r_numerator_abs);
             PMC_HANDLE_SINT r_numerator = GET_NUMBER_HANDLE(nr_numerator);
@@ -414,11 +414,11 @@ namespace Palmtree::Math::Core::Internal
 
             if (nv_numerator->IS_ZERO)
                 throw DivisionByZeroException(L"0 の逆数は未定義です。");
-            ResourceHolderSINT root;
+            ResourceHolderSINT root(tc);
             SIGN_T r_numerator_sign = nv_numerator->SIGN < 0 && (e_abs & 1) ? SIGN_NEGATIVE : SIGN_POSITIVE;
-            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(v_denominator, e_abs);
+            PMC_HANDLE_UINT r_numerator_abs = ep_uint.Pow(tc, v_denominator, e_abs);
             root.HookNumber(r_numerator_abs);
-            *r_denominator = ep_uint.Pow(nv_numerator->ABS, e_abs);
+            *r_denominator = ep_uint.Pow(tc, nv_numerator->ABS, e_abs);
             root.HookNumber(*r_denominator);
             NUMBER_OBJECT_SINT* nr_numerator = root.AllocateNumber(r_numerator_sign, r_numerator_abs);
             PMC_HANDLE_SINT r_numerator = GET_NUMBER_HANDLE(nr_numerator);

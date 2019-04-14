@@ -31,14 +31,14 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    PMC_HANDLE_UINT PMC_FromByteArray_RTNL(const unsigned char * buffer, size_t count, PMC_HANDLE_SINT * o_numerator) noexcept(false)
+    PMC_HANDLE_UINT PMC_FromByteArray_RTNL(ThreadContext& tc, const unsigned char * buffer, size_t count, PMC_HANDLE_SINT * o_numerator) noexcept(false)
     {
         if (buffer == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"buffer");
-        ResourceHolderSINT root;
+        ResourceHolderSINT root(tc);
         SIGN_T o_numerator_sign;
         PMC_HANDLE_UINT no_numerator_abs;
-        PMC_HANDLE_UINT o_denominator = ep_uint.FromByteArray_RTNL(buffer, count, &o_numerator_sign, &no_numerator_abs);
+        PMC_HANDLE_UINT o_denominator = ep_uint.FromByteArray_RTNL(tc, buffer, count, &o_numerator_sign, &no_numerator_abs);
         root.HookNumber(no_numerator_abs);
         root.HookNumber(o_denominator);
         NUMBER_OBJECT_SINT* no_numerator = root.AllocateNumber(o_numerator_sign, no_numerator_abs);
@@ -48,13 +48,13 @@ namespace Palmtree::Math::Core::Internal
         return (o_denominator);
     }
 
-    PMC_HANDLE_SINT PMC_FromByteArray_SINT(const unsigned char* buffer, size_t count)
+    PMC_HANDLE_SINT PMC_FromByteArray_SINT(ThreadContext& tc, const unsigned char* buffer, size_t count)
     {
         if (buffer == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"buffer");
-        ResourceHolderSINT root;
+        ResourceHolderSINT root(tc);
         SIGN_T o_sign;
-        PMC_HANDLE_UINT o_abs = ep_uint.FromByteArray_SINT(buffer, count, &o_sign);
+        PMC_HANDLE_UINT o_abs = ep_uint.FromByteArray_SINT(tc, buffer, count, &o_sign);
         root.HookNumber(o_abs);
         NUMBER_OBJECT_SINT* no = root.AllocateNumber(o_sign, o_abs);
         PMC_HANDLE_SINT o = GET_NUMBER_HANDLE(no);

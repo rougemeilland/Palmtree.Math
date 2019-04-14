@@ -37,6 +37,8 @@
 namespace Palmtree::Math::Core::Internal
 {
 
+    class ThreadContext;
+
     class __DLLEXPORT_UINT ResourceHolder
     {
     public:
@@ -70,7 +72,9 @@ namespace Palmtree::Math::Core::Internal
         __RootTag _root_tag;
 
     protected:
-        ResourceHolder();
+        ThreadContext& _tc;
+
+        ResourceHolder(ThreadContext& tc);
 
     public:
         virtual ~ResourceHolder();

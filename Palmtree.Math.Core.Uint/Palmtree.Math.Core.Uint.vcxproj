@@ -190,6 +190,7 @@
     <ClInclude Include="pmc_parserstate.h" />
     <ClInclude Include="pmc_string.h" />
     <ClInclude Include="pmc_thousandseparatedstringwriter.h" />
+    <ClInclude Include="pmc_threadcontext.h" />
     <ClInclude Include="pmc_tostringformatter.h" />
     <ClInclude Include="pmc_tostringformattercustom.h" />
     <ClInclude Include="pmc_tostringformattertypec.h" />
@@ -229,6 +230,7 @@
     <ClCompile Include="pmc_round.cpp" />
     <ClCompile Include="pmc_stringio.cpp" />
     <ClCompile Include="pmc_thousandseparatedstringwriter.cpp" />
+    <ClCompile Include="pmc_threadcontext.cpp" />
     <ClCompile Include="pmc_tostringformatter.cpp" />
     <ClCompile Include="pmc_tostringformattercustom.cpp" />
     <ClCompile Include="pmc_tostringformattertypec.cpp" />

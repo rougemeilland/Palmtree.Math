@@ -40,11 +40,12 @@ namespace Palmtree::Math::Core::Internal
         : public ResourceHolder::__ChainBufferTag
     {
     private:
+        ThreadContext& _tc;
         __UNIT_TYPE* _buffer;
         __UNIT_TYPE _word_count;
         __UNIT_TYPE _check_code;
     public:
-        ____UNIT_TYPE_Array_ChainBufferTag(__UNIT_TYPE* buffer, __UNIT_TYPE word_count, __UNIT_TYPE check_code);
+        ____UNIT_TYPE_Array_ChainBufferTag(ThreadContext& tc, __UNIT_TYPE* buffer, __UNIT_TYPE word_count, __UNIT_TYPE check_code);
         virtual ~____UNIT_TYPE_Array_ChainBufferTag();
         virtual bool EqualsBufferAddress(void* buffer) override;
         void virtual Clear() override;

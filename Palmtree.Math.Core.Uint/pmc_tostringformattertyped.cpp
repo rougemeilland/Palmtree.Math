@@ -31,8 +31,8 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    ToStringFormatterTypeD::ToStringFormatterTypeD(int precision, const PMC_NUMBER_FORMAT_INFO * number_format_info)
-        : ToStringFormatter(L'N', precision, number_format_info)
+    ToStringFormatterTypeD::ToStringFormatterTypeD(ThreadContext& tc, int precision, const PMC_NUMBER_FORMAT_INFO * number_format_info)
+        : ToStringFormatter(tc, L'N', precision, number_format_info)
     {
     }
 

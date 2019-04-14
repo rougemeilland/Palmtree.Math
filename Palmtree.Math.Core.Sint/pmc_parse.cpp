@@ -30,12 +30,12 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    PMC_STATUS_CODE PMC_TryParse_SINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o) noexcept(false)
+    PMC_STATUS_CODE PMC_TryParse_SINT(ThreadContext& tc, const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o) noexcept(false)
     {
-        ResourceHolderSINT root;
+        ResourceHolderSINT root(tc);
         SIGN_T o_sign;
         PMC_HANDLE_UINT o_abs;
-        PMC_STATUS_CODE result = ep_uint.TryParse_SINT(source, number_styles, format_option, &o_sign, &o_abs);
+        PMC_STATUS_CODE result = ep_uint.TryParse_SINT(tc, source, number_styles, format_option, &o_sign, &o_abs);
         if (result == PMC_STATUS_OK)
         {
             root.HookNumber(o_abs);
@@ -46,12 +46,12 @@ namespace Palmtree::Math::Core::Internal
         return (result);
     }
 
-    PMC_STATUS_CODE PMC_TryParse_RTNL(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o_numerator, PMC_HANDLE_UINT* o_denominator) noexcept(false)
+    PMC_STATUS_CODE PMC_TryParse_RTNL(ThreadContext& tc, const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_SINT* o_numerator, PMC_HANDLE_UINT* o_denominator) noexcept(false)
     {
-        ResourceHolderSINT root;
+        ResourceHolderSINT root(tc);
         SIGN_T o_numerator_sign;
         PMC_HANDLE_UINT o_numerator_abs;
-        PMC_STATUS_CODE result = ep_uint.TryParse_RTNL(source, number_styles, format_option, &o_numerator_sign, &o_numerator_abs, o_denominator);
+        PMC_STATUS_CODE result = ep_uint.TryParse_RTNL(tc, source, number_styles, format_option, &o_numerator_sign, &o_numerator_abs, o_denominator);
         if (result == PMC_STATUS_OK)
         {
             root.HookNumber(o_numerator_abs);

@@ -31,11 +31,11 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    static NUMBER_OBJECT_RTNL* PMC_Divide_UI_R_Imp(_UINT32_T u, NUMBER_OBJECT_RTNL* v)
+    static NUMBER_OBJECT_RTNL* PMC_Divide_UI_R_Imp(ThreadContext& tc, _UINT32_T u, NUMBER_OBJECT_RTNL* v)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT w_denominator;
-        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(u, v->NUMERATOR, v->DENOMINATOR, &w_denominator);
+        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(tc, u, v->NUMERATOR, v->DENOMINATOR, &w_denominator);
         root.HookNumber(w_numerator);
         root.HookNumber(w_denominator);
         NUMBER_OBJECT_RTNL* w = root.AllocateNumber(w_numerator, w_denominator);
@@ -43,11 +43,11 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static NUMBER_OBJECT_RTNL* PMC_Divide_UL_R_Imp(_UINT64_T u, NUMBER_OBJECT_RTNL* v)
+    static NUMBER_OBJECT_RTNL* PMC_Divide_UL_R_Imp(ThreadContext& tc, _UINT64_T u, NUMBER_OBJECT_RTNL* v)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT w_denominator;
-        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(u, v->NUMERATOR, v->DENOMINATOR, &w_denominator);
+        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(tc, u, v->NUMERATOR, v->DENOMINATOR, &w_denominator);
         root.HookNumber(w_numerator);
         root.HookNumber(w_denominator);
         NUMBER_OBJECT_RTNL* w = root.AllocateNumber(w_numerator, w_denominator);
@@ -55,11 +55,11 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static NUMBER_OBJECT_RTNL* PMC_Divide_UX_R_Imp(PMC_HANDLE_UINT u, NUMBER_OBJECT_RTNL* v)
+    static NUMBER_OBJECT_RTNL* PMC_Divide_UX_R_Imp(ThreadContext& tc, PMC_HANDLE_UINT u, NUMBER_OBJECT_RTNL* v)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT w_denominator;
-        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(u, v->NUMERATOR, v->DENOMINATOR, &w_denominator);
+        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(tc, u, v->NUMERATOR, v->DENOMINATOR, &w_denominator);
         root.HookNumber(w_numerator);
         root.HookNumber(w_denominator);
         NUMBER_OBJECT_RTNL* w = root.AllocateNumber(w_numerator, w_denominator);
@@ -67,11 +67,11 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static NUMBER_OBJECT_RTNL* PMC_Divide_I_R_Imp(_INT32_T u, NUMBER_OBJECT_RTNL* v)
+    static NUMBER_OBJECT_RTNL* PMC_Divide_I_R_Imp(ThreadContext& tc, _INT32_T u, NUMBER_OBJECT_RTNL* v)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT w_denominator;
-        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(u, v->NUMERATOR, v->DENOMINATOR, &w_denominator);
+        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(tc, u, v->NUMERATOR, v->DENOMINATOR, &w_denominator);
         root.HookNumber(w_numerator);
         root.HookNumber(w_denominator);
         NUMBER_OBJECT_RTNL* w = root.AllocateNumber(w_numerator, w_denominator);
@@ -79,11 +79,11 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static NUMBER_OBJECT_RTNL* PMC_Divide_L_R_Imp(_INT64_T u, NUMBER_OBJECT_RTNL* v)
+    static NUMBER_OBJECT_RTNL* PMC_Divide_L_R_Imp(ThreadContext& tc, _INT64_T u, NUMBER_OBJECT_RTNL* v)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT w_denominator;
-        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(u, v->NUMERATOR, v->DENOMINATOR, &w_denominator);
+        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(tc, u, v->NUMERATOR, v->DENOMINATOR, &w_denominator);
         root.HookNumber(w_numerator);
         root.HookNumber(w_denominator);
         NUMBER_OBJECT_RTNL* w = root.AllocateNumber(w_numerator, w_denominator);
@@ -91,11 +91,11 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static NUMBER_OBJECT_RTNL* PMC_Divide_X_R_Imp(PMC_HANDLE_SINT u, NUMBER_OBJECT_RTNL* v)
+    static NUMBER_OBJECT_RTNL* PMC_Divide_X_R_Imp(ThreadContext& tc, PMC_HANDLE_SINT u, NUMBER_OBJECT_RTNL* v)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT w_denominator;
-        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(u, v->NUMERATOR, v->DENOMINATOR, &w_denominator);
+        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(tc, u, v->NUMERATOR, v->DENOMINATOR, &w_denominator);
         root.HookNumber(w_numerator);
         root.HookNumber(w_denominator);
         NUMBER_OBJECT_RTNL* w = root.AllocateNumber(w_numerator, w_denominator);
@@ -103,11 +103,11 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static NUMBER_OBJECT_RTNL* PMC_Divide_R_UI_Imp(NUMBER_OBJECT_RTNL* u, _UINT32_T v)
+    static NUMBER_OBJECT_RTNL* PMC_Divide_R_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_RTNL* u, _UINT32_T v)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT w_denominator;
-        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(u->NUMERATOR, u->DENOMINATOR, v, &w_denominator);
+        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(tc, u->NUMERATOR, u->DENOMINATOR, v, &w_denominator);
         root.HookNumber(w_numerator);
         root.HookNumber(w_denominator);
         NUMBER_OBJECT_RTNL* w = root.AllocateNumber(w_numerator, w_denominator);
@@ -115,11 +115,11 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static NUMBER_OBJECT_RTNL* PMC_Divide_R_UL_Imp(NUMBER_OBJECT_RTNL* u, _UINT64_T v)
+    static NUMBER_OBJECT_RTNL* PMC_Divide_R_UL_Imp(ThreadContext& tc, NUMBER_OBJECT_RTNL* u, _UINT64_T v)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT w_denominator;
-        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(u->NUMERATOR, u->DENOMINATOR, v, &w_denominator);
+        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(tc, u->NUMERATOR, u->DENOMINATOR, v, &w_denominator);
         root.HookNumber(w_numerator);
         root.HookNumber(w_denominator);
         NUMBER_OBJECT_RTNL* w = root.AllocateNumber(w_numerator, w_denominator);
@@ -127,11 +127,11 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static NUMBER_OBJECT_RTNL* PMC_Divide_R_UX_Imp(NUMBER_OBJECT_RTNL* u, PMC_HANDLE_UINT v)
+    static NUMBER_OBJECT_RTNL* PMC_Divide_R_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_RTNL* u, PMC_HANDLE_UINT v)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT w_denominator;
-        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(u->NUMERATOR, u->DENOMINATOR, v, &w_denominator);
+        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(tc, u->NUMERATOR, u->DENOMINATOR, v, &w_denominator);
         root.HookNumber(w_numerator);
         root.HookNumber(w_denominator);
         NUMBER_OBJECT_RTNL* w = root.AllocateNumber(w_numerator, w_denominator);
@@ -139,11 +139,11 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static NUMBER_OBJECT_RTNL* PMC_Divide_R_I_Imp(NUMBER_OBJECT_RTNL* u, _INT32_T v)
+    static NUMBER_OBJECT_RTNL* PMC_Divide_R_I_Imp(ThreadContext& tc, NUMBER_OBJECT_RTNL* u, _INT32_T v)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT w_denominator;
-        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(u->NUMERATOR, u->DENOMINATOR, v, &w_denominator);
+        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(tc, u->NUMERATOR, u->DENOMINATOR, v, &w_denominator);
         root.HookNumber(w_numerator);
         root.HookNumber(w_denominator);
         NUMBER_OBJECT_RTNL* w = root.AllocateNumber(w_numerator, w_denominator);
@@ -151,11 +151,11 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static NUMBER_OBJECT_RTNL* PMC_Divide_R_L_Imp(NUMBER_OBJECT_RTNL* u, _INT64_T v)
+    static NUMBER_OBJECT_RTNL* PMC_Divide_R_L_Imp(ThreadContext& tc, NUMBER_OBJECT_RTNL* u, _INT64_T v)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT w_denominator;
-        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(u->NUMERATOR, u->DENOMINATOR, v, &w_denominator);
+        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(tc, u->NUMERATOR, u->DENOMINATOR, v, &w_denominator);
         root.HookNumber(w_numerator);
         root.HookNumber(w_denominator);
         NUMBER_OBJECT_RTNL* w = root.AllocateNumber(w_numerator, w_denominator);
@@ -163,11 +163,11 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static NUMBER_OBJECT_RTNL* PMC_Divide_R_X_Imp(NUMBER_OBJECT_RTNL* u, PMC_HANDLE_SINT v)
+    static NUMBER_OBJECT_RTNL* PMC_Divide_R_X_Imp(ThreadContext& tc, NUMBER_OBJECT_RTNL* u, PMC_HANDLE_SINT v)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT w_denominator;
-        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(u->NUMERATOR, u->DENOMINATOR, v, &w_denominator);
+        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(tc, u->NUMERATOR, u->DENOMINATOR, v, &w_denominator);
         root.HookNumber(w_numerator);
         root.HookNumber(w_denominator);
         NUMBER_OBJECT_RTNL* w = root.AllocateNumber(w_numerator, w_denominator);
@@ -175,11 +175,11 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static NUMBER_OBJECT_RTNL* PMC_Divide_R_R_Imp(NUMBER_OBJECT_RTNL* u, NUMBER_OBJECT_RTNL* v)
+    static NUMBER_OBJECT_RTNL* PMC_Divide_R_R_Imp(ThreadContext& tc, NUMBER_OBJECT_RTNL* u, NUMBER_OBJECT_RTNL* v)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT w_denominator;
-        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(u->NUMERATOR, u->DENOMINATOR, v->NUMERATOR, v->DENOMINATOR, &w_denominator);
+        PMC_HANDLE_SINT w_numerator = ep_sint.DivideRational(tc, u->NUMERATOR, u->DENOMINATOR, v->NUMERATOR, v->DENOMINATOR, &w_denominator);
         root.HookNumber(w_numerator);
         root.HookNumber(w_denominator);
         NUMBER_OBJECT_RTNL* w = root.AllocateNumber(w_numerator, w_denominator);
@@ -195,104 +195,104 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    PMC_HANDLE_RTNL PMC_Divide_I_R(_INT32_T u, PMC_HANDLE_RTNL v)
+    PMC_HANDLE_RTNL PMC_Divide_I_R(ThreadContext& tc, _INT32_T u, PMC_HANDLE_RTNL v)
     {
         NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Divide_I_R_Imp(u, nv)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, PMC_Divide_I_R_Imp(tc, u, nv)));
     }
 
-    PMC_HANDLE_RTNL PMC_Divide_L_R(_INT64_T u, PMC_HANDLE_RTNL v)
+    PMC_HANDLE_RTNL PMC_Divide_L_R(ThreadContext& tc, _INT64_T u, PMC_HANDLE_RTNL v)
     {
         NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Divide_L_R_Imp(u, nv)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, PMC_Divide_L_R_Imp(tc, u, nv)));
     }
 
-    PMC_HANDLE_RTNL PMC_Divide_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v)
+    PMC_HANDLE_RTNL PMC_Divide_X_R(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v)
     {
         if (u == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
         NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Divide_X_R_Imp(u, nv)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, PMC_Divide_X_R_Imp(tc, u, nv)));
     }
 
-    PMC_HANDLE_RTNL PMC_Divide_UI_R(_UINT32_T u, PMC_HANDLE_RTNL v)
+    PMC_HANDLE_RTNL PMC_Divide_UI_R(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_RTNL v)
     {
         NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Divide_UI_R_Imp(u, nv)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, PMC_Divide_UI_R_Imp(tc, u, nv)));
     }
 
-    PMC_HANDLE_RTNL PMC_Divide_UL_R(_UINT64_T u, PMC_HANDLE_RTNL v)
+    PMC_HANDLE_RTNL PMC_Divide_UL_R(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_RTNL v)
     {
         NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Divide_UL_R_Imp(u, nv)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, PMC_Divide_UL_R_Imp(tc, u, nv)));
     }
 
-    PMC_HANDLE_RTNL PMC_Divide_UX_R(PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v)
+    PMC_HANDLE_RTNL PMC_Divide_UX_R(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v)
     {
         if (u == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
         NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Divide_UX_R_Imp(u, nv)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, PMC_Divide_UX_R_Imp(tc, u, nv)));
     }
 
-    PMC_HANDLE_RTNL PMC_Divide_R_I(PMC_HANDLE_RTNL u, _INT32_T v)
+    PMC_HANDLE_RTNL PMC_Divide_R_I(ThreadContext& tc, PMC_HANDLE_RTNL u, _INT32_T v)
     {
         NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Divide_R_I_Imp(nu, v)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, PMC_Divide_R_I_Imp(tc, nu, v)));
     }
 
-    PMC_HANDLE_RTNL PMC_Divide_R_L(PMC_HANDLE_RTNL u, _INT64_T v)
+    PMC_HANDLE_RTNL PMC_Divide_R_L(ThreadContext& tc, PMC_HANDLE_RTNL u, _INT64_T v)
     {
         NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Divide_R_L_Imp(nu, v)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, PMC_Divide_R_L_Imp(tc, nu, v)));
     }
 
-    PMC_HANDLE_RTNL PMC_Divide_R_X(PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v)
-    {
-        NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
-        if (v == nullptr)
-            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Divide_R_X_Imp(nu, v)));
-    }
-
-    PMC_HANDLE_RTNL PMC_Divide_R_UI(PMC_HANDLE_RTNL u, _UINT32_T v)
-    {
-        NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Divide_R_UI_Imp(nu, v)));
-    }
-
-    PMC_HANDLE_RTNL PMC_Divide_R_UL(PMC_HANDLE_RTNL u, _UINT64_T v)
-    {
-        NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Divide_R_UL_Imp(nu, v)));
-    }
-
-    PMC_HANDLE_RTNL PMC_Divide_R_UX(PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_RTNL PMC_Divide_R_X(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Divide_R_UX_Imp(nu, v)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, PMC_Divide_R_X_Imp(tc, nu, v)));
     }
 
-    PMC_HANDLE_RTNL PMC_Divide_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v)
+    PMC_HANDLE_RTNL PMC_Divide_R_UI(ThreadContext& tc, PMC_HANDLE_RTNL u, _UINT32_T v)
+    {
+        NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, PMC_Divide_R_UI_Imp(tc, nu, v)));
+    }
+
+    PMC_HANDLE_RTNL PMC_Divide_R_UL(ThreadContext& tc, PMC_HANDLE_RTNL u, _UINT64_T v)
+    {
+        NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, PMC_Divide_R_UL_Imp(tc, nu, v)));
+    }
+
+    PMC_HANDLE_RTNL PMC_Divide_R_UX(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v)
+    {
+        NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
+        if (v == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, PMC_Divide_R_UX_Imp(tc, nu, v)));
+    }
+
+    PMC_HANDLE_RTNL PMC_Divide_R_R(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v)
     {
         NUMBER_OBJECT_RTNL* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderRTNL root;
-        return (EPILOGUE(root, PMC_Divide_R_R_Imp(nu, nv)));
+        ResourceHolderRTNL root(tc);
+        return (EPILOGUE(root, PMC_Divide_R_R_Imp(tc, nu, nv)));
     }
 
 }

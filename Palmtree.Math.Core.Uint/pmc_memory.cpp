@@ -27,6 +27,7 @@
 #include "pmc_uint_internal.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_lock.h"
+#include "pmc_threadcontext.h"
 #include "pmc_inline_func.h"
 
 #pragma region プラットフォーム固有の定義
@@ -159,7 +160,7 @@ namespace Palmtree::Math::Core::Internal
 
     // 多倍長整数をバイト列として格納するためのメモリ領域を獲得する。
     // 引数には格納可能な多倍長整数の合計ワード数が渡される。
-    __UNIT_TYPE* __AllocateBlock(size_t bits, __UNIT_TYPE* allocated_block_words, __UNIT_TYPE* code)
+    __UNIT_TYPE* __AllocateBlock(ThreadContext& tc, size_t bits, __UNIT_TYPE* allocated_block_words, __UNIT_TYPE* code)
     {
         // 実際に獲得されるメモリ領域は「引数で渡されたワード数+2」のワード数となる。
         // 最初のワードには獲得時に引数で渡されたワード数が格納される。
@@ -169,6 +170,7 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE words2 = words1 + 2;
         __UNIT_TYPE bytes = words2 * __UNIT_TYPE_BYTE_COUNT;
         __UNIT_TYPE* buffer = (__UNIT_TYPE*)__AllocateHeap(bytes);
+        tc.IncrementTypeAAllocationCount();
         buffer[0] = words1;
         *allocated_block_words = words1;
 #ifdef _DEBUG
@@ -193,12 +195,13 @@ namespace Palmtree::Math::Core::Internal
 #endif
         buffer[words1 + 1] = check_code;
         *code = check_code;
+
         return (&buffer[1]);
     }
 
 
     // AllocateBlock によって獲得されたメモリ領域が解放される。
-    void __DeallocateBlock(__UNIT_TYPE* buffer, __UNIT_TYPE buffer_words, __UNIT_TYPE check_code)
+    void __DeallocateBlock(ThreadContext& tc, __UNIT_TYPE* buffer, __UNIT_TYPE buffer_words, __UNIT_TYPE check_code)
     {
         if (buffer == nullptr)
             return;
@@ -212,7 +215,8 @@ namespace Palmtree::Math::Core::Internal
         // 使用済みのバッファを既定のデータで塗りつぶす。
         _FILL_MEMORY_UNIT(p, DEFAULT_MEMORY_DATA, buffer_words + 2);
         // バッファを解放する。
-        HeapFree(hLocalHeap, 0, p);
+        __DeallocateHeap(p);
+        tc.DecrementTypeAAllocationCount();
     }
 
     void __CheckBlock(__UNIT_TYPE* buffer, __UNIT_TYPE count, __UNIT_TYPE code)
@@ -333,13 +337,13 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    static void InitializeNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count)
+    static void InitializeNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count)
     {
         if (bit_count > 0)
         {
             __UNIT_TYPE word_count;
             __UNIT_TYPE check_code;
-            __UNIT_TYPE* block = __AllocateBlock(bit_count, &word_count, &check_code);
+            __UNIT_TYPE* block = __AllocateBlock(tc, bit_count, &word_count, &check_code);
             ClearNumberHeader(p);
             p->SIGNATURE1 = PMC_SIGNATURE;
             p->SIGNATURE2 = PMC_UINT_SIGNATURE;
@@ -363,7 +367,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static void CleanUpNumber(NUMBER_OBJECT_UINT* p)
+    static void CleanUpNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p)
     {
         if (p->BLOCK != nullptr)
         {
@@ -371,41 +375,42 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE block_count = p->BLOCK_COUNT;
             __UNIT_TYPE block_check_code = p->BLOCK_CHECK_CODE;
             p->BLOCK = nullptr;
-            __DeallocateBlock(block, block_count, block_check_code);        }
+            __DeallocateBlock(tc, block, block_count, block_check_code);        }
     }
 
-    void __AttatchNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count)
+    void __AttatchNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count)
     {
-        InitializeNumber(p, bit_count);
+        InitializeNumber(tc, p, bit_count);
         p->IS_STATIC = true;
     }
 
-    NUMBER_OBJECT_UINT* __AllocateNumber(__UNIT_TYPE bit_count)
+    NUMBER_OBJECT_UINT* __AllocateNumber(ThreadContext& tc, __UNIT_TYPE bit_count)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         NUMBER_OBJECT_UINT* p = (NUMBER_OBJECT_UINT*)root.AllocateNumberObjectUint();
-        InitializeNumber(p, bit_count);
+        InitializeNumber(tc, p, bit_count);
         p->IS_STATIC = false;
         root.UnlinkNumberObjectUint(p);
         return (p);
     }
 
-    void __DetatchNumber(NUMBER_OBJECT_UINT* p)
+    void __DetatchNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p)
     {
         if (p != nullptr && p->IS_STATIC)
-            CleanUpNumber(p);
+            CleanUpNumber(tc, p);
     }
 
-    void __DeallocateNumber(NUMBER_OBJECT_UINT* p)
+    void __DeallocateNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p)
     {
         Lock lock_obj;
         if (p == nullptr || p->IS_STATIC)
             return;
         if (p->WORKING_COUNT > 0)
             throw InvalidOperationException(L"演算に使用中の数値オブジェクトを解放しようとしました。");
-        CleanUpNumber(p);
+        CleanUpNumber(tc, p);
         FillNumberHeader(p);
-        HeapFree(hLocalHeap, 0, p);
+        __DeallocateHeap(p);
+        tc.DecrementTypeAAllocationCount();
     }
 
     static __UNIT_TYPE GetEffectiveBitLength(__UNIT_TYPE* p, __UNIT_TYPE word_count, __UNIT_TYPE* effective_word_count)
@@ -445,7 +450,7 @@ namespace Palmtree::Math::Core::Internal
         return (0);
     }
 
-    void CommitNumber(NUMBER_OBJECT_UINT* p) noexcept(false)
+    void CommitNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p) noexcept(false)
     {
         if (p->IS_COMMITTED)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;CommitNumber;1");
@@ -454,7 +459,7 @@ namespace Palmtree::Math::Core::Internal
         {
             if (p->BLOCK != nullptr)
             {
-                __DeallocateBlock(p->BLOCK, p->BLOCK_COUNT, p->BLOCK_CHECK_CODE);
+                __DeallocateBlock(tc, p->BLOCK, p->BLOCK_COUNT, p->BLOCK_CHECK_CODE);
                 p->BLOCK = nullptr;
                 p->BLOCK_COUNT = 0;
                 p->BLOCK_CHECK_CODE = 0;
@@ -511,16 +516,16 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    NUMBER_OBJECT_UINT* DuplicateNumber(NUMBER_OBJECT_UINT* x)
+    NUMBER_OBJECT_UINT* DuplicateNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* x)
     {
         if (x->IS_STATIC)
             return (x);
         if (x->IS_ZERO)
             return (&number_object_uint_zero);
         __UNIT_TYPE x_bit_count = x->UNIT_BIT_COUNT;
-        NUMBER_OBJECT_UINT* o = __AllocateNumber(x_bit_count);
+        NUMBER_OBJECT_UINT* o = __AllocateNumber(tc, x_bit_count);
         _COPY_MEMORY_UNIT(o->BLOCK, x->BLOCK, o->BLOCK_COUNT);
-        CommitNumber(o);
+        CommitNumber(tc, o);
         return (o);
     }
 
@@ -545,25 +550,33 @@ namespace Palmtree::Math::Core::Internal
         __CheckNumber(np);
     }
 
-    void PMC_Dispose_UX(PMC_HANDLE_UINT p)
+    void PMC_Dispose_UX(ThreadContext& tc, PMC_HANDLE_UINT p)
     {
         NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
-        __DeallocateNumber(np);
+        __DeallocateNumber(tc, np);
     }
 
-    PMC_HANDLE_UINT PMC_Clone_UX(PMC_HANDLE_UINT x) noexcept(false)
+    PMC_HANDLE_UINT PMC_Clone_UX(ThreadContext& tc, PMC_HANDLE_UINT x) noexcept(false)
     {
         NUMBER_OBJECT_UINT* nx = GET_NUMBER_OBJECT(x, L"x");
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         NUMBER_OBJECT_UINT* no;
         if (nx->IS_ZERO)
             no = &number_object_uint_zero;
         else
-            no = DuplicateNumber(nx);
+            no = DuplicateNumber(tc, nx);
         root.HookNumber(no);
         PMC_HANDLE_UINT o = GET_NUMBER_HANDLE(no);
         root.UnlinkNumber(no);
         return (o);
+    }
+
+    _INT32_T PMC_GetBufferCount_UX(PMC_HANDLE_UINT p) noexcept(false)
+    {
+        NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
+        if (np->IS_STATIC)
+            return (0);
+        return (1 + (np->BLOCK != nullptr ? 1 : 0));
     }
 
     void PMC_UseObject_UX(PMC_HANDLE_UINT x) noexcept(false)
@@ -663,22 +676,24 @@ namespace Palmtree::Math::Core::Internal
 
     PMC_STATUS_CODE Initialize_Memory(PROCESSOR_FEATURES* feature)
     {
+        ThreadContext tc;
+
         InitializeCriticalSection(&mcs);
 
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
 
         try
         {
             root.AttatchStaticNumber(&number_object_uint_zero, 0);
-            CommitNumber(&number_object_uint_zero);
+            CommitNumber(tc, &number_object_uint_zero);
 
             root.AttatchStaticNumber(&number_object_uint_one, 1);
             number_object_uint_one.BLOCK[0] = 1;
-            CommitNumber(&number_object_uint_one);
+            CommitNumber(tc, &number_object_uint_one);
 
             root.AttatchStaticNumber(&number_object_uint_ten, 1);
             number_object_uint_ten.BLOCK[0] = 10;
-            CommitNumber(&number_object_uint_ten);
+            CommitNumber(tc, &number_object_uint_ten);
 
             root.UnlinkStatickNumber(&number_object_uint_zero);
             root.UnlinkStatickNumber(&number_object_uint_one);
@@ -686,8 +701,14 @@ namespace Palmtree::Math::Core::Internal
 
             return (PMC_STATUS_OK);
         }
+        catch (const BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
         catch (const Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }

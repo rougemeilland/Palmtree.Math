@@ -33,18 +33,18 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    PMC_HANDLE_SINT PMC_Round_R(PMC_HANDLE_RTNL x, PMC_MIDPOINT_ROUNDING_CODE mode)
+    PMC_HANDLE_SINT PMC_Round_R(ThreadContext& tc, PMC_HANDLE_RTNL x, PMC_MIDPOINT_ROUNDING_CODE mode)
     {
         NUMBER_OBJECT_RTNL* nx = GET_NUMBER_OBJECT(x, L"x");
-        return (ep_sint.Round(nx->NUMERATOR, nx->DENOMINATOR, mode));
+        return (ep_sint.Round(tc, nx->NUMERATOR, nx->DENOMINATOR, mode));
     }
 
-    PMC_HANDLE_RTNL PMC_Round_R_I(PMC_HANDLE_RTNL x, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode)
+    PMC_HANDLE_RTNL PMC_Round_R_I(ThreadContext& tc, PMC_HANDLE_RTNL x, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode)
     {
         NUMBER_OBJECT_RTNL* nx = GET_NUMBER_OBJECT(x, L"x");
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT r_denominator;
-        PMC_HANDLE_SINT r_numerator = ep_sint.Round(nx->NUMERATOR, nx->DENOMINATOR, decimals, mode, &r_denominator);
+        PMC_HANDLE_SINT r_numerator = ep_sint.Round(tc, nx->NUMERATOR, nx->DENOMINATOR, decimals, mode, &r_denominator);
         root.HookNumber(r_numerator);
         root.HookNumber(r_denominator);
         NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(r_numerator, r_denominator);
@@ -53,16 +53,16 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    PMC_HANDLE_SINT PMC_Floor_R(PMC_HANDLE_RTNL x)
+    PMC_HANDLE_SINT PMC_Floor_R(ThreadContext& tc, PMC_HANDLE_RTNL x)
     {
         NUMBER_OBJECT_RTNL* nx = GET_NUMBER_OBJECT(x, L"x");
-        return (ep_sint.Round(nx->NUMERATOR, nx->DENOMINATOR, PMC_MIDPOINT_ROUNDING_FLOOR));
+        return (ep_sint.Round(tc, nx->NUMERATOR, nx->DENOMINATOR, PMC_MIDPOINT_ROUNDING_FLOOR));
     }
 
-    PMC_HANDLE_SINT PMC_Ceiling_R(PMC_HANDLE_RTNL x)
+    PMC_HANDLE_SINT PMC_Ceiling_R(ThreadContext& tc, PMC_HANDLE_RTNL x)
     {
         NUMBER_OBJECT_RTNL* nx = GET_NUMBER_OBJECT(x, L"x");
-        return (ep_sint.Round(nx->NUMERATOR, nx->DENOMINATOR, PMC_MIDPOINT_ROUNDING_CEILING));
+        return (ep_sint.Round(tc, nx->NUMERATOR, nx->DENOMINATOR, PMC_MIDPOINT_ROUNDING_CEILING));
     }
 }
 

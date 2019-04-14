@@ -46,7 +46,7 @@ namespace Palmtree::Math::Core::Internal
     }
 
 
-    static const unsigned char* PMC_FromByteArray_Imp(const unsigned char* buffer, size_t count, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_abs)
+    static const unsigned char* PMC_FromByteArray_Imp(ThreadContext& tc, const unsigned char* buffer, size_t count, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_abs)
     {
         if (count < 1)
             throw FormatException(L"与えられたバイト列が多倍長整数として認識できません。");
@@ -130,10 +130,10 @@ namespace Palmtree::Math::Core::Internal
             }
             else
             {
-                ResourceHolderUINT root;
+                ResourceHolderUINT root(tc);
                 NUMBER_OBJECT_UINT* no_abs = root.AllocateNumber(bit_count);
                 _COPY_MEMORY_BYTE(no_abs->BLOCK, data_ptr, _DIVIDE_CEILING_SIZE(bit_count, 8));
-                CommitNumber(no_abs);
+                CommitNumber(tc, no_abs);
                 *o_sign = sign_bit == 1 ? SIGN_POSITIVE : SIGN_NEGATIVE;
                 root.UnlinkNumber(no_abs);
                 *o_abs = no_abs;
@@ -142,7 +142,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_FromByteArray_RTNL(const unsigned char* buffer, size_t count, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs) noexcept(false)
+    PMC_HANDLE_UINT PMC_FromByteArray_RTNL(ThreadContext& tc, const unsigned char* buffer, size_t count, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs) noexcept(false)
     {
         if (buffer == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"buffer");
@@ -150,7 +150,7 @@ namespace Palmtree::Math::Core::Internal
             throw ArgumentNullException(L"引数にnullが与えられています。", L"o_numerator_sign");
         if (o_numerator_abs == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"o_numerator_abs");
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         if (count < 1)
             throw FormatException(L"与えられたバイト列が多倍長整数として認識できません。");
         if (buffer[0] != 0x10)
@@ -160,12 +160,12 @@ namespace Palmtree::Math::Core::Internal
 
         SIGN_T no_numerator_sign;
         NUMBER_OBJECT_UINT* no_numerator_abs;
-        next_ptr = PMC_FromByteArray_Imp(next_ptr, buffer + count - next_ptr, &no_numerator_sign, &no_numerator_abs);
+        next_ptr = PMC_FromByteArray_Imp(tc, next_ptr, buffer + count - next_ptr, &no_numerator_sign, &no_numerator_abs);
         root.HookNumber(no_numerator_abs);
         
         SIGN_T no_denominator_sign;
         NUMBER_OBJECT_UINT* no_denominator_abs;
-        next_ptr = PMC_FromByteArray_Imp(next_ptr, buffer + count - next_ptr, &no_denominator_sign, &no_denominator_abs);
+        next_ptr = PMC_FromByteArray_Imp(tc, next_ptr, buffer + count - next_ptr, &no_denominator_sign, &no_denominator_abs);
         root.HookNumber(no_denominator_abs);
 
         if (next_ptr != buffer + count)
@@ -182,15 +182,15 @@ namespace Palmtree::Math::Core::Internal
         return (o_denominator_abs);
     }
 
-    PMC_HANDLE_UINT PMC_FromByteArray_SINT(const unsigned char* buffer, size_t count, SIGN_T* o_sign) noexcept(false)
+    PMC_HANDLE_UINT PMC_FromByteArray_SINT(ThreadContext& tc, const unsigned char* buffer, size_t count, SIGN_T* o_sign) noexcept(false)
     {
         if (buffer == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"buffer");
         if (o_sign == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"o_sign");
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         NUMBER_OBJECT_UINT* no_abs;
-        const unsigned char* next_ptr = PMC_FromByteArray_Imp(buffer, count, o_sign, &no_abs);
+        const unsigned char* next_ptr = PMC_FromByteArray_Imp(tc, buffer, count, o_sign, &no_abs);
         if (next_ptr != buffer + count)
             throw FormatException(L"与えられたバイト列が多倍長整数として認識できません。");
         root.HookNumber(no_abs);
@@ -199,14 +199,14 @@ namespace Palmtree::Math::Core::Internal
         return (o_abs);
     }
 
-    PMC_HANDLE_UINT PMC_FromByteArray_UINT(const unsigned char* buffer, size_t count) noexcept(false)
+    PMC_HANDLE_UINT PMC_FromByteArray_UINT(ThreadContext& tc, const unsigned char* buffer, size_t count) noexcept(false)
     {
         if (buffer == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"buffer");
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         SIGN_T o_sign;
         NUMBER_OBJECT_UINT* no_abs;
-        const unsigned char* next_ptr = PMC_FromByteArray_Imp(buffer, count, &o_sign, &no_abs);
+        const unsigned char* next_ptr = PMC_FromByteArray_Imp(tc, buffer, count, &o_sign, &no_abs);
         root.HookNumber(no_abs);
         if (next_ptr != buffer + count)
             throw FormatException(L"与えられたバイト列が多倍長整数として認識できません。");

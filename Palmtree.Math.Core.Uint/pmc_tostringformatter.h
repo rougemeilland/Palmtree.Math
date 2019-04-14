@@ -50,13 +50,14 @@ namespace Palmtree::Math::Core::Internal
 #endif
 
     protected:
+        ThreadContext& _tc;
         wchar_t _format_type;
         int _precision;
         const PMC_NUMBER_FORMAT_INFO* _number_format_info;
         bool _omitted_trailing_sequential_zero; // ç≈â∫à ÇÃòAë±Ç∑ÇÈ 0 Çè»ó™Ç∑ÇÈ (èëéÆ g/G ÇÃèÍçáÇÃÇ›)
 
     protected:
-        ToStringFormatter(wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* number_format_info);
+        ToStringFormatter(ThreadContext& tc, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* number_format_info);
 
     public:
         void Format(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, StringWriter& writer);

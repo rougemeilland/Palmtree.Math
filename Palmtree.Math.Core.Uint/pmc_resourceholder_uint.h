@@ -45,9 +45,10 @@ namespace Palmtree::Math::Core::Internal
             : public __ChainBufferTag
         {
         private:
+            ThreadContext& _tc;
             NUMBER_OBJECT_UINT* _buffer;
         public:
-            __NumberObjectUintChainBufferTag(NUMBER_OBJECT_UINT* buffer);
+            __NumberObjectUintChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_UINT* buffer);
             virtual ~__NumberObjectUintChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Destruct() override;
@@ -57,9 +58,10 @@ namespace Palmtree::Math::Core::Internal
             : public __ChainBufferTag
         {
         private:
+            ThreadContext& _tc;
             NUMBER_OBJECT_UINT* _buffer;
         public:
-            __DynamicNumberChainBufferTag(NUMBER_OBJECT_UINT* buffer);
+            __DynamicNumberChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_UINT* buffer);
             virtual ~__DynamicNumberChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
@@ -70,9 +72,10 @@ namespace Palmtree::Math::Core::Internal
             : public __ChainBufferTag
         {
         private:
+            ThreadContext& _tc;
             NUMBER_OBJECT_UINT* _buffer;
         public:
-            __NumberHandleHookingChainBufferTag(NUMBER_OBJECT_UINT* buffer);
+            __NumberHandleHookingChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_UINT* buffer);
             virtual ~__NumberHandleHookingChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
@@ -83,9 +86,10 @@ namespace Palmtree::Math::Core::Internal
             : public __ChainBufferTag
         {
         private:
+            ThreadContext& _tc;
             NUMBER_OBJECT_UINT* _buffer;
         public:
-            __StaticNumberChainBufferTag(NUMBER_OBJECT_UINT* buffer);
+            __StaticNumberChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_UINT* buffer);
             virtual ~__StaticNumberChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
@@ -93,7 +97,7 @@ namespace Palmtree::Math::Core::Internal
         };
 
     public:
-        ResourceHolderUINT();
+        ResourceHolderUINT(ThreadContext& tc);
         virtual ~ResourceHolderUINT();
 
         NUMBER_OBJECT_UINT* AllocateNumberObjectUint();

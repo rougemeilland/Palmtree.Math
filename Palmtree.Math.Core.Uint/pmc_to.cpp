@@ -25,6 +25,7 @@
 
 #include <windows.h>
 #include "pmc_resourceholder_uint.h"
+#include "pmc_threadcontext.h"
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
 
@@ -126,7 +127,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    DECIMAL PMC_ToDecimal_R(SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
+    DECIMAL PMC_ToDecimal_R(ThreadContext& tc, SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
     {
         NUMBER_OBJECT_UINT* np_numerator = GET_NUMBER_OBJECT(p_numerator, L"p_numerator");
         NUMBER_OBJECT_UINT* np_denominator = GET_NUMBER_OBJECT(p_denominator, L"p_denominator");
@@ -142,13 +143,13 @@ namespace Palmtree::Math::Core::Internal
         {
             // p > 0 の場合
 
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
 
             // 最大値のチェック
-            NUMBER_OBJECT_UINT* t = PMC_Multiply_UX_UX_Imp(&number_object_uint_decimal_max, np_denominator);
+            NUMBER_OBJECT_UINT* t = PMC_Multiply_UX_UX_Imp(tc, &number_object_uint_decimal_max, np_denominator);
             root.HookNumber(t);
             // decimal.max >= p * 10^scale を満たす最大の scale を求める
-            _INT32_T max_scale = PMC_FloorLog10_R_Imp(t, np_numerator);
+            _INT32_T max_scale = PMC_FloorLog10_R_Imp(tc, t, np_numerator);
             if (max_scale < 0)
                 throw OverflowException(L"decimal への型変換に失敗しました。");
             if (max_scale >= 29)
@@ -160,20 +161,20 @@ namespace Palmtree::Math::Core::Internal
                 // scale が最大値に達しておらず、かつ分母が 1 ではない場合
 
                 // p に 10 を掛ける
-                np_numerator = PMC_Multiply_UX_UI_Imp(np_numerator, 10);
+                np_numerator = PMC_Multiply_UX_UI_Imp(tc, np_numerator, 10);
                 root.HookNumber(np_numerator);
 
                 // p を約分する
-                NUMBER_OBJECT_UINT* gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(np_numerator, np_denominator);
+                NUMBER_OBJECT_UINT* gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(tc, np_numerator, np_denominator);
                 root.HookNumber(gcd);
                 if (!gcd->IS_ONE)
                 {
                     // GCD が 1 ではない (== 既約ではない) 場合
 
                     // 分子と分母を GCD で割る
-                    np_numerator = PMC_DivideExactly_UX_UX_Imp(np_numerator, gcd);
+                    np_numerator = PMC_DivideExactly_UX_UX_Imp(tc, np_numerator, gcd);
                     root.HookNumber(np_numerator);
-                    np_denominator = PMC_DivideExactly_UX_UX_Imp(np_denominator, gcd);
+                    np_denominator = PMC_DivideExactly_UX_UX_Imp(tc, np_denominator, gcd);
                     root.HookNumber(np_denominator);
                 }
                 ++scale;
@@ -181,19 +182,19 @@ namespace Palmtree::Math::Core::Internal
 
             // p を整数部と小数部に分ける
             NUMBER_OBJECT_UINT* p_int_part;
-            NUMBER_OBJECT_UINT* p_frac_part_numerator = PMC_DivRem_UX_UX_Imp(np_numerator, np_denominator, &p_int_part);
+            NUMBER_OBJECT_UINT* p_frac_part_numerator = PMC_DivRem_UX_UX_Imp(tc, np_numerator, np_denominator, &p_int_part);
             root.HookNumber(p_int_part);
             root.HookNumber(p_frac_part_numerator);
             NUMBER_OBJECT_UINT* p_frac_part_denominator = np_denominator;
 
             // p の小数部と 1/2 を比較し、その結果により整数部を丸める
-            p_frac_part_numerator = PMC_LeftShift_UX_UI_Imp(p_frac_part_numerator, 1);
+            p_frac_part_numerator = PMC_LeftShift_UX_UI_Imp(tc, p_frac_part_numerator, 1);
             root.HookNumber(p_frac_part_numerator);
             _INT32_T c = PMC_Compare_UX_UX_Imp(p_frac_part_numerator, p_frac_part_denominator);
             if (c > 0)
             {
                 // 小数部が 1/2 より大きい場合
-                p_int_part = PMC_Increment_UX_Imp(p_int_part);
+                p_int_part = PMC_Increment_UX_Imp(tc, p_int_part);
                 root.HookNumber(p_int_part);
             }
             else if (c < 0)
@@ -210,7 +211,7 @@ namespace Palmtree::Math::Core::Internal
                 else
                 {
                     // 整数部が奇数である場合
-                    p_int_part = PMC_Increment_UX_Imp(p_int_part);
+                    p_int_part = PMC_Increment_UX_Imp(tc, p_int_part);
                     root.HookNumber(p_int_part);
                 }
             }
@@ -265,7 +266,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    double PMC_ToDouble_R(SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
+    double PMC_ToDouble_R(ThreadContext& tc, SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
     {
         NUMBER_OBJECT_UINT* np_numerator = GET_NUMBER_OBJECT(p_numerator, L"p_numerator");
         NUMBER_OBJECT_UINT* np_denominator = GET_NUMBER_OBJECT(p_denominator, L"p_denominator");
@@ -278,7 +279,7 @@ namespace Palmtree::Math::Core::Internal
 
         // p > 0 の場合
 
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
 
         if (np_numerator->UNIT_BIT_COUNT > 0x7fffffff)
             throw OverflowException(L"double への型変換に失敗しました。");
@@ -287,12 +288,12 @@ namespace Palmtree::Math::Core::Internal
         _INT32_T scale = (_INT32_T)(np_numerator->UNIT_BIT_COUNT - np_denominator->UNIT_BIT_COUNT);
         if (scale > 0)
         {
-            np_denominator = PMC_LeftShift_UX_UI_Imp(np_denominator, scale);
+            np_denominator = PMC_LeftShift_UX_UI_Imp(tc, np_denominator, scale);
             root.HookNumber(np_denominator);
         }
         else if (scale < 0)
         {
-            np_numerator = PMC_LeftShift_UX_UI_Imp(np_numerator, -scale);
+            np_numerator = PMC_LeftShift_UX_UI_Imp(tc, np_numerator, -scale);
             root.HookNumber(np_numerator);
         }
         else
@@ -301,7 +302,7 @@ namespace Palmtree::Math::Core::Internal
         }
         if (PMC_Compare_UX_UX_Imp(np_numerator, np_denominator) < 0)
         {
-            np_numerator = PMC_LeftShift_UX_UI_Imp(np_numerator, 1);
+            np_numerator = PMC_LeftShift_UX_UI_Imp(tc, np_numerator, 1);
             root.HookNumber(np_numerator);
             --scale;
         }
@@ -309,11 +310,11 @@ namespace Palmtree::Math::Core::Internal
         // この時点で、1 <= np < 2 が成立する。(仮数部は必ず 1bit)
 
         // 更に、np を 52bit だけ左シフトする。
-        np_numerator = PMC_LeftShift_UX_UI_Imp(np_numerator, 52);
+        np_numerator = PMC_LeftShift_UX_UI_Imp(tc, np_numerator, 52);
         root.HookNumber(np_numerator);
 
         NUMBER_OBJECT_UINT* int_part;
-        NUMBER_OBJECT_UINT* frac_part_numerator = PMC_DivRem_UX_UX_Imp(np_numerator, np_denominator, &int_part);
+        NUMBER_OBJECT_UINT* frac_part_numerator = PMC_DivRem_UX_UX_Imp(tc, np_numerator, np_denominator, &int_part);
         root.HookNumber(int_part);
         root.HookNumber(frac_part_numerator);
         NUMBER_OBJECT_UINT* frac_part_denominator = np_denominator;
@@ -323,7 +324,7 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_to.cpp;PMC_ToDouble_R;1");
 
         // 小数部と 1/2 の比較を行い、その結果によって整数部の丸めの方法を選ぶ
-        frac_part_numerator = PMC_LeftShift_UX_UI_Imp(frac_part_numerator, 1);
+        frac_part_numerator = PMC_LeftShift_UX_UI_Imp(tc, frac_part_numerator, 1);
         root.HookNumber(frac_part_numerator);
         int c = PMC_Compare_UX_UX_Imp(frac_part_numerator, frac_part_denominator);
         if (c > 0)
@@ -331,7 +332,7 @@ namespace Palmtree::Math::Core::Internal
             // 小数部が 1/2 を超えている場合
 
             // 整数部をインクリメントする
-            int_part = PMC_Increment_UX_Imp(int_part);
+            int_part = PMC_Increment_UX_Imp(tc, int_part);
             root.HookNumber(int_part);
         }
         else if (c < 0)
@@ -354,7 +355,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // 整数部が奇数である場合
 
-                int_part = PMC_Increment_UX_Imp(int_part);
+                int_part = PMC_Increment_UX_Imp(tc, int_part);
                 root.HookNumber(int_part);
             }
         }
@@ -362,7 +363,7 @@ namespace Palmtree::Math::Core::Internal
         // int_part が丸めにより 54 bit になっている場合は 1bit だけ右シフトする。
         if (int_part->UNIT_BIT_COUNT > 53)
         {
-            int_part = PMC_RightShift_UX_UI_Imp(int_part, 1);
+            int_part = PMC_RightShift_UX_UI_Imp(tc, int_part, 1);
             root.HookNumber(int_part);
             ++scale;
         }
@@ -412,8 +413,9 @@ namespace Palmtree::Math::Core::Internal
 
     PMC_STATUS_CODE Initialize_To(PROCESSOR_FEATURES *feature)
     {
+        ThreadContext tc;
 
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
 
         try
         {
@@ -428,14 +430,20 @@ namespace Palmtree::Math::Core::Internal
 #else
 #error unknown platform
 #endif
-            CommitNumber(&number_object_uint_decimal_max);
+            CommitNumber(tc, &number_object_uint_decimal_max);
 
             root.UnlinkStatickNumber(&number_object_uint_decimal_max);
 
             return (PMC_STATUS_OK);
         }
+        catch (const BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
         catch (const Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }

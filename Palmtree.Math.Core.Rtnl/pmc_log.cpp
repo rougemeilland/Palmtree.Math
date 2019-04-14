@@ -30,10 +30,10 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    _INT32_T PMC_FloorLog10_R(PMC_HANDLE_RTNL v)
+    _INT32_T PMC_FloorLog10_R(ThreadContext& tc, PMC_HANDLE_RTNL v)
     {
         NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
-        return (ep_sint.FloorLog10(nv->NUMERATOR, nv->DENOMINATOR));
+        return (ep_sint.FloorLog10(tc, nv->NUMERATOR, nv->DENOMINATOR));
     }
 
 }

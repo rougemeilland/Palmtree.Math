@@ -1508,7 +1508,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT32_T PMC_DivRem_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v, NUMBER_OBJECT_UINT** q)
+    _UINT32_T PMC_DivRem_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT32_T v, NUMBER_OBJECT_UINT** q)
     {
         if (v == 0)
         {
@@ -1537,7 +1537,7 @@ namespace Palmtree::Math::Core::Internal
 
                 // q = u, r = 0 を返す
                 if (q != nullptr)
-                    *q = DuplicateNumber(u);
+                    *q = DuplicateNumber(tc, u);
                 return (0);
             }
             else
@@ -1560,13 +1560,13 @@ namespace Palmtree::Math::Core::Internal
                 {
                     if (q != nullptr)
                     {
-                        ResourceHolderUINT root;
+                        ResourceHolderUINT root(tc);
                         __UNIT_TYPE q_bit_count = u_bit_count - v_bit_count + 1 + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには u_bit_count - v_bit_count + 1 だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                         *q = root.AllocateNumber(q_bit_count);
                         __UNIT_TYPE r_buf = 0;
                         DivRem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v, (*q)->BLOCK, &r_buf);
                         root.CheckNumber(*q);
-                        CommitNumber(*q);
+                        CommitNumber(tc, *q);
                         if ((*q)->IS_ZERO)
                         {
                             root.DeallocateNumber(*q);
@@ -1586,7 +1586,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT32_T PMC_DivRem_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v, PMC_HANDLE_UINT* q) noexcept(false)
+    _UINT32_T PMC_DivRem_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v, PMC_HANDLE_UINT* q) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) < sizeof(v))
         {
@@ -1594,11 +1594,11 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_DivRem_UX_I;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         NUMBER_OBJECT_UINT* nq;
         if (q != nullptr)
         {
-            _UINT32_T r = PMC_DivRem_UX_UI_Imp(nu, v, &nq);
+            _UINT32_T r = PMC_DivRem_UX_UI_Imp(tc, nu, v, &nq);
             root.HookNumber(nq);
             *q = GET_NUMBER_HANDLE(nq);
             root.UnlinkNumber(nq);
@@ -1606,7 +1606,7 @@ namespace Palmtree::Math::Core::Internal
         }
         else
         {
-            _UINT32_T r = PMC_DivRem_UX_UI_Imp(nu, v, nullptr);
+            _UINT32_T r = PMC_DivRem_UX_UI_Imp(tc, nu, v, nullptr);
             return (r);
         }
     }
@@ -1796,7 +1796,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT64_T PMC_DivRem_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v, NUMBER_OBJECT_UINT** q)
+    _UINT64_T PMC_DivRem_UX_UL_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT64_T v, NUMBER_OBJECT_UINT** q)
     {
         if (v == 0)
         {
@@ -1824,7 +1824,7 @@ namespace Palmtree::Math::Core::Internal
 
                 // q = u, r = 0 を返す
                 if (q != nullptr)
-                    *q = DuplicateNumber(u);
+                    *q = DuplicateNumber(tc, u);
                 return (0);
             }
             else
@@ -1855,13 +1855,13 @@ namespace Palmtree::Math::Core::Internal
                         {
                             if (q != nullptr)
                             {
-                                ResourceHolderUINT root;
+                                ResourceHolderUINT root(tc);
                                 __UNIT_TYPE q_bit_count = u_bit_count - v_bit_count + 1 + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには u_bit_count - v_bit_count + 1 だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                                 *q = root.AllocateNumber(q_bit_count);
                                 __UNIT_TYPE r_buf = 0;
                                 DivRem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, (*q)->BLOCK, &r_buf);
                                 root.CheckNumber(*q);
-                                CommitNumber(*q);
+                                CommitNumber(tc, *q);
                                 if ((*q)->IS_ZERO)
                                 {
                                     root.DeallocateNumber(*q);
@@ -1902,7 +1902,7 @@ namespace Palmtree::Math::Core::Internal
                         {
                             if (q != nullptr)
                             {
-                                ResourceHolderUINT root;
+                                ResourceHolderUINT root(tc);
                                 __UNIT_TYPE q_bit_count = u_bit_count - v_bit_count + 1 + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには u_bit_count - v_bit_count + 1 だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                                 __UNIT_TYPE r_bit_count = u_bit_count + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには v_bit_count だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                                 *q = root.AllocateNumber(q_bit_count);
@@ -1912,7 +1912,7 @@ namespace Palmtree::Math::Core::Internal
                                 (*fp_DivRem_UX_UX)(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, sizeof(v_buf) / sizeof(v_buf[0]), work_v_buf, (*q)->BLOCK, r_buf);
                                 root.CheckNumber(*q);
                                 root.CheckBlock(r_buf);
-                                CommitNumber(*q);
+                                CommitNumber(tc, *q);
                                 if ((*q)->IS_ZERO)
                                 {
                                     root.DeallocateNumber(*q);
@@ -1924,7 +1924,7 @@ namespace Palmtree::Math::Core::Internal
                             }
                             else
                             {
-                                ResourceHolderUINT root;
+                                ResourceHolderUINT root(tc);
                                 __UNIT_TYPE r_bit_count = u_bit_count + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには v_bit_count だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                                 __UNIT_TYPE v_buf[] = { v_lo, v_hi };
                                 __UNIT_TYPE work_v_buf[] = { 0, 0 };
@@ -1957,13 +1957,13 @@ namespace Palmtree::Math::Core::Internal
                     {
                         if (q != nullptr)
                         {
-                            ResourceHolderUINT root;
+                            ResourceHolderUINT root(tc);
                             __UNIT_TYPE q_bit_count = u_bit_count - v_bit_count + 1 + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには u_bit_count - v_bit_count + 1 だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                             *q = root.AllocateNumber(q_bit_count);
                             __UNIT_TYPE r_buf = 0;
                             DivRem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, (*q)->BLOCK, &r_buf);
                             root.CheckNumber(*q);
-                            CommitNumber(*q);
+                            CommitNumber(tc, *q);
                             if ((*q)->IS_ZERO)
                             {
                                 root.DeallocateNumber(*q);
@@ -1985,7 +1985,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT64_T PMC_DivRem_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v, PMC_HANDLE_UINT* q) noexcept(false)
+    _UINT64_T PMC_DivRem_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v, PMC_HANDLE_UINT* q) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) * 2 < sizeof(v))
         {
@@ -1993,11 +1993,11 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_DivRem_UX_L;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         NUMBER_OBJECT_UINT* nq;
         if (q != nullptr)
         {
-            _UINT64_T r = PMC_DivRem_UX_UL_Imp(nu, v, &nq);
+            _UINT64_T r = PMC_DivRem_UX_UL_Imp(tc, nu, v, &nq);
             root.HookNumber(nq);
             *q = GET_NUMBER_HANDLE(nq);
             root.UnlinkNumber(nq);
@@ -2005,12 +2005,12 @@ namespace Palmtree::Math::Core::Internal
         }
         else
         {
-            _UINT64_T r = PMC_DivRem_UX_UL_Imp(nu, v, nullptr);
+            _UINT64_T r = PMC_DivRem_UX_UL_Imp(tc, nu, v, nullptr);
             return (r);
         }
     }
 
-    NUMBER_OBJECT_UINT* PMC_DivRem_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT** q)
+    NUMBER_OBJECT_UINT* PMC_DivRem_UX_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT** q)
     {
         if (u->IS_ZERO)
         {
@@ -2031,7 +2031,7 @@ namespace Palmtree::Math::Core::Internal
 
                 // q = u, r = 0 を返す
                 if (q != nullptr)
-                    *q = DuplicateNumber(u);
+                    *q = DuplicateNumber(tc, u);
                 return (&number_object_uint_zero);
             }
             else
@@ -2048,7 +2048,7 @@ namespace Palmtree::Math::Core::Internal
                     // q = 0, r = u を返す。
                     if (q != nullptr)
                         *q = &number_object_uint_zero;
-                    return (DuplicateNumber(u));
+                    return (DuplicateNumber(tc, u));
                 }
                 else if (v_bit_count <= sizeof(__UNIT_TYPE) * 8)
                 {
@@ -2056,7 +2056,7 @@ namespace Palmtree::Math::Core::Internal
 
                     if (q != nullptr)
                     {
-                        ResourceHolderUINT root;
+                        ResourceHolderUINT root(tc);
                         __UNIT_TYPE q_bit_count = u_bit_count - v_bit_count + 1 + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには u_bit_count - v_bit_count + 1 だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                         *q = root.AllocateNumber(q_bit_count);
                         __UNIT_TYPE r_bit_count = sizeof(__UNIT_TYPE) * 8;
@@ -2064,8 +2064,8 @@ namespace Palmtree::Math::Core::Internal
                         DivRem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v->BLOCK[0], (*q)->BLOCK, r->BLOCK);
                         root.CheckNumber(*q);
                         root.CheckNumber(r);
-                        CommitNumber(*q);
-                        CommitNumber(r);
+                        CommitNumber(tc, *q);
+                        CommitNumber(tc, r);
                         if ((*q)->IS_ZERO)
                         {
                             root.DeallocateNumber(*q);
@@ -2084,12 +2084,12 @@ namespace Palmtree::Math::Core::Internal
                     }
                     else
                     {
-                        ResourceHolderUINT root;
+                        ResourceHolderUINT root(tc);
                         __UNIT_TYPE r_bit_count = sizeof(__UNIT_TYPE) * 8;
                         NUMBER_OBJECT_UINT* r = root.AllocateNumber(r_bit_count);
                         r->BLOCK[0] = Rem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v->BLOCK[0]);
                         root.CheckNumber(r);
-                        CommitNumber(r);
+                        CommitNumber(tc, r);
                         if (r->IS_ZERO)
                         {
                             root.DeallocateNumber(r);
@@ -2105,7 +2105,7 @@ namespace Palmtree::Math::Core::Internal
                     // 除数を表現するのに 2 ワード以上必要な場合
                     if (q != nullptr)
                     {
-                        ResourceHolderUINT root;
+                        ResourceHolderUINT root(tc);
                         __UNIT_TYPE q_bit_count = u_bit_count - v_bit_count + 1 + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには u_bit_count - v_bit_count + 1 だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                         __UNIT_TYPE r_bit_count = u_bit_count + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには v_bit_count だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                         *q = root.AllocateNumber(q_bit_count);
@@ -2116,8 +2116,8 @@ namespace Palmtree::Math::Core::Internal
                         root.CheckNumber(*q);
                         root.CheckNumber(r);
                         root.DeallocateBlock(work_v_buf);
-                        CommitNumber(*q);
-                        CommitNumber(r);
+                        CommitNumber(tc, *q);
+                        CommitNumber(tc, r);
                         if ((*q)->IS_ZERO)
                         {
                             root.DeallocateNumber(*q);
@@ -2136,7 +2136,7 @@ namespace Palmtree::Math::Core::Internal
                     }
                     else
                     {
-                        ResourceHolderUINT root;
+                        ResourceHolderUINT root(tc);
                         __UNIT_TYPE r_bit_count = u_bit_count + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには v_bit_count だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                         NUMBER_OBJECT_UINT* r = root.AllocateNumber(r_bit_count);
                         __UNIT_TYPE* work_v_buf = root.AllocateBlock(v->UNIT_WORD_COUNT * __UNIT_TYPE_BIT_COUNT);
@@ -2144,7 +2144,7 @@ namespace Palmtree::Math::Core::Internal
                         root.CheckBlock(work_v_buf);
                         root.CheckNumber(r);
                         root.DeallocateBlock(work_v_buf);
-                        CommitNumber(r);
+                        CommitNumber(tc, r);
                         if (r->IS_ZERO)
                         {
                             root.DeallocateNumber(r);
@@ -2159,7 +2159,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_DivRem_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* q) noexcept(false)
+    PMC_HANDLE_UINT PMC_DivRem_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* q) noexcept(false)
     {
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
@@ -2170,13 +2170,13 @@ namespace Palmtree::Math::Core::Internal
             // 0 による除算はエラーで返す
             throw DivisionByZeroException(L"0による除算が行われようとしました。");
         }
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         NUMBER_OBJECT_UINT* nq;
         NUMBER_OBJECT_UINT* nr;
 
         if (q != nullptr)
         {
-            nr = PMC_DivRem_UX_UX_Imp(nu, nv, &nq);
+            nr = PMC_DivRem_UX_UX_Imp(tc, nu, nv, &nq);
             root.HookNumber(nq);
             root.HookNumber(nr);
             *q = GET_NUMBER_HANDLE(nq);
@@ -2187,7 +2187,7 @@ namespace Palmtree::Math::Core::Internal
         }
         else
         {
-            nr = PMC_DivRem_UX_UX_Imp(nu, nv, nullptr);
+            nr = PMC_DivRem_UX_UX_Imp(tc, nu, nv, nullptr);
             root.HookNumber(nr);
             PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
             root.UnlinkNumber(nr);
@@ -2195,7 +2195,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    NUMBER_OBJECT_UINT* PMC_DivideExactly_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v) noexcept(false)
+    NUMBER_OBJECT_UINT* PMC_DivideExactly_UX_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v) noexcept(false)
     {
         if (v->IS_ZERO)
         {
@@ -2204,10 +2204,10 @@ namespace Palmtree::Math::Core::Internal
             // 0 による除算はエラーで返す
             throw DivisionByZeroException(L"0による除算が行われようとしました。");
         }
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         NUMBER_OBJECT_UINT* q;
         NUMBER_OBJECT_UINT* r;
-        r = PMC_DivRem_UX_UX_Imp(u, v, &q);
+        r = PMC_DivRem_UX_UX_Imp(tc, u, v, &q);
         root.HookNumber(q);
         root.HookNumber(r);
         if (!r->IS_ZERO)
@@ -2219,12 +2219,12 @@ namespace Palmtree::Math::Core::Internal
         return (q);
     }
 
-    PMC_HANDLE_UINT PMC_DivideExactly_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_DivideExactly_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
     {
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nq = PMC_DivideExactly_UX_UX_Imp(nu, nv);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nq = PMC_DivideExactly_UX_UX_Imp(tc, nu, nv);
         root.HookNumber(nq);
         PMC_HANDLE_UINT q = GET_NUMBER_HANDLE(nq);
         root.UnlinkNumber(nq);

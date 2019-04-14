@@ -49,13 +49,13 @@ namespace Palmtree::Math::Core::Internal
         *v = t;
     }
 
-    static NUMBER_OBJECT_UINT* Remainder(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
+    static NUMBER_OBJECT_UINT* Remainder(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->UNIT_BIT_COUNT < v->UNIT_BIT_COUNT)
-            return (DuplicateNumber(u));
+            return (DuplicateNumber(tc, u));
         else
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             __UNIT_TYPE* work_v_buf = root.AllocateBlock(v->UNIT_BIT_COUNT);
             NUMBER_OBJECT_UINT* r = root.AllocateNumber(u->UNIT_BIT_COUNT + __UNIT_TYPE_BIT_COUNT);
             if (u->UNIT_WORD_COUNT < v->UNIT_WORD_COUNT)
@@ -67,7 +67,7 @@ namespace Palmtree::Math::Core::Internal
                 root.CheckNumber(r);
             }
             root.DeallocateBlock(work_v_buf);
-            CommitNumber(r);
+            CommitNumber(tc, r);
             if (r->IS_ZERO)
             {
                 root.DeallocateNumber(r);
@@ -87,9 +87,9 @@ namespace Palmtree::Math::Core::Internal
             return (EXCEPTION_CONTINUE_SEARCH);
     }
 
-    static NUMBER_OBJECT_UINT* ModulePower(NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT* e, NUMBER_OBJECT_UINT* m)
+    static NUMBER_OBJECT_UINT* ModulePower(ThreadContext& tc, NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT* e, NUMBER_OBJECT_UINT* m)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
 
         __UNIT_TYPE* m_buf = m->BLOCK;
         __UNIT_TYPE m_count = m->UNIT_WORD_COUNT;
@@ -243,7 +243,7 @@ namespace Palmtree::Math::Core::Internal
         // 最下位桁まで達したので u_ptr と u_count を解として帰る
         _COPY_MEMORY_UNIT(r->BLOCK, u_ptr, u_count);
         root.CheckNumber(r);
-        CommitNumber(r);
+        CommitNumber(tc, r);
         if (r->IS_ZERO)
         {
             root.DeallocateNumber(r);
@@ -254,7 +254,7 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    static NUMBER_OBJECT_UINT* PMC_ModPow_UX_UX_UX_Imp(NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT* e, NUMBER_OBJECT_UINT* m)
+    static NUMBER_OBJECT_UINT* PMC_ModPow_UX_UX_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT* e, NUMBER_OBJECT_UINT* m)
     {
         if (m->IS_ZERO)
         {
@@ -332,25 +332,25 @@ namespace Palmtree::Math::Core::Internal
                     // e が 1 の場合
 
                     // v % m を計算して返す
-                    return (Remainder(v, m));
+                    return (Remainder(tc, v, m));
                 }
                 else
                 {
                     // v、e、m がすべて 2 以上である場合
                     // v の e 乗 の m による剰余を計算して返す
-                    return (ModulePower(v, e, m));
+                    return (ModulePower(tc, v, e, m));
                 }
             }
         }
     }
 
-    PMC_HANDLE_UINT PMC_ModPow_UX_UX_UX(PMC_HANDLE_UINT v, PMC_HANDLE_UINT e, PMC_HANDLE_UINT m) noexcept(false)
+    PMC_HANDLE_UINT PMC_ModPow_UX_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT v, PMC_HANDLE_UINT e, PMC_HANDLE_UINT m) noexcept(false)
     {
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         NUMBER_OBJECT_UINT* ne = GET_NUMBER_OBJECT(e, L"e");
         NUMBER_OBJECT_UINT* nm = GET_NUMBER_OBJECT(m, L"m");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nr = PMC_ModPow_UX_UX_UX_Imp(nv, ne, nm);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nr = PMC_ModPow_UX_UX_UX_Imp(tc, nv, ne, nm);
         root.HookNumber(nr);
         PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
         root.UnlinkNumber(nr);

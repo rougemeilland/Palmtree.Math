@@ -42,75 +42,75 @@ namespace Palmtree::Math::Core::Internal
 
     static PMC_NUMBER_FORMAT_INFO default_number_format_option;
 
-    static size_t ToStringC(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    static size_t ToStringC(ThreadContext& tc, SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
         StringWriter writer(buffer, buffer_size);
-        ToStringFormatterTypeC formatter(precision, format_option);
+        ToStringFormatterTypeC formatter(tc, precision, format_option);
         formatter.Format(x_sign, x_numerator, x_denominator, writer);
         return (writer.GetLength());
     }
 
-    static size_t ToStringD(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    static size_t ToStringD(ThreadContext& tc, SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
         StringWriter writer(buffer, buffer_size);
-        ToStringFormatterTypeD formatter(precision, format_option);
+        ToStringFormatterTypeD formatter(tc, precision, format_option);
         formatter.Format(x_sign, x_numerator, &number_object_uint_one, writer);
         return (writer.GetLength());
     }
 
-    static size_t ToStringE(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    static size_t ToStringE(ThreadContext& tc, SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
         StringWriter writer(buffer, buffer_size);
-        ToStringFormatterTypeE formatter(format_type, precision, format_option);
+        ToStringFormatterTypeE formatter(tc, format_type, precision, format_option);
         formatter.Format(x_sign, x_numerator, x_denominator, writer);
         return (writer.GetLength());
     }
 
-    static size_t ToStringF(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    static size_t ToStringF(ThreadContext& tc, SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
         StringWriter writer(buffer, buffer_size);
-        ToStringFormatterTypeF formatter(format_type, precision, format_option);
+        ToStringFormatterTypeF formatter(tc, format_type, precision, format_option);
         formatter.Format(x_sign, x_numerator, x_denominator, writer);
         return (writer.GetLength());
     }
 
-    static size_t ToStringG(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    static size_t ToStringG(ThreadContext& tc, SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
         StringWriter writer(buffer, buffer_size);
-        ToStringFormatterTypeG formatter(format_type, precision, format_option);
+        ToStringFormatterTypeG formatter(tc, format_type, precision, format_option);
         formatter.Format(x_sign, x_numerator, x_denominator, writer);
         return (writer.GetLength());
     }
 
-    static size_t ToStringN(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    static size_t ToStringN(ThreadContext& tc, SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
         StringWriter writer(buffer, buffer_size);
-        ToStringFormatterTypeN formatter(precision, format_option);
+        ToStringFormatterTypeN formatter(tc, precision, format_option);
         formatter.Format(x_sign, x_numerator, x_denominator, writer);
         return (writer.GetLength());
     }
 
 
-    static size_t ToStringP(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    static size_t ToStringP(ThreadContext& tc, SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
         StringWriter writer(buffer, buffer_size);
-        ToStringFormatterTypeP formatter(precision, format_option);
+        ToStringFormatterTypeP formatter(tc, precision, format_option);
         formatter.Format(x_sign, x_numerator, x_denominator, writer);
         return (writer.GetLength());
     }
 
-    static size_t ToStringX(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    static size_t ToStringX(ThreadContext& tc, SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
         StringWriter writer(buffer, buffer_size);
-        ToStringFormatterTypeX formatter(format_type, precision, format_option);
+        ToStringFormatterTypeX formatter(tc, format_type, precision, format_option);
         formatter.Format(x_sign, x_abs, writer);
         return (writer.GetLength());
     }
 
-    static size_t ToStringCustom(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    static size_t ToStringCustom(ThreadContext& tc, SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
         StringWriter writer(buffer, buffer_size);
-        CustomFormat::ToStringFormatterCustom formatter(format, format_option);
+        CustomFormat::ToStringFormatterCustom formatter(tc, format, format_option);
         formatter.Format(x_sign, x_numerator, x_denominator, writer);
         return (writer.GetLength());
     }
@@ -167,7 +167,7 @@ namespace Palmtree::Math::Core::Internal
             return (false);
     }
 
-    static size_t PMC_ToString_Imp(SIGN_T x_numerator_sign, NUMBER_OBJECT_UINT* x_numerator_abs, NUMBER_OBJECT_UINT* x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    static size_t PMC_ToString_Imp(ThreadContext& tc, SIGN_T x_numerator_sign, NUMBER_OBJECT_UINT* x_numerator_abs, NUMBER_OBJECT_UINT* x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
         if (format_option == nullptr)
             format_option = &default_number_format_option;
@@ -177,7 +177,7 @@ namespace Palmtree::Math::Core::Internal
         {
             if (x_denominator == nullptr)
                 x_denominator = &number_object_uint_one;
-            return (ToStringCustom(x_numerator_sign, x_numerator_abs, x_denominator, format, format_option, buffer, buffer_size));
+            return (ToStringCustom(tc, x_numerator_sign, x_numerator_abs, x_denominator, format, format_option, buffer, buffer_size));
         }
         else
         {
@@ -187,70 +187,70 @@ namespace Palmtree::Math::Core::Internal
             case L'C':
                 if (x_denominator == nullptr)
                     x_denominator = &number_object_uint_one;
-                return (ToStringC(x_numerator_sign, x_numerator_abs, x_denominator, L'C', precision, format_option, buffer, buffer_size));
+                return (ToStringC(tc, x_numerator_sign, x_numerator_abs, x_denominator, L'C', precision, format_option, buffer, buffer_size));
             case L'd':
             case L'D':
                 if (x_denominator != nullptr)
                     throw FormatException(L"書式 D が使用できない数値型です。");
-                return (ToStringD(x_numerator_sign, x_numerator_abs, L'D', precision, format_option, buffer, buffer_size));
+                return (ToStringD(tc, x_numerator_sign, x_numerator_abs, L'D', precision, format_option, buffer, buffer_size));
             case L'e':
             case L'E':
                 if (x_denominator == nullptr)
                     x_denominator = &number_object_uint_one;
-                return (ToStringE(x_numerator_sign, x_numerator_abs, x_denominator, format_type, precision, format_option, buffer, buffer_size));
+                return (ToStringE(tc, x_numerator_sign, x_numerator_abs, x_denominator, format_type, precision, format_option, buffer, buffer_size));
             case L'f':
             case L'F':
                 if (x_denominator == nullptr)
                     x_denominator = &number_object_uint_one;
-                return (ToStringF(x_numerator_sign, x_numerator_abs, x_denominator, L'F', precision, format_option, buffer, buffer_size));
+                return (ToStringF(tc, x_numerator_sign, x_numerator_abs, x_denominator, L'F', precision, format_option, buffer, buffer_size));
             case L'g':
             case L'G':
                 if (x_denominator == nullptr)
                     x_denominator = &number_object_uint_one;
-                return (ToStringG(x_numerator_sign, x_numerator_abs, x_denominator, format_type, precision, format_option, buffer, buffer_size));
+                return (ToStringG(tc, x_numerator_sign, x_numerator_abs, x_denominator, format_type, precision, format_option, buffer, buffer_size));
             case L'n':
             case L'N':
                 if (x_denominator == nullptr)
                     x_denominator = &number_object_uint_one;
-                return (ToStringN(x_numerator_sign, x_numerator_abs, x_denominator, L'N', precision, format_option, buffer, buffer_size));
+                return (ToStringN(tc, x_numerator_sign, x_numerator_abs, x_denominator, L'N', precision, format_option, buffer, buffer_size));
             case L'p':
             case L'P':
                 if (x_denominator == nullptr)
                     x_denominator = &number_object_uint_one;
-                return (ToStringP(x_numerator_sign, x_numerator_abs, x_denominator, L'P', precision, format_option, buffer, buffer_size));
+                return (ToStringP(tc, x_numerator_sign, x_numerator_abs, x_denominator, L'P', precision, format_option, buffer, buffer_size));
             case L'r':
             case L'R':
                 if (x_denominator != nullptr)
                     throw FormatException(L"書式 R が使用できない数値型です。");
-                return (ToStringD(x_numerator_sign, x_numerator_abs, L'D', 0, format_option, buffer, buffer_size));
+                return (ToStringD(tc, x_numerator_sign, x_numerator_abs, L'D', 0, format_option, buffer, buffer_size));
             case L'x':
             case L'X':
                 if (x_denominator != nullptr)
                     throw FormatException(L"書式 X が使用できない数値型です。");
-                return (ToStringX(x_numerator_sign, x_numerator_abs, format_type, precision, format_option, buffer, buffer_size));
+                return (ToStringX(tc, x_numerator_sign, x_numerator_abs, format_type, precision, format_option, buffer, buffer_size));
             default:
                 throw FormatException(L"未知の書式指定子です。");
             }
         }
     }
 
-    size_t PMC_ToString_UX(PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false)
+    size_t PMC_ToString_UX(ThreadContext& tc, PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false)
     {
         NUMBER_OBJECT_UINT* nx = GET_NUMBER_OBJECT(x, L"x");
-        return (PMC_ToString_Imp(nx->IS_ZERO ? SIGN_ZERO : SIGN_POSITIVE, nx, nullptr, format, format_option, buffer, buffer_size));
+        return (PMC_ToString_Imp(tc, nx->IS_ZERO ? SIGN_ZERO : SIGN_POSITIVE, nx, nullptr, format, format_option, buffer, buffer_size));
     }
 
-    size_t PMC_ToString_X(SIGN_T x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    size_t PMC_ToString_X(ThreadContext& tc, SIGN_T x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
         NUMBER_OBJECT_UINT* nx_abs = GET_NUMBER_OBJECT(x_abs, L"x_abs");
-        return (PMC_ToString_Imp(x_sign, nx_abs, nullptr, format, format_option, buffer, buffer_size));
+        return (PMC_ToString_Imp(tc, x_sign, nx_abs, nullptr, format, format_option, buffer, buffer_size));
     }
 
-    size_t PMC_ToString_R(SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    size_t PMC_ToString_R(ThreadContext& tc, SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
     {
         NUMBER_OBJECT_UINT* nx_numerator_abs = GET_NUMBER_OBJECT(x_numerator_abs, L"x_numerator_abs");
         NUMBER_OBJECT_UINT* nx_denominator = GET_NUMBER_OBJECT(x_denominator, L"x_denominator");
-        return (PMC_ToString_Imp(x_numerator_sign, nx_numerator_abs, nx_denominator, format, format_option, buffer, buffer_size));
+        return (PMC_ToString_Imp(tc, x_numerator_sign, nx_numerator_abs, nx_denominator, format, format_option, buffer, buffer_size));
     }
 
     void InitializeNumberFormatoInfo(PMC_NUMBER_FORMAT_INFO* info)

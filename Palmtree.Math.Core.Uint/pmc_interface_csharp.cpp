@@ -23,13 +23,8 @@
  */
 
 
-//#define SEH_TRACE
-
 #include "pmc_uint_internal.h"
-#ifdef SEH_TRACE
-#include <iostream>
-#endif
-
+#include "pmc_threadcontext.h"
 
 namespace Palmtree::Math::Core::Internal
 {
@@ -66,49 +61,6 @@ namespace Palmtree::Math::Core::Internal
             PMC_UnuseObject_UX(_handle);
         }
     };
-
-#ifdef SEH_TRACE
-    static void __OUTPUT_DEBUG_STRING(const char* str)
-    {
-        //::OutputDebugStringW(str);
-        std::cout << str << std::endl;
-    }
-#endif
-
-    static LONG DumpSEHInfo(_EXCEPTION_POINTERS *ep)
-    {
-#ifdef SEH_TRACE
-        PEXCEPTION_RECORD rec = ep->ExceptionRecord;
-
-        char buf[1024];
-        if (rec->ExceptionCode == EXCEPTION_ACCESS_VIOLATION && rec->NumberParameters >= 2)
-        {
-            wsprintfA(buf, "%pへの%s中にアクセス違反を検出しました。: 実行時アドレス=%p\n", rec->ExceptionInformation[1], rec->ExceptionInformation[0] ? "書き込み" : "読み込み", rec->ExceptionAddress);
-            __OUTPUT_DEBUG_STRING(buf);
-            for (DWORD index = 2; index < rec->NumberParameters; index++)
-            {
-                wsprintfA(buf, "  param[%d]=%x\n", index, rec->ExceptionInformation[index]);
-                __OUTPUT_DEBUG_STRING(buf);
-            }
-        }
-        else if (rec->ExceptionCode == 0xe06d7363)
-        {
-            // nop
-        }
-        else
-        {
-            wsprintfA(buf, "例外を検出しました。: code=%x flag=%x addr=%p params=%d\n", rec->ExceptionCode, rec->ExceptionFlags, rec->ExceptionAddress, rec->NumberParameters);
-            __OUTPUT_DEBUG_STRING(buf);
-            for (DWORD index = 0; index < rec->NumberParameters; index++)
-            {
-                wsprintfA(buf, "  param[%d]=%x\n", index, rec->ExceptionInformation[index]);
-                __OUTPUT_DEBUG_STRING(buf);
-            }
-        }
-#endif
-
-        return (EXCEPTION_CONTINUE_SEARCH);
-    }
 
     extern "C" _UINT32_T __stdcall PMCCS_UINT_Initialize()
     {
@@ -214,13 +166,21 @@ namespace Palmtree::Math::Core::Internal
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
-            *o = PMC_From_UI(x);
+            *o = PMC_From_UI(tc, x);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -229,13 +189,21 @@ namespace Palmtree::Math::Core::Internal
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
-            *o = PMC_From_UL(x);
+            *o = PMC_From_UL(tc, x);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -244,13 +212,21 @@ namespace Palmtree::Math::Core::Internal
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
-            *o = PMC_From_UI(x);
+            *o = PMC_From_UI(tc, x);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -259,13 +235,21 @@ namespace Palmtree::Math::Core::Internal
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
-            *o = PMC_From_UL(x);
+            *o = PMC_From_UL(tc, x);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -274,6 +258,7 @@ namespace Palmtree::Math::Core::Internal
     {
         if (p == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             PMC_CheckHandle_UX(p);
@@ -289,13 +274,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (p == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
-            PMC_Dispose_UX(p);
+            _INT32_T count = PMC_GetBufferCount_UX(p);
+            PMC_Dispose_UX(tc, p);
+            tc.VerifyAllocationCount(-count, true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -319,13 +313,21 @@ namespace Palmtree::Math::Core::Internal
     {
         if (value == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
-            *value = PMC_FromByteArray_UINT(buffer, count);
+            *value = PMC_FromByteArray_UINT(tc, buffer, count);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*value), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -353,13 +355,21 @@ namespace Palmtree::Math::Core::Internal
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
-            *o = PMC_Clone_UX(x);
+            *o = PMC_Clone_UX(tc, x);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -447,17 +457,28 @@ namespace Palmtree::Math::Core::Internal
     {
         if (size == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_x(x);
-            size_t r = PMC_ToString_UX(x, format, format_option, buffer, buffer_size);
+            size_t r = PMC_ToString_UX(tc, x, format, format_option, buffer, buffer_size);
             if (r > 0x7fffffff)
+            {
+                tc.VerifyAllocationCount(0, true);
                 return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+            }
             *size = (_INT32_T)r;
+            tc.VerifyAllocationCount(0, true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -478,12 +499,24 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         if (number_styles & ~all_styles)
             return (PMC_STATUS_ARGUMENT_ERROR);
+        ThreadContext tc;
         try
         {
-            return (PMC_TryParse_UINT(source, number_styles, format_option, o));
+            PMC_STATUS_CODE result = PMC_TryParse_UINT(tc, source, number_styles, format_option, o);
+            if (result == PMC_STATUS_OK)
+                tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
+            else
+                tc.VerifyAllocationCount(0, true);
+            return (result);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -504,21 +537,33 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         if (number_styles & ~all_styles)
             return (PMC_STATUS_ARGUMENT_ERROR);
+        ThreadContext tc;
         try
         {
-            PMC_STATUS_CODE err = PMC_TryParse_UINT(source, number_styles, format_option, o);
+            PMC_STATUS_CODE err = PMC_TryParse_UINT(tc, source, number_styles, format_option, o);
             switch (err)
             {
             case PMC_STATUS_FORMAT_ERROR:
             case PMC_STATUS_OVERFLOW:
                 *o = nullptr;
+                tc.VerifyAllocationCount(0, true);
                 return (PMC_STATUS_OK);
             default:
+                tc.VerifyAllocationCount(0, true);
+                return (err);
+            case PMC_STATUS_OK:
+                tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
                 return (err);
             }
         }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -527,14 +572,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_v(v);
-            *w = PMC_Add_UI_UX(u, v);
+            *w = PMC_Add_UI_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -543,14 +596,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_v(v);
-            *w = PMC_Add_UL_UX(u, v);
+            *w = PMC_Add_UL_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -559,14 +620,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *w = PMC_Add_UX_UI(u, v);
+            *w = PMC_Add_UX_UI(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -575,14 +644,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *w = PMC_Add_UX_UL(u, v);
+            *w = PMC_Add_UX_UL(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -591,15 +668,23 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
             UsingObject using_v(v);
-            *w = PMC_Add_UX_UX(u, v);
+            *w = PMC_Add_UX_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -640,14 +725,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *w = PMC_Subtruct_UX_UI(u, v);
+            *w = PMC_Subtruct_UX_UI(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -656,14 +749,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *w = PMC_Subtruct_UX_UL(u, v);
+            *w = PMC_Subtruct_UX_UL(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -672,15 +773,23 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
             UsingObject using_v(v);
-            *w = PMC_Subtruct_UX_UX(u, v);
+            *w = PMC_Subtruct_UX_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -689,14 +798,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_v(v);
-            *w = PMC_Multiply_UI_UX(u, v);
+            *w = PMC_Multiply_UI_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -705,14 +822,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_v(v);
-            *w = PMC_Multiply_UL_UX(u, v);
+            *w = PMC_Multiply_UL_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -721,14 +846,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *w = PMC_Multiply_UX_UI(u, v);
+            *w = PMC_Multiply_UX_UI(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -737,14 +870,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *w = PMC_Multiply_UX_UL(u, v);
+            *w = PMC_Multiply_UX_UL(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -753,15 +894,23 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
             UsingObject using_v(v);
-            *w = PMC_Multiply_UX_UX(u, v);
+            *w = PMC_Multiply_UX_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -802,14 +951,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *r = PMC_DivRem_UX_UI(u, v, q);
+            *r = PMC_DivRem_UX_UI(tc, u, v, q);
+            tc.VerifyAllocationCount(q != nullptr ? PMC_GetBufferCount_UX(*q) : 0, true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -818,14 +975,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *r = PMC_DivRem_UX_UL(u, v, q);
+            *r = PMC_DivRem_UX_UL(tc, u, v, q);
+            tc.VerifyAllocationCount(q != nullptr ? PMC_GetBufferCount_UX(*q) : 0, true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -834,15 +999,23 @@ namespace Palmtree::Math::Core::Internal
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
             UsingObject using_v(v);
-            *r = PMC_DivRem_UX_UX(u, v, q);
+            *r = PMC_DivRem_UX_UX(tc, u, v, q);
+            tc.VerifyAllocationCount((q != nullptr ? PMC_GetBufferCount_UX(*q) : 0) + PMC_GetBufferCount_UX(*r), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -883,14 +1056,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *r = PMC_DivRem_UX_UI(u, v, nullptr);
+            *r = PMC_DivRem_UX_UI(tc, u, v, nullptr);
+            tc.VerifyAllocationCount(0, true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -899,14 +1080,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *r = PMC_DivRem_UX_UL(u, v, nullptr);
+            *r = PMC_DivRem_UX_UL(tc, u, v, nullptr);
+            tc.VerifyAllocationCount(0, true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -915,15 +1104,23 @@ namespace Palmtree::Math::Core::Internal
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
             UsingObject using_v(v);
-            *r = PMC_DivRem_UX_UX(u, v, nullptr);
+            *r = PMC_DivRem_UX_UX(tc, u, v, nullptr);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*r), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -932,14 +1129,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_p(p);
-            *o = PMC_RightShift_UX_I(p, n);
+            *o = PMC_RightShift_UX_I(tc, p, n);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -948,14 +1153,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (o == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_p(p);
-            *o = PMC_LeftShift_UX_I(p, n);
+            *o = PMC_LeftShift_UX_I(tc, p, n);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1028,15 +1241,23 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
             UsingObject using_v(v);
-            *w = PMC_BitwiseAnd_UX_UX(u, v);
+            *w = PMC_BitwiseAnd_UX_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1045,14 +1266,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_v(v);
-            *w = PMC_BitwiseOr_UI_UX(u, v);
+            *w = PMC_BitwiseOr_UI_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1061,14 +1290,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_v(v);
-            *w = PMC_BitwiseOr_UL_UX(u, v);
+            *w = PMC_BitwiseOr_UL_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1077,14 +1314,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *w = PMC_BitwiseOr_UX_UI(u, v);
+            *w = PMC_BitwiseOr_UX_UI(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1093,14 +1338,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *w = PMC_BitwiseOr_UX_UL(u, v);
+            *w = PMC_BitwiseOr_UX_UL(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1109,15 +1362,23 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
             UsingObject using_v(v);
-            *w = PMC_BitwiseOr_UX_UX(u, v);
+            *w = PMC_BitwiseOr_UX_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1126,14 +1387,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_v(v);
-            *w = PMC_ExclusiveOr_UI_UX(u, v);
+            *w = PMC_ExclusiveOr_UI_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1142,14 +1411,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_v(v);
-            *w = PMC_ExclusiveOr_UL_UX(u, v);
+            *w = PMC_ExclusiveOr_UL_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1158,14 +1435,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *w = PMC_ExclusiveOr_UX_UI(u, v);
+            *w = PMC_ExclusiveOr_UX_UI(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1174,14 +1459,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *w = PMC_ExclusiveOr_UX_UL(u, v);
+            *w = PMC_ExclusiveOr_UX_UL(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1190,15 +1483,23 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
             UsingObject using_v(v);
-            *w = PMC_ExclusiveOr_UX_UX(u, v);
+            *w = PMC_ExclusiveOr_UX_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1223,6 +1524,7 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_v(v);
@@ -1369,14 +1671,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_v(v);
-            *w = PMC_GreatestCommonDivisor_UI_UX(u, v);
+            *w = PMC_GreatestCommonDivisor_UI_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1385,14 +1695,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_v(v);
-            *w = PMC_GreatestCommonDivisor_UL_UX(u, v);
+            *w = PMC_GreatestCommonDivisor_UL_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1401,14 +1719,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *w = PMC_GreatestCommonDivisor_UX_UI(u, v);
+            *w = PMC_GreatestCommonDivisor_UX_UI(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1417,14 +1743,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
-            *w = PMC_GreatestCommonDivisor_UX_UL(u, v);
+            *w = PMC_GreatestCommonDivisor_UX_UL(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1433,15 +1767,23 @@ namespace Palmtree::Math::Core::Internal
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_u(u);
             UsingObject using_v(v);
-            *w = PMC_GreatestCommonDivisor_UX_UX(u, v);
+            *w = PMC_GreatestCommonDivisor_UX_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1450,13 +1792,21 @@ namespace Palmtree::Math::Core::Internal
     {
         if (v == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
-            *v = PMC_Pow_UI_UI(x, n);
+            *v = PMC_Pow_UI_UI(tc, x, n);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*v), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1465,13 +1815,21 @@ namespace Palmtree::Math::Core::Internal
     {
         if (v == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
-            *v = PMC_Pow_UL_UI(x, n);
+            *v = PMC_Pow_UL_UI(tc, x, n);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*v), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1480,48 +1838,48 @@ namespace Palmtree::Math::Core::Internal
     {
         if (v == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_x(x);
-            *v = PMC_Pow_UX_UI(x, n);
+            *v = PMC_Pow_UX_UI(tc, x, n);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*v), true);
             return (PMC_STATUS_OK);
         }
-        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
         {
             return (ex.GetStatusCode());
         }
-    }
-
-    static PMC_HANDLE_UINT PMC_ModPow_UX_UX_UX_SEH(PMC_HANDLE_UINT v, PMC_HANDLE_UINT e, PMC_HANDLE_UINT m)
-    {
-#ifdef _MSC_VER
-        __try
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
-            return (PMC_ModPow_UX_UX_UX(v, e, m));
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
         }
-        __except (DumpSEHInfo(GetExceptionInformation()))
-        {
-            throw SEHException(L"ハードウェア例外を検出しました。");
-        }
-#else
-        return (PMC_ModPow_UX_UX_UX(v, e, m));
-#endif
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_ModPow_UX_UX_UX(PMC_HANDLE_UINT v, PMC_HANDLE_UINT e, PMC_HANDLE_UINT m, PMC_HANDLE_UINT* r)
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_v(v);
             UsingObject using_e(e);
             UsingObject using_m(m);
-            *r = PMC_ModPow_UX_UX_UX_SEH(v, e, m);
+            *r = PMC_ModPow_UX_UX_UX(tc, v, e, m);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*r), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1530,14 +1888,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_v(v);
-            *r = PMC_FloorLog10_UX(v);
+            *r = PMC_FloorLog10_UX(tc, v);
+            tc.VerifyAllocationCount(0, true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1546,14 +1912,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_x(x);
-            *r = PMC_Increment_UX(x);
+            *r = PMC_Increment_UX(tc, x);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*r), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }
@@ -1562,14 +1936,22 @@ namespace Palmtree::Math::Core::Internal
     {
         if (r == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
         try
         {
             UsingObject using_x(x);
-            *r = PMC_Decrement_UX(x);
+            *r = PMC_Decrement_UX(tc, x);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*r), true);
             return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }

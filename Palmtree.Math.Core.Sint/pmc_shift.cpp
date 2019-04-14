@@ -39,12 +39,12 @@ namespace Palmtree::Math::Core::Internal
         return (nr);
     }
 
-    static NUMBER_OBJECT_SINT* RightSift_Imp(NUMBER_OBJECT_SINT* p, _INT32_T n)
+    static NUMBER_OBJECT_SINT* RightSift_Imp(ThreadContext& tc, NUMBER_OBJECT_SINT* p, _INT32_T n)
     {
         SIGN_T n_sign;
         _UINT32_T n_abs = GET_ABS_32(n, &n_sign);
         if (n_sign == 0)
-            return (DuplicateNumber_X(p));
+            return (DuplicateNumber_X(tc, p));
         else if (n_sign > 0)
         {
             if (p->SIGN == 0)
@@ -53,18 +53,18 @@ namespace Palmtree::Math::Core::Internal
             {
                 // 正の数を右シフト
 
-                ResourceHolderSINT root;
-                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.RightShift(p->ABS, GET_INT_32(SIGN_POSITIVE, n_abs))));
+                ResourceHolderSINT root(tc);
+                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.RightShift(tc, p->ABS, GET_INT_32(SIGN_POSITIVE, n_abs))));
             }
             else
             {
                 // 負の数を右シフト
-                ResourceHolderSINT root;
-                PMC_HANDLE_UINT p2 = ep_uint.Decrement(p->ABS);
+                ResourceHolderSINT root(tc);
+                PMC_HANDLE_UINT p2 = ep_uint.Decrement(tc, p->ABS);
                 root.HookNumber(p2);
-                PMC_HANDLE_UINT p3 = ep_uint.RightShift(p2, GET_INT_32(SIGN_POSITIVE, n_abs));
+                PMC_HANDLE_UINT p3 = ep_uint.RightShift(tc, p2, GET_INT_32(SIGN_POSITIVE, n_abs));
                 root.HookNumber(p3);
-                PMC_HANDLE_UINT r_abs = ep_uint.Increment(p3);
+                PMC_HANDLE_UINT r_abs = ep_uint.Increment(tc, p3);
                 return (ALLOCATE_NUMBER(root, SIGN_NEGATIVE, r_abs));
             }
         }
@@ -76,25 +76,25 @@ namespace Palmtree::Math::Core::Internal
             {
                 // 正の数を左シフト
 
-                ResourceHolderSINT root;
-                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.LeftShift(p->ABS, GET_INT_32(SIGN_POSITIVE, n_abs))));
+                ResourceHolderSINT root(tc);
+                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.LeftShift(tc, p->ABS, GET_INT_32(SIGN_POSITIVE, n_abs))));
             }
             else
             {
                 // 負の数を左シフト
 
-                ResourceHolderSINT root;
-                return (ALLOCATE_NUMBER(root, SIGN_NEGATIVE, ep_uint.LeftShift(p->ABS, GET_INT_32(SIGN_POSITIVE, n_abs))));
+                ResourceHolderSINT root(tc);
+                return (ALLOCATE_NUMBER(root, SIGN_NEGATIVE, ep_uint.LeftShift(tc, p->ABS, GET_INT_32(SIGN_POSITIVE, n_abs))));
             }
         }
     }
     
-    static NUMBER_OBJECT_SINT* LeftSift_Imp(NUMBER_OBJECT_SINT* p, _INT32_T n)
+    static NUMBER_OBJECT_SINT* LeftSift_Imp(ThreadContext& tc, NUMBER_OBJECT_SINT* p, _INT32_T n)
     {
         SIGN_T n_sign;
         _UINT32_T n_abs = GET_ABS_32(n, &n_sign);
         if (n_sign == 0)
-            return (DuplicateNumber_X(p));
+            return (DuplicateNumber_X(tc, p));
         else if (n_sign < 0)
         {
             if (p->SIGN == 0)
@@ -103,18 +103,18 @@ namespace Palmtree::Math::Core::Internal
             {
                 // 正の数を右シフト
 
-                ResourceHolderSINT root;
-                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.RightShift(p->ABS, GET_INT_32(SIGN_POSITIVE, n_abs))));
+                ResourceHolderSINT root(tc);
+                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.RightShift(tc, p->ABS, GET_INT_32(SIGN_POSITIVE, n_abs))));
             }
             else
             {
                 // 負の数を右シフト
-                ResourceHolderSINT root;
-                PMC_HANDLE_UINT p2 = ep_uint.Decrement(p->ABS);
+                ResourceHolderSINT root(tc);
+                PMC_HANDLE_UINT p2 = ep_uint.Decrement(tc, p->ABS);
                 root.HookNumber(p2);
-                PMC_HANDLE_UINT p3 = ep_uint.RightShift(p2, GET_INT_32(SIGN_POSITIVE, n_abs));
+                PMC_HANDLE_UINT p3 = ep_uint.RightShift(tc, p2, GET_INT_32(SIGN_POSITIVE, n_abs));
                 root.HookNumber(p3);
-                PMC_HANDLE_UINT r_abs = ep_uint.Increment(p3);
+                PMC_HANDLE_UINT r_abs = ep_uint.Increment(tc, p3);
                 return (ALLOCATE_NUMBER(root, SIGN_NEGATIVE, r_abs));
             }
         }
@@ -126,15 +126,15 @@ namespace Palmtree::Math::Core::Internal
             {
                 // 正の数を右シフト
 
-                ResourceHolderSINT root;
-                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.LeftShift(p->ABS, GET_INT_32(SIGN_POSITIVE, n_abs))));
+                ResourceHolderSINT root(tc);
+                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.LeftShift(tc, p->ABS, GET_INT_32(SIGN_POSITIVE, n_abs))));
             }
             else
             {
                 // 負の数を左シフト
 
-                ResourceHolderSINT root;
-                return (ALLOCATE_NUMBER(root, SIGN_NEGATIVE, ep_uint.LeftShift(p->ABS, GET_INT_32(SIGN_POSITIVE, n_abs))));
+                ResourceHolderSINT root(tc);
+                return (ALLOCATE_NUMBER(root, SIGN_NEGATIVE, ep_uint.LeftShift(tc, p->ABS, GET_INT_32(SIGN_POSITIVE, n_abs))));
             }
         }
     }
@@ -147,18 +147,18 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    PMC_HANDLE_SINT PMC_LeftShift_X_I(PMC_HANDLE_SINT p, _INT32_T n) noexcept(false)
+    PMC_HANDLE_SINT PMC_LeftShift_X_I(ThreadContext& tc, PMC_HANDLE_SINT p, _INT32_T n) noexcept(false)
     {
         NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, LeftSift_Imp(np, n)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, LeftSift_Imp(tc, np, n)));
     }
 
-    PMC_HANDLE_SINT PMC_RightShift_X_I(PMC_HANDLE_SINT p, _INT32_T n) noexcept(false)
+    PMC_HANDLE_SINT PMC_RightShift_X_I(ThreadContext& tc, PMC_HANDLE_SINT p, _INT32_T n) noexcept(false)
     {
         NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
-        ResourceHolderSINT root;
-        return (EPILOGUE(root, RightSift_Imp(np, n)));
+        ResourceHolderSINT root(tc);
+        return (EPILOGUE(root, RightSift_Imp(tc, np, n)));
     }
 
 }

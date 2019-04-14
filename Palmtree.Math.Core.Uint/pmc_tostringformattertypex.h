@@ -39,12 +39,13 @@ namespace Palmtree::Math::Core::Internal
     class ToStringFormatterTypeX
     {
     private:
+        ThreadContext& _tc;
         wchar_t _format_type;
         int _precision;
         const PMC_NUMBER_FORMAT_INFO* _number_format_info;
         const wchar_t* _character_set;
     public:
-        ToStringFormatterTypeX(wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* number_format_info);
+        ToStringFormatterTypeX(ThreadContext& tc, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* number_format_info);
         void Format(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_abs, StringWriter& writer);
 
     protected:

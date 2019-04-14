@@ -302,12 +302,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    NUMBER_OBJECT_UINT* PMC_RightShift_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T n)
+    NUMBER_OBJECT_UINT* PMC_RightShift_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT32_T n)
     {
         if (u->IS_ZERO)
             return (&number_object_uint_zero);
         else if (n == 0)
-            return (DuplicateNumber(u));
+            return (DuplicateNumber(tc, u));
         else
         {
             __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
@@ -315,39 +315,39 @@ namespace Palmtree::Math::Core::Internal
                 return (&number_object_uint_zero);
             else
             {
-                ResourceHolderUINT root;
+                ResourceHolderUINT root(tc);
                 __UNIT_TYPE w_bit_count = u_bit_count - n;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 RightShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, n, w->BLOCK, FALSE);
                 root.CheckNumber(w);
-                CommitNumber(w);
+                CommitNumber(tc, w);
                 root.UnlinkNumber(w);
                 return (w);
             }
         }
     }
 
-    NUMBER_OBJECT_UINT* PMC_LeftShift_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T n)
+    NUMBER_OBJECT_UINT* PMC_LeftShift_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT32_T n)
     {
         if (u->IS_ZERO)
             return (&number_object_uint_zero);
         else if (n == 0)
-            return (DuplicateNumber(u));
+            return (DuplicateNumber(tc, u));
         else
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
             __UNIT_TYPE w_bit_count = u_bit_count + n;
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
             LeftShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, n, w->BLOCK, FALSE);
             root.CheckNumber(w);
-            CommitNumber(w);
+            CommitNumber(tc, w);
             root.UnlinkNumber(w);
             return (w);
         }
     }
 
-    PMC_HANDLE_UINT PMC_RightShift_UX_I(PMC_HANDLE_UINT u, _INT32_T n) noexcept(false)
+    PMC_HANDLE_UINT PMC_RightShift_UX_I(ThreadContext& tc, PMC_HANDLE_UINT u, _INT32_T n) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(n) * 8)
         {
@@ -355,17 +355,17 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_shift.cpp;PMC_RightShift_UX_I;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         SIGN_T n_sign;
         _UINT32_T n_abs = GET_ABS_32(n, &n_sign);
-        NUMBER_OBJECT_UINT* nw = n_sign >= 0 ? PMC_RightShift_UX_UI_Imp(nu, n_abs) : PMC_LeftShift_UX_UI_Imp(nu, n_abs);
+        NUMBER_OBJECT_UINT* nw = n_sign >= 0 ? PMC_RightShift_UX_UI_Imp(tc, nu, n_abs) : PMC_LeftShift_UX_UI_Imp(tc, nu, n_abs);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
         return (w);
     }
 
-    PMC_HANDLE_UINT PMC_LeftShift_UX_I(PMC_HANDLE_UINT u, _INT32_T n) noexcept(false)
+    PMC_HANDLE_UINT PMC_LeftShift_UX_I(ThreadContext& tc, PMC_HANDLE_UINT u, _INT32_T n) noexcept(false)
     {
         if (__UNIT_TYPE_BIT_COUNT < sizeof(n) * 8)
         {
@@ -373,10 +373,10 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_add.cpp;PMC_LeftShift_UX_I;1");
         }
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         SIGN_T n_sign;
         _UINT32_T n_abs = GET_ABS_32(n, &n_sign);
-        NUMBER_OBJECT_UINT* nw = n_sign >= 0 ? PMC_LeftShift_UX_UI_Imp(nu, n_abs) : PMC_RightShift_UX_UI_Imp(nu, n_abs);
+        NUMBER_OBJECT_UINT* nw = n_sign >= 0 ? PMC_LeftShift_UX_UI_Imp(tc, nu, n_abs) : PMC_RightShift_UX_UI_Imp(tc, nu, n_abs);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);

@@ -33,7 +33,7 @@ namespace Palmtree::Math::Core::Internal
 {
     static double log10_2; // 0.3010299956639811952137388947244
 
-    _INT32_T PMC_FloorLog10_R_Imp(NUMBER_OBJECT_UINT* v_numerator, NUMBER_OBJECT_UINT* v_denominator)
+    _INT32_T PMC_FloorLog10_R_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* v_numerator, NUMBER_OBJECT_UINT* v_denominator)
     {
         if (v_numerator->IS_ZERO)
             throw ArithmeticException(L"0 の対数は未定義です。");
@@ -50,16 +50,16 @@ namespace Palmtree::Math::Core::Internal
         {
             // v > 1  の場合
 
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             __UNIT_TYPE diff = v_numerator->UNIT_BIT_COUNT - v_denominator->UNIT_BIT_COUNT;
             if (diff > 0)
                 --diff;
             if (diff > 0x7fffffffU)
                 throw ArgumentOutOfRangeException(L"与えられた数値が計算可能な範囲を超えています。");
             _INT32_T result_value = (_INT32_T)floor(diff * log10_2);
-            NUMBER_OBJECT_UINT* ten_n = PMC_Pow10_UI_Imp(result_value);
+            NUMBER_OBJECT_UINT* ten_n = PMC_Pow10_UI_Imp(tc, result_value);
             root.HookNumber(ten_n);
-            NUMBER_OBJECT_UINT* v_denominator_times_ten_n = PMC_Multiply_UX_UX_Imp(v_denominator, ten_n);
+            NUMBER_OBJECT_UINT* v_denominator_times_ten_n = PMC_Multiply_UX_UX_Imp(tc, v_denominator, ten_n);
             root.HookNumber(v_denominator_times_ten_n);
             while (true)
             {
@@ -68,7 +68,7 @@ namespace Palmtree::Math::Core::Internal
                     return (result_value - 1);
                 if (c == 0)
                     return (result_value);
-                v_denominator_times_ten_n = PMC_Multiply_UX_UI_Imp(v_denominator_times_ten_n, 10);
+                v_denominator_times_ten_n = PMC_Multiply_UX_UI_Imp(tc, v_denominator_times_ten_n, 10);
                 root.HookNumber(v_denominator_times_ten_n);
                 ++result_value;
             }
@@ -77,45 +77,45 @@ namespace Palmtree::Math::Core::Internal
         {
             // v < 1 の場合
 
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             __UNIT_TYPE diff = v_denominator->UNIT_BIT_COUNT - v_numerator->UNIT_BIT_COUNT;
             if (diff > 0)
                 --diff;
             if (diff > 0x7fffffffU)
                 throw ArgumentOutOfRangeException(L"与えられた数値が計算可能な範囲を超えています。");
             _INT32_T result_value = -(_INT32_T)floor(diff * log10_2);
-            NUMBER_OBJECT_UINT* ten_n = PMC_Pow10_UI_Imp(-result_value);
+            NUMBER_OBJECT_UINT* ten_n = PMC_Pow10_UI_Imp(tc, -result_value);
             root.HookNumber(ten_n);
-            NUMBER_OBJECT_UINT* v_numerator_times_ten_n = PMC_Multiply_UX_UX_Imp(v_numerator, ten_n);
+            NUMBER_OBJECT_UINT* v_numerator_times_ten_n = PMC_Multiply_UX_UX_Imp(tc, v_numerator, ten_n);
             root.HookNumber(v_numerator_times_ten_n);
             while (true)
             {
                 _INT32_T c = PMC_Compare_UX_UX_Imp(v_numerator_times_ten_n, v_denominator);
                 if (c >= 0)
                     return (result_value);
-                v_numerator_times_ten_n = PMC_Multiply_UX_UI_Imp(v_numerator_times_ten_n, 10);
+                v_numerator_times_ten_n = PMC_Multiply_UX_UI_Imp(tc, v_numerator_times_ten_n, 10);
                 root.HookNumber(v_numerator_times_ten_n);
                 --result_value;
             }
         }
     }
 
-    _UINT32_T PMC_FloorLog10_UX_Imp(NUMBER_OBJECT_UINT* v)
+    _UINT32_T PMC_FloorLog10_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* v)
     {
-        return (PMC_FloorLog10_R_Imp(v, &number_object_uint_one));
+        return (PMC_FloorLog10_R_Imp(tc, v, &number_object_uint_one));
     }
 
-    _UINT32_T PMC_FloorLog10_UX(PMC_HANDLE_UINT v)
+    _UINT32_T PMC_FloorLog10_UX(ThreadContext& tc, PMC_HANDLE_UINT v)
     {
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        return (PMC_FloorLog10_UX_Imp(nv));
+        return (PMC_FloorLog10_UX_Imp(tc, nv));
     }
 
-    _INT32_T PMC_FloorLog10_R(PMC_HANDLE_UINT v_numerator, PMC_HANDLE_UINT v_denominator)
+    _INT32_T PMC_FloorLog10_R(ThreadContext& tc, PMC_HANDLE_UINT v_numerator, PMC_HANDLE_UINT v_denominator)
     {
         NUMBER_OBJECT_UINT* nv_numerator = GET_NUMBER_OBJECT(v_numerator, L"v_numerator");
         NUMBER_OBJECT_UINT* nv_denominator = GET_NUMBER_OBJECT(v_denominator, L"v_denominator");
-        return (PMC_FloorLog10_R_Imp(nv_numerator, nv_denominator));
+        return (PMC_FloorLog10_R_Imp(tc, nv_numerator, nv_denominator));
     }
 
     PMC_STATUS_CODE Initialize_Log(PROCESSOR_FEATURES* feature)

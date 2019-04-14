@@ -30,13 +30,13 @@
 
 namespace Palmtree::Math::Core::Internal
 {
-    PMC_HANDLE_RTNL PMC_FromByteArray_RTNL(const unsigned char* buffer, size_t count)
+    PMC_HANDLE_RTNL PMC_FromByteArray_RTNL(ThreadContext& tc, const unsigned char* buffer, size_t count)
     {
         if (buffer == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"buffer");
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_SINT o_numerator;
-        PMC_HANDLE_UINT o_denominator = ep_sint.FromByteArray_RTNL(buffer, count, &o_numerator);
+        PMC_HANDLE_UINT o_denominator = ep_sint.FromByteArray_RTNL(tc, buffer, count, &o_numerator);
         root.HookNumber(o_numerator);
         root.HookNumber(o_denominator);
         NUMBER_OBJECT_RTNL* no = root.AllocateNumber(o_numerator, o_denominator);

@@ -25,13 +25,15 @@
 
 #include "pmc_tostringformatter.h"
 #include "pmc_resourceholder_uint.h"
+#include "pmc_threadcontext.h"
 #include "pmc_string.h"
 #include "pmc_inline_func.h"
 
 
 namespace Palmtree::Math::Core::Internal
 {
-    ToStringFormatter::ToStringFormatter(wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO * number_format_info)
+    ToStringFormatter::ToStringFormatter(ThreadContext& tc, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO * number_format_info)
+        : _tc(tc)
     {
         _format_type = format_type;
         _precision = precision;
@@ -61,7 +63,7 @@ namespace Palmtree::Math::Core::Internal
             if (x_sign == 0)
                 throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_tostring.cpp;Formatter::Format;1");
 
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(_tc);
 
             // 丸め処理をする
             _INT32_T exp;
@@ -87,13 +89,13 @@ namespace Palmtree::Math::Core::Internal
 
     void ToStringFormatter::FormatInternally(NUMBER_OBJECT_UINT * x_numerator, NUMBER_OBJECT_UINT * x_denominator, _INT32_T exp, StringWriter& writer)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(_tc);
         NUMBER_OBJECT_UINT* frac_part_denominator = x_denominator;
         NUMBER_OBJECT_UINT* int_part;
-        NUMBER_OBJECT_UINT* frac_part_numerator = PMC_DivRem_UX_UX_Imp(x_numerator, x_denominator, &int_part);
+        NUMBER_OBJECT_UINT* frac_part_numerator = PMC_DivRem_UX_UX_Imp(_tc, x_numerator, x_denominator, &int_part);
         root.HookNumber(int_part);
         root.HookNumber(frac_part_numerator);
-        __UNIT_TYPE int_part_buffer_size = int_part->IS_ZERO ? 1 : PMC_FloorLog10_UX_Imp(int_part) + 1;
+        __UNIT_TYPE int_part_buffer_size = int_part->IS_ZERO ? 1 : PMC_FloorLog10_UX_Imp(_tc, int_part) + 1;
         int_part_buffer_size = int_part_buffer_size * 2 + 1; // 3桁区切り記号と終端ヌル文字の分のサイズを追加
         wchar_t* int_part_buffer = root.AllocateString(int_part_buffer_size);
 
@@ -116,7 +118,7 @@ namespace Palmtree::Math::Core::Internal
     // 小数点以下の丸め処理 (および必要なら小数点位置の移動) を行います。
     void ToStringFormatter::RoundValue(NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, NUMBER_OBJECT_UINT* * r_numerator, NUMBER_OBJECT_UINT* * r_denominator, _INT32_T * exp)
     {
-        *r_numerator = PMC_Round_R_Imp(x_numerator, x_denominator, _precision, PMC_MIDPOINT_ROUNDING_HALF_EVEN, r_denominator);
+        *r_numerator = PMC_Round_R_Imp(_tc, x_numerator, x_denominator, _precision, PMC_MIDPOINT_ROUNDING_HALF_EVEN, r_denominator);
         *exp = 0;
     }
 
@@ -129,14 +131,14 @@ namespace Palmtree::Math::Core::Internal
     wchar_t * ToStringFormatter::ConstructIntegerPartNumberSequence(NUMBER_OBJECT_UINT* int_part, wchar_t * out_buf, size_t out_buf_count)
     {
         ReverseStringWriter simple_number_sequence_writer(out_buf, out_buf_count);
-        PMC_LToA_Imp(int_part, simple_number_sequence_writer);
+        PMC_LToA_Imp(_tc, int_part, simple_number_sequence_writer);
         return (simple_number_sequence_writer.GetString());
     }
 
     void ToStringFormatter::ConstructFractionPartNumberSequence(NUMBER_OBJECT_UINT* frac_part_numerator, NUMBER_OBJECT_UINT* frac_part_denominator, size_t max_fraction_part_length, wchar_t * out_buf, size_t out_buf_count)
     {
         StringWriter simple_number_sequence_writer(out_buf, out_buf_count);
-        PMC_FToA_Imp(frac_part_numerator, frac_part_denominator, max_fraction_part_length, simple_number_sequence_writer);
+        PMC_FToA_Imp(_tc, frac_part_numerator, frac_part_denominator, max_fraction_part_length, simple_number_sequence_writer);
         if (_omitted_trailing_sequential_zero)
         {
             // 末尾の連続する 0 を削除する指定がされている場合は削除する

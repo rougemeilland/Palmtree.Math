@@ -25,7 +25,9 @@
 
 #include "pmc_tostringformattercustom.h"
 #include "pmc_resourceholder_uint.h"
+#include "pmc_threadcontext.h"
 #include "pmc_thousandseparatedstringwriter.h"
+#include "pmc_lock.h"
 
 
 namespace Palmtree::Math::Core::Internal::CustomFormat
@@ -58,10 +60,12 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
     {
     }
 
-    void FormatToken::Remove()
+    void FormatToken::Remove(ThreadContext& tc)
     {
+        Lock lock_obj;
         BidirectionalListHeader::Remove();
         delete this;
+        tc.DecrementTypeBAllocationCount();
     }
 
     LiteralToken * FormatToken::ToLiteral()
@@ -109,8 +113,8 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         return (nullptr);
     }
 
-    SectionToken::SectionToken()
-        : _section_root(), _10_factor(0), _enabled_grouping(false), _max_int_part_length(0), _min_int_part_length(0), _max_frac_part_length(0), _min_frac_part_length(0), _decimal_point_separater(nullptr), _exponent_part(nullptr), _exists_multi_section(false)
+    SectionToken::SectionToken(ThreadContext& tc)
+        : _tc(tc), _section_root(), _10_factor(0), _enabled_grouping(false), _max_int_part_length(0), _min_int_part_length(0), _max_frac_part_length(0), _min_frac_part_length(0), _decimal_point_separater(nullptr), _exponent_part(nullptr), _exists_multi_section(false)
     {
     }
 
@@ -118,7 +122,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
     {
         while (_section_root.Next() != &_section_root)
         {
-            _section_root.Next()->Remove();
+            _section_root.Next()->Remove(_tc);
         }
     }
 
@@ -262,20 +266,20 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
             WriteZeroValue(format_option, writer);
         else
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(_tc);
 
             if (_exponent_part != nullptr)
             {
                 // 指数表記の場合
 
-                int x_int_part_length = PMC_FloorLog10_R_Imp(x_numerator, x_denominator) + 1;
+                int x_int_part_length = PMC_FloorLog10_R_Imp(_tc, x_numerator, x_denominator) + 1;
                 // 現在の整数部の桁数は x_int_part_length 桁で、さらに追加して小数部を何桁表示する必要があるか。
                 // 合計で表示する桁数は _max_int_part_length + _min_frac_part_length であるので、表示する必要のある小数部の桁数 x_frac_part_length は
                 int x_frac_part_length = _max_int_part_length + _min_frac_part_length - x_int_part_length;
                 // である。
 
                 // 小数部を丸める
-                x_numerator = PMC_Round_R_Imp(x_numerator, x_denominator, x_frac_part_length, PMC_MIDPOINT_ROUNDING_HALF_EVEN, &x_denominator);
+                x_numerator = PMC_Round_R_Imp(_tc, x_numerator, x_denominator, x_frac_part_length, PMC_MIDPOINT_ROUNDING_HALF_EVEN, &x_denominator);
                 root.HookNumber(x_numerator);
                 root.HookNumber(x_denominator);
 
@@ -288,14 +292,14 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
 
                 // 整数部が _int_part_length になるよう仮数と指数を調整する。
                 int exp_part = _10_factor + x_int_part_length - _max_int_part_length;
-                Times10n_R(root, x_numerator, x_denominator, x_int_part_length - _max_int_part_length, &x_numerator, &x_denominator);
+                Times10n_R(_tc, root, x_numerator, x_denominator, x_int_part_length - _max_int_part_length, &x_numerator, &x_denominator);
             }
             else
             {
                 // 固定小数点表記の場合
 
                 // 小数部を丸める
-                x_numerator = PMC_Round_R_Imp(x_numerator, x_denominator, _max_frac_part_length + _10_factor, PMC_MIDPOINT_ROUNDING_HALF_EVEN, &x_denominator);
+                x_numerator = PMC_Round_R_Imp(_tc, x_numerator, x_denominator, _max_frac_part_length + _10_factor, PMC_MIDPOINT_ROUNDING_HALF_EVEN, &x_denominator);
                 root.HookNumber(x_numerator);
                 root.HookNumber(x_denominator);
 
@@ -307,12 +311,12 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
                 }
 
                 // _10_factor を数値に反映させる
-                Times10n_R(root, x_numerator, x_denominator, _10_factor, &x_numerator, &x_denominator);
+                Times10n_R(_tc, root, x_numerator, x_denominator, _10_factor, &x_numerator, &x_denominator);
             }
 
             // x を整数部と小数部に分ける
             NUMBER_OBJECT_UINT* t_int_part;
-            NUMBER_OBJECT_UINT* t_frac_part_numerator = PMC_DivRem_UX_UX_Imp(x_numerator, x_denominator, &t_int_part);
+            NUMBER_OBJECT_UINT* t_frac_part_numerator = PMC_DivRem_UX_UX_Imp(_tc, x_numerator, x_denominator, &t_int_part);
             NUMBER_OBJECT_UINT* t_frac_part_denominator = x_denominator;
             root.HookNumber(t_int_part);
             root.HookNumber(t_frac_part_numerator);
@@ -330,18 +334,21 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
     void SectionToken::AppendLiteral(const wchar_t * reference, int reference_count)
     {
         LiteralToken* token = new LiteralToken(reference, reference_count);
+        _tc.IncrementTypeBAllocationCount();
         _section_root.AddBefore(token);
     }
 
     void SectionToken::AppendIntPartPlaceHolder(const PMC_NUMBER_FORMAT_INFO& format_option, bool first, const wchar_t digit)
     {
         IntPartPlaceHolderToken* token = new IntPartPlaceHolderToken(format_option, first, digit);
+        _tc.IncrementTypeBAllocationCount();
         _section_root.AddBefore(token);
     }
 
     void SectionToken::AppendDecimalSeparaterToken(const PMC_NUMBER_FORMAT_INFO& format_option)
     {
         DecimalSeparaterToken* token = new DecimalSeparaterToken(format_option);
+        _tc.IncrementTypeBAllocationCount();
         _section_root.AddBefore(token);
         _decimal_point_separater = token;
     }
@@ -349,12 +356,14 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
     void SectionToken::AppendFracPartPlaceHolder(const wchar_t digit)
     {
         FracPartPlaceHolderToken* token = new FracPartPlaceHolderToken(digit);
+        _tc.IncrementTypeBAllocationCount();
         _section_root.AddBefore(token);
     }
 
     void SectionToken::AppendExponent(const PMC_NUMBER_FORMAT_INFO& format_option, wchar_t header, int zero_count)
     {
         ExponentToken* token = new ExponentToken(format_option, header, L'\0', zero_count);
+        _tc.IncrementTypeBAllocationCount();
         _section_root.AddBefore(token);
         _exponent_part = token;
     }
@@ -362,6 +371,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
     void SectionToken::AppendExponent(const PMC_NUMBER_FORMAT_INFO& format_option, wchar_t header, wchar_t sign, int zero_count)
     {
         ExponentToken* token = new ExponentToken(format_option, header, sign, zero_count);
+        _tc.IncrementTypeBAllocationCount();
         _section_root.AddBefore(token);
         _exponent_part = token;
     }
@@ -369,6 +379,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
     void SectionToken::AppendPercent(const PMC_NUMBER_FORMAT_INFO& format_option, const wchar_t digit)
     {
         PercentToken* token = new PercentToken(format_option, digit);
+        _tc.IncrementTypeBAllocationCount();
         _section_root.AddBefore(token);
     }
 
@@ -389,7 +400,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
 
     void SectionToken::WriteZeroValue(const PMC_NUMBER_FORMAT_INFO& format_option, StringWriter & writer)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(_tc);
 
         // 整数部の文字列化
         size_t int_buf_length = _max_int_part_length * 2 + 1;
@@ -412,7 +423,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
 
     void SectionToken::ApplyPlaceHolder(const PMC_NUMBER_FORMAT_INFO & format_option, const wchar_t* int_part_buf, const wchar_t* frac_part_buf, int exp_part, StringWriter & writer)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(_tc);
 
         // カスタム書式の小数点より前の文字の数(見積もり)
         size_t int_str_buf_length = lstrlenW( int_part_buf) + 1;
@@ -447,18 +458,18 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         writer.Write(frac_str_buf_writer.GetString());
     }
 
-    void SectionToken::Times10n_R(ResourceHolderUINT& root, NUMBER_OBJECT_UINT * x_numerator, NUMBER_OBJECT_UINT * x_denominator, int e, NUMBER_OBJECT_UINT ** r_numerator, NUMBER_OBJECT_UINT ** r_denominator)
+    void SectionToken::Times10n_R(ThreadContext& tc, ResourceHolderUINT& root, NUMBER_OBJECT_UINT * x_numerator, NUMBER_OBJECT_UINT * x_denominator, int e, NUMBER_OBJECT_UINT ** r_numerator, NUMBER_OBJECT_UINT ** r_denominator)
     {
         if (e > 0)
         {
-            NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(e);
-            x_denominator = PMC_Multiply_UX_UX_Imp(x_denominator, factor);
+            NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, e);
+            x_denominator = PMC_Multiply_UX_UX_Imp(tc, x_denominator, factor);
             root.HookNumber(x_denominator);
         }
         else if (e < 0)
         {
-            NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(-e);
-            x_numerator = PMC_Multiply_UX_UX_Imp(x_numerator, factor);
+            NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, -e);
+            x_numerator = PMC_Multiply_UX_UX_Imp(tc, x_numerator, factor);
             root.HookNumber(x_numerator);
         }
         else
@@ -719,8 +730,8 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         }
     }
 
-    ToStringFormatterCustom::ToStringFormatterCustom(const wchar_t * format, const PMC_NUMBER_FORMAT_INFO * format_option)
-        : _root(), _format(format), _format_option(*format_option), _section0_root(nullptr), _section1_root(nullptr), _section2_root(nullptr)
+    ToStringFormatterCustom::ToStringFormatterCustom(ThreadContext& tc, const wchar_t * format, const PMC_NUMBER_FORMAT_INFO * format_option)
+        : _tc(tc), _root(), _format(format), _format_option(*format_option), _section0_root(nullptr), _section1_root(nullptr), _section2_root(nullptr)
     {
         Parse();
         if ((_section0_root = _root.Next()->ToSection()) == nullptr)
@@ -751,7 +762,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
     {
         while (_root.Next() != &_root)
         {
-            _root.Next()->Remove();
+            _root.Next()->Remove(_tc);
         }
     }
 
@@ -787,7 +798,8 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
 
     SectionToken * ToStringFormatterCustom::AppendSection()
     {
-        SectionToken* token = new SectionToken();
+        SectionToken* token = new SectionToken(_tc);
+        _tc.IncrementTypeBAllocationCount();
         _root.AddBefore(token);
         return (token);
     }

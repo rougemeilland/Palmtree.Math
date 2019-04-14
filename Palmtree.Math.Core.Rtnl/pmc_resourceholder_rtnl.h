@@ -45,9 +45,10 @@ namespace Palmtree::Math::Core::Internal
             : public __ChainBufferTag
         {
         private:
+            ThreadContext& _tc;
             NUMBER_OBJECT_RTNL* _buffer;
         public:
-            __NumberObjectRtnlChainBufferTag(NUMBER_OBJECT_RTNL* buffer);
+            __NumberObjectRtnlChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_RTNL* buffer);
             virtual ~__NumberObjectRtnlChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Destruct() override;
@@ -57,9 +58,10 @@ namespace Palmtree::Math::Core::Internal
             : public __ChainBufferTag
         {
         private:
+            ThreadContext& _tc;
             PMC_HANDLE_UINT _buffer;
         public:
-            __UINTNumberHandleHookingChainBufferTag(PMC_HANDLE_UINT x);
+            __UINTNumberHandleHookingChainBufferTag(ThreadContext& tc, PMC_HANDLE_UINT x);
             virtual ~__UINTNumberHandleHookingChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
@@ -70,9 +72,10 @@ namespace Palmtree::Math::Core::Internal
             : public __ChainBufferTag
         {
         private:
+            ThreadContext& _tc;
             PMC_HANDLE_SINT _buffer;
         public:
-            __SINTNumberHandleHookingChainBufferTag(PMC_HANDLE_SINT x);
+            __SINTNumberHandleHookingChainBufferTag(ThreadContext& tc, PMC_HANDLE_SINT x);
             virtual ~__SINTNumberHandleHookingChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
@@ -83,9 +86,10 @@ namespace Palmtree::Math::Core::Internal
             : public __ChainBufferTag
         {
         private:
+            ThreadContext& _tc;
             NUMBER_OBJECT_RTNL* _buffer;
         public:
-            __DynamicNumberChainBufferTag(NUMBER_OBJECT_RTNL* buffer);
+            __DynamicNumberChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_RTNL* buffer);
             virtual ~__DynamicNumberChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
@@ -96,9 +100,10 @@ namespace Palmtree::Math::Core::Internal
             : public __ChainBufferTag
         {
         private:
+            ThreadContext& _tc;
             NUMBER_OBJECT_RTNL* _buffer;
         public:
-            __NumberHandleHookingChainBufferTag(NUMBER_OBJECT_RTNL* buffer);
+            __NumberHandleHookingChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_RTNL* buffer);
             virtual ~__NumberHandleHookingChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
@@ -109,9 +114,10 @@ namespace Palmtree::Math::Core::Internal
             : public __ChainBufferTag
         {
         private:
+            ThreadContext& _tc;
             NUMBER_OBJECT_RTNL* _buffer;
         public:
-            __StaticNumberChainBufferTag(NUMBER_OBJECT_RTNL* buffer);
+            __StaticNumberChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_RTNL* buffer);
             virtual ~__StaticNumberChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
@@ -133,11 +139,10 @@ namespace Palmtree::Math::Core::Internal
         ResourceHolderRTNL(const ResourceHolderRTNL& p); // åƒÇ—èoÇµã÷é~
 
     public:
-        ResourceHolderRTNL();
+        ResourceHolderRTNL(ThreadContext& tc);
         virtual ~ResourceHolderRTNL();
 
         NUMBER_OBJECT_RTNL* AllocateNumberObject();
-        void DeallocateBytes(NUMBER_OBJECT_RTNL* buffer);
         void UnlinkNumberObject(NUMBER_OBJECT_RTNL* buffer);
 
         NUMBER_OBJECT_RTNL* AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator);
@@ -160,8 +165,8 @@ namespace Palmtree::Math::Core::Internal
         void UnlinkInternalNumber(PMC_HANDLE_UINT x);
     };
 
-    extern PMC_HANDLE_SINT DivideExactly(ResourceHolderRTNL& root, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v);
-    extern PMC_HANDLE_UINT DivideExactly(ResourceHolderRTNL& root, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v);
+    extern PMC_HANDLE_SINT DivideExactly(ThreadContext&tc, ResourceHolderRTNL& root, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v);
+    extern PMC_HANDLE_UINT DivideExactly(ThreadContext&tc, ResourceHolderRTNL& root, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v);
 }
 
 #endif

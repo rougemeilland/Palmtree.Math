@@ -52,7 +52,7 @@ namespace Palmtree::Math::Core::Internal
         bool _is_exponential_format;
 
     public:
-        ToStringFormatterTypeG(wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* number_format_info);
+        ToStringFormatterTypeG(ThreadContext& tc, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* number_format_info);
 
     protected:
         virtual int GetDefaultPrecisionValue(int specified_precision) override;

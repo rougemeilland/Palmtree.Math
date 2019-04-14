@@ -114,23 +114,21 @@ namespace Palmtree::Math::Core::Internal
     //// 指定されたアドレスのメモリを解放する。
     extern void __DeallocateHeap(void* buffer) noexcept(true);
 
-    extern void __AttatchNumber(NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator);
+    extern void __AttatchNumber(ThreadContext& tc, NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator);
 
-    extern NUMBER_OBJECT_RTNL* __AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator);
+    extern NUMBER_OBJECT_RTNL* __AllocateNumber(ThreadContext& tc, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator);
 
-    extern  void __DetatchNumber(NUMBER_OBJECT_RTNL* p);
+    extern  void __DetatchNumber(ThreadContext& tc, NUMBER_OBJECT_RTNL* p);
 
-    extern  void __DeallocateNumber(NUMBER_OBJECT_RTNL* p);
+    extern  void __DeallocateNumber(ThreadContext& tc, NUMBER_OBJECT_RTNL* p);
 
     extern void __CheckNumber(NUMBER_OBJECT_RTNL* p) noexcept(false);
 
 #pragma endregion
 
-
 #pragma region 初期化関数の宣言
     extern PMC_STATUS_CODE Initialize_Memory(void);
 #pragma endregion
-
 
 #pragma region エントリポイントに登録される関数の宣言
     extern bool PMC_RTNL_Initialize();
@@ -142,121 +140,119 @@ namespace Palmtree::Math::Core::Internal
 
     extern _UINT64_T PMC_GetPerformanceCounter(const wchar_t* key);
 
-    extern PMC_HANDLE_RTNL PMC_From_I(_INT32_T x) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_From_L(_INT64_T x) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_From_UI(_UINT32_T x) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_From_UL(_UINT64_T x) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_From_UX(PMC_HANDLE_UINT x) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_From_X(PMC_HANDLE_SINT x) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_From_DECIMAL(DECIMAL x) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_From_DOUBLE(double x) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_From_I(ThreadContext& tc, _INT32_T x) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_From_L(ThreadContext& tc, _INT64_T x) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_From_UI(ThreadContext& tc, _UINT32_T x) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_From_UL(ThreadContext& tc, _UINT64_T x) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_From_UX(ThreadContext& tc, PMC_HANDLE_UINT x) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_From_X(ThreadContext& tc, PMC_HANDLE_SINT x) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_From_DECIMAL(ThreadContext& tc, DECIMAL x) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_From_DOUBLE(ThreadContext& tc, double x) noexcept(false);
 
     extern _INT32_T PMC_GetHashCode(PMC_HANDLE_RTNL p) noexcept(false);
 
-    extern void  PMC_CheckHandle_UX(PMC_HANDLE_UINT p) noexcept(false);
-    extern void  PMC_CheckHandle_X(PMC_HANDLE_SINT p) noexcept(false);
     extern void  PMC_CheckHandle_R(PMC_HANDLE_RTNL p) noexcept(false);
 
-    extern void  PMC_Dispose_UX(PMC_HANDLE_UINT p) noexcept(false);
-    extern void  PMC_Dispose_X(PMC_HANDLE_SINT p) noexcept(false);
-    extern void  PMC_Dispose_R(PMC_HANDLE_RTNL p) noexcept(false);
+    extern void  PMC_Dispose_R(ThreadContext& tc, PMC_HANDLE_RTNL p) noexcept(false);
+
+    extern _INT32_T PMC_GetBufferCount_R(PMC_HANDLE_RTNL p) noexcept(false);
 
     extern PMC_HANDLE_RTNL PMC_GetConstantValue_I(PMC_CONSTANT_VALUE_CODE type) noexcept(false);
 
-    extern PMC_HANDLE_RTNL PMC_FromByteArray_RTNL(const unsigned char* buffer, size_t count) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_FromByteArray_RTNL(ThreadContext& tc, const unsigned char* buffer, size_t count) noexcept(false);
     extern size_t PMC_ToByteArray_R(PMC_HANDLE_RTNL p, unsigned char* buffer, size_t buffer_size) noexcept(false);
 
-    extern PMC_HANDLE_RTNL PMC_Clone_R(PMC_HANDLE_RTNL x) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Clone_R(ThreadContext& tc, PMC_HANDLE_RTNL x) noexcept(false);
 
     extern _UINT64_T PMC_GetAllocatedMemorySize() noexcept(false);
 
-    extern _UINT32_T PMC_ToUInt32_R(PMC_HANDLE_RTNL p) noexcept(false);
-    extern _INT32_T PMC_ToInt32_R(PMC_HANDLE_RTNL p) noexcept(false);
-    extern _UINT64_T PMC_ToUInt64_R(PMC_HANDLE_RTNL p) noexcept(false);
-    extern _INT64_T PMC_ToInt64_R(PMC_HANDLE_RTNL p) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_ToUBigInt_R(PMC_HANDLE_RTNL p) noexcept(false);
-    extern PMC_HANDLE_SINT PMC_ToBigInt_R(PMC_HANDLE_RTNL p) noexcept(false);
-    extern DECIMAL PMC_ToDecimal_R(PMC_HANDLE_RTNL p) noexcept(false);
-    extern double PMC_ToDouble_R(PMC_HANDLE_RTNL p) noexcept(false);
+    extern _UINT32_T PMC_ToUInt32_R(ThreadContext& tc, PMC_HANDLE_RTNL p) noexcept(false);
+    extern _INT32_T PMC_ToInt32_R(ThreadContext& tc, PMC_HANDLE_RTNL p) noexcept(false);
+    extern _UINT64_T PMC_ToUInt64_R(ThreadContext& tc, PMC_HANDLE_RTNL p) noexcept(false);
+    extern _INT64_T PMC_ToInt64_R(ThreadContext& tc, PMC_HANDLE_RTNL p) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_ToUBigInt_R(ThreadContext& tc, PMC_HANDLE_RTNL p) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_ToBigInt_R(ThreadContext& tc, PMC_HANDLE_RTNL p) noexcept(false);
+    extern DECIMAL PMC_ToDecimal_R(ThreadContext& tc, PMC_HANDLE_RTNL p) noexcept(false);
+    extern double PMC_ToDouble_R(ThreadContext& tc, PMC_HANDLE_RTNL p) noexcept(false);
 
-    extern PMC_HANDLE_RTNL PMC_Negate_R(PMC_HANDLE_RTNL x) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Negate_R(ThreadContext& tc, PMC_HANDLE_RTNL x) noexcept(false);
 
-    extern PMC_HANDLE_RTNL PMC_Abs_R(PMC_HANDLE_RTNL x) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Abs_R(ThreadContext& tc, PMC_HANDLE_RTNL x) noexcept(false);
 
-    extern size_t PMC_ToString_R(PMC_HANDLE_RTNL x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
+    extern size_t PMC_ToString_R(ThreadContext& tc, PMC_HANDLE_RTNL x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
     extern void  PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info) noexcept(false);
 
-    extern PMC_STATUS_CODE PMC_TryParse_RTNL(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_RTNL* o) noexcept(false);
+    extern PMC_STATUS_CODE PMC_TryParse_RTNL(ThreadContext& tc, const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_RTNL* o) noexcept(false);
 
-    extern PMC_HANDLE_RTNL PMC_Add_I_R(_INT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Add_L_R(_INT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Add_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Add_UI_R(_UINT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Add_UL_R(_UINT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Add_UX_R(PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Add_R_I(PMC_HANDLE_RTNL u, _INT32_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Add_R_L(PMC_HANDLE_RTNL u, _INT64_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Add_R_X(PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Add_R_UI(PMC_HANDLE_RTNL u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Add_R_UL(PMC_HANDLE_RTNL u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Add_R_UX(PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Add_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Add_I_R(ThreadContext& tc, _INT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Add_L_R(ThreadContext& tc, _INT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Add_X_R(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Add_UI_R(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Add_UL_R(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Add_UX_R(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Add_R_I(ThreadContext& tc, PMC_HANDLE_RTNL u, _INT32_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Add_R_L(ThreadContext& tc, PMC_HANDLE_RTNL u, _INT64_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Add_R_X(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Add_R_UI(ThreadContext& tc, PMC_HANDLE_RTNL u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Add_R_UL(ThreadContext& tc, PMC_HANDLE_RTNL u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Add_R_UX(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Add_R_R(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v) noexcept(false);
 
-    extern PMC_HANDLE_RTNL PMC_Subtruct_I_R(_INT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Subtruct_L_R(_INT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Subtruct_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Subtruct_UI_R(_UINT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Subtruct_UL_R(_UINT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Subtruct_UX_R(PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Subtruct_R_I(PMC_HANDLE_RTNL u, _INT32_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Subtruct_R_L(PMC_HANDLE_RTNL u, _INT64_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Subtruct_R_X(PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Subtruct_R_UI(PMC_HANDLE_RTNL u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Subtruct_R_UL(PMC_HANDLE_RTNL u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Subtruct_R_UX(PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Subtruct_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Subtruct_I_R(ThreadContext& tc, _INT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Subtruct_L_R(ThreadContext& tc, _INT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Subtruct_X_R(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Subtruct_UI_R(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Subtruct_UL_R(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Subtruct_UX_R(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Subtruct_R_I(ThreadContext& tc, PMC_HANDLE_RTNL u, _INT32_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Subtruct_R_L(ThreadContext& tc, PMC_HANDLE_RTNL u, _INT64_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Subtruct_R_X(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Subtruct_R_UI(ThreadContext& tc, PMC_HANDLE_RTNL u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Subtruct_R_UL(ThreadContext& tc, PMC_HANDLE_RTNL u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Subtruct_R_UX(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Subtruct_R_R(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v) noexcept(false);
 
-    extern PMC_HANDLE_RTNL PMC_Multiply_I_R(_INT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Multiply_L_R(_INT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Multiply_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Multiply_UI_R(_UINT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Multiply_UL_R(_UINT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Multiply_UX_R(PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Multiply_R_I(PMC_HANDLE_RTNL u, _INT32_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Multiply_R_L(PMC_HANDLE_RTNL u, _INT64_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Multiply_R_X(PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Multiply_R_UI(PMC_HANDLE_RTNL u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Multiply_R_UL(PMC_HANDLE_RTNL u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Multiply_R_UX(PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Multiply_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Multiply_I_R(ThreadContext& tc, _INT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Multiply_L_R(ThreadContext& tc, _INT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Multiply_X_R(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Multiply_UI_R(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Multiply_UL_R(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Multiply_UX_R(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Multiply_R_I(ThreadContext& tc, PMC_HANDLE_RTNL u, _INT32_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Multiply_R_L(ThreadContext& tc, PMC_HANDLE_RTNL u, _INT64_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Multiply_R_X(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Multiply_R_UI(ThreadContext& tc, PMC_HANDLE_RTNL u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Multiply_R_UL(ThreadContext& tc, PMC_HANDLE_RTNL u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Multiply_R_UX(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Multiply_R_R(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v) noexcept(false);
 
-    extern PMC_HANDLE_RTNL PMC_Divide_I_R(_INT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Divide_L_R(_INT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Divide_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Divide_UI_R(_UINT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Divide_UL_R(_UINT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Divide_UX_R(PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Divide_R_I(PMC_HANDLE_RTNL u, _INT32_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Divide_R_L(PMC_HANDLE_RTNL u, _INT64_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Divide_R_X(PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Divide_R_UI(PMC_HANDLE_RTNL u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Divide_R_UL(PMC_HANDLE_RTNL u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Divide_R_UX(PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Divide_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Divide_I_R(ThreadContext& tc, _INT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Divide_L_R(ThreadContext& tc, _INT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Divide_X_R(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Divide_UI_R(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Divide_UL_R(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Divide_UX_R(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Divide_R_I(ThreadContext& tc, PMC_HANDLE_RTNL u, _INT32_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Divide_R_L(ThreadContext& tc, PMC_HANDLE_RTNL u, _INT64_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Divide_R_X(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Divide_R_UI(ThreadContext& tc, PMC_HANDLE_RTNL u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Divide_R_UL(ThreadContext& tc, PMC_HANDLE_RTNL u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Divide_R_UX(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Divide_R_R(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v) noexcept(false);
 
-    extern SIGN_T PMC_Compare_I_R(_INT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern SIGN_T PMC_Compare_L_R(_INT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern SIGN_T PMC_Compare_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern SIGN_T PMC_Compare_UI_R(_UINT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern SIGN_T PMC_Compare_UL_R(_UINT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern SIGN_T PMC_Compare_UX_R(PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v) noexcept(false);
-    extern SIGN_T PMC_Compare_R_I(PMC_HANDLE_RTNL u, _INT32_T v) noexcept(false);
-    extern SIGN_T PMC_Compare_R_L(PMC_HANDLE_RTNL u, _INT64_T v) noexcept(false);
-    extern SIGN_T PMC_Compare_R_X(PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v) noexcept(false);
-    extern SIGN_T PMC_Compare_R_UI(PMC_HANDLE_RTNL u, _UINT32_T v) noexcept(false);
-    extern SIGN_T PMC_Compare_R_UL(PMC_HANDLE_RTNL u, _UINT64_T v) noexcept(false);
-    extern SIGN_T PMC_Compare_R_UX(PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v) noexcept(false);
-    extern SIGN_T PMC_Compare_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern SIGN_T PMC_Compare_I_R(ThreadContext& tc, _INT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern SIGN_T PMC_Compare_L_R(ThreadContext& tc, _INT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern SIGN_T PMC_Compare_X_R(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern SIGN_T PMC_Compare_UI_R(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern SIGN_T PMC_Compare_UL_R(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern SIGN_T PMC_Compare_UX_R(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v) noexcept(false);
+    extern SIGN_T PMC_Compare_R_I(ThreadContext& tc, PMC_HANDLE_RTNL u, _INT32_T v) noexcept(false);
+    extern SIGN_T PMC_Compare_R_L(ThreadContext& tc, PMC_HANDLE_RTNL u, _INT64_T v) noexcept(false);
+    extern SIGN_T PMC_Compare_R_X(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v) noexcept(false);
+    extern SIGN_T PMC_Compare_R_UI(ThreadContext& tc, PMC_HANDLE_RTNL u, _UINT32_T v) noexcept(false);
+    extern SIGN_T PMC_Compare_R_UL(ThreadContext& tc, PMC_HANDLE_RTNL u, _UINT64_T v) noexcept(false);
+    extern SIGN_T PMC_Compare_R_UX(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v) noexcept(false);
+    extern SIGN_T PMC_Compare_R_R(ThreadContext& tc, PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v) noexcept(false);
 
     extern bool PMC_Equals_I_R(_INT32_T u, PMC_HANDLE_RTNL v) noexcept(false);
     extern bool PMC_Equals_L_R(_INT64_T u, PMC_HANDLE_RTNL v) noexcept(false);
@@ -272,28 +268,28 @@ namespace Palmtree::Math::Core::Internal
     extern bool PMC_Equals_R_UX(PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v) noexcept(false);
     extern bool PMC_Equals_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v) noexcept(false);
 
-    extern PMC_HANDLE_RTNL PMC_Pow_I_I(_INT32_T v, _INT32_T e) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Pow_L_I(_INT64_T v, _INT32_T e) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Pow_X_I(PMC_HANDLE_SINT v, _INT32_T e) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Pow_UI_I(_UINT32_T v, _INT32_T e) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Pow_UL_I(_UINT64_T v, _INT32_T e) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Pow_UX_I(PMC_HANDLE_UINT v, _INT32_T e) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Pow_R_I(PMC_HANDLE_RTNL v, _INT32_T e) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Pow_I_I(ThreadContext& tc, _INT32_T v, _INT32_T e) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Pow_L_I(ThreadContext& tc, _INT64_T v, _INT32_T e) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Pow_X_I(ThreadContext& tc, PMC_HANDLE_SINT v, _INT32_T e) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Pow_UI_I(ThreadContext& tc, _UINT32_T v, _INT32_T e) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Pow_UL_I(ThreadContext& tc, _UINT64_T v, _INT32_T e) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Pow_UX_I(ThreadContext& tc, PMC_HANDLE_UINT v, _INT32_T e) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Pow_R_I(ThreadContext& tc, PMC_HANDLE_RTNL v, _INT32_T e) noexcept(false);
 
-    extern PMC_HANDLE_RTNL PMC_Invert_I(_INT32_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Invert_L(_INT64_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Invert_X(PMC_HANDLE_SINT v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Invert_UI(_UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Invert_UL(_UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Invert_UX(PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_RTNL PMC_Invert_R(PMC_HANDLE_RTNL v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Invert_I(ThreadContext& tc, _INT32_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Invert_L(ThreadContext& tc, _INT64_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Invert_X(ThreadContext& tc, PMC_HANDLE_SINT v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Invert_UI(ThreadContext& tc, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Invert_UL(ThreadContext& tc, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Invert_UX(ThreadContext& tc, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_RTNL PMC_Invert_R(ThreadContext& tc, PMC_HANDLE_RTNL v) noexcept(false);
 
-    extern PMC_HANDLE_SINT PMC_Round_R(PMC_HANDLE_RTNL x, PMC_MIDPOINT_ROUNDING_CODE mode);
-    extern PMC_HANDLE_RTNL PMC_Round_R_I(PMC_HANDLE_RTNL x, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode);
-    extern PMC_HANDLE_SINT PMC_Floor_R(PMC_HANDLE_RTNL x);
-    extern PMC_HANDLE_SINT PMC_Ceiling_R(PMC_HANDLE_RTNL x);
+    extern PMC_HANDLE_SINT PMC_Round_R(ThreadContext& tc, PMC_HANDLE_RTNL x, PMC_MIDPOINT_ROUNDING_CODE mode);
+    extern PMC_HANDLE_RTNL PMC_Round_R_I(ThreadContext& tc, PMC_HANDLE_RTNL x, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode);
+    extern PMC_HANDLE_SINT PMC_Floor_R(ThreadContext& tc, PMC_HANDLE_RTNL x);
+    extern PMC_HANDLE_SINT PMC_Ceiling_R(ThreadContext& tc, PMC_HANDLE_RTNL x);
 
-    extern _INT32_T PMC_FloorLog10_R(PMC_HANDLE_RTNL v);
+    extern _INT32_T PMC_FloorLog10_R(ThreadContext& tc, PMC_HANDLE_RTNL v);
 
 #pragma endregion
 

@@ -278,7 +278,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_OBJECT_UINT* PMC_BitwiseAnd_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
+    static NUMBER_OBJECT_UINT* PMC_BitwiseAnd_UX_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->IS_ZERO)
             return (&number_object_uint_zero);
@@ -286,7 +286,7 @@ namespace Palmtree::Math::Core::Internal
             return (&number_object_uint_zero);
         else
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
             __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
             __UNIT_TYPE w_bit_count = _MINIMUM_UNIT(u_bit_count, v_bit_count);
@@ -294,7 +294,7 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE w_word_count = _DIVIDE_CEILING_UNIT(w_bit_count, __UNIT_TYPE_BIT_COUNT);
             BitwiseAnd_UX_UX(u->BLOCK, v->BLOCK, w->BLOCK, w_word_count);
             root.CheckNumber(w);
-            CommitNumber(w);
+            CommitNumber(tc, w);
             if (w->IS_ZERO)
             {
                 root.DeallocateNumber(w);
@@ -305,12 +305,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
     
-    PMC_HANDLE_UINT PMC_BitwiseAnd_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_UINT PMC_BitwiseAnd_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
     {
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderUINT root;
-        NUMBER_OBJECT_UINT* nw = PMC_BitwiseAnd_UX_UX_Imp(nu, nv);
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nw = PMC_BitwiseAnd_UX_UX_Imp(tc, nu, nv);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);

@@ -95,7 +95,8 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    ToStringFormatterTypeX::ToStringFormatterTypeX(wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO * number_format_info)
+    ToStringFormatterTypeX::ToStringFormatterTypeX(ThreadContext& tc, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO * number_format_info)
+        : _tc(tc)
     {
         _format_type = format_type;
         _precision = GetDefaultPrecisionValue(precision);
@@ -131,7 +132,7 @@ namespace Palmtree::Math::Core::Internal
 
     void ToStringFormatterTypeX::WriteValue(SIGN_T x_sign, NUMBER_OBJECT_UINT * x_abs, StringWriter& writer)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(_tc);
         __UNIT_TYPE temp_buf_bit_count = x_abs->UNIT_BIT_COUNT + 4;
         __UNIT_TYPE* temp_buf = root.AllocateBlock(temp_buf_bit_count);
         __UNIT_TYPE temp_buf_word_count = _DIVIDE_CEILING_UNIT(temp_buf_bit_count, __UNIT_TYPE_BIT_COUNT);

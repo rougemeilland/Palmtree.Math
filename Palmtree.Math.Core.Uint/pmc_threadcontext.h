@@ -1,4 +1,4 @@
-ï»¿/*
+/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -23,32 +23,53 @@
  */
 
 
-#include "pmc_sint_internal.h"
-#include "pmc_resourceholder_sint.h"
+#pragma once
 
+#ifndef PMC_THREAD_CONTEXT_H
+#define PMC_THREAD_CONTEXT_H
+
+
+#include "pmc_uint.h"
 
 namespace Palmtree::Math::Core::Internal
 {
-    size_t PMC_ToString_X(ThreadContext& tc, PMC_HANDLE_SINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false)
-    {
-        NUMBER_OBJECT_SINT* nx = GET_NUMBER_OBJECT(x, L"x");
-        return (ep_uint.ToString(tc, nx->SIGN, nx->ABS, format, format_option, buffer, buffer_size));
-    }
 
-    size_t PMC_ToString_R(ThreadContext& tc, PMC_HANDLE_SINT x_numerator, PMC_HANDLE_UINT x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size)
+    class __DLLEXPORT_UINT ThreadContext
     {
-        NUMBER_OBJECT_SINT* nx_numerator = GET_NUMBER_OBJECT(x_numerator, L"x_numerator");
-        if (x_denominator == nullptr)
-            throw ArgumentNullException(L"å¼•æ•°ã«nullãŒä¸ãˆã‚‰ã‚Œã¦ã„ã¾ã™ã€‚", L"x_denominator");
-        return (ep_uint.ToString(tc, nx_numerator->SIGN, nx_numerator->ABS, x_denominator, format, format_option, buffer, buffer_size));
-    }
+    private:
+        _UINT32_T _type_a_count;
+        _UINT32_T _type_b_count;
 
-    void  PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info) noexcept(false)
-    {
-        return (ep_uint.InitializeNumberFormatInfo(info));
-    }
+    public:
+        ThreadContext();
+        virtual ~ThreadContext();
+
+    private:
+        ThreadContext(const ThreadContext& p); // ƒRƒs[‚Í‹Ö~
+
+    public:
+        // ”’lƒIƒuƒWƒFƒNƒg‚ÌŠl“¾ƒJƒEƒ“ƒ^‚ğƒCƒ“ƒNƒŠƒƒ“ƒg‚·‚é
+        void IncrementTypeAAllocationCount();
+
+        // ”’lƒIƒuƒWƒFƒNƒg‚ÌŠl“¾ƒJƒEƒ“ƒ^‚ğƒfƒNƒŠƒƒ“ƒg‚·‚é
+        void DecrementTypeAAllocationCount();
+
+        // ResourceHolder ‚Ì—v‘f‚ÌŠl“¾ƒJƒEƒ“ƒ^‚ğƒCƒ“ƒNƒŠƒƒ“ƒg‚·‚é
+        void IncrementTypeBAllocationCount();
+
+        // ResourceHolder ‚Ì—v‘f‚ÌŠl“¾ƒJƒEƒ“ƒ^‚ğƒfƒNƒŠƒƒ“ƒg‚·‚é
+        void DecrementTypeBAllocationCount();
+
+        // Šl“¾ƒJƒEƒ“ƒ^‚ğŒŸØ‚·‚é
+        bool VerifyAllocationCount(_INT32_T count, bool cause_exception);
+
+        void PrintCounter(const wchar_t* tag);
+    };
 
 }
+
+
+#endif
 
 
 /*

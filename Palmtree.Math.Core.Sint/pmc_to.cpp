@@ -92,7 +92,7 @@ namespace Palmtree::Math::Core::Internal
         return (GET_INT_64(p_sign, p_abs));
     }
 
-    PMC_HANDLE_UINT PMC_ToUBigInt_X(PMC_HANDLE_SINT p)
+    PMC_HANDLE_UINT PMC_ToUBigInt_X(ThreadContext& tc, PMC_HANDLE_SINT p)
     {
         NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
         char p_sign = np->SIGN;
@@ -111,24 +111,24 @@ namespace Palmtree::Math::Core::Internal
         else
         {
             // p >  0 の場合
-            return (ep_uint.Clone(np->ABS));
+            return (ep_uint.Clone(tc, np->ABS));
         }
     }
 
-    DECIMAL PMC_ToDecimal_R(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
+    DECIMAL PMC_ToDecimal_R(ThreadContext& tc, PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* np_numerator = GET_NUMBER_OBJECT(p_numerator, L"p_numerator");
         if (p_denominator == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"p_denominator");
-        return (ep_uint.ToDecimal(np_numerator->SIGN, np_numerator->ABS, p_denominator));
+        return (ep_uint.ToDecimal(tc, np_numerator->SIGN, np_numerator->ABS, p_denominator));
     }
 
-    double PMC_ToDouble_R(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
+    double PMC_ToDouble_R(ThreadContext& tc, PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
     {
         NUMBER_OBJECT_SINT* np_numerator = GET_NUMBER_OBJECT(p_numerator, L"p_numerator");
         if (p_denominator == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"p_denominator");
-        return (ep_uint.ToDouble(np_numerator->SIGN, np_numerator->ABS, p_denominator));
+        return (ep_uint.ToDouble(tc, np_numerator->SIGN, np_numerator->ABS, p_denominator));
     }
 
 }

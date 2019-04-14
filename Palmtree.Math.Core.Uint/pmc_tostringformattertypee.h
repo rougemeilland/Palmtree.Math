@@ -39,7 +39,7 @@ namespace Palmtree::Math::Core::Internal
         : public ToStringFormatter
     {
     public:
-        ToStringFormatterTypeE(wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* number_format_info);
+        ToStringFormatterTypeE(ThreadContext& tc, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO* number_format_info);
 
     protected:
         virtual int GetDefaultPrecisionValue(int specified_precision) override;

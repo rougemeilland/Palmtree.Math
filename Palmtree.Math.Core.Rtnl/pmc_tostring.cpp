@@ -29,10 +29,10 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    size_t PMC_ToString_R(PMC_HANDLE_RTNL x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false)
+    size_t PMC_ToString_R(ThreadContext& tc, PMC_HANDLE_RTNL x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false)
     {
         NUMBER_OBJECT_RTNL* nx = GET_NUMBER_OBJECT(x, L"x");
-        size_t count = ep_sint.ToString(nx->NUMERATOR, nx->DENOMINATOR, format, format_option, buffer, buffer_size);
+        size_t count = ep_sint.ToString(tc, nx->NUMERATOR, nx->DENOMINATOR, format, format_option, buffer, buffer_size);
         return (count);
     }
 

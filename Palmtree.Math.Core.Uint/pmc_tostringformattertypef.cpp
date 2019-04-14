@@ -30,8 +30,8 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    ToStringFormatterTypeF::ToStringFormatterTypeF(wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO * number_format_info)
-        : ToStringFormatter(format_type, precision, number_format_info)
+    ToStringFormatterTypeF::ToStringFormatterTypeF(ThreadContext& tc, wchar_t format_type, int precision, const PMC_NUMBER_FORMAT_INFO * number_format_info)
+        : ToStringFormatter(tc, format_type, precision, number_format_info)
     {
     }
 

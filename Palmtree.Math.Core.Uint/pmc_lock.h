@@ -29,7 +29,6 @@
 #define PMC_LOCK_H
 
 
- //#include "pmc_exception.h"
 #include "pmc_uint.h"
 
 namespace Palmtree::Math::Core::Internal

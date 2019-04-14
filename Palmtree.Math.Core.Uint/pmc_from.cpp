@@ -32,17 +32,17 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    NUMBER_OBJECT_UINT* From_UI_Imp(_UINT32_T x) noexcept(false)
+    NUMBER_OBJECT_UINT* From_UI_Imp(ThreadContext& tc, _UINT32_T x) noexcept(false)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         NUMBER_OBJECT_UINT* o = root.AllocateNumber(sizeof(x) * 8 - _LZCNT_ALT_32(x));
         o->BLOCK[0] = x;
-        CommitNumber(o);
+        CommitNumber(tc, o);
         root.UnlinkNumber(o);
         return (o);
     }
 
-    NUMBER_OBJECT_UINT* From_UL_Imp(_UINT64_T x) noexcept(false)
+    NUMBER_OBJECT_UINT* From_UL_Imp(ThreadContext& tc, _UINT64_T x) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) * 2 < sizeof(x))
         {
@@ -57,22 +57,22 @@ namespace Palmtree::Math::Core::Internal
             _UINT32_T x_lo = _FROMDWORDTOWORD(x, &x_hi);
             if (x_hi == 0)
             {
-                ResourceHolderUINT root;
+                ResourceHolderUINT root(tc);
                 __UNIT_TYPE x_bit_length = sizeof(x_lo) * 8 - _LZCNT_ALT_32(x_lo);
                 NUMBER_OBJECT_UINT* o = root.AllocateNumber(x_bit_length);
                 o->BLOCK[0] = x_lo;
-                CommitNumber(o);
+                CommitNumber(tc, o);
                 root.UnlinkNumber(o);
                 return (o);
             }
             else
             {
-                ResourceHolderUINT root;
+                ResourceHolderUINT root(tc);
                 __UNIT_TYPE x_bit_length = sizeof(x) * 8 - _LZCNT_ALT_32(x_hi);
                 NUMBER_OBJECT_UINT* o = root.AllocateNumber(x_bit_length);
                 o->BLOCK[0] = x_lo;
                 o->BLOCK[1] = x_hi;
-                CommitNumber(o);
+                CommitNumber(tc, o);
                 root.UnlinkNumber(o);
                 return (o);
             }
@@ -80,21 +80,21 @@ namespace Palmtree::Math::Core::Internal
         else
         {
             // _UINT64_T を表現するのに 1 ワードで十分である処理系の場合
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             __UNIT_TYPE x_bit_length = sizeof(x) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)x);
             NUMBER_OBJECT_UINT* o = root.AllocateNumber(x_bit_length);
             o->BLOCK[0] = (__UNIT_TYPE)x;
-            CommitNumber(o);
+            CommitNumber(tc, o);
             root.UnlinkNumber(o);
             return (o);
         }
     }
 
-    PMC_HANDLE_UINT PMC_From_UI(_INT32_T x) noexcept(false)
+    PMC_HANDLE_UINT PMC_From_UI(ThreadContext& tc, _INT32_T x) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) < sizeof(x))
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;PMC_From_I;1");
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         SIGN_T x_sign;
         _UINT32_T x_abs = GET_ABS_32(x, &x_sign);
         NUMBER_OBJECT_UINT* no;
@@ -103,21 +103,21 @@ namespace Palmtree::Math::Core::Internal
         else if (x_sign == 0)
             no = &number_object_uint_zero;
         else
-            no = From_UL_Imp(x_abs);
+            no = From_UL_Imp(tc, x_abs);
         root.HookNumber(no);
         PMC_HANDLE_UINT o = GET_NUMBER_HANDLE(no);
         root.UnlinkNumber(no);
         return (o);
     }
 
-    PMC_HANDLE_UINT PMC_From_UL(_INT64_T x) noexcept(false)
+    PMC_HANDLE_UINT PMC_From_UL(ThreadContext& tc, _INT64_T x) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) * 2 < sizeof(x))
         {
             // 32bit未満のCPUには未対応
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;PMC_From_L;1");
         }
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         SIGN_T x_sign;
         _UINT64_T x_abs = GET_ABS_64(x, &x_sign);
         NUMBER_OBJECT_UINT* no;
@@ -126,49 +126,49 @@ namespace Palmtree::Math::Core::Internal
         else if (x_sign == 0)
             no = &number_object_uint_zero;
         else
-            no = From_UL_Imp(x_abs);
+            no = From_UL_Imp(tc, x_abs);
         root.HookNumber(no);
         PMC_HANDLE_UINT o = GET_NUMBER_HANDLE(no);
         root.UnlinkNumber(no);
         return (o);
     }
 
-    PMC_HANDLE_UINT PMC_From_UI(_UINT32_T x) noexcept(false)
+    PMC_HANDLE_UINT PMC_From_UI(ThreadContext& tc, _UINT32_T x) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) < sizeof(x))
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;PMC_From_UI;1");
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         NUMBER_OBJECT_UINT* no;
         if (x == 0)
             no = &number_object_uint_zero;
         else
-            no = From_UI_Imp(x);
+            no = From_UI_Imp(tc, x);
         root.HookNumber(no);
         PMC_HANDLE_UINT o = GET_NUMBER_HANDLE(no);
         root.UnlinkNumber(no);
         return (o);
     }
 
-    PMC_HANDLE_UINT PMC_From_UL(_UINT64_T x) noexcept(false)
+    PMC_HANDLE_UINT PMC_From_UL(ThreadContext& tc, _UINT64_T x) noexcept(false)
     {
         if (sizeof(__UNIT_TYPE) * 2 < sizeof(x))
         {
             // 32bit未満のCPUには未対応
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;PMC_From_UL;1");
         }
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         NUMBER_OBJECT_UINT* no;
         if (x == 0)
             no = &number_object_uint_zero;
         else
-            no = From_UL_Imp(x);
+            no = From_UL_Imp(tc, x);
         root.HookNumber(no);
         PMC_HANDLE_UINT o = GET_NUMBER_HANDLE(no);
         root.UnlinkNumber(no);
         return (o);
     }
 
-    static NUMBER_OBJECT_UINT* PMC_From_DECIMAL_Imp(DECIMAL x, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_denominator) noexcept(false)
+    static NUMBER_OBJECT_UINT* PMC_From_DECIMAL_Imp(ThreadContext& tc, DECIMAL x, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_denominator) noexcept(false)
     {
         if (x.HI_32 == 0 && x.LO_64 == 0)
         {
@@ -177,7 +177,7 @@ namespace Palmtree::Math::Core::Internal
             return (&number_object_uint_zero);
         }
 
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
 
         *o_sign = x.SIGN != 0 ? SIGN_NEGATIVE : SIGN_POSITIVE;
         __UNIT_TYPE x_bit_length = (sizeof(x.HI_32) + sizeof(x.LO_64)) * 8;
@@ -194,16 +194,16 @@ namespace Palmtree::Math::Core::Internal
 #else
 #error unknown platform
 #endif
-        CommitNumber(o_numerator);
-        *o_denominator = PMC_Pow10_UI_Imp(x.SCALE);
+        CommitNumber(tc, o_numerator);
+        *o_denominator = PMC_Pow10_UI_Imp(tc, x.SCALE);
         root.HookNumber(*o_denominator);
-        NUMBER_OBJECT_UINT* gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(o_numerator, *o_denominator);
+        NUMBER_OBJECT_UINT* gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(tc, o_numerator, *o_denominator);
         root.HookNumber(gcd);
         if (!gcd->IS_ONE)
         {
-            o_numerator = PMC_DivideExactly_UX_UX_Imp(o_numerator, gcd);
+            o_numerator = PMC_DivideExactly_UX_UX_Imp(tc, o_numerator, gcd);
             root.HookNumber(o_numerator);
-            *o_denominator = PMC_DivideExactly_UX_UX_Imp(*o_denominator, gcd);
+            *o_denominator = PMC_DivideExactly_UX_UX_Imp(tc, *o_denominator, gcd);
             root.HookNumber(*o_denominator);
         }
         root.UnlinkNumber(o_numerator);
@@ -211,11 +211,11 @@ namespace Palmtree::Math::Core::Internal
         return (o_numerator);
     }
 
-    PMC_HANDLE_UINT PMC_From_DECIMAL(DECIMAL x, SIGN_T* o_sign, PMC_HANDLE_UINT* o_denominator) noexcept(false)
+    PMC_HANDLE_UINT PMC_From_DECIMAL(ThreadContext& tc, DECIMAL x, SIGN_T* o_sign, PMC_HANDLE_UINT* o_denominator) noexcept(false)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         NUMBER_OBJECT_UINT* no_denominator;
-        NUMBER_OBJECT_UINT* no_numerator = PMC_From_DECIMAL_Imp(x, o_sign, &no_denominator);
+        NUMBER_OBJECT_UINT* no_numerator = PMC_From_DECIMAL_Imp(tc, x, o_sign, &no_denominator);
         root.HookNumber(no_numerator);
         root.HookNumber(no_denominator);
         PMC_HANDLE_UINT o_numerator = GET_NUMBER_HANDLE(no_numerator);
@@ -225,7 +225,7 @@ namespace Palmtree::Math::Core::Internal
         return (o_numerator);
     }
 
-    static NUMBER_OBJECT_UINT* PMC_From_DOUBLE_Imp(double x, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_denominator) noexcept(false)
+    static NUMBER_OBJECT_UINT* PMC_From_DOUBLE_Imp(ThreadContext& tc, double x, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_denominator) noexcept(false)
     {
         _UINT64_T x_raw_bits = *(_UINT64_T*)&x;
         _UINT64_T x_mantissa_part = x_raw_bits & 0x000fffffffffffff;
@@ -268,7 +268,7 @@ namespace Palmtree::Math::Core::Internal
         }
         else
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
 
             // 符号の作成
             *o_sign = x_sign_part != 0 ? SIGN_NEGATIVE : SIGN_POSITIVE;
@@ -326,7 +326,7 @@ namespace Palmtree::Math::Core::Internal
 #else
 #error unknown platform
 #endif
-            CommitNumber(o_numerator);
+            CommitNumber(tc, o_numerator);
             // この時点で分子は奇数になっている
 
             // 分母の作成
@@ -336,12 +336,12 @@ namespace Palmtree::Math::Core::Internal
             // 指数を分子/分母に反映させる
             if (exponent_value > 0)
             {
-                o_numerator = PMC_LeftShift_UX_UI_Imp(o_numerator, exponent_value);
+                o_numerator = PMC_LeftShift_UX_UI_Imp(tc, o_numerator, exponent_value);
                 root.HookNumber(o_numerator);
             }
             else if (exponent_value < 0)
             {
-                *o_denominator = PMC_LeftShift_UX_UI_Imp(*o_denominator, -exponent_value);
+                *o_denominator = PMC_LeftShift_UX_UI_Imp(tc, *o_denominator, -exponent_value);
                 root.HookNumber(*o_denominator);
             }
             else
@@ -357,11 +357,11 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_From_DOUBLE(double x, SIGN_T* o_sign, PMC_HANDLE_UINT* o_denominator) noexcept(false)
+    PMC_HANDLE_UINT PMC_From_DOUBLE(ThreadContext& tc, double x, SIGN_T* o_sign, PMC_HANDLE_UINT* o_denominator) noexcept(false)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         NUMBER_OBJECT_UINT* no_denominator;
-        NUMBER_OBJECT_UINT* no_numerator = PMC_From_DOUBLE_Imp(x, o_sign, &no_denominator);
+        NUMBER_OBJECT_UINT* no_numerator = PMC_From_DOUBLE_Imp(tc, x, o_sign, &no_denominator);
         root.HookNumber(no_numerator);
         root.HookNumber(no_denominator);
         PMC_HANDLE_UINT o_numerator = GET_NUMBER_HANDLE(no_numerator);

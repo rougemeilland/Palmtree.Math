@@ -43,9 +43,9 @@ namespace Palmtree::Math::Core::Internal
             return (state.ParseAsDecimalNumberString());
         }
 
-        static PMC_STATUS_CODE TryParseAsDecimal(const wchar_t* source, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* sign, NUMBER_OBJECT_UINT** o_int_part, NUMBER_OBJECT_UINT** o_frac_part_numerator, NUMBER_OBJECT_UINT** o_frac_part_denominator)
+        static PMC_STATUS_CODE TryParseAsDecimal(ThreadContext& tc, const wchar_t* source, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* sign, NUMBER_OBJECT_UINT** o_int_part, NUMBER_OBJECT_UINT** o_frac_part_numerator, NUMBER_OBJECT_UINT** o_frac_part_denominator)
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
 
             __UNIT_TYPE source_len = lstrlenW(source);
 
@@ -115,7 +115,7 @@ namespace Palmtree::Math::Core::Internal
             }
 
             // 整数部単純数字列から整数部を構築
-            NUMBER_OBJECT_UINT* t_int_part = PMC_AToL_Imp(int_part_buf);
+            NUMBER_OBJECT_UINT* t_int_part = PMC_AToL_Imp(tc, int_part_buf);
             root.HookNumber(t_int_part);
 
             // 小数部の分子・分母を構築
@@ -133,11 +133,11 @@ namespace Palmtree::Math::Core::Internal
             else
             {
                 // 小数部単純数字列から小数部の分子を構築
-                t_frac_part_numerator = PMC_AToL_Imp(frac_part_ptr);
+                t_frac_part_numerator = PMC_AToL_Imp(tc, frac_part_ptr);
                 root.HookNumber(t_frac_part_numerator);
 
                 // 小数部単純数字列の桁数から小数部の母数を構築
-                t_frac_part_denominator = PMC_Pow10_UI_Imp(lstrlenW(frac_part_ptr));
+                t_frac_part_denominator = PMC_Pow10_UI_Imp(tc, lstrlenW(frac_part_ptr));
                 root.HookNumber(t_frac_part_denominator);
             }
 
@@ -147,24 +147,24 @@ namespace Palmtree::Math::Core::Internal
                 _UINT64_T exponent_value = PMC_AToI(exp_part_buf);
                 if (exponent_value > 0xffffffffU)
                     throw OverflowException(L"大きすぎるあるいは小さすぎる数値を変換しようとしました。");
-                NUMBER_OBJECT_UINT* exponent_factor = PMC_Pow10_UI_Imp((_UINT32_T)exponent_value);
+                NUMBER_OBJECT_UINT* exponent_factor = PMC_Pow10_UI_Imp(tc, (_UINT32_T)exponent_value);
                 if (exponent_sign > 0)
                 {
                     // 指数が正の場合
 
                     // 整数部と小数部を加算した分子と分母を求める
-                    NUMBER_OBJECT_UINT* n = PMC_Multiply_UX_UX_Imp(t_int_part, t_frac_part_denominator);
+                    NUMBER_OBJECT_UINT* n = PMC_Multiply_UX_UX_Imp(tc, t_int_part, t_frac_part_denominator);
                     root.HookNumber(n);
-                    n = PMC_Add_UX_UX_Imp(n, t_frac_part_numerator);
+                    n = PMC_Add_UX_UX_Imp(tc, n, t_frac_part_numerator);
                     root.HookNumber(n);
                     NUMBER_OBJECT_UINT* d = t_frac_part_denominator;
 
                     // 分子に指数を反映させる
-                    n = PMC_Multiply_UX_UX_Imp(n, exponent_factor);
+                    n = PMC_Multiply_UX_UX_Imp(tc, n, exponent_factor);
                     root.HookNumber(n);
 
                     // 再び整数部と小数部に分ける
-                    t_frac_part_numerator = PMC_DivRem_UX_UX_Imp(n, d, &t_int_part);
+                    t_frac_part_numerator = PMC_DivRem_UX_UX_Imp(tc, n, d, &t_int_part);
                     t_frac_part_denominator = d;
                     root.HookNumber(t_int_part);
                     root.HookNumber(t_frac_part_numerator);
@@ -174,18 +174,18 @@ namespace Palmtree::Math::Core::Internal
                     // 指数が負の場合
 
                     // 整数部と小数部を加算した分子と分母を求める
-                    NUMBER_OBJECT_UINT* n = PMC_Multiply_UX_UX_Imp(t_int_part, t_frac_part_denominator);
+                    NUMBER_OBJECT_UINT* n = PMC_Multiply_UX_UX_Imp(tc, t_int_part, t_frac_part_denominator);
                     root.HookNumber(n);
-                    n = PMC_Add_UX_UX_Imp(n, t_frac_part_numerator);
+                    n = PMC_Add_UX_UX_Imp(tc, n, t_frac_part_numerator);
                     root.HookNumber(n);
                     NUMBER_OBJECT_UINT* d = t_frac_part_denominator;
 
                     // 分子に指数を反映させる
-                    d = PMC_Multiply_UX_UX_Imp(d, exponent_factor);
+                    d = PMC_Multiply_UX_UX_Imp(tc, d, exponent_factor);
                     root.HookNumber(d);
 
                     // 再び整数部と小数部に分ける
-                    t_frac_part_numerator = PMC_DivRem_UX_UX_Imp(n, d, &t_int_part);
+                    t_frac_part_numerator = PMC_DivRem_UX_UX_Imp(tc, n, d, &t_int_part);
                     t_frac_part_denominator = d;
                     root.HookNumber(t_int_part);
                     root.HookNumber(t_frac_part_numerator);
@@ -199,13 +199,13 @@ namespace Palmtree::Math::Core::Internal
             }
 
             // o を約分する
-            NUMBER_OBJECT_UINT* o_gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(t_frac_part_numerator, t_frac_part_denominator);
+            NUMBER_OBJECT_UINT* o_gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(tc, t_frac_part_numerator, t_frac_part_denominator);
             root.HookNumber(o_gcd);
             if (!o_gcd->IS_ONE)
             {
-                t_frac_part_numerator = PMC_DivideExactly_UX_UX_Imp(t_frac_part_numerator, o_gcd);
+                t_frac_part_numerator = PMC_DivideExactly_UX_UX_Imp(tc, t_frac_part_numerator, o_gcd);
                 root.HookNumber(t_frac_part_numerator);
-                t_frac_part_denominator = PMC_DivideExactly_UX_UX_Imp(t_frac_part_denominator, o_gcd);
+                t_frac_part_denominator = PMC_DivideExactly_UX_UX_Imp(tc, t_frac_part_denominator, o_gcd);
                 root.HookNumber(t_frac_part_denominator);
             }
 
@@ -306,9 +306,9 @@ namespace Palmtree::Math::Core::Internal
             return (state.ParseAsHexNumberString());
         }
 
-        static PMC_STATUS_CODE TryParseAsHexaDecimal(const wchar_t* source, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_abs)
+        static PMC_STATUS_CODE TryParseAsHexaDecimal(ThreadContext& tc, const wchar_t* source, _UINT32_T number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_abs)
         {
-            ResourceHolderUINT root;
+            ResourceHolderUINT root(tc);
             __UNIT_TYPE source_len = lstrlenW(source);
             size_t int_part_buf_size = source_len + 1;
             wchar_t* int_part_buf = root.AllocateString(source_len + 1);
@@ -369,7 +369,7 @@ namespace Palmtree::Math::Core::Internal
                     --count;
                 }
             }
-            CommitNumber(*o_abs);
+            CommitNumber(tc, *o_abs);
             if ((*o_abs)->IS_ZERO)
             {
                 root.DeallocateNumber(*o_abs);
@@ -382,9 +382,9 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static PMC_STATUS_CODE PMC_TryParse_Imp(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_int_part, NUMBER_OBJECT_UINT** o_frac_part_numerator, NUMBER_OBJECT_UINT** o_frac_part_denominator) noexcept(false)
+    static PMC_STATUS_CODE PMC_TryParse_Imp(ThreadContext& tc, const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, NUMBER_OBJECT_UINT** o_int_part, NUMBER_OBJECT_UINT** o_frac_part_numerator, NUMBER_OBJECT_UINT** o_frac_part_denominator) noexcept(false)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         if (number_styles & PMC_NUMBER_STYLE_ALLOW_HEX_SPECIFIER)
         {
             // 16進数の場合
@@ -396,7 +396,7 @@ namespace Palmtree::Math::Core::Internal
             if (number_styles & ~mask)
                 throw ArgumentException(L"引数 number_styles に許可されていない組み合わせのフラグが指定されました。");
 
-            PMC_STATUS_CODE result = HexaDecimalParser::TryParseAsHexaDecimal(source, number_styles, format_option, o_sign, o_int_part);
+            PMC_STATUS_CODE result = HexaDecimalParser::TryParseAsHexaDecimal(tc, source, number_styles, format_option, o_sign, o_int_part);
             if (result == PMC_STATUS_OK)
             {
                 *o_frac_part_numerator = &number_object_uint_zero;
@@ -407,18 +407,18 @@ namespace Palmtree::Math::Core::Internal
         else
         {
             // 10進数の場合
-            return (DecimalParser::TryParseAsDecimal(source, number_styles, format_option, o_sign, o_int_part, o_frac_part_numerator, o_frac_part_denominator));
+            return (DecimalParser::TryParseAsDecimal(tc, source, number_styles, format_option, o_sign, o_int_part, o_frac_part_numerator, o_frac_part_denominator));
         }
     }
 
-    PMC_STATUS_CODE PMC_TryParse_UINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_UINT* o) noexcept(false)
+    PMC_STATUS_CODE PMC_TryParse_UINT(ThreadContext& tc, const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_UINT* o) noexcept(false)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         SIGN_T o_sign;
         NUMBER_OBJECT_UINT* o_int_part;
         NUMBER_OBJECT_UINT* o_frac_part_numerator;
         NUMBER_OBJECT_UINT* o_frac_part_denominator;
-        PMC_STATUS_CODE result = PMC_TryParse_Imp(source, number_styles, format_option, &o_sign, &o_int_part, &o_frac_part_numerator, &o_frac_part_denominator);
+        PMC_STATUS_CODE result = PMC_TryParse_Imp(tc, source, number_styles, format_option, &o_sign, &o_int_part, &o_frac_part_numerator, &o_frac_part_denominator);
         if (result != PMC_STATUS_OK)
             return (result);
         root.HookNumber(o_int_part);
@@ -433,13 +433,13 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_STATUS_OK);
     }
 
-    PMC_STATUS_CODE PMC_TryParse_SINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, PMC_HANDLE_UINT* o_abs) noexcept(false)
+    PMC_STATUS_CODE PMC_TryParse_SINT(ThreadContext& tc, const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, PMC_HANDLE_UINT* o_abs) noexcept(false)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         NUMBER_OBJECT_UINT* o_int_part;
         NUMBER_OBJECT_UINT* o_frac_part_numerator;
         NUMBER_OBJECT_UINT* o_frac_part_denominator;
-        PMC_STATUS_CODE result = PMC_TryParse_Imp(source, number_styles | PMC_NUMBER_STYLE_ALLOW_SIGNED_INTEGER, format_option, o_sign, &o_int_part, &o_frac_part_numerator, &o_frac_part_denominator);
+        PMC_STATUS_CODE result = PMC_TryParse_Imp(tc, source, number_styles | PMC_NUMBER_STYLE_ALLOW_SIGNED_INTEGER, format_option, o_sign, &o_int_part, &o_frac_part_numerator, &o_frac_part_denominator);
         if (result != PMC_STATUS_OK)
             return (result);
         root.HookNumber(o_int_part);
@@ -452,14 +452,14 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_STATUS_OK);
     }
 
-    PMC_STATUS_CODE PMC_TryParse_RTNL(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs, PMC_HANDLE_UINT* o_denominator) noexcept(false)
+    PMC_STATUS_CODE PMC_TryParse_RTNL(ThreadContext& tc, const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs, PMC_HANDLE_UINT* o_denominator) noexcept(false)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(tc);
         SIGN_T o_sign;
         NUMBER_OBJECT_UINT* o_int_part;
         NUMBER_OBJECT_UINT* o_frac_part_numerator;
         NUMBER_OBJECT_UINT* o_frac_part_denominator;
-        PMC_STATUS_CODE result = PMC_TryParse_Imp(source, number_styles | PMC_NUMBER_STYLE_ALLOW_SIGNED_INTEGER, format_option, &o_sign, &o_int_part, &o_frac_part_numerator, &o_frac_part_denominator);
+        PMC_STATUS_CODE result = PMC_TryParse_Imp(tc, source, number_styles | PMC_NUMBER_STYLE_ALLOW_SIGNED_INTEGER, format_option, &o_sign, &o_int_part, &o_frac_part_numerator, &o_frac_part_denominator);
         if (result != PMC_STATUS_OK)
             return (result);
         root.HookNumber(o_int_part);
@@ -467,22 +467,22 @@ namespace Palmtree::Math::Core::Internal
         root.HookNumber(o_frac_part_denominator);
 
         // 分子と分母を計算する
-        NUMBER_OBJECT_UINT* no_numerator_abs = PMC_Multiply_UX_UX_Imp(o_int_part, o_frac_part_denominator);
+        NUMBER_OBJECT_UINT* no_numerator_abs = PMC_Multiply_UX_UX_Imp(tc, o_int_part, o_frac_part_denominator);
         root.HookNumber(no_numerator_abs);
-        no_numerator_abs = PMC_Add_UX_UX_Imp(no_numerator_abs, o_frac_part_numerator);
+        no_numerator_abs = PMC_Add_UX_UX_Imp(tc, no_numerator_abs, o_frac_part_numerator);
         root.HookNumber(no_numerator_abs);
         NUMBER_OBJECT_UINT* no_denominator = o_frac_part_denominator;
 
         // 分子と分母の GCD を計算する
-        NUMBER_OBJECT_UINT* gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(no_numerator_abs, no_denominator);
+        NUMBER_OBJECT_UINT* gcd = PMC_GreatestCommonDivisor_UX_UX_Imp(tc, no_numerator_abs, no_denominator);
         root.HookNumber(gcd);
         if (!gcd->IS_ONE)
         {
             // GCDが 1 ではない(==分子と分母が既約ではない)場合、分子と分母をそれぞれ GCD で割る
 
-            no_numerator_abs = PMC_DivideExactly_UX_UX_Imp(no_numerator_abs, gcd);
+            no_numerator_abs = PMC_DivideExactly_UX_UX_Imp(tc, no_numerator_abs, gcd);
             root.HookNumber(no_numerator_abs);
-            no_denominator = PMC_DivideExactly_UX_UX_Imp(no_denominator, gcd);
+            no_denominator = PMC_DivideExactly_UX_UX_Imp(tc, no_denominator, gcd);
             root.HookNumber(no_denominator);
         }
         *o_numerator_sign = o_sign;

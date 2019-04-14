@@ -31,8 +31,8 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    ToStringFormatterTypeP::ToStringFormatterTypeP(int precision, const PMC_NUMBER_FORMAT_INFO * number_format_info)
-        : ToStringFormatter(L'P', precision, number_format_info)
+    ToStringFormatterTypeP::ToStringFormatterTypeP(ThreadContext& tc, int precision, const PMC_NUMBER_FORMAT_INFO * number_format_info)
+        : ToStringFormatter(tc, L'P', precision, number_format_info)
     {
     }
 
@@ -53,18 +53,18 @@ namespace Palmtree::Math::Core::Internal
 
     void ToStringFormatterTypeP::RoundValue(NUMBER_OBJECT_UINT * x_numerator, NUMBER_OBJECT_UINT * x_denominator, NUMBER_OBJECT_UINT ** r_numerator, NUMBER_OBJECT_UINT ** r_denominator, _INT32_T * exp)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(_tc);
         *r_numerator = x_numerator;
         *r_denominator = x_denominator;
 
         // åÖÇä€ÇﬂÇÈ
-        *r_numerator = PMC_Round_R_Imp(*r_numerator, *r_denominator, _precision, PMC_MIDPOINT_ROUNDING_HALF_EVEN, r_denominator);
+        *r_numerator = PMC_Round_R_Imp(_tc, *r_numerator, *r_denominator, _precision, PMC_MIDPOINT_ROUNDING_HALF_EVEN, r_denominator);
         root.HookNumber(*r_numerator);
         root.HookNumber(*r_denominator);
         *exp = 0;
 
         // x Ç 100 î{Ç∑ÇÈ
-        *r_numerator = PMC_Multiply_UX_UI_Imp(*r_numerator, 100U);
+        *r_numerator = PMC_Multiply_UX_UI_Imp(_tc, *r_numerator, 100U);
         //root.HookNumber(*r_numerator); // íºå„Ç… unlink Ç™Ç†ÇÈÇÃÇ≈ÅAÇ∆Ç‡Ç…è»ó™Ç∑ÇÈÅB
 
         //root.UnlinkNumber(*r_numerator);
@@ -141,7 +141,7 @@ namespace Palmtree::Math::Core::Internal
 
     void ToStringFormatterTypeP::FormatNumberSequence(const wchar_t * int_part, const wchar_t * frac_part, _INT32_T exp, StringWriter& writer)
     {
-        ResourceHolderUINT root;
+        ResourceHolderUINT root(_tc);
         ReverseStringReader r_reader(int_part);
         size_t work_buf_len = lstrlenW(int_part) * 2 + 1 + _precision + 1;
         wchar_t* work_buf = root.AllocateString(work_buf_len);

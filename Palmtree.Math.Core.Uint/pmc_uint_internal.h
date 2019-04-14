@@ -40,6 +40,8 @@ namespace Palmtree::Math::Core::Internal
 {
 
 #pragma region 型の定義
+    class ThreadContext;
+
     typedef struct __tag_NUMBER_OBJECT_UINT
     {
         __UNIT_TYPE HASH_CODE;              // 数値のハッシュコード。
@@ -122,30 +124,30 @@ namespace Palmtree::Math::Core::Internal
     extern void __DeallocateHeap(void* buffer) noexcept(true);
 
     // 与えられたビット数のメモリを獲得するのに十分な __UNIT_TYPE 配列を獲得する。
-    extern __UNIT_TYPE* __AllocateBlock(size_t bits, __UNIT_TYPE* allocated_block_words, __UNIT_TYPE* code);
+    extern __UNIT_TYPE* __AllocateBlock(ThreadContext& tc, size_t bits, __UNIT_TYPE* allocated_block_words, __UNIT_TYPE* code);
 
     // AllocateBlock によって獲得されたメモリ領域を解放する。
-    extern void __DeallocateBlock(__UNIT_TYPE* buffer, __UNIT_TYPE buffer_words, __UNIT_TYPE check_code);
+    extern void __DeallocateBlock(ThreadContext& tc, __UNIT_TYPE* buffer, __UNIT_TYPE buffer_words, __UNIT_TYPE check_code);
 
     // 与えられた __UNIT_TYPE の配列がオーバーランを引き起こしていないかどうか検査する。
     extern void __CheckBlock(__UNIT_TYPE* buffer, __UNIT_TYPE count, __UNIT_TYPE code);
 
-    extern void __AttatchNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count);
+    extern void __AttatchNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count);
 
-    extern NUMBER_OBJECT_UINT* __AllocateNumber(__UNIT_TYPE bit_count);
+    extern NUMBER_OBJECT_UINT* __AllocateNumber(ThreadContext& tc, __UNIT_TYPE bit_count);
 
-    extern void __DetatchNumber(NUMBER_OBJECT_UINT* p);
+    extern void __DetatchNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p);
 
-    extern void __DeallocateNumber(NUMBER_OBJECT_UINT* p);
+    extern void __DeallocateNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p);
 
     // 与えられた NUMBER_OBJECT_UINT 構造体へのポインタが正しい構造体を指しているかどうか検査する。(主としてメモリ破壊の観点で)
     extern void __CheckNumber(NUMBER_OBJECT_UINT* p) noexcept(false);
 
     // p->BLOCK に格納された数値を確定します。
-    extern void CommitNumber(NUMBER_OBJECT_UINT* p) noexcept(false);
+    extern void CommitNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p) noexcept(false);
 
     // 与えられた NUMBER_OBJECT_UINT 構造体を複製する。p が指す NUMBER_OBJECT_UINT 構造体は 0 値であってはならない。
-    extern NUMBER_OBJECT_UINT* DuplicateNumber(NUMBER_OBJECT_UINT* p);
+    extern NUMBER_OBJECT_UINT* DuplicateNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p);
 
 #pragma endregion
 
@@ -180,67 +182,67 @@ namespace Palmtree::Math::Core::Internal
 #pragma region NUMBER_OBJECT_UINT* ベースの関数
 
     // 符号なし 32bit 整数 x から NUMBER_OBJECT_UINT 構造体を構築し、そのポインタを o が指す領域に格納して返す。x は 0 であってはならない。
-    extern NUMBER_OBJECT_UINT* From_UI_Imp(_UINT32_T x) noexcept(false);
+    extern NUMBER_OBJECT_UINT* From_UI_Imp(ThreadContext& tc, _UINT32_T x) noexcept(false);
 
     // 符号なし 64bit 整数 x から NUMBER_OBJECT_UINT 構造体を構築し、そのポインタを o が指す領域に格納して返す。x は 0 であってはならない。
-    extern NUMBER_OBJECT_UINT* From_UL_Imp(_UINT64_T x) noexcept(false);
+    extern NUMBER_OBJECT_UINT* From_UL_Imp(ThreadContext& tc, _UINT64_T x) noexcept(false);
 
     // 多倍長整数の加算を行う。
-    extern NUMBER_OBJECT_UINT* PMC_Add_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v);
+    extern NUMBER_OBJECT_UINT* PMC_Add_UX_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v);
 
     // 多倍長整数をインクリメントする。
-    extern NUMBER_OBJECT_UINT* PMC_Increment_UX_Imp(NUMBER_OBJECT_UINT* x);
+    extern NUMBER_OBJECT_UINT* PMC_Increment_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* x);
 
     // 多倍長整数と整数の乗算を行う。
-    extern NUMBER_OBJECT_UINT* PMC_Multiply_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v);
+    extern NUMBER_OBJECT_UINT* PMC_Multiply_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT32_T v);
 
     // 多倍長整数と整数の乗算を行う。
-    extern NUMBER_OBJECT_UINT* PMC_Multiply_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v);
+    extern NUMBER_OBJECT_UINT* PMC_Multiply_UX_UL_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT64_T v);
 
     // 多倍長整数と多倍長整数の乗算を行う。
-    extern NUMBER_OBJECT_UINT* PMC_Multiply_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v);
+    extern NUMBER_OBJECT_UINT* PMC_Multiply_UX_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v);
 
     // 多倍長整数と整数の除算を行う。
-    extern _UINT32_T PMC_DivRem_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v, NUMBER_OBJECT_UINT** q);
+    extern _UINT32_T PMC_DivRem_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT32_T v, NUMBER_OBJECT_UINT** q);
 
     // 多倍長整数と整数の除算を行う。
-    extern _UINT64_T PMC_DivRem_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v, NUMBER_OBJECT_UINT** q);
+    extern _UINT64_T PMC_DivRem_UX_UL_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT64_T v, NUMBER_OBJECT_UINT** q);
 
     // 多倍長整数と多倍長整数の除算を行う。
-    extern NUMBER_OBJECT_UINT* PMC_DivRem_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT** q);
+    extern NUMBER_OBJECT_UINT* PMC_DivRem_UX_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v, NUMBER_OBJECT_UINT** q);
 
     // 多倍長整数と多倍長整数の除算を行う。
-    extern NUMBER_OBJECT_UINT* PMC_DivideExactly_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v) noexcept(false);
+    extern NUMBER_OBJECT_UINT* PMC_DivideExactly_UX_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v) noexcept(false);
 
     // 多倍長整数の大小比較を行う。
     SIGN_T PMC_Compare_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v);
 
     // 多倍長整数を左シフトする。
-    NUMBER_OBJECT_UINT* PMC_LeftShift_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T n);
+    NUMBER_OBJECT_UINT* PMC_LeftShift_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT32_T n);
 
     // 多倍長整数を右シフトする。
-    NUMBER_OBJECT_UINT* PMC_RightShift_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T n);
+    NUMBER_OBJECT_UINT* PMC_RightShift_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT32_T n);
 
     // 多倍長整数と多倍長整数の最大公約数を計算する。
-    extern NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_UX_UX_Imp(NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v);
+    extern NUMBER_OBJECT_UINT* PMC_GreatestCommonDivisor_UX_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v);
 
     // 多倍長整数のべき乗を計算する。
-    extern NUMBER_OBJECT_UINT* PMC_Pow_UX_UI_Imp(NUMBER_OBJECT_UINT* v, _UINT32_T e) noexcept(false);
+    extern NUMBER_OBJECT_UINT* PMC_Pow_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* v, _UINT32_T e) noexcept(false);
 
     // 10 のべき乗を計算する。
-    extern NUMBER_OBJECT_UINT* PMC_Pow10_UI_Imp(_UINT32_T n);
+    extern NUMBER_OBJECT_UINT* PMC_Pow10_UI_Imp(ThreadContext& tc, _UINT32_T n);
 
     // mode で指定された方法により、符号が省略された有理数 x の小数以下を decimals 桁に丸める。
-    extern NUMBER_OBJECT_UINT* PMC_Round_R_Imp(NUMBER_OBJECT_UINT* x_numerator_abs, NUMBER_OBJECT_UINT* x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, NUMBER_OBJECT_UINT** r_denominator);
+    extern NUMBER_OBJECT_UINT* PMC_Round_R_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* x_numerator_abs, NUMBER_OBJECT_UINT* x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, NUMBER_OBJECT_UINT** r_denominator);
     
     // mode で指定された方法により、有理数 x の小数以下を decimals 桁に丸める。
-    extern NUMBER_OBJECT_UINT* PMC_Round_R_Imp(SIGN_T x_numerator_sign, NUMBER_OBJECT_UINT* x_numerator_abs, NUMBER_OBJECT_UINT* x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, NUMBER_OBJECT_UINT** r_denominator);
+    extern NUMBER_OBJECT_UINT* PMC_Round_R_Imp(ThreadContext& tc, SIGN_T x_numerator_sign, NUMBER_OBJECT_UINT* x_numerator_abs, NUMBER_OBJECT_UINT* x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, NUMBER_OBJECT_UINT** r_denominator);
 
     // 常用対数の整数部を計算する
-    extern _UINT32_T PMC_FloorLog10_UX_Imp(NUMBER_OBJECT_UINT* v);
+    extern _UINT32_T PMC_FloorLog10_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* v);
 
     // 常用対数の整数部を計算する
-    extern _INT32_T PMC_FloorLog10_R_Imp(NUMBER_OBJECT_UINT* v_numerator, NUMBER_OBJECT_UINT* v_denominator);
+    extern _INT32_T PMC_FloorLog10_R_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* v_numerator, NUMBER_OBJECT_UINT* v_denominator);
 #pragma endregion
 
 
@@ -320,22 +322,25 @@ namespace Palmtree::Math::Core::Internal
 
     extern _UINT64_T PMC_GetPerformanceCounter(const wchar_t* key);
 
-    extern PMC_HANDLE_UINT PMC_From_UI(_INT32_T x) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_From_UL(_INT64_T x) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_From_UI(_UINT32_T x) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_From_UL(_UINT64_T x) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_From_DECIMAL(DECIMAL x, SIGN_T* o_sign, PMC_HANDLE_UINT* o_denominator) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_From_DOUBLE(double x, SIGN_T* o_sign, PMC_HANDLE_UINT* o_denominator) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_From_UI(ThreadContext& tc, _INT32_T x) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_From_UL(ThreadContext& tc, _INT64_T x) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_From_UI(ThreadContext& tc, _UINT32_T x) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_From_UL(ThreadContext& tc, _UINT64_T x) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_From_DECIMAL(ThreadContext& tc, DECIMAL x, SIGN_T* o_sign, PMC_HANDLE_UINT* o_denominator) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_From_DOUBLE(ThreadContext& tc, double x, SIGN_T* o_sign, PMC_HANDLE_UINT* o_denominator) noexcept(false);
 
     extern void PMC_CheckHandle_UX(PMC_HANDLE_UINT p);
-    extern void PMC_Dispose_UX(PMC_HANDLE_UINT p);
+
+    extern void PMC_Dispose_UX(ThreadContext& tc, PMC_HANDLE_UINT p);
+
+    extern _INT32_T PMC_GetBufferCount_UX(PMC_HANDLE_UINT p) noexcept(false);
 
     extern PMC_HANDLE_UINT PMC_GetConstantValue_UI(PMC_CONSTANT_VALUE_CODE type) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_FromByteArray_UINT(const unsigned char* buffer, size_t count) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_FromByteArray_UINT(ThreadContext& tc, const unsigned char* buffer, size_t count) noexcept(false);
     extern size_t PMC_ToByteArray_UX(PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_Clone_UX(PMC_HANDLE_UINT x) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Clone_UX(ThreadContext& tc, PMC_HANDLE_UINT x) noexcept(false);
 
     extern _UINT64_T PMC_GetAllocatedMemorySize();
 
@@ -343,70 +348,70 @@ namespace Palmtree::Math::Core::Internal
     extern _INT64_T PMC_ToInt64_UX(PMC_HANDLE_UINT p) noexcept(false);
     extern _UINT32_T PMC_ToUInt32_UX(PMC_HANDLE_UINT p) noexcept(false);
     extern _UINT64_T PMC_ToUInt64_UX(PMC_HANDLE_UINT p) noexcept(false);
-    extern DECIMAL PMC_ToDecimal_R(SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false);
-    extern double PMC_ToDouble_R(SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false);
+    extern DECIMAL PMC_ToDecimal_R(ThreadContext& tc, SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false);
+    extern double PMC_ToDouble_R(ThreadContext& tc, SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false);
 
     extern void PMC_InitializeNumberFormatInfo(PMC_NUMBER_FORMAT_INFO* info);
-    extern size_t PMC_ToString_UX(PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
-    extern PMC_STATUS_CODE PMC_TryParse_UINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_UINT* o) noexcept(false);
+    extern size_t PMC_ToString_UX(ThreadContext& tc, PMC_HANDLE_UINT x, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size) noexcept(false);
+    extern PMC_STATUS_CODE PMC_TryParse_UINT(ThreadContext& tc, const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, PMC_HANDLE_UINT* o) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_Add_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_Add_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_Add_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_Add_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_Add_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Add_UI_UX(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Add_UL_UX(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Add_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Add_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Add_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
     extern _UINT32_T PMC_Subtruct_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
     extern _UINT64_T PMC_Subtruct_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_Subtruct_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_Subtruct_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_Subtruct_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Subtruct_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Subtruct_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Subtruct_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_Increment_UX(PMC_HANDLE_UINT x) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Increment_UX(ThreadContext& tc, PMC_HANDLE_UINT x) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_Decrement_UX(PMC_HANDLE_UINT x) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Decrement_UX(ThreadContext& tc, PMC_HANDLE_UINT x) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_Multiply_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_Multiply_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_Multiply_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_Multiply_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_Multiply_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Multiply_UI_UX(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Multiply_UL_UX(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Multiply_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Multiply_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Multiply_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
     extern _UINT32_T PMC_DivRem_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v, _UINT32_T* q) noexcept(false);
     extern _UINT64_T PMC_DivRem_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v, _UINT64_T* q) noexcept(false);
-    extern _UINT32_T PMC_DivRem_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v, PMC_HANDLE_UINT* q) noexcept(false);
-    extern _UINT64_T PMC_DivRem_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v, PMC_HANDLE_UINT* q) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_DivRem_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* q) noexcept(false);
+    extern _UINT32_T PMC_DivRem_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v, PMC_HANDLE_UINT* q) noexcept(false);
+    extern _UINT64_T PMC_DivRem_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v, PMC_HANDLE_UINT* q) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_DivRem_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* q) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_DivideExactly_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_DivideExactly_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_RightShift_UX_I(PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_RightShift_UX_I(ThreadContext& tc, PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_LeftShift_UX_I(PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_LeftShift_UX_I(ThreadContext& tc, PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);
 
     extern _UINT32_T PMC_BitwiseAnd_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
     extern _UINT64_T PMC_BitwiseAnd_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
     extern _UINT32_T PMC_BitwiseAnd_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
     extern _UINT64_T PMC_BitwiseAnd_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_BitwiseAnd_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_BitwiseAnd_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_UI_UX(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_UL_UX(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
     extern _UINT32_T PMC_OneCompliment_And_BitwiseAnd_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
     extern _UINT64_T PMC_OneCompliment_And_BitwiseAnd_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_OneCompliment_And_BitwiseAnd_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_BitwiseOr_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_BitwiseOr_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_BitwiseOr_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_BitwiseOr_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_BitwiseOr_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_BitwiseOr_UI_UX(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_BitwiseOr_UL_UX(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_BitwiseOr_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_BitwiseOr_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_BitwiseOr_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_ExclusiveOr_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_ExclusiveOr_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_ExclusiveOr_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_ExclusiveOr_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_ExclusiveOr_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_ExclusiveOr_UI_UX(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_ExclusiveOr_UL_UX(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_ExclusiveOr_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_ExclusiveOr_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_ExclusiveOr_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
     extern SIGN_T PMC_Compare_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
     extern SIGN_T PMC_Compare_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
@@ -420,37 +425,37 @@ namespace Palmtree::Math::Core::Internal
     extern bool PMC_Equals_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
     extern bool PMC_Equals_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UI_UX(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UL_UX(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_GreatestCommonDivisor_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_Pow_UI_UI(_UINT32_T x, _UINT32_T n) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_Pow_UL_UI(_UINT64_T x, _UINT32_T n) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_Pow_UX_UI(PMC_HANDLE_UINT x, _UINT32_T n) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Pow_UI_UI(ThreadContext& tc, _UINT32_T x, _UINT32_T n) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Pow_UL_UI(ThreadContext& tc, _UINT64_T x, _UINT32_T n) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Pow_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT x, _UINT32_T n) noexcept(false);
 
-    extern PMC_HANDLE_UINT PMC_Pow10_UI(_UINT32_T n);
+    extern PMC_HANDLE_UINT PMC_Pow10_UI(ThreadContext& tc, _UINT32_T n);
         
-    extern PMC_HANDLE_UINT PMC_ModPow_UX_UX_UX(PMC_HANDLE_UINT v, PMC_HANDLE_UINT e, PMC_HANDLE_UINT m) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_ModPow_UX_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT v, PMC_HANDLE_UINT e, PMC_HANDLE_UINT m) noexcept(false);
 
-    extern _UINT32_T PMC_FloorLog10_UX(PMC_HANDLE_UINT v);
-    extern _INT32_T PMC_FloorLog10_R(PMC_HANDLE_UINT v_numerator, PMC_HANDLE_UINT v_denominator);
+    extern _UINT32_T PMC_FloorLog10_UX(ThreadContext& tc, PMC_HANDLE_UINT v);
+    extern _INT32_T PMC_FloorLog10_R(ThreadContext& tc, PMC_HANDLE_UINT v_numerator, PMC_HANDLE_UINT v_denominator);
 
-    extern PMC_HANDLE_UINT PMC_RoundZero_R(PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode);
-    extern PMC_HANDLE_UINT PMC_RoundZero_R(SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode);
+    extern PMC_HANDLE_UINT PMC_RoundZero_R(ThreadContext& tc, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode);
+    extern PMC_HANDLE_UINT PMC_RoundZero_R(ThreadContext& tc, SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode);
 
-    extern PMC_HANDLE_UINT PMC_Round_R(PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
-    extern PMC_HANDLE_UINT PMC_Round_R(SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
+    extern PMC_HANDLE_UINT PMC_Round_R(ThreadContext& tc, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
+    extern PMC_HANDLE_UINT PMC_Round_R(ThreadContext& tc, SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
 
-    extern PMC_HANDLE_UINT PMC_FromByteArray_SINT(const unsigned char* buffer, size_t count, SIGN_T* o_sign) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_FromByteArray_RTNL(const unsigned char* buffer, size_t count, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_FromByteArray_SINT(ThreadContext& tc, const unsigned char* buffer, size_t count, SIGN_T* o_sign) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_FromByteArray_RTNL(ThreadContext& tc, const unsigned char* buffer, size_t count, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs) noexcept(false);
     extern size_t PMC_ToByteArray_X(SIGN_T p_sign, PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
     extern size_t PMC_ToByteArray_R(SIGN_T p_numerator_sign, PMC_HANDLE_UINT p_numerator_abs, PMC_HANDLE_UINT p_denominator, unsigned char* buffer, size_t buffer_size) noexcept(false);
-    extern PMC_STATUS_CODE PMC_TryParse_SINT(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, PMC_HANDLE_UINT* o_abs) noexcept(false);
-    extern PMC_STATUS_CODE PMC_TryParse_RTNL(const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs, PMC_HANDLE_UINT* o_denominator) noexcept(false);
-    extern size_t PMC_ToString_X(SIGN_T x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
-    extern size_t PMC_ToString_R(SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
+    extern PMC_STATUS_CODE PMC_TryParse_SINT(ThreadContext& tc, const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_sign, PMC_HANDLE_UINT* o_abs) noexcept(false);
+    extern PMC_STATUS_CODE PMC_TryParse_RTNL(ThreadContext& tc, const wchar_t* source, PMC_NUMBER_STYLE_CODE number_styles, const PMC_NUMBER_FORMAT_INFO* format_option, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs, PMC_HANDLE_UINT* o_denominator) noexcept(false);
+    extern size_t PMC_ToString_X(ThreadContext& tc, SIGN_T x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
+    extern size_t PMC_ToString_R(ThreadContext& tc, SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
 
     extern void PMC_InternalTest();
 #pragma endregion
@@ -525,7 +530,7 @@ namespace Palmtree::Math::Core::Internal
 
 }
 
-#endif /* PMC_UINT_INTERNAL_H */
+#endif
 
 
 /*

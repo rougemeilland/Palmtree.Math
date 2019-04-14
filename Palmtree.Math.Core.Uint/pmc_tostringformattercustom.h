@@ -55,7 +55,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         FormatToken(const FormatToken& p);
     public:
         virtual ~FormatToken();
-        void Remove();
+        void Remove(ThreadContext& tc);
         virtual SectionToken* ToSection();
         virtual LiteralToken* ToLiteral();
         virtual IntPartPlaceHolderToken* ToIntPartPlaceHolder();
@@ -71,6 +71,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         : public FormatToken
     {
     private:
+        ThreadContext& _tc;
         FormatToken _section_root;
         int _10_factor;
         bool _enabled_grouping;
@@ -83,7 +84,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         DecimalSeparaterToken* _decimal_point_separater;
 
     public:
-        SectionToken();
+        SectionToken(ThreadContext& tc);
         virtual ~SectionToken();
         virtual SectionToken* ToSection() override;
         void Parse(bool exists_multi_section);
@@ -103,7 +104,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
     private:
         void WriteZeroValue(const PMC_NUMBER_FORMAT_INFO& format_option, StringWriter& writer);
         void ApplyPlaceHolder(const PMC_NUMBER_FORMAT_INFO & format_option, const wchar_t* t_int_buf_writer, const wchar_t* frac_buf_writer, int exp, StringWriter & writer);
-        void Times10n_R(ResourceHolderUINT& root, NUMBER_OBJECT_UINT * x_numerator, NUMBER_OBJECT_UINT * x_denominator, int e, NUMBER_OBJECT_UINT ** r_numerator, NUMBER_OBJECT_UINT ** r_denominator);
+        void Times10n_R(ThreadContext& tc, ResourceHolderUINT& root, NUMBER_OBJECT_UINT * x_numerator, NUMBER_OBJECT_UINT * x_denominator, int e, NUMBER_OBJECT_UINT ** r_numerator, NUMBER_OBJECT_UINT ** r_denominator);
     };
 
     class LiteralToken
@@ -205,6 +206,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
     {
 
     private:
+        ThreadContext& _tc;
         const wchar_t* _format;
         const PMC_NUMBER_FORMAT_INFO& _format_option;
         FormatToken _root;
@@ -213,7 +215,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         SectionToken* _section2_root;
 
     public:
-        ToStringFormatterCustom(const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option);
+        ToStringFormatterCustom(ThreadContext& tc, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option);
         virtual ~ToStringFormatterCustom();
         void Format(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, StringWriter& writer);
 

@@ -30,14 +30,14 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    _INT32_T PMC_FloorLog10_R(PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator)
+    _INT32_T PMC_FloorLog10_R(ThreadContext& tc, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator)
     {
         NUMBER_OBJECT_SINT* nv_numerator = GET_NUMBER_OBJECT(v_numerator, L"v_numerator");
         if (v_denominator == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v_denominator");
         if (nv_numerator->SIGN <= 0)
             throw ArithmeticException(L"負または 0 の数値に対する対数は未定義です。");
-        return (ep_uint.FloorLog10(nv_numerator->ABS, v_denominator));
+        return (ep_uint.FloorLog10(tc, nv_numerator->ABS, v_denominator));
     }
 
 }

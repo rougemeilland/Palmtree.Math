@@ -30,11 +30,11 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    PMC_HANDLE_RTNL PMC_Invert_I(_INT32_T v) noexcept(false)
+    PMC_HANDLE_RTNL PMC_Invert_I(ThreadContext& tc, _INT32_T v) noexcept(false)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT r_denominator;
-        PMC_HANDLE_SINT r_numerator = ep_sint.Invert(v, &r_denominator);
+        PMC_HANDLE_SINT r_numerator = ep_sint.Invert(tc, v, &r_denominator);
         root.HookNumber(r_numerator);
         root.HookNumber(r_denominator);
         NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(r_numerator, r_denominator);
@@ -43,11 +43,11 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    PMC_HANDLE_RTNL PMC_Invert_L(_INT64_T v) noexcept(false)
+    PMC_HANDLE_RTNL PMC_Invert_L(ThreadContext& tc, _INT64_T v) noexcept(false)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT r_denominator;
-        PMC_HANDLE_SINT r_numerator = ep_sint.Invert(v, &r_denominator);
+        PMC_HANDLE_SINT r_numerator = ep_sint.Invert(tc, v, &r_denominator);
         root.HookNumber(r_numerator);
         root.HookNumber(r_denominator);
         NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(r_numerator, r_denominator);
@@ -56,11 +56,11 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    PMC_HANDLE_RTNL PMC_Invert_X(PMC_HANDLE_SINT v) noexcept(false)
+    PMC_HANDLE_RTNL PMC_Invert_X(ThreadContext& tc, PMC_HANDLE_SINT v) noexcept(false)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT r_denominator;
-        PMC_HANDLE_SINT r_numerator = ep_sint.Invert(v, &r_denominator);
+        PMC_HANDLE_SINT r_numerator = ep_sint.Invert(tc, v, &r_denominator);
         root.HookNumber(r_numerator);
         root.HookNumber(r_denominator);
         NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(r_numerator, r_denominator);
@@ -69,11 +69,11 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    PMC_HANDLE_RTNL PMC_Invert_UI(_UINT32_T v) noexcept(false)
+    PMC_HANDLE_RTNL PMC_Invert_UI(ThreadContext& tc, _UINT32_T v) noexcept(false)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT r_denominator;
-        PMC_HANDLE_SINT r_numerator = ep_sint.Invert(v, &r_denominator);
+        PMC_HANDLE_SINT r_numerator = ep_sint.Invert(tc, v, &r_denominator);
         root.HookNumber(r_numerator);
         root.HookNumber(r_denominator);
         NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(r_numerator, r_denominator);
@@ -82,11 +82,11 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    PMC_HANDLE_RTNL PMC_Invert_UL(_UINT64_T v) noexcept(false)
+    PMC_HANDLE_RTNL PMC_Invert_UL(ThreadContext& tc, _UINT64_T v) noexcept(false)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT r_denominator;
-        PMC_HANDLE_SINT r_numerator = ep_sint.Invert(v, &r_denominator);
+        PMC_HANDLE_SINT r_numerator = ep_sint.Invert(tc, v, &r_denominator);
         root.HookNumber(r_numerator);
         root.HookNumber(r_denominator);
         NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(r_numerator, r_denominator);
@@ -95,11 +95,11 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    PMC_HANDLE_RTNL PMC_Invert_UX(PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_RTNL PMC_Invert_UX(ThreadContext& tc, PMC_HANDLE_UINT v) noexcept(false)
     {
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT r_denominator;
-        PMC_HANDLE_SINT r_numerator = ep_sint.Invert(v, &r_denominator);
+        PMC_HANDLE_SINT r_numerator = ep_sint.Invert(tc, v, &r_denominator);
         root.HookNumber(r_numerator);
         root.HookNumber(r_denominator);
         NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(r_numerator, r_denominator);
@@ -108,12 +108,12 @@ namespace Palmtree::Math::Core::Internal
         return (r);
     }
 
-    PMC_HANDLE_RTNL PMC_Invert_R(PMC_HANDLE_RTNL v) noexcept(false)
+    PMC_HANDLE_RTNL PMC_Invert_R(ThreadContext& tc, PMC_HANDLE_RTNL v) noexcept(false)
     {
         NUMBER_OBJECT_RTNL* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderRTNL root;
+        ResourceHolderRTNL root(tc);
         PMC_HANDLE_UINT r_denominator;
-        PMC_HANDLE_SINT r_numerator = ep_sint.Invert(nv->NUMERATOR, nv->DENOMINATOR, &r_denominator);
+        PMC_HANDLE_SINT r_numerator = ep_sint.Invert(tc, nv->NUMERATOR, nv->DENOMINATOR, &r_denominator);
         root.HookNumber(r_numerator);
         root.HookNumber(r_denominator);
         NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(r_numerator, r_denominator);

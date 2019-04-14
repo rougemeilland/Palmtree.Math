@@ -38,7 +38,7 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static PMC_HANDLE_UINT PMC_BitwiseAnd_UX_I_Imp(PMC_HANDLE_UINT u, _INT32_T v)
+    static PMC_HANDLE_UINT PMC_BitwiseAnd_UX_I_Imp(ThreadContext& tc, PMC_HANDLE_UINT u, _INT32_T v)
     {
         if (u->FLAGS.IS_ZERO)
         {
@@ -63,7 +63,7 @@ namespace Palmtree::Math::Core::Internal
                 // v > 0 の場合
 
                 _UINT32_T w_abs = ep_uint.BitwiseAnd(u, v_abs);
-                return (ep_uint.From(w_abs));
+                return (ep_uint.From(tc, w_abs));
             }
             else
             {
@@ -73,12 +73,12 @@ namespace Palmtree::Math::Core::Internal
                 // AND式 w == u & v と上式より
                 // w == u & ~(abs(v) - 1) となる
 
-                return (ep_uint.OneCompliment_And_BitwiseAnd(v_abs - 1, u));
+                return (ep_uint.OneCompliment_And_BitwiseAnd(tc, v_abs - 1, u));
             }
         }
     }
 
-    static PMC_HANDLE_UINT PMC_BitwiseAnd_UX_L_Imp(PMC_HANDLE_UINT u, _INT64_T v)
+    static PMC_HANDLE_UINT PMC_BitwiseAnd_UX_L_Imp(ThreadContext& tc, PMC_HANDLE_UINT u, _INT64_T v)
     {
         if (u->FLAGS.IS_ZERO)
         {
@@ -103,7 +103,7 @@ namespace Palmtree::Math::Core::Internal
                 // v > 0 の場合
 
                 _UINT64_T w_abs = ep_uint.BitwiseAnd(u, v_abs);
-                return (ep_uint.From(w_abs));
+                return (ep_uint.From(tc, w_abs));
             }
             else
             {
@@ -113,12 +113,12 @@ namespace Palmtree::Math::Core::Internal
                 // AND式 w == u & v と上式より
                 // w == u & ~(abs(v) - 1) となる
 
-                return (ep_uint.OneCompliment_And_BitwiseAnd(v_abs - 1, u));
+                return (ep_uint.OneCompliment_And_BitwiseAnd(tc, v_abs - 1, u));
             }
         }
     }
 
-    static _UINT32_T PMC_BitwiseAnd_X_UI_Imp(NUMBER_OBJECT_SINT* u, _UINT32_T v)
+    static _UINT32_T PMC_BitwiseAnd_X_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_SINT* u, _UINT32_T v)
     {
         if (u->SIGN == 0)
         {
@@ -161,8 +161,8 @@ namespace Palmtree::Math::Core::Internal
                 // AND式 w == u & v と上式より
                 // w == ~(abs(u) - 1) & v となる
 
-                ResourceHolderSINT root;
-                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(u->ABS);
+                ResourceHolderSINT root(tc);
+                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(tc, u->ABS);
                 root.HookNumber(u_abs_minus_one);
                 _UINT32_T w = ep_uint.OneCompliment_And_BitwiseAnd(u_abs_minus_one, v);
                 return (w);
@@ -170,7 +170,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_OBJECT_SINT* PMC_BitwiseAnd_X_I_Imp(NUMBER_OBJECT_SINT* u, _INT32_T v)
+    static NUMBER_OBJECT_SINT* PMC_BitwiseAnd_X_I_Imp(ThreadContext& tc, NUMBER_OBJECT_SINT* u, _INT32_T v)
     {
         if (u->SIGN == 0)
         {
@@ -195,7 +195,7 @@ namespace Palmtree::Math::Core::Internal
                 // v > 0 の場合
 
                 _UINT32_T w_abs = ep_uint.BitwiseAnd(u->ABS, v_abs);
-                return (From_I_Imp(SIGN_POSITIVE, w_abs));
+                return (From_I_Imp(tc, SIGN_POSITIVE, w_abs));
             }
             else
             {
@@ -205,8 +205,8 @@ namespace Palmtree::Math::Core::Internal
                 // AND式 w == u & v と上式より
                 // w == u & ~(abs(v) - 1) となる
 
-                ResourceHolderSINT root;
-                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.OneCompliment_And_BitwiseAnd(v_abs - 1, u->ABS)));
+                ResourceHolderSINT root(tc);
+                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.OneCompliment_And_BitwiseAnd(tc, v_abs - 1, u->ABS)));
             }
         }
         else
@@ -229,11 +229,11 @@ namespace Palmtree::Math::Core::Internal
                 // AND式 w == u & v と上式より
                 // w == ~(abs(u) - 1) & v となる
 
-                ResourceHolderSINT root;
-                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(u->ABS);
+                ResourceHolderSINT root(tc);
+                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(tc, u->ABS);
                 root.HookNumber(u_abs_minus_one);
                 _UINT32_T w_abs = ep_uint.OneCompliment_And_BitwiseAnd(u_abs_minus_one, v_abs);
-                return (From_I_Imp(SIGN_POSITIVE, w_abs));
+                return (From_I_Imp(tc, SIGN_POSITIVE, w_abs));
             }
             else
             {
@@ -244,17 +244,17 @@ namespace Palmtree::Math::Core::Internal
                 // ~(abs(w) - 1) == ~(abs(u) - 1) & ~(abs(v) - 1) となり、OR式に直すと
                 // abs(w) == ((abs(u) - 1) | (abs(v) - 1)) + 1 となる。
 
-                ResourceHolderSINT root;
-                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(u->ABS);
+                ResourceHolderSINT root(tc);
+                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(tc, u->ABS);
                 root.HookNumber(u_abs_minus_one);
-                PMC_HANDLE_UINT w_abs_2 = ep_uint.BitwiseOr(u_abs_minus_one, v_abs - 1);
+                PMC_HANDLE_UINT w_abs_2 = ep_uint.BitwiseOr(tc, u_abs_minus_one, v_abs - 1);
                 root.HookNumber(w_abs_2);
-                return (ALLOCATE_NUMBER(root, SIGN_NEGATIVE, ep_uint.Increment(w_abs_2)));
+                return (ALLOCATE_NUMBER(root, SIGN_NEGATIVE, ep_uint.Increment(tc, w_abs_2)));
             }
         }
     }
 
-    static _UINT64_T PMC_BitwiseAnd_X_UL_Imp(NUMBER_OBJECT_SINT* u, _UINT64_T v)
+    static _UINT64_T PMC_BitwiseAnd_X_UL_Imp(ThreadContext& tc, NUMBER_OBJECT_SINT* u, _UINT64_T v)
     {
         if (u->SIGN == 0)
         {
@@ -297,8 +297,8 @@ namespace Palmtree::Math::Core::Internal
                 // AND式 w == u & v と上式より
                 // w == ~(abs(u) - 1) & v となる
 
-                ResourceHolderSINT root;
-                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(u->ABS);
+                ResourceHolderSINT root(tc);
+                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(tc, u->ABS);
                 root.HookNumber(u_abs_minus_one);
                 _UINT64_T w = ep_uint.OneCompliment_And_BitwiseAnd(u_abs_minus_one, v);
                 return (w);
@@ -306,7 +306,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    static NUMBER_OBJECT_SINT* PMC_BitwiseAnd_X_L_Imp(NUMBER_OBJECT_SINT* u, _INT64_T v)
+    static NUMBER_OBJECT_SINT* PMC_BitwiseAnd_X_L_Imp(ThreadContext& tc, NUMBER_OBJECT_SINT* u, _INT64_T v)
     {
         if (u->SIGN == 0)
         {
@@ -331,7 +331,7 @@ namespace Palmtree::Math::Core::Internal
                 // v > 0 の場合
 
                 _UINT64_T w_abs = ep_uint.BitwiseAnd(u->ABS, v_abs);
-                return (From_L_Imp(SIGN_POSITIVE, w_abs));
+                return (From_L_Imp(tc, SIGN_POSITIVE, w_abs));
             }
             else
             {
@@ -341,8 +341,8 @@ namespace Palmtree::Math::Core::Internal
                 // AND式 w == u & v と上式より
                 // w == u & ~(abs(v) - 1) となる
 
-                ResourceHolderSINT root;
-                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.OneCompliment_And_BitwiseAnd(v_abs - 1, u->ABS)));
+                ResourceHolderSINT root(tc);
+                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.OneCompliment_And_BitwiseAnd(tc, v_abs - 1, u->ABS)));
             }
         }
         else
@@ -365,11 +365,11 @@ namespace Palmtree::Math::Core::Internal
                 // AND式 w == u & v と上式より
                 // w == ~(abs(u) - 1) & v となる
 
-                ResourceHolderSINT root;
-                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(u->ABS);
+                ResourceHolderSINT root(tc);
+                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(tc, u->ABS);
                 root.HookNumber(u_abs_minus_one);
                 _UINT64_T w_abs = ep_uint.OneCompliment_And_BitwiseAnd(u_abs_minus_one, v_abs);
-                return (From_L_Imp(SIGN_POSITIVE, w_abs));
+                return (From_L_Imp(tc, SIGN_POSITIVE, w_abs));
             }
             else
             {
@@ -380,17 +380,17 @@ namespace Palmtree::Math::Core::Internal
                 // ~(abs(w) - 1) == ~(abs(u) - 1) & ~(abs(v) - 1) となり、OR式に直すと
                 // abs(w) == ((abs(u) - 1) | (abs(v) - 1)) + 1 となる。
 
-                ResourceHolderSINT root;
-                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(u->ABS);
+                ResourceHolderSINT root(tc);
+                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(tc, u->ABS);
                 root.HookNumber(u_abs_minus_one);
-                PMC_HANDLE_UINT w_abs_2 = ep_uint.BitwiseOr(u_abs_minus_one, v_abs - 1);
+                PMC_HANDLE_UINT w_abs_2 = ep_uint.BitwiseOr(tc, u_abs_minus_one, v_abs - 1);
                 root.HookNumber(w_abs_2);
-                return (ALLOCATE_NUMBER(root, SIGN_NEGATIVE, ep_uint.Increment(w_abs_2)));
+                return (ALLOCATE_NUMBER(root, SIGN_NEGATIVE, ep_uint.Increment(tc, w_abs_2)));
             }
         }
     }
 
-    static PMC_HANDLE_UINT PMC_BitwiseAnd_X_UX_Imp(NUMBER_OBJECT_SINT* u, PMC_HANDLE_UINT v)
+    static PMC_HANDLE_UINT PMC_BitwiseAnd_X_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_SINT* u, PMC_HANDLE_UINT v)
     {
         if (u->SIGN == 0)
         {
@@ -412,7 +412,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v > 0 の場合
 
-                return (ep_uint.BitwiseAnd(u->ABS, v));
+                return (ep_uint.BitwiseAnd(tc, u->ABS, v));
             }
         }
         else
@@ -433,16 +433,16 @@ namespace Palmtree::Math::Core::Internal
                 // AND式 w == u & v と上式より
                 // w == ~(abs(u) - 1) & v となる
 
-                ResourceHolderSINT root;
-                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(u->ABS);
+                ResourceHolderSINT root(tc);
+                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(tc, u->ABS);
                 root.HookNumber(u_abs_minus_one);
-                PMC_HANDLE_UINT w = ep_uint.OneCompliment_And_BitwiseAnd(u_abs_minus_one, v);
+                PMC_HANDLE_UINT w = ep_uint.OneCompliment_And_BitwiseAnd(tc, u_abs_minus_one, v);
                 return (w);
             }
         }
     }
 
-    static NUMBER_OBJECT_SINT* PMC_BitwiseAnd_X_X_Imp(NUMBER_OBJECT_SINT* u, NUMBER_OBJECT_SINT* v)
+    static NUMBER_OBJECT_SINT* PMC_BitwiseAnd_X_X_Imp(ThreadContext& tc, NUMBER_OBJECT_SINT* u, NUMBER_OBJECT_SINT* v)
     {
         if (u->SIGN == 0)
         {
@@ -464,8 +464,8 @@ namespace Palmtree::Math::Core::Internal
             {
                 // v > 0 の場合
 
-                ResourceHolderSINT root;
-                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.BitwiseAnd(u->ABS, v->ABS)));
+                ResourceHolderSINT root(tc);
+                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.BitwiseAnd(tc, u->ABS, v->ABS)));
             }
             else
             {
@@ -475,10 +475,10 @@ namespace Palmtree::Math::Core::Internal
                 // AND式 w == u & v と上式より
                 // w == u & ~(abs(v) - 1) となる
 
-                ResourceHolderSINT root;
-                PMC_HANDLE_UINT v_abs_minus_one = ep_uint.Decrement(v->ABS);
+                ResourceHolderSINT root(tc);
+                PMC_HANDLE_UINT v_abs_minus_one = ep_uint.Decrement(tc, v->ABS);
                 root.HookNumber(v_abs_minus_one);
-                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.OneCompliment_And_BitwiseAnd(v_abs_minus_one, u->ABS)));
+                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.OneCompliment_And_BitwiseAnd(tc, v_abs_minus_one, u->ABS)));
             }
         }
         else
@@ -499,10 +499,10 @@ namespace Palmtree::Math::Core::Internal
                 // AND式 w == u & v と上式より
                 // w == ~(abs(u) - 1) & v となる
 
-                ResourceHolderSINT root;
-                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(u->ABS);
+                ResourceHolderSINT root(tc);
+                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(tc, u->ABS);
                 root.HookNumber(u_abs_minus_one);
-                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.OneCompliment_And_BitwiseAnd(u_abs_minus_one, v->ABS)));
+                return (ALLOCATE_NUMBER(root, SIGN_POSITIVE, ep_uint.OneCompliment_And_BitwiseAnd(tc, u_abs_minus_one, v->ABS)));
             }
             else
             {
@@ -513,14 +513,14 @@ namespace Palmtree::Math::Core::Internal
                 // ~(abs(w) - 1) == ~(abs(u) - 1) & ~(abs(v) - 1) となり、OR式に直すと
                 // abs(w) == ((abs(u) - 1) | (abs(v) - 1)) + 1 となる。
 
-                ResourceHolderSINT root;
-                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(u->ABS);
+                ResourceHolderSINT root(tc);
+                PMC_HANDLE_UINT u_abs_minus_one = ep_uint.Decrement(tc, u->ABS);
                 root.HookNumber(u_abs_minus_one);
-                PMC_HANDLE_UINT v_abs_minus_one = ep_uint.Decrement(v->ABS);
+                PMC_HANDLE_UINT v_abs_minus_one = ep_uint.Decrement(tc, v->ABS);
                 root.HookNumber(v_abs_minus_one);
-                PMC_HANDLE_UINT w_abs_2 = ep_uint.BitwiseOr(u_abs_minus_one, v_abs_minus_one);
+                PMC_HANDLE_UINT w_abs_2 = ep_uint.BitwiseOr(tc, u_abs_minus_one, v_abs_minus_one);
                 root.HookNumber(w_abs_2);
-                return (ALLOCATE_NUMBER(root, SIGN_NEGATIVE, ep_uint.Increment(w_abs_2)));
+                return (ALLOCATE_NUMBER(root, SIGN_NEGATIVE, ep_uint.Increment(tc, w_abs_2)));
             }
         }
     }
@@ -548,122 +548,122 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    _UINT32_T PMC_BitwiseAnd_UI_X(_UINT32_T u, PMC_HANDLE_SINT v)
+    _UINT32_T PMC_BitwiseAnd_UI_X(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        _UINT32_T w = PMC_BitwiseAnd_X_UI_Imp(nv, u);
+        _UINT32_T w = PMC_BitwiseAnd_X_UI_Imp(tc, nv, u);
         return (EPILOGUE(w));
     }
 
-    PMC_HANDLE_SINT PMC_BitwiseAnd_I_X(_INT32_T u, PMC_HANDLE_SINT v)
+    PMC_HANDLE_SINT PMC_BitwiseAnd_I_X(ThreadContext& tc, _INT32_T u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderSINT root;
-        NUMBER_OBJECT_SINT* nw = PMC_BitwiseAnd_X_I_Imp(nv, u);
+        ResourceHolderSINT root(tc);
+        NUMBER_OBJECT_SINT* nw = PMC_BitwiseAnd_X_I_Imp(tc, nv, u);
         return (EPILOGUE(root, nw));
     }
 
-    PMC_HANDLE_UINT PMC_BitwiseAnd_I_UX(_INT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_BitwiseAnd_I_UX(ThreadContext& tc, _INT32_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        PMC_HANDLE_UINT nw = PMC_BitwiseAnd_UX_I_Imp(v, u);
+        PMC_HANDLE_UINT nw = PMC_BitwiseAnd_UX_I_Imp(tc, v, u);
         return (EPILOGUE(nw));
     }
 
-    _UINT64_T PMC_BitwiseAnd_UL_X(_UINT64_T u, PMC_HANDLE_SINT v)
+    _UINT64_T PMC_BitwiseAnd_UL_X(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        _UINT64_T w = PMC_BitwiseAnd_X_UL_Imp(nv, u);
+        _UINT64_T w = PMC_BitwiseAnd_X_UL_Imp(tc, nv, u);
         return (EPILOGUE(w));
     }
 
-    PMC_HANDLE_SINT PMC_BitwiseAnd_L_X(_INT64_T u, PMC_HANDLE_SINT v)
+    PMC_HANDLE_SINT PMC_BitwiseAnd_L_X(ThreadContext& tc, _INT64_T u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderSINT root;
-        NUMBER_OBJECT_SINT* nw = PMC_BitwiseAnd_X_L_Imp(nv, u);
+        ResourceHolderSINT root(tc);
+        NUMBER_OBJECT_SINT* nw = PMC_BitwiseAnd_X_L_Imp(tc, nv, u);
         return (EPILOGUE(root, nw));
     }
 
-    PMC_HANDLE_UINT PMC_BitwiseAnd_L_UX(_INT64_T u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_BitwiseAnd_L_UX(ThreadContext& tc, _INT64_T u, PMC_HANDLE_UINT v) noexcept(false)
     {
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        PMC_HANDLE_UINT nw = PMC_BitwiseAnd_UX_L_Imp(v, u);
+        PMC_HANDLE_UINT nw = PMC_BitwiseAnd_UX_L_Imp(tc, v, u);
         return (EPILOGUE(nw));
     }
 
-    PMC_HANDLE_UINT PMC_BitwiseAnd_UX_X(PMC_HANDLE_UINT u, PMC_HANDLE_SINT v)
+    PMC_HANDLE_UINT PMC_BitwiseAnd_UX_X(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_SINT v)
     {
         if (u == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        PMC_HANDLE_UINT w = PMC_BitwiseAnd_X_UX_Imp(nv, u);
+        PMC_HANDLE_UINT w = PMC_BitwiseAnd_X_UX_Imp(tc, nv, u);
         return (EPILOGUE(w));
     }
 
-    _UINT32_T PMC_BitwiseAnd_X_UI(PMC_HANDLE_SINT u, _UINT32_T v)
+    _UINT32_T PMC_BitwiseAnd_X_UI(ThreadContext& tc, PMC_HANDLE_SINT u, _UINT32_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        _UINT32_T w = PMC_BitwiseAnd_X_UI_Imp(nu, v);
+        _UINT32_T w = PMC_BitwiseAnd_X_UI_Imp(tc, nu, v);
         return (EPILOGUE(w));
     }
 
-    PMC_HANDLE_SINT PMC_BitwiseAnd_X_I(PMC_HANDLE_SINT u, _INT32_T v)
+    PMC_HANDLE_SINT PMC_BitwiseAnd_X_I(ThreadContext& tc, PMC_HANDLE_SINT u, _INT32_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderSINT root;
-        NUMBER_OBJECT_SINT* nw = PMC_BitwiseAnd_X_I_Imp(nu, v);
+        ResourceHolderSINT root(tc);
+        NUMBER_OBJECT_SINT* nw = PMC_BitwiseAnd_X_I_Imp(tc, nu, v);
         return (EPILOGUE(root, nw));
     }
 
-    PMC_HANDLE_UINT PMC_BitwiseAnd_UX_I(PMC_HANDLE_UINT u, _INT32_T v) noexcept(false)
+    PMC_HANDLE_UINT PMC_BitwiseAnd_UX_I(ThreadContext& tc, PMC_HANDLE_UINT u, _INT32_T v) noexcept(false)
     {
         if (u == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        PMC_HANDLE_UINT nw = PMC_BitwiseAnd_UX_I_Imp(u, v);
+        PMC_HANDLE_UINT nw = PMC_BitwiseAnd_UX_I_Imp(tc, u, v);
         return (EPILOGUE(nw));
     }
 
-    _UINT64_T PMC_BitwiseAnd_X_UL(PMC_HANDLE_SINT u, _UINT64_T v)
+    _UINT64_T PMC_BitwiseAnd_X_UL(ThreadContext& tc, PMC_HANDLE_SINT u, _UINT64_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        _UINT64_T w = PMC_BitwiseAnd_X_UL_Imp(nu, v);
+        _UINT64_T w = PMC_BitwiseAnd_X_UL_Imp(tc, nu, v);
         return (EPILOGUE(w));
     }
 
-    PMC_HANDLE_SINT PMC_BitwiseAnd_X_L(PMC_HANDLE_SINT u, _INT64_T v)
+    PMC_HANDLE_SINT PMC_BitwiseAnd_X_L(ThreadContext& tc, PMC_HANDLE_SINT u, _INT64_T v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        ResourceHolderSINT root;
-        NUMBER_OBJECT_SINT* nw = PMC_BitwiseAnd_X_L_Imp(nu, v);
+        ResourceHolderSINT root(tc);
+        NUMBER_OBJECT_SINT* nw = PMC_BitwiseAnd_X_L_Imp(tc, nu, v);
         return (EPILOGUE(root, nw));
     }
 
-    PMC_HANDLE_UINT PMC_BitwiseAnd_UX_L(PMC_HANDLE_UINT u, _INT64_T v) noexcept(false)
+    PMC_HANDLE_UINT PMC_BitwiseAnd_UX_L(ThreadContext& tc, PMC_HANDLE_UINT u, _INT64_T v) noexcept(false)
     {
         if (u == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"u");
-        PMC_HANDLE_UINT nw = PMC_BitwiseAnd_UX_L_Imp(u, v);
+        PMC_HANDLE_UINT nw = PMC_BitwiseAnd_UX_L_Imp(tc, u, v);
         return (EPILOGUE(nw));
     }
 
-    PMC_HANDLE_UINT PMC_BitwiseAnd_X_UX(PMC_HANDLE_SINT u, PMC_HANDLE_UINT v)
+    PMC_HANDLE_UINT PMC_BitwiseAnd_X_UX(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
         if (v == nullptr)
             throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
-        PMC_HANDLE_UINT w = PMC_BitwiseAnd_X_UX_Imp(nu, v);
+        PMC_HANDLE_UINT w = PMC_BitwiseAnd_X_UX_Imp(tc, nu, v);
         return (EPILOGUE(w));
     }
 
-    PMC_HANDLE_SINT PMC_BitwiseAnd_X_X(PMC_HANDLE_SINT u, PMC_HANDLE_SINT v)
+    PMC_HANDLE_SINT PMC_BitwiseAnd_X_X(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_SINT v)
     {
         NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_SINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderSINT root;
-        NUMBER_OBJECT_SINT* nw = PMC_BitwiseAnd_X_X_Imp(nu, nv);
+        ResourceHolderSINT root(tc);
+        NUMBER_OBJECT_SINT* nw = PMC_BitwiseAnd_X_X_Imp(tc, nu, nv);
         return (EPILOGUE(root, nw));
     }
 
