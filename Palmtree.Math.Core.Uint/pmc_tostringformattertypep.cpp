@@ -57,8 +57,8 @@ namespace Palmtree::Math::Core::Internal
         *r_numerator = x_numerator;
         *r_denominator = x_denominator;
 
-        // Œ…‚ğŠÛ‚ß‚é
-        *r_numerator = PMC_Round_R_Imp(_tc, *r_numerator, *r_denominator, _precision, PMC_MIDPOINT_ROUNDING_HALF_EVEN, r_denominator);
+        // Œ…‚ğŠÛ‚ß‚é (ˆÈ~‚Å x ‚ğ 100 ”{‚·‚é‚Ì‚ÅAŠÛ‚ß‚éŒ…”‚à 2 ‚¾‚¯—]•ª‚É‚·‚é)
+        *r_numerator = PMC_Round_R_Imp(_tc, *r_numerator, *r_denominator, _precision + 2, PMC_GetDefaultRoundingMode(), r_denominator);
         root.HookNumber(*r_numerator);
         root.HookNumber(*r_denominator);
         *exp = 0;

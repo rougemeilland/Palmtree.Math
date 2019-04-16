@@ -183,6 +183,9 @@ namespace Palmtree.Math.Core
         [DllImport("Palmtree.Math.Core.Uint.dll")]
         private static extern Int32 PMCCS_GetConstantValue_I(Int32 type, out IntPtr value);
 
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_GetDefaultRoundingMode(out Int32 value);
+
         [DllImport("Palmtree.Math.Core.Uint.dll", CharSet = CharSet.Unicode)]
         private static extern Int32 PMCCS_GetPerformanceCounter(string key, out Int64 value);
 
@@ -269,6 +272,9 @@ namespace Palmtree.Math.Core
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
         private static extern Int32 PMCCS_RightShift_UX_I(IntPtr p, Int32 n, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_SetDefaultRoundingMode(Int32 mode);
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
         private static extern Int32 PMCCS_Subtruct_UI_UX(UInt32 u, IntPtr v, out UInt32 w);

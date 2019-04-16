@@ -80,13 +80,15 @@ namespace Palmtree::Math::Core::Internal
             root.HookNumber(*r_numerator);
             *r_denominator = x_denominator;
         }
-#if _DEBUG
+
+#ifdef _DEBUG
         // この時点で数値は1以上10未満であるはず
         if (Compare_R_UI(_tc, *r_numerator, *r_denominator, 1U) < 0 || Compare_R_UI(_tc, *r_numerator, *r_denominator, 10U) >= 0)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_tostring.cpp;FormatterTypeG::RoundValue;1");
 #endif
+
         // 桁を丸める
-        *r_numerator = PMC_Round_R_Imp(_tc, *r_numerator, *r_denominator, _precision - 1, PMC_MIDPOINT_ROUNDING_HALF_EVEN, r_denominator);
+        *r_numerator = PMC_Round_R_Imp(_tc, *r_numerator, *r_denominator, _precision - 1, PMC_GetDefaultRoundingMode(), r_denominator);
         root.HookNumber(*r_numerator);
         root.HookNumber(*r_denominator);
         // 桁を丸めた結果繰り上がりによって最上位桁が 10 の位になってしまった場合は、更に 1 桁だけ桁をずらす

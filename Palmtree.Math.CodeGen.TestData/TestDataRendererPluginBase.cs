@@ -172,8 +172,8 @@ namespace Palmtree.Math.CodeGen.TestData
                         throw new ApplicationException();
                 }
                 return (source
-                        .SelectMany(item => new[] { item, -item })
                         .Concat(AdditionalUBigIntDataSource)
+                        .SelectMany(item => new[] { item, -item })
                         .Distinct(new BigIntegerComparer())
                         .OrderBy(x => x, new BigIntegerComparer()));
             }

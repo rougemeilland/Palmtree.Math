@@ -87,7 +87,7 @@ namespace Palmtree::Math::Core::Internal
             *r_denominator = x_denominator;
         }
         // 桁を丸める
-        *r_numerator = PMC_Round_R_Imp(_tc, *r_numerator, *r_denominator, _precision, PMC_MIDPOINT_ROUNDING_HALF_EVEN, r_denominator);
+        *r_numerator = PMC_Round_R_Imp(_tc, *r_numerator, *r_denominator, _precision, PMC_GetDefaultRoundingMode(), r_denominator);
         root.HookNumber(*r_numerator);
         root.HookNumber(*r_denominator);
         // 桁を丸めた結果繰り上がりによって最上位桁が 10 の位になってしまった場合は、更に 1 桁だけ桁をずらす

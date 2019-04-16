@@ -1,256 +1,286 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <dataitems>
   <dataitem index="0">
-    <param1 type="bigint">03,09,01,00,00,00,00,00,00,00,01</param1>
+    <param1 type="bigint">03,85,01,00,00,00,00,00,00,00,00,fc,ff,ff,ff,ff,ff,ff,ff,ff,03,04,39,38,17,91,a4,87,1d,ec,15,d5,5d,a9,2d,94,86,96,b0,19,ea,05,69,11,28,5f,ed,53,07,05,9d,75,3a,43,77,6f,24,8f,6c,ca,3a,2c,cc,93,ee,c3,d5,f6,1d,68,f7,70,f3,f2,52,9f,01,30,d9,3d,7b,6c,46,e9,11,57,59,df,de,16,fe,e8,f7,e3,e4,29,c3,3c,6e,59,aa,3c,82,40,36,ff,0a,e4,04,79,b5,ec,62,8c,7b,ec,b9,ce,21,40,66,d4,00,83,15,a1,e6,75,e3,cc,f2,29,2f,84,81</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="1">
-    <param1 type="bigint">03,09,01,00,00,00,00,00,00,00,01</param1>
+    <param1 type="bigint">03,85,01,00,00,00,00,00,00,00,00,fc,ff,ff,ff,ff,ff,ff,ff,ff,03,04,39,38,17,91,a4,87,1d,ec,15,d5,5d,a9,2d,94,86,96,b0,19,ea,05,69,11,28,5f,ed,53,07,05,9d,75,3a,43,77,6f,24,8f,6c,ca,3a,2c,cc,93,ee,c3,d5,f6,1d,68,f7,70,f3,f2,52,9f,01,30,d9,3d,7b,6c,46,e9,11,57,59,df,de,16,fe,e8,f7,e3,e4,29,c3,3c,6e,59,aa,3c,82,40,36,ff,0a,e4,04,79,b5,ec,62,8c,7b,ec,b9,ce,21,40,66,d4,00,83,15,a1,e6,75,e3,cc,f2,29,2f,84,81</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="2">
-    <param1 type="bigint">03,09,01,00,00,00,00,00,00,00,01</param1>
+    <param1 type="bigint">03,85,01,00,00,00,00,00,00,00,00,fc,ff,ff,ff,ff,ff,ff,ff,ff,03,04,39,38,17,91,a4,87,1d,ec,15,d5,5d,a9,2d,94,86,96,b0,19,ea,05,69,11,28,5f,ed,53,07,05,9d,75,3a,43,77,6f,24,8f,6c,ca,3a,2c,cc,93,ee,c3,d5,f6,1d,68,f7,70,f3,f2,52,9f,01,30,d9,3d,7b,6c,46,e9,11,57,59,df,de,16,fe,e8,f7,e3,e4,29,c3,3c,6e,59,aa,3c,82,40,36,ff,0a,e4,04,79,b5,ec,62,8c,7b,ec,b9,ce,21,40,66,d4,00,83,15,a1,e6,75,e3,cc,f2,29,2f,84,81</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="3">
-    <param1 type="bigint">03,09,00,00,00,00,00,00,00,00,01</param1>
+    <param1 type="bigint">03,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="4">
-    <param1 type="bigint">03,09,00,00,00,00,00,00,00,00,01</param1>
+    <param1 type="bigint">03,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="5">
-    <param1 type="bigint">03,09,00,00,00,00,00,00,00,00,01</param1>
+    <param1 type="bigint">03,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="6">
-    <param1 type="bigint">03,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param1 type="bigint">03,09,01,00,00,00,00,00,00,00,01</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="7">
-    <param1 type="bigint">03,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param1 type="bigint">03,09,01,00,00,00,00,00,00,00,01</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="8">
-    <param1 type="bigint">03,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param1 type="bigint">03,09,01,00,00,00,00,00,00,00,01</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="9">
-    <param1 type="bigint">03,05,01,00,00,00,01</param1>
+    <param1 type="bigint">03,09,00,00,00,00,00,00,00,00,01</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="10">
-    <param1 type="bigint">03,05,01,00,00,00,01</param1>
+    <param1 type="bigint">03,09,00,00,00,00,00,00,00,00,01</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="11">
-    <param1 type="bigint">03,05,01,00,00,00,01</param1>
+    <param1 type="bigint">03,09,00,00,00,00,00,00,00,00,01</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="12">
-    <param1 type="bigint">03,05,00,00,00,00,01</param1>
+    <param1 type="bigint">03,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="13">
-    <param1 type="bigint">03,05,00,00,00,00,01</param1>
+    <param1 type="bigint">03,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="14">
-    <param1 type="bigint">03,05,00,00,00,00,01</param1>
+    <param1 type="bigint">03,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="15">
-    <param1 type="bigint">03,04,ff,ff,ff,ff</param1>
+    <param1 type="bigint">03,05,01,00,00,00,01</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="16">
-    <param1 type="bigint">03,04,ff,ff,ff,ff</param1>
+    <param1 type="bigint">03,05,01,00,00,00,01</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="17">
-    <param1 type="bigint">03,04,ff,ff,ff,ff</param1>
+    <param1 type="bigint">03,05,01,00,00,00,01</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="18">
-    <param1 type="bigint">03,01,01</param1>
+    <param1 type="bigint">03,05,00,00,00,00,01</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="19">
-    <param1 type="bigint">03,01,01</param1>
+    <param1 type="bigint">03,05,00,00,00,00,01</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="20">
-    <param1 type="bigint">03,01,01</param1>
+    <param1 type="bigint">03,05,00,00,00,00,01</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="21">
-    <param1 type="bigint">00,00</param1>
+    <param1 type="bigint">03,04,ff,ff,ff,ff</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="22">
-    <param1 type="bigint">00,00</param1>
+    <param1 type="bigint">03,04,ff,ff,ff,ff</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="23">
-    <param1 type="bigint">00,00</param1>
+    <param1 type="bigint">03,04,ff,ff,ff,ff</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="24">
-    <param1 type="bigint">01,01,01</param1>
+    <param1 type="bigint">03,01,01</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="25">
-    <param1 type="bigint">01,01,01</param1>
+    <param1 type="bigint">03,01,01</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="26">
-    <param1 type="bigint">01,01,01</param1>
+    <param1 type="bigint">03,01,01</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="27">
-    <param1 type="bigint">01,04,ff,ff,ff,ff</param1>
+    <param1 type="bigint">00,00</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="28">
-    <param1 type="bigint">01,04,ff,ff,ff,ff</param1>
+    <param1 type="bigint">00,00</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="29">
-    <param1 type="bigint">01,04,ff,ff,ff,ff</param1>
+    <param1 type="bigint">00,00</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="30">
-    <param1 type="bigint">01,05,00,00,00,00,01</param1>
+    <param1 type="bigint">01,01,01</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="31">
-    <param1 type="bigint">01,05,00,00,00,00,01</param1>
+    <param1 type="bigint">01,01,01</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="32">
-    <param1 type="bigint">01,05,00,00,00,00,01</param1>
+    <param1 type="bigint">01,01,01</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="33">
-    <param1 type="bigint">01,05,01,00,00,00,01</param1>
+    <param1 type="bigint">01,04,ff,ff,ff,ff</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="34">
-    <param1 type="bigint">01,05,01,00,00,00,01</param1>
+    <param1 type="bigint">01,04,ff,ff,ff,ff</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="35">
-    <param1 type="bigint">01,05,01,00,00,00,01</param1>
+    <param1 type="bigint">01,04,ff,ff,ff,ff</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="36">
-    <param1 type="bigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param1 type="bigint">01,05,00,00,00,00,01</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="37">
-    <param1 type="bigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param1 type="bigint">01,05,00,00,00,00,01</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="38">
-    <param1 type="bigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param1 type="bigint">01,05,00,00,00,00,01</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="39">
-    <param1 type="bigint">01,09,00,00,00,00,00,00,00,00,01</param1>
+    <param1 type="bigint">01,05,01,00,00,00,01</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="40">
-    <param1 type="bigint">01,09,00,00,00,00,00,00,00,00,01</param1>
+    <param1 type="bigint">01,05,01,00,00,00,01</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="41">
-    <param1 type="bigint">01,09,00,00,00,00,00,00,00,00,01</param1>
+    <param1 type="bigint">01,05,01,00,00,00,01</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="42">
-    <param1 type="bigint">01,09,01,00,00,00,00,00,00,00,01</param1>
+    <param1 type="bigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="43">
-    <param1 type="bigint">01,09,01,00,00,00,00,00,00,00,01</param1>
+    <param1 type="bigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="44">
-    <param1 type="bigint">01,09,01,00,00,00,00,00,00,00,01</param1>
+    <param1 type="bigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="45">
-    <param1 type="bigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param1 type="bigint">01,09,00,00,00,00,00,00,00,00,01</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="46">
-    <param1 type="bigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param1 type="bigint">01,09,00,00,00,00,00,00,00,00,01</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="47">
-    <param1 type="bigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param1 type="bigint">01,09,00,00,00,00,00,00,00,00,01</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="48">
-    <param1 type="bigint">01,85,01,00,00,00,00,00,00,00,00,fc,ff,ff,ff,ff,ff,ff,ff,ff,03,04,39,38,17,91,a4,87,1d,ec,15,d5,5d,a9,2d,94,86,96,b0,19,ea,05,69,11,28,5f,ed,53,07,05,9d,75,3a,43,77,6f,24,8f,6c,ca,3a,2c,cc,93,ee,c3,d5,f6,1d,68,f7,70,f3,f2,52,9f,01,30,d9,3d,7b,6c,46,e9,11,57,59,df,de,16,fe,e8,f7,e3,e4,29,c3,3c,6e,59,aa,3c,82,40,36,ff,0a,e4,04,79,b5,ec,62,8c,7b,ec,b9,ce,21,40,66,d4,00,83,15,a1,e6,75,e3,cc,f2,29,2f,84,81</param1>
+    <param1 type="bigint">01,09,01,00,00,00,00,00,00,00,01</param1>
     <param2 type="int32">-1</param2>
     <result1 type="bigint">00,00</result1>
   </dataitem>
   <dataitem index="49">
-    <param1 type="bigint">01,85,01,00,00,00,00,00,00,00,00,fc,ff,ff,ff,ff,ff,ff,ff,ff,03,04,39,38,17,91,a4,87,1d,ec,15,d5,5d,a9,2d,94,86,96,b0,19,ea,05,69,11,28,5f,ed,53,07,05,9d,75,3a,43,77,6f,24,8f,6c,ca,3a,2c,cc,93,ee,c3,d5,f6,1d,68,f7,70,f3,f2,52,9f,01,30,d9,3d,7b,6c,46,e9,11,57,59,df,de,16,fe,e8,f7,e3,e4,29,c3,3c,6e,59,aa,3c,82,40,36,ff,0a,e4,04,79,b5,ec,62,8c,7b,ec,b9,ce,21,40,66,d4,00,83,15,a1,e6,75,e3,cc,f2,29,2f,84,81</param1>
+    <param1 type="bigint">01,09,01,00,00,00,00,00,00,00,01</param1>
     <param2 type="int32">0</param2>
     <result1 type="exception">DivideByZeroException</result1>
   </dataitem>
   <dataitem index="50">
+    <param1 type="bigint">01,09,01,00,00,00,00,00,00,00,01</param1>
+    <param2 type="int32">1</param2>
+    <result1 type="bigint">00,00</result1>
+  </dataitem>
+  <dataitem index="51">
+    <param1 type="bigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param2 type="int32">-1</param2>
+    <result1 type="bigint">00,00</result1>
+  </dataitem>
+  <dataitem index="52">
+    <param1 type="bigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param2 type="int32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="53">
+    <param1 type="bigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param2 type="int32">1</param2>
+    <result1 type="bigint">00,00</result1>
+  </dataitem>
+  <dataitem index="54">
+    <param1 type="bigint">01,85,01,00,00,00,00,00,00,00,00,fc,ff,ff,ff,ff,ff,ff,ff,ff,03,04,39,38,17,91,a4,87,1d,ec,15,d5,5d,a9,2d,94,86,96,b0,19,ea,05,69,11,28,5f,ed,53,07,05,9d,75,3a,43,77,6f,24,8f,6c,ca,3a,2c,cc,93,ee,c3,d5,f6,1d,68,f7,70,f3,f2,52,9f,01,30,d9,3d,7b,6c,46,e9,11,57,59,df,de,16,fe,e8,f7,e3,e4,29,c3,3c,6e,59,aa,3c,82,40,36,ff,0a,e4,04,79,b5,ec,62,8c,7b,ec,b9,ce,21,40,66,d4,00,83,15,a1,e6,75,e3,cc,f2,29,2f,84,81</param1>
+    <param2 type="int32">-1</param2>
+    <result1 type="bigint">00,00</result1>
+  </dataitem>
+  <dataitem index="55">
+    <param1 type="bigint">01,85,01,00,00,00,00,00,00,00,00,fc,ff,ff,ff,ff,ff,ff,ff,ff,03,04,39,38,17,91,a4,87,1d,ec,15,d5,5d,a9,2d,94,86,96,b0,19,ea,05,69,11,28,5f,ed,53,07,05,9d,75,3a,43,77,6f,24,8f,6c,ca,3a,2c,cc,93,ee,c3,d5,f6,1d,68,f7,70,f3,f2,52,9f,01,30,d9,3d,7b,6c,46,e9,11,57,59,df,de,16,fe,e8,f7,e3,e4,29,c3,3c,6e,59,aa,3c,82,40,36,ff,0a,e4,04,79,b5,ec,62,8c,7b,ec,b9,ce,21,40,66,d4,00,83,15,a1,e6,75,e3,cc,f2,29,2f,84,81</param1>
+    <param2 type="int32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="56">
     <param1 type="bigint">01,85,01,00,00,00,00,00,00,00,00,fc,ff,ff,ff,ff,ff,ff,ff,ff,03,04,39,38,17,91,a4,87,1d,ec,15,d5,5d,a9,2d,94,86,96,b0,19,ea,05,69,11,28,5f,ed,53,07,05,9d,75,3a,43,77,6f,24,8f,6c,ca,3a,2c,cc,93,ee,c3,d5,f6,1d,68,f7,70,f3,f2,52,9f,01,30,d9,3d,7b,6c,46,e9,11,57,59,df,de,16,fe,e8,f7,e3,e4,29,c3,3c,6e,59,aa,3c,82,40,36,ff,0a,e4,04,79,b5,ec,62,8c,7b,ec,b9,ce,21,40,66,d4,00,83,15,a1,e6,75,e3,cc,f2,29,2f,84,81</param1>
     <param2 type="int32">1</param2>
     <result1 type="bigint">00,00</result1>

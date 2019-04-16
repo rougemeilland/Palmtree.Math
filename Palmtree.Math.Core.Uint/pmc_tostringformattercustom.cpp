@@ -27,6 +27,7 @@
 #include "pmc_resourceholder_uint.h"
 #include "pmc_threadcontext.h"
 #include "pmc_thousandseparatedstringwriter.h"
+#include "pmc_string.h"
 #include "pmc_lock.h"
 
 
@@ -50,6 +51,16 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
     // '.' が複数ある場合は最初のものを除いて無視される。【例：(-0.0123456789).ToString("0.0 00.00") => -0.0 1235】
     // 三つ目の';'の後の文字列は数値の符号が何であっても表示されない。つまり無視される。
 
+
+#ifdef _M_IX86
+    static const __UNIT_TYPE _10n_base_number = 1000000000U; // 10^9
+    static const size_t _digit_count_on_word = 9;
+#elif defined (_M_X64)
+    static const __UNIT_TYPE _10n_base_number = 10000000000000000000UL; // 10^19
+    static const size_t _digit_count_on_word = 19;
+#else
+#error unknown platform
+#endif
 
     FormatToken::FormatToken()
         : BidirectionalListHeader<FormatToken>(this)
@@ -114,7 +125,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
     }
 
     SectionToken::SectionToken(ThreadContext& tc)
-        : _tc(tc), _section_root(), _10_factor(0), _enabled_grouping(false), _max_int_part_length(0), _min_int_part_length(0), _max_frac_part_length(0), _min_frac_part_length(0), _decimal_point_separater(nullptr), _exponent_part(nullptr), _exists_multi_section(false)
+        : _tc(tc), _section_root(), _10_factor(0), _enabled_grouping(false), _max_int_part_length(0), _min_int_part_length(0), _max_frac_part_length(0), _min_frac_part_length(0), _decimal_point_separater(nullptr), _exponent_part(nullptr), _auto_negative_sign(true)
     {
     }
 
@@ -131,9 +142,9 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         return (this);
     }
 
-    void SectionToken::Parse(bool exists_multi_section)
+    void SectionToken::Parse(bool auto_negative_sign)
     {
-        _exists_multi_section = exists_multi_section;
+        _auto_negative_sign = auto_negative_sign;
 
         // format を前から走査する
         bool found_int_part_zero = false;
@@ -236,7 +247,6 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
                 {
                 case L'0':
                     found_frac_part_zero = true;
-                    ++count_frac_part_zero_or_sharp;
                     ++count_frac_part_zero;
                     break;
                 case L'#':
@@ -245,7 +255,6 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
                         fp->SetLetter(L'0');
                         ++count_frac_part_zero;
                     }
-                    ++count_frac_part_zero_or_sharp;
                     break;
                 default:
                     break;
@@ -266,68 +275,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
             WriteZeroValue(format_option, writer);
         else
         {
-            ResourceHolderUINT root(_tc);
-
-            if (_exponent_part != nullptr)
-            {
-                // 指数表記の場合
-
-                int x_int_part_length = PMC_FloorLog10_R_Imp(_tc, x_numerator, x_denominator) + 1;
-                // 現在の整数部の桁数は x_int_part_length 桁で、さらに追加して小数部を何桁表示する必要があるか。
-                // 合計で表示する桁数は _max_int_part_length + _min_frac_part_length であるので、表示する必要のある小数部の桁数 x_frac_part_length は
-                int x_frac_part_length = _max_int_part_length + _min_frac_part_length - x_int_part_length;
-                // である。
-
-                // 小数部を丸める
-                x_numerator = PMC_Round_R_Imp(_tc, x_numerator, x_denominator, x_frac_part_length, PMC_MIDPOINT_ROUNDING_HALF_EVEN, &x_denominator);
-                root.HookNumber(x_numerator);
-                root.HookNumber(x_denominator);
-
-                // 丸めた結果の数値が 0 である場合、代替セクションパーサに処理を委譲する
-                if (alternative_section != nullptr && x_numerator->IS_ZERO)
-                {
-                    alternative_section->Format(nullptr, format_option, SIGN_ZERO, x_numerator, x_denominator, writer);
-                    return;
-                }
-
-                // 整数部が _int_part_length になるよう仮数と指数を調整する。
-                int exp_part = _10_factor + x_int_part_length - _max_int_part_length;
-                Times10n_R(_tc, root, x_numerator, x_denominator, x_int_part_length - _max_int_part_length, &x_numerator, &x_denominator);
-            }
-            else
-            {
-                // 固定小数点表記の場合
-
-                // 小数部を丸める
-                x_numerator = PMC_Round_R_Imp(_tc, x_numerator, x_denominator, _max_frac_part_length + _10_factor, PMC_MIDPOINT_ROUNDING_HALF_EVEN, &x_denominator);
-                root.HookNumber(x_numerator);
-                root.HookNumber(x_denominator);
-
-                // 丸めた結果の数値が 0 である場合、代替セクションパーサに処理を委譲する
-                if (alternative_section != nullptr && x_numerator->IS_ZERO)
-                {
-                    alternative_section->Format(nullptr, format_option, SIGN_ZERO, x_numerator, x_denominator, writer);
-                    return;
-                }
-
-                // _10_factor を数値に反映させる
-                Times10n_R(_tc, root, x_numerator, x_denominator, _10_factor, &x_numerator, &x_denominator);
-            }
-
-            // x を整数部と小数部に分ける
-            NUMBER_OBJECT_UINT* t_int_part;
-            NUMBER_OBJECT_UINT* t_frac_part_numerator = PMC_DivRem_UX_UX_Imp(_tc, x_numerator, x_denominator, &t_int_part);
-            NUMBER_OBJECT_UINT* t_frac_part_denominator = x_denominator;
-            root.HookNumber(t_int_part);
-            root.HookNumber(t_frac_part_numerator);
-
-            throw InternalErrorException(L"", L"");
-
-
-            //この後、;
-            //・セクションが1つだけ存在しかつ丸め後の数値が負であった場合は NegativeSign を出力する;
-            //・整数部と小数部をそれぞれ文字列に変換する。小数部は_frac_part_length桁の単純数字列、整数部は(必要ならグルーピング済みの)単純数字列。;
-            //・何番目のプレースホルダに何番目の文字を割り振るか決める。プレースホルダの桁数分だけの構造体配列にして各要素に割り当て文字を記録するのはどうか。;
+            WriteNonZeroValue(x_sign, x_numerator, x_denominator, alternative_section, format_option, writer);
         }
     }
 
@@ -400,6 +348,45 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
 
     void SectionToken::WriteZeroValue(const PMC_NUMBER_FORMAT_INFO& format_option, StringWriter & writer)
     {
+        if (_exponent_part != nullptr)
+        {
+            // 指数表現の場合
+
+            WriteZeroValueByExponential(format_option, writer);
+        }
+        else
+        {
+            // 固定小数点表現の場合
+
+            WriteZeroValueByFixedPoint(format_option, writer);
+        }
+    }
+
+    void SectionToken::WriteZeroValueByFixedPoint(const PMC_NUMBER_FORMAT_INFO & format_option, StringWriter & writer)
+    {
+        ResourceHolderUINT root(_tc);
+
+        // 整数部の文字列化
+        size_t int_buf_length = _min_int_part_length * 2 + 1;
+        wchar_t* int_buf = root.AllocateString(int_buf_length);
+        ReverseStringWriter int_buf_writer(int_buf, int_buf_length);
+        ThousandSeparatedStringWriter t_int_buf_writer(int_buf_writer, _enabled_grouping ? L'N' : L'D', format_option);
+        t_int_buf_writer.Write(L'0', _min_int_part_length);
+        root.CheckString(int_buf);
+
+        // 小数部の文字列化
+        size_t frac_buf_length = _min_frac_part_length + 1;
+        wchar_t* frac_buf = root.AllocateString(frac_buf_length);
+        StringWriter frac_buf_writer(frac_buf, frac_buf_length);
+        frac_buf_writer.Write(L'0', _min_frac_part_length);
+        root.CheckString(frac_buf);
+
+        // カスタム数値書式文字列のプレースホルダに適用する
+        ApplyPlaceHolder(SIGN_ZERO, t_int_buf_writer.GetString(), frac_buf_writer.GetString(), 0, format_option, writer);
+    }
+
+    void SectionToken::WriteZeroValueByExponential(const PMC_NUMBER_FORMAT_INFO & format_option, StringWriter & writer)
+    {
         ResourceHolderUINT root(_tc);
 
         // 整数部の文字列化
@@ -418,63 +405,200 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         root.CheckString(frac_buf);
 
         // カスタム数値書式文字列のプレースホルダに適用する
-        ApplyPlaceHolder(format_option, t_int_buf_writer.GetString(), frac_buf_writer.GetString(), 0, writer);
+        ApplyPlaceHolder(SIGN_ZERO, t_int_buf_writer.GetString(), frac_buf_writer.GetString(), 0, format_option, writer);
     }
 
-    void SectionToken::ApplyPlaceHolder(const PMC_NUMBER_FORMAT_INFO & format_option, const wchar_t* int_part_buf, const wchar_t* frac_part_buf, int exp_part, StringWriter & writer)
+    void SectionToken::WriteNonZeroValue(SIGN_T x_sign, NUMBER_OBJECT_UINT * x_numerator, NUMBER_OBJECT_UINT * x_denominator, SectionToken * alternative_section, const PMC_NUMBER_FORMAT_INFO & format_option, StringWriter & writer)
+    {
+        if (_exponent_part != nullptr)
+        {
+            // 指数表記の場合
+
+            WriteNonZeroValueByExponential(x_sign, x_numerator, x_denominator, alternative_section, format_option, writer);
+        }
+        else
+        {
+            // 固定小数点表記の場合
+
+            WriteNonZeroValueByFixedPoint(x_sign, x_numerator, x_denominator, alternative_section, format_option, writer);
+        }
+    }
+
+    void SectionToken::WriteNonZeroValueByFixedPoint(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, SectionToken* alternative_section, const PMC_NUMBER_FORMAT_INFO& format_option, StringWriter& writer)
+    {
+        ResourceHolderUINT root(_tc);
+
+        // 小数部を丸める
+        x_numerator = PMC_Round_R_Imp(_tc, x_numerator, x_denominator, _max_frac_part_length + _10_factor, PMC_GetDefaultRoundingMode(), &x_denominator);
+        root.HookNumber(x_numerator);
+        root.HookNumber(x_denominator);
+
+        // 丸めた結果の数値が 0 である場合、代替セクションパーサに処理を委譲する
+        if (x_sign != 0 && x_numerator->IS_ZERO)
+        {
+            if (alternative_section != nullptr)
+                alternative_section->Format(nullptr, format_option, SIGN_ZERO, x_numerator, x_denominator, writer);
+        }
+        else
+        {
+            // _10_factor を数値に反映させる
+            Times10n_R(root, x_numerator, x_denominator, _10_factor, &x_numerator, &x_denominator);
+
+            // x を整数部と小数部に分ける
+            NUMBER_OBJECT_UINT* t_int_part;
+            NUMBER_OBJECT_UINT* t_frac_part_numerator = PMC_DivRem_UX_UX_Imp(_tc, x_numerator, x_denominator, &t_int_part);
+            NUMBER_OBJECT_UINT* t_frac_part_denominator = x_denominator;
+            root.HookNumber(t_int_part);
+            root.HookNumber(t_frac_part_numerator);
+
+            // 整数部の文字列化
+            size_t int_buf_length = t_int_part->UNIT_WORD_COUNT * (_digit_count_on_word + 1) * 2 + 1 + 1; // 桁区切り文字を考慮して余分に獲得する
+            wchar_t* int_buf = root.AllocateString(int_buf_length);
+            ReverseStringWriter int_buf_writer(int_buf, int_buf_length);
+            ThousandSeparatedStringWriter t_int_buf_writer(int_buf_writer, _enabled_grouping ? L'N' : L'D', format_option);
+            PMC_LToA_Imp(_tc, t_int_part, t_int_buf_writer);
+            root.CheckString(int_buf);
+
+            // 小数部の文字列化
+            size_t frac_buf_length = _max_frac_part_length + 1;
+            wchar_t* frac_buf = root.AllocateString(frac_buf_length);
+            StringWriter frac_buf_writer(frac_buf, frac_buf_length);
+            PMC_FToA_Imp(_tc, t_frac_part_numerator, t_frac_part_denominator, _max_frac_part_length, frac_buf_writer);
+            root.CheckString(frac_buf);
+
+            // カスタム数値書式文字列のプレースホルダに適用する
+            ApplyPlaceHolder(x_sign, t_int_buf_writer.GetString(), frac_buf_writer.GetString(), 0, format_option, writer);
+        }
+    }
+
+    void SectionToken::WriteNonZeroValueByExponential(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, SectionToken* alternative_section, const PMC_NUMBER_FORMAT_INFO& format_option, StringWriter& writer)
+    {
+        ResourceHolderUINT root(_tc);
+
+        int x_int_part_length = PMC_FloorLog10_R_Imp(_tc, x_numerator, x_denominator) + 1;
+        // 現在の整数部の桁数は x_int_part_length 桁で、さらに追加して小数部を何桁表示する必要があるか。
+        // 合計で表示する桁数は _max_int_part_length + _max_frac_part_length であるので、表示する必要のある小数部の桁数 x_frac_part_length は
+        int x_frac_part_length = _max_int_part_length + _max_frac_part_length - x_int_part_length;
+        // である。
+
+        // 小数部を丸める
+        x_numerator = PMC_Round_R_Imp(_tc, x_numerator, x_denominator, x_frac_part_length, PMC_GetDefaultRoundingMode(), &x_denominator);
+        root.HookNumber(x_numerator);
+        root.HookNumber(x_denominator);
+
+        // 丸めた結果の数値が 0 である場合、代替セクションパーサに処理を委譲する
+        if (x_sign != 0 && x_numerator->IS_ZERO)
+        {
+            if (alternative_section != nullptr)
+                alternative_section->Format(nullptr, format_option, SIGN_ZERO, x_numerator, x_denominator, writer);
+        }
+        else
+        {
+            // 稀に丸めにより整数部の桁数が 1 増えていることがあるので、再計算する
+            x_int_part_length = PMC_FloorLog10_R_Imp(_tc, x_numerator, x_denominator) + 1;
+
+            // 整数部が _max_int_part_length になるよう仮数と指数を調整する。
+            int exp_part = _10_factor + x_int_part_length - _max_int_part_length;
+            Times10n_R(root, x_numerator, x_denominator,  _max_int_part_length - x_int_part_length, &x_numerator, &x_denominator);
+
+            // x を整数部と小数部に分ける
+            NUMBER_OBJECT_UINT* t_int_part;
+            NUMBER_OBJECT_UINT* t_frac_part_numerator = PMC_DivRem_UX_UX_Imp(_tc, x_numerator, x_denominator, &t_int_part);
+            NUMBER_OBJECT_UINT* t_frac_part_denominator = x_denominator;
+            root.HookNumber(t_int_part);
+            root.HookNumber(t_frac_part_numerator);
+
+            // 整数部の文字列化
+            size_t int_buf_length = t_int_part->UNIT_WORD_COUNT * (_digit_count_on_word + 1) * 2 + 1 + 1; // 桁区切り文字を考慮して余分に獲得する
+            wchar_t* int_buf = root.AllocateString(int_buf_length);
+            ReverseStringWriter int_buf_writer(int_buf, int_buf_length);
+            ThousandSeparatedStringWriter t_int_buf_writer(int_buf_writer, _enabled_grouping ? L'N' : L'D', format_option);
+            PMC_LToA_Imp(_tc, t_int_part, t_int_buf_writer);
+            root.CheckString(int_buf);
+
+            // 小数部の文字列化
+            size_t frac_buf_length = _max_frac_part_length + 1;
+            wchar_t* frac_buf = root.AllocateString(frac_buf_length);
+            StringWriter frac_buf_writer(frac_buf, frac_buf_length);
+            PMC_FToA_Imp(_tc, t_frac_part_numerator, t_frac_part_denominator, _max_frac_part_length, frac_buf_writer);
+            root.CheckString(frac_buf);
+
+            // カスタム数値書式文字列のプレースホルダに適用する
+            ApplyPlaceHolder(x_sign, t_int_buf_writer.GetString(), frac_buf_writer.GetString(), exp_part, format_option, writer);
+        }
+    }
+
+    void SectionToken::Times10n_R(ResourceHolderUINT& root, NUMBER_OBJECT_UINT * x_numerator, NUMBER_OBJECT_UINT * x_denominator, int e, NUMBER_OBJECT_UINT ** r_numerator, NUMBER_OBJECT_UINT ** r_denominator)
+    {
+        *r_numerator = x_numerator;
+        *r_denominator = x_denominator;
+        if (e > 0)
+        {
+            NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, e);
+            root.HookNumber(factor);
+            *r_numerator = PMC_Multiply_UX_UX_Imp(_tc, *r_numerator, factor);
+            root.HookNumber(*r_numerator);
+        }
+        else if (e < 0)
+        {
+            NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, -e);
+            root.HookNumber(factor);
+            *r_denominator = PMC_Multiply_UX_UX_Imp(_tc, *r_denominator, factor);
+            root.HookNumber(*r_denominator);
+        }
+        else
+        {
+        }
+    }
+
+    void SectionToken::ApplyPlaceHolder(SIGN_T sign, const wchar_t* int_part_buf, const wchar_t* frac_part_buf, int exp_part, const PMC_NUMBER_FORMAT_INFO& format_option, StringWriter & writer)
     {
         ResourceHolderUINT root(_tc);
 
         // カスタム書式の小数点より前の文字の数(見積もり)
-        size_t int_str_buf_length = lstrlenW( int_part_buf) + 1;
-        for (FormatToken* p = _decimal_point_separater->Prev(); p != &_section_root; p = p->Prev())
+        size_t int_str_buf_length = lstrlenW(int_part_buf) + 1;
+        for (FormatToken* p = _decimal_point_separater == nullptr ? _section_root.Prev() : _decimal_point_separater->Prev(); p != &_section_root; p = p->Prev())
             int_str_buf_length += p->StringCount();
 
         // カスタム書式の小数点より前を編集
         wchar_t* int_str_buf = root.AllocateString(int_str_buf_length);
         ReverseStringWriter int_str_buf_writer(int_str_buf, int_str_buf_length);
         ReverseStringReader int_buf_reader(int_part_buf);
-        for (FormatToken* p = _decimal_point_separater->Prev(); p != &_section_root; p = p->Prev())
+        for (FormatToken* p = _decimal_point_separater == nullptr ? _section_root.Prev() : _decimal_point_separater->Prev(); p != &_section_root; p = p->Prev())
             p->Format(int_buf_reader, exp_part, int_str_buf_writer);
         root.CheckString(int_str_buf);
 
         // カスタム書式の小数点より後の文字の数(見積もり)
-        size_t frac_str_buf_length = lstrlenW( frac_part_buf) + 1;
-        for (FormatToken* p = _decimal_point_separater->Next(); p != &_section_root; p = p->Next())
-            frac_str_buf_length += p->StringCount();
+        size_t frac_str_buf_length = lstrlenW(frac_part_buf) + 1;
+        if (_decimal_point_separater != nullptr)
+        {
+            for (FormatToken* p = _decimal_point_separater->Next(); p != &_section_root; p = p->Next())
+                frac_str_buf_length += p->StringCount();
+        }
 
-        // カスタム書式の小数点より前を編集
+        // カスタム書式の小数点より後を編集
         wchar_t* frac_str_buf = root.AllocateString(frac_str_buf_length);
         StringWriter frac_str_buf_writer(frac_str_buf, frac_str_buf_length);
-        StringReader frac_buf_reader(frac_part_buf);
-        for (FormatToken* p = _decimal_point_separater->Next(); p != &_section_root; p = p->Next())
-            p->Format(frac_buf_reader, exp_part, frac_str_buf_writer);
-        root.CheckString(frac_str_buf);
+        if (_decimal_point_separater != nullptr)
+        {
+            StringReader frac_buf_reader(frac_part_buf);
+            for (FormatToken* p = _decimal_point_separater->Next(); p != &_section_root; p = p->Next())
+                p->Format(frac_buf_reader, exp_part, frac_str_buf_writer);
+            root.CheckString(frac_str_buf);
+        }
 
         // 編集したパーツを結合する
+        if (_auto_negative_sign && sign < 0 && (int_part_buf[0] != L'\0' || frac_part_buf[0] != L'\0'))
+            writer.Write(format_option.NegativeSign);
         writer.Write(int_str_buf_writer.GetString());
-        if (frac_str_buf[0] != L'\0')
-            _decimal_point_separater->Format(format_option, writer);
+        if (_decimal_point_separater != nullptr)
+        {
+            if (_max_int_part_length <= 0)
+                writer.Write(int_part_buf);
+            if (frac_part_buf[0] != L'\0' || _min_frac_part_length > 0)
+                _decimal_point_separater->Format(format_option, writer);
+        }
         writer.Write(frac_str_buf_writer.GetString());
-    }
-
-    void SectionToken::Times10n_R(ThreadContext& tc, ResourceHolderUINT& root, NUMBER_OBJECT_UINT * x_numerator, NUMBER_OBJECT_UINT * x_denominator, int e, NUMBER_OBJECT_UINT ** r_numerator, NUMBER_OBJECT_UINT ** r_denominator)
-    {
-        if (e > 0)
-        {
-            NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, e);
-            x_denominator = PMC_Multiply_UX_UX_Imp(tc, x_denominator, factor);
-            root.HookNumber(x_denominator);
-        }
-        else if (e < 0)
-        {
-            NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, -e);
-            x_numerator = PMC_Multiply_UX_UX_Imp(tc, x_numerator, factor);
-            root.HookNumber(x_numerator);
-        }
-        else
-        {
-        }
     }
 
     LiteralToken::LiteralToken(const wchar_t * reference, int reference_count)
@@ -530,49 +654,46 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
 
     void IntPartPlaceHolderToken::Format(StringReader & source_reader, int exponent, StringWriter & writer)
     {
+        bool break_loop = false;
+        while (!break_loop)
+        {
+            switch (source_reader.PeekChar())
+            {
+            case L'\0':
+                if (_letter == L'0')
+                    writer.Write(L'0');
+                break_loop = true;
+                break;
+            case L'0':
+            case L'1':
+            case L'2':
+            case L'3':
+            case L'4':
+            case L'5':
+            case L'6':
+            case L'7':
+            case L'8':
+            case L'9':
+                writer.Write(source_reader.ReadChar());
+                break_loop = true;
+                break;
+            default:
+                // グループ区切り文字の場合にこのルートに到着する
+                writer.Write(source_reader.ReadChar());
+                break;
+            }
+        }
         if (_first)
         {
             // 最上位桁の場合
             // source_reader に残っているものをすべて出力する
             writer.Write(source_reader);
         }
-        else
-        {
-            bool break_loop = false;
-            while (!break_loop)
-            {
-                switch (source_reader.PeekChar())
-                {
-                case L'\0':
-                    if (_letter == L'0')
-                        writer.Write(L'0');
-                    break_loop = true;
-                    break;
-                case L'0':
-                case L'1':
-                case L'2':
-                case L'3':
-                case L'4':
-                case L'5':
-                case L'6':
-                case L'7':
-                case L'8':
-                case L'9':
-                    writer.Write(source_reader.ReadChar());
-                    break_loop = true;
-                    break;
-                default:
-                    // グループ区切り文字の場合にこのルートに到着する
-                    writer.Write(source_reader.ReadChar());
-                    break;
-                }
-            }
-        }
     }
 
     int IntPartPlaceHolderToken::StringCount()
     {
-        return (0);
+        return (_letter == L'0' ? 1 : 0);
     }
 
     DecimalSeparaterToken::DecimalSeparaterToken(const PMC_NUMBER_FORMAT_INFO& format_option)
@@ -657,7 +778,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
 
     int FracPartPlaceHolderToken::StringCount()
     {
-        return (0);
+        return (_letter == L'0' ? 1 : 0);
     }
 
     ExponentToken::ExponentToken(const PMC_NUMBER_FORMAT_INFO& format_option, wchar_t header, wchar_t sign, int zero_count)
@@ -677,7 +798,12 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         wchar_t exp_format[22];
         wsprintfW(exp_format, L"%%c%%s%%0%dd", _zero_count);
         wchar_t exp_buf[1 + 1+ 21 + 1];
-        wsprintfW(exp_buf, exp_format, _header, _sign == L'+' ? +L"+" : L"", exponent);
+        if (exponent > 0)
+            wsprintfW(exp_buf, exp_format, _header, _sign == L'+' ? L"+" : L"", exponent);
+        else if (exponent == 0)
+            wsprintfW(exp_buf, exp_format, _header, L"", exponent);
+        else
+            wsprintfW(exp_buf, exp_format, _header, L"-", -exponent);
         writer.Write(exp_buf);
     }
 
@@ -734,28 +860,12 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         : _tc(tc), _root(), _format(format), _format_option(*format_option), _section0_root(nullptr), _section1_root(nullptr), _section2_root(nullptr)
     {
         Parse();
-        if ((_section0_root = _root.Next()->ToSection()) == nullptr)
-        {
-            _section1_root = nullptr;
-            _section2_root = nullptr;
-        }
-        else if ((_section1_root = _section0_root->Next()->ToSection()) == nullptr)
-            _section2_root = nullptr;
-        else
-            _section2_root = _section1_root->Next()->ToSection();
-        
-        if (_section1_root != nullptr && _section1_root->IsEmpty())
-            _section1_root = nullptr;
-        if (_section2_root != nullptr && _section2_root->IsEmpty())
-            _section2_root = nullptr;
-
-        bool exists_multi_section = _section1_root != nullptr || _section2_root != nullptr;
-        if (_section0_root != nullptr)
-            _section0_root->Parse(exists_multi_section);
-        if (_section1_root != nullptr)
-            _section1_root->Parse(exists_multi_section);
-        if (_section2_root != nullptr)
-            _section2_root->Parse(exists_multi_section);
+        while (_section2_root == nullptr)
+            AppendSection();
+        bool auto_negative_sign = _section1_root->IsEmpty();
+        _section0_root->Parse(auto_negative_sign);
+        _section1_root->Parse(auto_negative_sign);
+        _section2_root->Parse(auto_negative_sign);
     }
 
     ToStringFormatterCustom::~ToStringFormatterCustom()
@@ -768,31 +878,22 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
 
     void ToStringFormatterCustom::Format(SIGN_T x_sign, NUMBER_OBJECT_UINT * x_numerator, NUMBER_OBJECT_UINT * x_denominator, StringWriter& writer)
     {
-        SectionToken* zero_value_section = (_section2_root != nullptr) ? _section2_root : nullptr;
+        SectionToken* zero_value_section = !_section2_root->IsEmpty() ? _section2_root : _section0_root;
         if (x_sign > 0)
-        {
-            if (_section0_root != nullptr)
-                _section0_root->Format(zero_value_section != _section0_root ? zero_value_section : nullptr, _format_option, x_sign, x_numerator, x_denominator, writer);
-            else
-                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_tostringformattercustom.cpp;ToStringFormatterCustom::Format;1");
-        }
+            _section0_root->Format(zero_value_section, _format_option, x_sign, x_numerator, x_denominator, writer);
         else if (x_sign < 0)
         {
-            if (_section1_root != nullptr)
-                _section1_root->Format(zero_value_section != _section1_root ? zero_value_section : nullptr, _format_option, x_sign, x_numerator, x_denominator, writer);
-            else if (_section0_root != nullptr)
-                _section0_root->Format(zero_value_section != _section0_root ? zero_value_section : nullptr, _format_option, x_sign, x_numerator, x_denominator, writer);
+            if (!_section1_root->IsEmpty())
+                _section1_root->Format(zero_value_section, _format_option, x_sign, x_numerator, x_denominator, writer);
             else
-                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_tostringformattercustom.cpp;ToStringFormatterCustom::Format;2");
+                _section0_root->Format(zero_value_section, _format_option, x_sign, x_numerator, x_denominator, writer);
         }
         else
         {
-            if (_section2_root != nullptr)
-                _section2_root->Format(zero_value_section != _section2_root ? zero_value_section : nullptr, _format_option, x_sign, x_numerator, x_denominator, writer);
-            else if (_section0_root != nullptr)
-                _section0_root->Format(zero_value_section != _section0_root ? zero_value_section : nullptr, _format_option, x_sign, x_numerator, x_denominator, writer);
+            if (!_section2_root->IsEmpty())
+                _section2_root->Format(zero_value_section, _format_option, x_sign, x_numerator, x_denominator, writer);
             else
-                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_tostringformattercustom.cpp;ToStringFormatterCustom::Format;3");
+                _section0_root->Format(zero_value_section, _format_option, x_sign, x_numerator, x_denominator, writer);
         }
     }
 
@@ -801,6 +902,15 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         SectionToken* token = new SectionToken(_tc);
         _tc.IncrementTypeBAllocationCount();
         _root.AddBefore(token);
+        if (_section0_root == nullptr)
+            _section0_root = token;
+        else if (_section1_root == nullptr)
+            _section1_root = token;
+        else if (_section2_root == nullptr)
+            _section2_root = token;
+        else
+        {
+        }
         return (token);
     }
 
@@ -928,6 +1038,17 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
                     ++ptr;
                 }
                 break;
+            case L'\'':
+                ++ptr;
+                // 次にシングルクォートが見つかるまですべての文字をリテラルとみなして出力する ('\' によるエスケープは不可)
+                {
+                    const wchar_t* ptr2 = ptr;
+                    while (*ptr2 != L'\0' && *ptr2 != '\'')
+                        ++ptr2;
+                    current_sention->AppendLiteral(ptr, (int)(ptr2 - ptr));
+                    ptr = *ptr2 == L'\0' ? ptr2 : ptr2 + 1;
+                }
+                break;
             case ';':
                 ++ptr;
                 // 新たなセクションを作る
@@ -938,7 +1059,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
                 found_decimal_point = false;
                 break;
             default:
-                // 文字列リテラルとみなして捨てる
+                // 文字列リテラルとみなして出力する
                 current_sention->AppendLiteral(ptr, 1);
                 ++ptr;
                 break;

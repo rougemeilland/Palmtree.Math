@@ -34,7 +34,7 @@ namespace Palmtree::Math::Core::Internal
 {
 
     class __DLLEXPORT_UINT ThousandSeparatedStringWriter
-        : public StringWriter
+        : public ReverseStringWriter
     {
     private:
         ReverseStringWriter& _native_writer;

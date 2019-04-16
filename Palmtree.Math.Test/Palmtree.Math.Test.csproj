@@ -385,6 +385,8 @@
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToBigInt_R.cs" />
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToInt32_R.cs" />
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToInt64_R.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToStringCustom2.cs" />
+    <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToStringCustom1.cs" />
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToStringC.cs" />
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToStringE.cs" />
     <Compile Include="Plugin\Rtnl\ComponentTestPlugin_ToStringF.cs" />
@@ -488,6 +490,8 @@
     <Compile Include="Plugin\Sint\ComponentTestPlugin_Pow_I_UI.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_Pow_L_UI.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_Pow_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ToStringCustom2.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_ToStringCustom1.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_ToUInt32_X.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_ToUBigInt_X.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_op_ToUInt64_X.cs" />
@@ -943,6 +947,8 @@
     <Compile Include="Plugin\Uint\ComponentTestPlugin_Pow_L_I.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_static_Pow_X_I.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_ToBigInt_UX.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ToStringCustom2.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_ToStringCustom1.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_ToUInt32_UX.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_ToUInt64_UX.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_ToInt64_UX.cs" />
@@ -1653,6 +1659,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Rtnl\test_data_tostringc.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_tostringcustom1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Rtnl\test_data_tostringcustom2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Rtnl\test_data_tostringe.xml">
@@ -2540,6 +2552,12 @@
     <Content Include="Data\Sint\test_data_tostringc.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\Sint\test_data_tostringcustom1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_tostringcustom2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Sint\test_data_tostringd.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2904,6 +2922,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Uint\test_data_tostringc.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_tostringcustom1.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_tostringcustom2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Uint\test_data_tostringd.xml">

@@ -868,49 +868,49 @@
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0</param3>
-    <result1 type="string">¥123.4</result1>
+    <result1 type="string">¥123.5</result1>
   </dataitem>
   <dataitem index="145">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0:CurrencyPositivePattern=1</param3>
-    <result1 type="string">123.4¥</result1>
+    <result1 type="string">123.5¥</result1>
   </dataitem>
   <dataitem index="146">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0:CurrencyPositivePattern=2</param3>
-    <result1 type="string">¥ 123.4</result1>
+    <result1 type="string">¥ 123.5</result1>
   </dataitem>
   <dataitem index="147">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0:CurrencyPositivePattern=3</param3>
-    <result1 type="string">123.4 ¥</result1>
+    <result1 type="string">123.5 ¥</result1>
   </dataitem>
   <dataitem index="148">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT123,4</result1>
+    <result1 type="string">DT123,5</result1>
   </dataitem>
   <dataitem index="149">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=1</param3>
-    <result1 type="string">123,4DT</result1>
+    <result1 type="string">123,5DT</result1>
   </dataitem>
   <dataitem index="150">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=2</param3>
-    <result1 type="string">DT 123,4</result1>
+    <result1 type="string">DT 123,5</result1>
   </dataitem>
   <dataitem index="151">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0</param3>
-    <result1 type="string">123,4 DT</result1>
+    <result1 type="string">123,5 DT</result1>
   </dataitem>
   <dataitem index="152">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
@@ -1060,49 +1060,49 @@
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0</param3>
-    <result1 type="string">¥123.4</result1>
+    <result1 type="string">¥123.5</result1>
   </dataitem>
   <dataitem index="177">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0:CurrencyPositivePattern=1</param3>
-    <result1 type="string">123.4¥</result1>
+    <result1 type="string">123.5¥</result1>
   </dataitem>
   <dataitem index="178">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0:CurrencyPositivePattern=2</param3>
-    <result1 type="string">¥ 123.4</result1>
+    <result1 type="string">¥ 123.5</result1>
   </dataitem>
   <dataitem index="179">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0:CurrencyPositivePattern=3</param3>
-    <result1 type="string">123.4 ¥</result1>
+    <result1 type="string">123.5 ¥</result1>
   </dataitem>
   <dataitem index="180">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT123,4</result1>
+    <result1 type="string">DT123,5</result1>
   </dataitem>
   <dataitem index="181">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=1</param3>
-    <result1 type="string">123,4DT</result1>
+    <result1 type="string">123,5DT</result1>
   </dataitem>
   <dataitem index="182">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=2</param3>
-    <result1 type="string">DT 123,4</result1>
+    <result1 type="string">DT 123,5</result1>
   </dataitem>
   <dataitem index="183">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0</param3>
-    <result1 type="string">123,4 DT</result1>
+    <result1 type="string">123,5 DT</result1>
   </dataitem>
   <dataitem index="184">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
@@ -1180,25 +1180,25 @@
     <param1 type="rational">10,01,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT1,234</result1>
+    <result1 type="string">DT1,235</result1>
   </dataitem>
   <dataitem index="197">
     <param1 type="rational">10,01,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=1</param3>
-    <result1 type="string">1,234DT</result1>
+    <result1 type="string">1,235DT</result1>
   </dataitem>
   <dataitem index="198">
     <param1 type="rational">10,01,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=2</param3>
-    <result1 type="string">DT 1,234</result1>
+    <result1 type="string">DT 1,235</result1>
   </dataitem>
   <dataitem index="199">
     <param1 type="rational">10,01,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0</param3>
-    <result1 type="string">1,234 DT</result1>
+    <result1 type="string">1,235 DT</result1>
   </dataitem>
   <dataitem index="200">
     <param1 type="rational">10,01,02,a5,09,01,02,d0,07</param1>
@@ -1372,25 +1372,25 @@
     <param1 type="rational">10,01,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT1,234</result1>
+    <result1 type="string">DT1,235</result1>
   </dataitem>
   <dataitem index="229">
     <param1 type="rational">10,01,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=1</param3>
-    <result1 type="string">1,234DT</result1>
+    <result1 type="string">1,235DT</result1>
   </dataitem>
   <dataitem index="230">
     <param1 type="rational">10,01,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=2</param3>
-    <result1 type="string">DT 1,234</result1>
+    <result1 type="string">DT 1,235</result1>
   </dataitem>
   <dataitem index="231">
     <param1 type="rational">10,01,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0</param3>
-    <result1 type="string">1,234 DT</result1>
+    <result1 type="string">1,235 DT</result1>
   </dataitem>
   <dataitem index="232">
     <param1 type="rational">10,01,02,a5,09,01,02,d0,07</param1>
@@ -1684,49 +1684,49 @@
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0</param3>
-    <result1 type="string">¥0.01234</result1>
+    <result1 type="string">¥0.01235</result1>
   </dataitem>
   <dataitem index="281">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0:CurrencyPositivePattern=1</param3>
-    <result1 type="string">0.01234¥</result1>
+    <result1 type="string">0.01235¥</result1>
   </dataitem>
   <dataitem index="282">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0:CurrencyPositivePattern=2</param3>
-    <result1 type="string">¥ 0.01234</result1>
+    <result1 type="string">¥ 0.01235</result1>
   </dataitem>
   <dataitem index="283">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0:CurrencyPositivePattern=3</param3>
-    <result1 type="string">0.01234 ¥</result1>
+    <result1 type="string">0.01235 ¥</result1>
   </dataitem>
   <dataitem index="284">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT0,01234</result1>
+    <result1 type="string">DT0,01235</result1>
   </dataitem>
   <dataitem index="285">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=1</param3>
-    <result1 type="string">0,01234DT</result1>
+    <result1 type="string">0,01235DT</result1>
   </dataitem>
   <dataitem index="286">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=2</param3>
-    <result1 type="string">DT 0,01234</result1>
+    <result1 type="string">DT 0,01235</result1>
   </dataitem>
   <dataitem index="287">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0</param3>
-    <result1 type="string">0,01234 DT</result1>
+    <result1 type="string">0,01235 DT</result1>
   </dataitem>
   <dataitem index="288">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
@@ -1876,49 +1876,49 @@
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0</param3>
-    <result1 type="string">¥0.01234</result1>
+    <result1 type="string">¥0.01235</result1>
   </dataitem>
   <dataitem index="313">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0:CurrencyPositivePattern=1</param3>
-    <result1 type="string">0.01234¥</result1>
+    <result1 type="string">0.01235¥</result1>
   </dataitem>
   <dataitem index="314">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0:CurrencyPositivePattern=2</param3>
-    <result1 type="string">¥ 0.01234</result1>
+    <result1 type="string">¥ 0.01235</result1>
   </dataitem>
   <dataitem index="315">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0:CurrencyPositivePattern=3</param3>
-    <result1 type="string">0.01234 ¥</result1>
+    <result1 type="string">0.01235 ¥</result1>
   </dataitem>
   <dataitem index="316">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT0,01234</result1>
+    <result1 type="string">DT0,01235</result1>
   </dataitem>
   <dataitem index="317">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=1</param3>
-    <result1 type="string">0,01234DT</result1>
+    <result1 type="string">0,01235DT</result1>
   </dataitem>
   <dataitem index="318">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=2</param3>
-    <result1 type="string">DT 0,01234</result1>
+    <result1 type="string">DT 0,01235</result1>
   </dataitem>
   <dataitem index="319">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0</param3>
-    <result1 type="string">0,01234 DT</result1>
+    <result1 type="string">0,01235 DT</result1>
   </dataitem>
   <dataitem index="320">
     <param1 type="rational">10,01,05,ff,e3,0b,54,02,01,02,10,27</param1>
@@ -4228,193 +4228,193 @@
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0</param3>
-    <result1 type="string">(¥123.4)</result1>
+    <result1 type="string">(¥123.5)</result1>
   </dataitem>
   <dataitem index="705">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
-    <result1 type="string">-¥123.4</result1>
+    <result1 type="string">-¥123.5</result1>
   </dataitem>
   <dataitem index="706">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=2</param3>
-    <result1 type="string">¥-123.4</result1>
+    <result1 type="string">¥-123.5</result1>
   </dataitem>
   <dataitem index="707">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=3</param3>
-    <result1 type="string">¥123.4-</result1>
+    <result1 type="string">¥123.5-</result1>
   </dataitem>
   <dataitem index="708">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=4</param3>
-    <result1 type="string">(123.4¥)</result1>
+    <result1 type="string">(123.5¥)</result1>
   </dataitem>
   <dataitem index="709">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=5</param3>
-    <result1 type="string">-123.4¥</result1>
+    <result1 type="string">-123.5¥</result1>
   </dataitem>
   <dataitem index="710">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=6</param3>
-    <result1 type="string">123.4-¥</result1>
+    <result1 type="string">123.5-¥</result1>
   </dataitem>
   <dataitem index="711">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=7</param3>
-    <result1 type="string">123.4¥-</result1>
+    <result1 type="string">123.5¥-</result1>
   </dataitem>
   <dataitem index="712">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=8</param3>
-    <result1 type="string">-123.4 ¥</result1>
+    <result1 type="string">-123.5 ¥</result1>
   </dataitem>
   <dataitem index="713">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=9</param3>
-    <result1 type="string">-¥ 123.4</result1>
+    <result1 type="string">-¥ 123.5</result1>
   </dataitem>
   <dataitem index="714">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=10</param3>
-    <result1 type="string">123.4 ¥-</result1>
+    <result1 type="string">123.5 ¥-</result1>
   </dataitem>
   <dataitem index="715">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=11</param3>
-    <result1 type="string">¥ 123.4-</result1>
+    <result1 type="string">¥ 123.5-</result1>
   </dataitem>
   <dataitem index="716">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=12</param3>
-    <result1 type="string">¥ -123.4</result1>
+    <result1 type="string">¥ -123.5</result1>
   </dataitem>
   <dataitem index="717">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=13</param3>
-    <result1 type="string">123.4- ¥</result1>
+    <result1 type="string">123.5- ¥</result1>
   </dataitem>
   <dataitem index="718">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=14</param3>
-    <result1 type="string">(¥ 123.4)</result1>
+    <result1 type="string">(¥ 123.5)</result1>
   </dataitem>
   <dataitem index="719">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=15</param3>
-    <result1 type="string">(123.4 ¥)</result1>
+    <result1 type="string">(123.5 ¥)</result1>
   </dataitem>
   <dataitem index="720">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(DT123,4)</result1>
+    <result1 type="string">(DT123,5)</result1>
   </dataitem>
   <dataitem index="721">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=1:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-DT123,4</result1>
+    <result1 type="string">-DT123,5</result1>
   </dataitem>
   <dataitem index="722">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=2:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT-123,4</result1>
+    <result1 type="string">DT-123,5</result1>
   </dataitem>
   <dataitem index="723">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=3:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT123,4-</result1>
+    <result1 type="string">DT123,5-</result1>
   </dataitem>
   <dataitem index="724">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=4:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(123,4DT)</result1>
+    <result1 type="string">(123,5DT)</result1>
   </dataitem>
   <dataitem index="725">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=5:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-123,4DT</result1>
+    <result1 type="string">-123,5DT</result1>
   </dataitem>
   <dataitem index="726">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=6:CurrencyPositivePattern=0</param3>
-    <result1 type="string">123,4-DT</result1>
+    <result1 type="string">123,5-DT</result1>
   </dataitem>
   <dataitem index="727">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=7:CurrencyPositivePattern=0</param3>
-    <result1 type="string">123,4DT-</result1>
+    <result1 type="string">123,5DT-</result1>
   </dataitem>
   <dataitem index="728">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-123,4 DT</result1>
+    <result1 type="string">-123,5 DT</result1>
   </dataitem>
   <dataitem index="729">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=9:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-DT 123,4</result1>
+    <result1 type="string">-DT 123,5</result1>
   </dataitem>
   <dataitem index="730">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=10:CurrencyPositivePattern=0</param3>
-    <result1 type="string">123,4 DT-</result1>
+    <result1 type="string">123,5 DT-</result1>
   </dataitem>
   <dataitem index="731">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=11:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT 123,4-</result1>
+    <result1 type="string">DT 123,5-</result1>
   </dataitem>
   <dataitem index="732">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=12:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT -123,4</result1>
+    <result1 type="string">DT -123,5</result1>
   </dataitem>
   <dataitem index="733">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=13:CurrencyPositivePattern=0</param3>
-    <result1 type="string">123,4- DT</result1>
+    <result1 type="string">123,5- DT</result1>
   </dataitem>
   <dataitem index="734">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=14:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(DT 123,4)</result1>
+    <result1 type="string">(DT 123,5)</result1>
   </dataitem>
   <dataitem index="735">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">c1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=15:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(123,4 DT)</result1>
+    <result1 type="string">(123,5 DT)</result1>
   </dataitem>
   <dataitem index="736">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
@@ -4996,193 +4996,193 @@
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0</param3>
-    <result1 type="string">(¥123.4)</result1>
+    <result1 type="string">(¥123.5)</result1>
   </dataitem>
   <dataitem index="833">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
-    <result1 type="string">-¥123.4</result1>
+    <result1 type="string">-¥123.5</result1>
   </dataitem>
   <dataitem index="834">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=2</param3>
-    <result1 type="string">¥-123.4</result1>
+    <result1 type="string">¥-123.5</result1>
   </dataitem>
   <dataitem index="835">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=3</param3>
-    <result1 type="string">¥123.4-</result1>
+    <result1 type="string">¥123.5-</result1>
   </dataitem>
   <dataitem index="836">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=4</param3>
-    <result1 type="string">(123.4¥)</result1>
+    <result1 type="string">(123.5¥)</result1>
   </dataitem>
   <dataitem index="837">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=5</param3>
-    <result1 type="string">-123.4¥</result1>
+    <result1 type="string">-123.5¥</result1>
   </dataitem>
   <dataitem index="838">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=6</param3>
-    <result1 type="string">123.4-¥</result1>
+    <result1 type="string">123.5-¥</result1>
   </dataitem>
   <dataitem index="839">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=7</param3>
-    <result1 type="string">123.4¥-</result1>
+    <result1 type="string">123.5¥-</result1>
   </dataitem>
   <dataitem index="840">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=8</param3>
-    <result1 type="string">-123.4 ¥</result1>
+    <result1 type="string">-123.5 ¥</result1>
   </dataitem>
   <dataitem index="841">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=9</param3>
-    <result1 type="string">-¥ 123.4</result1>
+    <result1 type="string">-¥ 123.5</result1>
   </dataitem>
   <dataitem index="842">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=10</param3>
-    <result1 type="string">123.4 ¥-</result1>
+    <result1 type="string">123.5 ¥-</result1>
   </dataitem>
   <dataitem index="843">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=11</param3>
-    <result1 type="string">¥ 123.4-</result1>
+    <result1 type="string">¥ 123.5-</result1>
   </dataitem>
   <dataitem index="844">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=12</param3>
-    <result1 type="string">¥ -123.4</result1>
+    <result1 type="string">¥ -123.5</result1>
   </dataitem>
   <dataitem index="845">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=13</param3>
-    <result1 type="string">123.4- ¥</result1>
+    <result1 type="string">123.5- ¥</result1>
   </dataitem>
   <dataitem index="846">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=14</param3>
-    <result1 type="string">(¥ 123.4)</result1>
+    <result1 type="string">(¥ 123.5)</result1>
   </dataitem>
   <dataitem index="847">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=15</param3>
-    <result1 type="string">(123.4 ¥)</result1>
+    <result1 type="string">(123.5 ¥)</result1>
   </dataitem>
   <dataitem index="848">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(DT123,4)</result1>
+    <result1 type="string">(DT123,5)</result1>
   </dataitem>
   <dataitem index="849">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=1:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-DT123,4</result1>
+    <result1 type="string">-DT123,5</result1>
   </dataitem>
   <dataitem index="850">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=2:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT-123,4</result1>
+    <result1 type="string">DT-123,5</result1>
   </dataitem>
   <dataitem index="851">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=3:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT123,4-</result1>
+    <result1 type="string">DT123,5-</result1>
   </dataitem>
   <dataitem index="852">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=4:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(123,4DT)</result1>
+    <result1 type="string">(123,5DT)</result1>
   </dataitem>
   <dataitem index="853">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=5:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-123,4DT</result1>
+    <result1 type="string">-123,5DT</result1>
   </dataitem>
   <dataitem index="854">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=6:CurrencyPositivePattern=0</param3>
-    <result1 type="string">123,4-DT</result1>
+    <result1 type="string">123,5-DT</result1>
   </dataitem>
   <dataitem index="855">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=7:CurrencyPositivePattern=0</param3>
-    <result1 type="string">123,4DT-</result1>
+    <result1 type="string">123,5DT-</result1>
   </dataitem>
   <dataitem index="856">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-123,4 DT</result1>
+    <result1 type="string">-123,5 DT</result1>
   </dataitem>
   <dataitem index="857">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=9:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-DT 123,4</result1>
+    <result1 type="string">-DT 123,5</result1>
   </dataitem>
   <dataitem index="858">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=10:CurrencyPositivePattern=0</param3>
-    <result1 type="string">123,4 DT-</result1>
+    <result1 type="string">123,5 DT-</result1>
   </dataitem>
   <dataitem index="859">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=11:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT 123,4-</result1>
+    <result1 type="string">DT 123,5-</result1>
   </dataitem>
   <dataitem index="860">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=12:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT -123,4</result1>
+    <result1 type="string">DT -123,5</result1>
   </dataitem>
   <dataitem index="861">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=13:CurrencyPositivePattern=0</param3>
-    <result1 type="string">123,4- DT</result1>
+    <result1 type="string">123,5- DT</result1>
   </dataitem>
   <dataitem index="862">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=14:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(DT 123,4)</result1>
+    <result1 type="string">(DT 123,5)</result1>
   </dataitem>
   <dataitem index="863">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">C1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=15:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(123,4 DT)</result1>
+    <result1 type="string">(123,5 DT)</result1>
   </dataitem>
   <dataitem index="864">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
@@ -5476,97 +5476,97 @@
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(DT1,234)</result1>
+    <result1 type="string">(DT1,235)</result1>
   </dataitem>
   <dataitem index="913">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=1:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-DT1,234</result1>
+    <result1 type="string">-DT1,235</result1>
   </dataitem>
   <dataitem index="914">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=2:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT-1,234</result1>
+    <result1 type="string">DT-1,235</result1>
   </dataitem>
   <dataitem index="915">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=3:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT1,234-</result1>
+    <result1 type="string">DT1,235-</result1>
   </dataitem>
   <dataitem index="916">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=4:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(1,234DT)</result1>
+    <result1 type="string">(1,235DT)</result1>
   </dataitem>
   <dataitem index="917">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=5:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-1,234DT</result1>
+    <result1 type="string">-1,235DT</result1>
   </dataitem>
   <dataitem index="918">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=6:CurrencyPositivePattern=0</param3>
-    <result1 type="string">1,234-DT</result1>
+    <result1 type="string">1,235-DT</result1>
   </dataitem>
   <dataitem index="919">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=7:CurrencyPositivePattern=0</param3>
-    <result1 type="string">1,234DT-</result1>
+    <result1 type="string">1,235DT-</result1>
   </dataitem>
   <dataitem index="920">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-1,234 DT</result1>
+    <result1 type="string">-1,235 DT</result1>
   </dataitem>
   <dataitem index="921">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=9:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-DT 1,234</result1>
+    <result1 type="string">-DT 1,235</result1>
   </dataitem>
   <dataitem index="922">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=10:CurrencyPositivePattern=0</param3>
-    <result1 type="string">1,234 DT-</result1>
+    <result1 type="string">1,235 DT-</result1>
   </dataitem>
   <dataitem index="923">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=11:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT 1,234-</result1>
+    <result1 type="string">DT 1,235-</result1>
   </dataitem>
   <dataitem index="924">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=12:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT -1,234</result1>
+    <result1 type="string">DT -1,235</result1>
   </dataitem>
   <dataitem index="925">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=13:CurrencyPositivePattern=0</param3>
-    <result1 type="string">1,234- DT</result1>
+    <result1 type="string">1,235- DT</result1>
   </dataitem>
   <dataitem index="926">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=14:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(DT 1,234)</result1>
+    <result1 type="string">(DT 1,235)</result1>
   </dataitem>
   <dataitem index="927">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">c</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=15:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(1,234 DT)</result1>
+    <result1 type="string">(1,235 DT)</result1>
   </dataitem>
   <dataitem index="928">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
@@ -6244,97 +6244,97 @@
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(DT1,234)</result1>
+    <result1 type="string">(DT1,235)</result1>
   </dataitem>
   <dataitem index="1041">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=1:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-DT1,234</result1>
+    <result1 type="string">-DT1,235</result1>
   </dataitem>
   <dataitem index="1042">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=2:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT-1,234</result1>
+    <result1 type="string">DT-1,235</result1>
   </dataitem>
   <dataitem index="1043">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=3:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT1,234-</result1>
+    <result1 type="string">DT1,235-</result1>
   </dataitem>
   <dataitem index="1044">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=4:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(1,234DT)</result1>
+    <result1 type="string">(1,235DT)</result1>
   </dataitem>
   <dataitem index="1045">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=5:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-1,234DT</result1>
+    <result1 type="string">-1,235DT</result1>
   </dataitem>
   <dataitem index="1046">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=6:CurrencyPositivePattern=0</param3>
-    <result1 type="string">1,234-DT</result1>
+    <result1 type="string">1,235-DT</result1>
   </dataitem>
   <dataitem index="1047">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=7:CurrencyPositivePattern=0</param3>
-    <result1 type="string">1,234DT-</result1>
+    <result1 type="string">1,235DT-</result1>
   </dataitem>
   <dataitem index="1048">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-1,234 DT</result1>
+    <result1 type="string">-1,235 DT</result1>
   </dataitem>
   <dataitem index="1049">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=9:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-DT 1,234</result1>
+    <result1 type="string">-DT 1,235</result1>
   </dataitem>
   <dataitem index="1050">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=10:CurrencyPositivePattern=0</param3>
-    <result1 type="string">1,234 DT-</result1>
+    <result1 type="string">1,235 DT-</result1>
   </dataitem>
   <dataitem index="1051">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=11:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT 1,234-</result1>
+    <result1 type="string">DT 1,235-</result1>
   </dataitem>
   <dataitem index="1052">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=12:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT -1,234</result1>
+    <result1 type="string">DT -1,235</result1>
   </dataitem>
   <dataitem index="1053">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=13:CurrencyPositivePattern=0</param3>
-    <result1 type="string">1,234- DT</result1>
+    <result1 type="string">1,235- DT</result1>
   </dataitem>
   <dataitem index="1054">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=14:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(DT 1,234)</result1>
+    <result1 type="string">(DT 1,235)</result1>
   </dataitem>
   <dataitem index="1055">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
     <param2 type="string">C</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=15:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(1,234 DT)</result1>
+    <result1 type="string">(1,235 DT)</result1>
   </dataitem>
   <dataitem index="1056">
     <param1 type="rational">10,03,02,a5,09,01,02,d0,07</param1>
@@ -7492,193 +7492,193 @@
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0</param3>
-    <result1 type="string">(¥0.01234)</result1>
+    <result1 type="string">(¥0.01235)</result1>
   </dataitem>
   <dataitem index="1249">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
-    <result1 type="string">-¥0.01234</result1>
+    <result1 type="string">-¥0.01235</result1>
   </dataitem>
   <dataitem index="1250">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=2</param3>
-    <result1 type="string">¥-0.01234</result1>
+    <result1 type="string">¥-0.01235</result1>
   </dataitem>
   <dataitem index="1251">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=3</param3>
-    <result1 type="string">¥0.01234-</result1>
+    <result1 type="string">¥0.01235-</result1>
   </dataitem>
   <dataitem index="1252">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=4</param3>
-    <result1 type="string">(0.01234¥)</result1>
+    <result1 type="string">(0.01235¥)</result1>
   </dataitem>
   <dataitem index="1253">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=5</param3>
-    <result1 type="string">-0.01234¥</result1>
+    <result1 type="string">-0.01235¥</result1>
   </dataitem>
   <dataitem index="1254">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=6</param3>
-    <result1 type="string">0.01234-¥</result1>
+    <result1 type="string">0.01235-¥</result1>
   </dataitem>
   <dataitem index="1255">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=7</param3>
-    <result1 type="string">0.01234¥-</result1>
+    <result1 type="string">0.01235¥-</result1>
   </dataitem>
   <dataitem index="1256">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=8</param3>
-    <result1 type="string">-0.01234 ¥</result1>
+    <result1 type="string">-0.01235 ¥</result1>
   </dataitem>
   <dataitem index="1257">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=9</param3>
-    <result1 type="string">-¥ 0.01234</result1>
+    <result1 type="string">-¥ 0.01235</result1>
   </dataitem>
   <dataitem index="1258">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=10</param3>
-    <result1 type="string">0.01234 ¥-</result1>
+    <result1 type="string">0.01235 ¥-</result1>
   </dataitem>
   <dataitem index="1259">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=11</param3>
-    <result1 type="string">¥ 0.01234-</result1>
+    <result1 type="string">¥ 0.01235-</result1>
   </dataitem>
   <dataitem index="1260">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=12</param3>
-    <result1 type="string">¥ -0.01234</result1>
+    <result1 type="string">¥ -0.01235</result1>
   </dataitem>
   <dataitem index="1261">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=13</param3>
-    <result1 type="string">0.01234- ¥</result1>
+    <result1 type="string">0.01235- ¥</result1>
   </dataitem>
   <dataitem index="1262">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=14</param3>
-    <result1 type="string">(¥ 0.01234)</result1>
+    <result1 type="string">(¥ 0.01235)</result1>
   </dataitem>
   <dataitem index="1263">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=15</param3>
-    <result1 type="string">(0.01234 ¥)</result1>
+    <result1 type="string">(0.01235 ¥)</result1>
   </dataitem>
   <dataitem index="1264">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(DT0,01234)</result1>
+    <result1 type="string">(DT0,01235)</result1>
   </dataitem>
   <dataitem index="1265">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=1:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-DT0,01234</result1>
+    <result1 type="string">-DT0,01235</result1>
   </dataitem>
   <dataitem index="1266">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=2:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT-0,01234</result1>
+    <result1 type="string">DT-0,01235</result1>
   </dataitem>
   <dataitem index="1267">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=3:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT0,01234-</result1>
+    <result1 type="string">DT0,01235-</result1>
   </dataitem>
   <dataitem index="1268">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=4:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(0,01234DT)</result1>
+    <result1 type="string">(0,01235DT)</result1>
   </dataitem>
   <dataitem index="1269">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=5:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-0,01234DT</result1>
+    <result1 type="string">-0,01235DT</result1>
   </dataitem>
   <dataitem index="1270">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=6:CurrencyPositivePattern=0</param3>
-    <result1 type="string">0,01234-DT</result1>
+    <result1 type="string">0,01235-DT</result1>
   </dataitem>
   <dataitem index="1271">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=7:CurrencyPositivePattern=0</param3>
-    <result1 type="string">0,01234DT-</result1>
+    <result1 type="string">0,01235DT-</result1>
   </dataitem>
   <dataitem index="1272">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-0,01234 DT</result1>
+    <result1 type="string">-0,01235 DT</result1>
   </dataitem>
   <dataitem index="1273">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=9:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-DT 0,01234</result1>
+    <result1 type="string">-DT 0,01235</result1>
   </dataitem>
   <dataitem index="1274">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=10:CurrencyPositivePattern=0</param3>
-    <result1 type="string">0,01234 DT-</result1>
+    <result1 type="string">0,01235 DT-</result1>
   </dataitem>
   <dataitem index="1275">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=11:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT 0,01234-</result1>
+    <result1 type="string">DT 0,01235-</result1>
   </dataitem>
   <dataitem index="1276">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=12:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT -0,01234</result1>
+    <result1 type="string">DT -0,01235</result1>
   </dataitem>
   <dataitem index="1277">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=13:CurrencyPositivePattern=0</param3>
-    <result1 type="string">0,01234- DT</result1>
+    <result1 type="string">0,01235- DT</result1>
   </dataitem>
   <dataitem index="1278">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=14:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(DT 0,01234)</result1>
+    <result1 type="string">(DT 0,01235)</result1>
   </dataitem>
   <dataitem index="1279">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">c5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=15:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(0,01234 DT)</result1>
+    <result1 type="string">(0,01235 DT)</result1>
   </dataitem>
   <dataitem index="1280">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
@@ -8260,193 +8260,193 @@
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=0</param3>
-    <result1 type="string">(¥0.01234)</result1>
+    <result1 type="string">(¥0.01235)</result1>
   </dataitem>
   <dataitem index="1377">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
-    <result1 type="string">-¥0.01234</result1>
+    <result1 type="string">-¥0.01235</result1>
   </dataitem>
   <dataitem index="1378">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=2</param3>
-    <result1 type="string">¥-0.01234</result1>
+    <result1 type="string">¥-0.01235</result1>
   </dataitem>
   <dataitem index="1379">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=3</param3>
-    <result1 type="string">¥0.01234-</result1>
+    <result1 type="string">¥0.01235-</result1>
   </dataitem>
   <dataitem index="1380">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=4</param3>
-    <result1 type="string">(0.01234¥)</result1>
+    <result1 type="string">(0.01235¥)</result1>
   </dataitem>
   <dataitem index="1381">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=5</param3>
-    <result1 type="string">-0.01234¥</result1>
+    <result1 type="string">-0.01235¥</result1>
   </dataitem>
   <dataitem index="1382">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=6</param3>
-    <result1 type="string">0.01234-¥</result1>
+    <result1 type="string">0.01235-¥</result1>
   </dataitem>
   <dataitem index="1383">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=7</param3>
-    <result1 type="string">0.01234¥-</result1>
+    <result1 type="string">0.01235¥-</result1>
   </dataitem>
   <dataitem index="1384">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=8</param3>
-    <result1 type="string">-0.01234 ¥</result1>
+    <result1 type="string">-0.01235 ¥</result1>
   </dataitem>
   <dataitem index="1385">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=9</param3>
-    <result1 type="string">-¥ 0.01234</result1>
+    <result1 type="string">-¥ 0.01235</result1>
   </dataitem>
   <dataitem index="1386">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=10</param3>
-    <result1 type="string">0.01234 ¥-</result1>
+    <result1 type="string">0.01235 ¥-</result1>
   </dataitem>
   <dataitem index="1387">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=11</param3>
-    <result1 type="string">¥ 0.01234-</result1>
+    <result1 type="string">¥ 0.01235-</result1>
   </dataitem>
   <dataitem index="1388">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=12</param3>
-    <result1 type="string">¥ -0.01234</result1>
+    <result1 type="string">¥ -0.01235</result1>
   </dataitem>
   <dataitem index="1389">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=13</param3>
-    <result1 type="string">0.01234- ¥</result1>
+    <result1 type="string">0.01235- ¥</result1>
   </dataitem>
   <dataitem index="1390">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=14</param3>
-    <result1 type="string">(¥ 0.01234)</result1>
+    <result1 type="string">(¥ 0.01235)</result1>
   </dataitem>
   <dataitem index="1391">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:CurrencyNegativePattern=15</param3>
-    <result1 type="string">(0.01234 ¥)</result1>
+    <result1 type="string">(0.01235 ¥)</result1>
   </dataitem>
   <dataitem index="1392">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=0:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(DT0,01234)</result1>
+    <result1 type="string">(DT0,01235)</result1>
   </dataitem>
   <dataitem index="1393">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=1:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-DT0,01234</result1>
+    <result1 type="string">-DT0,01235</result1>
   </dataitem>
   <dataitem index="1394">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=2:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT-0,01234</result1>
+    <result1 type="string">DT-0,01235</result1>
   </dataitem>
   <dataitem index="1395">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=3:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT0,01234-</result1>
+    <result1 type="string">DT0,01235-</result1>
   </dataitem>
   <dataitem index="1396">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=4:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(0,01234DT)</result1>
+    <result1 type="string">(0,01235DT)</result1>
   </dataitem>
   <dataitem index="1397">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=5:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-0,01234DT</result1>
+    <result1 type="string">-0,01235DT</result1>
   </dataitem>
   <dataitem index="1398">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=6:CurrencyPositivePattern=0</param3>
-    <result1 type="string">0,01234-DT</result1>
+    <result1 type="string">0,01235-DT</result1>
   </dataitem>
   <dataitem index="1399">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=7:CurrencyPositivePattern=0</param3>
-    <result1 type="string">0,01234DT-</result1>
+    <result1 type="string">0,01235DT-</result1>
   </dataitem>
   <dataitem index="1400">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-0,01234 DT</result1>
+    <result1 type="string">-0,01235 DT</result1>
   </dataitem>
   <dataitem index="1401">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=9:CurrencyPositivePattern=0</param3>
-    <result1 type="string">-DT 0,01234</result1>
+    <result1 type="string">-DT 0,01235</result1>
   </dataitem>
   <dataitem index="1402">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=10:CurrencyPositivePattern=0</param3>
-    <result1 type="string">0,01234 DT-</result1>
+    <result1 type="string">0,01235 DT-</result1>
   </dataitem>
   <dataitem index="1403">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=11:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT 0,01234-</result1>
+    <result1 type="string">DT 0,01235-</result1>
   </dataitem>
   <dataitem index="1404">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=12:CurrencyPositivePattern=0</param3>
-    <result1 type="string">DT -0,01234</result1>
+    <result1 type="string">DT -0,01235</result1>
   </dataitem>
   <dataitem index="1405">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=13:CurrencyPositivePattern=0</param3>
-    <result1 type="string">0,01234- DT</result1>
+    <result1 type="string">0,01235- DT</result1>
   </dataitem>
   <dataitem index="1406">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=14:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(DT 0,01234)</result1>
+    <result1 type="string">(DT 0,01235)</result1>
   </dataitem>
   <dataitem index="1407">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">C5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:CurrencyNegativePattern=15:CurrencyPositivePattern=0</param3>
-    <result1 type="string">(0,01234 DT)</result1>
+    <result1 type="string">(0,01235 DT)</result1>
   </dataitem>
   <dataitem index="1408">
     <param1 type="rational">10,03,05,ff,e3,0b,54,02,01,02,10,27</param1>

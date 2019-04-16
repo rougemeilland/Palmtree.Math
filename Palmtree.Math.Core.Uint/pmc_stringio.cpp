@@ -202,6 +202,12 @@ namespace Palmtree::Math::Core::Internal
     StringWriter::StringWriter(wchar_t * buffer, size_t size)
         : StringWriter(buffer, buffer, buffer != nullptr ? buffer + size : nullptr)
     {
+        if (_p != nullptr)
+        {
+            if (_p >= _eob)
+                throw InsufficientBufferException(L"書き込み先バッファのサイズが不足しています。");
+            *_p = L'\0';
+        }
     }
 
     StringWriter::StringWriter(const StringWriter & p)
@@ -271,6 +277,11 @@ namespace Palmtree::Math::Core::Internal
     bool StringWriter::IsBufferAssigned()
     {
         return (_p != nullptr);
+    }
+
+    ReverseStringWriter::ReverseStringWriter(wchar_t * p, wchar_t * sob, wchar_t * eob)
+        : StringWriter(p, sob, eob)
+    {
     }
 
     ReverseStringWriter::ReverseStringWriter(wchar_t * buffer, size_t size)

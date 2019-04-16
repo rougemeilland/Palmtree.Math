@@ -544,31 +544,31 @@
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=0</param3>
-    <result1 type="string">123.4</result1>
+    <result1 type="string">123.5</result1>
   </dataitem>
   <dataitem index="91">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=0</param3>
-    <result1 type="string">123,4</result1>
+    <result1 type="string">123,5</result1>
   </dataitem>
   <dataitem index="92">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=0</param3>
-    <result1 type="string">123,4</result1>
+    <result1 type="string">123,5</result1>
   </dataitem>
   <dataitem index="93">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=0</param3>
-    <result1 type="string">123.4</result1>
+    <result1 type="string">123.5</result1>
   </dataitem>
   <dataitem index="94">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=0</param3>
-    <result1 type="string">123.4</result1>
+    <result1 type="string">123.5</result1>
   </dataitem>
   <dataitem index="95">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
@@ -664,31 +664,31 @@
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=0</param3>
-    <result1 type="string">123.4</result1>
+    <result1 type="string">123.5</result1>
   </dataitem>
   <dataitem index="111">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=0</param3>
-    <result1 type="string">123,4</result1>
+    <result1 type="string">123,5</result1>
   </dataitem>
   <dataitem index="112">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=0</param3>
-    <result1 type="string">123,4</result1>
+    <result1 type="string">123,5</result1>
   </dataitem>
   <dataitem index="113">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=0</param3>
-    <result1 type="string">123.4</result1>
+    <result1 type="string">123.5</result1>
   </dataitem>
   <dataitem index="114">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=0</param3>
-    <result1 type="string">123.4</result1>
+    <result1 type="string">123.5</result1>
   </dataitem>
   <dataitem index="115">
     <param1 type="rational">10,01,02,a5,09,01,01,14</param1>
@@ -1054,31 +1054,31 @@
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=0</param3>
-    <result1 type="string">0.01234</result1>
+    <result1 type="string">0.01235</result1>
   </dataitem>
   <dataitem index="176">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=0</param3>
-    <result1 type="string">0,01234</result1>
+    <result1 type="string">0,01235</result1>
   </dataitem>
   <dataitem index="177">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=0</param3>
-    <result1 type="string">0,01234</result1>
+    <result1 type="string">0,01235</result1>
   </dataitem>
   <dataitem index="178">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=0</param3>
-    <result1 type="string">0.01234</result1>
+    <result1 type="string">0.01235</result1>
   </dataitem>
   <dataitem index="179">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=0</param3>
-    <result1 type="string">0.01234</result1>
+    <result1 type="string">0.01235</result1>
   </dataitem>
   <dataitem index="180">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
@@ -1174,31 +1174,31 @@
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=0</param3>
-    <result1 type="string">0.01234</result1>
+    <result1 type="string">0.01235</result1>
   </dataitem>
   <dataitem index="196">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=0</param3>
-    <result1 type="string">0,01234</result1>
+    <result1 type="string">0,01235</result1>
   </dataitem>
   <dataitem index="197">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=0</param3>
-    <result1 type="string">0,01234</result1>
+    <result1 type="string">0,01235</result1>
   </dataitem>
   <dataitem index="198">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=0</param3>
-    <result1 type="string">0.01234</result1>
+    <result1 type="string">0.01235</result1>
   </dataitem>
   <dataitem index="199">
     <param1 type="rational">10,01,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=0</param3>
-    <result1 type="string">0.01234</result1>
+    <result1 type="string">0.01235</result1>
   </dataitem>
   <dataitem index="200">
     <param1 type="rational">10,01,05,ff,e3,0b,54,02,01,02,10,27</param1>
@@ -2944,151 +2944,151 @@
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=0</param3>
-    <result1 type="string">(123.4)</result1>
+    <result1 type="string">(123.5)</result1>
   </dataitem>
   <dataitem index="491">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
-    <result1 type="string">-123.4</result1>
+    <result1 type="string">-123.5</result1>
   </dataitem>
   <dataitem index="492">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=2</param3>
-    <result1 type="string">- 123.4</result1>
+    <result1 type="string">- 123.5</result1>
   </dataitem>
   <dataitem index="493">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=3</param3>
-    <result1 type="string">123.4-</result1>
+    <result1 type="string">123.5-</result1>
   </dataitem>
   <dataitem index="494">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=4</param3>
-    <result1 type="string">123.4 -</result1>
+    <result1 type="string">123.5 -</result1>
   </dataitem>
   <dataitem index="495">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=0</param3>
-    <result1 type="string">(123,4)</result1>
+    <result1 type="string">(123,5)</result1>
   </dataitem>
   <dataitem index="496">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN</param3>
-    <result1 type="string">-123,4</result1>
+    <result1 type="string">-123,5</result1>
   </dataitem>
   <dataitem index="497">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=2</param3>
-    <result1 type="string">- 123,4</result1>
+    <result1 type="string">- 123,5</result1>
   </dataitem>
   <dataitem index="498">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=3</param3>
-    <result1 type="string">123,4-</result1>
+    <result1 type="string">123,5-</result1>
   </dataitem>
   <dataitem index="499">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=4</param3>
-    <result1 type="string">123,4 -</result1>
+    <result1 type="string">123,5 -</result1>
   </dataitem>
   <dataitem index="500">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=0</param3>
-    <result1 type="string">(123,4)</result1>
+    <result1 type="string">(123,5)</result1>
   </dataitem>
   <dataitem index="501">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=es-ES</param3>
-    <result1 type="string">-123,4</result1>
+    <result1 type="string">-123,5</result1>
   </dataitem>
   <dataitem index="502">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=2</param3>
-    <result1 type="string">- 123,4</result1>
+    <result1 type="string">- 123,5</result1>
   </dataitem>
   <dataitem index="503">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=3</param3>
-    <result1 type="string">123,4-</result1>
+    <result1 type="string">123,5-</result1>
   </dataitem>
   <dataitem index="504">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=4</param3>
-    <result1 type="string">123,4 -</result1>
+    <result1 type="string">123,5 -</result1>
   </dataitem>
   <dataitem index="505">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=0</param3>
-    <result1 type="string">(123.4)</result1>
+    <result1 type="string">(123.5)</result1>
   </dataitem>
   <dataitem index="506">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN</param3>
-    <result1 type="string">-123.4</result1>
+    <result1 type="string">-123.5</result1>
   </dataitem>
   <dataitem index="507">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=2</param3>
-    <result1 type="string">- 123.4</result1>
+    <result1 type="string">- 123.5</result1>
   </dataitem>
   <dataitem index="508">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=3</param3>
-    <result1 type="string">123.4-</result1>
+    <result1 type="string">123.5-</result1>
   </dataitem>
   <dataitem index="509">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=4</param3>
-    <result1 type="string">123.4 -</result1>
+    <result1 type="string">123.5 -</result1>
   </dataitem>
   <dataitem index="510">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=0</param3>
-    <result1 type="string">(123.4)</result1>
+    <result1 type="string">(123.5)</result1>
   </dataitem>
   <dataitem index="511">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN</param3>
-    <result1 type="string">-123.4</result1>
+    <result1 type="string">-123.5</result1>
   </dataitem>
   <dataitem index="512">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=2</param3>
-    <result1 type="string">- 123.4</result1>
+    <result1 type="string">- 123.5</result1>
   </dataitem>
   <dataitem index="513">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=3</param3>
-    <result1 type="string">123.4-</result1>
+    <result1 type="string">123.5-</result1>
   </dataitem>
   <dataitem index="514">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">n1</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=4</param3>
-    <result1 type="string">123.4 -</result1>
+    <result1 type="string">123.5 -</result1>
   </dataitem>
   <dataitem index="515">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
@@ -3544,151 +3544,151 @@
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=0</param3>
-    <result1 type="string">(123.4)</result1>
+    <result1 type="string">(123.5)</result1>
   </dataitem>
   <dataitem index="591">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
-    <result1 type="string">-123.4</result1>
+    <result1 type="string">-123.5</result1>
   </dataitem>
   <dataitem index="592">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=2</param3>
-    <result1 type="string">- 123.4</result1>
+    <result1 type="string">- 123.5</result1>
   </dataitem>
   <dataitem index="593">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=3</param3>
-    <result1 type="string">123.4-</result1>
+    <result1 type="string">123.5-</result1>
   </dataitem>
   <dataitem index="594">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=4</param3>
-    <result1 type="string">123.4 -</result1>
+    <result1 type="string">123.5 -</result1>
   </dataitem>
   <dataitem index="595">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=0</param3>
-    <result1 type="string">(123,4)</result1>
+    <result1 type="string">(123,5)</result1>
   </dataitem>
   <dataitem index="596">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN</param3>
-    <result1 type="string">-123,4</result1>
+    <result1 type="string">-123,5</result1>
   </dataitem>
   <dataitem index="597">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=2</param3>
-    <result1 type="string">- 123,4</result1>
+    <result1 type="string">- 123,5</result1>
   </dataitem>
   <dataitem index="598">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=3</param3>
-    <result1 type="string">123,4-</result1>
+    <result1 type="string">123,5-</result1>
   </dataitem>
   <dataitem index="599">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=4</param3>
-    <result1 type="string">123,4 -</result1>
+    <result1 type="string">123,5 -</result1>
   </dataitem>
   <dataitem index="600">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=0</param3>
-    <result1 type="string">(123,4)</result1>
+    <result1 type="string">(123,5)</result1>
   </dataitem>
   <dataitem index="601">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=es-ES</param3>
-    <result1 type="string">-123,4</result1>
+    <result1 type="string">-123,5</result1>
   </dataitem>
   <dataitem index="602">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=2</param3>
-    <result1 type="string">- 123,4</result1>
+    <result1 type="string">- 123,5</result1>
   </dataitem>
   <dataitem index="603">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=3</param3>
-    <result1 type="string">123,4-</result1>
+    <result1 type="string">123,5-</result1>
   </dataitem>
   <dataitem index="604">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=4</param3>
-    <result1 type="string">123,4 -</result1>
+    <result1 type="string">123,5 -</result1>
   </dataitem>
   <dataitem index="605">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=0</param3>
-    <result1 type="string">(123.4)</result1>
+    <result1 type="string">(123.5)</result1>
   </dataitem>
   <dataitem index="606">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN</param3>
-    <result1 type="string">-123.4</result1>
+    <result1 type="string">-123.5</result1>
   </dataitem>
   <dataitem index="607">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=2</param3>
-    <result1 type="string">- 123.4</result1>
+    <result1 type="string">- 123.5</result1>
   </dataitem>
   <dataitem index="608">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=3</param3>
-    <result1 type="string">123.4-</result1>
+    <result1 type="string">123.5-</result1>
   </dataitem>
   <dataitem index="609">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=4</param3>
-    <result1 type="string">123.4 -</result1>
+    <result1 type="string">123.5 -</result1>
   </dataitem>
   <dataitem index="610">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=0</param3>
-    <result1 type="string">(123.4)</result1>
+    <result1 type="string">(123.5)</result1>
   </dataitem>
   <dataitem index="611">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN</param3>
-    <result1 type="string">-123.4</result1>
+    <result1 type="string">-123.5</result1>
   </dataitem>
   <dataitem index="612">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=2</param3>
-    <result1 type="string">- 123.4</result1>
+    <result1 type="string">- 123.5</result1>
   </dataitem>
   <dataitem index="613">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=3</param3>
-    <result1 type="string">123.4-</result1>
+    <result1 type="string">123.5-</result1>
   </dataitem>
   <dataitem index="614">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
     <param2 type="string">N1</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=4</param3>
-    <result1 type="string">123.4 -</result1>
+    <result1 type="string">123.5 -</result1>
   </dataitem>
   <dataitem index="615">
     <param1 type="rational">10,03,02,a5,09,01,01,14</param1>
@@ -5494,151 +5494,151 @@
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=0</param3>
-    <result1 type="string">(0.01234)</result1>
+    <result1 type="string">(0.01235)</result1>
   </dataitem>
   <dataitem index="916">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
-    <result1 type="string">-0.01234</result1>
+    <result1 type="string">-0.01235</result1>
   </dataitem>
   <dataitem index="917">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=2</param3>
-    <result1 type="string">- 0.01234</result1>
+    <result1 type="string">- 0.01235</result1>
   </dataitem>
   <dataitem index="918">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=3</param3>
-    <result1 type="string">0.01234-</result1>
+    <result1 type="string">0.01235-</result1>
   </dataitem>
   <dataitem index="919">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=4</param3>
-    <result1 type="string">0.01234 -</result1>
+    <result1 type="string">0.01235 -</result1>
   </dataitem>
   <dataitem index="920">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=0</param3>
-    <result1 type="string">(0,01234)</result1>
+    <result1 type="string">(0,01235)</result1>
   </dataitem>
   <dataitem index="921">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN</param3>
-    <result1 type="string">-0,01234</result1>
+    <result1 type="string">-0,01235</result1>
   </dataitem>
   <dataitem index="922">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=2</param3>
-    <result1 type="string">- 0,01234</result1>
+    <result1 type="string">- 0,01235</result1>
   </dataitem>
   <dataitem index="923">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=3</param3>
-    <result1 type="string">0,01234-</result1>
+    <result1 type="string">0,01235-</result1>
   </dataitem>
   <dataitem index="924">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=4</param3>
-    <result1 type="string">0,01234 -</result1>
+    <result1 type="string">0,01235 -</result1>
   </dataitem>
   <dataitem index="925">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=0</param3>
-    <result1 type="string">(0,01234)</result1>
+    <result1 type="string">(0,01235)</result1>
   </dataitem>
   <dataitem index="926">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=es-ES</param3>
-    <result1 type="string">-0,01234</result1>
+    <result1 type="string">-0,01235</result1>
   </dataitem>
   <dataitem index="927">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=2</param3>
-    <result1 type="string">- 0,01234</result1>
+    <result1 type="string">- 0,01235</result1>
   </dataitem>
   <dataitem index="928">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=3</param3>
-    <result1 type="string">0,01234-</result1>
+    <result1 type="string">0,01235-</result1>
   </dataitem>
   <dataitem index="929">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=4</param3>
-    <result1 type="string">0,01234 -</result1>
+    <result1 type="string">0,01235 -</result1>
   </dataitem>
   <dataitem index="930">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=0</param3>
-    <result1 type="string">(0.01234)</result1>
+    <result1 type="string">(0.01235)</result1>
   </dataitem>
   <dataitem index="931">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN</param3>
-    <result1 type="string">-0.01234</result1>
+    <result1 type="string">-0.01235</result1>
   </dataitem>
   <dataitem index="932">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=2</param3>
-    <result1 type="string">- 0.01234</result1>
+    <result1 type="string">- 0.01235</result1>
   </dataitem>
   <dataitem index="933">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=3</param3>
-    <result1 type="string">0.01234-</result1>
+    <result1 type="string">0.01235-</result1>
   </dataitem>
   <dataitem index="934">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=4</param3>
-    <result1 type="string">0.01234 -</result1>
+    <result1 type="string">0.01235 -</result1>
   </dataitem>
   <dataitem index="935">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=0</param3>
-    <result1 type="string">(0.01234)</result1>
+    <result1 type="string">(0.01235)</result1>
   </dataitem>
   <dataitem index="936">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN</param3>
-    <result1 type="string">-0.01234</result1>
+    <result1 type="string">-0.01235</result1>
   </dataitem>
   <dataitem index="937">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=2</param3>
-    <result1 type="string">- 0.01234</result1>
+    <result1 type="string">- 0.01235</result1>
   </dataitem>
   <dataitem index="938">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=3</param3>
-    <result1 type="string">0.01234-</result1>
+    <result1 type="string">0.01235-</result1>
   </dataitem>
   <dataitem index="939">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">n5</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=4</param3>
-    <result1 type="string">0.01234 -</result1>
+    <result1 type="string">0.01235 -</result1>
   </dataitem>
   <dataitem index="940">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
@@ -6094,151 +6094,151 @@
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=0</param3>
-    <result1 type="string">(0.01234)</result1>
+    <result1 type="string">(0.01235)</result1>
   </dataitem>
   <dataitem index="1016">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP</param3>
-    <result1 type="string">-0.01234</result1>
+    <result1 type="string">-0.01235</result1>
   </dataitem>
   <dataitem index="1017">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=2</param3>
-    <result1 type="string">- 0.01234</result1>
+    <result1 type="string">- 0.01235</result1>
   </dataitem>
   <dataitem index="1018">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=3</param3>
-    <result1 type="string">0.01234-</result1>
+    <result1 type="string">0.01235-</result1>
   </dataitem>
   <dataitem index="1019">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=ja-JP:NumberNegativePattern=4</param3>
-    <result1 type="string">0.01234 -</result1>
+    <result1 type="string">0.01235 -</result1>
   </dataitem>
   <dataitem index="1020">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=0</param3>
-    <result1 type="string">(0,01234)</result1>
+    <result1 type="string">(0,01235)</result1>
   </dataitem>
   <dataitem index="1021">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN</param3>
-    <result1 type="string">-0,01234</result1>
+    <result1 type="string">-0,01235</result1>
   </dataitem>
   <dataitem index="1022">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=2</param3>
-    <result1 type="string">- 0,01234</result1>
+    <result1 type="string">- 0,01235</result1>
   </dataitem>
   <dataitem index="1023">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=3</param3>
-    <result1 type="string">0,01234-</result1>
+    <result1 type="string">0,01235-</result1>
   </dataitem>
   <dataitem index="1024">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=fr-TN:NumberNegativePattern=4</param3>
-    <result1 type="string">0,01234 -</result1>
+    <result1 type="string">0,01235 -</result1>
   </dataitem>
   <dataitem index="1025">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=0</param3>
-    <result1 type="string">(0,01234)</result1>
+    <result1 type="string">(0,01235)</result1>
   </dataitem>
   <dataitem index="1026">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=es-ES</param3>
-    <result1 type="string">-0,01234</result1>
+    <result1 type="string">-0,01235</result1>
   </dataitem>
   <dataitem index="1027">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=2</param3>
-    <result1 type="string">- 0,01234</result1>
+    <result1 type="string">- 0,01235</result1>
   </dataitem>
   <dataitem index="1028">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=3</param3>
-    <result1 type="string">0,01234-</result1>
+    <result1 type="string">0,01235-</result1>
   </dataitem>
   <dataitem index="1029">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=es-ES:NumberNegativePattern=4</param3>
-    <result1 type="string">0,01234 -</result1>
+    <result1 type="string">0,01235 -</result1>
   </dataitem>
   <dataitem index="1030">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=0</param3>
-    <result1 type="string">(0.01234)</result1>
+    <result1 type="string">(0.01235)</result1>
   </dataitem>
   <dataitem index="1031">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN</param3>
-    <result1 type="string">-0.01234</result1>
+    <result1 type="string">-0.01235</result1>
   </dataitem>
   <dataitem index="1032">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=2</param3>
-    <result1 type="string">- 0.01234</result1>
+    <result1 type="string">- 0.01235</result1>
   </dataitem>
   <dataitem index="1033">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=3</param3>
-    <result1 type="string">0.01234-</result1>
+    <result1 type="string">0.01235-</result1>
   </dataitem>
   <dataitem index="1034">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=pa-IN:NumberNegativePattern=4</param3>
-    <result1 type="string">0.01234 -</result1>
+    <result1 type="string">0.01235 -</result1>
   </dataitem>
   <dataitem index="1035">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=0</param3>
-    <result1 type="string">(0.01234)</result1>
+    <result1 type="string">(0.01235)</result1>
   </dataitem>
   <dataitem index="1036">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN</param3>
-    <result1 type="string">-0.01234</result1>
+    <result1 type="string">-0.01235</result1>
   </dataitem>
   <dataitem index="1037">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=2</param3>
-    <result1 type="string">- 0.01234</result1>
+    <result1 type="string">- 0.01235</result1>
   </dataitem>
   <dataitem index="1038">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=3</param3>
-    <result1 type="string">0.01234-</result1>
+    <result1 type="string">0.01235-</result1>
   </dataitem>
   <dataitem index="1039">
     <param1 type="rational">10,03,02,a5,09,01,03,40,0d,03</param1>
     <param2 type="string">N5</param2>
     <param3 type="numberformatinfo">CultureName=mn-Mong-CN:NumberNegativePattern=4</param3>
-    <result1 type="string">0.01234 -</result1>
+    <result1 type="string">0.01235 -</result1>
   </dataitem>
   <dataitem index="1040">
     <param1 type="rational">10,03,05,ff,e3,0b,54,02,01,02,10,27</param1>

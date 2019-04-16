@@ -113,6 +113,9 @@ namespace Palmtree::Math::Core::Internal
     class __DLLEXPORT_UINT ReverseStringWriter
         : public StringWriter
     {
+    protected:
+        ReverseStringWriter(wchar_t* p, wchar_t* sob, wchar_t* eob);
+
     public:
         ReverseStringWriter(wchar_t* buffer, size_t size);
 

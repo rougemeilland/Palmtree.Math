@@ -156,7 +156,7 @@ namespace Palmtree.Math.CodeGen.TestData
                         return (sign * upper_value);
 
                 case 1001:  // 正の無限大に近づくように丸められる。
-                    return (sign >= 0 ?  sign * upper_value : sign * lower_value);
+                    return (sign >= 0 ? sign * upper_value : sign * lower_value);
 
                 case 1002:  // 0 に近づくように丸められる。
                     return (sign * lower_value);
@@ -267,7 +267,7 @@ namespace Palmtree.Math.CodeGen.TestData
             if (Numerator == 0)
                 return (0m);
             var sign = Numerator.Sign;
-            var n = BigInteger.Abs( Numerator) * BigInteger.Pow(10, 28);
+            var n = BigInteger.Abs(Numerator) * BigInteger.Pow(10, 28);
             var d = Denominator;
             var scale = 28;
             var limit = (BigInteger.One << 96) - 1;
@@ -320,7 +320,7 @@ namespace Palmtree.Math.CodeGen.TestData
         public double ToDouble()
         {
             var sign = Numerator.Sign;
-            var n = BigInteger.Abs( Numerator) << 1022;
+            var n = BigInteger.Abs(Numerator) << 1022;
             var d = Denominator;
             var scale = -1022;
             while (n.IsEven && d.IsEven)
@@ -426,102 +426,8 @@ namespace Palmtree.Math.CodeGen.TestData
 
         public string ToString(string format, IFormatProvider provider)
         {
-            int precision;
-            var format_type = ParseFormat(format, provider, out precision);
             var value = (double)Numerator / (double)Denominator;
-            int sign = 1;
-            if (value < 0)
-            {
-                sign = -1;
-                value = -value;
-            }
-            double value_round_even;
-            switch (format_type.ToLower())
-            {
-                case "c":
-                case "f":
-                case "n":
-                case "p":
-                    value_round_even = System.Math.Round(value, precision, MidpointRounding.ToEven);
-                    break;
-                case "e":
-                    value_round_even = 指数表記で丸め(value, precision);
-                    break;
-                case "g":
-                    value_round_even = 指数表記で丸め(value, precision - 1);
-                    break;
-                default:
-                    throw new ApplicationException();
-            }
-            return ((sign * value_round_even).ToString(format, provider));
-        }
-
-        private static double 指数表記で丸め(double value, int precision)
-        {
-            if (value == 0)
-                return (0);
-            double value_round_even;
-            int exp = 0;
-            while (value >= 10)
-            {
-                value /= 10;
-                exp++;
-            }
-            while (value < 1)
-            {
-                value *= 10;
-                exp--;
-            }
-            value_round_even = System.Math.Round(value, precision, MidpointRounding.ToEven);
-            while (exp > 0)
-            {
-                value_round_even *= 10;
-                --exp;
-            }
-            while (exp < 0)
-            {
-                value_round_even /= 10;
-                ++exp;
-            }
-
-            return (value_round_even);
-        }
-
-        private static string ParseFormat(string format, IFormatProvider provider, out int precision)
-        {
-            if (string.IsNullOrEmpty(format))
-                format = "G";
-            var number_format = provider as NumberFormatInfo;
-            var format_type = format.Substring(0, 1);
-            var precision_str = format.Substring(1);
-            if (precision_str == "")
-            {
-                switch (format_type.ToLower())
-                {
-                    case "c":
-                        precision_str = number_format.CurrencyDecimalDigits.ToString();
-                        break;
-                    case "f":
-                    case "n":
-                        precision_str = number_format.NumberDecimalDigits.ToString();
-                        break;
-                    case "p":
-                        precision_str = number_format.PercentDecimalDigits.ToString();
-                        break;
-                    case "e":
-                        precision_str = "6";
-                        break;
-                    case "g":
-                        precision_str = "15";
-                        break;
-                    default:
-                        throw new ApplicationException();
-                }
-            }
-            precision = int.Parse(precision_str);
-            if (format_type.ToLower() == "g" && precision == 0)
-                precision = 15;
-            return (format_type);
+            return (value.ToString(format, provider));
         }
 
         public static MiniRational Parse(string s, NumberStyles style, IFormatProvider provider)

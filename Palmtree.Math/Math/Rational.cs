@@ -93,6 +93,19 @@ namespace Palmtree.Math
 
         public bool IsZero => EngineObject.IsZero(Handle);
 
+        public static RoundingMode DefaultRoundingMode
+        {
+            get
+            {
+                return (UBigInt.EngineObject.DefaultRoundingMode);
+            }
+
+            set
+            {
+                UBigInt.EngineObject.DefaultRoundingMode = value;
+            }
+        }
+
         #endregion
 
         #region インターナルプロパティ

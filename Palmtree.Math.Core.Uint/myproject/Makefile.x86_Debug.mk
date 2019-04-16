@@ -122,7 +122,7 @@ OBJS = ../build/x86_Debug/pmc_add.o ../build/x86_Debug/pmc_atoi.o ../build/x86_D
 	mkdir -p ../build/x86_Debug
 	g++ -c -save-temps=obj -Werror -D_M_IX86 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x86_Debug/pmc_resourceholder_uint.o ../pmc_resourceholder_uint.cpp
 
-../build/x86_Debug/pmc_round.o: ../pmc_round.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_resourceholder_uint.h  ../mymakefile.xml
+../build/x86_Debug/pmc_round.o: ../pmc_round.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_resourceholder_uint.h  ../pmc_lock.h  ../mymakefile.xml
 	mkdir -p ../build/x86_Debug
 	g++ -c -save-temps=obj -Werror -D_M_IX86 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x86_Debug/pmc_round.o ../pmc_round.cpp
 
@@ -162,7 +162,7 @@ OBJS = ../build/x86_Debug/pmc_add.o ../build/x86_Debug/pmc_atoi.o ../build/x86_D
 	mkdir -p ../build/x86_Debug
 	g++ -c -save-temps=obj -Werror -D_M_IX86 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x86_Debug/pmc_tostringformatter.o ../pmc_tostringformatter.cpp
 
-../build/x86_Debug/pmc_tostringformattercustom.o: ../pmc_tostringformattercustom.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_resourceholder_uint.h  ../pmc_stringio.h  ../pmc_tostringformattercustom.h  ../pmc_threadcontext.h  ../pmc_thousandseparatedstringwriter.h  ../pmc_lock.h  ../mymakefile.xml
+../build/x86_Debug/pmc_tostringformattercustom.o: ../pmc_tostringformattercustom.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_resourceholder_uint.h  ../pmc_stringio.h  ../pmc_thousandseparatedstringwriter.h  ../pmc_tostringformattercustom.h  ../pmc_threadcontext.h  ../pmc_string.h  ../pmc_lock.h  ../mymakefile.xml
 	mkdir -p ../build/x86_Debug
 	g++ -c -save-temps=obj -Werror -D_M_IX86 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z  -o ../build/x86_Debug/pmc_tostringformattercustom.o ../pmc_tostringformattercustom.cpp
 

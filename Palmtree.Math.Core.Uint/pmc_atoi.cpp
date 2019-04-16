@@ -34,14 +34,13 @@ namespace Palmtree::Math::Core::Internal
 
 #ifdef _M_IX86
     static const __UNIT_TYPE _10n_base_number = 1000000000U; // 10^9
-    static const size_t digit_count_on_word = 9;
+    static const size_t _digit_count_on_word = 9;
 #elif defined (_M_X64)
     static const __UNIT_TYPE _10n_base_number = 10000000000000000000UL; // 10^19
-    static const size_t digit_count_on_word = 19;
+    static const size_t _digit_count_on_word = 19;
 #else
 #error unknown platform
 #endif
-
 
     static __UNIT_TYPE* (*fp_MultiplyAndAdd)(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE x);
 
@@ -477,7 +476,7 @@ namespace Palmtree::Math::Core::Internal
     {
         ResourceHolderUINT root(tc);
         // êÆêîïîÇ 10^word_digit_count ÇäÓêîÇ∆ÇµÇΩÉoÉCÉgóÒÇ…ïœä∑Ç∑ÇÈ
-        __UNIT_TYPE* bin_buf = root.AllocateBlock(_DIVIDE_CEILING_SIZE(lstrlenW(source), digit_count_on_word) * __UNIT_TYPE_BIT_COUNT);
+        __UNIT_TYPE* bin_buf = root.AllocateBlock(_DIVIDE_CEILING_SIZE(lstrlenW(source), _digit_count_on_word) * __UNIT_TYPE_BIT_COUNT);
         __UNIT_TYPE bin_buf_count;
         BuildBinaryFromDecimalString(source, bin_buf, &bin_buf_count);
 

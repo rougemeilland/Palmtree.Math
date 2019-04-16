@@ -41,10 +41,10 @@ namespace Palmtree::Math::Core::Internal
     private:
 #ifdef _M_IX86
         const __UNIT_TYPE _10n_base_number = 1000000000U; // 10^9
-        const size_t digit_count_on_word = 9;
+        const size_t _digit_count_on_word = 9;
 #elif defined (_M_X64)
         const __UNIT_TYPE _10n_base_number = 10000000000000000000UL; // 10^19
-        const size_t digit_count_on_word = 19;
+        const size_t _digit_count_on_word = 19;
 #else
 #error unknown platform
 #endif

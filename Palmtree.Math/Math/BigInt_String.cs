@@ -118,39 +118,8 @@ namespace Palmtree.Math
 
         private static string ToString(Core.BigIntHandle handle, string format, NumberFormatInfo provider)
         {
-#if false
-            if (_tostring_standard_format_pattern.IsMatch(format))
-                return (EngineObject.ToString(handle, format, provider));
-            else
-                return (ToStringCustomFormat(handle, format, provider));
-#else
             return (EngineObject.ToString(handle, format, provider));
-#endif
         }
-
-#if false
-        private static string ToStringCustomFormat(Core.BigIntHandle handle, string format, NumberFormatInfo provider)
-        {
-            // 【実験結果】
-            // %と‰の効果は重複してかかる。%が2個なら100*100倍、%と‰なら100*1000倍。%と‰はどこに書かれていてもそのとおりの場所で表示される。【例：(-1.23456789).ToString("0■%■0") => -12■%■3 】
-            // '#', '0', '.', ','をまず抜き出して数値を文字列化し、そのあとで'#', '0'のある場所に数値をはめ込む、みたいな実装になっているらしい。
-            // ⇒小数部は小数点を基準に上位から順に1文字ずつはめ込まれ、はめ込めなかった分は四捨五入されて必要ならば繰り上がる。
-            // ⇒整数部は小数点を基準に下位から順に1文字ずつはめ込まれる。
-            // '.'の後に書かれている','は無視される。また、最初の '0', '#' の前に書かれている ',' は無視される。
-            // 整数部にて、'0'の後に書かれている'#'は'0'と解釈される。
-            // 小数部にて、'0'の前に書かれている'#'は'0'と解釈される。
-            // '.'の前に '0'または '#'が一つもない場合は、'#' が一つだけあると解釈される。
-            // 整数部の符号は最初の '#', '0'の前にどんなテキストがあろうとあらゆるテキストの最初に表示される。正値のときに自動的には'+'は表示されない。
-            // Eの構文解析に失敗した場合はEは(そしてその次の+あるいは-も)一般テキストとしてそのまま表示される。
-            // ⇒【例：(1.23456789).ToString("0.0E+#0  000") => 1.2E+34  568】
-            // 逆に、構文として正しければEはどこに記述されていてもその場所のまま表示される。
-            // ⇒【例：(-0.0123456789).ToString("0.0E+0  000") => -1.2E-2  346】
-            // '.' が複数ある場合は最初のものを除いて無視される。【例：(-0.0123456789).ToString("0.0 00.00") => -0.0 1235】
-            // 三つ目の';'の後の文字列は数値の符号が何であっても表示されない。つまり無視される。
-
-            throw new NotSupportedException();
-        }
-#endif
 
         #endregion
     }

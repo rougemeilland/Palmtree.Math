@@ -180,41 +180,9 @@ namespace Palmtree::Math::Core::Internal
                 ++scale;
             }
 
-            // p を整数部と小数部に分ける
-            NUMBER_OBJECT_UINT* p_int_part;
-            NUMBER_OBJECT_UINT* p_frac_part_numerator = PMC_DivRem_UX_UX_Imp(tc, np_numerator, np_denominator, &p_int_part);
+            // 数値を丸める
+            NUMBER_OBJECT_UINT* p_int_part = PMC_RoundZero_R_Imp(tc, p_sign, np_numerator, np_denominator, PMC_GetDefaultRoundingMode());
             root.HookNumber(p_int_part);
-            root.HookNumber(p_frac_part_numerator);
-            NUMBER_OBJECT_UINT* p_frac_part_denominator = np_denominator;
-
-            // p の小数部と 1/2 を比較し、その結果により整数部を丸める
-            p_frac_part_numerator = PMC_LeftShift_UX_UI_Imp(tc, p_frac_part_numerator, 1);
-            root.HookNumber(p_frac_part_numerator);
-            _INT32_T c = PMC_Compare_UX_UX_Imp(p_frac_part_numerator, p_frac_part_denominator);
-            if (c > 0)
-            {
-                // 小数部が 1/2 より大きい場合
-                p_int_part = PMC_Increment_UX_Imp(tc, p_int_part);
-                root.HookNumber(p_int_part);
-            }
-            else if (c < 0)
-            {
-                // 小数部が 1/2 より小さい場合
-            }
-            else
-            {
-                // 小数部が 1/2 に等しい場合
-                if (p_int_part->IS_EVEN)
-                {
-                    // 整数部が偶数である場合
-                }
-                else
-                {
-                    // 整数部が奇数である場合
-                    p_int_part = PMC_Increment_UX_Imp(tc, p_int_part);
-                    root.HookNumber(p_int_part);
-                }
-            }
 
             // 復帰値を組み立てる
 
@@ -313,52 +281,9 @@ namespace Palmtree::Math::Core::Internal
         np_numerator = PMC_LeftShift_UX_UI_Imp(tc, np_numerator, 52);
         root.HookNumber(np_numerator);
 
-        NUMBER_OBJECT_UINT* int_part;
-        NUMBER_OBJECT_UINT* frac_part_numerator = PMC_DivRem_UX_UX_Imp(tc, np_numerator, np_denominator, &int_part);
+        // 数値を丸める
+        NUMBER_OBJECT_UINT* int_part = PMC_RoundZero_R_Imp(tc, p_sign, np_numerator, np_denominator, PMC_GetDefaultRoundingMode());
         root.HookNumber(int_part);
-        root.HookNumber(frac_part_numerator);
-        NUMBER_OBJECT_UINT* frac_part_denominator = np_denominator;
-
-        // この時点で int_part は 53bit (doubleの有効桁数) あるはず。
-        if (int_part->UNIT_BIT_COUNT != 53)
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_to.cpp;PMC_ToDouble_R;1");
-
-        // 小数部と 1/2 の比較を行い、その結果によって整数部の丸めの方法を選ぶ
-        frac_part_numerator = PMC_LeftShift_UX_UI_Imp(tc, frac_part_numerator, 1);
-        root.HookNumber(frac_part_numerator);
-        int c = PMC_Compare_UX_UX_Imp(frac_part_numerator, frac_part_denominator);
-        if (c > 0)
-        {
-            // 小数部が 1/2 を超えている場合
-
-            // 整数部をインクリメントする
-            int_part = PMC_Increment_UX_Imp(tc, int_part);
-            root.HookNumber(int_part);
-        }
-        else if (c < 0)
-        {
-            // 小数部が 1/2 に満たない場合
-
-            // nop
-        }
-        else
-        {
-            // 小数部が 1/2 に等しい場合
-
-            if (int_part->IS_EVEN)
-            {
-                // 整数部が偶数である場合
-
-                // nop
-            }
-            else
-            {
-                // 整数部が奇数である場合
-
-                int_part = PMC_Increment_UX_Imp(tc, int_part);
-                root.HookNumber(int_part);
-            }
-        }
 
         // int_part が丸めにより 54 bit になっている場合は 1bit だけ右シフトする。
         if (int_part->UNIT_BIT_COUNT > 53)
@@ -368,7 +293,9 @@ namespace Palmtree::Math::Core::Internal
             ++scale;
         }
 
-        // この時点で int_part はちょうど 53bit の整数である。
+        // この時点で int_part は 53bit (doubleの有効桁数) あるはず。
+        if (int_part->UNIT_BIT_COUNT != 53)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_to.cpp;PMC_ToDouble_R;1");
 
         // 仮数部の取得
 #ifdef _M_IX86

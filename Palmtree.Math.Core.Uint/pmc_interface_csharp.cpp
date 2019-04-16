@@ -309,6 +309,34 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_GetDefaultRoundingMode(PMC_MIDPOINT_ROUNDING_CODE* value)
+    {
+        if (value == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *value = PMC_GetDefaultRoundingMode();
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_SetDefaultRoundingMode(PMC_MIDPOINT_ROUNDING_CODE mode)
+    {
+        try
+        {
+            PMC_SetDefaultRoundingMode(mode);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_FromByteArray(const unsigned char* buffer, _INT32_T count, PMC_HANDLE_UINT* value)
     {
         if (value == nullptr)

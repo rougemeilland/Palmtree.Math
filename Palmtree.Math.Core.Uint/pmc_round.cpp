@@ -23,13 +23,15 @@
  */
 
 
-#include <windows.h>
 #include "pmc_resourceholder_uint.h"
 #include "pmc_uint_internal.h"
+#include "pmc_lock.h"
 
 
 namespace Palmtree::Math::Core::Internal
 {
+
+    static PMC_MIDPOINT_ROUNDING_CODE deafult_rounding_mode = PMC_MIDPOINT_ROUNDING_HALF_EVEN;
 
     static NUMBER_OBJECT_UINT* Round_R_Imp(ThreadContext& tc, ResourceHolderUINT& root, PMC_MIDPOINT_ROUNDING_CODE mode, SIGN_T r_numerator_sign, NUMBER_OBJECT_UINT* r_numerator_abs, NUMBER_OBJECT_UINT* frac_part_numerator, NUMBER_OBJECT_UINT* frac_part_denominator)
     {
@@ -174,16 +176,26 @@ namespace Palmtree::Math::Core::Internal
     }
 
     // mode で指定された方法により、有理数 x を小数以下を 0 桁に丸める。
+    NUMBER_OBJECT_UINT* PMC_RoundZero_R_Imp(ThreadContext& tc, SIGN_T x_numerator_sign, NUMBER_OBJECT_UINT* x_numerator_abs, NUMBER_OBJECT_UINT* x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode)
+    {
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* int_part;
+        NUMBER_OBJECT_UINT* frac_part_numerator = PMC_DivRem_UX_UX_Imp(tc, x_numerator_abs, x_denominator, &int_part);
+        root.HookNumber(int_part);
+        root.HookNumber(frac_part_numerator);
+        int_part = Round_R_Imp(tc, root, mode, x_numerator_sign, int_part, frac_part_numerator, x_denominator);
+        root.UnlinkNumber(int_part);
+        return (int_part);
+    }
+
+    // mode で指定された方法により、有理数 x を小数以下を 0 桁に丸める。
     PMC_HANDLE_UINT PMC_RoundZero_R(ThreadContext& tc, SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode)
     {
         NUMBER_OBJECT_UINT* nx_numerator_abs = GET_NUMBER_OBJECT(x_numerator_abs, L"x_numerator_abs");
         NUMBER_OBJECT_UINT* nx_denominator = GET_NUMBER_OBJECT(x_denominator, L"x_denominator");
         ResourceHolderUINT root(tc);
-        NUMBER_OBJECT_UINT* nr_abs;
-        NUMBER_OBJECT_UINT* frac_part_numerator = PMC_DivRem_UX_UX_Imp(tc, nx_numerator_abs, nx_denominator, &nr_abs);
+        NUMBER_OBJECT_UINT* nr_abs = PMC_RoundZero_R_Imp(tc, x_numerator_sign, nx_numerator_abs, nx_denominator, mode);
         root.HookNumber(nr_abs);
-        root.HookNumber(frac_part_numerator);
-        nr_abs = Round_R_Imp(tc, root, mode, x_numerator_sign, nr_abs, frac_part_numerator, nx_denominator);
         PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr_abs);
         root.UnlinkNumber(nr_abs);
         return (r);
@@ -214,6 +226,23 @@ namespace Palmtree::Math::Core::Internal
         root.UnlinkNumber(nr_numerator_abs);
         root.UnlinkNumber(nr_denominator);
         return (r_numerator_abs);
+    }
+
+    PMC_MIDPOINT_ROUNDING_CODE PMC_GetDefaultRoundingMode()
+    {
+        Lock lock_obj;
+
+        return (deafult_rounding_mode);
+    }
+
+    void PMC_SetDefaultRoundingMode(PMC_MIDPOINT_ROUNDING_CODE mode) noexcept(false)
+    {
+        Lock lock_obj;
+
+        if (mode == PMC_MIDPOINT_ROUNDING_CEILING || mode == PMC_MIDPOINT_ROUNDING_FLOOR)
+            throw ArgumentException(L"mode に PMC_MIDPOINT_ROUNDING_CEILING または PMC_MIDPOINT_ROUNDING_FLOOR を指定できません。");
+
+        deafult_rounding_mode = mode;
     }
 
 }

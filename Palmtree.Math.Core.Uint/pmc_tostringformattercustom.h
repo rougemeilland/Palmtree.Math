@@ -79,7 +79,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         int _min_int_part_length;
         int _max_frac_part_length;
         int _min_frac_part_length;
-        bool _exists_multi_section;
+        bool _auto_negative_sign;
         ExponentToken* _exponent_part;
         DecimalSeparaterToken* _decimal_point_separater;
 
@@ -87,7 +87,7 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         SectionToken(ThreadContext& tc);
         virtual ~SectionToken();
         virtual SectionToken* ToSection() override;
-        void Parse(bool exists_multi_section);
+        void Parse(bool auto_negative_sign);
         void Format(SectionToken* alternative_section, const PMC_NUMBER_FORMAT_INFO& format_option, SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, StringWriter& writer);
         void AppendLiteral(const wchar_t* reference, int reference_count);
         void AppendIntPartPlaceHolder(const PMC_NUMBER_FORMAT_INFO& format_option, bool first, const wchar_t digit);
@@ -103,8 +103,13 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
 
     private:
         void WriteZeroValue(const PMC_NUMBER_FORMAT_INFO& format_option, StringWriter& writer);
-        void ApplyPlaceHolder(const PMC_NUMBER_FORMAT_INFO & format_option, const wchar_t* t_int_buf_writer, const wchar_t* frac_buf_writer, int exp, StringWriter & writer);
-        void Times10n_R(ThreadContext& tc, ResourceHolderUINT& root, NUMBER_OBJECT_UINT * x_numerator, NUMBER_OBJECT_UINT * x_denominator, int e, NUMBER_OBJECT_UINT ** r_numerator, NUMBER_OBJECT_UINT ** r_denominator);
+        void WriteZeroValueByFixedPoint(const PMC_NUMBER_FORMAT_INFO & format_option, StringWriter & writer);
+        void WriteZeroValueByExponential(const PMC_NUMBER_FORMAT_INFO & format_option, StringWriter & writer);
+        void WriteNonZeroValue(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, SectionToken * alternative_section, const PMC_NUMBER_FORMAT_INFO & format_option, StringWriter & writer);
+        void WriteNonZeroValueByFixedPoint(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT * x_denominator, SectionToken * alternative_section, const PMC_NUMBER_FORMAT_INFO & format_option, StringWriter & writer);
+        void WriteNonZeroValueByExponential(SIGN_T x_sign, NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT * x_denominator, SectionToken * alternative_section, const PMC_NUMBER_FORMAT_INFO & format_option, StringWriter & writer);
+        void Times10n_R(ResourceHolderUINT& root, NUMBER_OBJECT_UINT * x_numerator, NUMBER_OBJECT_UINT * x_denominator, int e, NUMBER_OBJECT_UINT ** r_numerator, NUMBER_OBJECT_UINT ** r_denominator);
+        void ApplyPlaceHolder(SIGN_T sign, const wchar_t* t_int_buf_writer, const wchar_t* frac_buf_writer, int exp, const PMC_NUMBER_FORMAT_INFO & format_option, StringWriter & writer);
     };
 
     class LiteralToken

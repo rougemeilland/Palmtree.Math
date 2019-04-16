@@ -146,6 +146,20 @@ namespace Palmtree.Math.Core
             }
         }
 
+        public RoundingMode DefaultRoundingMode
+        {
+            get
+            {
+                HandleResultCode((PMC_STATUS_CODE)PMCCS_GetDefaultRoundingMode(out Int32 mode));
+                return ((RoundingMode)mode);
+            }
+
+            set
+            {
+                HandleResultCode((PMC_STATUS_CODE)PMCCS_SetDefaultRoundingMode((int)value));
+            }
+        }
+
         public UBigIntHandle FromByteArray(byte[] data)
         {
             IntPtr r;

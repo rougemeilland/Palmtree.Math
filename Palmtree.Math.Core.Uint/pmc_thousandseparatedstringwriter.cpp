@@ -30,7 +30,7 @@ namespace Palmtree::Math::Core::Internal
 {
 
     ThousandSeparatedStringWriter::ThousandSeparatedStringWriter(ReverseStringWriter& native_writer, wchar_t format_type, const PMC_NUMBER_FORMAT_INFO& format_option)
-        : StringWriter(nullptr, nullptr, nullptr), _native_writer(native_writer)
+        : ReverseStringWriter(nullptr, nullptr, nullptr), _native_writer(native_writer)
     {
         _native_writer = native_writer;
         const PMC_DECIMAL_NUMBER_FORMAT_INFO* decimal_info;

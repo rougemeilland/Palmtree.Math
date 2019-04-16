@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dataitems>
+  <dataitem index="0">
+    <param1 type="bigint">00,00</param1>
+    <param2 type="string">#0.0#;(#0.0#)</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">0.0</result1>
+  </dataitem>
+  <dataitem index="1">
+    <param1 type="bigint">00,00</param1>
+    <param2 type="string">#0.0#;(#0.0#);-\0-</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">-0-</result1>
+  </dataitem>
+  <dataitem index="2">
+    <param1 type="bigint">01,04,ff,ff,ff,7f</param1>
+    <param2 type="string">##,#</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">2,147,483,647</result1>
+  </dataitem>
+  <dataitem index="3">
+    <param1 type="bigint">01,04,ff,ff,ff,7f</param1>
+    <param2 type="string">##,#</param2>
+    <param3 type="numberformatinfo">CultureName=es-ES</param3>
+    <result1 type="string">2.147.483.647</result1>
+  </dataitem>
+  <dataitem index="4">
+    <param1 type="bigint">01,04,ff,ff,ff,7f</param1>
+    <param2 type="string">#,#,,</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">2,147</result1>
+  </dataitem>
+  <dataitem index="5">
+    <param1 type="bigint">01,04,ff,ff,ff,7f</param1>
+    <param2 type="string">#,#,,</param2>
+    <param3 type="numberformatinfo">CultureName=es-ES</param3>
+    <result1 type="string">2.147</result1>
+  </dataitem>
+  <dataitem index="6">
+    <param1 type="bigint">01,01,44</param1>
+    <param2 type="string"># 'degrees'</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">68 degrees</result1>
+  </dataitem>
+  <dataitem index="7">
+    <param1 type="bigint">01,01,44</param1>
+    <param2 type="string"># °</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">68 °</result1>
+  </dataitem>
+  <dataitem index="8">
+    <param1 type="bigint">01,01,44</param1>
+    <param2 type="string">#' degrees'</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">68 degrees</result1>
+  </dataitem>
+  <dataitem index="9">
+    <param1 type="bigint">01,03,06,12,0f</param1>
+    <param2 type="string">#0.0e0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">98.8e4</result1>
+  </dataitem>
+  <dataitem index="10">
+    <param1 type="bigint">01,03,06,12,0f</param1>
+    <param2 type="string">\###00\#</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">#987654#</result1>
+  </dataitem>
+  <dataitem index="11">
+    <param1 type="bigint">01,01,7b</param1>
+    <param2 type="string">00000</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">00123</result1>
+  </dataitem>
+  <dataitem index="12">
+    <param1 type="bigint">01,04,d2,02,96,49</param1>
+    <param2 type="string">0,0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">1,234,567,890</result1>
+  </dataitem>
+  <dataitem index="13">
+    <param1 type="bigint">01,04,d2,02,96,49</param1>
+    <param2 type="string">0,0</param2>
+    <param3 type="numberformatinfo">CultureName=fr-FR</param3>
+    <result1 type="string">1 234 567 890</result1>
+  </dataitem>
+  <dataitem index="14">
+    <param1 type="bigint">01,01,7b</param1>
+    <param2 type="string">#####</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">123</result1>
+  </dataitem>
+  <dataitem index="15">
+    <param1 type="bigint">01,03,40,e2,01</param1>
+    <param2 type="string">[##-##-##]</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">[12-34-56]</result1>
+  </dataitem>
+  <dataitem index="16">
+    <param1 type="bigint">01,04,d2,02,96,49</param1>
+    <param2 type="string">#</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">1234567890</result1>
+  </dataitem>
+  <dataitem index="17">
+    <param1 type="bigint">01,04,d2,02,96,49</param1>
+    <param2 type="string">(###) ###-####</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">(123) 456-7890</result1>
+  </dataitem>
+  <dataitem index="18">
+    <param1 type="bigint">01,03,f0,4f,01</param1>
+    <param2 type="string">0.###E+0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">8.6E+4</result1>
+  </dataitem>
+  <dataitem index="19">
+    <param1 type="bigint">01,04,d2,02,96,49</param1>
+    <param2 type="string">#,#</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">1,234,567,890</result1>
+  </dataitem>
+  <dataitem index="20">
+    <param1 type="bigint">01,04,d2,02,96,49</param1>
+    <param2 type="string">#,##0,,</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">1,235</result1>
+  </dataitem>
+  <dataitem index="21">
+    <param1 type="bigint">01,04,d2,02,96,49</param1>
+    <param2 type="string">#,,</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">1235</result1>
+  </dataitem>
+  <dataitem index="22">
+    <param1 type="bigint">01,04,d2,02,96,49</param1>
+    <param2 type="string">#,,,</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">1</result1>
+  </dataitem>
+  <dataitem index="23">
+    <param1 type="bigint">01,04,d2,02,96,49</param1>
+    <param2 type="string">#,##0,,</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">1,235</result1>
+  </dataitem>
+  <dataitem index="24">
+    <param1 type="bigint">01,03,f0,4f,01</param1>
+    <param2 type="string">0.###E+0</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">8.6E+4</result1>
+  </dataitem>
+  <dataitem index="25">
+    <param1 type="bigint">01,03,f0,4f,01</param1>
+    <param2 type="string">0.###E+000</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">8.6E+004</result1>
+  </dataitem>
+  <dataitem index="26">
+    <param1 type="bigint">01,03,f0,4f,01</param1>
+    <param2 type="string">0.###E-000</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">8.6E004</result1>
+  </dataitem>
+  <dataitem index="27">
+    <param1 type="bigint">01,01,7b</param1>
+    <param2 type="string">\#\#\# ##0 dollars and \0\0 cents \#\#\#</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">### 123 dollars and 00 cents ###</result1>
+  </dataitem>
+  <dataitem index="28">
+    <param1 type="bigint">01,01,7b</param1>
+    <param2 type="string">\#\#\# ##0 dollars and \0\0 cents \#\#\#</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">### 123 dollars and 00 cents ###</result1>
+  </dataitem>
+  <dataitem index="29">
+    <param1 type="bigint">01,01,7b</param1>
+    <param2 type="string">\\\\\\ ##0 dollars and \0\0 cents \\\\\\</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">\\\ 123 dollars and 00 cents \\\</result1>
+  </dataitem>
+  <dataitem index="30">
+    <param1 type="bigint">01,01,7b</param1>
+    <param2 type="string">\\\\\\ ##0 dollars and \0\0 cents \\\\\\</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">\\\ 123 dollars and 00 cents \\\</result1>
+  </dataitem>
+  <dataitem index="31">
+    <param1 type="bigint">01,02,d2,04</param1>
+    <param2 type="string">##;(##);**Zero**</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">1234</result1>
+  </dataitem>
+  <dataitem index="32">
+    <param1 type="bigint">03,02,d2,04</param1>
+    <param2 type="string">##;(##);**Zero**</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">(1234)</result1>
+  </dataitem>
+  <dataitem index="33">
+    <param1 type="bigint">00,00</param1>
+    <param2 type="string">##;(##);**Zero**</param2>
+    <param3 type="numberformatinfo">CultureName=ja-JP</param3>
+    <result1 type="string">**Zero**</result1>
+  </dataitem>
+</dataitems>

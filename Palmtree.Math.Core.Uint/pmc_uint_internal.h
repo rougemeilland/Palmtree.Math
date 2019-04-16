@@ -232,6 +232,9 @@ namespace Palmtree::Math::Core::Internal
     // 10 のべき乗を計算する。
     extern NUMBER_OBJECT_UINT* PMC_Pow10_UI_Imp(ThreadContext& tc, _UINT32_T n);
 
+    // mode で指定された方法により、有理数 x を小数以下を 0 桁に丸める。
+    NUMBER_OBJECT_UINT* PMC_RoundZero_R_Imp(ThreadContext& tc, SIGN_T x_numerator_sign, NUMBER_OBJECT_UINT* x_numerator_abs, NUMBER_OBJECT_UINT* x_denominator, PMC_MIDPOINT_ROUNDING_CODE mode);
+
     // mode で指定された方法により、符号が省略された有理数 x の小数以下を decimals 桁に丸める。
     extern NUMBER_OBJECT_UINT* PMC_Round_R_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* x_numerator_abs, NUMBER_OBJECT_UINT* x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, NUMBER_OBJECT_UINT** r_denominator);
     
@@ -447,6 +450,9 @@ namespace Palmtree::Math::Core::Internal
 
     extern PMC_HANDLE_UINT PMC_Round_R(ThreadContext& tc, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
     extern PMC_HANDLE_UINT PMC_Round_R(ThreadContext& tc, SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
+
+    extern PMC_MIDPOINT_ROUNDING_CODE PMC_GetDefaultRoundingMode();
+    extern void PMC_SetDefaultRoundingMode(PMC_MIDPOINT_ROUNDING_CODE mode) noexcept(false);
 
     extern PMC_HANDLE_UINT PMC_FromByteArray_SINT(ThreadContext& tc, const unsigned char* buffer, size_t count, SIGN_T* o_sign) noexcept(false);
     extern PMC_HANDLE_UINT PMC_FromByteArray_RTNL(ThreadContext& tc, const unsigned char* buffer, size_t count, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs) noexcept(false);

@@ -118,7 +118,7 @@ namespace Palmtree::Math::Core::Internal
     // 小数点以下の丸め処理 (および必要なら小数点位置の移動) を行います。
     void ToStringFormatter::RoundValue(NUMBER_OBJECT_UINT* x_numerator, NUMBER_OBJECT_UINT* x_denominator, NUMBER_OBJECT_UINT* * r_numerator, NUMBER_OBJECT_UINT* * r_denominator, _INT32_T * exp)
     {
-        *r_numerator = PMC_Round_R_Imp(_tc, x_numerator, x_denominator, _precision, PMC_MIDPOINT_ROUNDING_HALF_EVEN, r_denominator);
+        *r_numerator = PMC_Round_R_Imp(_tc, x_numerator, x_denominator, _precision, PMC_GetDefaultRoundingMode(), r_denominator);
         *exp = 0;
     }
 
@@ -131,7 +131,10 @@ namespace Palmtree::Math::Core::Internal
     wchar_t * ToStringFormatter::ConstructIntegerPartNumberSequence(NUMBER_OBJECT_UINT* int_part, wchar_t * out_buf, size_t out_buf_count)
     {
         ReverseStringWriter simple_number_sequence_writer(out_buf, out_buf_count);
-        PMC_LToA_Imp(_tc, int_part, simple_number_sequence_writer);
+        if (int_part->IS_ZERO)
+            simple_number_sequence_writer.Write(L"0");
+        else
+            PMC_LToA_Imp(_tc, int_part, simple_number_sequence_writer);
         return (simple_number_sequence_writer.GetString());
     }
 
@@ -139,17 +142,7 @@ namespace Palmtree::Math::Core::Internal
     {
         StringWriter simple_number_sequence_writer(out_buf, out_buf_count);
         PMC_FToA_Imp(_tc, frac_part_numerator, frac_part_denominator, max_fraction_part_length, simple_number_sequence_writer);
-        if (_omitted_trailing_sequential_zero)
-        {
-            // 末尾の連続する 0 を削除する指定がされている場合は削除する
-            wchar_t* tail = out_buf + lstrlenW(out_buf);
-            while (tail > out_buf && tail[-1] == L'0')
-            {
-                --tail;
-                *tail = L'\0';
-            }
-        }
-        else
+        if (!_omitted_trailing_sequential_zero)
         {
             // fraction_part_length 桁だけ '0' で埋める
             size_t written_digit_count = lstrlenW(out_buf);

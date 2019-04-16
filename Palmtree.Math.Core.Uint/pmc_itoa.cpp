@@ -33,10 +33,10 @@ namespace Palmtree::Math::Core::Internal
 
 #ifdef _M_IX86
     static const __UNIT_TYPE _10n_base_number = 1000000000U; // 10^9
-    static const size_t digit_count_on_word = 9;
+    static const size_t _digit_count_on_word = 9;
 #elif defined (_M_X64)
     static const __UNIT_TYPE _10n_base_number = 10000000000000000000UL; // 10^19
-    static const size_t digit_count_on_word = 19;
+    static const size_t _digit_count_on_word = 19;
 #else
 #error unknown platform
 #endif
@@ -46,9 +46,12 @@ namespace Palmtree::Math::Core::Internal
         writer.Write(L'0' + d);
     }
 
-    // 整数を文字列化する。
+    // 数値 x を10進文字列として writer へ書き込む (数値が 0 の場合は何も書き込まない)
     void PMC_ItoA(__UNIT_TYPE x, ReverseStringWriter& writer)
     {
+        if (x == 0)
+            return;
+
         __UNIT_TYPE r;
         do
         {
@@ -124,8 +127,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    // 数値 int_part を10進文字列として writer へ書き込む (数値が 0 の場合は何も書き込まない)
     void PMC_LToA_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* int_part, ReverseStringWriter& writer)
     {
+        if (int_part->IS_ZERO)
+            return;
+
         ResourceHolderUINT root(tc);
 
         while (true)
@@ -143,80 +150,81 @@ namespace Palmtree::Math::Core::Internal
                 PMC_ItoA(data, writer);
                 break;
             }
-            WriteIntPartTrailingWord(data, writer);
+            else
+                WriteIntPartTrailingWord(data, writer);
         }
     }
 
 
-    // 小数部の最下位のワードを文字列化する。(count 桁で打ち切る)
+    // 小数部の最下位のワードを文字列化する。(count 桁になるか、あるいは x== 0 で打ち切る)
     static void WriteFracPartTrailingOneWord(__UNIT_TYPE x, size_t count, StringWriter& writer)
     {
         __UNIT_TYPE q;
-#if _M_X64
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 1000000000000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+#ifdef _M_X64
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 1000000000000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 100000000000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 100000000000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 10000000000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 10000000000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 1000000000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 1000000000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 100000000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 100000000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 10000000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 10000000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 1000000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 1000000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 100000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 100000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 10000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 10000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 1000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 1000000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
@@ -224,63 +232,63 @@ namespace Palmtree::Math::Core::Internal
             IncrementDIV32Counter();
 #endif
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 100000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 100000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 10000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 10000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 1000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 1000000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 100000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 100000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 10000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 10000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 1000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 1000UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 100UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 100UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = _DIVREM_UNIT(0, x, 10UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = _DIVREM_UNIT(0, x, 10UL, &x); WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
         else
             IncrementDIV32Counter();
 #endif
-        if (count <= 0) return; q = x; WriteDigit((_UINT32_T)q, writer); --count;
+        if (x == 0 || count <= 0) return; q = x; WriteDigit((_UINT32_T)q, writer); --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
             IncrementDIV64Counter();
@@ -289,11 +297,11 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    // 小数部の最下位ワード以外のワードを文字列化する。(digit_count_on_word 桁だけ続ける)
+    // 小数部の最下位ワード以外のワードを文字列化する。(_digit_count_on_word 桁だけ続ける)
     static void WriteFracPartLeadingWord(__UNIT_TYPE x, StringWriter& writer)
     {
         __UNIT_TYPE q;
-#if _M_X64
+#ifdef _M_X64
         q = _DIVREM_UNIT(0, x, 1000000000000000000U, &x); WriteDigit((_UINT32_T)q, writer);
         q = _DIVREM_UNIT(0, x, 100000000000000000U, &x); WriteDigit((_UINT32_T)q, writer);
         q = _DIVREM_UNIT(0, x, 10000000000000000U, &x); WriteDigit((_UINT32_T)q, writer);
@@ -316,19 +324,23 @@ namespace Palmtree::Math::Core::Internal
         q = x; WriteDigit((_UINT32_T)q, writer);
 #ifdef ENABLED_PERFORMANCE_COUNTER
         if (sizeof(q) == sizeof(_UINT64_T))
-            AddToDIV64Counter((int)digit_count_on_word);
+            AddToDIV64Counter((int)_digit_count_on_word);
         else
-            AddToDIV32Counter((int)digit_count_on_word);
+            AddToDIV32Counter((int)_digit_count_on_word);
 #endif
     }
 
+    // frac_part を最大で max_fraction_part_length 桁だけ文字列化する。末尾の 0 は省略する。
     void PMC_FToA_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* frac_part_numerator, NUMBER_OBJECT_UINT* frac_part_denominator, size_t max_fraction_part_length, StringWriter& simple_number_sequence_writer)
     {
+        if (frac_part_numerator->IS_ZERO)
+            return;
+
         ResourceHolderUINT root(tc);
 
         size_t fraction_part_length = max_fraction_part_length;
 
-        while (!frac_part_numerator->IS_ZERO)
+        while (true)
         {
 #ifdef _M_IX86
             frac_part_numerator = PMC_Multiply_UX_UI_Imp(tc, frac_part_numerator, _10n_base_number);
@@ -343,21 +355,21 @@ namespace Palmtree::Math::Core::Internal
             root.HookNumber(digit);
             root.HookNumber(frac_part_numerator);
 
-            if (fraction_part_length >= digit_count_on_word)
+            if (!frac_part_numerator->IS_ZERO && fraction_part_length >= _digit_count_on_word)
             {
-                // digit を digit_count_on_word 桁の 10 進整数として数字列を書き込む
+                // digit を _digit_count_on_word 桁の 10 進整数として数字列を書き込む
                 if (digit->UNIT_WORD_COUNT > 1)
                     throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_itoa.cpp;PMC_FToA_Imp;1");
-                __UNIT_TYPE digit_word = digit->BLOCK[0];
+                __UNIT_TYPE digit_word = digit->IS_ZERO ? 0 : digit->BLOCK[0];
                 WriteFracPartLeadingWord(digit_word, simple_number_sequence_writer);
-                fraction_part_length -= digit_count_on_word;
+                fraction_part_length -= _digit_count_on_word;
             }
             else
             {
-                // digit を digit_count_on_word 桁の 10 進整数として、上位から fraction_part_length 桁だけ数字列を書き込む
+                // digit を _digit_count_on_word 桁の 10 進整数として、上位から fraction_part_length 桁だけ数字列を書き込む
                 if (digit->UNIT_WORD_COUNT > 1)
                     throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_itoa.cpp;PMC_FToA_Imp;2");
-                __UNIT_TYPE digit_word = digit->BLOCK[0];
+                __UNIT_TYPE digit_word = digit->IS_ZERO ? 0 : digit->BLOCK[0];
                 WriteFracPartTrailingOneWord(digit_word, fraction_part_length, simple_number_sequence_writer);
                 break;
             }

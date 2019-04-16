@@ -179,6 +179,9 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_UINT Round(ThreadContext& tc, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
         PMC_HANDLE_UINT Round(ThreadContext& tc, SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_UINT* r_denominator);
 
+        PMC_MIDPOINT_ROUNDING_CODE GetDefaultRoundingMode();
+        void SetDefaultRoundingMode(PMC_MIDPOINT_ROUNDING_CODE mode) noexcept(false);
+
         PMC_HANDLE_UINT DivideExactly(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v);
 
         PMC_HANDLE_UINT FromByteArray_SINT(ThreadContext& tc, const unsigned char* buffer, size_t count, SIGN_T* o_sign) noexcept(false);

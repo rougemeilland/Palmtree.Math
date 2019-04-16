@@ -50,6 +50,7 @@ EXPORTS
 	PMCCS_GetAllocatedMemorySize
 	PMCCS_GetConfigurationSettings
 	PMCCS_GetConstantValue_I
+	PMCCS_GetDefaultRoundingMode
 	PMCCS_GetPerformanceCounter
 	PMCCS_GreatestCommonDivisor_UI_UX
 	PMCCS_GreatestCommonDivisor_UL_UX
@@ -78,6 +79,7 @@ EXPORTS
 	PMCCS_Remainder_UX_UL
 	PMCCS_Remainder_UX_UX
 	PMCCS_RightShift_UX_I
+    PMCCS_SetDefaultRoundingMode
 	PMCCS_Subtruct_UI_UX
 	PMCCS_Subtruct_UL_UX
 	PMCCS_Subtruct_UX_UI

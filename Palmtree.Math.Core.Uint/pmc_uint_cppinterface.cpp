@@ -547,6 +547,16 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_Round_R(tc, x_numerator_sign, x_numerator_abs, x_denominator, decimals, mode, r_denominator));
     }
 
+    PMC_MIDPOINT_ROUNDING_CODE PMC_UINT_CppInterface::GetDefaultRoundingMode()
+    {
+        return (PMC_GetDefaultRoundingMode());
+    }
+
+    void PMC_UINT_CppInterface::SetDefaultRoundingMode(PMC_MIDPOINT_ROUNDING_CODE mode) noexcept(false)
+    {
+        PMC_SetDefaultRoundingMode(mode);
+    }
+
     PMC_HANDLE_UINT PMC_UINT_CppInterface::FromByteArray_SINT(ThreadContext& tc, const unsigned char * buffer, size_t count, SIGN_T * o_sign) noexcept(false)
     {
         return (PMC_FromByteArray_SINT(tc, buffer, count, o_sign));

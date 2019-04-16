@@ -13,7 +13,8 @@ namespace Palmtree.Math.CsLauncher
     {
         static void Main(string[] args)
         {
-            var v = Rational.Parse("", NumberStyles.None, null);
+            var x = Rational.FromByteArray(new byte[] { 0x10, 0x01, 0x02, 0xa5, 0x09, 0x01, 0x01, 0x14 });
+            Console.WriteLine(x.ToString(@"g"));
             Console.ReadLine();
         }
     }
