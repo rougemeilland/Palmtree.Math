@@ -8,7 +8,7 @@ OBJS = ../build/x86_Debug/pmc_add.o ../build/x86_Debug/pmc_bytes.o ../build/x86_
 
 ../../dist/Debug/x86/Palmtree.Math.Core.Rtnl.dll: $(OBJS) ../Palmtree.Math.Core.Rtnl.def
 	mkdir -p ../../dist/Debug/x86
-	g++ -o ../../dist/Debug/x86/Palmtree.Math.Core.Rtnl.dll $(OBJS) ../Palmtree.Math.Core.Rtnl.def -shared -lkernel32 -luser32 -mwindows -Wl,--enable-stdcall-fixup -Wl,-Map=../build/x86_Debug/Palmtree.Math.Core.Rtnl.map -LZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/dist/Release/x86/
+	g++ -o ../../dist/Debug/x86/Palmtree.Math.Core.Rtnl.dll $(OBJS) ../Palmtree.Math.Core.Rtnl.def -shared -static -lkernel32 -luser32 -mwindows -Wl,--enable-stdcall-fixup -Wl,-Map=../build/x86_Debug/Palmtree.Math.Core.Rtnl.map -LZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/dist/Release/x86/
 
 ../build/x86_Debug/pmc_add.o: ../pmc_add.cpp  ../../Palmtree.Math.Core.Uint/pmc.h  ../../Palmtree.Math.Core.Uint/pmc_uint.h  ../../Palmtree.Math.Core.Uint/pmc_bidirectionallistheader.h  ../../Palmtree.Math.Core.Sint/pmc_sint.h  ../../Palmtree.Math.Core.Uint/pmc_cpuid.h  ../pmc_rtnl.h  ../../Palmtree.Math.Core.Uint/pmc_internal.h  ../../Palmtree.Math.Core.Uint/pmc_exception.h  ../../Palmtree.Math.Core.Uint/pmc_uint_cppinterface.h  ../../Palmtree.Math.Core.Sint/pmc_sint_cppinterface.h  ../../Palmtree.Math.Core.Uint/pmc_resourceholder.h  ../pmc_rtnl_internal.h  ../pmc_resourceholder_rtnl.h  ../mymakefile.xml
 	mkdir -p ../build/x86_Debug
