@@ -4,6 +4,14 @@ Palmtree 数値計算ライブラリ
 長精度の整数や有理数の演算に特化していますので、機能的にはあまり多くありません。  
 なお、SFMTによる乱数生成もサポートしています。
  
+動作環境
+-----
+.NET Frameworkが動作する x86/x64 CPUのコンピュータが必要です。
+
+必要ディスク容量
+-----
+インストールのために約6Mバイトのディスクが必要です。
+
 データ型/クラスについて
 ------
 ### UBigInt型(符号なし長精度整数) ###
@@ -22,60 +30,44 @@ Palmtree 数値計算ライブラリ
 ### BigInt型(符号つき長精度整数) ###
 負の数も扱えること以外はUBigInt型とほぼ同等です。
 UBigInt型でできる演算に加えて、BigInt型では以下の演算が可能です。
-* 絶対値の取得/符号の反転
+* 絶対値/符号の反転
 
 ### Rational型(有理数) ###
 論理的には、分子と分母がそれぞれ最大で2の32乗-1ビットの長さまでの有理数を扱うことができます。
+有理数の演算なので、Doubleなどの浮動小数点型に比べて可能な演算は限られますが、計算誤差が発生しないことが特長です。
 以下の演算が可能です。
-* 
+* 加算/減算/乗算/除算
+* 累乗
+* 逆数
+* 絶対値/符号反転
+* 指定桁での丸め(Floor/Ceiling/切り捨て/切り上げ/四捨五入/五捨五超入/偶数への丸め)
+* 等値/大小比較
+* ToString/Parse/TryParse
+* 他のデータ型との相互型変換
+  * Int32/UInt32/Int64/UInt64
+  * Double/Decimal
 
-負の数も扱えること以外はUBigInt型とほぼ同等です。
-UBigInt型でできる演算に加えて、BigInt型では以下の演算が可能です。
-* 絶対値の取得/符号の反転
+### Randomクラス(乱数生成) ###
+SFMTを使用して乱数を生成することができるクラスです。
+以下のデータ型の乱数を生成することができます。
+* UInt32型(0以上、2の32乗-1以下)
+* UInt64型(0以上、2の64乗-1以下)
+* Double型(0以上1未満)
+* UBigInt型(0以上、2のn乗-1以下、nは指定可能)
+* BigInt型(0以上、2のn乗-1以下、nは指定可能)
+* Rational型(0以上、1未満)
+ 
+著作権
+----------
+&copy; 2018-2019 Palmtree Software
 
-### ブロックレベル ###
-    function f () {
-        alert(0);  /* 先頭に4文字のスペース、
-                      もしくはタブを挿入します */
-    }
- 
-パラメータの解説
-----------------
-リストの間に空行を挟むと、それぞれのリストに `<p>` タグが挿入され、行間が
-広くなります。
- 
-    def MyFunction(param1, param2, ...)
- 
-+   `param1` :
-    _パラメータ1_ の説明
- 
-+   `param2` :
-    _パラメータ2_ の説明
- 
-関連情報
---------
-### リンク、ネストしたリスト
-1. [リンク1](http://example.com/ "リンクのタイトル")
-    * ![画像1](http://github.com/unicorn.png "画像のタイトル")
-2. [リンク2][link]
-    - [![画像2][image]](https://github.com/)
- 
-  [link]: http://example.com/ "インデックス型のリンク"
-  [image]: http://github.com/github.png "インデックス型の画像"
- 
-### 引用、ネストした引用
-> これは引用です。
->
-> > スペースを挟んで `>` を重ねると、引用の中で引用ができますが、
-> > GitHubの場合、1行前に空の引用が無いと、正しくマークアップされません。
- 
+##### SFMT.c, SFMT-*.h: #####
+Copyright (C) 2006, 2007 Mutsuo Saito, Makoto Matsumoto and Hiroshima  University.  
+Copyright (c) 2012 Mutsuo Saito, Makoto Matsumoto, Hiroshima University  and The University of Tokyo.  
+All rights reserved.
+
 ライセンス
 ----------
-Copyright &copy; 2011 xxxxxx
-Licensed under the [Apache License, Version 2.0][Apache]
-Distributed under the [MIT License][mit].
-Dual licensed under the [MIT license][MIT] and [GPL license][GPL].
+Licensed under the [MIT License][mit].
  
-[Apache]: http://www.apache.org/licenses/LICENSE-2.0
 [MIT]: http://www.opensource.org/licenses/mit-license.php
-[GPL]: http://www.gnu.org/licenses/gpl.html
