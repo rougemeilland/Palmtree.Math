@@ -120,8 +120,8 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_SINT handle = (PMC_HANDLE_SINT)&nh;
 
         _ZERO_MEMORY_BYTE(&nh, sizeof(nh));
-        nh.IS_STATIC = TRUE;
-        if (!handle->FLAGS.IS_STATIC)
+        nh.IS_SHARED = TRUE;
+        if (!handle->FLAGS.IS_SHARED)
             return (false);
 
         _ZERO_MEMORY_BYTE(&nh, sizeof(nh));

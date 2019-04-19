@@ -23,6 +23,8 @@
  */
 
 
+#pragma once
+
 #ifndef PMC_RTNL_H
 #define PMC_RTNL_H
 
@@ -34,12 +36,18 @@ namespace Palmtree::Math::Core::Internal
 {
 #endif
 
+#ifdef PALMTREEMATHCORERTNL_EXPORTS
+#define __DLLEXPORT_RTNL __declspec(dllexport)
+#else
+#define __DLLEXPORT_RTNL __declspec(dllimport)
+#endif
+
 #pragma region 型の定義
     union __tag_PMC_HANDLE_RTNL
     {
         const struct __tag_RTNL_FLAGS
         {
-            unsigned    IS_STATIC : 1;          // 本ハンドルが静的に割り当てられていて開放不要ならばTRUE
+            unsigned    IS_SHARED : 1;          // 本ハンドルが静的に割り当てられていて開放不要ならばTRUE
             unsigned    IS_INT : 1;             // 数値が整数なら TRUE
             unsigned    IS_ZERO : 1;            // 数値が 0 なら TRUE
             unsigned    IS_ONE : 1;             // 数値が 1 なら TRUE

@@ -36,7 +36,7 @@ namespace Palmtree.Math.Test
     class Program
     {
         private static bool _verbose = false;
-        private static bool _parallel = false;
+        private static bool _parallel = true;
 
         [HandleProcessCorruptedStateExceptions]
         static void Main(string[] args)
@@ -169,22 +169,7 @@ namespace Palmtree.Math.Test
                 {
                     lock (lock_obj)
                     {
-                        Console.WriteLine(string.Format("***{0}-{1},{2}***", test_item.PluginName, test_item.Index, string.Join(",", new[]
-                        {
-                        UBigInt.PerformanceCounters["bigint/allocatenumber"],
-                        UBigInt.PerformanceCounters["bigint/allocatenumberobject"],
-                        UBigInt.PerformanceCounters["bigint/hooknumberux"],
-                        UBigInt.PerformanceCounters["bigint/hooknumberx"],
-                        UBigInt.PerformanceCounters["rational/allocatenumber"],
-                        UBigInt.PerformanceCounters["rational/allocatenumberobject"],
-                        UBigInt.PerformanceCounters["rational/hooknumberr"],
-                        UBigInt.PerformanceCounters["rational/hooknumberux"],
-                        UBigInt.PerformanceCounters["rational/hooknumberx"],
-                        UBigInt.PerformanceCounters["ubigint/allocateblock"],
-                        UBigInt.PerformanceCounters["ubigint/allocatenumber"],
-                        UBigInt.PerformanceCounters["ubigint/allocatenumberobject"],
-                        UBigInt.PerformanceCounters["ubigint/hooknumberux"],
-                    })));
+                        Console.WriteLine(string.Format("***{0}-{1}***", test_item.PluginName, test_item.Index));
                     }
                 }
                 var 結果 = test_item.DoTest(out summary);

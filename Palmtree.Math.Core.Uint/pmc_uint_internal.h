@@ -45,7 +45,7 @@ namespace Palmtree::Math::Core::Internal
     typedef struct __tag_NUMBER_OBJECT_UINT
     {
         __UNIT_TYPE HASH_CODE;              // 数値のハッシュコード。
-        unsigned IS_STATIC : 1;             // 本構造体が静的に割り当てられていて開放不要ならばTRUE
+        unsigned IS_SHARED : 1;             // 本構造体が静的に割り当てられていて開放不要ならばTRUE
         unsigned IS_ZERO : 1;               // データが 0 なら TRUE
         unsigned IS_ONE : 1;                // データが 1 なら TRUE
         unsigned IS_EVEN : 1;               // データが 偶数 なら TRUE
@@ -53,7 +53,6 @@ namespace Palmtree::Math::Core::Internal
 
         _UINT32_T SIGNATURE1;               // テーブルを識別するためのデータ1
         _UINT32_T SIGNATURE2;               // テーブルを識別するためのデータ2
-        __UNIT_TYPE WORKING_COUNT;          // この数値オブジェクトを参照して演算中のスレッドの数
         __UNIT_TYPE UNIT_WORD_COUNT;        // BLOCKが示す領域において有効なデータが格納されている要素の数
         __UNIT_TYPE UNIT_BIT_COUNT;         // データの有効部分の合計ビット数
         __UNIT_TYPE TRAILING_ZERO_BITS_COUNT;  // データの最下位の連続した 0 ビット数
@@ -79,6 +78,15 @@ namespace Palmtree::Math::Core::Internal
         _INT64_T COUNT_ALLOCATE_NUMBER;
         _INT64_T COUNT_HOOK_NUMBER;
     } PMC_STATISTICS_INFO_UINT;
+
+    typedef struct __tag_RANDOM_STATE_OBJECT
+    {
+        _UINT32_T       SIGNATURE1; // テーブルを識別するためのデータ1
+        _UINT32_T       SIGNATURE2; // テーブルを識別するためのデータ2
+
+        void*           STATE;     // 乱数の状態を示すオブジェクト
+    } RANDOM_STATE_OBJECT;
+
 #pragma endregion
 
 
@@ -142,6 +150,14 @@ namespace Palmtree::Math::Core::Internal
 
     // 与えられた NUMBER_OBJECT_UINT 構造体へのポインタが正しい構造体を指しているかどうか検査する。(主としてメモリ破壊の観点で)
     extern void __CheckNumber(NUMBER_OBJECT_UINT* p) noexcept(false);
+
+    extern RANDOM_STATE_OBJECT* __AllocateRandomStateObjectFromUInt32(ThreadContext& tc, _UINT32_T seed);
+
+    extern RANDOM_STATE_OBJECT* __AllocateRandomStateObjectFromUInt32Array(ThreadContext& tc, _UINT32_T* init_key, _UINT32_T key_length);
+
+    extern void __DeallocateRandomStateObject(ThreadContext& tc, RANDOM_STATE_OBJECT* p);
+
+    extern void __CheckNumber(RANDOM_STATE_OBJECT* p) noexcept(false);
 
     // p->BLOCK に格納された数値を確定します。
     extern void CommitNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p) noexcept(false);
@@ -318,9 +334,6 @@ namespace Palmtree::Math::Core::Internal
 #pragma region エントリポイントに登録される関数の宣言
     extern bool PMC_UINT_Initialize();
 
-    extern void PMC_UseObject_UX(PMC_HANDLE_UINT x) noexcept(false);
-    extern void PMC_UnuseObject_UX(PMC_HANDLE_UINT x) noexcept(false);
-
     extern PMC_STATUS_CODE PMC_GetConfigurationSettings(const wchar_t* key, wchar_t* value_buffer, _INT32_T value_buffer_size, _INT32_T* count);
 
     extern _UINT64_T PMC_GetPerformanceCounter(const wchar_t* key);
@@ -463,6 +476,16 @@ namespace Palmtree::Math::Core::Internal
     extern size_t PMC_ToString_X(ThreadContext& tc, SIGN_T x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
     extern size_t PMC_ToString_R(ThreadContext& tc, SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
 
+    extern PMC_HANDLE_SFMT PMC_AllocateRandomStateObjectFromUInt32(ThreadContext& tc, _UINT32_T seed);
+    extern PMC_HANDLE_SFMT PMC_AllocateRandomStateObjectFromUInt32Array(ThreadContext& tc, _UINT32_T* init_key, _UINT32_T key_length);
+    extern void PMC_CheckHandle_SFMT(PMC_HANDLE_SFMT p);
+    extern void PMC_Dispose_SFMT(ThreadContext& tc, PMC_HANDLE_SFMT p);
+    extern _INT32_T PMC_GetBufferCount_SFMT(PMC_HANDLE_SFMT p) noexcept(false);
+    extern _UINT32_T PMC_GenerateUInt32RandomValue(PMC_HANDLE_SFMT handle);
+    extern _UINT64_T PMC_GenerateUInt64RandomValue(PMC_HANDLE_SFMT handle);
+    extern double PMC_GenerateDoubleRandomValue(PMC_HANDLE_SFMT handle);
+    extern PMC_HANDLE_UINT PMC_GenerateUBigIntRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count);
+
     extern void PMC_InternalTest();
 #pragma endregion
 
@@ -531,6 +554,22 @@ namespace Palmtree::Math::Core::Internal
         return ((PMC_HANDLE_UINT)r);
     }
 
+    __inline static RANDOM_STATE_OBJECT* GET_STATE_OBJECT(PMC_HANDLE_SFMT x, const wchar_t* param_name)
+    {
+        if (x == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", param_name);
+        RANDOM_STATE_OBJECT* nx = (RANDOM_STATE_OBJECT*)x;
+        __CheckNumber(nx);
+        return (nx);
+    }
+
+    __inline static PMC_HANDLE_SFMT GET_STATE_HANDLE(RANDOM_STATE_OBJECT* r)
+    {
+#ifdef _DEBUG
+        __CheckNumber(r);
+#endif
+        return ((PMC_HANDLE_SFMT)r);
+    }
 #pragma endregion
 
 

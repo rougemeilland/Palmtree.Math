@@ -838,7 +838,6 @@ namespace Palmtree::Math::Core::Internal
             root.HookNumber(q_abs);
             NUMBER_OBJECT_SINT* nq = root.AllocateNumber(q_sign, q_abs);
             PMC_HANDLE_SINT q = GET_NUMBER_HANDLE(nq);
-            root.UnlinkNumber(q_abs);
             root.UnlinkNumber(nq);
             return (q);
         }

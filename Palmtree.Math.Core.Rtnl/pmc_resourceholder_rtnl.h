@@ -41,42 +41,42 @@ namespace Palmtree::Math::Core::Internal
         : ResourceHolder
     {
     private:
-        class __NumberObjectRtnlChainBufferTag
+        class __RationalNumberObjectStructureChainBufferTag
             : public __ChainBufferTag
         {
         private:
             ThreadContext& _tc;
             NUMBER_OBJECT_RTNL* _buffer;
         public:
-            __NumberObjectRtnlChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_RTNL* buffer);
-            virtual ~__NumberObjectRtnlChainBufferTag();
+            __RationalNumberObjectStructureChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_RTNL* buffer);
+            virtual ~__RationalNumberObjectStructureChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Destruct() override;
         };
 
-        class __UINTNumberHandleHookingChainBufferTag
+        class __UBigIntNumberHandleChainBufferTag
             : public __ChainBufferTag
         {
         private:
             ThreadContext& _tc;
             PMC_HANDLE_UINT _buffer;
         public:
-            __UINTNumberHandleHookingChainBufferTag(ThreadContext& tc, PMC_HANDLE_UINT x);
-            virtual ~__UINTNumberHandleHookingChainBufferTag();
+            __UBigIntNumberHandleChainBufferTag(ThreadContext& tc, PMC_HANDLE_UINT x);
+            virtual ~__UBigIntNumberHandleChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
             void virtual Destruct() override;
         };
 
-        class __SINTNumberHandleHookingChainBufferTag
+        class __BigIntNumberHandleChainBufferTag
             : public __ChainBufferTag
         {
         private:
             ThreadContext& _tc;
             PMC_HANDLE_SINT _buffer;
         public:
-            __SINTNumberHandleHookingChainBufferTag(ThreadContext& tc, PMC_HANDLE_SINT x);
-            virtual ~__SINTNumberHandleHookingChainBufferTag();
+            __BigIntNumberHandleChainBufferTag(ThreadContext& tc, PMC_HANDLE_SINT x);
+            virtual ~__BigIntNumberHandleChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
             void virtual Destruct() override;
@@ -96,20 +96,6 @@ namespace Palmtree::Math::Core::Internal
             void virtual Destruct() override;
         };
 
-        class __NumberHandleHookingChainBufferTag
-            : public __ChainBufferTag
-        {
-        private:
-            ThreadContext& _tc;
-            NUMBER_OBJECT_RTNL* _buffer;
-        public:
-            __NumberHandleHookingChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_RTNL* buffer);
-            virtual ~__NumberHandleHookingChainBufferTag();
-            virtual bool EqualsBufferAddress(void* buffer) override;
-            void virtual Check() override;
-            void virtual Destruct() override;
-        };
-
         class __StaticNumberChainBufferTag
             : public __ChainBufferTag
         {
@@ -124,17 +110,6 @@ namespace Palmtree::Math::Core::Internal
             void virtual Destruct() override;
         };
 
-        class __RootTag
-            : public __ChainBufferTag
-        {
-        public:
-            __RootTag();
-            virtual ~__RootTag();
-            virtual bool EqualsBufferAddress(void* buffer) override;
-            void virtual Destruct() override;
-
-        };
-
     private:
         ResourceHolderRTNL(const ResourceHolderRTNL& p); // åƒÇ—èoÇµã÷é~
 
@@ -142,8 +117,8 @@ namespace Palmtree::Math::Core::Internal
         ResourceHolderRTNL(ThreadContext& tc);
         virtual ~ResourceHolderRTNL();
 
-        NUMBER_OBJECT_RTNL* AllocateNumberObject();
-        void UnlinkNumberObject(NUMBER_OBJECT_RTNL* buffer);
+        NUMBER_OBJECT_RTNL* AllocateRationalNumberObjectStructure();
+        void UnlinkRationalNumberObjectStructure(NUMBER_OBJECT_RTNL* buffer);
 
         NUMBER_OBJECT_RTNL* AllocateNumber(PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator);
         void HookNumber(NUMBER_OBJECT_RTNL* buffer);

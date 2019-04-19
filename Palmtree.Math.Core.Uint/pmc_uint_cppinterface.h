@@ -43,9 +43,6 @@ namespace Palmtree::Math::Core::Internal
 
         bool Initialize();
 
-        void UseObject(PMC_HANDLE_UINT x) noexcept(false);
-        void UnuseObject(PMC_HANDLE_UINT x) noexcept(false);
-
         PMC_STATUS_CODE GetConfigurationSettings(const wchar_t* key, wchar_t* value_buffer, _INT32_T value_buffer_size, _INT32_T* count);
 
         PMC_HANDLE_UINT From(ThreadContext& tc, _INT32_T x);
@@ -193,7 +190,17 @@ namespace Palmtree::Math::Core::Internal
         size_t ToString(ThreadContext& tc, SIGN_T x_sign, PMC_HANDLE_UINT x_abs, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
         size_t ToString(ThreadContext& tc, SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
 
+        PMC_HANDLE_SFMT AllocateRandomStateObject(ThreadContext& tc, _UINT32_T seed);
+        PMC_HANDLE_SFMT AllocateRandomStateObject(ThreadContext& tc, _UINT32_T* init_key, _UINT32_T key_length);
+        void CheckHandle(PMC_HANDLE_SFMT p);
+        void Dispose(ThreadContext& tc, PMC_HANDLE_SFMT p);
+        _UINT32_T GenerateUInt32RandomValue(PMC_HANDLE_SFMT handle);
+        _UINT64_T GenerateUInt64RandomValue(PMC_HANDLE_SFMT handle);
+        double GenerateDoubleRandomValue(PMC_HANDLE_SFMT handle);
+        PMC_HANDLE_UINT GenerateUBigIntRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count);
+
         void InternalTest();
+
     };
 
 }

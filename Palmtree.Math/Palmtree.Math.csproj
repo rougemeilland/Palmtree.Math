@@ -47,8 +47,11 @@
     <Compile Include="InsufficientBufferException.cs" />
     <Compile Include="InternalErrorException.cs" />
     <Compile Include="Math\ConfigurationDictionary.cs" />
+    <Compile Include="Math\Core\IRandomStateObjectDisposable.cs" />
+    <Compile Include="Math\Core\RandomStateObjectHandle.cs" />
     <Compile Include="Math\IPerformanceCounterCollection.cs" />
     <Compile Include="Math\PerformanceCounterCollection.cs" />
+    <Compile Include="Math\Random.cs" />
     <Compile Include="Math\RationalExtensions.cs" />
     <Compile Include="Math\Rational_Subtruct.cs" />
     <Compile Include="Math\Rational_Multiply.cs" />

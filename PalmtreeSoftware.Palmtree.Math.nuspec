@@ -14,12 +14,25 @@
   </metadata>
   <files> 
     <file src="dist\Release\Palmtree.Math.dll" target="lib\net471" />
-    <file src="PalmtreeSoftware.Palmtree.Math.targets" target="build/" />
-    <file src="dist\Release\x86\Palmtree.Math.Core.Rtnl.dll" target="build/x86" />
-    <file src="dist\Release\x86\Palmtree.Math.Core.Sint.dll" target="build/x86" />
-    <file src="dist\Release\x86\Palmtree.Math.Core.Uint.dll" target="build/x86" />
-    <file src="dist\Release\x64\Palmtree.Math.Core.Rtnl.dll" target="build/x64" />
-    <file src="dist\Release\x64\Palmtree.Math.Core.Sint.dll" target="build/x64" />
-    <file src="dist\Release\x64\Palmtree.Math.Core.Uint.dll" target="build/x64" />
+    <file src="PalmtreeSoftware.Palmtree.Math.targets" target="build\" />
+
+    <file src="dist\Release\x86\Palmtree.Math.Core.Rtnl.dll" target="build\x86" />
+    <file src="dist\Release\x86\Palmtree.Math.Core.Sint.dll" target="build\x86" />
+    <file src="dist\Release\x86\Palmtree.Math.Core.Uint.dll" target="build\x86" />
+    <file src="dist\Release\x86\Palmtree.Math.Core.Sfmt.dll" target="build\x86" />
+
+    <file src="dist\Release\x86\libgcc_s_dw2-1.dll" target="build\x86" />
+    <file src="dist\Release\x86\libstdc++-6.dll" target="build\x86" />
+
+    <file src="dist\Release\x64\Palmtree.Math.Core.Rtnl.dll" target="build\x64" />
+    <file src="dist\Release\x64\Palmtree.Math.Core.Sint.dll" target="build\x64" />
+    <file src="dist\Release\x64\Palmtree.Math.Core.Uint.dll" target="build\x64" />
+    <file src="dist\Release\x64\Palmtree.Math.Core.Sfmt.dll" target="build\x64" />
+
+    <file src="dist\Release\x64\libgcc_s_seh-1.dll" target="build\x64" />
+    <file src="dist\Release\x64\libstdc++-6.dll" target="build\x64" />
+
+    <file src="Palmtree.Math.Core.Sfmt\SFMT-LICENSE.txt" target="content\SFMT" />
+
   </files>
 </package>

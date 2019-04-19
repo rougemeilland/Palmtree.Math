@@ -23,6 +23,8 @@
  */
 
 
+#pragma once
+
 #ifndef PMC_RTNL_INTERNAL_H
 #define PMC_RTNL_INTERNAL_H
 
@@ -43,7 +45,7 @@ namespace Palmtree::Math::Core::Internal
 #pragma region 型の定義
     typedef struct __tag_NUMBER_OBJECT_RTNL
     {
-        unsigned        IS_STATIC : 1;          // 本ハンドルが静的に割り当てられていて開放不要ならばTRUE
+        unsigned        IS_SHARED : 1;          // 本ハンドルが静的に割り当てられていて開放不要ならばTRUE
         unsigned        IS_INT : 1;             // 数値が整数なら TRUE
         unsigned        IS_ZERO : 1;            // 数値が 0 なら TRUE
         unsigned        IS_ONE : 1;             // 数値が 1 なら TRUE
@@ -51,7 +53,6 @@ namespace Palmtree::Math::Core::Internal
 
         _UINT32_T       SIGNATURE1;             // テーブルを識別するためのデータ1
         _UINT32_T       SIGNATURE2;             // テーブルを識別するためのデータ2
-        __UNIT_TYPE     WORKING_COUNT;          // この数値オブジェクトを参照して演算中のスレッドの数
 
         PMC_HANDLE_SINT NUMERATOR;              // 数値を分数で表現した場合の分子を表すハンドル
         PMC_HANDLE_UINT DENOMINATOR;            // 数値を分数で表現した場合の分母を表すハンドル
@@ -132,9 +133,6 @@ namespace Palmtree::Math::Core::Internal
 
 #pragma region エントリポイントに登録される関数の宣言
     extern bool PMC_RTNL_Initialize();
-
-    extern void PMC_UseObject_R(PMC_HANDLE_RTNL x) noexcept(false);
-    extern void PMC_UnuseObject_R(PMC_HANDLE_RTNL x) noexcept(false);
 
     extern PMC_STATUS_CODE PMC_GetConfigurationSettings(const wchar_t* key, wchar_t* value_buffer, _INT32_T value_buffer_size, _INT32_T* count);
 
@@ -291,6 +289,7 @@ namespace Palmtree::Math::Core::Internal
 
     extern _INT32_T PMC_FloorLog10_R(ThreadContext& tc, PMC_HANDLE_RTNL v);
 
+    extern PMC_HANDLE_RTNL PMC_GenerateRationalRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count);
 #pragma endregion
 
 #pragma region インライン関数の定義

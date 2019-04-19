@@ -32,77 +32,77 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    ResourceHolderRTNL::__NumberObjectRtnlChainBufferTag::__NumberObjectRtnlChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_RTNL * buffer)
+    ResourceHolderRTNL::__RationalNumberObjectStructureChainBufferTag::__RationalNumberObjectStructureChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_RTNL * buffer)
         : _tc(tc)
     {
         _buffer = buffer;
         ++statistics_info.COUNT_ALLOCATE_NUMBER_OBJECT;
     }
 
-    ResourceHolderRTNL::__NumberObjectRtnlChainBufferTag::~__NumberObjectRtnlChainBufferTag()
+    ResourceHolderRTNL::__RationalNumberObjectStructureChainBufferTag::~__RationalNumberObjectStructureChainBufferTag()
     {
         --statistics_info.COUNT_ALLOCATE_NUMBER_OBJECT;
     }
 
-    bool ResourceHolderRTNL::__NumberObjectRtnlChainBufferTag::EqualsBufferAddress(void * buffer)
+    bool ResourceHolderRTNL::__RationalNumberObjectStructureChainBufferTag::EqualsBufferAddress(void * buffer)
     {
         return ((void*)_buffer == buffer);
     }
 
-    void ResourceHolderRTNL::__NumberObjectRtnlChainBufferTag::Destruct()
+    void ResourceHolderRTNL::__RationalNumberObjectStructureChainBufferTag::Destruct()
     {
         __DeallocateHeap(_buffer);
         _tc.DecrementTypeAAllocationCount();
     }
 
-    ResourceHolderRTNL::__UINTNumberHandleHookingChainBufferTag::__UINTNumberHandleHookingChainBufferTag(ThreadContext& tc, PMC_HANDLE_UINT x)
+    ResourceHolderRTNL::__UBigIntNumberHandleChainBufferTag::__UBigIntNumberHandleChainBufferTag(ThreadContext& tc, PMC_HANDLE_UINT x)
         : _tc(tc)
     {
         _buffer = x;
         ++statistics_info.COUNT_HOOK_NUMBER_UX;
     }
 
-    ResourceHolderRTNL::__UINTNumberHandleHookingChainBufferTag::~__UINTNumberHandleHookingChainBufferTag()
+    ResourceHolderRTNL::__UBigIntNumberHandleChainBufferTag::~__UBigIntNumberHandleChainBufferTag()
     {
         --statistics_info.COUNT_HOOK_NUMBER_UX;
     }
 
-    bool ResourceHolderRTNL::__UINTNumberHandleHookingChainBufferTag::EqualsBufferAddress(void * buffer)
+    bool ResourceHolderRTNL::__UBigIntNumberHandleChainBufferTag::EqualsBufferAddress(void * buffer)
     {
         return ((void*)_buffer == buffer);
     }
 
-    void ResourceHolderRTNL::__UINTNumberHandleHookingChainBufferTag::Check()
+    void ResourceHolderRTNL::__UBigIntNumberHandleChainBufferTag::Check()
     {
     }
 
-    void ResourceHolderRTNL::__UINTNumberHandleHookingChainBufferTag::Destruct()
+    void ResourceHolderRTNL::__UBigIntNumberHandleChainBufferTag::Destruct()
     {
         Palmtree::Math::Core::Internal::ep_uint.Dispose(_tc, _buffer);
     }
 
-    ResourceHolderRTNL::__SINTNumberHandleHookingChainBufferTag::__SINTNumberHandleHookingChainBufferTag(ThreadContext& tc, PMC_HANDLE_SINT x)
+    ResourceHolderRTNL::__BigIntNumberHandleChainBufferTag::__BigIntNumberHandleChainBufferTag(ThreadContext& tc, PMC_HANDLE_SINT x)
         : _tc(tc)
     {
         _buffer = x;
         ++statistics_info.COUNT_HOOK_NUMBER_X;
     }
 
-    ResourceHolderRTNL::__SINTNumberHandleHookingChainBufferTag::~__SINTNumberHandleHookingChainBufferTag()
+    ResourceHolderRTNL::__BigIntNumberHandleChainBufferTag::~__BigIntNumberHandleChainBufferTag()
     {
         --statistics_info.COUNT_HOOK_NUMBER_X;
     }
 
-    bool ResourceHolderRTNL::__SINTNumberHandleHookingChainBufferTag::EqualsBufferAddress(void * buffer)
+    bool ResourceHolderRTNL::__BigIntNumberHandleChainBufferTag::EqualsBufferAddress(void * buffer)
     {
         return ((void*)_buffer == buffer);
     }
 
-    void ResourceHolderRTNL::__SINTNumberHandleHookingChainBufferTag::Check()
+    void ResourceHolderRTNL::__BigIntNumberHandleChainBufferTag::Check()
     {
     }
 
-    void ResourceHolderRTNL::__SINTNumberHandleHookingChainBufferTag::Destruct()
+    void ResourceHolderRTNL::__BigIntNumberHandleChainBufferTag::Destruct()
     {
         Palmtree::Math::Core::Internal::ep_sint.Dispose(_tc, _buffer);
     }
@@ -130,32 +130,6 @@ namespace Palmtree::Math::Core::Internal
     }
 
     void  ResourceHolderRTNL::__DynamicNumberChainBufferTag::Destruct()
-    {
-        Palmtree::Math::Core::Internal::__DeallocateNumber(_tc, _buffer);
-    }
-
-    ResourceHolderRTNL::__NumberHandleHookingChainBufferTag::__NumberHandleHookingChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_RTNL * buffer)
-        : _tc(tc)
-    {
-        _buffer = buffer;
-        ++statistics_info.COUNT_HOOK_NUMBER_R;
-    }
-
-    ResourceHolderRTNL::__NumberHandleHookingChainBufferTag::~__NumberHandleHookingChainBufferTag()
-    {
-        --statistics_info.COUNT_HOOK_NUMBER_R;
-    }
-
-    bool  ResourceHolderRTNL::__NumberHandleHookingChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void  ResourceHolderRTNL::__NumberHandleHookingChainBufferTag::Check()
-    {
-    }
-
-    void  ResourceHolderRTNL::__NumberHandleHookingChainBufferTag::Destruct()
     {
         Palmtree::Math::Core::Internal::__DeallocateNumber(_tc, _buffer);
     }
@@ -193,18 +167,18 @@ namespace Palmtree::Math::Core::Internal
     {
     }
 
-    NUMBER_OBJECT_RTNL* ResourceHolderRTNL::AllocateNumberObject()
+    NUMBER_OBJECT_RTNL * ResourceHolderRTNL::AllocateRationalNumberObjectStructure()
     {
         Lock lock_obj;
         NUMBER_OBJECT_RTNL* buffer = (NUMBER_OBJECT_RTNL*)__AllocateHeap(sizeof(NUMBER_OBJECT_RTNL));
         _tc.IncrementTypeAAllocationCount();
-        __ChainBufferTag* tag = new __NumberObjectRtnlChainBufferTag(_tc, buffer);
+        __ChainBufferTag* tag = new __RationalNumberObjectStructureChainBufferTag(_tc, buffer);
         _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);
         return (buffer);
     }
 
-    void ResourceHolderRTNL::UnlinkNumberObject(NUMBER_OBJECT_RTNL *buffer)
+    void ResourceHolderRTNL::UnlinkRationalNumberObjectStructure(NUMBER_OBJECT_RTNL * buffer)
     {
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
@@ -224,47 +198,54 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = new __DynamicNumberChainBufferTag(_tc, buffer);
         _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);
+        UnlinkInternalNumber(buffer->NUMERATOR);
+        UnlinkInternalNumber(buffer->DENOMINATOR);
         return (buffer);
     }
 
     void ResourceHolderRTNL::HookNumber(NUMBER_OBJECT_RTNL * buffer)
     {
+        if (buffer->IS_SHARED)
+            return;
         Lock lock_obj;
 #ifdef _DEBUG
-        if (!buffer->IS_STATIC)
-            NotExists(buffer);
+        NotExists(buffer);
 #endif
-        __ChainBufferTag* tag = new __NumberHandleHookingChainBufferTag(_tc, buffer);
+        __ChainBufferTag* tag = new __DynamicNumberChainBufferTag(_tc, buffer);
         _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);
     }
 
     void ResourceHolderRTNL::HookNumber(PMC_HANDLE_SINT x)
     {
+        if (x->FLAGS.IS_SHARED)
+            return;
         Lock lock_obj;
 #ifdef _DEBUG
-        if (!x->FLAGS.IS_STATIC)
-            NotExists(x);
+        NotExists(x);
 #endif
-        __ChainBufferTag* tag = new __SINTNumberHandleHookingChainBufferTag(_tc, x);
+        __ChainBufferTag* tag = new __BigIntNumberHandleChainBufferTag(_tc, x);
         _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);
     }
 
     void ResourceHolderRTNL::HookNumber(PMC_HANDLE_UINT x)
     {
+        if (x->FLAGS.IS_SHARED)
+            return;
         Lock lock_obj;
 #ifdef _DEBUG
-        if (!x->FLAGS.IS_STATIC)
-            NotExists(x);
+        NotExists(x);
 #endif
-        __ChainBufferTag* tag = new __UINTNumberHandleHookingChainBufferTag(_tc, x);
+        __ChainBufferTag* tag = new __UBigIntNumberHandleChainBufferTag(_tc, x);
         _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);
     }
 
     void ResourceHolderRTNL::DeallocateNumber(NUMBER_OBJECT_RTNL * buffer)
     {
+        if (buffer->IS_SHARED)
+            return;
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag != nullptr)
@@ -277,6 +258,8 @@ namespace Palmtree::Math::Core::Internal
 
     void ResourceHolderRTNL::DeallocateNumber(PMC_HANDLE_SINT x)
     {
+        if (x->FLAGS.IS_SHARED)
+            return;
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(x);
         if (tag != nullptr)
@@ -289,6 +272,8 @@ namespace Palmtree::Math::Core::Internal
 
     void ResourceHolderRTNL::DeallocateNumber(PMC_HANDLE_UINT x)
     {
+        if (x->FLAGS.IS_SHARED)
+            return;
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(x);
         if (tag != nullptr)
@@ -312,6 +297,8 @@ namespace Palmtree::Math::Core::Internal
 
     void ResourceHolderRTNL::UnlinkNumber(NUMBER_OBJECT_RTNL * buffer)
     {
+        if (buffer->IS_SHARED)
+            return;
         Lock lock_obj;
         UnlinkInternalNumber(buffer->NUMERATOR);
         UnlinkInternalNumber(buffer->DENOMINATOR);
@@ -324,6 +311,8 @@ namespace Palmtree::Math::Core::Internal
 
     void ResourceHolderRTNL::UnlinkNumber(PMC_HANDLE_SINT x)
     {
+        if (x->FLAGS.IS_SHARED)
+            return;
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(x);
         if (tag == nullptr)
@@ -334,6 +323,8 @@ namespace Palmtree::Math::Core::Internal
 
     void ResourceHolderRTNL::UnlinkNumber(PMC_HANDLE_UINT x)
     {
+        if (x->FLAGS.IS_SHARED)
+            return;
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(x);
         if (tag == nullptr)

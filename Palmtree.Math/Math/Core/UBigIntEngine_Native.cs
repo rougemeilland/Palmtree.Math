@@ -315,6 +315,30 @@ namespace Palmtree.Math.Core
         [DllImport("Palmtree.Math.Core.Uint.dll")]
         private static extern UInt32 PMCCS_UINT_Initialize();
 
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_AllocateRandomStateObjectFromUInt32(UInt32 seed, out IntPtr value);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_AllocateRandomStateObjectFromUInt32Array(UInt32[] seed_arryay, UInt32 key_length, out IntPtr value);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_CheckHandle_SFMT(IntPtr p);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_Dispose_SFMT(IntPtr p);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_GenerateUInt32RandomValue(IntPtr p, out UInt32 o);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_GenerateUInt64RandomValue(IntPtr p, out UInt64 o);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_GenerateDoubleRandomValue(IntPtr p, out double o);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_GenerateUBigIntRandomValue(IntPtr handle, UInt32 bit_count, out IntPtr value);
+
         #endregion
     }
 }

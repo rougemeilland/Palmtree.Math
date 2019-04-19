@@ -43,16 +43,6 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_RTNL_Initialize());
     }
 
-    void PMC_RTNL_CppInterface::UseObject(PMC_HANDLE_RTNL x) noexcept(false)
-    {
-        PMC_UseObject_R(x);
-    }
-
-    void PMC_RTNL_CppInterface::UnuseObject(PMC_HANDLE_RTNL x) noexcept(false)
-    {
-        PMC_UnuseObject_R(x);
-    }
-
     PMC_STATUS_CODE PMC_RTNL_CppInterface::GetConfigurationSettings(const wchar_t * key, wchar_t * value_buffer, _INT32_T value_buffer_size, _INT32_T * count)
     {
         return (PMC_GetConfigurationSettings(key, value_buffer, value_buffer_size, count));
@@ -671,6 +661,11 @@ namespace Palmtree::Math::Core::Internal
     _INT32_T PMC_RTNL_CppInterface::FloorLog10(ThreadContext& tc, PMC_HANDLE_RTNL v)
     {
         return (PMC_FloorLog10_R(tc, v));
+    }
+
+    PMC_HANDLE_RTNL PMC_RTNL_CppInterface::GenerateRationalRandomValue(ThreadContext & tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count)
+    {
+        return (PMC_GenerateRationalRandomValue(tc, handle, bit_count));
     }
 
 }

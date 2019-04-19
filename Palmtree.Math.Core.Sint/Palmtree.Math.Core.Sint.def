@@ -214,3 +214,4 @@ EXPORTS
 	PMCCS_ToByteArray
 	PMCCS_ToString_X
 	PMCCS_TryParse
+	PMCCS_GenerateBigIntRandomValue

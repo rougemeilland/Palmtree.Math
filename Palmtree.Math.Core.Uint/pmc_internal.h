@@ -46,6 +46,7 @@ namespace Palmtree::Math::Core::Internal
 #define PMC_UINT_SIGNATURE (((_UINT32_T)'T' << 24) | ((_UINT32_T)'n' << 16) | ((_UINT32_T)'i' << 8) | (_UINT32_T)'U')
 #define PMC_SINT_SIGNATURE (((_UINT32_T)'t' << 24) | ((_UINT32_T)'N' << 16) | ((_UINT32_T)'I' << 8) | (_UINT32_T)'s')
 #define PMC_RTNL_SIGNATURE (((_UINT32_T)'L' << 24) | ((_UINT32_T)'n' << 16) | ((_UINT32_T)'t' << 8) | (_UINT32_T)'R')
+#define PMC_SFMT_SIGNATURE (((_UINT32_T)'t' << 24) | ((_UINT32_T)'M' << 16) | ((_UINT32_T)'F' << 8) | (_UINT32_T)'s')
 #pragma endregion
 
 

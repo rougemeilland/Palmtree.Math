@@ -257,6 +257,9 @@
     <ClCompile Include="pmc_threadcontext.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="pmc_random.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Palmtree.Math.Core.Uint.def" />

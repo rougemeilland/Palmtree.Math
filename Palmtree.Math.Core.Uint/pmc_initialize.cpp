@@ -125,8 +125,8 @@ namespace Palmtree::Math::Core::Internal
             return (FALSE);
 
         _ZERO_MEMORY_BYTE(&nh, sizeof(nh));
-        nh.IS_STATIC = TRUE;
-        if (!handle->FLAGS.IS_STATIC)
+        nh.IS_SHARED = TRUE;
+        if (!handle->FLAGS.IS_SHARED)
             return (FALSE);
 
         _ZERO_MEMORY_BYTE(&nh, sizeof(nh));

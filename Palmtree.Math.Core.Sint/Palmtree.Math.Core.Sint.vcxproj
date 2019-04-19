@@ -263,6 +263,7 @@
     <ClCompile Include="pmc_onecomplement.cpp" />
     <ClCompile Include="pmc_parse.cpp" />
     <ClCompile Include="pmc_pow.cpp" />
+    <ClCompile Include="pmc_random.cpp" />
     <ClCompile Include="pmc_resourceholder_sint.cpp" />
     <ClCompile Include="pmc_round.cpp" />
     <ClCompile Include="pmc_shift.cpp" />
@@ -270,6 +271,11 @@
     <ClCompile Include="pmc_statistics.cpp" />
     <ClCompile Include="pmc_to.cpp" />
     <ClCompile Include="pmc_tostring.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Palmtree.Math.Core.Uint\Palmtree.Math.Core.Uint.vcxproj">
+      <Project>{2b4d6366-1dd5-4e4d-920b-8fdddf1aaab9}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

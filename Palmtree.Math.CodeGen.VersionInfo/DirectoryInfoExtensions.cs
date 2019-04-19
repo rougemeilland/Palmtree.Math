@@ -26,7 +26,7 @@
 using System.IO;
 using System.Linq;
 
-namespace Palmtree.Math.Core.Uint.CodeGen.VersionInfo
+namespace Palmtree.Math.CodeGen.VersionInfo
 {
     static class DirectoryInfoExtensions
     {

@@ -47,6 +47,7 @@
     <ClCompile Include="pmc_multiply.cpp" />
     <ClCompile Include="pmc_parse.cpp" />
     <ClCompile Include="pmc_pow.cpp" />
+    <ClCompile Include="pmc_random.cpp" />
     <ClCompile Include="pmc_resourceholder_rtnl.cpp" />
     <ClCompile Include="pmc_round.cpp" />
     <ClCompile Include="pmc_rtnl_cppinterface.cpp" />

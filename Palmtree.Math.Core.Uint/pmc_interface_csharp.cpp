@@ -28,39 +28,6 @@
 
 namespace Palmtree::Math::Core::Internal
 {
-    template<typename HANDLE_T>
-    class UsingObject
-    {
-        HANDLE_T _handle;
-
-    public:
-        UsingObject(HANDLE_T handle)
-        {
-            _handle = handle;
-        }
-
-        ~UsingObject()
-        {
-        }
-    };
-
-    template<>
-    class UsingObject<PMC_HANDLE_UINT>
-    {
-        PMC_HANDLE_UINT _handle;
-
-    public:
-        UsingObject(PMC_HANDLE_UINT handle)
-        {
-            _handle = handle;
-            PMC_UseObject_UX(_handle);
-        }
-
-        ~UsingObject()
-        {
-            PMC_UnuseObject_UX(_handle);
-        }
-    };
 
     extern "C" _UINT32_T __stdcall PMCCS_UINT_Initialize()
     {
@@ -80,7 +47,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_p(p);
             *r = p->FLAGS.IS_EVEN;
             return (PMC_STATUS_OK);
         }
@@ -98,7 +64,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_p(p);
             *r = p->FLAGS.IS_ONE;
             return (PMC_STATUS_OK);
         }
@@ -116,7 +81,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_p(p);
             *r = p->FLAGS.IS_POWER_OF_TWO;
             return (PMC_STATUS_OK);
         }
@@ -134,7 +98,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_p(p);
             *r = p->FLAGS.IS_ZERO;
             return (PMC_STATUS_OK);
         }
@@ -152,7 +115,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_p(p);
             *r = (_INT32_T)p->HASH_CODE;
             return (PMC_STATUS_OK);
         }
@@ -366,7 +328,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_p(p);
             size_t r = PMC_ToByteArray_UX(p, buffer, buffer_size);
             if (r > 0x7fffffff)
                 return (PMC_STATUS_NOT_ENOUGH_MEMORY);
@@ -423,7 +384,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_p(p);
             *o = PMC_ToInt32_UX(p);
             return (PMC_STATUS_OK);
         }
@@ -439,7 +399,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_p(p);
             *o = PMC_ToInt64_UX(p);
             return (PMC_STATUS_OK);
         }
@@ -455,7 +414,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_p(p);
             *o = PMC_ToUInt32_UX(p);
             return (PMC_STATUS_OK);
         }
@@ -471,7 +429,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_p(p);
             *o = PMC_ToUInt64_UX(p);
             return (PMC_STATUS_OK);
         }
@@ -488,7 +445,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_x(x);
             size_t r = PMC_ToString_UX(tc, x, format, format_option, buffer, buffer_size);
             if (r > 0x7fffffff)
             {
@@ -603,7 +559,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_v(v);
             *w = PMC_Add_UI_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -627,7 +582,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_v(v);
             *w = PMC_Add_UL_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -651,7 +605,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *w = PMC_Add_UX_UI(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -675,7 +628,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *w = PMC_Add_UX_UL(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -699,8 +651,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
-            UsingObject using_v(v);
             *w = PMC_Add_UX_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -723,7 +673,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_v(v);
             *w = PMC_Subtruct_UI_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -739,7 +688,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_v(v);
             *w = PMC_Subtruct_UL_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -756,7 +704,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *w = PMC_Subtruct_UX_UI(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -780,7 +727,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *w = PMC_Subtruct_UX_UL(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -804,8 +750,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
-            UsingObject using_v(v);
             *w = PMC_Subtruct_UX_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -829,7 +773,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_v(v);
             *w = PMC_Multiply_UI_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -853,7 +796,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_v(v);
             *w = PMC_Multiply_UL_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -877,7 +819,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *w = PMC_Multiply_UX_UI(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -901,7 +842,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *w = PMC_Multiply_UX_UL(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -925,8 +865,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
-            UsingObject using_v(v);
             *w = PMC_Multiply_UX_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -949,7 +887,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_v(v);
             *r = PMC_DivRem_UI_UX(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -965,7 +902,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_v(v);
             *r = PMC_DivRem_UL_UX(u, v, q);
             return (PMC_STATUS_OK);
         }
@@ -982,7 +918,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *r = PMC_DivRem_UX_UI(tc, u, v, q);
             tc.VerifyAllocationCount(q != nullptr ? PMC_GetBufferCount_UX(*q) : 0, true);
             return (PMC_STATUS_OK);
@@ -1006,7 +941,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *r = PMC_DivRem_UX_UL(tc, u, v, q);
             tc.VerifyAllocationCount(q != nullptr ? PMC_GetBufferCount_UX(*q) : 0, true);
             return (PMC_STATUS_OK);
@@ -1030,8 +964,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
-            UsingObject using_v(v);
             *r = PMC_DivRem_UX_UX(tc, u, v, q);
             tc.VerifyAllocationCount((q != nullptr ? PMC_GetBufferCount_UX(*q) : 0) + PMC_GetBufferCount_UX(*r), true);
             return (PMC_STATUS_OK);
@@ -1054,7 +986,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_v(v);
             *r = PMC_DivRem_UI_UX(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1070,7 +1001,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_v(v);
             *r = PMC_DivRem_UL_UX(u, v, nullptr);
             return (PMC_STATUS_OK);
         }
@@ -1087,7 +1017,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *r = PMC_DivRem_UX_UI(tc, u, v, nullptr);
             tc.VerifyAllocationCount(0, true);
             return (PMC_STATUS_OK);
@@ -1111,7 +1040,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *r = PMC_DivRem_UX_UL(tc, u, v, nullptr);
             tc.VerifyAllocationCount(0, true);
             return (PMC_STATUS_OK);
@@ -1135,8 +1063,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
-            UsingObject using_v(v);
             *r = PMC_DivRem_UX_UX(tc, u, v, nullptr);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*r), true);
             return (PMC_STATUS_OK);
@@ -1160,7 +1086,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_p(p);
             *o = PMC_RightShift_UX_I(tc, p, n);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
             return (PMC_STATUS_OK);
@@ -1184,7 +1109,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_p(p);
             *o = PMC_LeftShift_UX_I(tc, p, n);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
             return (PMC_STATUS_OK);
@@ -1207,7 +1131,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_v(v);
             *w = PMC_BitwiseAnd_UI_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1223,7 +1146,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_v(v);
             *w = PMC_BitwiseAnd_UL_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1239,7 +1161,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_u(u);
             *w = PMC_BitwiseAnd_UX_UI(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1255,7 +1176,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_u(u);
             *w = PMC_BitwiseAnd_UX_UL(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1272,8 +1192,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
-            UsingObject using_v(v);
             *w = PMC_BitwiseAnd_UX_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1297,7 +1215,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_v(v);
             *w = PMC_BitwiseOr_UI_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1321,7 +1238,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_v(v);
             *w = PMC_BitwiseOr_UL_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1345,7 +1261,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *w = PMC_BitwiseOr_UX_UI(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1369,7 +1284,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *w = PMC_BitwiseOr_UX_UL(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1393,8 +1307,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
-            UsingObject using_v(v);
             *w = PMC_BitwiseOr_UX_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1418,7 +1330,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_v(v);
             *w = PMC_ExclusiveOr_UI_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1442,7 +1353,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_v(v);
             *w = PMC_ExclusiveOr_UL_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1466,7 +1376,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *w = PMC_ExclusiveOr_UX_UI(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1490,7 +1399,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *w = PMC_ExclusiveOr_UX_UL(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1514,8 +1422,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
-            UsingObject using_v(v);
             *w = PMC_ExclusiveOr_UX_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1538,7 +1444,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_v(v);
             *w = PMC_Compare_UI_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1555,7 +1460,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_v(v);
             *w = PMC_Compare_UL_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1571,7 +1475,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_u(u);
             *w = PMC_Compare_UX_UI(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1587,7 +1490,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_u(u);
             *w = PMC_Compare_UX_UL(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1603,8 +1505,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_u(u);
-            UsingObject using_v(v);
             *w = PMC_Compare_UX_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1620,7 +1520,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_v(v);
             *w = PMC_Equals_UI_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1636,7 +1535,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_v(v);
             *w = PMC_Equals_UL_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1652,7 +1550,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_u(u);
             *w = PMC_Equals_UX_UI(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1668,7 +1565,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_u(u);
             *w = PMC_Equals_UX_UL(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1684,8 +1580,6 @@ namespace Palmtree::Math::Core::Internal
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         try
         {
-            UsingObject using_u(u);
-            UsingObject using_v(v);
             *w = PMC_Equals_UX_UX(u, v);
             return (PMC_STATUS_OK);
         }
@@ -1702,7 +1596,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_v(v);
             *w = PMC_GreatestCommonDivisor_UI_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1726,7 +1619,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_v(v);
             *w = PMC_GreatestCommonDivisor_UL_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1750,7 +1642,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *w = PMC_GreatestCommonDivisor_UX_UI(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1774,7 +1665,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
             *w = PMC_GreatestCommonDivisor_UX_UL(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1798,8 +1688,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_u(u);
-            UsingObject using_v(v);
             *w = PMC_GreatestCommonDivisor_UX_UX(tc, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
@@ -1869,7 +1757,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_x(x);
             *v = PMC_Pow_UX_UI(tc, x, n);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*v), true);
             return (PMC_STATUS_OK);
@@ -1893,9 +1780,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_v(v);
-            UsingObject using_e(e);
-            UsingObject using_m(m);
             *r = PMC_ModPow_UX_UX_UX(tc, v, e, m);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*r), true);
             return (PMC_STATUS_OK);
@@ -1919,7 +1803,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_v(v);
             *r = PMC_FloorLog10_UX(tc, v);
             tc.VerifyAllocationCount(0, true);
             return (PMC_STATUS_OK);
@@ -1943,7 +1826,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_x(x);
             *r = PMC_Increment_UX(tc, x);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*r), true);
             return (PMC_STATUS_OK);
@@ -1967,7 +1849,6 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            UsingObject using_x(x);
             *r = PMC_Decrement_UX(tc, x);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*r), true);
             return (PMC_STATUS_OK);
@@ -1995,6 +1876,159 @@ namespace Palmtree::Math::Core::Internal
         }
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_AllocateRandomStateObjectFromUInt32(_UINT32_T seed, PMC_HANDLE_SFMT* value)
+    {
+        if (value == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            *value = PMC_AllocateRandomStateObjectFromUInt32(tc, seed);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_SFMT(*value), true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_AllocateRandomStateObjectFromUInt32Array(_UINT32_T* init_key, _UINT32_T key_length, PMC_HANDLE_SFMT* value)
+    {
+        if (value == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            *value = PMC_AllocateRandomStateObjectFromUInt32Array(tc, init_key, key_length);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_SFMT(*value), true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_CheckHandle_SFMT(PMC_HANDLE_SFMT p)
+    {
+        if (p == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            PMC_CheckHandle_SFMT(p);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_Dispose_SFMT(PMC_HANDLE_SFMT p)
+    {
+        if (p == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            _INT32_T count = PMC_GetBufferCount_SFMT(p);
+            PMC_Dispose_SFMT(tc, p);
+            tc.VerifyAllocationCount(-count, true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_GenerateUInt32RandomValue(PMC_HANDLE_SFMT p, _UINT32_T* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *o = PMC_GenerateUInt32RandomValue(p);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_GenerateUInt64RandomValue(PMC_HANDLE_SFMT p, _UINT64_T* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *o = PMC_GenerateUInt64RandomValue(p);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_GenerateDoubleRandomValue(PMC_HANDLE_SFMT p, double* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *o = PMC_GenerateDoubleRandomValue(p);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_GenerateUBigIntRandomValue(PMC_HANDLE_SFMT handle, _UINT32_T bit_count, PMC_HANDLE_UINT* value)
+    {
+        if (value == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            *value = PMC_GenerateUBigIntRandomValue(tc, handle, bit_count);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*value), true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
     }

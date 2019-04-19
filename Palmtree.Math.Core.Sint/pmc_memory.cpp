@@ -59,19 +59,18 @@ namespace Palmtree::Math::Core::Internal
     __inline static void ClearNumberHeader(NUMBER_OBJECT_SINT* p)
     {
 #ifdef _M_IX64
-        if (sizeof(*p) == sizeof(_UINT64_T) * 5)
+        if (sizeof(*p) == sizeof(_UINT64_T) * 4)
         {
             _UINT64_T* __p = (_UINT64_T*)p;
             __p[0] = 0;
             __p[1] = 0;
             __p[2] = 0;
             __p[3] = 0;
-            __p[4] = 0;
         }
         else
         {
 #endif
-            if (sizeof(*p) == sizeof(_UINT32_T) * 6)
+            if (sizeof(*p) == sizeof(_UINT32_T) * 5)
             {
                 _UINT32_T* __p = (_UINT32_T*)p;
                 __p[0] = 0;
@@ -79,7 +78,6 @@ namespace Palmtree::Math::Core::Internal
                 __p[2] = 0;
                 __p[3] = 0;
                 __p[4] = 0;
-                __p[5] = 0;
             }
 #ifdef _M_IX64
             else if (sizeof(*p) % sizeof(_UINT64_T) == 0)
@@ -99,19 +97,18 @@ namespace Palmtree::Math::Core::Internal
     __inline static void FillNumberHeader(NUMBER_OBJECT_SINT* p)
     {
 #ifdef _M_IX64
-        if (sizeof(*p) == sizeof(_UINT64_T) * 5)
+        if (sizeof(*p) == sizeof(_UINT64_T) * 4)
         {
             _UINT64_T* __p = (_UINT64_T*)p;
             __p[0] = DEFAULT_MEMORY_DATA;
             __p[1] = DEFAULT_MEMORY_DATA;
             __p[2] = DEFAULT_MEMORY_DATA;
             __p[3] = DEFAULT_MEMORY_DATA;
-            __p[4] = DEFAULT_MEMORY_DATA;
     }
         else
         {
 #endif
-            if (sizeof(*p) == sizeof(_UINT32_T) * 6)
+            if (sizeof(*p) == sizeof(_UINT32_T) * 5)
             {
                 _UINT32_T* __p = (_UINT32_T*)p;
                 __p[0] = (_UINT32_T)DEFAULT_MEMORY_DATA;
@@ -119,7 +116,6 @@ namespace Palmtree::Math::Core::Internal
                 __p[2] = (_UINT32_T)DEFAULT_MEMORY_DATA;
                 __p[3] = (_UINT32_T)DEFAULT_MEMORY_DATA;
                 __p[4] = (_UINT32_T)DEFAULT_MEMORY_DATA;
-                __p[5] = (_UINT32_T)DEFAULT_MEMORY_DATA;
             }
 #ifdef _M_IX64
             else if (sizeof(*p) % sizeof(_UINT64_T) == 0)
@@ -188,22 +184,22 @@ namespace Palmtree::Math::Core::Internal
     void __AttatchNumber(NUMBER_OBJECT_SINT* p, SIGN_T sign, PMC_HANDLE_UINT abs)
     {
         InitializeNumber(p, sign, abs);
-        p->IS_STATIC = TRUE;
+        p->IS_SHARED = TRUE;
     }
 
     NUMBER_OBJECT_SINT* __AllocateNumber(ThreadContext& tc, SIGN_T sign, PMC_HANDLE_UINT abs)
     {
         ResourceHolderSINT root(tc);
-        NUMBER_OBJECT_SINT* p = root.AllocateNumberObjectSint();
+        NUMBER_OBJECT_SINT* p = root.AllocateBigIntNumberObjectStructure();
         InitializeNumber(p, sign, abs);
-        p->IS_STATIC = FALSE;
-        root.UnlinkNumberObjectSint(p);
+        p->IS_SHARED = FALSE;
+        root.UnlinkBigIntNumberObjectStructure(p);
         return (p);
     }
 
     void __DetatchNumber(ThreadContext& tc, NUMBER_OBJECT_SINT* p)
     {
-        if (p == nullptr || !p->IS_STATIC)
+        if (p == nullptr || !p->IS_SHARED)
             return;
         CleanUpNumber(tc, p);
     }
@@ -211,10 +207,8 @@ namespace Palmtree::Math::Core::Internal
     void __DeallocateNumber(ThreadContext& tc, NUMBER_OBJECT_SINT* p)
     {
         Lock lock_obj;
-        if (p == nullptr || p->IS_STATIC)
+        if (p == nullptr || p->IS_SHARED)
             return;
-        if (p->WORKING_COUNT > 0)
-            throw InvalidOperationException(L"演算に使用中の数値オブジェクトを解放しようとしました。");
         CleanUpNumber(tc, p);
         FillNumberHeader(p);
         __DeallocateHeap(p);
@@ -276,7 +270,7 @@ namespace Palmtree::Math::Core::Internal
 
     NUMBER_OBJECT_SINT* DuplicateNumber_X(ThreadContext& tc, NUMBER_OBJECT_SINT* x)
     {
-        if (x->IS_STATIC)
+        if (x->IS_SHARED)
             return (x);
         return (From_X_Imp(tc, x->SIGN, x->ABS));
     }
@@ -356,25 +350,9 @@ namespace Palmtree::Math::Core::Internal
     _INT32_T PMC_GetBufferCount_X(PMC_HANDLE_SINT p) noexcept(false)
     {
         NUMBER_OBJECT_SINT* np = GET_NUMBER_OBJECT(p, L"p");
-        if (np->IS_STATIC)
+        if (np->IS_SHARED)
             return (0);
         return (1 + ep_uint.GetBufferCount(np->ABS));
-    }
-
-    void PMC_UseObject_X(PMC_HANDLE_SINT x) noexcept(false)
-    {
-        if (x == nullptr)
-            return;
-        NUMBER_OBJECT_SINT* nx = GET_NUMBER_OBJECT(x, L"x");
-        ++nx->WORKING_COUNT;
-    }
-
-    void PMC_UnuseObject_X(PMC_HANDLE_SINT x) noexcept(false)
-    {
-        if (x == nullptr)
-            return;
-        NUMBER_OBJECT_SINT* nx = GET_NUMBER_OBJECT(x, L"x");
-        --nx->WORKING_COUNT;
     }
 #pragma region ヒープメモリ関連関数
 

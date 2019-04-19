@@ -28,30 +28,31 @@
 #include "pmc_lock.h"
 #include "pmc_uint_internal.h"
 #include "pmc___unit_type_array_chainbuffertag.h"
+#include "pmc_sfmt.h"
 #include "pmc_inline_func.h"
 
 
 namespace Palmtree::Math::Core::Internal
 {
 
-    ResourceHolderUINT::__NumberObjectUintChainBufferTag::__NumberObjectUintChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_UINT * buffer)
+    ResourceHolderUINT::__UBigIntNumberObjectStructureChainBufferTag::__UBigIntNumberObjectStructureChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_UINT * buffer)
         : _tc(tc)
     {
         _buffer = buffer;
         ++statistics_info.COUNT_ALLOCATE_NUMBER_OBJECT;
     }
 
-    ResourceHolderUINT::__NumberObjectUintChainBufferTag::~__NumberObjectUintChainBufferTag()
+    ResourceHolderUINT::__UBigIntNumberObjectStructureChainBufferTag::~__UBigIntNumberObjectStructureChainBufferTag()
     {
         --statistics_info.COUNT_ALLOCATE_NUMBER_OBJECT;
     }
 
-    bool ResourceHolderUINT::__NumberObjectUintChainBufferTag::EqualsBufferAddress(void * buffer)
+    bool ResourceHolderUINT::__UBigIntNumberObjectStructureChainBufferTag::EqualsBufferAddress(void * buffer)
     {
         return ((void*)_buffer == buffer);
     }
 
-    void ResourceHolderUINT::__NumberObjectUintChainBufferTag::Destruct()
+    void ResourceHolderUINT::__UBigIntNumberObjectStructureChainBufferTag::Destruct()
     {
         __DeallocateHeap(_buffer);
         _tc.DecrementTypeAAllocationCount();
@@ -84,32 +85,6 @@ namespace Palmtree::Math::Core::Internal
         Palmtree::Math::Core::Internal::__DeallocateNumber(_tc, _buffer);
     }
 
-    ResourceHolderUINT::__NumberHandleHookingChainBufferTag::__NumberHandleHookingChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_UINT * buffer)
-        : _tc(tc)
-    {
-        _buffer = buffer;
-        ++statistics_info.COUNT_HOOK_NUMBER;
-    }
-
-    ResourceHolderUINT::__NumberHandleHookingChainBufferTag::~__NumberHandleHookingChainBufferTag()
-    {
-        --statistics_info.COUNT_HOOK_NUMBER;
-    }
-
-    bool  ResourceHolderUINT::__NumberHandleHookingChainBufferTag::EqualsBufferAddress(void * buffer)
-    {
-        return ((void*)_buffer == buffer);
-    }
-
-    void  ResourceHolderUINT::__NumberHandleHookingChainBufferTag::Check()
-    {
-    }
-
-    void  ResourceHolderUINT::__NumberHandleHookingChainBufferTag::Destruct()
-    {
-        Palmtree::Math::Core::Internal::__DeallocateNumber(_tc, _buffer);
-    }
-
     ResourceHolderUINT::__StaticNumberChainBufferTag::__StaticNumberChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_UINT * buffer)
         : _tc(tc)
     {
@@ -134,6 +109,74 @@ namespace Palmtree::Math::Core::Internal
         __DetatchNumber(_tc, _buffer);
     }
 
+    ResourceHolderUINT::__RandomStateObjectStructureChainBufferTag::__RandomStateObjectStructureChainBufferTag(ThreadContext& tc, RANDOM_STATE_OBJECT * buffer)
+        : _tc(tc), _buffer(buffer)
+    {
+    }
+
+    ResourceHolderUINT::__RandomStateObjectStructureChainBufferTag::~__RandomStateObjectStructureChainBufferTag()
+    {
+    }
+
+    bool ResourceHolderUINT::__RandomStateObjectStructureChainBufferTag::EqualsBufferAddress(void * buffer)
+    {
+        return ((void*)_buffer == buffer);
+    }
+
+    void ResourceHolderUINT::__RandomStateObjectStructureChainBufferTag::Destruct()
+    {
+        delete _buffer;
+        _tc.DecrementTypeAAllocationCount();
+    }
+
+    ResourceHolderUINT::__RandomStateObjectChainBufferTag::__RandomStateObjectChainBufferTag(ThreadContext & tc, RANDOM_STATE_OBJECT * buffer)
+        : _tc(tc), _buffer(buffer)
+    {
+    }
+
+    ResourceHolderUINT::__RandomStateObjectChainBufferTag::~__RandomStateObjectChainBufferTag()
+    {
+    }
+
+    bool ResourceHolderUINT::__RandomStateObjectChainBufferTag::EqualsBufferAddress(void * buffer)
+    {
+        return ((void*)_buffer == buffer);
+    }
+
+    void ResourceHolderUINT::__RandomStateObjectChainBufferTag::Check()
+    {
+    }
+
+    void ResourceHolderUINT::__RandomStateObjectChainBufferTag::Destruct()
+    {
+        __DeallocateRandomStateObject(_tc, _buffer);
+        _tc.DecrementTypeAAllocationCount();
+    }
+
+    ResourceHolderUINT::__InternalRandomStateObjectChainBufferTag::__InternalRandomStateObjectChainBufferTag(ThreadContext & tc, void * buffer)
+        : _tc(tc), _buffer(buffer)
+    {
+    }
+
+    ResourceHolderUINT::__InternalRandomStateObjectChainBufferTag::~__InternalRandomStateObjectChainBufferTag()
+    {
+    }
+
+    bool ResourceHolderUINT::__InternalRandomStateObjectChainBufferTag::EqualsBufferAddress(void * buffer)
+    {
+        return ((void*)_buffer == buffer);
+    }
+
+    void ResourceHolderUINT::__InternalRandomStateObjectChainBufferTag::Check()
+    {
+    }
+
+    void ResourceHolderUINT::__InternalRandomStateObjectChainBufferTag::Destruct()
+    {
+        PMCSFMT_DeallocateRandomState(_buffer);
+        _tc.DecrementTypeAAllocationCount();
+    }
+
     ResourceHolderUINT::ResourceHolderUINT(ThreadContext& tc)
         : ResourceHolder(tc)
     {
@@ -143,18 +186,18 @@ namespace Palmtree::Math::Core::Internal
     {
     }
 
-    NUMBER_OBJECT_UINT* ResourceHolderUINT::AllocateNumberObjectUint()
+    NUMBER_OBJECT_UINT* ResourceHolderUINT::AllocateUBigIntNumberObjectStructure()
     {
         Lock lock_obj;
         NUMBER_OBJECT_UINT* buffer = (NUMBER_OBJECT_UINT*)__AllocateHeap(sizeof(NUMBER_OBJECT_UINT));
         _tc.IncrementTypeAAllocationCount();
-        __ChainBufferTag* tag = new __NumberObjectUintChainBufferTag(_tc, buffer);
+        __ChainBufferTag* tag = new __UBigIntNumberObjectStructureChainBufferTag(_tc, buffer);
         _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);
         return (buffer);
     }
 
-    void ResourceHolderUINT::DeallocateNumberObjectUint(NUMBER_OBJECT_UINT * buffer)
+    void ResourceHolderUINT::DeallocateUBigIntNumberObjectStructure(NUMBER_OBJECT_UINT * buffer)
     {
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
@@ -166,7 +209,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    void ResourceHolderUINT::UnlinkNumberObjectUint(NUMBER_OBJECT_UINT * buffer)
+    void ResourceHolderUINT::UnlinkUBigIntNumberObjectStructure(NUMBER_OBJECT_UINT * buffer)
     {
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
@@ -243,18 +286,21 @@ namespace Palmtree::Math::Core::Internal
 
     void ResourceHolderUINT::HookNumber(NUMBER_OBJECT_UINT * buffer)
     {
+        if (buffer->IS_SHARED)
+            return;
         Lock lock_obj;
 #ifdef _DEBUG
-        if (!buffer->IS_STATIC)
-            NotExists(buffer);
+        NotExists(buffer);
 #endif
-        __ChainBufferTag* tag = new __NumberHandleHookingChainBufferTag(_tc, buffer);
+        __ChainBufferTag* tag = new __DynamicNumberChainBufferTag(_tc, buffer);
         _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);
     }
 
     void ResourceHolderUINT::DeallocateNumber(NUMBER_OBJECT_UINT * buffer)
     {
+        if (buffer->IS_SHARED)
+            return;
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag != nullptr)
@@ -278,6 +324,8 @@ namespace Palmtree::Math::Core::Internal
 
     void ResourceHolderUINT::UnlinkNumber(NUMBER_OBJECT_UINT * buffer)
     {
+        if (buffer->IS_SHARED)
+            return;
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
@@ -318,6 +366,141 @@ namespace Palmtree::Math::Core::Internal
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::UnlinkStatickNumber;1");
         delete tag;
         _tc.DecrementTypeBAllocationCount();
+    }
+
+    RANDOM_STATE_OBJECT * ResourceHolderUINT::AllocateRandomStateObjectStructure()
+    {
+        Lock lock_obj;
+        RANDOM_STATE_OBJECT* buffer = new RANDOM_STATE_OBJECT();
+        _tc.IncrementTypeAAllocationCount();
+        memset(buffer, 0, sizeof(buffer));
+        __ChainBufferTag* tag = new __RandomStateObjectChainBufferTag(_tc, buffer);
+        _tc.IncrementTypeBAllocationCount();
+        LinkTag(tag);
+        return (buffer);
+    }
+
+    RANDOM_STATE_OBJECT * ResourceHolderUINT::AllocateRandomStateObject(_UINT32_T seed)
+    {
+        Lock lock_obj;
+        RANDOM_STATE_OBJECT* buffer = __AllocateRandomStateObjectFromUInt32(_tc, seed);
+        __ChainBufferTag* tag = new __RandomStateObjectChainBufferTag(_tc, buffer);
+        _tc.IncrementTypeBAllocationCount();
+        LinkTag(tag);
+        return (buffer);
+    }
+
+    RANDOM_STATE_OBJECT * ResourceHolderUINT::AllocateRandomStateObject(_UINT32_T * init_key, _UINT32_T key_length)
+    {
+        Lock lock_obj;
+        RANDOM_STATE_OBJECT* buffer = __AllocateRandomStateObjectFromUInt32Array(_tc, init_key, key_length);
+        __ChainBufferTag* tag = new __RandomStateObjectChainBufferTag(_tc, buffer);
+        _tc.IncrementTypeBAllocationCount();
+        LinkTag(tag);
+        return (buffer);
+    }
+
+    void ResourceHolderUINT::DeallocateRandomStateObject(RANDOM_STATE_OBJECT * buffer)
+    {
+        Lock lock_obj;
+        __ChainBufferTag* tag = FindTag(buffer);
+        if (tag != nullptr)
+        {
+            tag->Destruct();
+            delete tag;
+            _tc.DecrementTypeBAllocationCount();
+        }
+    }
+
+    void ResourceHolderUINT::HookRandomStateObject(RANDOM_STATE_OBJECT * buffer)
+    {
+        Lock lock_obj;
+#ifdef _DEBUG
+        NotExists(buffer);
+#endif
+        __ChainBufferTag* tag = new __RandomStateObjectChainBufferTag(_tc, buffer);
+        _tc.IncrementTypeBAllocationCount();
+        LinkTag(tag);
+    }
+
+    void ResourceHolderUINT::UnlinkRandomStateObject(RANDOM_STATE_OBJECT * buffer)
+    {
+        Lock lock_obj;
+        UnlinkInternalRandomStateObjectInternally(buffer->STATE);
+        __ChainBufferTag* tag = FindTag(buffer);
+        if (tag == nullptr)
+            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::Unlink;1");
+        delete tag;
+        _tc.DecrementTypeBAllocationCount();
+    }
+
+    void * ResourceHolderUINT::AllocateInternalRandomStateObject(_UINT32_T seed)
+    {
+        Lock lock_obj;
+        void* buffer = PMCSFMT_AllocateRandomStateFromUInt32(seed);
+        if (buffer == nullptr)
+            throw NotEnoughMemoryException(L"乱数の状態を記憶するためのメモリ領域が不足しています。");
+        _tc.IncrementTypeAAllocationCount();
+        __ChainBufferTag * tag = new __InternalRandomStateObjectChainBufferTag(_tc, buffer);
+        _tc.IncrementTypeBAllocationCount();
+        LinkTag(tag);
+        return (buffer);
+    }
+
+    void * ResourceHolderUINT::AllocateInternalRandomStateObject(_UINT32_T * init_key, _UINT32_T key_length)
+    {
+        Lock lock_obj;
+        void* buffer = PMCSFMT_AllocateRandomStateFromUInt32Array(init_key, key_length);
+        if (buffer == nullptr)
+            throw NotEnoughMemoryException(L"乱数の状態を記憶するためのメモリ領域が不足しています。");
+        _tc.IncrementTypeAAllocationCount();
+        __ChainBufferTag * tag = new __InternalRandomStateObjectChainBufferTag(_tc, buffer);
+        _tc.IncrementTypeBAllocationCount();
+        LinkTag(tag);
+        return (buffer);
+    }
+
+    void ResourceHolderUINT::DeallocateInternalRandomStateObject(void * buffer)
+    {
+        Lock lock_obj;
+        __ChainBufferTag* tag = FindTag(buffer);
+        if (tag != nullptr)
+        {
+            tag->Destruct();
+            delete tag;
+            _tc.DecrementTypeBAllocationCount();
+        }
+    }
+
+    void ResourceHolderUINT::HookInternalRandomStateObject(void * buffer)
+    {
+        Lock lock_obj;
+#ifdef _DEBUG
+        NotExists(buffer);
+#endif
+        __ChainBufferTag* tag = new __InternalRandomStateObjectChainBufferTag(_tc, buffer);
+        _tc.IncrementTypeBAllocationCount();
+        LinkTag(tag);
+    }
+
+    void ResourceHolderUINT::UnlinkInternalRandomStateObject(void * buffer)
+    {
+        Lock lock_obj;
+        __ChainBufferTag* tag = FindTag(buffer);
+        if (tag == nullptr)
+            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::Unlink;2");
+        delete tag;
+        _tc.DecrementTypeBAllocationCount();
+    }
+
+    void ResourceHolderUINT::UnlinkInternalRandomStateObjectInternally(void * buffer)
+    {
+        __ChainBufferTag* tag = FindTag(buffer);
+        if (tag != nullptr)
+        {
+            delete tag;
+            _tc.DecrementTypeBAllocationCount();
+        }
     }
 
 }

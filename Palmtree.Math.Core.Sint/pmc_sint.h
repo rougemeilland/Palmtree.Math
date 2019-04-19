@@ -23,6 +23,8 @@
  */
 
 
+#pragma once
+
 #ifndef PMC_SINT_H
 #define PMC_SINT_H
 
@@ -38,7 +40,7 @@ namespace Palmtree::Math::Core::Internal
     {
         const struct __tag_SINT_FLAGS
         {
-            unsigned    IS_STATIC : 1;          // 本ハンドルが静的に割り当てられていて開放不要ならばTRUE
+            unsigned    IS_SHARED : 1;          // 本ハンドルが静的に割り当てられていて開放不要ならばTRUE
             unsigned    IS_ZERO : 1;            // 数値が 0 なら TRUE
             unsigned    IS_ONE : 1;             // 数値が 1 なら TRUE
             unsigned    IS_MINUS_ONE : 1;       // 数値が -1 なら TRUE

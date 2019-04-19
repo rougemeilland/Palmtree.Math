@@ -1,4 +1,4 @@
-﻿/*
+/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -23,21 +23,31 @@
  */
 
 
-using System.IO;
-using System.Linq;
+#pragma once
 
-namespace Palmtree.Math.Core.Sint.CodeGen.VersionInfo
+#ifndef PMC_SFMT_H
+#define PMC_SFMT_H
+
+namespace Palmtree::Math::Core::Internal
 {
-    static class DirectoryInfoExtensions
-    {
-        public static DirectoryInfo GetChildDirectory(this DirectoryInfo dir, string sub_directory_name)
-        {
-            return (dir.GetDirectories(sub_directory_name).Where(x => x.Name == sub_directory_name).First());
-        }
 
-        public static FileInfo GetChildFile(this DirectoryInfo dir, string file_name)
-        {
-            return (dir.GetFiles(file_name).Where(x => x.Name == file_name).First());
-        }
-    }
+#ifdef PALMTREEMATHCORESFMT_EXPORTS
+#define __DLLEXPORT_SFMT __declspec(dllexport)
+#else
+#define __DLLEXPORT_SFMT __declspec(dllimport)
+#endif
+
+    extern "C" __DLLEXPORT_SFMT void* PMCSFMT_AllocateRandomStateFromUInt32(unsigned int seed);
+    extern "C" __DLLEXPORT_SFMT void* PMCSFMT_AllocateRandomStateFromUInt32Array(unsigned int* init_key, unsigned int key_length);
+    extern "C" __DLLEXPORT_SFMT void PMCSFMT_DeallocateRandomState(void* state);
+    extern "C" __DLLEXPORT_SFMT unsigned int PMCSFMT_GenerateUInt32RandomValue(void* state);
+    extern "C" __DLLEXPORT_SFMT unsigned long long PMCSFMT_GenerateUInt64RandomValue(void* state);
+    extern "C" __DLLEXPORT_SFMT double PMCSFMT_GenerateDoubleRandomValue(void* state);
 }
+
+#endif
+
+
+/*
+ * END OF FILE
+ */

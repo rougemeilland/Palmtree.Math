@@ -41,28 +41,28 @@ namespace Palmtree::Math::Core::Internal
         : public ResourceHolder
     {
     private:
-        class __NumberObjectSintChainBufferTag
+        class __BigIntNumberObjectStructureChainBufferTag
             : public __ChainBufferTag
         {
         private:
             ThreadContext& _tc;
             void* _buffer;
         public:
-            __NumberObjectSintChainBufferTag(ThreadContext& tc, void* buffer);
-            virtual ~__NumberObjectSintChainBufferTag();
+            __BigIntNumberObjectStructureChainBufferTag(ThreadContext& tc, void* buffer);
+            virtual ~__BigIntNumberObjectStructureChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Destruct() override;
         };
 
-        class __UINTNumberHandleHookingChainBufferTag
+        class __UBigIntNumberHandleChainBufferTag
             : public __ChainBufferTag
         {
         private:
             ThreadContext& _tc;
             PMC_HANDLE_UINT _buffer;
         public:
-            __UINTNumberHandleHookingChainBufferTag(ThreadContext& tc, PMC_HANDLE_UINT x);
-            virtual ~__UINTNumberHandleHookingChainBufferTag();
+            __UBigIntNumberHandleChainBufferTag(ThreadContext& tc, PMC_HANDLE_UINT x);
+            virtual ~__UBigIntNumberHandleChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
             void virtual Destruct() override;
@@ -82,15 +82,15 @@ namespace Palmtree::Math::Core::Internal
             void virtual Destruct() override;
         };
 
-        class __NumberHandleHookingChainBufferTag
+        class __SINTNumberHandleChainBufferTag
             : public __ChainBufferTag
         {
         private:
             ThreadContext& _tc;
             NUMBER_OBJECT_SINT* _buffer;
         public:
-            __NumberHandleHookingChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_SINT* buffer);
-            virtual ~__NumberHandleHookingChainBufferTag();
+            __SINTNumberHandleChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_SINT* buffer);
+            virtual ~__SINTNumberHandleChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
             void virtual Destruct() override;
@@ -110,17 +110,6 @@ namespace Palmtree::Math::Core::Internal
             void virtual Destruct() override;
         };
 
-        class __RootTag
-            : public __ChainBufferTag
-        {
-        public:
-            __RootTag();
-            virtual ~__RootTag();
-            virtual bool EqualsBufferAddress(void* buffer) override;
-            void virtual Destruct() override;
-
-        };
-
     private:
         ResourceHolderSINT(const ResourceHolderSINT& p); // åƒÇ—èoÇµã÷é~
 
@@ -128,9 +117,9 @@ namespace Palmtree::Math::Core::Internal
         ResourceHolderSINT(ThreadContext& tc);
         virtual ~ResourceHolderSINT();
 
-        NUMBER_OBJECT_SINT* AllocateNumberObjectSint();
-        void DeallocateNumberObjectSint(NUMBER_OBJECT_SINT* buffer);
-        void UnlinkNumberObjectSint(NUMBER_OBJECT_SINT* buffer);
+        NUMBER_OBJECT_SINT* AllocateBigIntNumberObjectStructure();
+        void DeallocateBigIntNumberObjectStructure(NUMBER_OBJECT_SINT* buffer);
+        void UnlinkBigIntNumberObjectStructure(NUMBER_OBJECT_SINT* buffer);
 
         NUMBER_OBJECT_SINT* AllocateNumber(SIGN_T sign, PMC_HANDLE_UINT abs);
         void HookNumber(NUMBER_OBJECT_SINT* buffer);

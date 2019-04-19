@@ -33,12 +33,6 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-#ifdef PALMTREEMATHCORERTNL_EXPORTS
-#define __DLLEXPORT_RTNL __declspec(dllexport)
-#else
-#define __DLLEXPORT_RTNL __declspec(dllimport)
-#endif
-
     class __DLLEXPORT_RTNL PMC_RTNL_CppInterface
     {
     public:
@@ -46,9 +40,6 @@ namespace Palmtree::Math::Core::Internal
         ~PMC_RTNL_CppInterface();
 
         bool Initialize();
-
-        void UseObject(PMC_HANDLE_RTNL x) noexcept(false);
-        void UnuseObject(PMC_HANDLE_RTNL x) noexcept(false);
 
         PMC_STATUS_CODE GetConfigurationSettings(const wchar_t* key, wchar_t* value_buffer, _INT32_T value_buffer_size, _INT32_T* count);
 
@@ -198,6 +189,8 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_SINT Ceiling(ThreadContext& tc, PMC_HANDLE_RTNL x);
 
         _INT32_T FloorLog10(ThreadContext& tc, PMC_HANDLE_RTNL v);
+
+        PMC_HANDLE_RTNL GenerateRationalRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count);
     };
 
 }

@@ -23,12 +23,12 @@ BEGIN
         BLOCK "041104b0"
         BEGIN
             VALUE "CompanyName", "Palmtree Software"
-            VALUE "FileDescription", "多倍長整数演算ライブラリ アンマネージDLL"
+            VALUE "FileDescription", "Palmtree 数値演算ライブラリ 符号つき多倍長整数演算アンマネージドモジュール"
             VALUE "FileVersion", "1.0.0.1"
-            VALUE "InternalName", "Palmtree.Math.Core.Uint"
+            VALUE "InternalName", "Palmtree.Math.Core.Sint"
             VALUE "LegalCopyright", "© 2018-2019 Palmtree Software"
-            VALUE "OriginalFilename", "Palmtree.Math.Core.Uint"
-            VALUE "ProductName", "多倍長整数演算ライブラリ"
+            VALUE "OriginalFilename", "Palmtree.Math.Core.Sint"
+            VALUE "ProductName", "Palmtree 数値演算ライブラリ"
             VALUE "ProductVersion", "1.0.0.1"
         END
     END

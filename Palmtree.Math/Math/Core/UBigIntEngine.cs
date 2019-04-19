@@ -29,7 +29,7 @@ namespace Palmtree.Math.Core
 {
 
     internal partial class UBigIntEngine
-        : EngineBase, IUBigIntDisposable
+        : EngineBase, IUBigIntDisposable, IRandomStateObjectDisposable
     {
         #region コンストラクタ
 
@@ -49,9 +49,19 @@ namespace Palmtree.Math.Core
             HandleResultCode((PMC_STATUS_CODE)PMCCS_CheckHandle_UX(handle));
         }
 
+        void IRandomStateObjectDisposable.CheckHandle(IntPtr handle)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_CheckHandle_SFMT(handle));
+        }
+
         void IUBigIntDisposable.Dispose(IntPtr handle)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_Dispose_UX(handle));
+        }
+
+        void IRandomStateObjectDisposable.Dispose(IntPtr handle)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Dispose_SFMT(handle));
         }
 
         #endregion

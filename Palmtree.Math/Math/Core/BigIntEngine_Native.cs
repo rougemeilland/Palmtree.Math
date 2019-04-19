@@ -679,6 +679,9 @@ namespace Palmtree.Math.Core
         [DllImport("Palmtree.Math.Core.Sint.dll", CharSet = CharSet.Unicode, EntryPoint = "PMCCS_ToString_X")]
         private static extern Int32 PMCCS_GetStringCount_X(IntPtr x, string format, [In]PMC_NUMBER_FORMAT_INFO format_option, IntPtr buffer, int buffer_size, out int size);
 
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_GenerateBigIntRandomValue(IntPtr handle, UInt32 bit_count, out IntPtr value);
+
         #endregion
     }
 }

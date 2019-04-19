@@ -23,6 +23,8 @@
  */
 
 
+#pragma once
+
 #ifndef PMC_SINT_INTERNAL_H
 #define PMC_SINT_INTERNAL_H
 
@@ -42,7 +44,7 @@ namespace Palmtree::Math::Core::Internal
 #pragma region 型の定義
     typedef struct __tag_NUMBER_OBJECT_SINT
     {
-        unsigned        IS_STATIC : 1;          // 本構造体が静的に割り当てられていて解放不要ならばTRUE
+        unsigned        IS_SHARED : 1;          // 本構造体が静的に割り当てられていて解放不要ならばTRUE
         unsigned        IS_ZERO : 1;            // データが 0 なら TRUE
         unsigned        IS_ONE : 1;             // データが 1 なら TRUE
         unsigned        IS_MINUS_ONE : 1;       // データが -1 なら TRUE
@@ -51,7 +53,6 @@ namespace Palmtree::Math::Core::Internal
 
         _UINT32_T       SIGNATURE1;             // テーブルを識別するためのデータ1
         _UINT32_T       SIGNATURE2;             // テーブルを識別するためのデータ2
-        __UNIT_TYPE     WORKING_COUNT;          // この数値オブジェクトを参照して演算中のスレッドの数
 
         PMC_HANDLE_UINT ABS;                    // 数値の絶対値を表すハンドル
         SIGN_T          SIGN;                   // 数値の符号
@@ -127,8 +128,6 @@ namespace Palmtree::Math::Core::Internal
 
 #pragma region エントリポイントに登録される関数の宣言
     extern bool PMC_SINT_Initialize();
-    extern void PMC_UseObject_X(PMC_HANDLE_SINT x) noexcept(false);
-    extern void PMC_UnuseObject_X(PMC_HANDLE_SINT x) noexcept(false);
     extern PMC_STATUS_CODE PMC_GetConfigurationSettings(const wchar_t* key, wchar_t* value_buffer, _INT32_T value_buffer_size, _INT32_T* count);
     extern _UINT64_T PMC_GetPerformanceCounter(const wchar_t* key);
     extern PMC_HANDLE_SINT PMC_From_UI(ThreadContext& tc, _UINT32_T x) noexcept(false);
@@ -360,6 +359,7 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_SINT PMC_Invert_UX(ThreadContext& tc, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* r_denominator) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Invert_R(ThreadContext& tc, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT* r_denominator) noexcept(false);
 
+    extern PMC_HANDLE_SINT PMC_GenerateBigIntRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count);
 #pragma endregion
 
 #pragma region インライン関数の定義

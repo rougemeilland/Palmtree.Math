@@ -75,7 +75,6 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_UINT w_abs = ep_uint.Multiply(tc, u, v);
         root.HookNumber(w_abs);
         NUMBER_OBJECT_SINT* w = root.AllocateNumber(w_sign, w_abs);
-        root.UnlinkNumber(w_abs);
         root.UnlinkNumber(w);
         return (w);
     }

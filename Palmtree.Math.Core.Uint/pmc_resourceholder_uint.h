@@ -41,15 +41,15 @@ namespace Palmtree::Math::Core::Internal
         : public ResourceHolder
     {
     private:
-        class __NumberObjectUintChainBufferTag
+        class __UBigIntNumberObjectStructureChainBufferTag
             : public __ChainBufferTag
         {
         private:
             ThreadContext& _tc;
             NUMBER_OBJECT_UINT* _buffer;
         public:
-            __NumberObjectUintChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_UINT* buffer);
-            virtual ~__NumberObjectUintChainBufferTag();
+            __UBigIntNumberObjectStructureChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_UINT* buffer);
+            virtual ~__UBigIntNumberObjectStructureChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Destruct() override;
         };
@@ -63,20 +63,6 @@ namespace Palmtree::Math::Core::Internal
         public:
             __DynamicNumberChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_UINT* buffer);
             virtual ~__DynamicNumberChainBufferTag();
-            virtual bool EqualsBufferAddress(void* buffer) override;
-            void virtual Check() override;
-            void virtual Destruct() override;
-        };
-
-        class __NumberHandleHookingChainBufferTag
-            : public __ChainBufferTag
-        {
-        private:
-            ThreadContext& _tc;
-            NUMBER_OBJECT_UINT* _buffer;
-        public:
-            __NumberHandleHookingChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_UINT* buffer);
-            virtual ~__NumberHandleHookingChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Check() override;
             void virtual Destruct() override;
@@ -96,13 +82,54 @@ namespace Palmtree::Math::Core::Internal
             void virtual Destruct() override;
         };
 
+        class __RandomStateObjectStructureChainBufferTag
+            : public __ChainBufferTag
+        {
+        private:
+            ThreadContext& _tc;
+            RANDOM_STATE_OBJECT* _buffer;
+        public:
+            __RandomStateObjectStructureChainBufferTag(ThreadContext& tc, RANDOM_STATE_OBJECT* buffer);
+            virtual ~__RandomStateObjectStructureChainBufferTag();
+            virtual bool EqualsBufferAddress(void* buffer) override;
+            void virtual Destruct() override;
+        };
+
+        class __RandomStateObjectChainBufferTag
+            : public __ChainBufferTag
+        {
+        private:
+            ThreadContext& _tc;
+            RANDOM_STATE_OBJECT* _buffer;
+        public:
+            __RandomStateObjectChainBufferTag(ThreadContext& tc, RANDOM_STATE_OBJECT* buffer);
+            virtual ~__RandomStateObjectChainBufferTag();
+            virtual bool EqualsBufferAddress(void* buffer) override;
+            void virtual Check() override;
+            void virtual Destruct() override;
+        };
+
+        class __InternalRandomStateObjectChainBufferTag
+            : public __ChainBufferTag
+        {
+        private:
+            ThreadContext& _tc;
+            void* _buffer;
+        public:
+            __InternalRandomStateObjectChainBufferTag(ThreadContext& tc, void* buffer);
+            virtual ~__InternalRandomStateObjectChainBufferTag();
+            virtual bool EqualsBufferAddress(void* buffer) override;
+            void virtual Check() override;
+            void virtual Destruct() override;
+        };
+
     public:
         ResourceHolderUINT(ThreadContext& tc);
         virtual ~ResourceHolderUINT();
 
-        NUMBER_OBJECT_UINT* AllocateNumberObjectUint();
-        void DeallocateNumberObjectUint(NUMBER_OBJECT_UINT* buffer);
-        void UnlinkNumberObjectUint(NUMBER_OBJECT_UINT* buffer);
+        NUMBER_OBJECT_UINT* AllocateUBigIntNumberObjectStructure();
+        void DeallocateUBigIntNumberObjectStructure(NUMBER_OBJECT_UINT* buffer);
+        void UnlinkUBigIntNumberObjectStructure(NUMBER_OBJECT_UINT* buffer);
 
         __UNIT_TYPE* AllocateBlock(__UNIT_TYPE bit_count);
         void ClearBlock(__UNIT_TYPE* buffer);
@@ -119,6 +146,22 @@ namespace Palmtree::Math::Core::Internal
         void AttatchStaticNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count);
         void DetatchStaticNumber(NUMBER_OBJECT_UINT* buffer);
         void UnlinkStatickNumber(NUMBER_OBJECT_UINT* buffer);
+
+        RANDOM_STATE_OBJECT* AllocateRandomStateObjectStructure();
+        RANDOM_STATE_OBJECT* AllocateRandomStateObject(_UINT32_T seed);
+        RANDOM_STATE_OBJECT* AllocateRandomStateObject(_UINT32_T* init_key, _UINT32_T key_length);
+        void DeallocateRandomStateObject(RANDOM_STATE_OBJECT* buffer);
+        void HookRandomStateObject(RANDOM_STATE_OBJECT* buffer);
+        void UnlinkRandomStateObject(RANDOM_STATE_OBJECT* buffer);
+
+        void* AllocateInternalRandomStateObject(_UINT32_T seed);
+        void* AllocateInternalRandomStateObject(_UINT32_T* init_key, _UINT32_T key_length);
+        void DeallocateInternalRandomStateObject(void* buffer);
+        void HookInternalRandomStateObject(void* buffer);
+        void UnlinkInternalRandomStateObject(void* buffer);
+
+    private:
+        void UnlinkInternalRandomStateObjectInternally(void* buffer);
     };
 
 }

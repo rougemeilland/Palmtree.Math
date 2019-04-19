@@ -44,16 +44,6 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_SINT_Initialize());
     }
 
-    void PMC_SINT_CppInterface::UseObject(PMC_HANDLE_SINT x) noexcept(false)
-    {
-        PMC_UseObject_X(x);
-    }
-
-    void PMC_SINT_CppInterface::UnuseObject(PMC_HANDLE_SINT x) noexcept(false)
-    {
-        PMC_UnuseObject_X(x);
-    }
-
     PMC_STATUS_CODE PMC_SINT_CppInterface::GetConfigurationSettings(const wchar_t * key, wchar_t * value_buffer, _INT32_T value_buffer_size, _INT32_T * count)
     {
         return (PMC_GetConfigurationSettings(key, value_buffer, value_buffer_size, count));
@@ -1197,6 +1187,11 @@ namespace Palmtree::Math::Core::Internal
     PMC_HANDLE_SINT PMC_SINT_CppInterface::Invert(ThreadContext& tc, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * r_denominator) noexcept(false)
     {
         return (PMC_Invert_R(tc, v_numerator, v_denominator, r_denominator));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::GenerateBigIntRandomValue(ThreadContext & tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count)
+    {
+        return (PMC_GenerateBigIntRandomValue(tc, handle, bit_count));
     }
 
 }

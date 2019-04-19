@@ -93,3 +93,11 @@ EXPORTS
 	PMCCS_ToUInt64_UX
 	PMCCS_TryParse
 	PMCCS_UINT_Initialize
+	PMCCS_AllocateRandomStateObjectFromUInt32
+	PMCCS_AllocateRandomStateObjectFromUInt32Array
+	PMCCS_CheckHandle_SFMT
+	PMCCS_Dispose_SFMT
+	PMCCS_GenerateUInt32RandomValue
+	PMCCS_GenerateUInt64RandomValue
+	PMCCS_GenerateDoubleRandomValue
+	PMCCS_GenerateUBigIntRandomValue

@@ -48,16 +48,6 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_UINT_Initialize());
     }
 
-    void PMC_UINT_CppInterface::UseObject(PMC_HANDLE_UINT x) noexcept(false)
-    {
-        PMC_UseObject_UX(x);
-    }
-
-    void PMC_UINT_CppInterface::UnuseObject(PMC_HANDLE_UINT x) noexcept(false)
-    {
-        PMC_UnuseObject_UX(x);
-    }
-
     PMC_STATUS_CODE PMC_UINT_CppInterface::GetConfigurationSettings(const wchar_t * key, wchar_t * value_buffer, _INT32_T value_buffer_size, _INT32_T * count)
     {
         return (PMC_GetConfigurationSettings(key, value_buffer, value_buffer_size, count));
@@ -600,6 +590,46 @@ namespace Palmtree::Math::Core::Internal
     PMC_HANDLE_UINT PMC_UINT_CppInterface::DivideExactly(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
     {
         return (PMC_DivideExactly_UX_UX(tc, u, v));
+    }
+
+    PMC_HANDLE_SFMT PMC_UINT_CppInterface::AllocateRandomStateObject(ThreadContext & tc, _UINT32_T seed)
+    {
+        return (PMC_AllocateRandomStateObjectFromUInt32(tc, seed));
+    }
+
+    PMC_HANDLE_SFMT PMC_UINT_CppInterface::AllocateRandomStateObject(ThreadContext & tc, _UINT32_T * init_key, _UINT32_T key_length)
+    {
+        return (PMC_AllocateRandomStateObjectFromUInt32Array(tc, init_key, key_length));
+    }
+
+    void PMC_UINT_CppInterface::CheckHandle(PMC_HANDLE_SFMT p)
+    {
+        PMC_CheckHandle_SFMT(p);
+    }
+
+    void PMC_UINT_CppInterface::Dispose(ThreadContext & tc, PMC_HANDLE_SFMT p)
+    {
+        PMC_Dispose_SFMT(tc, p);
+    }
+
+    _UINT32_T PMC_UINT_CppInterface::GenerateUInt32RandomValue(PMC_HANDLE_SFMT handle)
+    {
+        return (PMC_GenerateUInt32RandomValue(handle));
+    }
+
+    _UINT64_T PMC_UINT_CppInterface::GenerateUInt64RandomValue(PMC_HANDLE_SFMT handle)
+    {
+        return (PMC_GenerateUInt64RandomValue(handle));
+    }
+
+    double PMC_UINT_CppInterface::GenerateDoubleRandomValue(PMC_HANDLE_SFMT handle)
+    {
+        return (PMC_GenerateDoubleRandomValue(handle));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::GenerateUBigIntRandomValue(ThreadContext & tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count)
+    {
+        return (PMC_GenerateUBigIntRandomValue(tc, handle, bit_count));
     }
 
     void PMC_UINT_CppInterface::InternalTest()

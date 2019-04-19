@@ -28,6 +28,7 @@
 #include "pmc_resourceholder_uint.h"
 #include "pmc_lock.h"
 #include "pmc_threadcontext.h"
+#include "pmc_sfmt.h"
 #include "pmc_inline_func.h"
 
 #pragma region プラットフォーム固有の定義
@@ -236,7 +237,7 @@ namespace Palmtree::Math::Core::Internal
     __inline static void ClearNumberHeader(NUMBER_OBJECT_UINT* p)
     {
 #ifdef _M_X64
-        if (sizeof(*p) == sizeof(_UINT64_T) * 11)
+        if (sizeof(*p) == sizeof(_UINT64_T) * 10)
         {
             _UINT64_T* __p = (_UINT64_T*)p;
             __p[0] = 0;
@@ -249,12 +250,11 @@ namespace Palmtree::Math::Core::Internal
             __p[7] = 0;
             __p[8] = 0;
             __p[9] = 0;
-            __p[10] = 0;
         }
         else
         {
 #endif
-            if (sizeof(*p) == sizeof(_UINT32_T) * 12)
+            if (sizeof(*p) == sizeof(_UINT32_T) * 11)
             {
                 _UINT32_T* __p = (_UINT32_T*)p;
                 __p[0] = 0;
@@ -268,7 +268,6 @@ namespace Palmtree::Math::Core::Internal
                 __p[8] = 0;
                 __p[9] = 0;
                 __p[10] = 0;
-                __p[11] = 0;
             }
 #ifdef _M_X64
             else if (sizeof(*p) % sizeof(_UINT64_T) == 0)
@@ -288,7 +287,7 @@ namespace Palmtree::Math::Core::Internal
     __inline static void FillNumberHeader(NUMBER_OBJECT_UINT* p)
     {
 #ifdef _M_X64
-        if (sizeof(*p) == sizeof(_UINT64_T) * 11)
+        if (sizeof(*p) == sizeof(_UINT64_T) * 10)
         {
             _UINT64_T* __p = (_UINT64_T*)p;
             __p[0] = DEFAULT_MEMORY_DATA;
@@ -301,12 +300,11 @@ namespace Palmtree::Math::Core::Internal
             __p[7] = DEFAULT_MEMORY_DATA;
             __p[8] = DEFAULT_MEMORY_DATA;
             __p[9] = DEFAULT_MEMORY_DATA;
-            __p[10] = DEFAULT_MEMORY_DATA;
     }
         else
         {
 #endif
-            if (sizeof(*p) == sizeof(_UINT32_T) * 12)
+            if (sizeof(*p) == sizeof(_UINT32_T) * 11)
             {
                 _UINT32_T* __p = (_UINT32_T*)p;
                 __p[0] = (_UINT32_T)DEFAULT_MEMORY_DATA;
@@ -320,7 +318,6 @@ namespace Palmtree::Math::Core::Internal
                 __p[8] = (_UINT32_T)DEFAULT_MEMORY_DATA;
                 __p[9] = (_UINT32_T)DEFAULT_MEMORY_DATA;
                 __p[10] = (_UINT32_T)DEFAULT_MEMORY_DATA;
-                __p[11] = (_UINT32_T)DEFAULT_MEMORY_DATA;
             }
 #ifdef _M_X64
             else if (sizeof(*p) % sizeof(_UINT64_T) == 0)
@@ -381,32 +378,30 @@ namespace Palmtree::Math::Core::Internal
     void __AttatchNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count)
     {
         InitializeNumber(tc, p, bit_count);
-        p->IS_STATIC = true;
+        p->IS_SHARED = true;
     }
 
     NUMBER_OBJECT_UINT* __AllocateNumber(ThreadContext& tc, __UNIT_TYPE bit_count)
     {
         ResourceHolderUINT root(tc);
-        NUMBER_OBJECT_UINT* p = (NUMBER_OBJECT_UINT*)root.AllocateNumberObjectUint();
+        NUMBER_OBJECT_UINT* p = (NUMBER_OBJECT_UINT*)root.AllocateUBigIntNumberObjectStructure();
         InitializeNumber(tc, p, bit_count);
-        p->IS_STATIC = false;
-        root.UnlinkNumberObjectUint(p);
+        p->IS_SHARED = false;
+        root.UnlinkUBigIntNumberObjectStructure(p);
         return (p);
     }
 
     void __DetatchNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p)
     {
-        if (p != nullptr && p->IS_STATIC)
+        if (p != nullptr && p->IS_SHARED)
             CleanUpNumber(tc, p);
     }
 
     void __DeallocateNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p)
     {
         Lock lock_obj;
-        if (p == nullptr || p->IS_STATIC)
+        if (p == nullptr || p->IS_SHARED)
             return;
-        if (p->WORKING_COUNT > 0)
-            throw InvalidOperationException(L"演算に使用中の数値オブジェクトを解放しようとしました。");
         CleanUpNumber(tc, p);
         FillNumberHeader(p);
         __DeallocateHeap(p);
@@ -448,6 +443,39 @@ namespace Palmtree::Math::Core::Internal
         }
         // このルートには到達しないはず
         return (0);
+    }
+
+    RANDOM_STATE_OBJECT* __AllocateRandomStateObjectFromUInt32(ThreadContext& tc, _UINT32_T seed)
+    {
+        ResourceHolderUINT root(tc);
+        RANDOM_STATE_OBJECT* p = (RANDOM_STATE_OBJECT*)root.AllocateRandomStateObjectStructure();
+        p->SIGNATURE1 = PMC_SIGNATURE;
+        p->SIGNATURE2 = PMC_SFMT_SIGNATURE;
+        p->STATE = root.AllocateInternalRandomStateObject(seed);
+        root.UnlinkRandomStateObject(p);
+        return (p);
+    }
+
+    RANDOM_STATE_OBJECT* __AllocateRandomStateObjectFromUInt32Array(ThreadContext& tc, _UINT32_T* init_key, _UINT32_T key_length)
+    {
+        ResourceHolderUINT root(tc);
+        RANDOM_STATE_OBJECT* p = (RANDOM_STATE_OBJECT*)root.AllocateRandomStateObjectStructure();
+        p->SIGNATURE1 = PMC_SIGNATURE;
+        p->SIGNATURE2 = PMC_SFMT_SIGNATURE;
+        p->STATE = root.AllocateInternalRandomStateObject(init_key, key_length);
+        root.UnlinkRandomStateObject(p);
+        return (p);
+    }
+
+    void __DeallocateRandomStateObject(ThreadContext& tc, RANDOM_STATE_OBJECT* p)
+    {
+        if (p->STATE != nullptr)
+        {
+            PMCSFMT_DeallocateRandomState(p->STATE);
+            tc.DecrementTypeAAllocationCount();
+        }
+        delete p;
+        tc.DecrementTypeAAllocationCount();
     }
 
     void CommitNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p) noexcept(false)
@@ -502,7 +530,7 @@ namespace Palmtree::Math::Core::Internal
             __CheckBlock(p->BLOCK, p->BLOCK_COUNT, p->BLOCK_CHECK_CODE);
         if (p->IS_COMMITTED)
         {
-            if (p->IS_ZERO && !p->IS_STATIC)
+            if (p->IS_ZERO && !p->IS_SHARED)
                 throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;CheckNumber;1");
             if (!p->IS_ZERO)
             {
@@ -516,9 +544,15 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    void __CheckNumber(RANDOM_STATE_OBJECT* p) noexcept(false)
+    {
+        if (p->SIGNATURE1 != PMC_SIGNATURE || p->SIGNATURE2 != PMC_SFMT_SIGNATURE)
+            throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;CheckNumber;1");
+    }
+
     NUMBER_OBJECT_UINT* DuplicateNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* x)
     {
-        if (x->IS_STATIC)
+        if (x->IS_SHARED)
             return (x);
         if (x->IS_ZERO)
             return (&number_object_uint_zero);
@@ -544,9 +578,35 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    PMC_HANDLE_SFMT PMC_AllocateRandomStateObjectFromUInt32(ThreadContext & tc, _UINT32_T seed)
+    {
+        ResourceHolderUINT root(tc);
+
+        RANDOM_STATE_OBJECT* nstate = root.AllocateRandomStateObject(seed);
+        PMC_HANDLE_SFMT state = GET_STATE_HANDLE(nstate);
+        root.UnlinkRandomStateObject(nstate);
+        return (state);
+    }
+
+    PMC_HANDLE_SFMT PMC_AllocateRandomStateObjectFromUInt32Array(ThreadContext& tc, _UINT32_T* init_key, _UINT32_T key_length)
+    {
+        ResourceHolderUINT root(tc);
+
+        RANDOM_STATE_OBJECT* nstate = root.AllocateRandomStateObject(init_key, key_length);
+        PMC_HANDLE_SFMT state = GET_STATE_HANDLE(nstate);
+        root.UnlinkRandomStateObject(nstate);
+        return (state);
+    }
+
     void PMC_CheckHandle_UX(PMC_HANDLE_UINT p)
     {
         NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
+        __CheckNumber(np);
+    }
+
+    void PMC_CheckHandle_SFMT(PMC_HANDLE_SFMT p)
+    {
+        RANDOM_STATE_OBJECT* np = GET_STATE_OBJECT(p, L"p");
         __CheckNumber(np);
     }
 
@@ -554,6 +614,12 @@ namespace Palmtree::Math::Core::Internal
     {
         NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
         __DeallocateNumber(tc, np);
+    }
+
+    void PMC_Dispose_SFMT(ThreadContext& tc, PMC_HANDLE_SFMT p)
+    {
+        RANDOM_STATE_OBJECT* np = GET_STATE_OBJECT(p, L"p");
+        __DeallocateRandomStateObject(tc, np);
     }
 
     PMC_HANDLE_UINT PMC_Clone_UX(ThreadContext& tc, PMC_HANDLE_UINT x) noexcept(false)
@@ -574,25 +640,15 @@ namespace Palmtree::Math::Core::Internal
     _INT32_T PMC_GetBufferCount_UX(PMC_HANDLE_UINT p) noexcept(false)
     {
         NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
-        if (np->IS_STATIC)
+        if (np->IS_SHARED)
             return (0);
         return (1 + (np->BLOCK != nullptr ? 1 : 0));
     }
 
-    void PMC_UseObject_UX(PMC_HANDLE_UINT x) noexcept(false)
+    _INT32_T PMC_GetBufferCount_SFMT(PMC_HANDLE_SFMT p) noexcept(false)
     {
-        if (x == nullptr)
-            return;
-        NUMBER_OBJECT_UINT* nx = GET_NUMBER_OBJECT(x, L"x");
-        ++nx->WORKING_COUNT;
-    }
-
-    void PMC_UnuseObject_UX(PMC_HANDLE_UINT x) noexcept(false)
-    {
-        if (x == nullptr)
-            return;
-        NUMBER_OBJECT_UINT* nx = GET_NUMBER_OBJECT(x, L"x");
-        --nx->WORKING_COUNT;
+        RANDOM_STATE_OBJECT* np = GET_STATE_OBJECT(p, L"p");
+        return (1 + (np->STATE != nullptr ? 1 : 0));
     }
 #pragma endregion
 

@@ -68,23 +68,31 @@
     <OutDir>$(SolutionDir)vs_dist\$(Configuration)\x86\</OutDir>
     <IntDir>vs_build\x86_$(Configuration)\</IntDir>
     <LibraryPath>C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\lib\x86;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10586.0\um\x86;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(SolutionDir)Palmtree.Math.Core.Sfmt;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)vs_dist\$(Configuration)\x86\</OutDir>
     <IntDir>vs_build\x86_$(Configuration)\</IntDir>
     <LibraryPath>C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\lib\x86;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10586.0\um\x86;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(SolutionDir)Palmtree.Math.Core.Sfmt;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)vs_dist\$(Configuration)\x64\</OutDir>
     <IntDir>vs_build\x64_$(Configuration)\</IntDir>
     <LibraryPath>C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\lib\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10586.0\um\x64;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(SolutionDir)Palmtree.Math.Core.Sfmt;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)vs_dist\$(Configuration)\x64\</OutDir>
     <IntDir>vs_build\x64_$(Configuration)\</IntDir>
     <LibraryPath>C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\lib\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.10586.0\um\x64;$(LibraryPath)</LibraryPath>
     <LinkIncremental>false</LinkIncremental>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(SolutionDir)Palmtree.Math.Core.Sfmt;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -225,6 +233,7 @@
     <ClCompile Include="pmc_lock.cpp" />
     <ClCompile Include="pmc_atoi.cpp" />
     <ClCompile Include="pmc_parserstate.cpp" />
+    <ClCompile Include="pmc_random.cpp" />
     <ClCompile Include="pmc_resourceholder.cpp" />
     <ClCompile Include="pmc_resourceholder_uint.cpp" />
     <ClCompile Include="pmc_round.cpp" />
@@ -276,6 +285,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Palmtree.Math.Core.Uint.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Palmtree.Math.Core.Sfmt\Palmtree.Math.Core.Sfmt.vcxproj">
+      <Project>{da673f87-1621-4c7b-ba62-d0e1c85694e3}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

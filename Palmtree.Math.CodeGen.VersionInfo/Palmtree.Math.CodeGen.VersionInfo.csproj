@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D6482B0D-A40E-4515-B86D-4AAF4123E3C7}</ProjectGuid>
+    <ProjectGuid>{53C620BA-A831-4F40-B24E-D973059807D9}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Palmtree.Math.Core.Uint.CodeGen.VersionInfo</RootNamespace>
-    <AssemblyName>Palmtree.Math.Core.Uint.CodeGen.VersionInfo</AssemblyName>
+    <RootNamespace>Palmtree.Math.CodeGen.VersionInfo</RootNamespace>
+    <AssemblyName>Palmtree.Math.CodeGen.VersionInfo</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -22,7 +22,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,7 +31,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

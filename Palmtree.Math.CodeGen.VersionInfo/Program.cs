@@ -24,26 +24,32 @@
 
 
 using System;
-using System.Reflection;
 using System.IO;
-using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Palmtree.Math.Core.Uint.CodeGen.VersionInfo
+namespace Palmtree.Math.CodeGen.VersionInfo
 {
     class Program
     {
         static void Main(string[] args)
         {
+            var root_dir = new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.Parent.Parent.Parent;
 
-            var source_file = new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.Parent.Parent.Parent.GetChildDirectory("Palmtree.Math.Core.Uint").GetChildFile("Palmtree.Math.Core.Uint.rc");
-            if (!source_file.Exists)
-                return;
-            var target_file = new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.Parent.Parent.Parent.GetChildDirectory("Palmtree.Math.Core.Uint").GetChildFile("version.rc");
-            if (!target_file.Exists)
-                return;
+            var query = root_dir.EnumerateDirectories("*", SearchOption.TopDirectoryOnly)
+                .SelectMany(dir => dir.EnumerateFiles("*.rc", SearchOption.TopDirectoryOnly), (dir, rcfile) => new { dir, rcfile })
+                .Select(item => new { item.dir, item.rcfile, newrcfile = new FileInfo(Path.Combine(item.dir.FullName, "version.rc")), dir_name = item.dir.Name, file_name = Path.GetFileNameWithoutExtension(item.rcfile.Name) })
+                .Where(item => item.dir_name == item.file_name);
+            foreach (var item in query)
+            {
+                Console.WriteLine(string.Format("{0}, {1}", item.rcfile.FullName, item.newrcfile.FullName));
+                CopyVersionResource(item.rcfile, item.newrcfile);
+            }
+        }
+
+        private static void CopyVersionResource(FileInfo source_file, FileInfo target_file)
+        {
             using (var reader = new StreamReader(source_file.FullName, Encoding.Unicode))
             using (var writer = new StreamWriter(target_file.FullName, false, Encoding.UTF8))
             {
@@ -62,7 +68,7 @@ namespace Palmtree.Math.Core.Uint.CodeGen.VersionInfo
                         text1 == "//" &&
                         text2 == "// Version")
                         break;
-                    text0  = text1;
+                    text0 = text1;
                     text1 = text2;
                     text2 = null;
                 }

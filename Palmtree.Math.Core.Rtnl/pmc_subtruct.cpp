@@ -246,8 +246,6 @@ namespace Palmtree::Math::Core::Internal
                 root.HookNumber(denominator);
             }
             NUMBER_OBJECT_RTNL* nw = root.AllocateNumber(numerator, denominator);
-            root.UnlinkNumber(numerator);
-            root.UnlinkNumber(denominator);
             root.UnlinkNumber(nw);
             return (nw);
         }

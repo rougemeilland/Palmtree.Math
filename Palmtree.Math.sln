@@ -9,8 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Palmtree.Math.Core.Uint", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Palmtree.Math.Core.Uint.CodeGen.InlineFunc", "Palmtree.Math.Core.Uint.CodeGen.InlineFunc\Palmtree.Math.Core.Uint.CodeGen.InlineFunc.csproj", "{9A77A2BE-3529-45BA-A471-3294827AA7E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Palmtree.Math.Core.Uint.CodeGen.VersionInfo", "Palmtree.Math.Core.Uint.CodeGen.VersionInfo\Palmtree.Math.Core.Uint.CodeGen.VersionInfo.csproj", "{D6482B0D-A40E-4515-B86D-4AAF4123E3C7}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Palmtree.Math.Core.Uint.Launcher", "Palmtree.Math.Core.Uint.Launcher\Palmtree.Math.Core.Uint.Launcher.vcxproj", "{C28F3978-46C2-44AC-AC9E-8997A9462A11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Palmtree.Math.Experiment", "Palmtree.Math.Experiment\Palmtree.Math.Experiment.csproj", "{8A0F0C31-51F4-4292-AA04-FAF1A20590B7}"
@@ -21,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Palmtree.Math.CsLauncher", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Palmtree.Math.Core.Sint", "Palmtree.Math.Core.Sint\Palmtree.Math.Core.Sint.vcxproj", "{E4F0558E-65D9-41C9-BA28-3B23DD21E18D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Palmtree.Math.Core.Sint.CodeGen.VersionInfo", "Palmtree.Math.Core.Sint.CodeGen.VersionInfo\Palmtree.Math.Core.Sint.CodeGen.VersionInfo.csproj", "{E4459AF9-2C82-4ABE-B1D9-ABE622E49515}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Palmtree.Math.Core.Sint.Launcher", "Palmtree.Math.Core.Sint.Launcher\Palmtree.Math.Core.Sint.Launcher.vcxproj", "{55531C44-BC49-4170-8377-452E525644D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Palmtree.Math.Test", "Palmtree.Math.Test\Palmtree.Math.Test.csproj", "{F1950BCB-3AC3-4442-BBDF-21487CC32044}"
@@ -32,6 +28,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Palmtree.Math.Core.Rtnl", "Palmtree.Math.Core.Rtnl\Palmtree.Math.Core.Rtnl.vcxproj", "{30E309C9-30DA-47DC-920E-4F50488CD798}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Palmtree.Math.Test.CppMultiThread", "Palmtree.Math.Test.CppMultiThread\Palmtree.Math.Test.CppMultiThread.vcxproj", "{DE711819-0177-4746-8F87-5AFE41A2FA56}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Palmtree.Math.Core.Sfmt", "Palmtree.Math.Core.Sfmt\Palmtree.Math.Core.Sfmt.vcxproj", "{DA673F87-1621-4C7B-BA62-D0E1C85694E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Palmtree.Math.CodeGen.VersionInfo", "Palmtree.Math.CodeGen.VersionInfo\Palmtree.Math.CodeGen.VersionInfo.csproj", "{53C620BA-A831-4F40-B24E-D973059807D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,18 +77,6 @@ Global
 		{9A77A2BE-3529-45BA-A471-3294827AA7E0}.Release|x64.Build.0 = Release|Any CPU
 		{9A77A2BE-3529-45BA-A471-3294827AA7E0}.Release|x86.ActiveCfg = Release|Any CPU
 		{9A77A2BE-3529-45BA-A471-3294827AA7E0}.Release|x86.Build.0 = Release|Any CPU
-		{D6482B0D-A40E-4515-B86D-4AAF4123E3C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6482B0D-A40E-4515-B86D-4AAF4123E3C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6482B0D-A40E-4515-B86D-4AAF4123E3C7}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D6482B0D-A40E-4515-B86D-4AAF4123E3C7}.Debug|x64.Build.0 = Debug|Any CPU
-		{D6482B0D-A40E-4515-B86D-4AAF4123E3C7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D6482B0D-A40E-4515-B86D-4AAF4123E3C7}.Debug|x86.Build.0 = Debug|Any CPU
-		{D6482B0D-A40E-4515-B86D-4AAF4123E3C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6482B0D-A40E-4515-B86D-4AAF4123E3C7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D6482B0D-A40E-4515-B86D-4AAF4123E3C7}.Release|x64.ActiveCfg = Release|Any CPU
-		{D6482B0D-A40E-4515-B86D-4AAF4123E3C7}.Release|x64.Build.0 = Release|Any CPU
-		{D6482B0D-A40E-4515-B86D-4AAF4123E3C7}.Release|x86.ActiveCfg = Release|Any CPU
-		{D6482B0D-A40E-4515-B86D-4AAF4123E3C7}.Release|x86.Build.0 = Release|Any CPU
 		{C28F3978-46C2-44AC-AC9E-8997A9462A11}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{C28F3978-46C2-44AC-AC9E-8997A9462A11}.Debug|x64.ActiveCfg = Debug|x64
 		{C28F3978-46C2-44AC-AC9E-8997A9462A11}.Debug|x64.Build.0 = Debug|x64
@@ -143,18 +131,6 @@ Global
 		{E4F0558E-65D9-41C9-BA28-3B23DD21E18D}.Release|x64.Build.0 = Release|x64
 		{E4F0558E-65D9-41C9-BA28-3B23DD21E18D}.Release|x86.ActiveCfg = Release|Win32
 		{E4F0558E-65D9-41C9-BA28-3B23DD21E18D}.Release|x86.Build.0 = Release|Win32
-		{E4459AF9-2C82-4ABE-B1D9-ABE622E49515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E4459AF9-2C82-4ABE-B1D9-ABE622E49515}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E4459AF9-2C82-4ABE-B1D9-ABE622E49515}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E4459AF9-2C82-4ABE-B1D9-ABE622E49515}.Debug|x64.Build.0 = Debug|Any CPU
-		{E4459AF9-2C82-4ABE-B1D9-ABE622E49515}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E4459AF9-2C82-4ABE-B1D9-ABE622E49515}.Debug|x86.Build.0 = Debug|Any CPU
-		{E4459AF9-2C82-4ABE-B1D9-ABE622E49515}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E4459AF9-2C82-4ABE-B1D9-ABE622E49515}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E4459AF9-2C82-4ABE-B1D9-ABE622E49515}.Release|x64.ActiveCfg = Release|Any CPU
-		{E4459AF9-2C82-4ABE-B1D9-ABE622E49515}.Release|x64.Build.0 = Release|Any CPU
-		{E4459AF9-2C82-4ABE-B1D9-ABE622E49515}.Release|x86.ActiveCfg = Release|Any CPU
-		{E4459AF9-2C82-4ABE-B1D9-ABE622E49515}.Release|x86.Build.0 = Release|Any CPU
 		{55531C44-BC49-4170-8377-452E525644D4}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{55531C44-BC49-4170-8377-452E525644D4}.Debug|x64.ActiveCfg = Debug|x64
 		{55531C44-BC49-4170-8377-452E525644D4}.Debug|x64.Build.0 = Debug|x64
@@ -209,6 +185,28 @@ Global
 		{DE711819-0177-4746-8F87-5AFE41A2FA56}.Release|x64.Build.0 = Release|x64
 		{DE711819-0177-4746-8F87-5AFE41A2FA56}.Release|x86.ActiveCfg = Release|Win32
 		{DE711819-0177-4746-8F87-5AFE41A2FA56}.Release|x86.Build.0 = Release|Win32
+		{DA673F87-1621-4C7B-BA62-D0E1C85694E3}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{DA673F87-1621-4C7B-BA62-D0E1C85694E3}.Debug|x64.ActiveCfg = Debug|x64
+		{DA673F87-1621-4C7B-BA62-D0E1C85694E3}.Debug|x64.Build.0 = Debug|x64
+		{DA673F87-1621-4C7B-BA62-D0E1C85694E3}.Debug|x86.ActiveCfg = Debug|Win32
+		{DA673F87-1621-4C7B-BA62-D0E1C85694E3}.Debug|x86.Build.0 = Debug|Win32
+		{DA673F87-1621-4C7B-BA62-D0E1C85694E3}.Release|Any CPU.ActiveCfg = Release|Win32
+		{DA673F87-1621-4C7B-BA62-D0E1C85694E3}.Release|x64.ActiveCfg = Release|x64
+		{DA673F87-1621-4C7B-BA62-D0E1C85694E3}.Release|x64.Build.0 = Release|x64
+		{DA673F87-1621-4C7B-BA62-D0E1C85694E3}.Release|x86.ActiveCfg = Release|Win32
+		{DA673F87-1621-4C7B-BA62-D0E1C85694E3}.Release|x86.Build.0 = Release|Win32
+		{53C620BA-A831-4F40-B24E-D973059807D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53C620BA-A831-4F40-B24E-D973059807D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53C620BA-A831-4F40-B24E-D973059807D9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{53C620BA-A831-4F40-B24E-D973059807D9}.Debug|x64.Build.0 = Debug|Any CPU
+		{53C620BA-A831-4F40-B24E-D973059807D9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{53C620BA-A831-4F40-B24E-D973059807D9}.Debug|x86.Build.0 = Debug|Any CPU
+		{53C620BA-A831-4F40-B24E-D973059807D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53C620BA-A831-4F40-B24E-D973059807D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53C620BA-A831-4F40-B24E-D973059807D9}.Release|x64.ActiveCfg = Release|Any CPU
+		{53C620BA-A831-4F40-B24E-D973059807D9}.Release|x64.Build.0 = Release|Any CPU
+		{53C620BA-A831-4F40-B24E-D973059807D9}.Release|x86.ActiveCfg = Release|Any CPU
+		{53C620BA-A831-4F40-B24E-D973059807D9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
