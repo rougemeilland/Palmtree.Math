@@ -21,7 +21,8 @@ Palmtree 数値計算ライブラリ v1.1.0
 * 等値/大小比較
 * ビット単位の論理積/論理和/排他的論理和
 * ビットシフト(右/左)
-* `ToString`/`Parse`/`TryParse`
+* `ToString`(対応書式: C, D, E, F, G, N, P, X, カスタム)
+* `Parse`/`TryParse`
 * 他のデータ型との相互型変換
   * `Int32`/`UInt32`/`Int64`/`UInt64`
   * `Double`/`Decimal`
@@ -47,7 +48,8 @@ Palmtree 数値計算ライブラリ v1.1.0
 * 絶対値/符号反転
 * 指定桁での丸め(`Floor`/`Ceiling`/切り捨て/切り上げ/四捨五入/五捨五超入/偶数への丸め)
 * 等値/大小比較
-* `ToString`/`Parse`/`TryParse`
+* `ToString`(対応書式: C, E, F, G, N, P, カスタム)
+* `Parse`/`TryParse`
 * 他のデータ型との相互型変換
   * Int32/UInt32/Int64/UInt64
   * Double/Decimal
