@@ -153,7 +153,7 @@ namespace Palmtree::Math::Core::Internal
 
     extern RANDOM_STATE_OBJECT* __AllocateRandomStateObjectFromUInt32(ThreadContext& tc, _UINT32_T seed);
 
-    extern RANDOM_STATE_OBJECT* __AllocateRandomStateObjectFromUInt32Array(ThreadContext& tc, _UINT32_T* init_key, _UINT32_T key_length);
+    extern RANDOM_STATE_OBJECT* __AllocateRandomStateObjectFromUInt32Array(ThreadContext& tc, _UINT32_T* init_key, _INT32_T key_length);
 
     extern void __DeallocateRandomStateObject(ThreadContext& tc, RANDOM_STATE_OBJECT* p);
 
@@ -477,14 +477,15 @@ namespace Palmtree::Math::Core::Internal
     extern size_t PMC_ToString_R(ThreadContext& tc, SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, const wchar_t* format, const PMC_NUMBER_FORMAT_INFO* format_option, wchar_t* buffer, size_t buffer_size);
 
     extern PMC_HANDLE_SFMT PMC_AllocateRandomStateObjectFromUInt32(ThreadContext& tc, _UINT32_T seed);
-    extern PMC_HANDLE_SFMT PMC_AllocateRandomStateObjectFromUInt32Array(ThreadContext& tc, _UINT32_T* init_key, _UINT32_T key_length);
+    extern PMC_HANDLE_SFMT PMC_AllocateRandomStateObjectFromUInt32Array(ThreadContext& tc, _UINT32_T* init_key, _INT32_T key_length);
     extern void PMC_CheckHandle_SFMT(PMC_HANDLE_SFMT p);
     extern void PMC_Dispose_SFMT(ThreadContext& tc, PMC_HANDLE_SFMT p);
     extern _INT32_T PMC_GetBufferCount_SFMT(PMC_HANDLE_SFMT p) noexcept(false);
     extern _UINT32_T PMC_GenerateUInt32RandomValue(PMC_HANDLE_SFMT handle);
     extern _UINT64_T PMC_GenerateUInt64RandomValue(PMC_HANDLE_SFMT handle);
     extern double PMC_GenerateDoubleRandomValue(PMC_HANDLE_SFMT handle);
-    extern PMC_HANDLE_UINT PMC_GenerateUBigIntRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count);
+    extern PMC_HANDLE_UINT PMC_GenerateUBigIntRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _INT32_T bit_count);
+    extern PMC_HANDLE_UINT PMC_GenerateUBigIntCryptoRandomValue(ThreadContext& tc, _BYTE_T* data, _INT32_T bit_count);
 
     extern void PMC_InternalTest();
 #pragma endregion

@@ -1010,10 +1010,21 @@ namespace Palmtree.Math.Core
 
         #region GenerateRationalRandomValue 関数
 
-        public RationalHandle GenerateRationalRandomValue(RandomStateObjectHandle x, UInt32 bit_count)
+        public RationalHandle GenerateRationalRandomValue(RandomStateObjectHandle x, Int32 bit_count)
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_GenerateRationalRandomValue(x.NativeHandle, bit_count, out r));
+            return (new RationalHandle(r));
+        }
+
+        #endregion
+
+        #region GenerateRationalCryptoRandomValue 関数
+
+        public RationalHandle GenerateRationalCryptoRandomValue(byte[] data, Int32 bit_count)
+        {
+            IntPtr r;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_GenerateRationalCryptoRandomValue(data, bit_count, out r));
             return (new RationalHandle(r));
         }
 

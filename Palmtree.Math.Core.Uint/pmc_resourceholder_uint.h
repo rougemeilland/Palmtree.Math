@@ -149,13 +149,13 @@ namespace Palmtree::Math::Core::Internal
 
         RANDOM_STATE_OBJECT* AllocateRandomStateObjectStructure();
         RANDOM_STATE_OBJECT* AllocateRandomStateObject(_UINT32_T seed);
-        RANDOM_STATE_OBJECT* AllocateRandomStateObject(_UINT32_T* init_key, _UINT32_T key_length);
+        RANDOM_STATE_OBJECT* AllocateRandomStateObject(_UINT32_T* init_key, _INT32_T key_length);
         void DeallocateRandomStateObject(RANDOM_STATE_OBJECT* buffer);
         void HookRandomStateObject(RANDOM_STATE_OBJECT* buffer);
         void UnlinkRandomStateObject(RANDOM_STATE_OBJECT* buffer);
 
         void* AllocateInternalRandomStateObject(_UINT32_T seed);
-        void* AllocateInternalRandomStateObject(_UINT32_T* init_key, _UINT32_T key_length);
+        void* AllocateInternalRandomStateObject(_UINT32_T* init_key, _INT32_T key_length);
         void DeallocateInternalRandomStateObject(void* buffer);
         void HookInternalRandomStateObject(void* buffer);
         void UnlinkInternalRandomStateObject(void* buffer);

@@ -190,7 +190,8 @@ namespace Palmtree::Math::Core::Internal
 
         _INT32_T FloorLog10(ThreadContext& tc, PMC_HANDLE_RTNL v);
 
-        PMC_HANDLE_RTNL GenerateRationalRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count);
+        PMC_HANDLE_RTNL GenerateRationalRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _INT32_T bit_count);
+        PMC_HANDLE_RTNL GenerateRationalCryptoRandomValue(ThreadContext& tc, _BYTE_T* data, _INT32_T bit_count);
     };
 
 }

@@ -48,11 +48,11 @@ namespace Palmtree::Math::Core::Internal
         return (PMCSFMT_GenerateDoubleRandomValue(state->STATE));
     }
 
-    PMC_HANDLE_UINT PMC_GenerateUBigIntRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count)
+    PMC_HANDLE_UINT PMC_GenerateUBigIntRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _INT32_T bit_count)
     {
         RANDOM_STATE_OBJECT* state = GET_STATE_OBJECT(handle, L"handle");
-        if (bit_count > 0x7fffffff)
-            throw ArgumentOutOfRangeException(L"bit_count が大きすぎます。");
+        if (bit_count <= 0)
+            throw ArgumentOutOfRangeException(L"bit_count は正の整数である必要があります。");
 
         ResourceHolderUINT root(tc);
 
@@ -67,7 +67,40 @@ namespace Palmtree::Math::Core::Internal
 #error unknown platform
 #endif
         }
-        if (nr->BLOCK_COUNT*__UNIT_TYPE_BIT_COUNT > bit_count)
+        if (nr->BLOCK_COUNT*__UNIT_TYPE_BIT_COUNT > (__UNIT_TYPE)bit_count)
+        {
+            int shift_count = (int)(__UNIT_TYPE_BIT_COUNT - nr->BLOCK_COUNT*__UNIT_TYPE_BIT_COUNT + bit_count);
+            __UNIT_TYPE mask = (1UL << shift_count) - 1;
+            nr->BLOCK[nr->BLOCK_COUNT - 1] &= mask;
+        }
+        root.CheckNumber(nr);
+        CommitNumber(tc, nr);
+        if (nr->IS_ZERO)
+        {
+            root.DeallocateNumber(nr);
+            nr = &number_object_uint_zero;
+            PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
+            return (r);
+        }
+        else
+        {
+            PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
+            root.UnlinkNumber(nr);
+            return (r);
+        }
+    }
+
+    PMC_HANDLE_UINT PMC_GenerateUBigIntCryptoRandomValue(ThreadContext& tc, _BYTE_T* data, _INT32_T bit_count)
+    {
+        if (bit_count <= 0)
+            throw ArgumentOutOfRangeException(L"bit_count は正の整数である必要があります。");
+
+        ResourceHolderUINT root(tc);
+
+        NUMBER_OBJECT_UINT* nr = root.AllocateNumber(bit_count);
+        size_t byte_count = (bit_count + 7) / 8;
+        _COPY_MEMORY_BYTE(nr->BLOCK, data, byte_count);
+        if (nr->BLOCK_COUNT*__UNIT_TYPE_BIT_COUNT > (__UNIT_TYPE)bit_count)
         {
             int shift_count = (int)(__UNIT_TYPE_BIT_COUNT - nr->BLOCK_COUNT*__UNIT_TYPE_BIT_COUNT + bit_count);
             __UNIT_TYPE mask = (1UL << shift_count) - 1;

@@ -313,7 +313,8 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_SINT Invert(ThreadContext& tc, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* r_denominator) noexcept(false);
         PMC_HANDLE_SINT Invert(ThreadContext& tc, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT* r_denominator) noexcept(false);
 
-        PMC_HANDLE_SINT GenerateBigIntRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count);
+        PMC_HANDLE_SINT GenerateBigIntRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _INT32_T bit_count);
+        PMC_HANDLE_SINT GenerateBigIntCryptoRandomValue(ThreadContext& tc, _BYTE_T* data, _INT32_T bit_count);
     };
 
 }

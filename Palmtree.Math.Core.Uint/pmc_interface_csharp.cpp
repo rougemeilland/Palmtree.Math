@@ -1903,7 +1903,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __stdcall PMCCS_AllocateRandomStateObjectFromUInt32Array(_UINT32_T* init_key, _UINT32_T key_length, PMC_HANDLE_SFMT* value)
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_AllocateRandomStateObjectFromUInt32Array(_UINT32_T* init_key, _INT32_T key_length, PMC_HANDLE_SFMT* value)
     {
         if (value == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2010,7 +2010,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __stdcall PMCCS_GenerateUBigIntRandomValue(PMC_HANDLE_SFMT handle, _UINT32_T bit_count, PMC_HANDLE_UINT* value)
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_GenerateUBigIntRandomValue(PMC_HANDLE_SFMT handle, _INT32_T bit_count, PMC_HANDLE_UINT* value)
     {
         if (value == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
@@ -2018,6 +2018,29 @@ namespace Palmtree::Math::Core::Internal
         try
         {
             *value = PMC_GenerateUBigIntRandomValue(tc, handle, bit_count);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*value), true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_GenerateUBigIntCryptoRandomValue(_BYTE_T* data, _INT32_T bit_count, PMC_HANDLE_UINT* value)
+    {
+        if (value == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            *value = PMC_GenerateUBigIntCryptoRandomValue(tc, data, bit_count);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*value), true);
             return (PMC_STATUS_OK);
         }

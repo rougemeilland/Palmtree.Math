@@ -4598,29 +4598,6 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __stdcall PMCCS_GenerateBigIntRandomValue(PMC_HANDLE_SFMT handle, _UINT32_T bit_count, PMC_HANDLE_SINT* value)
-    {
-        if (value == nullptr)
-            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
-        ThreadContext tc;
-        try
-        {
-            *value = PMC_GenerateBigIntRandomValue(tc, handle, bit_count);
-            tc.VerifyAllocationCount(PMC_GetBufferCount_X(*value), true);
-            return (PMC_STATUS_OK);
-        }
-        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
-        {
-            return (ex.GetStatusCode());
-        }
-        catch (const Palmtree::Math::Core::Internal::Exception& ex)
-        {
-            if (!tc.VerifyAllocationCount(0, false))
-                return (PMC_STATUS_BAD_BUFFER);
-            return (ex.GetStatusCode());
-        }
-    }
-
 }
 
 

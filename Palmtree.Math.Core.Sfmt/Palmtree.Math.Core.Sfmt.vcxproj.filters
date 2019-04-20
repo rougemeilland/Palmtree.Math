@@ -93,7 +93,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="SFMT-LICENSE.txt">
+    <Text Include="LICENSE.txt">
       <Filter>SFMT</Filter>
     </Text>
   </ItemGroup>

@@ -2,11 +2,11 @@
 <package >
   <metadata>
     <id>PalmtreeSoftware.Palmtree.Math</id>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <title>Palmtree 数値演算ライブラリ</title>
     <authors>Palmtree Software</authors>
     <owners>Palmtree Software</owners>
-    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <licenseUrl>https://github.com/rougemeilland/Palmtree.Math/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/rougemeilland/Palmtree.Math</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Palmtree 数値演算ライブラリ</description>
@@ -31,8 +31,6 @@
 
     <file src="dist\Release\x64\libgcc_s_seh-1.dll" target="build\x64" />
     <file src="dist\Release\x64\libstdc++-6.dll" target="build\x64" />
-
-    <file src="Palmtree.Math.Core.Sfmt\SFMT-LICENSE.txt" target="content\SFMT" />
 
   </files>
 </package>

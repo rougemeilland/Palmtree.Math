@@ -101,3 +101,4 @@ EXPORTS
 	PMCCS_GenerateUInt64RandomValue
 	PMCCS_GenerateDoubleRandomValue
 	PMCCS_GenerateUBigIntRandomValue
+	PMCCS_GenerateUBigIntCryptoRandomValue

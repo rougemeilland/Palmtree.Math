@@ -663,9 +663,14 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_FloorLog10_R(tc, v));
     }
 
-    PMC_HANDLE_RTNL PMC_RTNL_CppInterface::GenerateRationalRandomValue(ThreadContext & tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count)
+    PMC_HANDLE_RTNL PMC_RTNL_CppInterface::GenerateRationalRandomValue(ThreadContext & tc, PMC_HANDLE_SFMT handle, _INT32_T bit_count)
     {
         return (PMC_GenerateRationalRandomValue(tc, handle, bit_count));
+    }
+
+    PMC_HANDLE_RTNL PMC_RTNL_CppInterface::GenerateRationalCryptoRandomValue(ThreadContext & tc, _BYTE_T * data, _INT32_T bit_count)
+    {
+        return (PMC_GenerateRationalCryptoRandomValue(tc, data, bit_count));
     }
 
 }

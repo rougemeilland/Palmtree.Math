@@ -359,7 +359,8 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_SINT PMC_Invert_UX(ThreadContext& tc, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* r_denominator) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Invert_R(ThreadContext& tc, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT* r_denominator) noexcept(false);
 
-    extern PMC_HANDLE_SINT PMC_GenerateBigIntRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count);
+    extern PMC_HANDLE_SINT PMC_GenerateBigIntRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _INT32_T bit_count);
+    extern PMC_HANDLE_SINT PMC_GenerateBigIntCryptoRandomValue(ThreadContext& tc, _BYTE_T* data, _INT32_T bit_count);
 #pragma endregion
 
 #pragma region インライン関数の定義

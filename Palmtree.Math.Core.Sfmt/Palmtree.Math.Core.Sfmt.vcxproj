@@ -23,7 +23,7 @@
     <ClCompile Include="SFMT.c" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="SFMT-LICENSE.txt">
+    <Text Include="LICENSE.txt">
       <DeploymentContent>true</DeploymentContent>
     </Text>
   </ItemGroup>

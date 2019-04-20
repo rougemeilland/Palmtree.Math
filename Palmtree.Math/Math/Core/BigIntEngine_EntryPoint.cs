@@ -1478,17 +1478,6 @@ namespace Palmtree.Math.Core
 
         #endregion
 
-        #region GenerateBigIntRandomValue 関数
-
-        public BigIntHandle GenerateBigIntRandomValue(RandomStateObjectHandle x, UInt32 bit_count)
-        {
-            IntPtr r;
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_GenerateBigIntRandomValue(x.NativeHandle, bit_count, out r));
-            return (new BigIntHandle(r));
-        }
-
-        #endregion
-
         #endregion
     }
 }

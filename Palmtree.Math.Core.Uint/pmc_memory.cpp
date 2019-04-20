@@ -456,7 +456,7 @@ namespace Palmtree::Math::Core::Internal
         return (p);
     }
 
-    RANDOM_STATE_OBJECT* __AllocateRandomStateObjectFromUInt32Array(ThreadContext& tc, _UINT32_T* init_key, _UINT32_T key_length)
+    RANDOM_STATE_OBJECT* __AllocateRandomStateObjectFromUInt32Array(ThreadContext& tc, _UINT32_T* init_key, _INT32_T key_length)
     {
         ResourceHolderUINT root(tc);
         RANDOM_STATE_OBJECT* p = (RANDOM_STATE_OBJECT*)root.AllocateRandomStateObjectStructure();
@@ -588,7 +588,7 @@ namespace Palmtree::Math::Core::Internal
         return (state);
     }
 
-    PMC_HANDLE_SFMT PMC_AllocateRandomStateObjectFromUInt32Array(ThreadContext& tc, _UINT32_T* init_key, _UINT32_T key_length)
+    PMC_HANDLE_SFMT PMC_AllocateRandomStateObjectFromUInt32Array(ThreadContext& tc, _UINT32_T* init_key, _INT32_T key_length)
     {
         ResourceHolderUINT root(tc);
 

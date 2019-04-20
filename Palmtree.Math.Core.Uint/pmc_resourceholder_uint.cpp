@@ -390,7 +390,7 @@ namespace Palmtree::Math::Core::Internal
         return (buffer);
     }
 
-    RANDOM_STATE_OBJECT * ResourceHolderUINT::AllocateRandomStateObject(_UINT32_T * init_key, _UINT32_T key_length)
+    RANDOM_STATE_OBJECT * ResourceHolderUINT::AllocateRandomStateObject(_UINT32_T * init_key, _INT32_T key_length)
     {
         Lock lock_obj;
         RANDOM_STATE_OBJECT* buffer = __AllocateRandomStateObjectFromUInt32Array(_tc, init_key, key_length);
@@ -447,7 +447,7 @@ namespace Palmtree::Math::Core::Internal
         return (buffer);
     }
 
-    void * ResourceHolderUINT::AllocateInternalRandomStateObject(_UINT32_T * init_key, _UINT32_T key_length)
+    void * ResourceHolderUINT::AllocateInternalRandomStateObject(_UINT32_T * init_key, _INT32_T key_length)
     {
         Lock lock_obj;
         void* buffer = PMCSFMT_AllocateRandomStateFromUInt32Array(init_key, key_length);

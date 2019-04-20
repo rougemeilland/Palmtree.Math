@@ -30,14 +30,40 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    PMC_HANDLE_RTNL PMC_GenerateRationalRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count)
+    PMC_HANDLE_RTNL PMC_GenerateRationalRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _INT32_T bit_count)
     {
-        if (bit_count > 0x7fffffff)
-            throw ArgumentOutOfRangeException(L"bit_count が大きすぎます。");
+        if (bit_count <= 0)
+            throw ArgumentOutOfRangeException(L"bit_count は正の整数である必要があります。");
 
         ResourceHolderRTNL root(tc);
 
         PMC_HANDLE_SINT r_numerator = ep_sint.GenerateBigIntRandomValue(tc, handle, bit_count);
+        root.HookNumber(r_numerator);
+        PMC_HANDLE_UINT r_denominator = ep_uint.LeftShift(tc, number_handle_uint_one, bit_count);
+        root.HookNumber(r_denominator);
+        PMC_HANDLE_UINT gcd = ep_sint.GreatestCommonDivisor(tc, r_numerator, r_denominator);
+        root.HookNumber(gcd);
+        if (!gcd->FLAGS.IS_ONE)
+        {
+            r_numerator = ep_sint.DivideExactly(tc, r_numerator, gcd);
+            root.HookNumber(r_numerator);
+            r_denominator = ep_uint.DivideExactly(tc, r_denominator, gcd);
+            root.HookNumber(r_denominator);
+        }
+        NUMBER_OBJECT_RTNL* nr = root.AllocateNumber(r_numerator, r_denominator);
+        PMC_HANDLE_RTNL r = GET_NUMBER_HANDLE(nr);
+        root.UnlinkNumber(nr);
+        return (r);
+    }
+
+    PMC_HANDLE_RTNL PMC_GenerateRationalCryptoRandomValue(ThreadContext& tc, _BYTE_T* data, _INT32_T bit_count)
+    {
+        if (bit_count <= 0)
+            throw ArgumentOutOfRangeException(L"bit_count は正の整数である必要があります。");
+
+        ResourceHolderRTNL root(tc);
+
+        PMC_HANDLE_SINT r_numerator = ep_sint.GenerateBigIntCryptoRandomValue(tc, data, bit_count);
         root.HookNumber(r_numerator);
         PMC_HANDLE_UINT r_denominator = ep_uint.LeftShift(tc, number_handle_uint_one, bit_count);
         root.HookNumber(r_denominator);

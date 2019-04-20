@@ -80,17 +80,12 @@ namespace Palmtree.Math
             return (EngineObject.GenerateUInt64RandomValue(_random_state_object_handle));
         }
 
-        public UBigInt GenerateUBigInt(UInt32 bit_count)
+        public UBigInt GenerateUBigInt(Int32 bit_count)
         {
             return (new UBigInt(EngineObject.GenerateUBigIntRandomValue(_random_state_object_handle, bit_count)));
         }
 
-        public BigInt GenerateBigInt(UInt32 bit_count)
-        {
-            return (new BigInt(BigInt.EngineObject.GenerateBigIntRandomValue(_random_state_object_handle, bit_count)));
-        }
-
-        public Rational GenerateRational(UInt32 bit_count)
+        public Rational GenerateRational(Int32 bit_count)
         {
             return (new Rational(Rational.EngineObject.GenerateRationalRandomValue(_random_state_object_handle, bit_count)));
         }

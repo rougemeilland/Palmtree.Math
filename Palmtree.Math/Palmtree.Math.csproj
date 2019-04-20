@@ -125,6 +125,7 @@
     <Compile Include="Math\UBigInt_String.cs" />
     <Compile Include="Math\UBigInt_Subtruct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Cryptography\CryptoRandom.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

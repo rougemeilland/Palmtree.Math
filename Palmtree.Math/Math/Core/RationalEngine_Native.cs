@@ -451,7 +451,10 @@ namespace Palmtree.Math.Core
         private static extern UInt32 PMCCS_RTNL_Initialize();
 
         [DllImport("Palmtree.Math.Core.Rtnl.dll")]
-        private static extern UInt32 PMCCS_GenerateRationalRandomValue(IntPtr handle, UInt32 bit_count, out IntPtr value);
+        private static extern UInt32 PMCCS_GenerateRationalRandomValue(IntPtr handle, Int32 bit_count, out IntPtr value);
+
+        [DllImport("Palmtree.Math.Core.Rtnl.dll")]
+        private static extern UInt32 PMCCS_GenerateRationalCryptoRandomValue(byte[] data, Int32 bit_count, out IntPtr value);
 
         #endregion
     }

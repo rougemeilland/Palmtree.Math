@@ -724,7 +724,7 @@ namespace Palmtree.Math.Core
         public RandomStateObjectHandle AllocateRandomStateObject(UInt32[] init_key)
         {
             IntPtr r;
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_AllocateRandomStateObjectFromUInt32Array(init_key, (UInt32)init_key.Length, out r));
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_AllocateRandomStateObjectFromUInt32Array(init_key, init_key.Length, out r));
             return (new RandomStateObjectHandle(r));
         }
 
@@ -749,10 +749,17 @@ namespace Palmtree.Math.Core
             return (r);
         }
 
-        public UBigIntHandle GenerateUBigIntRandomValue(RandomStateObjectHandle x, UInt32 bit_count)
+        public UBigIntHandle GenerateUBigIntRandomValue(RandomStateObjectHandle x, Int32 bit_count)
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_GenerateUBigIntRandomValue(x.NativeHandle, bit_count, out r));
+            return (new UBigIntHandle(r));
+        }
+
+        public UBigIntHandle GenerateUBigIntCryptoRandomValue(byte[] data, Int32 bit_count)
+        {
+            IntPtr r;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_GenerateUBigIntCryptoRandomValue(data, bit_count, out r));
             return (new UBigIntHandle(r));
         }
 

@@ -597,7 +597,7 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_AllocateRandomStateObjectFromUInt32(tc, seed));
     }
 
-    PMC_HANDLE_SFMT PMC_UINT_CppInterface::AllocateRandomStateObject(ThreadContext & tc, _UINT32_T * init_key, _UINT32_T key_length)
+    PMC_HANDLE_SFMT PMC_UINT_CppInterface::AllocateRandomStateObject(ThreadContext & tc, _UINT32_T * init_key, _INT32_T key_length)
     {
         return (PMC_AllocateRandomStateObjectFromUInt32Array(tc, init_key, key_length));
     }
@@ -627,9 +627,14 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_GenerateDoubleRandomValue(handle));
     }
 
-    PMC_HANDLE_UINT PMC_UINT_CppInterface::GenerateUBigIntRandomValue(ThreadContext & tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count)
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::GenerateUBigIntRandomValue(ThreadContext & tc, PMC_HANDLE_SFMT handle, _INT32_T bit_count)
     {
         return (PMC_GenerateUBigIntRandomValue(tc, handle, bit_count));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::GenerateUBigIntCryptoRandomValue(ThreadContext & tc, _BYTE_T * data, _INT32_T bit_count)
+    {
+        return (PMC_GenerateUBigIntCryptoRandomValue(tc, data, bit_count));
     }
 
     void PMC_UINT_CppInterface::InternalTest()

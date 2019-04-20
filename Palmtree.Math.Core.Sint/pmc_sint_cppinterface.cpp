@@ -1189,9 +1189,14 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_Invert_R(tc, v_numerator, v_denominator, r_denominator));
     }
 
-    PMC_HANDLE_SINT PMC_SINT_CppInterface::GenerateBigIntRandomValue(ThreadContext & tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count)
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::GenerateBigIntRandomValue(ThreadContext & tc, PMC_HANDLE_SFMT handle, _INT32_T bit_count)
     {
         return (PMC_GenerateBigIntRandomValue(tc, handle, bit_count));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::GenerateBigIntCryptoRandomValue(ThreadContext & tc, _BYTE_T * data, _INT32_T bit_count)
+    {
+        return (PMC_GenerateBigIntCryptoRandomValue(tc, data, bit_count));
     }
 
 }

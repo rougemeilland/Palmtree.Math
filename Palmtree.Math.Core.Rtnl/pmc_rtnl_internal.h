@@ -289,7 +289,8 @@ namespace Palmtree::Math::Core::Internal
 
     extern _INT32_T PMC_FloorLog10_R(ThreadContext& tc, PMC_HANDLE_RTNL v);
 
-    extern PMC_HANDLE_RTNL PMC_GenerateRationalRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _UINT32_T bit_count);
+    extern PMC_HANDLE_RTNL PMC_GenerateRationalRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _INT32_T bit_count);
+    extern PMC_HANDLE_RTNL PMC_GenerateRationalCryptoRandomValue(ThreadContext& tc, _BYTE_T* data, _INT32_T bit_count);
 #pragma endregion
 
 #pragma region インライン関数の定義
