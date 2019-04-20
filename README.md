@@ -83,11 +83,15 @@ SFMTを使用して乱数を生成することができるクラスです。
 ### v1.0.0 ###
 * 正式公開
 
+プロジェクトURL
+--------------
+https://github.com/rougemeilland/Palmtree.Math
+
 著作権
 ------
 &copy; 2018-2019 Palmtree Software
 
-##### SFMT.c, SFMT-*.h: #####
+##### SFMTのソースファイル(SFMT.c, SFMT-*.h): #####
 Copyright (C) 2006, 2007 Mutsuo Saito, Makoto Matsumoto and Hiroshima  University.  
 Copyright (c) 2012 Mutsuo Saito, Makoto Matsumoto, Hiroshima University  and The University of Tokyo.  
 All rights reserved.
