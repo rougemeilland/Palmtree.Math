@@ -22,15 +22,9 @@
  * THE SOFTWARE.
  */
 
- 
+
 using System;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 
 
 // 演算子のオーバーロードに関するガイドライン：
@@ -44,7 +38,6 @@ namespace Palmtree.Math
         #region プライベートフィールド
 
         private static object _lock_obj;
-        //private static Regex _tostring_standard_format_pattern;
         private Core.RationalHandle _handle;
 
         #endregion
@@ -63,7 +56,6 @@ namespace Palmtree.Math
             MinusOne = new Rational(EngineObject.MinusOne);
             One = new Rational(EngineObject.One);
             Zero = new Rational(EngineObject.Zero);
-            //_tostring_standard_format_pattern = new Regex("^|[cefgnp]|[cdefgnprx][0-9]|[cdefgnprx][0-9][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
 
         internal Rational(Core.RationalHandle handle)

@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("多倍長整数演算ライブラリ マネージDLL")]
-[assembly: AssemblyDescription("多倍長整数演算ライブラリ マネージDLL")]
+[assembly: AssemblyTitle("Palmtree 数値演算ライブラリ マネージドモジュール")]
+[assembly: AssemblyDescription("Palmtree 数値演算ライブラリ マネージドモジュール")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Palmtree Software")]
-[assembly: AssemblyProduct("多倍長整数演算ライブラリ")]
+[assembly: AssemblyProduct("Palmtree 数値演算ライブラリ")]
 [assembly: AssemblyCopyright("© 2018-2019 Palmtree Software")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -33,6 +33,6 @@ using System.Runtime.InteropServices;
 // すべての値を指定するか、次を使用してビルド番号とリビジョン番号を既定に設定できます
 // 以下のように '*' を使用します:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.2.0.0")]
+[assembly: AssemblyFileVersion("1.2.0.0")]
 [assembly: NeutralResourcesLanguage("ja")]
