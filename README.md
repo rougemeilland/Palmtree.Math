@@ -1,4 +1,4 @@
-Palmtree 数値計算ライブラリ v1.1.0
+Palmtree 数値計算ライブラリ v1.2.0
 =================================
 .NET Framework で数値計算を行うためのライブラリです。
 長精度の整数や有理数の演算に特化していますので、機能的にはあまり多くありません。  
@@ -12,7 +12,7 @@ Palmtree 数値計算ライブラリ v1.1.0
 ---------------
 インストールのために約6Mバイトのディスク空き容量が必要です。
 
-データ型/クラスについて
+主なデータ型/クラスについて
 ---------------------
 ### `Palmtree.Math.UBigInt`型(符号なし長精度整数) ###
 論理的には2の32乗-1ビットの長さまでの整数を扱うことができます。以下の演算が可能です。
@@ -75,6 +75,10 @@ SFMTを使用して乱数を生成することができるクラスです。
  
 更新履歴
 --------
+### v1.2.0 ###
+* `Palmtree.Math.UBigIntComparer`クラス(`IEqualityComparer<UBigInt>`および`IComparer<UBigInt>`の実装)の追加
+* `Palmtree.Math.BigIntComparer`クラス(`IEqualityComparer<BigInt>`および`IComparer<BigInt>`の実装)の追加
+* `Palmtree.Math.RationalComparer`クラス(`IEqualityComparer<Rational>`および`IComparer<Rational>`の実装)の追加
 ### v1.1.0 ###
 * `Palmtree.Security.Cryptography.CryptoRandom`クラスの追加
 * `Palmtree.Math.Random`クラスにおいて、BigInt型の乱数を生成する機能を削除
