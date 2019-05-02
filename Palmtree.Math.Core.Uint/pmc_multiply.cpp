@@ -26,406 +26,39 @@
 #include <windows.h>
 #include "pmc_resourceholder_uint.h"
 #include "pmc_uint_internal.h"
+#include "pmc_multiply_classic.h"
+#include "pmc_multiply_karatsuba.h"
+#include "pmc_multiply_schonHagestrassen.h"
 #include "pmc_inline_func.h"
 
 
 namespace Palmtree::Math::Core::Internal
 {
 
-    static void(*fp_Multiply_UX_1W)(__UNIT_TYPE* u, __UNIT_TYPE u_count, __UNIT_TYPE v, __UNIT_TYPE* w);
-    static void(*fp_Multiply_UX_2W)(__UNIT_TYPE* u, __UNIT_TYPE u_count, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, __UNIT_TYPE* w);
-    static void(*fp_Multiply_UX_UX)(__UNIT_TYPE* u, __UNIT_TYPE u_count, __UNIT_TYPE* v, __UNIT_TYPE v_count, __UNIT_TYPE* w);
+    static ClassicMultiplicationEngine* _engine_classic;
+    static KaratsubaMultiplicationEngine* _engine_karatsuba;
+    static SchonHageStrassenMultiplicationEngine* _engine_schonHagestrassen;
 
-    void Multiply_UX_UX_Imp(__UNIT_TYPE* u, __UNIT_TYPE u_count, __UNIT_TYPE* v, __UNIT_TYPE v_count, __UNIT_TYPE* w)
+    void Multiply_UX_UX_Imp(PMC_MULTIPLICATION_METHOD_CODE method, __UNIT_TYPE* u, __UNIT_TYPE u_count, __UNIT_TYPE* v, __UNIT_TYPE v_count, __UNIT_TYPE* w)
     {
-        (*fp_Multiply_UX_UX)(u, u_count, v, v_count, w);
-    }
-
-    __inline static __UNIT_TYPE _MULTIPLY_DIGIT_UNIT(__UNIT_TYPE k, __UNIT_TYPE* up, __UNIT_TYPE v, __UNIT_TYPE* wp)
-    {
-        __UNIT_TYPE t_hi;
-        __UNIT_TYPE t_lo;
-        t_lo = _MULTIPLY_UNIT(*up, v, &t_hi);
-        _ADD_UNIT(_ADD_UNIT(0, t_lo, *wp, &t_lo), t_hi, 0, &t_hi);
-        _ADD_UNIT(_ADD_UNIT(0, t_lo, k, &t_lo), t_hi, 0, &t_hi);
-        *wp = t_lo;
-        k = t_hi;
-        return (k);
-    }
-
-    __inline static __UNIT_TYPE _MULTIPLYX_DIGIT_UNIT(__UNIT_TYPE k, __UNIT_TYPE* up, __UNIT_TYPE v, __UNIT_TYPE* wp)
-    {
-        __UNIT_TYPE t_hi;
-        __UNIT_TYPE t_lo;
-        t_lo = _MULTIPLYX_UNIT(*up, v, &t_hi);
-        _ADDX_UNIT(_ADDX_UNIT(0, t_lo, *wp, &t_lo), t_hi, 0, &t_hi);
-        _ADDX_UNIT(_ADDX_UNIT(0, t_lo, k, &t_lo), t_hi, 0, &t_hi);
-        *wp = t_lo;
-        k = t_hi;
-        return (k);
-    }
-
-    __inline static void Multiply_WORD_using_MUL_ADC(__UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE v, __UNIT_TYPE* wp)
-    {
-        __UNIT_TYPE k = 0;
-        __UNIT_TYPE count = u_count >> 5;
-
-        while (count != 0)
+        switch (method)
         {
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[0], v, &wp[0]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[1], v, &wp[1]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[2], v, &wp[2]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[3], v, &wp[3]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[4], v, &wp[4]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[5], v, &wp[5]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[6], v, &wp[6]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[7], v, &wp[7]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[8], v, &wp[8]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[9], v, &wp[9]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[10], v, &wp[10]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[11], v, &wp[11]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[12], v, &wp[12]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[13], v, &wp[13]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[14], v, &wp[14]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[15], v, &wp[15]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[16], v, &wp[16]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[17], v, &wp[17]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[18], v, &wp[18]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[19], v, &wp[19]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[20], v, &wp[20]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[21], v, &wp[21]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[22], v, &wp[22]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[23], v, &wp[23]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[24], v, &wp[24]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[25], v, &wp[25]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[26], v, &wp[26]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[27], v, &wp[27]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[28], v, &wp[28]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[29], v, &wp[29]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[30], v, &wp[30]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[31], v, &wp[31]);
-            up += 32;
-            wp += 32;
-            --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                AddToMULTI32Counter(32);
+        case PMC_MULTIPLICATION_METHOD_AUTO:
+            if (false)
+                return (_engine_schonHagestrassen->Multiply_UX_UX(u, u_count, v, v_count, w));
+            else if (false)
+                return (_engine_karatsuba->Multiply_UX_UX(u, u_count, v, v_count, w));
             else
-                AddToMULTI64Counter(32);
-#endif
+                return (_engine_classic->Multiply_UX_UX(u, u_count, v, v_count, w));
+        case PMC_MULTIPLICATION_METHOD_CLASSIC:
+            return (_engine_schonHagestrassen->Multiply_UX_UX(u, u_count, v, v_count, w));
+        case PMC_MULTIPLICATION_METHOD_KARATSUBA:
+            return (_engine_karatsuba->Multiply_UX_UX(u, u_count, v, v_count, w));
+        case PMC_MULTIPLICATION_METHOD_SCHONSTRASSEN:
+            return (_engine_classic->Multiply_UX_UX(u, u_count, v, v_count, w));
+        default:
+            throw ArgumentException(L"methodが不正です。");
         }
-
-        if (u_count & 0x10)
-        {
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[0], v, &wp[0]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[1], v, &wp[1]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[2], v, &wp[2]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[3], v, &wp[3]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[4], v, &wp[4]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[5], v, &wp[5]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[6], v, &wp[6]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[7], v, &wp[7]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[8], v, &wp[8]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[9], v, &wp[9]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[10], v, &wp[10]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[11], v, &wp[11]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[12], v, &wp[12]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[13], v, &wp[13]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[14], v, &wp[14]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[15], v, &wp[15]);
-            up += 16;
-            wp += 16;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                AddToMULTI32Counter(16);
-            else
-                AddToMULTI64Counter(16);
-#endif
-        }
-
-        if (u_count & 0x8)
-        {
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[0], v, &wp[0]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[1], v, &wp[1]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[2], v, &wp[2]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[3], v, &wp[3]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[4], v, &wp[4]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[5], v, &wp[5]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[6], v, &wp[6]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[7], v, &wp[7]);
-            up += 8;
-            wp += 8;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                AddToMULTI32Counter(8);
-            else
-                AddToMULTI64Counter(8);
-#endif
-        }
-
-        if (u_count & 0x4)
-        {
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[0], v, &wp[0]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[1], v, &wp[1]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[2], v, &wp[2]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[3], v, &wp[3]);
-            up += 4;
-            wp += 4;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                AddToMULTI32Counter(4);
-            else
-                AddToMULTI64Counter(4);
-#endif
-        }
-
-        if (u_count & 0x2)
-        {
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[0], v, &wp[0]);
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[1], v, &wp[1]);
-            up += 2;
-            wp += 2;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                AddToMULTI32Counter(2);
-            else
-                AddToMULTI64Counter(2);
-#endif
-        }
-
-        if (u_count & 0x1)
-        {
-            k = _MULTIPLY_DIGIT_UNIT(k, &up[0], v, &wp[0]);
-            up += 1;
-            wp += 1;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                IncrementMULTI32Counter();
-            else
-                IncrementMULTI64Counter();
-#endif
-        }
-
-        if (k != 0)
-            *wp = k;
-    }
-
-    __inline static void Multiply_WORD_using_MULX_ADCX(__UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE v, __UNIT_TYPE* wp)
-    {
-        __UNIT_TYPE k = 0;
-        __UNIT_TYPE count = u_count >> 5;
-
-        while (count != 0)
-        {
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[0], v, &wp[0]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[1], v, &wp[1]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[2], v, &wp[2]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[3], v, &wp[3]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[4], v, &wp[4]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[5], v, &wp[5]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[6], v, &wp[6]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[7], v, &wp[7]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[8], v, &wp[8]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[9], v, &wp[9]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[10], v, &wp[10]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[11], v, &wp[11]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[12], v, &wp[12]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[13], v, &wp[13]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[14], v, &wp[14]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[15], v, &wp[15]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[16], v, &wp[16]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[17], v, &wp[17]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[18], v, &wp[18]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[19], v, &wp[19]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[20], v, &wp[20]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[21], v, &wp[21]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[22], v, &wp[22]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[23], v, &wp[23]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[24], v, &wp[24]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[25], v, &wp[25]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[26], v, &wp[26]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[27], v, &wp[27]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[28], v, &wp[28]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[29], v, &wp[29]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[30], v, &wp[30]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[31], v, &wp[31]);
-            up += 32;
-            wp += 32;
-            --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                AddToMULTI32Counter(32);
-            else
-                AddToMULTI64Counter(32);
-#endif
-        }
-
-        if (u_count & 0x10)
-        {
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[0], v, &wp[0]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[1], v, &wp[1]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[2], v, &wp[2]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[3], v, &wp[3]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[4], v, &wp[4]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[5], v, &wp[5]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[6], v, &wp[6]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[7], v, &wp[7]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[8], v, &wp[8]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[9], v, &wp[9]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[10], v, &wp[10]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[11], v, &wp[11]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[12], v, &wp[12]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[13], v, &wp[13]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[14], v, &wp[14]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[15], v, &wp[15]);
-            up += 16;
-            wp += 16;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                AddToMULTI32Counter(16);
-            else
-                AddToMULTI64Counter(16);
-#endif
-        }
-
-        if (u_count & 0x8)
-        {
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[0], v, &wp[0]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[1], v, &wp[1]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[2], v, &wp[2]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[3], v, &wp[3]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[4], v, &wp[4]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[5], v, &wp[5]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[6], v, &wp[6]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[7], v, &wp[7]);
-            up += 8;
-            wp += 8;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                AddToMULTI32Counter(8);
-            else
-                AddToMULTI64Counter(8);
-#endif
-        }
-
-        if (u_count & 0x4)
-        {
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[0], v, &wp[0]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[1], v, &wp[1]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[2], v, &wp[2]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[3], v, &wp[3]);
-            up += 4;
-            wp += 4;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                AddToMULTI32Counter(4);
-            else
-                AddToMULTI64Counter(4);
-#endif
-        }
-
-        if (u_count & 0x2)
-        {
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[0], v, &wp[0]);
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[1], v, &wp[1]);
-            up += 2;
-            wp += 2;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                AddToMULTI32Counter(2);
-            else
-                AddToMULTI64Counter(2);
-#endif
-        }
-
-        if (u_count & 0x1)
-        {
-            k = _MULTIPLYX_DIGIT_UNIT(k, &up[0], v, &wp[0]);
-            up += 1;
-            wp += 1;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                IncrementMULTI32Counter();
-            else
-                IncrementMULTI64Counter();
-#endif
-        }
-
-        if (k != 0)
-            *wp = k;
-    }
-
-
-    __inline static void Multiply_UX_1W_using_MUL_ADC(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE v, __UNIT_TYPE* w_buf)
-    {
-        Multiply_WORD_using_MUL_ADC(u_buf, u_count, v, w_buf);
-    }
-
-    __inline static void Multiply_UX_1W_using_MULX_ADCX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE v, __UNIT_TYPE* w_buf)
-    {
-        Multiply_WORD_using_MULX_ADCX(u_buf, u_count, v, w_buf);
-    }
-
-    __inline static void Multiply_UX_2W_using_MUL_ADC(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, __UNIT_TYPE* w_buf)
-    {
-        Multiply_WORD_using_MUL_ADC(u_buf, u_count, v_lo, &w_buf[0]);
-        Multiply_WORD_using_MUL_ADC(u_buf, u_count, v_hi, &w_buf[1]);
-    }
-
-    __inline static void Multiply_UX_2W_using_MULX_ADCX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, __UNIT_TYPE* w_buf)
-    {
-        Multiply_WORD_using_MULX_ADCX(u_buf, u_count, v_lo, &w_buf[0]);
-        Multiply_WORD_using_MULX_ADCX(u_buf, u_count, v_hi, &w_buf[1]);
-    }
-
-    __inline static void Multiply_UX_UX_using_MUL_ADC(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf)
-    {
-        // x のワード長が y のワード長以上であるようにする
-        if (u_count < v_count)
-        {
-            __UNIT_TYPE* t_buf = u_buf;
-            u_buf = v_buf;
-            v_buf = t_buf;
-            __UNIT_TYPE t_count = u_count;
-            u_count = v_count;
-            v_count = t_count;
-        }
-        __UNIT_TYPE* up = u_buf;
-        __UNIT_TYPE* vp = v_buf;
-        __UNIT_TYPE* wp = w_buf;
-
-        do
-        {
-            Multiply_WORD_using_MUL_ADC(up, u_count, *vp, wp);
-            ++vp;
-            ++wp;
-            --v_count;
-        } while (v_count != 0);
-    }
-
-    __inline static void Multiply_UX_UX_using_MULX_ADCX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf)
-    {
-        // x のワード長が y のワード長以上であるようにする
-        if (u_count < v_count)
-        {
-            __UNIT_TYPE* t_buf = u_buf;
-            u_buf = v_buf;
-            v_buf = t_buf;
-            __UNIT_TYPE t_count = u_count;
-            u_count = v_count;
-            v_count = t_count;
-        }
-        __UNIT_TYPE* up = u_buf;
-        __UNIT_TYPE* vp = v_buf;
-        __UNIT_TYPE* wp = w_buf;
-
-        do
-        {
-            Multiply_WORD_using_MULX_ADCX(up, u_count, *vp, wp);
-            ++vp;
-            ++wp;
-            --v_count;
-        } while (v_count != 0);
     }
 
     NUMBER_OBJECT_UINT* PMC_Multiply_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT32_T v)
@@ -483,7 +116,7 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v);
                 __UNIT_TYPE w_bit_count = u_bit_count + v_bit_count;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
-                (*fp_Multiply_UX_1W)(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK);
+                _engine_classic->Multiply_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK);
                 root.CheckNumber(w);
                 CommitNumber(tc, w);
                 root.UnlinkNumber(w);
@@ -588,7 +221,7 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE v_bit_count = sizeof(v_lo) * 8 - _LZCNT_ALT_32(v_lo);
                         __UNIT_TYPE w_bit_count = u_bit_count + v_bit_count;
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
-                        (*fp_Multiply_UX_1W)(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, w->BLOCK);
+                        _engine_classic->Multiply_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, w->BLOCK);
                         root.CheckNumber(w);
                         CommitNumber(tc, w);
                         root.UnlinkNumber(w);
@@ -601,7 +234,7 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v_hi);
                         __UNIT_TYPE w_bit_count = u_bit_count + v_bit_count;
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
-                        (*fp_Multiply_UX_2W)(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK);
+                        _engine_classic->Multiply_UX_2W(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK);
                         root.CheckNumber(w);
                         CommitNumber(tc, w);
                         root.UnlinkNumber(w);
@@ -616,7 +249,7 @@ namespace Palmtree::Math::Core::Internal
                     __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)v);
                     __UNIT_TYPE w_bit_count = u_bit_count + v_bit_count;
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
-                    (*fp_Multiply_UX_1W)(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, w->BLOCK);
+                    _engine_classic->Multiply_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, w->BLOCK);
                     root.CheckNumber(w);
                     CommitNumber(tc, w);
                     root.UnlinkNumber(w);
@@ -658,7 +291,7 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    NUMBER_OBJECT_UINT* PMC_Multiply_UX_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
+    NUMBER_OBJECT_UINT* PMC_Multiply_UX_UX_Imp(ThreadContext& tc, PMC_MULTIPLICATION_METHOD_CODE method, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->IS_ZERO)
         {
@@ -713,7 +346,7 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
                 __UNIT_TYPE w_bit_count = u_bit_count + v_bit_count;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
-                (*fp_Multiply_UX_UX)(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK);
+                Multiply_UX_UX_Imp(method, u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK);
                 root.CheckNumber(w);
                 CommitNumber(tc, w);
                 root.UnlinkNumber(w);
@@ -723,12 +356,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    PMC_HANDLE_UINT PMC_Multiply_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
+    PMC_HANDLE_UINT PMC_Multiply_UX_UX(ThreadContext& tc, PMC_MULTIPLICATION_METHOD_CODE method, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
     {
         NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
         NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
         ResourceHolderUINT root(tc);
-        NUMBER_OBJECT_UINT* nw = PMC_Multiply_UX_UX_Imp(tc, nu, nv);
+        NUMBER_OBJECT_UINT* nw = PMC_Multiply_UX_UX_Imp(tc, method, nu, nv);
         root.HookNumber(nw);
         PMC_HANDLE_UINT w = GET_NUMBER_HANDLE(nw);
         root.UnlinkNumber(nw);
@@ -737,18 +370,10 @@ namespace Palmtree::Math::Core::Internal
 
     PMC_STATUS_CODE Initialize_Multiply(PROCESSOR_FEATURES* feature)
     {
-        if (feature->PROCESSOR_FEATURE_ADX && feature->PROCESSOR_FEATURE_BMI2)
-        {
-            fp_Multiply_UX_1W = Multiply_UX_1W_using_MULX_ADCX;
-            fp_Multiply_UX_2W = Multiply_UX_2W_using_MULX_ADCX;
-            fp_Multiply_UX_UX = Multiply_UX_UX_using_MULX_ADCX;
-        }
-        else
-        {
-            fp_Multiply_UX_1W = Multiply_UX_1W_using_MUL_ADC;
-            fp_Multiply_UX_2W = Multiply_UX_2W_using_MUL_ADC;
-            fp_Multiply_UX_UX = Multiply_UX_UX_using_MUL_ADC;
-        }
+        _engine_classic = new ClassicMultiplicationEngine();
+        _engine_karatsuba = new KaratsubaMultiplicationEngine();
+        _engine_schonHagestrassen = new SchonHageStrassenMultiplicationEngine();
+
         return (PMC_STATUS_OK);
     }
 

@@ -865,7 +865,7 @@ namespace Palmtree::Math::Core::Internal
         ThreadContext tc;
         try
         {
-            *w = PMC_Multiply_UX_UX(tc, u, v);
+            *w = PMC_Multiply_UX_UX(tc, PMC_MULTIPLICATION_METHOD_AUTO, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
         }

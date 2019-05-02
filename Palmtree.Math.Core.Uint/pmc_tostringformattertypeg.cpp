@@ -69,14 +69,14 @@ namespace Palmtree::Math::Core::Internal
             NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, *exp);
             root.HookNumber(factor);
             *r_numerator = x_numerator;
-            *r_denominator = PMC_Multiply_UX_UX_Imp(_tc, x_denominator, factor);
+            *r_denominator = PMC_Multiply_UX_UX_Imp(_tc, PMC_MULTIPLICATION_METHOD_AUTO, x_denominator, factor);
             root.HookNumber(*r_denominator);
         }
         else
         {
             NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, -*exp);
             root.HookNumber(factor);
-            *r_numerator = PMC_Multiply_UX_UX_Imp(_tc, x_numerator, factor);
+            *r_numerator = PMC_Multiply_UX_UX_Imp(_tc, PMC_MULTIPLICATION_METHOD_AUTO, x_numerator, factor);
             root.HookNumber(*r_numerator);
             *r_denominator = x_denominator;
         }
@@ -110,7 +110,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, *exp);
                 root.HookNumber(factor);
-                *r_numerator = PMC_Multiply_UX_UX_Imp(_tc, *r_numerator, factor);
+                *r_numerator = PMC_Multiply_UX_UX_Imp(_tc, PMC_MULTIPLICATION_METHOD_AUTO, *r_numerator, factor);
                 root.HookNumber(*r_numerator);
                 *exp = 0;
             }
@@ -118,7 +118,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, -*exp);
                 root.HookNumber(factor);
-                *r_denominator = PMC_Multiply_UX_UX_Imp(_tc, *r_denominator, factor);
+                *r_denominator = PMC_Multiply_UX_UX_Imp(_tc, PMC_MULTIPLICATION_METHOD_AUTO, *r_denominator, factor);
                 root.HookNumber(*r_denominator);
                 *exp = 0;
             }

@@ -59,7 +59,7 @@ namespace Palmtree::Math::Core::Internal
             _INT32_T result_value = (_INT32_T)floor(diff * log10_2);
             NUMBER_OBJECT_UINT* ten_n = PMC_Pow10_UI_Imp(tc, result_value);
             root.HookNumber(ten_n);
-            NUMBER_OBJECT_UINT* v_denominator_times_ten_n = PMC_Multiply_UX_UX_Imp(tc, v_denominator, ten_n);
+            NUMBER_OBJECT_UINT* v_denominator_times_ten_n = PMC_Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, v_denominator, ten_n);
             root.HookNumber(v_denominator_times_ten_n);
             while (true)
             {
@@ -86,7 +86,7 @@ namespace Palmtree::Math::Core::Internal
             _INT32_T result_value = -(_INT32_T)floor(diff * log10_2);
             NUMBER_OBJECT_UINT* ten_n = PMC_Pow10_UI_Imp(tc, -result_value);
             root.HookNumber(ten_n);
-            NUMBER_OBJECT_UINT* v_numerator_times_ten_n = PMC_Multiply_UX_UX_Imp(tc, v_numerator, ten_n);
+            NUMBER_OBJECT_UINT* v_numerator_times_ten_n = PMC_Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, v_numerator, ten_n);
             root.HookNumber(v_numerator_times_ten_n);
             while (true)
             {

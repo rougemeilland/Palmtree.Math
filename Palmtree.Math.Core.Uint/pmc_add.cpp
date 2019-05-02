@@ -32,8 +32,6 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    static void (*fp_Add_Imp)(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf, __UNIT_TYPE w_count);
-
     static void DoCarry(char c, __UNIT_TYPE* u_ptr, __UNIT_TYPE u_count, __UNIT_TYPE* w_ptr, __UNIT_TYPE w_count)
     {
         // 繰り上がりを続く限り行う
@@ -212,83 +210,6 @@ namespace Palmtree::Math::Core::Internal
         // 未処理の桁が 1 ワード以上あるなら 1 ワード加算を行う。
         if (v_count & 0x1)
             c = _ADD_UNIT(c, *up++, *vp++, wp++);
-
-        // 残りの桁の繰り上がりを計算し、復帰する。
-        DoCarry(c, up, u_count - v_count, wp, w_count - v_count);
-    }
-
-    static void Add_Imp_using_ADCX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf, __UNIT_TYPE w_count)
-    {
-        // x のワード長が y のワード長以上であるようにする
-        if (u_count < v_count)
-        {
-            __UNIT_TYPE* t_buf = u_buf;
-            u_buf = v_buf;
-            v_buf = t_buf;
-            __UNIT_TYPE t_count = u_count;
-            u_count = v_count;
-            v_count = t_count;
-        }
-        __UNIT_TYPE* up = u_buf;
-        __UNIT_TYPE* vp = v_buf;
-        __UNIT_TYPE* wp = w_buf;
-        char c = 0;
-
-        // まず 32 ワードずつ加算をする。
-        __UNIT_TYPE count = v_count >> 5;
-        while (count != 0)
-        {
-            c = _ADD_32WORDS_ADCX(c, up, vp, wp);
-            up += 32;
-            vp += 32;
-            wp += 32;
-            --count;
-        }
-        // この時点で未処理の桁は 32 ワード未満のはず
-
-        // 未処理の桁が 16 ワード以上あるなら 16 ワード加算を行う。
-        if (v_count & 0x10)
-        {
-            c = _ADD_16WORDS_ADCX(c, up, vp, wp);
-            up += 16;
-            vp += 16;
-            wp += 16;
-        }
-        // この時点で未処理の桁は 16 ワード未満のはず
-
-        // 未処理の桁が 8 ワード以上あるなら 8 ワード加算を行う。
-        if (v_count & 0x8)
-        {
-            c = _ADD_8WORDS_ADCX(c, up, vp, wp);
-            up += 8;
-            vp += 8;
-            wp += 8;
-        }
-        // この時点で未処理の桁は 8 ワード未満のはず
-
-        // 未処理の桁が 4 ワード以上あるなら 4 ワード加算を行う。
-        if (v_count & 0x4)
-        {
-            c = _ADD_4WORDS_ADCX(c, up, vp, wp);
-            up += 4;
-            vp += 4;
-            wp += 4;
-        }
-        // この時点で未処理の桁は 4 ワード未満のはず
-
-        // 未処理の桁が 2 ワード以上あるなら 2 ワード加算を行う。
-        if (v_count & 0x2)
-        {
-            c = _ADD_2WORDS_ADCX(c, up, vp, wp);
-            up += 2;
-            vp += 2;
-            wp += 2;
-        }
-        // この時点で未処理の桁は 2 ワード未満のはず
-
-        // 未処理の桁が 1 ワード以上あるなら 1 ワード加算を行う。
-        if (v_count & 0x1)
-            c = _ADDX_UNIT(c, *up++, *vp++, wp++);
 
         // 残りの桁の繰り上がりを計算し、復帰する。
         DoCarry(c, up, u_count - v_count, wp, w_count - v_count);
@@ -558,7 +479,7 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
                 __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
-                (*fp_Add_Imp)(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
+                Add_Imp_using_ADC(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
                 root.CheckNumber(w);
                 CommitNumber(tc, w);
                 root.UnlinkNumber(w);
@@ -581,7 +502,6 @@ namespace Palmtree::Math::Core::Internal
 
     PMC_STATUS_CODE Initialize_Add(PROCESSOR_FEATURES* feature)
     {
-        fp_Add_Imp = feature->PROCESSOR_FEATURE_ADX ? Add_Imp_using_ADCX : Add_Imp_using_ADC;
         return (PMC_STATUS_OK);
     }
 

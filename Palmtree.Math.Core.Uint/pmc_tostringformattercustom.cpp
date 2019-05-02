@@ -536,14 +536,14 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         {
             NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, e);
             root.HookNumber(factor);
-            *r_numerator = PMC_Multiply_UX_UX_Imp(_tc, *r_numerator, factor);
+            *r_numerator = PMC_Multiply_UX_UX_Imp(_tc, PMC_MULTIPLICATION_METHOD_AUTO, *r_numerator, factor);
             root.HookNumber(*r_numerator);
         }
         else if (e < 0)
         {
             NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(_tc, -e);
             root.HookNumber(factor);
-            *r_denominator = PMC_Multiply_UX_UX_Imp(_tc, *r_denominator, factor);
+            *r_denominator = PMC_Multiply_UX_UX_Imp(_tc, PMC_MULTIPLICATION_METHOD_AUTO, *r_denominator, factor);
             root.HookNumber(*r_denominator);
         }
         else

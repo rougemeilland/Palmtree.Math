@@ -49,7 +49,7 @@ namespace Palmtree::Math::Core::Internal
         {
             // u を自乗して w に格納する
             _ZERO_MEMORY_UNIT(w_ptr, u_count * 2);
-            Multiply_UX_UX_Imp(u_ptr, u_count, u_ptr, u_count, w_ptr);
+            Multiply_UX_UX_Imp(PMC_MULTIPLICATION_METHOD_AUTO, u_ptr, u_count, u_ptr, u_count, w_ptr);
             u_count *= 2;
             if (w_ptr[u_count - 1] == 0)
                 --u_count;
@@ -59,7 +59,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // bit が立っていたら u = w * v とする
                 _ZERO_MEMORY_UNIT(u_ptr, u_count + v_count);
-                Multiply_UX_UX_Imp(w_ptr, u_count, v_ptr, v_count, u_ptr);
+                Multiply_UX_UX_Imp(PMC_MULTIPLICATION_METHOD_AUTO, w_ptr, u_count, v_ptr, v_count, u_ptr);
                 u_count += v_count;
                 if (u_ptr[u_count - 1] == 0)
                     --u_count;

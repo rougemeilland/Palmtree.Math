@@ -269,7 +269,12 @@ namespace Palmtree::Math::Core::Internal
 
     PMC_HANDLE_UINT PMC_UINT_CppInterface::Multiply(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
     {
-        return (PMC_Multiply_UX_UX(tc, u, v));
+        return (PMC_Multiply_UX_UX(tc, PMC_MULTIPLICATION_METHOD_AUTO, u, v));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::Multiply(ThreadContext & tc, PMC_MULTIPLICATION_METHOD_CODE method, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
+    {
+        return (PMC_Multiply_UX_UX(tc, method, u, v));
     }
 
     _UINT32_T PMC_UINT_CppInterface::DivRem(_UINT32_T u, PMC_HANDLE_UINT v, _UINT32_T * q) noexcept(false)

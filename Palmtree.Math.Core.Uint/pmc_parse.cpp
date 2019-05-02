@@ -153,14 +153,14 @@ namespace Palmtree::Math::Core::Internal
                     // 指数が正の場合
 
                     // 整数部と小数部を加算した分子と分母を求める
-                    NUMBER_OBJECT_UINT* n = PMC_Multiply_UX_UX_Imp(tc, t_int_part, t_frac_part_denominator);
+                    NUMBER_OBJECT_UINT* n = PMC_Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, t_int_part, t_frac_part_denominator);
                     root.HookNumber(n);
                     n = PMC_Add_UX_UX_Imp(tc, n, t_frac_part_numerator);
                     root.HookNumber(n);
                     NUMBER_OBJECT_UINT* d = t_frac_part_denominator;
 
                     // 分子に指数を反映させる
-                    n = PMC_Multiply_UX_UX_Imp(tc, n, exponent_factor);
+                    n = PMC_Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, n, exponent_factor);
                     root.HookNumber(n);
 
                     // 再び整数部と小数部に分ける
@@ -174,14 +174,14 @@ namespace Palmtree::Math::Core::Internal
                     // 指数が負の場合
 
                     // 整数部と小数部を加算した分子と分母を求める
-                    NUMBER_OBJECT_UINT* n = PMC_Multiply_UX_UX_Imp(tc, t_int_part, t_frac_part_denominator);
+                    NUMBER_OBJECT_UINT* n = PMC_Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, t_int_part, t_frac_part_denominator);
                     root.HookNumber(n);
                     n = PMC_Add_UX_UX_Imp(tc, n, t_frac_part_numerator);
                     root.HookNumber(n);
                     NUMBER_OBJECT_UINT* d = t_frac_part_denominator;
 
                     // 分子に指数を反映させる
-                    d = PMC_Multiply_UX_UX_Imp(tc, d, exponent_factor);
+                    d = PMC_Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, d, exponent_factor);
                     root.HookNumber(d);
 
                     // 再び整数部と小数部に分ける
@@ -467,7 +467,7 @@ namespace Palmtree::Math::Core::Internal
         root.HookNumber(o_frac_part_denominator);
 
         // 分子と分母を計算する
-        NUMBER_OBJECT_UINT* no_numerator_abs = PMC_Multiply_UX_UX_Imp(tc, o_int_part, o_frac_part_denominator);
+        NUMBER_OBJECT_UINT* no_numerator_abs = PMC_Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, o_int_part, o_frac_part_denominator);
         root.HookNumber(no_numerator_abs);
         no_numerator_abs = PMC_Add_UX_UX_Imp(tc, no_numerator_abs, o_frac_part_numerator);
         root.HookNumber(no_numerator_abs);

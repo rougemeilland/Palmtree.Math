@@ -113,7 +113,7 @@ namespace Palmtree::Math::Core::Internal
             ResourceHolderUINT root(tc);
             NUMBER_OBJECT_UINT* nr_denominator = PMC_Pow10_UI_Imp(tc, decimals);
             root.HookNumber(nr_denominator);
-            nx_numerator_abs = PMC_Multiply_UX_UX_Imp(tc, nx_numerator_abs, nr_denominator);
+            nx_numerator_abs = PMC_Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, nx_numerator_abs, nr_denominator);
             root.HookNumber(nx_numerator_abs);
             NUMBER_OBJECT_UINT* nr_numerator_abs;
             NUMBER_OBJECT_UINT* frac_part_numerator = PMC_DivRem_UX_UX_Imp(tc, nx_numerator_abs, nx_denominator, &nr_numerator_abs);
@@ -140,14 +140,14 @@ namespace Palmtree::Math::Core::Internal
             ResourceHolderUINT root(tc);
             NUMBER_OBJECT_UINT* factor = PMC_Pow10_UI_Imp(tc, -decimals);
             root.HookNumber(factor);
-            NUMBER_OBJECT_UINT* frac_part_denominator = PMC_Multiply_UX_UX_Imp(tc, nx_denominator, factor);
+            NUMBER_OBJECT_UINT* frac_part_denominator = PMC_Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, nx_denominator, factor);
             root.HookNumber(frac_part_denominator);
             NUMBER_OBJECT_UINT* nr_numerator_abs;
             NUMBER_OBJECT_UINT* frac_part_numerator = PMC_DivRem_UX_UX_Imp(tc, nx_numerator_abs, frac_part_denominator, &nr_numerator_abs);
             root.HookNumber(nr_numerator_abs);
             root.HookNumber(frac_part_numerator);
             nr_numerator_abs = Round_R_Imp(tc, root, mode, x_numerator_sign, nr_numerator_abs, frac_part_numerator, frac_part_denominator);
-            nr_numerator_abs = PMC_Multiply_UX_UX_Imp(tc, nr_numerator_abs, factor);
+            nr_numerator_abs = PMC_Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, nr_numerator_abs, factor);
             root.HookNumber(nr_numerator_abs);
             PMC_HANDLE_UINT r_numerator_abs = GET_NUMBER_HANDLE(nr_numerator_abs);
             *r_denominator = &number_object_uint_one;

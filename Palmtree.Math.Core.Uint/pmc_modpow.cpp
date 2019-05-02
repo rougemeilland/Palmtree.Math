@@ -175,7 +175,7 @@ namespace Palmtree::Math::Core::Internal
 
             // w := u * u を計算する
             root.ClearBlock(w_ptr);
-            Multiply_UX_UX_Imp(u_ptr, u_count, u_ptr, u_count, w_ptr);
+            Multiply_UX_UX_Imp(PMC_MULTIPLICATION_METHOD_AUTO, u_ptr, u_count, u_ptr, u_count, w_ptr);
             root.CheckBlock(work_1_buf);
             root.CheckBlock(work_2_buf);
             SwapPointer(&u_ptr, &w_ptr);
@@ -210,7 +210,7 @@ namespace Palmtree::Math::Core::Internal
 
                 // w := u * v を計算する
                 root.ClearBlock(w_ptr);
-                Multiply_UX_UX_Imp(u_ptr, u_count, v_ptr, v_count, w_ptr);
+                Multiply_UX_UX_Imp(PMC_MULTIPLICATION_METHOD_AUTO, u_ptr, u_count, v_ptr, v_count, w_ptr);
                 root.CheckBlock(work_1_buf);
                 root.CheckBlock(work_2_buf);
                 SwapPointer(&u_ptr, &w_ptr);

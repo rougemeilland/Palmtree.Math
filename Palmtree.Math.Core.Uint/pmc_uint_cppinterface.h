@@ -107,6 +107,7 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_UINT Multiply(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
         PMC_HANDLE_UINT Multiply(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
         PMC_HANDLE_UINT Multiply(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+        PMC_HANDLE_UINT Multiply(ThreadContext& tc, PMC_MULTIPLICATION_METHOD_CODE method, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
         _UINT32_T DivRem(_UINT32_T u, PMC_HANDLE_UINT v, _UINT32_T* q) noexcept(false);
         _UINT64_T DivRem(_UINT64_T u, PMC_HANDLE_UINT v, _UINT64_T* q) noexcept(false);

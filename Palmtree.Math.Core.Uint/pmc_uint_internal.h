@@ -173,7 +173,7 @@ namespace Palmtree::Math::Core::Internal
     extern void Subtruct_Imp(__UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE* vp, __UNIT_TYPE v_count, __UNIT_TYPE* wp, __UNIT_TYPE w_count);
 
     // 多倍長整数の乗算を行う。u と v はどちらも 0 であってはならない。
-    extern void Multiply_UX_UX_Imp(__UNIT_TYPE* u, __UNIT_TYPE u_count, __UNIT_TYPE* v, __UNIT_TYPE v_count, __UNIT_TYPE* w);
+    extern void Multiply_UX_UX_Imp(PMC_MULTIPLICATION_METHOD_CODE method, __UNIT_TYPE* u, __UNIT_TYPE u_count, __UNIT_TYPE* v, __UNIT_TYPE v_count, __UNIT_TYPE* w);
 
     // 多倍長同士の除算を行う。work_v_buf が指す領域は v_count ワード以上の大きさが必要である。q_buf が指す領域は <uのビット数> - <vのビット数> + 1 + <1ワード分のビット数> 以上の大きさが必要である。r_buf が指す領域は u_count + 1 ワード以上の大きさが必要である。q_buf に nullptr が与えられた場合は商を出力しない。
     extern void DivRem_UX_UX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE* r_buf);
@@ -216,7 +216,7 @@ namespace Palmtree::Math::Core::Internal
     extern NUMBER_OBJECT_UINT* PMC_Multiply_UX_UL_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT64_T v);
 
     // 多倍長整数と多倍長整数の乗算を行う。
-    extern NUMBER_OBJECT_UINT* PMC_Multiply_UX_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v);
+    extern NUMBER_OBJECT_UINT* PMC_Multiply_UX_UX_Imp(ThreadContext& tc, PMC_MULTIPLICATION_METHOD_CODE method, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v);
 
     // 多倍長整数と整数の除算を行う。
     extern _UINT32_T PMC_DivRem_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT32_T v, NUMBER_OBJECT_UINT** q);
@@ -391,7 +391,7 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_UINT PMC_Multiply_UL_UX(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
     extern PMC_HANDLE_UINT PMC_Multiply_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
     extern PMC_HANDLE_UINT PMC_Multiply_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
-    extern PMC_HANDLE_UINT PMC_Multiply_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_Multiply_UX_UX(ThreadContext& tc, PMC_MULTIPLICATION_METHOD_CODE method, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
     extern _UINT32_T PMC_DivRem_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v, _UINT32_T* q) noexcept(false);
     extern _UINT64_T PMC_DivRem_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v, _UINT64_T* q) noexcept(false);

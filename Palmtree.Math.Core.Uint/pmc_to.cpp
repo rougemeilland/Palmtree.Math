@@ -146,7 +146,7 @@ namespace Palmtree::Math::Core::Internal
             ResourceHolderUINT root(tc);
 
             // 最大値のチェック
-            NUMBER_OBJECT_UINT* t = PMC_Multiply_UX_UX_Imp(tc, &number_object_uint_decimal_max, np_denominator);
+            NUMBER_OBJECT_UINT* t = PMC_Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, &number_object_uint_decimal_max, np_denominator);
             root.HookNumber(t);
             // decimal.max >= p * 10^scale を満たす最大の scale を求める
             _INT32_T max_scale = PMC_FloorLog10_R_Imp(tc, t, np_numerator);
