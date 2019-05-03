@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -219,7 +219,7 @@ namespace Palmtree::Math::Core::Internal
 
     void ClassicMultiplicationEngine::Multiply_UX_UX(ThreadContext& tc, __UNIT_TYPE * u_buf, __UNIT_TYPE u_count, __UNIT_TYPE * v_buf, __UNIT_TYPE v_count, __UNIT_TYPE * w_buf)
     {
-        // x ‚Ìƒ[ƒh’·‚ª y ‚Ìƒ[ƒh’·ˆÈã‚Å‚ ‚é‚æ‚¤‚É‚·‚é
+        // x ã®ãƒ¯ãƒ¼ãƒ‰é•·ãŒ y ã®ãƒ¯ãƒ¼ãƒ‰é•·ä»¥ä¸Šã§ã‚ã‚‹ã‚ˆã†ã«ã™ã‚‹
         if (u_count < v_count)
         {
             __UNIT_TYPE* t_buf = u_buf;

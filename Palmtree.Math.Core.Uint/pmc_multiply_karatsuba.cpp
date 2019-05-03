@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -59,7 +59,7 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE* wp = w_buf;
         char c = 0;
 
-        // ‚Ü‚¸ 32 ƒ[ƒh‚¸‚Â‰ÁZ‚ğ‚·‚éB
+        // ã¾ãš 32 ãƒ¯ãƒ¼ãƒ‰ãšã¤åŠ ç®—ã‚’ã™ã‚‹ã€‚
         __UNIT_TYPE count = n >> 5;
         while (count != 0)
         {
@@ -69,9 +69,9 @@ namespace Palmtree::Math::Core::Internal
             wp += 32;
             --count;
         }
-        // ‚±‚Ì“_‚Å–¢ˆ—‚ÌŒ…‚Í 32 ƒ[ƒh–¢–‚Ì‚Í‚¸
+        // ã“ã®æ™‚ç‚¹ã§æœªå‡¦ç†ã®æ¡ã¯ 32 ãƒ¯ãƒ¼ãƒ‰æœªæº€ã®ã¯ãš
 
-        // –¢ˆ—‚ÌŒ…‚ª 16 ƒ[ƒhˆÈã‚ ‚é‚È‚ç 16 ƒ[ƒh‰ÁZ‚ğs‚¤B
+        // æœªå‡¦ç†ã®æ¡ãŒ 16 ãƒ¯ãƒ¼ãƒ‰ä»¥ä¸Šã‚ã‚‹ãªã‚‰ 16 ãƒ¯ãƒ¼ãƒ‰åŠ ç®—ã‚’è¡Œã†ã€‚
         if (n & 0x10)
         {
             c = _ADD_16WORDS_ADC(c, up, vp, wp);
@@ -79,9 +79,9 @@ namespace Palmtree::Math::Core::Internal
             vp += 16;
             wp += 16;
         }
-        // ‚±‚Ì“_‚Å–¢ˆ—‚ÌŒ…‚Í 16 ƒ[ƒh–¢–‚Ì‚Í‚¸
+        // ã“ã®æ™‚ç‚¹ã§æœªå‡¦ç†ã®æ¡ã¯ 16 ãƒ¯ãƒ¼ãƒ‰æœªæº€ã®ã¯ãš
 
-        // –¢ˆ—‚ÌŒ…‚ª 8 ƒ[ƒhˆÈã‚ ‚é‚È‚ç 8 ƒ[ƒh‰ÁZ‚ğs‚¤B
+        // æœªå‡¦ç†ã®æ¡ãŒ 8 ãƒ¯ãƒ¼ãƒ‰ä»¥ä¸Šã‚ã‚‹ãªã‚‰ 8 ãƒ¯ãƒ¼ãƒ‰åŠ ç®—ã‚’è¡Œã†ã€‚
         if (n & 0x8)
         {
             c = _ADD_8WORDS_ADC(c, up, vp, wp);
@@ -89,9 +89,9 @@ namespace Palmtree::Math::Core::Internal
             vp += 8;
             wp += 8;
         }
-        // ‚±‚Ì“_‚Å–¢ˆ—‚ÌŒ…‚Í 8 ƒ[ƒh–¢–‚Ì‚Í‚¸
+        // ã“ã®æ™‚ç‚¹ã§æœªå‡¦ç†ã®æ¡ã¯ 8 ãƒ¯ãƒ¼ãƒ‰æœªæº€ã®ã¯ãš
 
-        // –¢ˆ—‚ÌŒ…‚ª 4 ƒ[ƒhˆÈã‚ ‚é‚È‚ç 4 ƒ[ƒh‰ÁZ‚ğs‚¤B
+        // æœªå‡¦ç†ã®æ¡ãŒ 4 ãƒ¯ãƒ¼ãƒ‰ä»¥ä¸Šã‚ã‚‹ãªã‚‰ 4 ãƒ¯ãƒ¼ãƒ‰åŠ ç®—ã‚’è¡Œã†ã€‚
         if (n & 0x4)
         {
             c = _ADD_4WORDS_ADC(c, up, vp, wp);
@@ -99,9 +99,9 @@ namespace Palmtree::Math::Core::Internal
             vp += 4;
             wp += 4;
         }
-        // ‚±‚Ì“_‚Å–¢ˆ—‚ÌŒ…‚Í 4 ƒ[ƒh–¢–‚Ì‚Í‚¸
+        // ã“ã®æ™‚ç‚¹ã§æœªå‡¦ç†ã®æ¡ã¯ 4 ãƒ¯ãƒ¼ãƒ‰æœªæº€ã®ã¯ãš
 
-        // –¢ˆ—‚ÌŒ…‚ª 2 ƒ[ƒhˆÈã‚ ‚é‚È‚ç 2 ƒ[ƒh‰ÁZ‚ğs‚¤B
+        // æœªå‡¦ç†ã®æ¡ãŒ 2 ãƒ¯ãƒ¼ãƒ‰ä»¥ä¸Šã‚ã‚‹ãªã‚‰ 2 ãƒ¯ãƒ¼ãƒ‰åŠ ç®—ã‚’è¡Œã†ã€‚
         if (n & 0x2)
         {
             c = _ADD_2WORDS_ADC(c, up, vp, wp);
@@ -109,9 +109,9 @@ namespace Palmtree::Math::Core::Internal
             vp += 2;
             wp += 2;
         }
-        // ‚±‚Ì“_‚Å–¢ˆ—‚ÌŒ…‚Í 2 ƒ[ƒh–¢–‚Ì‚Í‚¸
+        // ã“ã®æ™‚ç‚¹ã§æœªå‡¦ç†ã®æ¡ã¯ 2 ãƒ¯ãƒ¼ãƒ‰æœªæº€ã®ã¯ãš
 
-        // –¢ˆ—‚ÌŒ…‚ª 1 ƒ[ƒhˆÈã‚ ‚é‚È‚ç 1 ƒ[ƒh‰ÁZ‚ğs‚¤B
+        // æœªå‡¦ç†ã®æ¡ãŒ 1 ãƒ¯ãƒ¼ãƒ‰ä»¥ä¸Šã‚ã‚‹ãªã‚‰ 1 ãƒ¯ãƒ¼ãƒ‰åŠ ç®—ã‚’è¡Œã†ã€‚
         if (n & 0x1)
             c = _ADD_UNIT(c, *up++, *vp++, wp++);
 
@@ -122,7 +122,7 @@ namespace Palmtree::Math::Core::Internal
     {
         char c = 0;
 
-        // ‚Ü‚¸ 32 ƒ[ƒh‚¸‚ÂŒ¸Z‚ğ‚·‚éB
+        // ã¾ãš 32 ãƒ¯ãƒ¼ãƒ‰ãšã¤æ¸›ç®—ã‚’ã™ã‚‹ã€‚
         __UNIT_TYPE count = n >> 5;
         while (count != 0)
         {
@@ -132,9 +132,9 @@ namespace Palmtree::Math::Core::Internal
             wp += 32;
             --count;
         }
-        // ‚±‚Ì“_‚Å–¢ˆ—‚ÌŒ…‚Í 32 ƒ[ƒh–¢–‚Ì‚Í‚¸
+        // ã“ã®æ™‚ç‚¹ã§æœªå‡¦ç†ã®æ¡ã¯ 32 ãƒ¯ãƒ¼ãƒ‰æœªæº€ã®ã¯ãš
 
-        // –¢ˆ—‚ÌŒ…‚ª 16 ƒ[ƒhˆÈã‚ ‚é‚È‚ç 16 ƒ[ƒhŒ¸Z‚ğs‚¤B
+        // æœªå‡¦ç†ã®æ¡ãŒ 16 ãƒ¯ãƒ¼ãƒ‰ä»¥ä¸Šã‚ã‚‹ãªã‚‰ 16 ãƒ¯ãƒ¼ãƒ‰æ¸›ç®—ã‚’è¡Œã†ã€‚
         if (n & 0x10)
         {
             c = _SUBTRUCT_16WORDS_SBB(c, up, vp, wp);
@@ -142,9 +142,9 @@ namespace Palmtree::Math::Core::Internal
             vp += 16;
             wp += 16;
         }
-        // ‚±‚Ì“_‚Å–¢ˆ—‚ÌŒ…‚Í 16 ƒ[ƒh–¢–‚Ì‚Í‚¸
+        // ã“ã®æ™‚ç‚¹ã§æœªå‡¦ç†ã®æ¡ã¯ 16 ãƒ¯ãƒ¼ãƒ‰æœªæº€ã®ã¯ãš
 
-        // –¢ˆ—‚ÌŒ…‚ª 8 ƒ[ƒhˆÈã‚ ‚é‚È‚ç 8 ƒ[ƒhŒ¸Z‚ğs‚¤B
+        // æœªå‡¦ç†ã®æ¡ãŒ 8 ãƒ¯ãƒ¼ãƒ‰ä»¥ä¸Šã‚ã‚‹ãªã‚‰ 8 ãƒ¯ãƒ¼ãƒ‰æ¸›ç®—ã‚’è¡Œã†ã€‚
         if (n & 0x8)
         {
             c = _SUBTRUCT_8WORDS_SBB(c, up, vp, wp);
@@ -152,9 +152,9 @@ namespace Palmtree::Math::Core::Internal
             vp += 8;
             wp += 8;
         }
-        // ‚±‚Ì“_‚Å–¢ˆ—‚ÌŒ…‚Í 8 ƒ[ƒh–¢–‚Ì‚Í‚¸
+        // ã“ã®æ™‚ç‚¹ã§æœªå‡¦ç†ã®æ¡ã¯ 8 ãƒ¯ãƒ¼ãƒ‰æœªæº€ã®ã¯ãš
 
-        // –¢ˆ—‚ÌŒ…‚ª 4 ƒ[ƒhˆÈã‚ ‚é‚È‚ç 4 ƒ[ƒhŒ¸Z‚ğs‚¤B
+        // æœªå‡¦ç†ã®æ¡ãŒ 4 ãƒ¯ãƒ¼ãƒ‰ä»¥ä¸Šã‚ã‚‹ãªã‚‰ 4 ãƒ¯ãƒ¼ãƒ‰æ¸›ç®—ã‚’è¡Œã†ã€‚
         if (n & 0x4)
         {
             c = _SUBTRUCT_4WORDS_SBB(c, up, vp, wp);
@@ -162,9 +162,9 @@ namespace Palmtree::Math::Core::Internal
             vp += 4;
             wp += 4;
         }
-        // ‚±‚Ì“_‚Å–¢ˆ—‚ÌŒ…‚Í 4 ƒ[ƒh–¢–‚Ì‚Í‚¸
+        // ã“ã®æ™‚ç‚¹ã§æœªå‡¦ç†ã®æ¡ã¯ 4 ãƒ¯ãƒ¼ãƒ‰æœªæº€ã®ã¯ãš
 
-        // –¢ˆ—‚ÌŒ…‚ª 2 ƒ[ƒhˆÈã‚ ‚é‚È‚ç 2 ƒ[ƒhŒ¸Z‚ğs‚¤B
+        // æœªå‡¦ç†ã®æ¡ãŒ 2 ãƒ¯ãƒ¼ãƒ‰ä»¥ä¸Šã‚ã‚‹ãªã‚‰ 2 ãƒ¯ãƒ¼ãƒ‰æ¸›ç®—ã‚’è¡Œã†ã€‚
         if (n & 0x2)
         {
             c = _SUBTRUCT_2WORDS_SBB(c, up, vp, wp);
@@ -172,9 +172,9 @@ namespace Palmtree::Math::Core::Internal
             vp += 2;
             wp += 2;
         }
-        // ‚±‚Ì“_‚Å–¢ˆ—‚ÌŒ…‚Í 2 ƒ[ƒh–¢–‚Ì‚Í‚¸
+        // ã“ã®æ™‚ç‚¹ã§æœªå‡¦ç†ã®æ¡ã¯ 2 ãƒ¯ãƒ¼ãƒ‰æœªæº€ã®ã¯ãš
 
-        // –¢ˆ—‚ÌŒ…‚ª 1 ƒ[ƒhˆÈã‚ ‚é‚È‚ç 1 ƒ[ƒhŒ¸Z‚ğs‚¤B
+        // æœªå‡¦ç†ã®æ¡ãŒ 1 ãƒ¯ãƒ¼ãƒ‰ä»¥ä¸Šã‚ã‚‹ãªã‚‰ 1 ãƒ¯ãƒ¼ãƒ‰æ¸›ç®—ã‚’è¡Œã†ã€‚
         if (n & 1)
             c = _SUBTRUCT_UNIT(c, *up++, *vp++, wp++);
         return (c);
@@ -184,30 +184,37 @@ namespace Palmtree::Math::Core::Internal
     {
         if (n == 0)
         {
-            // n == 0 ‚Ìê‡
+            // n == 0 ã®å ´åˆ
 
-            throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;1");
+            throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;1");
         }
         else if (n == 1)
         {
-            // n == 1 ‚Ìê‡
+            // n == 1 ã®å ´åˆ
 
             w_buf[0] = _MULTIPLY_UNIT(*u_buf, *v_buf, &w_buf[1]);
+#ifdef ENABLED_PERFORMANCE_COUNTER
+            if (sizeof(w_buf[0]) == sizeof(_UINT32_T))
+                IncrementMULTI32Counter();
+            else
+                IncrementMULTI64Counter();
+#endif
         }
         else
         {
-            // n > 1 ‚Ìê‡
+            // n > 1 ã®å ´åˆ
 
             ResourceHolderUINT root(tc);
 #ifdef _DEBUG
             int lzcnt = _LZCNT_ALT_UNIT(n);
             int tzcnt = _TZCNT_ALT_UNIT(n);
             if (lzcnt + tzcnt != __UNIT_TYPE_BIT_COUNT - 1)
-                throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;2");
+                throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;2");
 #endif
             __UNIT_TYPE n_half = n >> 1;
             Multiply_UX_UX_Karatsuba(tc, n_half, &u_buf[0], &v_buf[0], &w_buf[0]);
             Multiply_UX_UX_Karatsuba(tc, n_half, &u_buf[n_half], &v_buf[n_half], &w_buf[n]);
+
             SIGN_T t3_sign = SIGN_NEGATIVE;
 
             __UNIT_TYPE* t1 = root.AllocateBlock(n_half * __UNIT_TYPE_BIT_COUNT);
@@ -251,38 +258,48 @@ namespace Palmtree::Math::Core::Internal
 #endif
 
             __UNIT_TYPE* t = root.AllocateBlock(n * __UNIT_TYPE_BIT_COUNT);
-            Add_UX_UX(n, &w_buf[n], &w_buf[0], t);
+
+            // è«–ç†çš„ãª t ã®æœ€å¤§å€¤ã®ãƒ“ãƒƒãƒˆé•·ã¯ n * __UNIT_TYPE_BIT_COUNT * 2 + 1 ã§ã€
+            // n ãƒ¯ãƒ¼ãƒ‰ã®ãƒãƒƒãƒ•ã‚¡ã«æ ¼ç´ã—ã‚ˆã†ã¨ã™ã‚‹ã¨ 1 ãƒ“ãƒƒãƒˆåˆ†ä¸è¶³ã™ã‚‹ãŸã‚ã€
+            // æ¡ä¸Šã‚Šã‚’ t_carry ã¨ã—ã¦ä¿å­˜ã—ã€æœ€å¾Œã« t ã‚’åŠ ç®—ã—ãŸå¾Œã®æ¡ä¸Šã‚Šå‡¦ç†ã§ t_carry ã‚‚åŠ ç®—ã™ã‚‹ã“ã¨ã«ã™ã‚‹ã€‚
+            char t_carry = Add_UX_UX(n, &w_buf[n], &w_buf[0], t);
 #ifdef _DEBUG
             root.CheckBlock(t);
 #endif
             if (t3_sign >= 0)
             {
-                Add_UX_UX(n, t, t3, t);
+                t_carry += Add_UX_UX(n, t, t3, t);
 #ifdef _DEBUG
                 root.CheckBlock(t);
 #endif
             }
             else
             {
-                Subtruct_UX_UX(n, t, t3, t);
+                t_carry -= Subtruct_UX_UX(n, t, t3, t);
 #ifdef _DEBUG
                 root.CheckBlock(t);
 #endif
             }
 
+            if (t_carry < 0)
+                throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;3");
+
             char carry = Add_UX_UX(n, &w_buf[n_half], t, &w_buf[n_half]);
             __UNIT_TYPE* w_ptr = &w_buf[n_half + n];
             __UNIT_TYPE count = n_half;
-            while (count > 0 && carry != 0)
+
+            // t ã«ä»˜éšã™ã‚‹ t ã«åã¾ã‚Šåˆ‡ã‚Œãªã‹ã£ãŸãƒ“ãƒƒãƒˆ (t_carry) ã‚‚1å›ã ã‘åŠ ç®—ã™ã‚‹ã€‚
+            while (count > 0 && (carry != 0 || t_carry != 0))
             {
-                carry = _ADD_UNIT(carry, *w_ptr, 0, w_ptr);
+                carry = _ADD_UNIT(carry, *w_ptr, t_carry, w_ptr);
+                t_carry = 0;
                 ++w_ptr;
             }
             if (carry != 0)
             {
-                // ÅãˆÊŒ…‚Ü‚Å carry ‚ªc‚Á‚Ä‚µ‚Ü‚Á‚½ê‡
+                // æœ€ä¸Šä½æ¡ã¾ã§ carry ãŒæ®‹ã£ã¦ã—ã¾ã£ãŸå ´åˆ
 
-                throw InternalErrorException(L"“à•”ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;3");
+                throw InternalErrorException(L"å†…éƒ¨ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;4");
             }
         }
     }
@@ -303,15 +320,15 @@ namespace Palmtree::Math::Core::Internal
         int tzcnt = _TZCNT_ALT_UNIT(n);
         if (lzcnt + tzcnt == __UNIT_TYPE_BIT_COUNT - 1)
         {
-            // n ‚ª 2 ‚Ì—İæ‚Å‚ ‚éê‡
+            // n ãŒ 2 ã®ç´¯ä¹—ã§ã‚ã‚‹å ´åˆ
 
             // nop
         }
         else
         {
-            // n ‚ª 2 ‚Ì—İæ‚Å‚Í‚È‚¢ê‡
+            // n ãŒ 2 ã®ç´¯ä¹—ã§ã¯ãªã„å ´åˆ
 
-            // n ˆÈã‚Å‚ ‚èA‚©‚Â 2 ‚Ì—İæ‚Å‚ ‚éAÅ¬‚Ì’l‚ğ‹‚ß‚é
+            // n ä»¥ä¸Šã§ã‚ã‚Šã€ã‹ã¤ 2 ã®ç´¯ä¹—ã§ã‚ã‚‹ã€æœ€å°ã®å€¤ã‚’æ±‚ã‚ã‚‹
             n = (__UNIT_TYPE)1 << (__UNIT_TYPE_BIT_COUNT - lzcnt);
         }
         if (u_count == n)

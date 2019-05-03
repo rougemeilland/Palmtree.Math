@@ -1,4 +1,4 @@
-/*
+Ôªø/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -41,7 +41,7 @@ namespace Palmtree::Math::Core::Internal
 
     void SchonHageStrassenMultiplicationEngine::Multiply_UX_UX(ThreadContext& tc, __UNIT_TYPE * u_buf, __UNIT_TYPE u_count, __UNIT_TYPE * v_buf, __UNIT_TYPE v_count, __UNIT_TYPE * w_buf)
     {
-        throw InternalErrorException(L"ñ¢é¿ëïÇ≈Ç∑ÅB", L"pmc_multiply_schonHagestrassen.cpp;SchonHageStrassenMultiplicationEngine::Multiply_UX_UX;1");
+        throw InternalErrorException(L"Êú™ÂÆüË£Ö„Åß„Åô„ÄÇ", L"pmc_multiply_schonHagestrassen.cpp;SchonHageStrassenMultiplicationEngine::Multiply_UX_UX;1");
     }
 
 }

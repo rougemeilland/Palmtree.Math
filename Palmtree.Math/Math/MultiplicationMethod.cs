@@ -23,41 +23,21 @@
  */
 
 
-#include <windows.h>
-#include "pmc_rtnl_internal.h"
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-
-namespace Palmtree::Math::Core::Internal
+namespace Palmtree.Math
 {
 
-    extern "C" BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD dwReason, LPVOID lpvReserved)
+    public enum MultiplicationMethod
     {
-        BOOL result = TRUE;
-        switch (dwReason)
-        {
-        case DLL_PROCESS_ATTACH: // DLLがプロセスのアドレス空間にマッピングされた。
-#ifdef USE_WIN32_HEAP
-            if (!__AllocateRTNLHeapArea())
-                result = FALSE;
-#endif
-            break;
-
-        case DLL_THREAD_ATTACH: // スレッドが作成されようとしている。
-            break;
-
-        case DLL_THREAD_DETACH: // スレッドが破棄されようとしている。
-            break;
-
-        case DLL_PROCESS_DETACH: // DLLのマッピングが解除されようとしている。
-#ifdef USE_WIN32_HEAP
-            __DeallocateRTNLHeapArea();
-#endif
-            break;
-        default:
-            result = FALSE;
-            break;
-        }
-        return (result);
+        Auto = 0,
+        Classic = 1,
+        Karatsuba = 2,
+        SchonStrassen = 3,
     }
 
 }

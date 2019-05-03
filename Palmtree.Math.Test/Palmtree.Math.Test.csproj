@@ -926,6 +926,8 @@
     <Compile Include="Plugin\Uint\ComponentTestPlugin_CompareTo_X_I.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_CompareTo_X_L.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_CompareTo_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Multiply_X_X_Classic.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Multiply_X_X_Karatsuba.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_static_Equals_I_X.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_static_Equals_L_X.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_static_Equals_X_I.cs" />

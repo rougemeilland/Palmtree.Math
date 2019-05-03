@@ -39,23 +39,34 @@ namespace Palmtree::Math::Core::Internal
     static KaratsubaMultiplicationEngine* _engine_karatsuba;
     static SchonHageStrassenMultiplicationEngine* _engine_schonHagestrassen;
 
+    static bool AutoKaratsubaCondition(__UNIT_TYPE u_count, __UNIT_TYPE v_count)
+    {
+        // この閾値は、乗算の度に一時メモリを獲得/解放しているKaratsuba法のもの。
+        return (u_count >= 268435456 / __UNIT_TYPE_BIT_COUNT && v_count >= 268435456 / __UNIT_TYPE_BIT_COUNT);
+    }
+
+    static bool AutoSchonStrassenCondition(__UNIT_TYPE u_count, __UNIT_TYPE v_count)
+    {
+        return (false);
+    }
+
     void Multiply_UX_UX_Imp(ThreadContext& tc, PMC_MULTIPLICATION_METHOD_CODE method, __UNIT_TYPE* u, __UNIT_TYPE u_count, __UNIT_TYPE* v, __UNIT_TYPE v_count, __UNIT_TYPE* w)
     {
         switch (method)
         {
         case PMC_MULTIPLICATION_METHOD_AUTO:
-            if (false)
+            if (AutoSchonStrassenCondition(u_count, v_count))
                 return (_engine_schonHagestrassen->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
-            else if (false)
+            else if (AutoKaratsubaCondition(u_count, v_count))
                 return (_engine_karatsuba->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
             else
                 return (_engine_classic->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
         case PMC_MULTIPLICATION_METHOD_CLASSIC:
-            return (_engine_schonHagestrassen->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
+            return (_engine_classic->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
         case PMC_MULTIPLICATION_METHOD_KARATSUBA:
             return (_engine_karatsuba->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
         case PMC_MULTIPLICATION_METHOD_SCHONSTRASSEN:
-            return (_engine_classic->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
+            return (_engine_schonHagestrassen->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
         default:
             throw ArgumentException(L"methodが不正です。");
         }
@@ -350,9 +361,8 @@ namespace Palmtree::Math::Core::Internal
 
                 // u と v の積を計算する
                 ResourceHolderUINT root(tc);
-                __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
-                __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
-                __UNIT_TYPE w_bit_count = u_bit_count + v_bit_count;
+                // classic 以外の乗算の場合に領域長の計算が面倒なので、w のビット長は u と v のワード長から計算する。
+                __UNIT_TYPE w_bit_count = (u->UNIT_WORD_COUNT + v->UNIT_WORD_COUNT) * __UNIT_TYPE_BIT_COUNT;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 Multiply_UX_UX_Imp(tc, method, u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK);
 #ifdef _DEBUG

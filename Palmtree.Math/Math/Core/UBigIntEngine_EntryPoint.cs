@@ -355,10 +355,10 @@ namespace Palmtree.Math.Core
             return (new UBigIntHandle(w));
         }
 
-        public UBigIntHandle Multiply(UBigIntHandle u, UBigIntHandle v)
+        public UBigIntHandle Multiply(MultiplicationMethod method, UBigIntHandle u, UBigIntHandle v)
         {
             IntPtr w;
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_UX_UX(u.NativeHandle, v.NativeHandle, out w));
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Multiply_I_UX_UX((Int32)method, u.NativeHandle, v.NativeHandle, out w));
             return (new UBigIntHandle(w));
         }
 

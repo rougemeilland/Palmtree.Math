@@ -23,43 +23,26 @@
  */
 
 
-#include <windows.h>
-#include "pmc_rtnl_internal.h"
+using System;
 
-
-namespace Palmtree::Math::Core::Internal
+namespace Palmtree.Math.Test.Plugin.Uint
 {
-
-    extern "C" BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD dwReason, LPVOID lpvReserved)
+    class ComponentTestPlugin_Multiply_X_X_Karatsuba
+        : ComponentTestPluginBase_2_1
     {
-        BOOL result = TRUE;
-        switch (dwReason)
+        public ComponentTestPlugin_Multiply_X_X_Karatsuba()
+            : base("uint", "multiply_x_x_karatsuba", "test_data_multiply_x_x.xml")
         {
-        case DLL_PROCESS_ATTACH: // DLLがプロセスのアドレス空間にマッピングされた。
-#ifdef USE_WIN32_HEAP
-            if (!__AllocateRTNLHeapArea())
-                result = FALSE;
-#endif
-            break;
-
-        case DLL_THREAD_ATTACH: // スレッドが作成されようとしている。
-            break;
-
-        case DLL_THREAD_DETACH: // スレッドが破棄されようとしている。
-            break;
-
-        case DLL_PROCESS_DETACH: // DLLのマッピングが解除されようとしている。
-#ifdef USE_WIN32_HEAP
-            __DeallocateRTNLHeapArea();
-#endif
-            break;
-        default:
-            result = FALSE;
-            break;
         }
-        return (result);
-    }
 
+        protected override IDataItem TestFunc(IDataItem p1, IDataItem p2)
+        {
+            var u = p1.ToUBigInt().Value;
+            var v = p2.ToUBigInt().Value;
+            var w = u.Multiply(MultiplicationMethod.Karatsuba, v);
+            return (new UBigIntDataItem(w));
+        }
+    }
 }
 
 

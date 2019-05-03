@@ -238,7 +238,7 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_Multiply_UX_UL(IntPtr u, UInt64 v, out IntPtr w);
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
-        private static extern Int32 PMCCS_Multiply_UX_UX(IntPtr u, IntPtr v, out IntPtr w);
+        private static extern Int32 PMCCS_Multiply_I_UX_UX(Int32 method, IntPtr u, IntPtr v, out IntPtr w);
 
         [DllImport("Palmtree.Math.Core.Uint.dll", CharSet = CharSet.Unicode)]
         private static extern Int32 PMCCS_Parse(string source, int number_styles, [In]PMC_NUMBER_FORMAT_INFO format_option, out IntPtr o);

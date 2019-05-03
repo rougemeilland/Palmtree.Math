@@ -26,6 +26,9 @@
       <Project>{2b4d6366-1dd5-4e4d-920b-8fdddf1aaab9}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="mymakefile.xml" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{C28F3978-46C2-44AC-AC9E-8997A9462A11}</ProjectGuid>

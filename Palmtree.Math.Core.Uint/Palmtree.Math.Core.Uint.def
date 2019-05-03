@@ -67,7 +67,7 @@ EXPORTS
 	PMCCS_Multiply_UL_UX
 	PMCCS_Multiply_UX_UI
 	PMCCS_Multiply_UX_UL
-	PMCCS_Multiply_UX_UX
+	PMCCS_Multiply_I_UX_UX
 	PMCCS_Parse
 	PMCCS_Pow_UI_UI
 	PMCCS_Pow_UL_UI

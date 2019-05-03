@@ -31,7 +31,7 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    ResourceHolderSINT::__BigIntNumberObjectStructureChainBufferTag::__BigIntNumberObjectStructureChainBufferTag(ThreadContext& tc, void * buffer)
+    ResourceHolderSINT::__BigIntNumberObjectStructureChainBufferTag::__BigIntNumberObjectStructureChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_SINT * buffer)
         : _tc(tc)
     {
         _buffer = buffer;

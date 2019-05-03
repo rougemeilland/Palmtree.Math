@@ -30,7 +30,6 @@ using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-
 namespace Palmtree.Math.Test
 {
     class Program
@@ -149,13 +148,13 @@ namespace Palmtree.Math.Test
 
         private static bool PluginFilter(IComponentTestPlugin plugin)
         {
-            //return (plugin.PluginName.Contains("rtnl.tostringg"));
+            //return (plugin.PluginName.StartsWith("uint.multiply_x_x_kara"));
             return (true);
         }
 
         private static bool TestItemFilter(IComponentTestItem test_item)
         {
-            //return (test_item.Index == 16);
+            //return (test_item.Index == 87);
             return (true);
         }
 

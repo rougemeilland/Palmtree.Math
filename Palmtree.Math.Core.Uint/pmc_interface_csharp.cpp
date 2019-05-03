@@ -843,14 +843,14 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __stdcall PMCCS_Multiply_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* w)
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_Multiply_I_UX_UX(PMC_MULTIPLICATION_METHOD_CODE method, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* w)
     {
         if (w == nullptr)
             return (PMC_STATUS_ARGUMENT_NULL_ERROR);
         ThreadContext tc;
         try
         {
-            *w = PMC_Multiply_UX_UX(tc, PMC_MULTIPLICATION_METHOD_AUTO, u, v);
+            *w = PMC_Multiply_UX_UX(tc, method, u, v);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*w), true);
             return (PMC_STATUS_OK);
         }

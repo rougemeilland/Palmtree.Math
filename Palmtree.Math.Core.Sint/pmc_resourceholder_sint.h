@@ -46,9 +46,9 @@ namespace Palmtree::Math::Core::Internal
         {
         private:
             ThreadContext& _tc;
-            void* _buffer;
+            NUMBER_OBJECT_SINT* _buffer;
         public:
-            __BigIntNumberObjectStructureChainBufferTag(ThreadContext& tc, void* buffer);
+            __BigIntNumberObjectStructureChainBufferTag(ThreadContext& tc, NUMBER_OBJECT_SINT* buffer);
             virtual ~__BigIntNumberObjectStructureChainBufferTag();
             virtual bool EqualsBufferAddress(void* buffer) override;
             void virtual Destruct() override;

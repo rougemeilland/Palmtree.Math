@@ -46,6 +46,7 @@
     <Compile Include="BadBufferException.cs" />
     <Compile Include="InsufficientBufferException.cs" />
     <Compile Include="InternalErrorException.cs" />
+    <Compile Include="Math\MultiplicationMethod.cs" />
     <Compile Include="Math\RationalComparer.cs" />
     <Compile Include="Math\UBigIntComparer.cs" />
     <Compile Include="Math\BigIntComparer.cs" />

@@ -176,6 +176,7 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE* buffer = (__UNIT_TYPE*)__AllocateHeap(words2 * __UNIT_TYPE_BYTE_COUNT);
 #else
         __UNIT_TYPE* buffer = new __UNIT_TYPE[words2];
+        _ZERO_MEMORY_UNIT(buffer, words2);
 #endif
         tc.IncrementTypeAAllocationCount();
         buffer[0] = words1;
@@ -207,6 +208,7 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE* buffer = (__UNIT_TYPE*)__AllocateHeap(words * __UNIT_TYPE_BYTE_COUNT);
 #else
         __UNIT_TYPE* buffer = new __UNIT_TYPE[words];
+        _ZERO_MEMORY_UNIT(buffer, words);
 #endif
         tc.IncrementTypeAAllocationCount();
         *allocated_block_words = words;

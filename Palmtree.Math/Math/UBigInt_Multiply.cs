@@ -44,7 +44,12 @@ namespace Palmtree.Math
 
         public UBigInt Multiply(UBigInt v)
         {
-            return (new UBigInt(EngineObject.Multiply(Handle, v.Handle)));
+            return (new UBigInt(EngineObject.Multiply(MultiplicationMethod.Auto, Handle, v.Handle)));
+        }
+
+        public UBigInt Multiply(MultiplicationMethod method, UBigInt v)
+        {
+            return (new UBigInt(EngineObject.Multiply(method, Handle, v.Handle)));
         }
 
         public BigInt Multiply(Int32 v)
@@ -89,7 +94,7 @@ namespace Palmtree.Math
 
         public static UBigInt operator *(UBigInt u, UBigInt v)
         {
-            return (new UBigInt(EngineObject.Multiply(u.Handle, v.Handle)));
+            return (new UBigInt(EngineObject.Multiply(MultiplicationMethod.Auto, u.Handle, v.Handle)));
         }
 
         public static BigInt operator *(Int32 u, UBigInt v)
