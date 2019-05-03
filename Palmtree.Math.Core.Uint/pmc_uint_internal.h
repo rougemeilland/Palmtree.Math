@@ -173,7 +173,7 @@ namespace Palmtree::Math::Core::Internal
     extern void Subtruct_Imp(__UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE* vp, __UNIT_TYPE v_count, __UNIT_TYPE* wp, __UNIT_TYPE w_count);
 
     // 多倍長整数の乗算を行う。u と v はどちらも 0 であってはならない。
-    extern void Multiply_UX_UX_Imp(PMC_MULTIPLICATION_METHOD_CODE method, __UNIT_TYPE* u, __UNIT_TYPE u_count, __UNIT_TYPE* v, __UNIT_TYPE v_count, __UNIT_TYPE* w);
+    extern void Multiply_UX_UX_Imp(ThreadContext& tc, PMC_MULTIPLICATION_METHOD_CODE method, __UNIT_TYPE* u, __UNIT_TYPE u_count, __UNIT_TYPE* v, __UNIT_TYPE v_count, __UNIT_TYPE* w);
 
     // 多倍長同士の除算を行う。work_v_buf が指す領域は v_count ワード以上の大きさが必要である。q_buf が指す領域は <uのビット数> - <vのビット数> + 1 + <1ワード分のビット数> 以上の大きさが必要である。r_buf が指す領域は u_count + 1 ワード以上の大きさが必要である。q_buf に nullptr が与えられた場合は商を出力しない。
     extern void DivRem_UX_UX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE* r_buf);

@@ -171,7 +171,9 @@ namespace Palmtree::Math::Core::Internal
                     // u と v がともに 1 ワードで表現できる場合
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
                     w->BLOCK[0] = GreatestCommonDivisor_1W_Imp(u->BLOCK[0], v);
+#ifdef _DEBUG
                     root.CheckNumber(w);
+#endif
                     CommitNumber(tc, w);
                     root.UnlinkNumber(w);
                     return (w);
@@ -195,13 +197,17 @@ namespace Palmtree::Math::Core::Internal
                     work_v_buf[0] = v >> v_tzcnt;
                     __UNIT_TYPE w_buf_count;
                     GreatestCommonDivisor_Imp(work_u_buf, work_v_buf, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT), w->BLOCK, &w_buf_count);
+#ifdef _DEBUG
                     root.CheckBlock(work_u_buf);
                     root.CheckBlock(work_v_buf);
                     root.CheckNumber(w);
+#endif
                     root.DeallocateBlock(work_v_buf);
                     root.DeallocateBlock(work_u_buf);
                     LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
+#ifdef _DEBUG
                     root.CheckNumber(w);
+#endif
                     CommitNumber(tc, w);
                     root.UnlinkNumber(w);
                     return (w);
@@ -263,7 +269,9 @@ namespace Palmtree::Math::Core::Internal
                             // u と v がともに 1 ワードで表現できる場合
                             NUMBER_OBJECT_UINT* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
                             w->BLOCK[0] = GreatestCommonDivisor_1W_Imp(u->BLOCK[0], v_lo);
+#ifdef _DEBUG
                             root.CheckNumber(w);
+#endif
                             CommitNumber(tc, w);
                             root.UnlinkNumber(w);
                             return (w);
@@ -288,14 +296,18 @@ namespace Palmtree::Math::Core::Internal
 
                             __UNIT_TYPE w_buf_count;
                             GreatestCommonDivisor_Imp(work_u_buf, work_v_buf, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT), w->BLOCK, &w_buf_count);
+#ifdef _DEBUG
                             root.CheckBlock(work_u_buf);
                             root.CheckBlock(work_v_buf);
                             root.CheckNumber(w);
+#endif
                             root.DeallocateBlock(work_v_buf);
                             root.DeallocateBlock(work_u_buf);
 
                             LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
+#ifdef _DEBUG
                             root.CheckNumber(w);
+#endif
                             CommitNumber(tc, w);
                             root.UnlinkNumber(w);
                             return (w);
@@ -325,14 +337,18 @@ namespace Palmtree::Math::Core::Internal
 
                         __UNIT_TYPE w_buf_count;
                         GreatestCommonDivisor_Imp(work_u_buf, work_v_buf, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT), w->BLOCK, &w_buf_count);
+#ifdef _DEBUG
                         root.CheckBlock(work_u_buf);
                         root.CheckBlock(work_v_buf);
                         root.CheckNumber(w);
+#endif
                         root.DeallocateBlock(work_v_buf);
                         root.DeallocateBlock(work_u_buf);
 
                         LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
+#ifdef _DEBUG
                         root.CheckNumber(w);
+#endif
                         CommitNumber(tc, w);
                         root.UnlinkNumber(w);
                         return (w);
@@ -347,7 +363,9 @@ namespace Palmtree::Math::Core::Internal
                         // u と v がともに 1 ワードで表現できる場合
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
                         w->BLOCK[0] = GreatestCommonDivisor_1W_Imp(u->BLOCK[0], (__UNIT_TYPE)v);
+#ifdef _DEBUG
                         root.CheckNumber(w);
+#endif
                         CommitNumber(tc, w);
                         root.UnlinkNumber(w);
                         return (w);
@@ -373,14 +391,18 @@ namespace Palmtree::Math::Core::Internal
 
                         __UNIT_TYPE w_buf_count;
                         GreatestCommonDivisor_Imp(work_u_buf, work_v_buf, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT), w->BLOCK, &w_buf_count);
+#ifdef _DEBUG
                         root.CheckBlock(work_u_buf);
                         root.CheckBlock(work_v_buf);
                         root.CheckNumber(w);
+#endif
                         root.DeallocateBlock(work_v_buf);
                         root.DeallocateBlock(work_u_buf);
 
                         LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
+#ifdef _DEBUG
                         root.CheckNumber(w);
+#endif
                         CommitNumber(tc, w);
                         root.UnlinkNumber(w);
                         return (w);
@@ -436,7 +458,9 @@ namespace Palmtree::Math::Core::Internal
                     // u と v がともに 1 ワードで表現できる場合
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
                     w->BLOCK[0] = GreatestCommonDivisor_1W_Imp(u->BLOCK[0], v->BLOCK[0]);
+#ifdef _DEBUG
                     root.CheckNumber(w);
+#endif
                     CommitNumber(tc, w);
                     root.UnlinkNumber(w);
                     return (w);
@@ -462,15 +486,19 @@ namespace Palmtree::Math::Core::Internal
 
                     __UNIT_TYPE w_buf_count;
                     GreatestCommonDivisor_Imp(work_u_buf, work_v_buf, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT), w->BLOCK, &w_buf_count);
+#ifdef _DEBUG
                     root.CheckBlock(work_u_buf);
                     root.CheckBlock(work_v_buf);
                     root.CheckNumber(w);
+#endif
                     root.DeallocateBlock(work_v_buf);
                     root.DeallocateBlock(work_u_buf);
 
                     if (k > 0)
                         LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
+#ifdef _DEBUG
                     root.CheckNumber(w);
+#endif
                     CommitNumber(tc, w);
                     root.UnlinkNumber(w);
                     return (w);

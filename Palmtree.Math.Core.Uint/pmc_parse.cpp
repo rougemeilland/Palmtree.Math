@@ -57,9 +57,11 @@ namespace Palmtree::Math::Core::Internal
             wchar_t* exp_part_buf = root.AllocateString(frac_part_buf_count);
             SIGN_T exponent_sign;
             bool result_parsing = ParseAsDecimalNumberString(source, number_styles, format_option, sign, int_part_buf, int_part_buf_count, frac_part_buf, frac_part_buf_count, &exponent_sign, exp_part_buf, exp_part_buf_count);
+#ifdef _DEBUG
             root.CheckString(int_part_buf);
             root.CheckString(frac_part_buf);
             root.CheckString(exp_part_buf);
+#endif
             if (!result_parsing)
                 return (PMC_STATUS_FORMAT_ERROR);
             if (int_part_buf[0] == L'\0' && (frac_part_buf[0] == L'\0' || frac_part_buf[0] == L'.' && frac_part_buf[1] == L'\0'))
@@ -313,7 +315,9 @@ namespace Palmtree::Math::Core::Internal
             size_t int_part_buf_size = source_len + 1;
             wchar_t* int_part_buf = root.AllocateString(source_len + 1);
             int result_parsing = ParseAsHexNumberString(source, number_styles, format_option, int_part_buf, int_part_buf_size);
+#ifdef _DEBUG
             root.CheckString(int_part_buf);
+#endif
             if (!result_parsing || int_part_buf[0] == L'\0')
                 return (PMC_STATUS_FORMAT_ERROR);
 
@@ -345,7 +349,9 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE o_bit_count = lstrlenW(int_part_buf) * 4;
             *o_abs = root.AllocateNumber(o_bit_count);
             BuildBinaryFromHexString(int_part_buf, (*o_abs)->BLOCK);
+#ifdef _DEBUG
             root.CheckNumber(*o_abs);
+#endif
             root.DeallocateString(int_part_buf);
             if (*o_sign < 0)
             {

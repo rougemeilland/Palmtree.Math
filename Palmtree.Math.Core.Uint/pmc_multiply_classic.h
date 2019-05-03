@@ -39,7 +39,7 @@ namespace Palmtree::Math::Core::Internal
         ~ClassicMultiplicationEngine();
         void Multiply_UX_1W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE v, __UNIT_TYPE* w_buf);
         void Multiply_UX_2W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, __UNIT_TYPE* w_buf);
-        void Multiply_UX_UX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf);
+        void Multiply_UX_UX(ThreadContext& tc, __UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf);
     };
 
 }

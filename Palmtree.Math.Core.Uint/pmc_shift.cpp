@@ -319,7 +319,9 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE w_bit_count = u_bit_count - n;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 RightShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, n, w->BLOCK, FALSE);
+#ifdef _DEBUG
                 root.CheckNumber(w);
+#endif
                 CommitNumber(tc, w);
                 root.UnlinkNumber(w);
                 return (w);
@@ -340,7 +342,9 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE w_bit_count = u_bit_count + n;
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
             LeftShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, n, w->BLOCK, FALSE);
+#ifdef _DEBUG
             root.CheckNumber(w);
+#endif
             CommitNumber(tc, w);
             root.UnlinkNumber(w);
             return (w);

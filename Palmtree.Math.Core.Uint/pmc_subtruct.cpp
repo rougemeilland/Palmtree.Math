@@ -200,7 +200,9 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE w_bit_count = x_bit_count;
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
             DoBorrow(1, x->BLOCK, x->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
+#ifdef _DEBUG
             root.CheckNumber(w);
+#endif
             CommitNumber(tc, w);
             if (w->IS_ZERO)
             {
@@ -343,7 +345,9 @@ namespace Palmtree::Math::Core::Internal
                     __UNIT_TYPE w_bit_count = u_bit_count;
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                     Subtruct_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK, w->BLOCK_COUNT);
+#ifdef _DEBUG
                     root.CheckNumber(w);
+#endif
                     CommitNumber(tc, w);
                     if (w->IS_ZERO)
                     {
@@ -591,7 +595,9 @@ namespace Palmtree::Math::Core::Internal
                             __UNIT_TYPE w_bit_count = u_bit_count;
                             NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                             Subtruct_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, w->BLOCK, w->BLOCK_COUNT);
+#ifdef _DEBUG
                             root.CheckNumber(w);
+#endif
                             CommitNumber(tc, w);
                             if (w->IS_ZERO)
                             {
@@ -616,7 +622,9 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE w_bit_count = u_bit_count;
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                         Subtruct_UX_2W(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK, w->BLOCK_COUNT);
+#ifdef _DEBUG
                         root.CheckNumber(w);
+#endif
                         CommitNumber(tc, w);
                         if (w->IS_ZERO)
                         {
@@ -642,7 +650,9 @@ namespace Palmtree::Math::Core::Internal
                     __UNIT_TYPE w_bit_count = x_bit_count;
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                     Subtruct_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, w->BLOCK, w->BLOCK_COUNT);
+#ifdef _DEBUG
                     root.CheckNumber(w);
+#endif
                     CommitNumber(tc, w);
                     if (w->IS_ZERO)
                     {
@@ -719,7 +729,9 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE w_bit_count = u_bit_count;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 Subtruct_Imp(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
+#ifdef _DEBUG
                 root.CheckNumber(w);
+#endif
                 CommitNumber(tc, w);
                 if (w->IS_ZERO)
                 {

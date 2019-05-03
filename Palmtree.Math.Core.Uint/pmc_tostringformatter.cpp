@@ -109,9 +109,13 @@ namespace Palmtree::Math::Core::Internal
 
         wchar_t* frac_part_buffer = root.AllocateString(frac_part_buffer_size);
         wchar_t* top_of_int_part = ConstructIntegerPartNumberSequence(int_part, int_part_buffer, int_part_buffer_size);
+#ifdef _DEBUG
         root.CheckString(int_part_buffer);
+#endif
         ConstructFractionPartNumberSequence(frac_part_numerator, frac_part_denominator, GetFractionPartLength(), frac_part_buffer, frac_part_buffer_size);
+#ifdef _DEBUG
         root.CheckString(frac_part_buffer);
+#endif
         FormatNumberSequence(top_of_int_part, frac_part_buffer, exp, writer);
     }
 

@@ -73,7 +73,9 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE mask = (1UL << shift_count) - 1;
             nr->BLOCK[nr->BLOCK_COUNT - 1] &= mask;
         }
+#ifdef _DEBUG
         root.CheckNumber(nr);
+#endif
         CommitNumber(tc, nr);
         if (nr->IS_ZERO)
         {
@@ -106,7 +108,9 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE mask = (1UL << shift_count) - 1;
             nr->BLOCK[nr->BLOCK_COUNT - 1] &= mask;
         }
+#ifdef _DEBUG
         root.CheckNumber(nr);
+#endif
         CommitNumber(tc, nr);
         if (nr->IS_ZERO)
         {

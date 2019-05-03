@@ -124,16 +124,16 @@ namespace Palmtree::Math::Core::Internal
          }
      }
 
+#ifdef _DEBUG
      void ResourceHolder::CheckString(wchar_t * buffer)
      {
-#ifdef _DEBUG
          Lock lock_obj;
          __ChainBufferTag* tag = FindTag(buffer);
          if (tag == nullptr)
              throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::CheckString;1");
          tag->Check();
-#endif
      }
+#endif
 
      void ResourceHolder::UnlinkString(wchar_t * buffer)
      {

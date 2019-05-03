@@ -52,7 +52,6 @@ namespace Palmtree::Math::Core::Internal
         return (SIGN_ZERO);
     }
 
-
     static SIGN_T PMC_Compare_UX_UI_Imp(NUMBER_OBJECT_UINT* u, _UINT32_T v)
     {
         if (u->IS_ZERO)

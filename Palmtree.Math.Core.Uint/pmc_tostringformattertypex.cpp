@@ -215,7 +215,9 @@ namespace Palmtree::Math::Core::Internal
             }
             filling_char = _character_set[15];
         }
+#ifdef _DEBUG
         root.CheckBlock(temp_buf);
+#endif
 
         // この時点で 合計桁数は output_len だけあることが判明
 

@@ -252,16 +252,16 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+#ifdef _DEBUG
     void ResourceHolderUINT::CheckBlock(__UNIT_TYPE * buffer)
     {
-#ifdef _DEBUG
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::CheckBlock;1");
         tag->Check();
-#endif
     }
+#endif
 
     void ResourceHolderUINT::UnlinkBlock(__UNIT_TYPE * buffer)
     {
@@ -311,16 +311,16 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+#ifdef _DEBUG
     void ResourceHolderUINT::CheckNumber(NUMBER_OBJECT_UINT * buffer)
     {
-#ifdef _DEBUG
         Lock lock_obj;
         __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::CheckNumber;1");
         tag->Check();
-#endif
     }
+#endif
 
     void ResourceHolderUINT::UnlinkNumber(NUMBER_OBJECT_UINT * buffer)
     {

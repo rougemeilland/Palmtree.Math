@@ -32,7 +32,7 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    static void Pow_UX_UI_Imp(__UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_count, _UINT32_T e, __UNIT_TYPE* work1_buf, __UNIT_TYPE* work2_buf, __UNIT_TYPE* r_buf)
+    static void Pow_UX_UI_Imp(ThreadContext& tc, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_count, _UINT32_T e, __UNIT_TYPE* work1_buf, __UNIT_TYPE* work2_buf, __UNIT_TYPE* r_buf)
     {
         _UINT32_T e_mask = _rotr(1, _LZCNT_ALT_32(e) + 1);
 
@@ -49,7 +49,7 @@ namespace Palmtree::Math::Core::Internal
         {
             // u を自乗して w に格納する
             _ZERO_MEMORY_UNIT(w_ptr, u_count * 2);
-            Multiply_UX_UX_Imp(PMC_MULTIPLICATION_METHOD_AUTO, u_ptr, u_count, u_ptr, u_count, w_ptr);
+            Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, u_ptr, u_count, u_ptr, u_count, w_ptr);
             u_count *= 2;
             if (w_ptr[u_count - 1] == 0)
                 --u_count;
@@ -59,7 +59,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 // bit が立っていたら u = w * v とする
                 _ZERO_MEMORY_UNIT(u_ptr, u_count + v_count);
-                Multiply_UX_UX_Imp(PMC_MULTIPLICATION_METHOD_AUTO, w_ptr, u_count, v_ptr, v_count, u_ptr);
+                Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, w_ptr, u_count, v_ptr, v_count, u_ptr);
                 u_count += v_count;
                 if (u_ptr[u_count - 1] == 0)
                     --u_count;
@@ -147,10 +147,12 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE* work1_buf = root.AllocateBlock(work_bit_count);
                 __UNIT_TYPE* work2_buf = root.AllocateBlock(work_bit_count);
                 NUMBER_OBJECT_UINT* r = root.AllocateNumber(work_bit_count);
-                Pow_UX_UI_Imp(v_buf, 1, e, work1_buf, work2_buf, r->BLOCK);
+                Pow_UX_UI_Imp(tc, v_buf, 1, e, work1_buf, work2_buf, r->BLOCK);
+#ifdef _DEBUG
                 root.CheckBlock(work1_buf);
                 root.CheckBlock(work2_buf);
                 root.CheckNumber(r);
+#endif
                 CommitNumber(tc, r);
                 root.UnlinkNumber(r);
                 return (r);
@@ -269,10 +271,12 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE* work1_buf = root.AllocateBlock(work_bit_count);
                 __UNIT_TYPE* work2_buf = root.AllocateBlock(work_bit_count);
                 NUMBER_OBJECT_UINT* r = root.AllocateNumber(work_bit_count);
-                Pow_UX_UI_Imp(v_buf, v_buf_count, e, work1_buf, work2_buf, r->BLOCK);
+                Pow_UX_UI_Imp(tc, v_buf, v_buf_count, e, work1_buf, work2_buf, r->BLOCK);
+#ifdef _DEBUG
                 root.CheckBlock(work1_buf);
                 root.CheckBlock(work2_buf);
                 root.CheckNumber(r);
+#endif
                 CommitNumber(tc, r);
                 root.UnlinkNumber(r);
                 return (r);
@@ -342,10 +346,12 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE* work1_buf = root.AllocateBlock(work_bit_count);
                 __UNIT_TYPE* work2_buf = root.AllocateBlock(work_bit_count);
                 NUMBER_OBJECT_UINT* r = root.AllocateNumber(work_bit_count);
-                Pow_UX_UI_Imp(v->BLOCK, v->UNIT_WORD_COUNT, e, work1_buf, work2_buf, r->BLOCK);
+                Pow_UX_UI_Imp(tc, v->BLOCK, v->UNIT_WORD_COUNT, e, work1_buf, work2_buf, r->BLOCK);
+#ifdef _DEBUG
                 root.CheckBlock(work1_buf);
                 root.CheckBlock(work2_buf);
                 root.CheckNumber(r);
+#endif
                 CommitNumber(tc, r);
                 root.UnlinkNumber(r);
                 return (r);

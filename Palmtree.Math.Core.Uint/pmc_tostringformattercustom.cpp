@@ -372,14 +372,18 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         ReverseStringWriter int_buf_writer(int_buf, int_buf_length);
         ThousandSeparatedStringWriter t_int_buf_writer(int_buf_writer, _enabled_grouping ? L'N' : L'D', format_option);
         t_int_buf_writer.Write(L'0', _min_int_part_length);
+#ifdef _DEBUG
         root.CheckString(int_buf);
+#endif
 
         // 小数部の文字列化
         size_t frac_buf_length = _min_frac_part_length + 1;
         wchar_t* frac_buf = root.AllocateString(frac_buf_length);
         StringWriter frac_buf_writer(frac_buf, frac_buf_length);
         frac_buf_writer.Write(L'0', _min_frac_part_length);
+#ifdef _DEBUG
         root.CheckString(frac_buf);
+#endif
 
         // カスタム数値書式文字列のプレースホルダに適用する
         ApplyPlaceHolder(SIGN_ZERO, t_int_buf_writer.GetString(), frac_buf_writer.GetString(), 0, format_option, writer);
@@ -395,14 +399,18 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         ReverseStringWriter int_buf_writer(int_buf, int_buf_length);
         ThousandSeparatedStringWriter t_int_buf_writer(int_buf_writer, _enabled_grouping ? L'N' : L'D', format_option);
         t_int_buf_writer.Write(L'0', _max_int_part_length);
+#ifdef _DEBUG
         root.CheckString(int_buf);
+#endif
 
         // 小数部の文字列化
         size_t frac_buf_length = _min_frac_part_length + 1;
         wchar_t* frac_buf = root.AllocateString(frac_buf_length);
         StringWriter frac_buf_writer(frac_buf, frac_buf_length);
         frac_buf_writer.Write(L'0', _min_frac_part_length);
+#ifdef _DEBUG
         root.CheckString(frac_buf);
+#endif
 
         // カスタム数値書式文字列のプレースホルダに適用する
         ApplyPlaceHolder(SIGN_ZERO, t_int_buf_writer.GetString(), frac_buf_writer.GetString(), 0, format_option, writer);
@@ -457,14 +465,18 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
             ReverseStringWriter int_buf_writer(int_buf, int_buf_length);
             ThousandSeparatedStringWriter t_int_buf_writer(int_buf_writer, _enabled_grouping ? L'N' : L'D', format_option);
             PMC_LToA_Imp(_tc, t_int_part, t_int_buf_writer);
+#ifdef _DEBUG
             root.CheckString(int_buf);
+#endif
 
             // 小数部の文字列化
             size_t frac_buf_length = _max_frac_part_length + 1;
             wchar_t* frac_buf = root.AllocateString(frac_buf_length);
             StringWriter frac_buf_writer(frac_buf, frac_buf_length);
             PMC_FToA_Imp(_tc, t_frac_part_numerator, t_frac_part_denominator, _max_frac_part_length, frac_buf_writer);
+#ifdef _DEBUG
             root.CheckString(frac_buf);
+#endif
 
             // カスタム数値書式文字列のプレースホルダに適用する
             ApplyPlaceHolder(x_sign, t_int_buf_writer.GetString(), frac_buf_writer.GetString(), 0, format_option, writer);
@@ -514,14 +526,18 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
             ReverseStringWriter int_buf_writer(int_buf, int_buf_length);
             ThousandSeparatedStringWriter t_int_buf_writer(int_buf_writer, _enabled_grouping ? L'N' : L'D', format_option);
             PMC_LToA_Imp(_tc, t_int_part, t_int_buf_writer);
+#ifdef _DEBUG
             root.CheckString(int_buf);
+#endif
 
             // 小数部の文字列化
             size_t frac_buf_length = _max_frac_part_length + 1;
             wchar_t* frac_buf = root.AllocateString(frac_buf_length);
             StringWriter frac_buf_writer(frac_buf, frac_buf_length);
             PMC_FToA_Imp(_tc, t_frac_part_numerator, t_frac_part_denominator, _max_frac_part_length, frac_buf_writer);
+#ifdef _DEBUG
             root.CheckString(frac_buf);
+#endif
 
             // カスタム数値書式文字列のプレースホルダに適用する
             ApplyPlaceHolder(x_sign, t_int_buf_writer.GetString(), frac_buf_writer.GetString(), exp_part, format_option, writer);
@@ -566,7 +582,9 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
         ReverseStringReader int_buf_reader(int_part_buf);
         for (FormatToken* p = _decimal_point_separater == nullptr ? _section_root.Prev() : _decimal_point_separater->Prev(); p != &_section_root; p = p->Prev())
             p->Format(int_buf_reader, exp_part, int_str_buf_writer);
+#ifdef _DEBUG
         root.CheckString(int_str_buf);
+#endif
 
         // カスタム書式の小数点より後の文字の数(見積もり)
         size_t frac_str_buf_length = lstrlenW(frac_part_buf) + 1;
@@ -584,7 +602,9 @@ namespace Palmtree::Math::Core::Internal::CustomFormat
             StringReader frac_buf_reader(frac_part_buf);
             for (FormatToken* p = _decimal_point_separater->Next(); p != &_section_root; p = p->Next())
                 p->Format(frac_buf_reader, exp_part, frac_str_buf_writer);
+#ifdef _DEBUG
             root.CheckString(frac_str_buf);
+#endif
         }
 
         // 編集したパーツを結合する

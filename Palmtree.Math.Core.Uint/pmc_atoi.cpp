@@ -468,7 +468,9 @@ namespace Palmtree::Math::Core::Internal
             ++in_buf;
             --in_buf_count;
         }
+#ifdef _DEBUG
         root.CheckBlock(work_buf);
+#endif
         _COPY_MEMORY_UNIT(out_buf, work_buf, work_buf_count);
     }
 
@@ -484,7 +486,9 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE o_bit_count = bin_buf_count * __UNIT_TYPE_BIT_COUNT;
         NUMBER_OBJECT_UINT* nr = root.AllocateNumber(o_bit_count);
         ConvertCardinalNumber(tc, bin_buf, bin_buf_count, nr->BLOCK);
+#ifdef _DEBUG
         root.CheckNumber(nr);
+#endif
         CommitNumber(tc, nr);
 
         if (nr->IS_ZERO)

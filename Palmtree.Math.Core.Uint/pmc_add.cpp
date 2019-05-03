@@ -138,7 +138,7 @@ namespace Palmtree::Math::Core::Internal
     }
 
     // 加算の実装。x のワード数は y のワード数より小さくてはならない。
-    static void Add_Imp_using_ADC(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf, __UNIT_TYPE w_count)
+    static void Add_Imp(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf, __UNIT_TYPE w_count)
     {
         // x のワード長が y のワード長以上であるようにする
         if (u_count < v_count)
@@ -234,7 +234,9 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE w_bit_count = x_bit_count + 1;
             NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
             DoCarry(1, x->BLOCK, x->UNIT_WORD_COUNT, nw->BLOCK, nw->BLOCK_COUNT);
+#ifdef _DEBUG
             root.CheckNumber(nw);
+#endif
             CommitNumber(tc, nw);
             root.UnlinkNumber(nw);
             return (nw);
@@ -295,7 +297,9 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                 NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
                 Add_UX_1W(nu->BLOCK, nu->UNIT_WORD_COUNT, v, nw->BLOCK, nw->BLOCK_COUNT);
+#ifdef _DEBUG
                 root.CheckNumber(nw);
+#endif
                 CommitNumber(tc, nw);
                 root.UnlinkNumber(nw);
                 return (nw);
@@ -388,7 +392,9 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                         Add_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, w->BLOCK, w->BLOCK_COUNT);
+#ifdef _DEBUG
                         root.CheckNumber(w);
+#endif
                         CommitNumber(tc, w);
                         root.UnlinkNumber(w);
                         return (w);
@@ -402,7 +408,9 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                         Add_UX_2W(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK, w->BLOCK_COUNT);
+#ifdef _DEBUG
                         root.CheckNumber(w);
+#endif
                         CommitNumber(tc, w);
                         root.UnlinkNumber(w);
                         return (w);
@@ -418,7 +426,9 @@ namespace Palmtree::Math::Core::Internal
                     __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                     Add_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, w->BLOCK, w->BLOCK_COUNT);
+#ifdef _DEBUG
                     root.CheckNumber(w);
+#endif
                     CommitNumber(tc, w);
                     root.UnlinkNumber(w);
                     return (w);
@@ -479,8 +489,10 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
                 __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
-                Add_Imp_using_ADC(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
+                Add_Imp(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
+#ifdef _DEBUG
                 root.CheckNumber(w);
+#endif
                 CommitNumber(tc, w);
                 root.UnlinkNumber(w);
                 return (w);

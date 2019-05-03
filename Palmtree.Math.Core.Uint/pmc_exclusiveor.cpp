@@ -211,7 +211,9 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
             ExclusiveOr_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK);
+#ifdef _DEBUG
             root.CheckNumber(w);
+#endif
             CommitNumber(tc, w);
             if (w->IS_ZERO)
             {
@@ -294,7 +296,9 @@ namespace Palmtree::Math::Core::Internal
                     __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count);
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                     ExclusiveOr_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, w->BLOCK);
+#ifdef _DEBUG
                     root.CheckNumber(w);
+#endif
                     CommitNumber(tc, w);
                     if (w->IS_ZERO)
                     {
@@ -313,7 +317,9 @@ namespace Palmtree::Math::Core::Internal
                     __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count);
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                     ExclusiveOr_UX_2W(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK);
+#ifdef _DEBUG
                     root.CheckNumber(w);
+#endif
                     CommitNumber(tc, w);
                     if (w->IS_ZERO)
                     {
@@ -334,7 +340,9 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 ExclusiveOr_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, w->BLOCK);
+#ifdef _DEBUG
                 root.CheckNumber(w);
+#endif
                 CommitNumber(tc, w);
                 if (w->IS_ZERO)
                 {
@@ -400,7 +408,9 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count);
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
             ExclusiveOr_UX_UX(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK);
+#ifdef _DEBUG
             root.CheckNumber(w);
+#endif
             CommitNumber(tc, w);
             if (w->IS_ZERO)
             {

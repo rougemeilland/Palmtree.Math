@@ -217,7 +217,7 @@ namespace Palmtree::Math::Core::Internal
         Multiply_WORD(u_buf, u_count, v_hi, &w_buf[1]);
     }
 
-    void ClassicMultiplicationEngine::Multiply_UX_UX(__UNIT_TYPE * u_buf, __UNIT_TYPE u_count, __UNIT_TYPE * v_buf, __UNIT_TYPE v_count, __UNIT_TYPE * w_buf)
+    void ClassicMultiplicationEngine::Multiply_UX_UX(ThreadContext& tc, __UNIT_TYPE * u_buf, __UNIT_TYPE u_count, __UNIT_TYPE * v_buf, __UNIT_TYPE v_count, __UNIT_TYPE * w_buf)
     {
         // x のワード長が y のワード長以上であるようにする
         if (u_count < v_count)

@@ -37,7 +37,7 @@ namespace Palmtree::Math::Core::Internal
     public:
         KaratsubaMultiplicationEngine();
         ~KaratsubaMultiplicationEngine();
-        void Multiply_UX_UX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf);
+        void Multiply_UX_UX(ThreadContext& tc, __UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf);
     };
 
 }

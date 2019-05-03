@@ -63,8 +63,10 @@ namespace Palmtree::Math::Core::Internal
             else
             {
                 DivRem_UX_UX(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, nullptr, r->BLOCK);
+#ifdef _DEBUG
                 root.CheckBlock(work_v_buf);
                 root.CheckNumber(r);
+#endif
             }
             root.DeallocateBlock(work_v_buf);
             CommitNumber(tc, r);
@@ -123,8 +125,10 @@ namespace Palmtree::Math::Core::Internal
             // v2 を v % m に設定する。
 
             DivRem_UX_UX(v->BLOCK, v->UNIT_WORD_COUNT, m_buf, m_count, work_v_buf, nullptr, v_2_buf);
+#ifdef _DEBUG
             root.CheckBlock(work_v_buf);
             root.CheckBlock(v_2_buf);
+#endif
             v_count = m_count;
             while (v_count > 0 && v_2_buf[v_count - 1] == 0)
                 --v_count;
@@ -175,9 +179,11 @@ namespace Palmtree::Math::Core::Internal
 
             // w := u * u を計算する
             root.ClearBlock(w_ptr);
-            Multiply_UX_UX_Imp(PMC_MULTIPLICATION_METHOD_AUTO, u_ptr, u_count, u_ptr, u_count, w_ptr);
+            Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, u_ptr, u_count, u_ptr, u_count, w_ptr);
+#ifdef _DEBUG
             root.CheckBlock(work_1_buf);
             root.CheckBlock(work_2_buf);
+#endif
             SwapPointer(&u_ptr, &w_ptr);
             u_count *= 2;
             if (u_ptr[u_count - 1] == 0)
@@ -189,9 +195,11 @@ namespace Palmtree::Math::Core::Internal
                 root.ClearBlock(work_v_buf);
                 root.ClearBlock(w_ptr);
                 DivRem_UX_UX(u_ptr, u_count, m_buf, m_count, work_v_buf, nullptr, w_ptr);
+#ifdef _DEBUG
                 root.CheckBlock(work_v_buf);
                 root.CheckBlock(work_1_buf);
                 root.CheckBlock(work_2_buf);
+#endif
                 SwapPointer(&u_ptr, &w_ptr);
                 u_count = m_count;
                 while (u_count > 0 && u_ptr[u_count - 1] == 0)
@@ -210,9 +218,11 @@ namespace Palmtree::Math::Core::Internal
 
                 // w := u * v を計算する
                 root.ClearBlock(w_ptr);
-                Multiply_UX_UX_Imp(PMC_MULTIPLICATION_METHOD_AUTO, u_ptr, u_count, v_ptr, v_count, w_ptr);
+                Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, u_ptr, u_count, v_ptr, v_count, w_ptr);
+#ifdef _DEBUG
                 root.CheckBlock(work_1_buf);
                 root.CheckBlock(work_2_buf);
+#endif
                 SwapPointer(&u_ptr, &w_ptr);
                 u_count += v_count;
                 if (u_ptr[u_count - 1] == 0)
@@ -224,9 +234,11 @@ namespace Palmtree::Math::Core::Internal
                     root.ClearBlock(work_v_buf);
                     root.ClearBlock(w_ptr);
                     DivRem_UX_UX(u_ptr, u_count, m_buf, m_count, work_v_buf, nullptr, w_ptr);
+#ifdef _DEBUG
                     root.CheckBlock(work_v_buf);
                     root.CheckBlock(work_1_buf);
                     root.CheckBlock(work_2_buf);
+#endif
                     SwapPointer(&u_ptr, &w_ptr);
                     u_count = m_count;
                     while (u_count > 0 && u_ptr[u_count - 1] == 0)
@@ -242,7 +254,9 @@ namespace Palmtree::Math::Core::Internal
 
         // 最下位桁まで達したので u_ptr と u_count を解として帰る
         _COPY_MEMORY_UNIT(r->BLOCK, u_ptr, u_count);
+#ifdef _DEBUG
         root.CheckNumber(r);
+#endif
         CommitNumber(tc, r);
         if (r->IS_ZERO)
         {

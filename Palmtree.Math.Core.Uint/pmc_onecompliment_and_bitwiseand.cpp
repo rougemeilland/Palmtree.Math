@@ -91,7 +91,9 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE w_bit_count = v_bit_count;
             NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
             OneCompliment_And_BitwiseAnd_1W(u, nv->BLOCK, nv->UNIT_WORD_COUNT, nw->BLOCK);
+#ifdef _DEBUG
             root.CheckNumber(nw);
+#endif
             CommitNumber(tc, nw);
             if (nw->IS_ZERO)
             {
@@ -149,7 +151,9 @@ namespace Palmtree::Math::Core::Internal
                     __UNIT_TYPE w_bit_count = v_bit_count;
                     NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
                     OneCompliment_And_BitwiseAnd_1W(u_lo, nv->BLOCK, nv->UNIT_WORD_COUNT, nw->BLOCK);
+#ifdef _DEBUG
                     root.CheckNumber(nw);
+#endif
                     CommitNumber(tc, nw);
                     if (nw->IS_ZERO)
                     {
@@ -169,7 +173,9 @@ namespace Palmtree::Math::Core::Internal
                     __UNIT_TYPE w_bit_count = v_bit_count;
                     NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
                     OneCompliment_And_BitwiseAnd_2W(u_hi, u_lo, nv->BLOCK, nv->UNIT_WORD_COUNT, nw->BLOCK);
+#ifdef _DEBUG
                     root.CheckNumber(nw);
+#endif
                     CommitNumber(tc, nw);
                     if (nw->IS_ZERO)
                     {
@@ -190,7 +196,9 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE w_bit_count = v_bit_count;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 OneCompliment_And_BitwiseAnd_1W((__UNIT_TYPE)u, nv->BLOCK, nv->UNIT_WORD_COUNT, w->BLOCK);
+#ifdef _DEBUG
                 root.CheckNumber(w);
+#endif
                 CommitNumber(tc, w);
                 if (w->IS_ZERO)
                 {
@@ -444,7 +452,9 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE w_bit_count = v_bit_count;
             NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
             OneCompliment_And_BitwiseAnd_UX_UX(nu->BLOCK, _MINIMUM_UNIT(nu->UNIT_WORD_COUNT, nv->UNIT_WORD_COUNT), nv->BLOCK, nv->UNIT_WORD_COUNT, nw->BLOCK);
+#ifdef _DEBUG
             root.CheckNumber(nw);
+#endif
             CommitNumber(tc, nw);
             if (nw->IS_ZERO)
             {

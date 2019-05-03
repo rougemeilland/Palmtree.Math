@@ -39,23 +39,23 @@ namespace Palmtree::Math::Core::Internal
     static KaratsubaMultiplicationEngine* _engine_karatsuba;
     static SchonHageStrassenMultiplicationEngine* _engine_schonHagestrassen;
 
-    void Multiply_UX_UX_Imp(PMC_MULTIPLICATION_METHOD_CODE method, __UNIT_TYPE* u, __UNIT_TYPE u_count, __UNIT_TYPE* v, __UNIT_TYPE v_count, __UNIT_TYPE* w)
+    void Multiply_UX_UX_Imp(ThreadContext& tc, PMC_MULTIPLICATION_METHOD_CODE method, __UNIT_TYPE* u, __UNIT_TYPE u_count, __UNIT_TYPE* v, __UNIT_TYPE v_count, __UNIT_TYPE* w)
     {
         switch (method)
         {
         case PMC_MULTIPLICATION_METHOD_AUTO:
             if (false)
-                return (_engine_schonHagestrassen->Multiply_UX_UX(u, u_count, v, v_count, w));
+                return (_engine_schonHagestrassen->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
             else if (false)
-                return (_engine_karatsuba->Multiply_UX_UX(u, u_count, v, v_count, w));
+                return (_engine_karatsuba->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
             else
-                return (_engine_classic->Multiply_UX_UX(u, u_count, v, v_count, w));
+                return (_engine_classic->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
         case PMC_MULTIPLICATION_METHOD_CLASSIC:
-            return (_engine_schonHagestrassen->Multiply_UX_UX(u, u_count, v, v_count, w));
+            return (_engine_schonHagestrassen->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
         case PMC_MULTIPLICATION_METHOD_KARATSUBA:
-            return (_engine_karatsuba->Multiply_UX_UX(u, u_count, v, v_count, w));
+            return (_engine_karatsuba->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
         case PMC_MULTIPLICATION_METHOD_SCHONSTRASSEN:
-            return (_engine_classic->Multiply_UX_UX(u, u_count, v, v_count, w));
+            return (_engine_classic->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
         default:
             throw ArgumentException(L"methodが不正です。");
         }
@@ -117,7 +117,9 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE w_bit_count = u_bit_count + v_bit_count;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 _engine_classic->Multiply_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK);
+#ifdef _DEBUG
                 root.CheckNumber(w);
+#endif
                 CommitNumber(tc, w);
                 root.UnlinkNumber(w);
                 return (w);
@@ -222,7 +224,9 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE w_bit_count = u_bit_count + v_bit_count;
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                         _engine_classic->Multiply_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, w->BLOCK);
+#ifdef _DEBUG
                         root.CheckNumber(w);
+#endif
                         CommitNumber(tc, w);
                         root.UnlinkNumber(w);
                         return (w);
@@ -235,7 +239,9 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE w_bit_count = u_bit_count + v_bit_count;
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                         _engine_classic->Multiply_UX_2W(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK);
+#ifdef _DEBUG
                         root.CheckNumber(w);
+#endif
                         CommitNumber(tc, w);
                         root.UnlinkNumber(w);
                         return (w);
@@ -250,7 +256,9 @@ namespace Palmtree::Math::Core::Internal
                     __UNIT_TYPE w_bit_count = u_bit_count + v_bit_count;
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                     _engine_classic->Multiply_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, w->BLOCK);
+#ifdef _DEBUG
                     root.CheckNumber(w);
+#endif
                     CommitNumber(tc, w);
                     root.UnlinkNumber(w);
                     return (w);
@@ -346,8 +354,10 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
                 __UNIT_TYPE w_bit_count = u_bit_count + v_bit_count;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
-                Multiply_UX_UX_Imp(method, u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK);
+                Multiply_UX_UX_Imp(tc, method, u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK);
+#ifdef _DEBUG
                 root.CheckNumber(w);
+#endif
                 CommitNumber(tc, w);
                 root.UnlinkNumber(w);
                 return (w);

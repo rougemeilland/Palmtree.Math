@@ -82,7 +82,9 @@ namespace Palmtree::Math::Core::Internal
         wchar_t* AllocateString(size_t count); // 終端ヌル文字を含めた文字数
         void ClearString(wchar_t* buffer);
         void DeallocateString(wchar_t* buffer);
+#ifdef _DEBUG
         void CheckString(wchar_t* buffer);
+#endif
         void UnlinkString(wchar_t* buffer);
 
     protected:

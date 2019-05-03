@@ -293,7 +293,9 @@ namespace Palmtree::Math::Core::Internal
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
             __UNIT_TYPE w_word_count = _DIVIDE_CEILING_UNIT(w_bit_count, __UNIT_TYPE_BIT_COUNT);
             BitwiseAnd_UX_UX(u->BLOCK, v->BLOCK, w->BLOCK, w_word_count);
+#ifdef _DEBUG
             root.CheckNumber(w);
+#endif
             CommitNumber(tc, w);
             if (w->IS_ZERO)
             {

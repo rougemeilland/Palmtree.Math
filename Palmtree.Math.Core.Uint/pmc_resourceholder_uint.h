@@ -134,13 +134,17 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE* AllocateBlock(__UNIT_TYPE bit_count);
         void ClearBlock(__UNIT_TYPE* buffer);
         void DeallocateBlock(__UNIT_TYPE* buffer);
+#ifdef _DEBUG
         void CheckBlock(__UNIT_TYPE* buffer);
+#endif
         void UnlinkBlock(__UNIT_TYPE* buffer);
 
         NUMBER_OBJECT_UINT* AllocateNumber(__UNIT_TYPE bit_count);
         void HookNumber(NUMBER_OBJECT_UINT* buffer);
         void DeallocateNumber(NUMBER_OBJECT_UINT* buffer);
+#ifdef _DEBUG
         void CheckNumber(NUMBER_OBJECT_UINT* buffer);
+#endif
         void UnlinkNumber(NUMBER_OBJECT_UINT* buffer);
 
         void AttatchStaticNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count);
