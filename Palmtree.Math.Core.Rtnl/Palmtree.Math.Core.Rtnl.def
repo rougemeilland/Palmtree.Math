@@ -73,7 +73,6 @@ EXPORTS
 	PMCCS_From_UL
 	PMCCS_From_UX
 	PMCCS_From_X
-	PMCCS_GetAllocatedMemorySize
 	PMCCS_GetConfigurationSettings
 	PMCCS_GetConstantValue_I
 	PMCCS_GetHashCode_R

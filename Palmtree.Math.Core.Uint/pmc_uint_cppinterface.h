@@ -65,8 +65,6 @@ namespace Palmtree::Math::Core::Internal
 
         PMC_HANDLE_UINT Clone(ThreadContext& tc, PMC_HANDLE_UINT x) noexcept(false);
 
-        _UINT64_T GetAllocatedMemorySize();
-
         _INT32_T ToInt32(PMC_HANDLE_UINT p) noexcept(false);
         _INT64_T ToInt64(PMC_HANDLE_UINT p) noexcept(false);
         _UINT32_T ToUInt32(PMC_HANDLE_UINT p) noexcept(false);

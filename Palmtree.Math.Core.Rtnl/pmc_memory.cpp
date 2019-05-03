@@ -46,7 +46,9 @@ namespace Palmtree::Math::Core::Internal
 {
 
 #pragma region 静的変数の定義
+#ifdef USE_WIN32_HEAP
     static HANDLE hLocalHeap;
+#endif
     NUMBER_OBJECT_RTNL number_object_rtnl_zero;
     NUMBER_OBJECT_RTNL number_object_rtnl_one;
     NUMBER_OBJECT_RTNL number_object_rtnl_minus_one;
@@ -221,7 +223,11 @@ namespace Palmtree::Math::Core::Internal
             return;
         CleanUpNumber(tc, p);
         FillNumberHeader(p);
+#ifdef USE_WIN32_HEAP
         __DeallocateHeap(p);
+#else
+        delete p;
+#endif
         tc.DecrementTypeAAllocationCount();
     }
 
@@ -324,90 +330,11 @@ namespace Palmtree::Math::Core::Internal
         return (1 + ep_sint.GetBufferCount(np->NUMERATOR) + ep_uint.GetBufferCount(np->DENOMINATOR));
     }
 
-#pragma region ヒープメモリ関連関数
-
-    static BOOL GetAllocatedMemorySize_Imp(_UINT64_T* size)
-    {
-        *size = 0;
-        DWORD LastError;
-        PROCESS_HEAP_ENTRY Entry;
-        Entry.lpData = nullptr;
-        while (HeapWalk(hLocalHeap, &Entry))
-        {
-            BOOL is_allocated = FALSE;
-            if ((Entry.wFlags & PROCESS_HEAP_ENTRY_BUSY) != 0)
-            {
-                //_tprintf(TEXT("Allocated block"));
-                is_allocated = TRUE;
-
-                if ((Entry.wFlags & PROCESS_HEAP_ENTRY_MOVEABLE) != 0)
-                {
-                    //_tprintf(TEXT(", movable with HANDLE %#p"), Entry.Block.hMem);
-                }
-
-                if ((Entry.wFlags & PROCESS_HEAP_ENTRY_DDESHARE) != 0)
-                {
-                    //_tprintf(TEXT(", DDESHARE"));
-                }
-            }
-            else if ((Entry.wFlags & PROCESS_HEAP_REGION) != 0)
-            {
-                //_tprintf(TEXT("Region\n  %d bytes committed\n") \
-                //    TEXT("  %d bytes uncommitted\n  First block address: %#p\n") \
-                //    TEXT("  Last block address: %#p\n"),
-                //    Entry.Region.dwCommittedSize,
-                //    Entry.Region.dwUnCommittedSize,
-                //    Entry.Region.lpFirstBlock,
-                //    Entry.Region.lpLastBlock);
-            }
-            else if ((Entry.wFlags & PROCESS_HEAP_UNCOMMITTED_RANGE) != 0)
-            {
-                //_tprintf(TEXT("Uncommitted range\n"));
-            }
-            else
-            {
-                //_tprintf(TEXT("Block\n"));
-            }
-
-            //_tprintf(TEXT("  Data portion begins at: %#p\n  Size: %d bytes\n") \
-            //    TEXT("  Overhead: %d bytes\n  Region index: %d\n\n"),
-            //    Entry.lpData,
-            //    Entry.cbData,
-            //    Entry.cbOverhead,
-            //    Entry.iRegionIndex);
-            if (is_allocated)
-                *size += Entry.cbData;
-        }
-        LastError = GetLastError();
-        if (LastError != ERROR_NO_MORE_ITEMS)
-        {
-            //_tprintf(TEXT("HeapWalk failed with LastError %d.\n"), LastError);
-            return (FALSE);
-        }
-        return (TRUE);
-    }
-
-    _UINT64_T PMC_GetAllocatedMemorySize() noexcept(false)
-    {
-        if (!HeapLock(hLocalHeap))
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;GetAllocatedMemorySize;1");
-        _UINT64_T size;
-        BOOL result = GetAllocatedMemorySize_Imp(&size);
-        if (!HeapUnlock(hLocalHeap))
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;GetAllocatedMemorySize;2");
-        if (!result)
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;GetAllocatedMemorySize;3");
-        return (size);
-    }
-
     _INT32_T PMC_GetHashCode(PMC_HANDLE_RTNL p) noexcept(false)
     {
         NUMBER_OBJECT_RTNL* np = GET_NUMBER_OBJECT(p, L"p");
         return ((_INT32_T)ep_sint.GetHashCode(np->NUMERATOR) ^ (_INT32_T)np->DENOMINATOR->HASH_CODE);
     }
-
-
-#pragma endregion
 
     PMC_STATUS_CODE Initialize_Memory(void)
     {
@@ -458,6 +385,7 @@ namespace Palmtree::Math::Core::Internal
 
     }
 
+#ifdef USE_WIN32_HEAP
     void* __AllocateHeap(size_t size) noexcept(false)
     {
         void* buffer = HeapAlloc(hLocalHeap, HEAP_ZERO_MEMORY, size);
@@ -487,6 +415,7 @@ namespace Palmtree::Math::Core::Internal
             hLocalHeap = nullptr;
         }
     }
+#endif
 
 }
 

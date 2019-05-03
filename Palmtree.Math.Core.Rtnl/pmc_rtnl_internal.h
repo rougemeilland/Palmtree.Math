@@ -103,6 +103,7 @@ namespace Palmtree::Math::Core::Internal
     // パフォーマンスカウンタ
     extern PMC_STATISTICS_INFO_RTNL statistics_info;
 
+#ifdef USE_WIN32_HEAP
     // 内部ヒープメモリ領域を獲得する。
     extern bool __AllocateRTNLHeapArea(void) noexcept(true);
 
@@ -114,6 +115,7 @@ namespace Palmtree::Math::Core::Internal
 
     //// 指定されたアドレスのメモリを解放する。
     extern void __DeallocateHeap(void* buffer) noexcept(true);
+#endif
 
     extern void __AttatchNumber(ThreadContext& tc, NUMBER_OBJECT_RTNL* p, PMC_HANDLE_SINT numerator, PMC_HANDLE_UINT denominator);
 
@@ -161,8 +163,6 @@ namespace Palmtree::Math::Core::Internal
     extern size_t PMC_ToByteArray_R(PMC_HANDLE_RTNL p, unsigned char* buffer, size_t buffer_size) noexcept(false);
 
     extern PMC_HANDLE_RTNL PMC_Clone_R(ThreadContext& tc, PMC_HANDLE_RTNL x) noexcept(false);
-
-    extern _UINT64_T PMC_GetAllocatedMemorySize() noexcept(false);
 
     extern _UINT32_T PMC_ToUInt32_R(ThreadContext& tc, PMC_HANDLE_RTNL p) noexcept(false);
     extern _INT32_T PMC_ToInt32_R(ThreadContext& tc, PMC_HANDLE_RTNL p) noexcept(false);

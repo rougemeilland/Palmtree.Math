@@ -775,16 +775,6 @@ namespace Palmtree.Math.Core
 
         #endregion
 
-        #region GetAllocatedMemorySize 関数
-
-        public UInt64 GetAllocatedMemorySize()
-        {
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_GetAllocatedMemorySize(out UInt64 r));
-            return (r);
-        }
-
-        #endregion
-
         #region GetConfigurationSettings 関数
 
         public string GetConfigurationSettings(string key)

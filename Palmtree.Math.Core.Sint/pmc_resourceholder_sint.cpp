@@ -50,7 +50,11 @@ namespace Palmtree::Math::Core::Internal
 
     void ResourceHolderSINT::__BigIntNumberObjectStructureChainBufferTag::Destruct()
     {
+#ifdef USE_WIN32_HEAP
         __DeallocateHeap(_buffer);
+#else
+        delete _buffer;
+#endif
         _tc.DecrementTypeAAllocationCount();
     }
 
@@ -169,7 +173,11 @@ namespace Palmtree::Math::Core::Internal
     NUMBER_OBJECT_SINT * ResourceHolderSINT::AllocateBigIntNumberObjectStructure()
     {
         Lock lock_obj;
+#ifdef USE_WIN32_HEAP
         NUMBER_OBJECT_SINT* buffer = (NUMBER_OBJECT_SINT*)__AllocateHeap(sizeof(NUMBER_OBJECT_SINT));
+#else
+        NUMBER_OBJECT_SINT* buffer = new NUMBER_OBJECT_SINT();
+#endif
         _tc.IncrementTypeAAllocationCount();
         __ChainBufferTag* tag = new __BigIntNumberObjectStructureChainBufferTag(_tc, buffer);
         _tc.IncrementTypeBAllocationCount();

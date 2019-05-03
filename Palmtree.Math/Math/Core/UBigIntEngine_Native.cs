@@ -171,9 +171,6 @@ namespace Palmtree.Math.Core
         [DllImport("Palmtree.Math.Core.Uint.dll")]
         private static extern Int32 PMCCS_GET_HASH_CODE(IntPtr p, out Int32 r);
 
-        [DllImport("Palmtree.Math.Core.Uint.dll")]
-        private static extern Int32 PMCCS_GetAllocatedMemorySize(out UInt64 size);
-
         [DllImport("Palmtree.Math.Core.Uint.dll", CharSet = CharSet.Unicode, EntryPoint = "PMCCS_GetConfigurationSettings")]
         private static extern Int32 PMCCS_GetConfigurationSettingCount(string key, IntPtr value_buffer, int value_buffer_size, out Int32 count);
 

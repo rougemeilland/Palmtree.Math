@@ -124,11 +124,6 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_Clone_X(tc, x));
     }
 
-    _UINT64_T PMC_SINT_CppInterface::GetAllocatedMemorySize()
-    {
-        return (PMC_GetAllocatedMemorySize());
-    }
-
     _UINT32_T PMC_SINT_CppInterface::ToUInt32(PMC_HANDLE_SINT p) noexcept(false)
     {
         return (PMC_ToUInt32_X(p));

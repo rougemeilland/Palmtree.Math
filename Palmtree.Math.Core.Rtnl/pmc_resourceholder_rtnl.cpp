@@ -51,7 +51,11 @@ namespace Palmtree::Math::Core::Internal
 
     void ResourceHolderRTNL::__RationalNumberObjectStructureChainBufferTag::Destruct()
     {
+#ifdef USE_WIN32_HEAP
         __DeallocateHeap(_buffer);
+#else
+        delete _buffer;
+#endif
         _tc.DecrementTypeAAllocationCount();
     }
 
@@ -170,7 +174,11 @@ namespace Palmtree::Math::Core::Internal
     NUMBER_OBJECT_RTNL * ResourceHolderRTNL::AllocateRationalNumberObjectStructure()
     {
         Lock lock_obj;
+#ifdef USE_WIN32_HEAP
         NUMBER_OBJECT_RTNL* buffer = (NUMBER_OBJECT_RTNL*)__AllocateHeap(sizeof(NUMBER_OBJECT_RTNL));
+#else
+        NUMBER_OBJECT_RTNL* buffer = new NUMBER_OBJECT_RTNL();
+#endif
         _tc.IncrementTypeAAllocationCount();
         __ChainBufferTag* tag = new __RationalNumberObjectStructureChainBufferTag(_tc, buffer);
         _tc.IncrementTypeBAllocationCount();

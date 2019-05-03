@@ -65,8 +65,6 @@ namespace Palmtree::Math::Core::Internal
 
         PMC_HANDLE_RTNL Clone(ThreadContext& tc, PMC_HANDLE_RTNL x) noexcept(false);
 
-        _UINT64_T GetAllocatedMemorySize() noexcept(false);
-
         _UINT32_T ToUInt32(ThreadContext& tc, PMC_HANDLE_RTNL p) noexcept(false);
         _INT32_T ToInt32(ThreadContext& tc, PMC_HANDLE_RTNL p) noexcept(false);
         _UINT64_T ToUInt64(ThreadContext& tc, PMC_HANDLE_RTNL p) noexcept(false);

@@ -389,9 +389,6 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_FromByteArray(byte[] buffer, int count, out IntPtr value);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
-        private static extern Int32 PMCCS_GetAllocatedMemorySize(out UInt64 size);
-
-        [DllImport("Palmtree.Math.Core.Sint.dll")]
         private static extern Int32 PMCCS_GetConstantValue_I(Int32 type, out IntPtr value);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]

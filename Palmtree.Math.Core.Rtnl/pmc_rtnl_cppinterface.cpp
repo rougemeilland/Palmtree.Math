@@ -118,11 +118,6 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_Clone_R(tc, x));
     }
 
-    _UINT64_T PMC_RTNL_CppInterface::GetAllocatedMemorySize()
-    {
-        return (PMC_GetAllocatedMemorySize());
-    }
-
     _UINT32_T PMC_RTNL_CppInterface::ToUInt32(ThreadContext& tc, PMC_HANDLE_RTNL p) noexcept(false)
     {
         return (PMC_ToUInt32_R(tc, p));

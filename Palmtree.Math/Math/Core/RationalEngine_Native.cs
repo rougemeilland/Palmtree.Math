@@ -249,9 +249,6 @@ namespace Palmtree.Math.Core
         [DllImport("Palmtree.Math.Core.Rtnl.dll")]
         private static extern Int32 PMCCS_From_X(IntPtr x, out IntPtr o);
 
-        [DllImport("Palmtree.Math.Core.Rtnl.dll")]
-        private static extern Int32 PMCCS_GetAllocatedMemorySize(out UInt64 size);
-
         [DllImport("Palmtree.Math.Core.Rtnl.dll", CharSet = CharSet.Unicode)]
         private static extern Int32 PMCCS_GetConfigurationSettings(string key, StringBuilder value_buffer, int value_buffer_size, out Int32 count);
 

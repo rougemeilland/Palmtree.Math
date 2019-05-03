@@ -54,7 +54,11 @@ namespace Palmtree::Math::Core::Internal
 
     void ResourceHolderUINT::__UBigIntNumberObjectStructureChainBufferTag::Destruct()
     {
+#ifdef USE_WIN32_HEAP
         __DeallocateHeap(_buffer);
+#else
+        delete _buffer;
+#endif
         _tc.DecrementTypeAAllocationCount();
     }
 
@@ -189,7 +193,11 @@ namespace Palmtree::Math::Core::Internal
     NUMBER_OBJECT_UINT* ResourceHolderUINT::AllocateUBigIntNumberObjectStructure()
     {
         Lock lock_obj;
+#ifdef USE_WIN32_HEAP
         NUMBER_OBJECT_UINT* buffer = (NUMBER_OBJECT_UINT*)__AllocateHeap(sizeof(NUMBER_OBJECT_UINT));
+#else
+        NUMBER_OBJECT_UINT* buffer = new NUMBER_OBJECT_UINT();
+#endif
         _tc.IncrementTypeAAllocationCount();
         __ChainBufferTag* tag = new __UBigIntNumberObjectStructureChainBufferTag(_tc, buffer);
         _tc.IncrementTypeBAllocationCount();

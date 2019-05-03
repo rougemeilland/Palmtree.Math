@@ -93,6 +93,7 @@ namespace Palmtree::Math::Core::Internal
     // パフォーマンスカウンタ
     extern PMC_STATISTICS_INFO_SINT statistics_info;
 
+#ifdef USE_WIN32_HEAP
     // 内部ヒープメモリ領域を獲得する。
     extern bool __AllocateSINTHeapArea(void) noexcept(true);
 
@@ -104,6 +105,7 @@ namespace Palmtree::Math::Core::Internal
 
     //// 指定されたアドレスのメモリを解放する。
     extern void __DeallocateHeap(void* buffer) noexcept(true);
+#endif
 
     extern void __AttatchNumber(NUMBER_OBJECT_SINT* p, SIGN_T sign, PMC_HANDLE_UINT abs);
 
@@ -145,7 +147,6 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_SINT PMC_FromByteArray_SINT(ThreadContext& tc, const unsigned char* buffer, size_t count) noexcept(false);
     extern size_t PMC_ToByteArray_X(PMC_HANDLE_SINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
     extern PMC_HANDLE_SINT PMC_Clone_X(ThreadContext& tc, PMC_HANDLE_SINT x) noexcept(false);
-    extern _UINT64_T PMC_GetAllocatedMemorySize() noexcept(false);
     extern _UINT32_T PMC_ToUInt32_X(PMC_HANDLE_SINT p) noexcept(false);
     extern _INT32_T PMC_ToInt32_X(PMC_HANDLE_SINT p) noexcept(false);
     extern _UINT64_T PMC_ToUInt64_X(PMC_HANDLE_SINT p) noexcept(false);

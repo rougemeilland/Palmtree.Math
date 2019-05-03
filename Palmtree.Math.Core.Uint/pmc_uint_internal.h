@@ -119,6 +119,7 @@ namespace Palmtree::Math::Core::Internal
     // クリティカルセクションを使用して排他を解放する。
     extern void __GlobalUnlock(void) noexcept (true);
 
+#ifdef USE_WIN32_HEAP
     // 内部ヒープメモリ領域を獲得する。
     extern bool __AllocateUINTHeapArea(void) noexcept(true);
 
@@ -130,6 +131,7 @@ namespace Palmtree::Math::Core::Internal
 
     // 指定されたアドレスのメモリを解放する。
     extern void __DeallocateHeap(void* buffer) noexcept(true);
+#endif
 
     // 与えられたビット数のメモリを獲得するのに十分な __UNIT_TYPE 配列を獲得する。
     extern __UNIT_TYPE* __AllocateBlock(ThreadContext& tc, size_t bits, __UNIT_TYPE* allocated_block_words, __UNIT_TYPE* code);
@@ -357,8 +359,6 @@ namespace Palmtree::Math::Core::Internal
     extern size_t PMC_ToByteArray_UX(PMC_HANDLE_UINT p, unsigned char* buffer, size_t buffer_size) noexcept(false);
 
     extern PMC_HANDLE_UINT PMC_Clone_UX(ThreadContext& tc, PMC_HANDLE_UINT x) noexcept(false);
-
-    extern _UINT64_T PMC_GetAllocatedMemorySize();
 
     extern _INT32_T PMC_ToInt32_UX(PMC_HANDLE_UINT p) noexcept(false);
     extern _INT64_T PMC_ToInt64_UX(PMC_HANDLE_UINT p) noexcept(false);

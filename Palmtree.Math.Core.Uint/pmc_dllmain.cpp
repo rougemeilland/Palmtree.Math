@@ -36,8 +36,10 @@ namespace Palmtree::Math::Core::Internal
         switch (dwReason)
         {
         case DLL_PROCESS_ATTACH: // DLLがプロセスのアドレス空間にマッピングされた。
+#ifdef USE_WIN32_HEAP
             if (!__AllocateUINTHeapArea())
                 result = FALSE;
+#endif
             break;
 
         case DLL_THREAD_ATTACH: // スレッドが作成されようとしている。
@@ -47,7 +49,9 @@ namespace Palmtree::Math::Core::Internal
             break;
 
         case DLL_PROCESS_DETACH: // DLLのマッピングが解除されようとしている。
+#ifdef USE_WIN32_HEAP
             __DeallocateUINTHeapArea();
+#endif
             break;
         default:
             result = FALSE;

@@ -47,7 +47,9 @@ namespace Palmtree::Math::Core::Internal
 {
 
 #pragma region 静的変数の定義
+#ifdef USE_WIN32_HEAP
     HANDLE hLocalHeap;
+#endif
     NUMBER_OBJECT_UINT number_object_uint_zero;
     NUMBER_OBJECT_UINT number_object_uint_one;
     NUMBER_OBJECT_UINT number_object_uint_ten;
@@ -163,18 +165,22 @@ namespace Palmtree::Math::Core::Internal
     // 引数には格納可能な多倍長整数の合計ワード数が渡される。
     __UNIT_TYPE* __AllocateBlock(ThreadContext& tc, size_t bits, __UNIT_TYPE* allocated_block_words, __UNIT_TYPE* code)
     {
+#ifdef _DEBUG
         // 実際に獲得されるメモリ領域は「引数で渡されたワード数+2」のワード数となる。
         // 最初のワードには獲得時に引数で渡されたワード数が格納される。
         // 最後のワードには格納されている内容の正当性確認のための値が格納される。
         // 2番目のワードへのポインタは呼び出し元に通知され利用される。
         __UNIT_TYPE words1 = _DIVIDE_CEILING_UNIT(bits, __UNIT_TYPE_BIT_COUNT);
         __UNIT_TYPE words2 = words1 + 2;
-        __UNIT_TYPE bytes = words2 * __UNIT_TYPE_BYTE_COUNT;
-        __UNIT_TYPE* buffer = (__UNIT_TYPE*)__AllocateHeap(bytes);
+#ifdef USE_WIN32_HEAP
+        __UNIT_TYPE* buffer = (__UNIT_TYPE*)__AllocateHeap(words2 * __UNIT_TYPE_BYTE_COUNT);
+#else
+        __UNIT_TYPE* buffer = new __UNIT_TYPE[words2];
+#endif
         tc.IncrementTypeAAllocationCount();
         buffer[0] = words1;
         *allocated_block_words = words1;
-#ifdef _DEBUG
+
         // 乱数もどきを生成する。
 #ifdef _M_IX86
         __UNIT_TYPE r = GetTickCount();
@@ -191,13 +197,22 @@ namespace Palmtree::Math::Core::Internal
 #error unknown platform
 #endif
         __UNIT_TYPE check_code = CHECK_CODE_INIT | r;
-#else
-        __UNIT_TYPE check_code = 0;
-#endif
         buffer[words1 + 1] = check_code;
         *code = check_code;
 
         return (&buffer[1]);
+#else
+        __UNIT_TYPE words = _DIVIDE_CEILING_UNIT(bits, __UNIT_TYPE_BIT_COUNT);
+#ifdef USE_WIN32_HEAP
+        __UNIT_TYPE* buffer = (__UNIT_TYPE*)__AllocateHeap(words * __UNIT_TYPE_BYTE_COUNT);
+#else
+        __UNIT_TYPE* buffer = new __UNIT_TYPE[words];
+#endif
+        tc.IncrementTypeAAllocationCount();
+        *allocated_block_words = words;
+        *code = 0;
+        return (&buffer[0]);
+#endif
     }
 
 
@@ -206,17 +221,23 @@ namespace Palmtree::Math::Core::Internal
     {
         if (buffer == nullptr)
             return;
-        __UNIT_TYPE* p = buffer - 1;
 #ifdef _DEBUG
+        __UNIT_TYPE* p = buffer - 1;
         if (*p != buffer_words)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;DeallocateBlock;1");
         if (p[buffer_words+1] != check_code)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;DeallocateBlock;2");
-#endif
         // 使用済みのバッファを既定のデータで塗りつぶす。
         _FILL_MEMORY_UNIT(p, DEFAULT_MEMORY_DATA, buffer_words + 2);
+#else
+        __UNIT_TYPE* p = buffer;
+#endif
         // バッファを解放する。
+#ifdef USE_WIN32_HEAP
         __DeallocateHeap(p);
+#else
+        delete[] p;
+#endif
         tc.DecrementTypeAAllocationCount();
     }
 
@@ -224,6 +245,7 @@ namespace Palmtree::Math::Core::Internal
     {
         if (buffer == nullptr)
             return;
+#ifdef _DEBUG
         --buffer;
         __UNIT_TYPE words = buffer[0];
         if (words != count)
@@ -232,6 +254,7 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE code_desired = code;
         if (code_desired != code_actual)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;CheckBlockLight;2");
+#endif
     }
 
     __inline static void ClearNumberHeader(NUMBER_OBJECT_UINT* p)
@@ -404,7 +427,11 @@ namespace Palmtree::Math::Core::Internal
             return;
         CleanUpNumber(tc, p);
         FillNumberHeader(p);
+#ifdef USE_WIN32_HEAP
         __DeallocateHeap(p);
+#else
+        delete p;
+#endif
         tc.DecrementTypeAAllocationCount();
     }
 
@@ -652,84 +679,6 @@ namespace Palmtree::Math::Core::Internal
     }
 #pragma endregion
 
-#pragma region ヒープメモリ関連関数
-
-    static BOOL GetAllocatedMemorySize_Imp(_UINT64_T* size)
-    {
-        *size = 0;
-        DWORD LastError;
-        PROCESS_HEAP_ENTRY Entry;
-        Entry.lpData = nullptr;
-        while (HeapWalk(hLocalHeap, &Entry))
-        {
-            BOOL is_allocated = FALSE;
-            if ((Entry.wFlags & PROCESS_HEAP_ENTRY_BUSY) != 0)
-            {
-                //_tprintf(TEXT("Allocated block"));
-                is_allocated = TRUE;
-
-                if ((Entry.wFlags & PROCESS_HEAP_ENTRY_MOVEABLE) != 0)
-                {
-                    //_tprintf(TEXT(", movable with HANDLE %#p"), Entry.Block.hMem);
-                }
-
-                if ((Entry.wFlags & PROCESS_HEAP_ENTRY_DDESHARE) != 0)
-                {
-                    //_tprintf(TEXT(", DDESHARE"));
-                }
-            }
-            else if ((Entry.wFlags & PROCESS_HEAP_REGION) != 0)
-            {
-                //_tprintf(TEXT("Region\n  %d bytes committed\n") \
-                //    TEXT("  %d bytes uncommitted\n  First block address: %#p\n") \
-                //    TEXT("  Last block address: %#p\n"),
-                //    Entry.Region.dwCommittedSize,
-                //    Entry.Region.dwUnCommittedSize,
-                //    Entry.Region.lpFirstBlock,
-                //    Entry.Region.lpLastBlock);
-            }
-            else if ((Entry.wFlags & PROCESS_HEAP_UNCOMMITTED_RANGE) != 0)
-            {
-                //_tprintf(TEXT("Uncommitted range\n"));
-            }
-            else
-            {
-                //_tprintf(TEXT("Block\n"));
-            }
-
-            //_tprintf(TEXT("  Data portion begins at: %#p\n  Size: %d bytes\n") \
-            //    TEXT("  Overhead: %d bytes\n  Region index: %d\n\n"),
-            //    Entry.lpData,
-            //    Entry.cbData,
-            //    Entry.cbOverhead,
-            //    Entry.iRegionIndex);
-            if (is_allocated)
-                *size += Entry.cbData;
-        }
-        LastError = GetLastError();
-        if (LastError != ERROR_NO_MORE_ITEMS)
-        {
-            //_tprintf(TEXT("HeapWalk failed with LastError %d.\n"), LastError);
-            return (FALSE);
-        }
-        return (TRUE);
-    }
-
-    _UINT64_T PMC_GetAllocatedMemorySize()
-    {
-        if (!HeapLock(hLocalHeap))
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;GetAllocatedMemorySize;1");
-        _UINT64_T size;
-        BOOL result = GetAllocatedMemorySize_Imp(&size);
-        if (!HeapUnlock(hLocalHeap))
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;GetAllocatedMemorySize;2");
-        if (!result)
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_memory.cpp;GetAllocatedMemorySize;3");
-        return (size);
-    }
-
-#pragma endregion
-
     PMC_STATUS_CODE Initialize_Memory(PROCESSOR_FEATURES* feature)
     {
         ThreadContext tc;
@@ -779,6 +728,7 @@ namespace Palmtree::Math::Core::Internal
         LeaveCriticalSection(&mcs);
     }
 
+#ifdef USE_WIN32_HEAP
     void* __AllocateHeap(size_t size) noexcept(false)
     {
         void* buffer = HeapAlloc(hLocalHeap, HEAP_ZERO_MEMORY, size);
@@ -808,6 +758,7 @@ namespace Palmtree::Math::Core::Internal
             hLocalHeap = nullptr;
         }
     }
+#endif
 
 }
 

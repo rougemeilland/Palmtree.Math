@@ -47,7 +47,6 @@ EXPORTS
 	PMCCS_From_UI
 	PMCCS_From_UL
 	PMCCS_GET_HASH_CODE
-	PMCCS_GetAllocatedMemorySize
 	PMCCS_GetConfigurationSettings
 	PMCCS_GetConstantValue_I
 	PMCCS_GetDefaultRoundingMode

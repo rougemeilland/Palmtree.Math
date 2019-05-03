@@ -193,13 +193,6 @@ namespace Palmtree.Math.Core
             return (new UBigIntHandle(r));
         }
 
-        public UInt64 GetAllocatedMemorySize()
-        {
-            UInt64 r;
-            HandleResultCode((PMC_STATUS_CODE)PMCCS_GetAllocatedMemorySize(out r));
-            return (r);
-        }
-
         public Int32 ToInt32(UBigIntHandle value)
         {
             Int32 r;

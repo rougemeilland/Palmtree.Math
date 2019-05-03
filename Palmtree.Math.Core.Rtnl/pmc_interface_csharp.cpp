@@ -468,21 +468,6 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    extern "C" PMC_STATUS_CODE __stdcall PMCCS_GetAllocatedMemorySize(_UINT64_T* size)
-    {
-        if (size == nullptr)
-            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
-        try
-        {
-            *size = PMC_GetAllocatedMemorySize();
-            return (PMC_STATUS_OK);
-        }
-        catch (const Palmtree::Math::Core::Internal::Exception& ex)
-        {
-            return (ex.GetStatusCode());
-        }
-    }
-
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_ToInt32_R(PMC_HANDLE_RTNL p, _INT32_T* o)
     {
         if (o == nullptr)
