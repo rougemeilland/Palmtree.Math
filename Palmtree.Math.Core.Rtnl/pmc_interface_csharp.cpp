@@ -55,6 +55,10 @@ namespace Palmtree::Math::Core::Internal
         {
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_IS_MINUS_ONE(PMC_HANDLE_RTNL p, _UINT32_T* r)
@@ -71,6 +75,10 @@ namespace Palmtree::Math::Core::Internal
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -89,6 +97,10 @@ namespace Palmtree::Math::Core::Internal
         {
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_IS_ZERO(PMC_HANDLE_RTNL p, _UINT32_T* r)
@@ -106,6 +118,10 @@ namespace Palmtree::Math::Core::Internal
         {
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_GetHashCode_R(PMC_HANDLE_RTNL p, _INT32_T* r)
@@ -122,6 +138,10 @@ namespace Palmtree::Math::Core::Internal
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -146,6 +166,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_From_DOUBLE(double x, PMC_HANDLE_RTNL* o)
@@ -168,6 +192,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -192,6 +220,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_From_L(_INT64_T x, PMC_HANDLE_RTNL* o)
@@ -214,6 +246,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -238,6 +274,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_From_UI(_UINT32_T x, PMC_HANDLE_RTNL* o)
@@ -261,6 +301,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_From_UL(_UINT64_T x, PMC_HANDLE_RTNL* o)
@@ -283,6 +327,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -309,6 +357,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_CheckHandle_UX(PMC_HANDLE_UINT p)
@@ -324,6 +376,10 @@ namespace Palmtree::Math::Core::Internal
         {
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_CheckHandle_R(PMC_HANDLE_RTNL p)
@@ -338,6 +394,10 @@ namespace Palmtree::Math::Core::Internal
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -363,6 +423,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Dispose_R(PMC_HANDLE_RTNL p)
@@ -387,6 +451,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_GetConstantValue_I(PMC_CONSTANT_VALUE_CODE type, PMC_HANDLE_RTNL* value)
@@ -401,6 +469,10 @@ namespace Palmtree::Math::Core::Internal
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -425,6 +497,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_ToByteArray(PMC_HANDLE_RTNL p, unsigned char* buffer, _INT32_T buffer_size, _INT32_T* size)
@@ -442,6 +518,10 @@ namespace Palmtree::Math::Core::Internal
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -466,6 +546,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_ToInt32_R(PMC_HANDLE_RTNL p, _INT32_T* o)
@@ -488,6 +572,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -512,6 +600,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_ToBigInt_R(PMC_HANDLE_RTNL p, PMC_HANDLE_SINT* o)
@@ -534,6 +626,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -558,6 +654,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_ToUInt64_R(PMC_HANDLE_RTNL p, _UINT64_T* o)
@@ -580,6 +680,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -604,6 +708,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_ToDecimal_R(PMC_HANDLE_RTNL p, DECIMAL* o)
@@ -627,6 +735,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_ToDouble_R(PMC_HANDLE_RTNL p, double* o)
@@ -649,6 +761,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -678,6 +794,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -716,6 +836,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -764,6 +888,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Add_I_R(_INT32_T u, PMC_HANDLE_RTNL v, PMC_HANDLE_RTNL* w)
@@ -786,6 +914,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -810,6 +942,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Add_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v, PMC_HANDLE_RTNL* w)
@@ -832,6 +968,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -856,6 +996,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Add_UL_R(_UINT64_T u, PMC_HANDLE_RTNL v, PMC_HANDLE_RTNL* w)
@@ -878,6 +1022,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -902,6 +1050,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Add_R_I(PMC_HANDLE_RTNL u, _INT32_T v, PMC_HANDLE_RTNL* w)
@@ -924,6 +1076,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -948,6 +1104,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Add_R_X(PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v, PMC_HANDLE_RTNL* w)
@@ -970,6 +1130,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -994,6 +1158,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Add_R_UL(PMC_HANDLE_RTNL u, _UINT64_T v, PMC_HANDLE_RTNL* w)
@@ -1016,6 +1184,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1040,6 +1212,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Add_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v, PMC_HANDLE_RTNL* w)
@@ -1062,6 +1238,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1086,6 +1266,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Subtruct_L_R(_INT64_T u, PMC_HANDLE_RTNL v, PMC_HANDLE_RTNL* w)
@@ -1108,6 +1292,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1132,6 +1320,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Subtruct_UI_R(_UINT32_T u, PMC_HANDLE_RTNL v, PMC_HANDLE_RTNL* w)
@@ -1154,6 +1346,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1178,6 +1374,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Subtruct_UX_R(PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v, PMC_HANDLE_RTNL* w)
@@ -1200,6 +1400,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1224,6 +1428,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Subtruct_R_L(PMC_HANDLE_RTNL u, _INT64_T v, PMC_HANDLE_RTNL* w)
@@ -1246,6 +1454,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1270,6 +1482,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Subtruct_R_UI(PMC_HANDLE_RTNL u, _UINT32_T v, PMC_HANDLE_RTNL* w)
@@ -1292,6 +1508,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1316,6 +1536,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Subtruct_R_UX(PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v, PMC_HANDLE_RTNL* w)
@@ -1338,6 +1562,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1362,6 +1590,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Multiply_I_R(_INT32_T u, PMC_HANDLE_RTNL v, PMC_HANDLE_RTNL* w)
@@ -1384,6 +1616,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1408,6 +1644,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Multiply_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v, PMC_HANDLE_RTNL* w)
@@ -1430,6 +1670,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1454,6 +1698,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Multiply_UL_R(_UINT64_T u, PMC_HANDLE_RTNL v, PMC_HANDLE_RTNL* w)
@@ -1476,6 +1724,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1500,6 +1752,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Multiply_R_I(PMC_HANDLE_RTNL u, _INT32_T v, PMC_HANDLE_RTNL* w)
@@ -1522,6 +1778,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1546,6 +1806,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Multiply_R_X(PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v, PMC_HANDLE_RTNL* w)
@@ -1568,6 +1832,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1592,6 +1860,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Multiply_R_UL(PMC_HANDLE_RTNL u, _UINT64_T v, PMC_HANDLE_RTNL* w)
@@ -1614,6 +1886,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1638,6 +1914,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Multiply_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v, PMC_HANDLE_RTNL* w)
@@ -1660,6 +1940,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1684,6 +1968,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Divide_L_R(_INT64_T u, PMC_HANDLE_RTNL v, PMC_HANDLE_RTNL* w)
@@ -1706,6 +1994,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1730,6 +2022,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Divide_UI_R(_UINT32_T u, PMC_HANDLE_RTNL v, PMC_HANDLE_RTNL* w)
@@ -1752,6 +2048,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1776,6 +2076,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Divide_UX_R(PMC_HANDLE_UINT u, PMC_HANDLE_RTNL v, PMC_HANDLE_RTNL* w)
@@ -1798,6 +2102,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1822,6 +2130,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Divide_R_L(PMC_HANDLE_RTNL u, _INT64_T v, PMC_HANDLE_RTNL* w)
@@ -1844,6 +2156,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1868,6 +2184,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Divide_R_UI(PMC_HANDLE_RTNL u, _UINT32_T v, PMC_HANDLE_RTNL* w)
@@ -1890,6 +2210,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1914,6 +2238,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Divide_R_UX(PMC_HANDLE_RTNL u, PMC_HANDLE_UINT v, PMC_HANDLE_RTNL* w)
@@ -1936,6 +2264,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -1960,6 +2292,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Compare_I_R(_INT32_T u, PMC_HANDLE_RTNL v, _INT32_T* w)
@@ -1982,6 +2318,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2006,6 +2346,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Compare_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v, _INT32_T* w)
@@ -2028,6 +2372,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2052,6 +2400,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Compare_UL_R(_UINT64_T u, PMC_HANDLE_RTNL v, _INT32_T* w)
@@ -2074,6 +2426,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2098,6 +2454,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Compare_R_I(PMC_HANDLE_RTNL u, _INT32_T v, _INT32_T* w)
@@ -2120,6 +2480,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2144,6 +2508,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Compare_R_X(PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v, _INT32_T* w)
@@ -2166,6 +2534,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2190,6 +2562,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Compare_R_UL(PMC_HANDLE_RTNL u, _UINT64_T v, _INT32_T* w)
@@ -2212,6 +2588,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2236,6 +2616,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Compare_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v, _INT32_T* w)
@@ -2259,6 +2643,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Equals_I_R(_INT32_T u, PMC_HANDLE_RTNL v, _UINT32_T* w)
@@ -2273,6 +2661,10 @@ namespace Palmtree::Math::Core::Internal
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2289,6 +2681,10 @@ namespace Palmtree::Math::Core::Internal
         {
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Equals_X_R(PMC_HANDLE_SINT u, PMC_HANDLE_RTNL v, _UINT32_T* w)
@@ -2303,6 +2699,10 @@ namespace Palmtree::Math::Core::Internal
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2319,6 +2719,10 @@ namespace Palmtree::Math::Core::Internal
         {
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Equals_UL_R(_UINT64_T u, PMC_HANDLE_RTNL v, _UINT32_T* w)
@@ -2333,6 +2737,10 @@ namespace Palmtree::Math::Core::Internal
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2349,6 +2757,10 @@ namespace Palmtree::Math::Core::Internal
         {
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Equals_R_I(PMC_HANDLE_RTNL u, _INT32_T v, _UINT32_T* w)
@@ -2363,6 +2775,10 @@ namespace Palmtree::Math::Core::Internal
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2379,6 +2795,10 @@ namespace Palmtree::Math::Core::Internal
         {
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Equals_R_X(PMC_HANDLE_RTNL u, PMC_HANDLE_SINT v, _UINT32_T* w)
@@ -2393,6 +2813,10 @@ namespace Palmtree::Math::Core::Internal
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2409,6 +2833,10 @@ namespace Palmtree::Math::Core::Internal
         {
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Equals_R_UL(PMC_HANDLE_RTNL u, _UINT64_T v, _UINT32_T* w)
@@ -2423,6 +2851,10 @@ namespace Palmtree::Math::Core::Internal
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2439,6 +2871,10 @@ namespace Palmtree::Math::Core::Internal
         {
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Equals_R_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL v, _UINT32_T* w)
@@ -2453,6 +2889,10 @@ namespace Palmtree::Math::Core::Internal
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2477,6 +2917,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Negate_R(PMC_HANDLE_RTNL u, PMC_HANDLE_RTNL* w)
@@ -2499,6 +2943,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2523,6 +2971,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
     
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Pow_L_I(_INT64_T v, _INT32_T e, PMC_HANDLE_RTNL* r) noexcept(false)
@@ -2545,6 +2997,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2569,6 +3025,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Pow_UI_I(_UINT32_T v, _INT32_T e, PMC_HANDLE_RTNL* r) noexcept(false)
@@ -2591,6 +3051,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2615,6 +3079,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Pow_UX_I(PMC_HANDLE_UINT v, _INT32_T e, PMC_HANDLE_RTNL* r) noexcept(false)
@@ -2637,6 +3105,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2661,6 +3133,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Invert_I(_INT32_T v, PMC_HANDLE_RTNL* r) noexcept(false)
@@ -2683,6 +3159,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2707,6 +3187,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Invert_X(PMC_HANDLE_SINT v, PMC_HANDLE_RTNL* r) noexcept(false)
@@ -2729,6 +3213,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2753,6 +3241,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Invert_UL(_UINT64_T v, PMC_HANDLE_RTNL* r) noexcept(false)
@@ -2775,6 +3267,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2799,6 +3295,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Invert_R(PMC_HANDLE_RTNL v, PMC_HANDLE_RTNL* r) noexcept(false)
@@ -2821,6 +3321,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2845,6 +3349,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Round_R_I(PMC_HANDLE_RTNL x, _INT32_T decimals, PMC_MIDPOINT_ROUNDING_CODE mode, PMC_HANDLE_RTNL* r)
@@ -2867,6 +3375,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2891,6 +3403,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_Ceiling_R(PMC_HANDLE_RTNL x, PMC_HANDLE_SINT* r)
@@ -2913,6 +3429,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2937,6 +3457,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_GetPerformanceCounter(const wchar_t* key, _INT64_T* r)
@@ -2951,6 +3475,10 @@ namespace Palmtree::Math::Core::Internal
         catch (const Palmtree::Math::Core::Internal::Exception& ex)
         {
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 
@@ -2975,6 +3503,10 @@ namespace Palmtree::Math::Core::Internal
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
         }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_GenerateRationalCryptoRandomValue(_BYTE_T* data, _INT32_T bit_count, PMC_HANDLE_RTNL* value)
@@ -2997,6 +3529,10 @@ namespace Palmtree::Math::Core::Internal
             if (!tc.VerifyAllocationCount(0, false))
                 return (PMC_STATUS_BAD_BUFFER);
             return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
         }
     }
 

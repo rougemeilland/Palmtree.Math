@@ -30,7 +30,8 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    SchonHageStrassenMultiplicationEngine::SchonHageStrassenMultiplicationEngine()
+    SchonHageStrassenMultiplicationEngine::SchonHageStrassenMultiplicationEngine(bool fixed, KaratsubaMultiplicationEngine& karatsuba_engine)
+        : _fixed(fixed), _karatsuba_engine(karatsuba_engine)
     {
     }
 

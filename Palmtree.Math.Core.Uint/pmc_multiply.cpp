@@ -37,7 +37,9 @@ namespace Palmtree::Math::Core::Internal
 
     static ClassicMultiplicationEngine* _engine_classic;
     static KaratsubaMultiplicationEngine* _engine_karatsuba;
+    static KaratsubaMultiplicationEngine* _fixed_engine_karatsuba;
     static SchonHageStrassenMultiplicationEngine* _engine_schonHagestrassen;
+    static SchonHageStrassenMultiplicationEngine* _fixed_engine_schonHagestrassen;
 
     static bool AutoKaratsubaCondition(__UNIT_TYPE u_count, __UNIT_TYPE v_count)
     {
@@ -65,8 +67,12 @@ namespace Palmtree::Math::Core::Internal
             return (_engine_classic->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
         case PMC_MULTIPLICATION_METHOD_KARATSUBA:
             return (_engine_karatsuba->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
+        case PMC_MULTIPLICATION_METHOD_FIXED_KARATSUBA:
+            return (_fixed_engine_karatsuba->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
         case PMC_MULTIPLICATION_METHOD_SCHONSTRASSEN:
             return (_engine_schonHagestrassen->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
+        case PMC_MULTIPLICATION_METHOD_FIXED_SCHONSTRASSEN:
+            return (_fixed_engine_schonHagestrassen->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
         default:
             throw ArgumentException(L"methodが不正です。");
         }
@@ -390,11 +396,19 @@ namespace Palmtree::Math::Core::Internal
 
     PMC_STATUS_CODE Initialize_Multiply(PROCESSOR_FEATURES* feature)
     {
-        _engine_classic = new ClassicMultiplicationEngine();
-        _engine_karatsuba = new KaratsubaMultiplicationEngine();
-        _engine_schonHagestrassen = new SchonHageStrassenMultiplicationEngine();
-
-        return (PMC_STATUS_OK);
+        try
+        {
+            _engine_classic = new ClassicMultiplicationEngine();
+            _engine_karatsuba = new KaratsubaMultiplicationEngine(false, *_engine_classic);
+            _fixed_engine_karatsuba = new KaratsubaMultiplicationEngine(true, *_engine_classic);
+            _engine_schonHagestrassen = new SchonHageStrassenMultiplicationEngine(false, *_engine_karatsuba);
+            _fixed_engine_schonHagestrassen = new SchonHageStrassenMultiplicationEngine(true, *_engine_karatsuba);
+            return (PMC_STATUS_OK);
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
     }
 
 }

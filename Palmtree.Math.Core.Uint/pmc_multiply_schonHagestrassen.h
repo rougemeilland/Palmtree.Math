@@ -32,10 +32,16 @@
 namespace Palmtree::Math::Core::Internal
 {
 
+    class KaratsubaMultiplicationEngine;
+
     class SchonHageStrassenMultiplicationEngine
     {
+    private:
+        bool _fixed;
+        KaratsubaMultiplicationEngine& _karatsuba_engine;
+
     public:
-        SchonHageStrassenMultiplicationEngine();
+        SchonHageStrassenMultiplicationEngine(bool fixed, KaratsubaMultiplicationEngine& karatsuba_engine);
         ~SchonHageStrassenMultiplicationEngine();
         void Multiply_UX_UX(ThreadContext& tc, __UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf);
     };

@@ -37,7 +37,9 @@ namespace Palmtree.Math
         Auto = 0,
         Classic = 1,
         Karatsuba = 2,
-        SchonStrassen = 3,
+        FixedKaratsuba = 3,
+        SchonStrassen = 4,
+        FixedSchonStrassen = 5,
     }
 
 }

@@ -61,10 +61,12 @@ namespace Palmtree::Math::Core::Internal
 #define PMC_CONSTANT_TEN        (3)
 #define PMC_CONSTANT_MINUS_ONE  (4)
 
-#define PMC_MULTIPLICATION_METHOD_AUTO          (0)
-#define PMC_MULTIPLICATION_METHOD_CLASSIC       (1)
-#define PMC_MULTIPLICATION_METHOD_KARATSUBA     (2)
-#define PMC_MULTIPLICATION_METHOD_SCHONSTRASSEN (3)
+#define PMC_MULTIPLICATION_METHOD_AUTO                  (0) // 乗算の算法は自動的に選択される。
+#define PMC_MULTIPLICATION_METHOD_CLASSIC               (1) // 乗算に古典的算法を使用する。
+#define PMC_MULTIPLICATION_METHOD_KARATSUBA             (2) // 乗算に Karatsuba 法を使用する。ただし桁数が少ない場合には古典的算法を使用する。
+#define PMC_MULTIPLICATION_METHOD_FIXED_KARATSUBA       (3) // 乗算に Karatsuba 法を使用する。
+#define PMC_MULTIPLICATION_METHOD_SCHONSTRASSEN         (4) // 乗算に Schön & Strassen 法を使用する。ただし桁数が少ない場合には Karatsuba 法あるいは古典的算法を使用する。
+#define PMC_MULTIPLICATION_METHOD_FIXED_SCHONSTRASSEN   (5) // 乗算に Schön & Strassen 法を使用する。
 
 #define PMC_NUMBER_STYLE_NONE                   (0x0000)    // スタイル要素 (先行する空白、後続の空白、桁区切り記号、小数点の記号など) を解析対象の文字列に含めることができないことを示す。
 #define PMC_NUMBER_STYLE_ALLOW_LEADING_WHITE    (0x0001)    // 先行する空白文字を解析対象の文字列に使用できることを示す。有効な空白文字の Unicode 値は、U+0009、U+000A、U+000B、U+000C、U+000D、および U+0020 である。
