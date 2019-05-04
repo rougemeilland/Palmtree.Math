@@ -77,7 +77,7 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_SFMT random = ep.AllocateRandomStateObject(tc, 0);
         int loop_count = 1000;
 
-        int bit_count = 16384;
+        int bit_count = 128;
 
         sokutei(ep, tc, loop_count, random, bit_count); bit_count *= 2;
         sokutei(ep, tc, loop_count, random, bit_count); bit_count *= 2;
