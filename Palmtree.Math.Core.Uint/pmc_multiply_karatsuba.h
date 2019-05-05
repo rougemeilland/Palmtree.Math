@@ -31,6 +31,7 @@
 
 namespace Palmtree::Math::Core::Internal
 {
+    class ResourceHolderUINT;
     class ClassicMultiplicationEngine;
 
     class KaratsubaMultiplicationEngine
@@ -45,7 +46,9 @@ namespace Palmtree::Math::Core::Internal
         void Multiply_UX_UX(ThreadContext& tc, __UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf);
 
     private:
-        void Multiply_UX_UX_Karatsuba(ThreadContext& tc, _UINT32_T log2_n, __UNIT_TYPE * u_buf, __UNIT_TYPE * v_buf, __UNIT_TYPE * w_buf);
+        void Multiply_UX_UX_Karatsuba1(ThreadContext& tc, _UINT32_T log2_n, __UNIT_TYPE * u_buf, __UNIT_TYPE * v_buf, __UNIT_TYPE * w_buf);
+        void Multiply_UX_UX_Karatsuba2(ThreadContext& tc, _UINT32_T log2_n, __UNIT_TYPE * u_buf, __UNIT_TYPE * v_buf, __UNIT_TYPE * w_buf);
+        void Multiply_UX_UX_Karatsuba3(ResourceHolderUINT& root, _UINT32_T log2_n, __UNIT_TYPE* temp_buf, __UNIT_TYPE* current_temp_buf_ptr, __UNIT_TYPE * u_buf, __UNIT_TYPE * v_buf, __UNIT_TYPE * w_buf);
     };
 
 }

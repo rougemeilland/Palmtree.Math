@@ -43,8 +43,13 @@ namespace Palmtree::Math::Core::Internal
 
     static bool AutoKaratsubaCondition(__UNIT_TYPE u_count, __UNIT_TYPE v_count)
     {
-        // この閾値は、乗算の度に一時メモリを獲得/解放しているKaratsuba法のもの。
-        return (u_count >= 268435456 / __UNIT_TYPE_BIT_COUNT && v_count >= 268435456 / __UNIT_TYPE_BIT_COUNT);
+#ifdef _M_IX86
+        return (u_count >= 65536 / __UNIT_TYPE_BIT_COUNT && v_count >= 53974 / __UNIT_TYPE_BIT_COUNT);
+#elif defined(_M_X64)
+        return (u_count >= 131072 / __UNIT_TYPE_BIT_COUNT && v_count >= 120016 / __UNIT_TYPE_BIT_COUNT);
+#else
+#error unknown platform
+#endif
     }
 
     static bool AutoSchonStrassenCondition(__UNIT_TYPE u_count, __UNIT_TYPE v_count)
@@ -57,14 +62,14 @@ namespace Palmtree::Math::Core::Internal
         switch (method)
         {
         case PMC_MULTIPLICATION_METHOD_AUTO:
-            if (AutoSchonStrassenCondition(u_count, v_count))
+            if (u_count > v_count ? AutoSchonStrassenCondition(u_count, v_count) : AutoSchonStrassenCondition(v_count, u_count))
                 return (_engine_schonHagestrassen->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
             else if (AutoKaratsubaCondition(u_count, v_count))
                 return (_engine_karatsuba->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
             else
-                return (_engine_classic->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
+                return (_engine_classic->Multiply_UX_UX(u, u_count, v, v_count, w));
         case PMC_MULTIPLICATION_METHOD_CLASSIC:
-            return (_engine_classic->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
+            return (_engine_classic->Multiply_UX_UX(u, u_count, v, v_count, w));
         case PMC_MULTIPLICATION_METHOD_KARATSUBA:
             return (_engine_karatsuba->Multiply_UX_UX(tc, u, u_count, v, v_count, w));
         case PMC_MULTIPLICATION_METHOD_FIXED_KARATSUBA:
