@@ -44,8 +44,63 @@ namespace Palmtree::Math::Core::Internal
 
     double PMC_GenerateDoubleRandomValue(PMC_HANDLE_SFMT handle)
     {
+        // double のビット構成：
+        // +-----+-----+-----+-----+-----+-----+-----+-----+
+        // | 0 0 | 0 f | f f | f f | f f | f f | f f | f f |
+        // +-----+-----+-----+-----+-----+-----+-----+-----+
+        // | | 指数 | 仮数部
+        // 符号
+
         RANDOM_STATE_OBJECT* state = GET_STATE_OBJECT(handle, L"handle");
-        return (PMCSFMT_GenerateDoubleRandomValue(state->STATE));
+#ifdef _M_IX86
+        // 仮数の初期値となる乱数を取得する
+        _UINT32_T mantissa_lo = PMCSFMT_GenerateUInt32RandomValue(state->STATE);
+        _UINT32_T mantissa_hi = PMCSFMT_GenerateUInt32RandomValue(state->STATE);
+
+        // scale の初期値を取得する
+        double invert_scale = 0x8000000000000000 * 2.0;
+
+        // 有効桁数が 53bit 未満の間繰り返す
+        while (mantissa_hi < 0x00100000)
+        {
+            // 下位桁に補充する追加の乱数を取得する
+            _UINT32_T additional_mantissa = PMCSFMT_GenerateUInt32RandomValue(state->STATE);
+
+            // 仮数を左に 11bit シフトし、失われた下位 11ビット に追加の乱数を設定する
+            mantissa_hi = (mantissa_hi << 11) | (mantissa_lo >> (32 - 11));
+            mantissa_lo = (mantissa_lo << 11) | (additional_mantissa & 0x7ff);
+
+            // scaleを 11bit 分だけずらす
+            invert_scale *= 0x800;
+        }
+
+        // 仮数と scale を合成して復帰値とする
+        return ((mantissa_hi * (double)0x100000000 + mantissa_lo) / invert_scale);
+#elif defined(_M_X64)
+        // 仮数の初期値となる乱数を取得する
+        _UINT64_T mantissa = PMCSFMT_GenerateUInt64RandomValue(state->STATE);
+
+        // scale の初期値を取得する
+        double invert_scale = 0x8000000000000000 * 2.0;
+        
+        // 有効桁数が 53bit 未満の間繰り返す
+        while (mantissa < 0x0010000000000000)
+        {
+            // 下位桁に補充する追加の乱数を取得する
+            _UINT64_T additional_mantissa = PMCSFMT_GenerateUInt32RandomValue(state->STATE);
+
+            // 仮数を左に 11bit シフトし、失われた下位 11ビット に追加の乱数を設定する
+            mantissa = (mantissa << 11) | (additional_mantissa & 0x7ff);
+
+            // scaleを 11bit 分だけずらす
+            invert_scale *= 0x800;
+        }
+
+        // 仮数と scale を合成して復帰値とする
+        return (mantissa / invert_scale);
+#else
+#error unknown platform
+#endif
     }
 
     PMC_HANDLE_UINT PMC_GenerateUBigIntRandomValue(ThreadContext& tc, PMC_HANDLE_SFMT handle, _INT32_T bit_count)

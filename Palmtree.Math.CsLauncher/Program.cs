@@ -14,10 +14,14 @@ namespace Palmtree.Math.CsLauncher
     {
         static void Main(string[] args)
         {
-            using (var r = new CryptoRandom())
+            using (var r = new Random(0))
             {
                 for (var count = 0; count < 10000; ++count)
-                    r.GenerateDouble();
+                {
+                    var x1 = r.GenerateUint64();
+                    var x2 = r.GenerateUint32();
+                    Console.WriteLine(string.Format("{0}, {1}", x1, x2));
+                }
             }
             Console.ReadLine();
         }

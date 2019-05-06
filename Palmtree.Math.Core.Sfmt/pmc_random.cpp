@@ -60,7 +60,13 @@ namespace Palmtree::Math::Core::Internal
 
     extern "C" __DLLEXPORT_SFMT unsigned int PMCSFMT_GenerateUInt32RandomValue(void* state)
     {
+        // どうやら、同じ sfmt_t 構造体を使用して sfmt_genrand_uint32 と sfmt_genrand_uint64 を混在して呼び出すと Assert で落ちるらしいので、
+        // 32bit 版では sfmt_genrand_uint32 のみ、64bit版では sfmt_genrand_uint64 のみを呼び出すようにする。
+#ifdef _M_IX86
         return (sfmt_genrand_uint32((sfmt_t*)state));
+#elif defined(_M_X64)
+        return ((unsigned int)sfmt_genrand_uint64((sfmt_t*)state));
+#endif
     }
 
     extern "C" __DLLEXPORT_SFMT unsigned long long PMCSFMT_GenerateUInt64RandomValue(void* state)
