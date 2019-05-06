@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>PalmtreeSoftware.Palmtree.Math</id>
-    <version>1.3.3</version>
+    <version>1.3.4</version>
     <title>Palmtree 数値演算ライブラリ</title>
     <authors>Palmtree Software</authors>
     <owners>Palmtree Software</owners>
