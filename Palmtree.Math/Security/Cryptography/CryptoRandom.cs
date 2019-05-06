@@ -90,20 +90,21 @@ namespace Palmtree.Security.Cryptography
         public double GenerateDouble()
         {
             // まず、64bit 分だけのデータを取得して UInt64型 の数値を得てこれを仮数とし、指数を 0 に初期化する
-            var data = new byte[8];
-            _engine.GetBytes(data);
-            var mantissa = BitConverter.ToUInt64(data, 0);
+            var mantissa_bytes = new byte[8];
+            _engine.GetBytes(mantissa_bytes);
+            var mantissa = BitConverter.ToUInt64(mantissa_bytes, 0);
             var exponent = 1U;
 
             // 仮数の最上位 8bit が 0 である場合に以下の処理を繰り返す
             while ((mantissa & 0xff00000000000000UL) == 0)
             {
                 // 新たに乱数を 8bit だけ取得する
-                _engine.GetBytes(data, 0, 1);
+                var additional_byte = new byte[1];
+                _engine.GetBytes(additional_byte);
 
                 // 仮数を左に 8bit だけシフトし、最下位 8bit に上記で得た乱数を追加する。また、指数を 8 だけ増やす。
                 mantissa <<= 8;
-                mantissa |= data[0];
+                mantissa |= additional_byte[0];
                 exponent += 8U;
             }
 
