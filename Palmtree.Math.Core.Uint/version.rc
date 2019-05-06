@@ -6,8 +6,8 @@
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,2,1,0
- PRODUCTVERSION 1,2,1,0
+ FILEVERSION 1,2,2,0
+ PRODUCTVERSION 1,2,2,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -24,12 +24,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Palmtree Software"
             VALUE "FileDescription", "Palmtree 数値演算ライブラリ 符号なし多倍長整数演算アンマネージドモジュール"
-            VALUE "FileVersion", "1.2.1.0"
+            VALUE "FileVersion", "1.2.2.0"
             VALUE "InternalName", "Palmtree.Math.Core.Uint"
             VALUE "LegalCopyright", "© 2018-2019 Palmtree Software"
             VALUE "OriginalFilename", "Palmtree.Math.Core.Uint"
             VALUE "ProductName", "Palmtree 数値演算ライブラリ"
-            VALUE "ProductVersion", "1.2.1.0"
+            VALUE "ProductVersion", "1.2.2.0"
         END
     END
     BLOCK "VarFileInfo"

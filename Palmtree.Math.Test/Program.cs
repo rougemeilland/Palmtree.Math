@@ -41,9 +41,27 @@ namespace Palmtree.Math.Test
         static void Main(string[] args)
         {
             Rational.DefaultRoundingMode = RoundingMode.HalfUp;
-            定数のテスト();
-            TestLoop();
-            // Console.ReadLine();
+            var default_fgc = Console.ForegroundColor;
+            var default_bgc = Console.BackgroundColor;
+
+            Console.CancelKeyPress += (sender, e) =>
+            {
+                Console.ForegroundColor = default_fgc;
+                Console.BackgroundColor = default_bgc;
+            };
+
+            try
+            {
+                定数のテスト();
+                TestLoop();
+                // Console.ReadLine();
+            }
+            finally
+            {
+                Console.ForegroundColor = default_fgc;
+                Console.BackgroundColor = default_bgc;
+            }
+
         }
 
         private static void 定数のテスト()
@@ -139,11 +157,36 @@ namespace Palmtree.Math.Test
                     TaskAction(test_item, ref 合計項目数, ref NG項目数, lock_obj);
                 };
             }
-            Console.WriteLine(string.Format("***test end: 合計項目数:{0}, OK項目数:{1}, NG項目数:{2}, NG率:{3:p2}",
-                                             合計項目数,
-                                             合計項目数 - NG項目数,
-                                             NG項目数,
-                                             (double)NG項目数 / 合計項目数));
+            if (NG項目数 > 0)
+            {
+                var default_fgc = Console.ForegroundColor;
+                var default_bgc = Console.BackgroundColor;
+                try
+                {
+                    Console.Write(string.Format("***test end: 合計項目数:{0}, OK項目数:{1}, ", 合計項目数, 合計項目数 - NG項目数));
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.Write(string.Format("NG項目数:{0}", NG項目数));
+                    Console.ForegroundColor = default_fgc;
+                    Console.BackgroundColor = default_bgc;
+                    Console.Write(", ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.Write(string.Format("NG率:{0:p2}", (double)NG項目数 / 合計項目数));
+                    Console.ForegroundColor = default_fgc;
+                    Console.BackgroundColor = default_bgc;
+                    Console.WriteLine();
+                }
+                finally
+                {
+                    Console.ForegroundColor = default_fgc;
+                    Console.BackgroundColor = default_bgc;
+                }
+            }
+            else
+            {
+                Console.WriteLine(string.Format("***test end: 合計項目数:{0}, OK項目数:{1}, NG項目数:{2}, NG率:{3:p2}", 合計項目数, 合計項目数, 0, 0.0));
+            }
         }
 
         private static bool PluginFilter(IComponentTestPlugin plugin)
@@ -177,9 +220,25 @@ namespace Palmtree.Math.Test
                     lock (lock_obj)
                     {
                         ++NG項目数;
-                        Console.WriteLine(string.Format("NG: {0}-{1} {2}", test_item.PluginName, test_item.Index, summary));
-                        if (_verbose)
-                            Console.ReadLine();
+                        var default_fgc = Console.ForegroundColor;
+                        var default_bgc = Console.BackgroundColor;
+                        try
+                        {
+                            Console.WriteLine("----------");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.BackgroundColor = ConsoleColor.Black;
+                            Console.Write(string.Format("NG: {0}-{1} {2}", test_item.PluginName, test_item.Index, summary));
+                            Console.ForegroundColor = default_fgc;
+                            Console.BackgroundColor = default_bgc;
+                            Console.WriteLine();
+                            if (_verbose)
+                                Console.ReadLine();
+                        }
+                        finally
+                        {
+                            Console.ForegroundColor = default_fgc;
+                            Console.BackgroundColor = default_bgc;
+                        }
                     }
                 }
             }
