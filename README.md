@@ -51,8 +51,8 @@ Palmtree 数値計算ライブラリ v1.3.4
 * `ToString`(対応書式: C, E, F, G, N, P, カスタム)
 * `Parse`/`TryParse`
 * 他のデータ型との相互型変換
-  * Int32/UInt32/Int64/UInt64
-  * Double/Decimal
+  * `Int32`/`UInt32`/`Int64`/`UInt64`
+  * `Double`/`Decimal`
   * `UBigInt`/`BigInt`
 
 ### `Palmtree.Math.Random`クラス(乱数生成) ###
