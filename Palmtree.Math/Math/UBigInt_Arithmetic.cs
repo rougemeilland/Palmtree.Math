@@ -102,6 +102,42 @@ namespace Palmtree.Math
             return (x);
         }
 
+        /// <summary>
+        /// 拡張ユークリッド互除法を使用して、不定方程式 a * x + b * y = GCD(a, b), a > 0, b > 0 を満たす x および y を求めます。
+        /// この数値は変数 a として使用されます。
+        /// </summary>
+        /// <param name="b">不定方程式の変数 b です。</param>
+        /// <returns>
+        /// 計算結果を表す<see cref="Tuple{UBigInt, BigInt, BigInt}"/>オブジェクトです。
+        /// オブジェクトの第一要素は a と b の最大公約数、第二要素は不定方程式における変数 x、第三要素は不定方程式における変数 y です。
+        /// </returns>
+        public Tuple<UBigInt, BigInt, BigInt> ExtendedEuclideanAlgorithm(UBigInt b)
+        {
+            var a = this;
+            if (a.IsZero)
+                throw new ArgumentOutOfRangeException();
+            if (b.IsZero)
+                throw new ArgumentOutOfRangeException();
+            var previous_x = BigInt.One;
+            var previous_y = BigInt.Zero;
+            var current_x = BigInt.Zero;
+            var current_y = BigInt.One;
+            while (!b.IsZero)
+            {
+                UBigInt next_b;
+                var q = a.DivRem(b, out next_b);
+                var next_x = previous_x - q * current_x;
+                var next_y = previous_y - q * current_y;
+                a = b;
+                b = next_b;
+                previous_x = current_x;
+                current_x = next_x;
+                previous_y = current_y;
+                current_y = next_y;
+            }
+            return (new Tuple<UBigInt, BigInt, BigInt>(a, previous_x, previous_y));
+        }
+
         #endregion
     }
 }
