@@ -132,7 +132,10 @@ namespace Palmtree::Math::Core::Internal
             {
                 ResourceHolderUINT root(tc);
                 NUMBER_OBJECT_UINT* no_abs = root.AllocateNumber(bit_count);
-                _COPY_MEMORY_BYTE(no_abs->BLOCK, data_ptr, _DIVIDE_CEILING_SIZE(bit_count, 8));
+                __UNIT_TYPE byte_count = _DIVIDE_CEILING_SIZE(bit_count, 8);
+                __UNIT_TYPE word_count = _DIVIDE_CEILING_SIZE(bit_count, __UNIT_TYPE_BIT_COUNT);
+                no_abs->BLOCK[word_count - 1] = 0; // 最上位ワードのみ 0 クリアする
+                _COPY_MEMORY_BYTE(no_abs->BLOCK, data_ptr, byte_count);
                 CommitNumber(tc, no_abs);
                 *o_sign = sign_bit == 1 ? SIGN_POSITIVE : SIGN_NEGATIVE;
                 root.UnlinkNumber(no_abs);

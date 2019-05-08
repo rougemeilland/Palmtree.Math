@@ -134,9 +134,8 @@ namespace Palmtree::Math::Core::Internal
 
                 // u と v の積を計算する
                 ResourceHolderUINT root(tc);
-                __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
-                __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v);
-                __UNIT_TYPE w_bit_count = u_bit_count + v_bit_count;
+                // 乗算 engine での処理の簡素化のために、w のビット長は u と v のワード長から計算する。
+                __UNIT_TYPE w_bit_count = (u->UNIT_WORD_COUNT + 1) * __UNIT_TYPE_BIT_COUNT;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 _engine_classic->Multiply_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK);
 #ifdef _DEBUG
@@ -242,8 +241,8 @@ namespace Palmtree::Math::Core::Internal
                     {
                         // v の値が 32bit で表現可能な場合
                         ResourceHolderUINT root(tc);
-                        __UNIT_TYPE v_bit_count = sizeof(v_lo) * 8 - _LZCNT_ALT_32(v_lo);
-                        __UNIT_TYPE w_bit_count = u_bit_count + v_bit_count;
+                        // 乗算 engine での処理の簡素化のために、w のビット長は u と v のワード長から計算する。
+                        __UNIT_TYPE w_bit_count = (u->UNIT_WORD_COUNT + 1) * __UNIT_TYPE_BIT_COUNT;
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                         _engine_classic->Multiply_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, w->BLOCK);
 #ifdef _DEBUG
@@ -257,8 +256,8 @@ namespace Palmtree::Math::Core::Internal
                     {
                         // v の値が 32bit では表現できない場合
                         ResourceHolderUINT root(tc);
-                        __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v_hi);
-                        __UNIT_TYPE w_bit_count = u_bit_count + v_bit_count;
+                        // 乗算 engine での処理の簡素化のために、w のビット長は u と v のワード長から計算する。
+                        __UNIT_TYPE w_bit_count = (u->UNIT_WORD_COUNT + 2) * __UNIT_TYPE_BIT_COUNT;
                         NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                         _engine_classic->Multiply_UX_2W(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK);
 #ifdef _DEBUG
@@ -273,9 +272,8 @@ namespace Palmtree::Math::Core::Internal
                 {
                     // _UINT64_T が 1 ワードで表現できる場合
                     ResourceHolderUINT root(tc);
-                    __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
-                    __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)v);
-                    __UNIT_TYPE w_bit_count = u_bit_count + v_bit_count;
+                    // 乗算 engine での処理の簡素化のために、w のビット長は u と v のワード長から計算する。
+                    __UNIT_TYPE w_bit_count = (u->UNIT_WORD_COUNT + 1) * __UNIT_TYPE_BIT_COUNT;
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                     _engine_classic->Multiply_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, w->BLOCK);
 #ifdef _DEBUG
@@ -372,7 +370,7 @@ namespace Palmtree::Math::Core::Internal
 
                 // u と v の積を計算する
                 ResourceHolderUINT root(tc);
-                // classic 以外の乗算の場合に領域長の計算が面倒なので、w のビット長は u と v のワード長から計算する。
+                // 乗算 engine での処理の簡素化のために、w のビット長は u と v のワード長から計算する。
                 __UNIT_TYPE w_bit_count = (u->UNIT_WORD_COUNT + v->UNIT_WORD_COUNT) * __UNIT_TYPE_BIT_COUNT;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 Multiply_UX_UX_Imp(tc, method, u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK);

@@ -23,6 +23,7 @@
  */
 
 
+#include <windows.h>
 #include "pmc_parserstate.h"
 #include "pmc_parser.h"
 

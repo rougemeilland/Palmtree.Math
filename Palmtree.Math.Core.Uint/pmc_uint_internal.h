@@ -32,6 +32,7 @@
 #include <stdio.h>
 #endif
 
+#include <intrin.h>
 #include "pmc_uint.h"
 #include "pmc_internal.h"
 #include "pmc_exception.h"
@@ -69,10 +70,10 @@ namespace Palmtree::Math::Core::Internal
 
     typedef struct __tag_PMC_STATISTICS_INFO_UINT
     {
-        _UINT32_T COUNT_MULTI64; // 32bit * 32bit => 64bitの乗算の回数
-        _UINT32_T COUNT_MULTI32; // 16bit * 16bit => 32bitの乗算の回数
-        _UINT32_T COUNT_DIV64;   // 64bit / 32bit => 32bitの除算の回数
-        _UINT32_T COUNT_DIV32;   // 32bit / 16bit => 16bitの除算の回数
+        long COUNT_MULTI64; // 32bit * 32bit => 64bitの乗算の回数
+        long COUNT_MULTI32; // 16bit * 16bit => 32bitの乗算の回数
+        long COUNT_DIV64;   // 64bit / 32bit => 32bitの除算の回数
+        long COUNT_DIV32;   // 32bit / 16bit => 16bitの除算の回数
         _INT64_T COUNT_ALLOCATE_BLOCK;
         _INT64_T COUNT_ALLOCATE_NUMBER_OBJECT;
         _INT64_T COUNT_ALLOCATE_NUMBER;
@@ -178,22 +179,16 @@ namespace Palmtree::Math::Core::Internal
     extern void Multiply_UX_UX_Imp(ThreadContext& tc, PMC_MULTIPLICATION_METHOD_CODE method, __UNIT_TYPE* u, __UNIT_TYPE u_count, __UNIT_TYPE* v, __UNIT_TYPE v_count, __UNIT_TYPE* w);
 
     // 多倍長同士の除算を行う。work_v_buf が指す領域は v_count ワード以上の大きさが必要である。q_buf が指す領域は <uのビット数> - <vのビット数> + 1 + <1ワード分のビット数> 以上の大きさが必要である。r_buf が指す領域は u_count + 1 ワード以上の大きさが必要である。q_buf に nullptr が与えられた場合は商を出力しない。
-    extern void DivRem_UX_UX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE* r_buf);
-
-    // 多倍長整数を 1 ワードで除算を行う。
-    extern void DivRem_UX_1W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE v, __UNIT_TYPE* q_buf, __UNIT_TYPE* r_buf);
-
-    // 多倍長整数の 1 ワードによる剰余を計算する。
-    extern __UNIT_TYPE Rem_UX_1W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE v);
+    extern void DivRem_UX_UX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE q_buf_count, __UNIT_TYPE* r_buf, __UNIT_TYPE r_buf_count);
 
     // 多倍長整数の大小比較を行う。
     extern SIGN_T Compare_Imp(__UNIT_TYPE* u, __UNIT_TYPE* v, __UNIT_TYPE count);
 
     // 指定されたワード列を右にシフトして指定された領域に格納する。シフト数は 0 であってはならない。
-    extern void RightShift_Imp(__UNIT_TYPE* p, __UNIT_TYPE p_word_count, __UNIT_TYPE n, __UNIT_TYPE* o, BOOL padding_zero);
+    extern void RightShift_Imp(__UNIT_TYPE* p, __UNIT_TYPE p_word_count, __UNIT_TYPE n, __UNIT_TYPE* o, bool padding_zero);
 
     // 指定されたワード列を左にシフトして指定された領域に格納する。シフト数は 0 であってはならない。
-    extern void LeftShift_Imp(__UNIT_TYPE* p, __UNIT_TYPE p_word_count, __UNIT_TYPE n, __UNIT_TYPE* o, BOOL padding_zero);
+    extern void LeftShift_Imp(__UNIT_TYPE* p, __UNIT_TYPE p_word_count, __UNIT_TYPE n, __UNIT_TYPE* o, bool padding_zero);
 
 #pragma endregion
 

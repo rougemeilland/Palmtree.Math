@@ -23,6 +23,7 @@
  */
 
 
+#include <windows.h>
 #include "pmc_uint_internal.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_stringio.h"

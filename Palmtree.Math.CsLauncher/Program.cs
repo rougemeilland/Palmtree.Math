@@ -12,17 +12,20 @@ namespace Palmtree.Math.CsLauncher
 {
     class Program
     {
+        /*
+  <dataitem index="87">
+    <param1 type="ubigint">01,09,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint64">9999999999</param2>
+    <result1 type="ubigint">01,04,67,7f,f3,6d</result1>
+  </dataitem>
+         */
+
+
         static void Main(string[] args)
         {
-            using (var r = new Random(0))
-            {
-                for (var count = 0; count < 10000; ++count)
-                {
-                    var x1 = r.GenerateUint64();
-                    var x2 = r.GenerateUint32();
-                    Console.WriteLine(string.Format("{0}, {1}", x1, x2));
-                }
-            }
+            var u = 12345678901234567890UL;
+            var v = UBigInt.From(1);
+            var r = u.Add(v);
             Console.ReadLine();
         }
     }

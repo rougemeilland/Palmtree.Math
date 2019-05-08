@@ -23,7 +23,7 @@
  */
 
 
-#include <windows.h>
+//#include <windows.h>
 #include "pmc_resourceholder_uint.h"
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
@@ -32,7 +32,7 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    void RightShift_Imp(__UNIT_TYPE* p, __UNIT_TYPE p_word_count, __UNIT_TYPE n, __UNIT_TYPE* o, BOOL padding_zero)
+    void RightShift_Imp(__UNIT_TYPE* p, __UNIT_TYPE p_word_count, __UNIT_TYPE n, __UNIT_TYPE* o, bool padding_zero)
     {
         __UNIT_TYPE* pp = p;
         __UNIT_TYPE p_count = p_word_count;
@@ -167,7 +167,7 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    void LeftShift_Imp(__UNIT_TYPE* p, __UNIT_TYPE p_word_count, __UNIT_TYPE n, __UNIT_TYPE* o, BOOL padding_zero)
+    void LeftShift_Imp(__UNIT_TYPE* p, __UNIT_TYPE p_word_count, __UNIT_TYPE n, __UNIT_TYPE* o, bool padding_zero)
     {
         __UNIT_TYPE* pp = p;
         __UNIT_TYPE p_count = p_word_count;
@@ -318,7 +318,7 @@ namespace Palmtree::Math::Core::Internal
                 ResourceHolderUINT root(tc);
                 __UNIT_TYPE w_bit_count = u_bit_count - n;
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
-                RightShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, n, w->BLOCK, FALSE);
+                RightShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, n, w->BLOCK, false);
 #ifdef _DEBUG
                 root.CheckNumber(w);
 #endif
@@ -341,7 +341,7 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
             __UNIT_TYPE w_bit_count = u_bit_count + n;
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
-            LeftShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, n, w->BLOCK, FALSE);
+            LeftShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, n, w->BLOCK, true);
 #ifdef _DEBUG
             root.CheckNumber(w);
 #endif

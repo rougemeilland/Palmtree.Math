@@ -29,7 +29,6 @@
 #define PMC_INLINE_FUNC_H
 
 
-#include <windows.h>
 #include <intrin.h>
 #include "pmc_internal.h"
 
@@ -468,7 +467,7 @@ namespace Palmtree::Math::Core::Internal
     {
         if (x == 0)
             return (sizeof(x) * 8);
-        DWORD pos;
+        unsigned long pos;
 #ifdef _MSC_VER
         _BitScanReverse(&pos, x);
 #elif defined(__GNUC__)
@@ -483,7 +482,7 @@ namespace Palmtree::Math::Core::Internal
     {
         if (x == 0)
             return (sizeof(x) * 8);
-        DWORD pos;
+        unsigned long pos;
 #ifdef _MSC_VER
         _BitScanReverse(&pos, x);
 #elif defined(__GNUC__)
@@ -500,7 +499,7 @@ namespace Palmtree::Math::Core::Internal
         if (x == 0)
             return (sizeof(x) * 8);
 #ifdef _MSC_VER
-        DWORD pos;
+        unsigned long pos;
         _BitScanReverse64(&pos, x);
 #elif defined(__GNUC__)
         _UINT64_T pos;
@@ -550,7 +549,7 @@ namespace Palmtree::Math::Core::Internal
         if (x == 0)
             return (sizeof(x) * 8);
 #ifdef _M_IX86
-        DWORD pos;
+        unsigned long pos;
 #ifdef _MSC_VER
         _BitScanForward(&pos, x);
 #elif defined(__GNUC__)
@@ -560,7 +559,7 @@ namespace Palmtree::Math::Core::Internal
 #endif
 #elif defined(_M_X64)
 #ifdef _MSC_VER
-        DWORD pos;
+        unsigned long pos;
         _BitScanForward64(&pos, x);
 #elif defined(__GNUC__)
         _UINT64_T pos;

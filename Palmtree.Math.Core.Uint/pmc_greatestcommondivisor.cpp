@@ -23,7 +23,6 @@
  */
 
 
-#include <windows.h>
 #include "pmc_resourceholder_uint.h"
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
@@ -77,7 +76,7 @@ namespace Palmtree::Math::Core::Internal
             }
             tz_count += _TZCNT_ALT_UNIT(*t_ptr);
             if (tz_count > 0)
-                RightShift_Imp(u, word_count, tz_count, u, TRUE);
+                RightShift_Imp(u, word_count, tz_count, u, true);
         }
     }
 
@@ -184,19 +183,25 @@ namespace Palmtree::Math::Core::Internal
                     __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
                     __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v);
                     __UNIT_TYPE work_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count);
+                    __UNIT_TYPE w_bit_count = _MINIMUM_UNIT(u_bit_count, v_bit_count);
+
                     __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_bit_count);
                     __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_bit_count);
-                    NUMBER_OBJECT_UINT* w = root.AllocateNumber(work_bit_count);
+                    _ZERO_MEMORY_UNIT(work_u_buf + u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT) - u->UNIT_WORD_COUNT);
+                    _ZERO_MEMORY_UNIT(work_v_buf + 1, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT) - 1);
+                    NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
+
                     __UNIT_TYPE u_tzcnt = u->TRAILING_ZERO_BITS_COUNT;
                     __UNIT_TYPE v_tzcnt = _TZCNT_ALT_UNIT(v);
                     __UNIT_TYPE k = _MINIMUM_UNIT(u_tzcnt, v_tzcnt);
                     if (u_tzcnt > 0)
-                        RightShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, u_tzcnt, work_u_buf, FALSE);
+                        RightShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, u_tzcnt, work_u_buf, true);
                     else
                         _COPY_MEMORY_UNIT(work_u_buf, u->BLOCK, u->UNIT_WORD_COUNT);
                     work_v_buf[0] = v >> v_tzcnt;
                     __UNIT_TYPE w_buf_count;
                     GreatestCommonDivisor_Imp(work_u_buf, work_v_buf, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT), w->BLOCK, &w_buf_count);
+                    _ZERO_MEMORY_UNIT(w->BLOCK + w_buf_count, w->BLOCK_COUNT - w_buf_count);
 #ifdef _DEBUG
                     root.CheckBlock(work_u_buf);
                     root.CheckBlock(work_v_buf);
@@ -204,7 +209,7 @@ namespace Palmtree::Math::Core::Internal
 #endif
                     root.DeallocateBlock(work_v_buf);
                     root.DeallocateBlock(work_u_buf);
-                    LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
+                    LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, true);
 #ifdef _DEBUG
                     root.CheckNumber(w);
 #endif
@@ -281,21 +286,25 @@ namespace Palmtree::Math::Core::Internal
                             // u と v のどちらかが 1 ワードで表現できない場合
                             __UNIT_TYPE v_bit_count = sizeof(v_lo) * 8 - _LZCNT_ALT_32(v_lo);
                             __UNIT_TYPE work_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count);
+                            __UNIT_TYPE w_bit_count = _MINIMUM_UNIT(u_bit_count, v_bit_count);
                             __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_bit_count);
                             __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_bit_count);
-                            NUMBER_OBJECT_UINT* w = root.AllocateNumber(work_bit_count);
+                            _ZERO_MEMORY_UNIT(work_u_buf + u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT) - u->UNIT_WORD_COUNT);
+                            _ZERO_MEMORY_UNIT(work_v_buf + 1, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT) - 1);
+                            NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
 
                             __UNIT_TYPE u_tzcnt = u->TRAILING_ZERO_BITS_COUNT;
                             __UNIT_TYPE v_tzcnt = _TZCNT_ALT_UNIT(v_lo);
                             __UNIT_TYPE k = _MINIMUM_UNIT(u_tzcnt, v_tzcnt);
                             if (u_tzcnt > 0)
-                                RightShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, u_tzcnt, work_u_buf, FALSE);
+                                RightShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, u_tzcnt, work_u_buf, true);
                             else
                                 _COPY_MEMORY_UNIT(work_u_buf, u->BLOCK, u->UNIT_WORD_COUNT);
                             work_v_buf[0] = v_lo >> v_tzcnt;
 
                             __UNIT_TYPE w_buf_count;
                             GreatestCommonDivisor_Imp(work_u_buf, work_v_buf, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT), w->BLOCK, &w_buf_count);
+                            _ZERO_MEMORY_UNIT(w->BLOCK + w_buf_count, w->BLOCK_COUNT - w_buf_count);
 #ifdef _DEBUG
                             root.CheckBlock(work_u_buf);
                             root.CheckBlock(work_v_buf);
@@ -304,7 +313,7 @@ namespace Palmtree::Math::Core::Internal
                             root.DeallocateBlock(work_v_buf);
                             root.DeallocateBlock(work_u_buf);
 
-                            LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
+                            LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, true);
 #ifdef _DEBUG
                             root.CheckNumber(w);
 #endif
@@ -319,24 +328,29 @@ namespace Palmtree::Math::Core::Internal
                         ResourceHolderUINT root(tc);
                         __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v_hi);
                         __UNIT_TYPE work_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count);
+                        __UNIT_TYPE w_bit_count = _MINIMUM_UNIT(u_bit_count, v_bit_count);
+
                         __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_bit_count);
                         __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_bit_count);
-                        NUMBER_OBJECT_UINT* w = root.AllocateNumber(work_bit_count);
+                        _ZERO_MEMORY_UNIT(work_u_buf + u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT) - u->UNIT_WORD_COUNT);
+                        _ZERO_MEMORY_UNIT(work_v_buf + 2, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT) - 2);
+                        NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
 
                         __UNIT_TYPE u_tzcnt = u->TRAILING_ZERO_BITS_COUNT;
                         __UNIT_TYPE v_tzcnt = v_lo == 0 ? 32 + _TZCNT_ALT_UNIT(v_hi) : _TZCNT_ALT_UNIT(v_lo);
                         __UNIT_TYPE k = _MINIMUM_UNIT(u_tzcnt, v_tzcnt);
                         if (u_tzcnt > 0)
-                            RightShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, u_tzcnt, work_u_buf, FALSE);
+                            RightShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, u_tzcnt, work_u_buf, true);
                         else
                             _COPY_MEMORY_UNIT(work_u_buf, u->BLOCK, u->UNIT_WORD_COUNT);
                         work_v_buf[0] = v_lo;
                         work_v_buf[1] = v_hi;
                         if (v_tzcnt > 0)
-                            RightShift_Imp(work_v_buf, 2, v_tzcnt, work_v_buf, TRUE);
+                            RightShift_Imp(work_v_buf, 2, v_tzcnt, work_v_buf, true);
 
                         __UNIT_TYPE w_buf_count;
                         GreatestCommonDivisor_Imp(work_u_buf, work_v_buf, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT), w->BLOCK, &w_buf_count);
+                        _ZERO_MEMORY_UNIT(w->BLOCK + w_buf_count, w->BLOCK_COUNT - w_buf_count);
 #ifdef _DEBUG
                         root.CheckBlock(work_u_buf);
                         root.CheckBlock(work_v_buf);
@@ -345,7 +359,7 @@ namespace Palmtree::Math::Core::Internal
                         root.DeallocateBlock(work_v_buf);
                         root.DeallocateBlock(work_u_buf);
 
-                        LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
+                        LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, true);
 #ifdef _DEBUG
                         root.CheckNumber(w);
 #endif
@@ -376,21 +390,26 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
                         __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)v);
                         __UNIT_TYPE work_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count);
+                        __UNIT_TYPE w_bit_count = _MINIMUM_UNIT(u_bit_count, v_bit_count);
 
                         __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_bit_count);
                         __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_bit_count);
-                        NUMBER_OBJECT_UINT* w = root.AllocateNumber(work_bit_count);
+                        _ZERO_MEMORY_UNIT(work_u_buf + u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT) - u->UNIT_WORD_COUNT);
+                        _ZERO_MEMORY_UNIT(work_v_buf + 1, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT) - 1);
+                        NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
+
                         __UNIT_TYPE u_tzcnt = u->TRAILING_ZERO_BITS_COUNT;
                         __UNIT_TYPE v_tzcnt = _TZCNT_ALT_UNIT((__UNIT_TYPE)v);
                         __UNIT_TYPE k = _MINIMUM_UNIT(u_tzcnt, v_tzcnt);
                         if (u_tzcnt > 0)
-                            RightShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, u_tzcnt, work_u_buf, FALSE);
+                            RightShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, u_tzcnt, work_u_buf, true);
                         else
                             _COPY_MEMORY_UNIT(work_u_buf, u->BLOCK, u->UNIT_WORD_COUNT);
                         work_v_buf[0] = (__UNIT_TYPE)(v >> v_tzcnt);
 
                         __UNIT_TYPE w_buf_count;
                         GreatestCommonDivisor_Imp(work_u_buf, work_v_buf, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT), w->BLOCK, &w_buf_count);
+                        _ZERO_MEMORY_UNIT(w->BLOCK + w_buf_count, w->BLOCK_COUNT - w_buf_count);
 #ifdef _DEBUG
                         root.CheckBlock(work_u_buf);
                         root.CheckBlock(work_v_buf);
@@ -399,7 +418,7 @@ namespace Palmtree::Math::Core::Internal
                         root.DeallocateBlock(work_v_buf);
                         root.DeallocateBlock(work_u_buf);
 
-                        LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
+                        LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, true);
 #ifdef _DEBUG
                         root.CheckNumber(w);
 #endif
@@ -453,10 +472,11 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
                 __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
                 __UNIT_TYPE work_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count);
+                __UNIT_TYPE w_bit_count = _MINIMUM_UNIT(u_bit_count, v_bit_count);
                 if (work_bit_count <= __UNIT_TYPE_BIT_COUNT)
                 {
                     // u と v がともに 1 ワードで表現できる場合
-                    NUMBER_OBJECT_UINT* w = root.AllocateNumber(__UNIT_TYPE_BIT_COUNT);
+                    NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                     w->BLOCK[0] = GreatestCommonDivisor_1W_Imp(u->BLOCK[0], v->BLOCK[0]);
 #ifdef _DEBUG
                     root.CheckNumber(w);
@@ -470,22 +490,25 @@ namespace Palmtree::Math::Core::Internal
                     // u と v のどちらかが 1 ワードで表現できない場合
                     __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_bit_count);
                     __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_bit_count);
-                    NUMBER_OBJECT_UINT* w = root.AllocateNumber(work_bit_count);
+                    _ZERO_MEMORY_UNIT(work_u_buf + u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT) - u->UNIT_WORD_COUNT);
+                    _ZERO_MEMORY_UNIT(work_v_buf + v->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT) - v->UNIT_WORD_COUNT);
+                    NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
 
                     __UNIT_TYPE u_tzcnt = u->TRAILING_ZERO_BITS_COUNT;
                     __UNIT_TYPE v_tzcnt = v->TRAILING_ZERO_BITS_COUNT;
                     __UNIT_TYPE k = _MINIMUM_UNIT(u_tzcnt, v_tzcnt);
                     if (u_tzcnt > 0)
-                        RightShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, u_tzcnt, work_u_buf, FALSE);
+                        RightShift_Imp(u->BLOCK, u->UNIT_WORD_COUNT, u_tzcnt, work_u_buf, true);
                     else
                         _COPY_MEMORY_UNIT(work_u_buf, u->BLOCK, u->UNIT_WORD_COUNT);
                     if (v_tzcnt > 0)
-                        RightShift_Imp(v->BLOCK, v->UNIT_WORD_COUNT, v_tzcnt, work_v_buf, FALSE);
+                        RightShift_Imp(v->BLOCK, v->UNIT_WORD_COUNT, v_tzcnt, work_v_buf, true);
                     else
                         _COPY_MEMORY_UNIT(work_v_buf, v->BLOCK, v->UNIT_WORD_COUNT);
 
                     __UNIT_TYPE w_buf_count;
                     GreatestCommonDivisor_Imp(work_u_buf, work_v_buf, _DIVIDE_CEILING_UNIT(work_bit_count, __UNIT_TYPE_BIT_COUNT), w->BLOCK, &w_buf_count);
+                    _ZERO_MEMORY_UNIT(w->BLOCK + w_buf_count, w->BLOCK_COUNT - w_buf_count);
 #ifdef _DEBUG
                     root.CheckBlock(work_u_buf);
                     root.CheckBlock(work_v_buf);
@@ -495,7 +518,7 @@ namespace Palmtree::Math::Core::Internal
                     root.DeallocateBlock(work_u_buf);
 
                     if (k > 0)
-                        LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, TRUE);
+                        LeftShift_Imp(w->BLOCK, w_buf_count, k, w->BLOCK, true);
 #ifdef _DEBUG
                     root.CheckNumber(w);
 #endif

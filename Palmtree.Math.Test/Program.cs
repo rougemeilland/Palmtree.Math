@@ -41,27 +41,9 @@ namespace Palmtree.Math.Test
         static void Main(string[] args)
         {
             Rational.DefaultRoundingMode = RoundingMode.HalfUp;
-            var default_fgc = Console.ForegroundColor;
-            var default_bgc = Console.BackgroundColor;
-
-            Console.CancelKeyPress += (sender, e) =>
-            {
-                Console.ForegroundColor = default_fgc;
-                Console.BackgroundColor = default_bgc;
-            };
-
-            try
-            {
-                定数のテスト();
-                TestLoop();
-                // Console.ReadLine();
-            }
-            finally
-            {
-                Console.ForegroundColor = default_fgc;
-                Console.BackgroundColor = default_bgc;
-            }
-
+            定数のテスト();
+            TestLoop();
+            // Console.ReadLine();
         }
 
         private static void 定数のテスト()
@@ -191,7 +173,7 @@ namespace Palmtree.Math.Test
 
         private static bool PluginFilter(IComponentTestPlugin plugin)
         {
-            //return (plugin.PluginName.StartsWith("uint.multiply_x_x_kara"));
+            //return (plugin.PluginName.StartsWith("uint."));
             return (true);
         }
 
@@ -220,25 +202,9 @@ namespace Palmtree.Math.Test
                     lock (lock_obj)
                     {
                         ++NG項目数;
-                        var default_fgc = Console.ForegroundColor;
-                        var default_bgc = Console.BackgroundColor;
-                        try
-                        {
-                            Console.WriteLine("----------");
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.BackgroundColor = ConsoleColor.Black;
-                            Console.Write(string.Format("NG: {0}-{1} {2}", test_item.PluginName, test_item.Index, summary));
-                            Console.ForegroundColor = default_fgc;
-                            Console.BackgroundColor = default_bgc;
-                            Console.WriteLine();
-                            if (_verbose)
-                                Console.ReadLine();
-                        }
-                        finally
-                        {
-                            Console.ForegroundColor = default_fgc;
-                            Console.BackgroundColor = default_bgc;
-                        }
+                        Console.WriteLine(string.Format("NG: {0}-{1} {2}", test_item.PluginName, test_item.Index, summary));
+                        if (_verbose)
+                            Console.ReadLine();
                     }
                 }
             }
@@ -249,6 +215,7 @@ namespace Palmtree.Math.Test
             Interlocked.Increment(ref 合計項目数);
         }
     }
+
 }
 
 

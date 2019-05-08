@@ -29,7 +29,6 @@
 #define PMC_INTERNAL_H
 
 
-#include <windows.h>
 #include "pmc.h"
 #include "pmc_cpuid.h"
 

@@ -51,12 +51,12 @@ namespace Palmtree::Math::Core::Internal
                         // w のバッファはこの余裕を見込んでいるのでこのルートには到達しないはず。
                         throw InternalErrorException(L"内部エラーが発生しました。", L"pcm_add.cpp;DoCarry;1");
                     }
-                    *w_ptr = 1;
+                    *w_ptr++ = 1;
+                    --w_count;
                 }
 
                 // u の最上位に達してしまった場合はいずれにしろループを中断して正常復帰する。
-
-                return;
+                break;
             }
             else if (c)
             {
@@ -71,21 +71,29 @@ namespace Palmtree::Math::Core::Internal
             {
                 // u の最上位に達しておらず、かつキャリーが立っていない場合
 
-                // 繰り上がりを中断し、u の残りのデータをzにそのまま複写し、正常復帰する。
-                while (u_count > 0)
-                {
-                    *w_ptr++ = *u_ptr++;
-                    --u_count;
-                    --w_count;
-                }
-                return;
+                // 繰り上がりを中断し、u の残りのデータを z にそのまま複写し、正常復帰する。
+                _COPY_MEMORY_UNIT(w_ptr, u_ptr, u_count);
+                w_ptr += u_count;
+                u_ptr += u_count;
+                w_count -= u_count;
+                u_count = 0;
+                break;
             }
         }
+        _ZERO_MEMORY_UNIT(w_ptr, w_count);
     }
 
 
     static void Add_UX_1W(__UNIT_TYPE* u_ptr, __UNIT_TYPE u_count, __UNIT_TYPE v, __UNIT_TYPE* w_ptr, __UNIT_TYPE w_count)
     {
+#ifdef _DEBUG
+        if (u_count < 1)
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_Imp;1");
+        if (w_count < u_count)
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_Imp;2");
+        if (w_count < 1)
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_Imp;3");
+#endif
         char c;
 
         // 最下桁の加算を行う
@@ -99,13 +107,21 @@ namespace Palmtree::Math::Core::Internal
 
     static void Add_UX_2W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, __UNIT_TYPE* w_buf, __UNIT_TYPE w_count)
     {
+#ifdef _DEBUG
+        if (u_count < 1)
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_Imp;1");
+        if (w_count < u_count)
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_Imp;2");
+        if (w_count < 2)
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_Imp;3");
+#endif
         __UNIT_TYPE* up = u_buf;
         __UNIT_TYPE* wp = w_buf;
         char c;
 
         if (u_count < 2)
         {
-            // x が 1 ワードしかなかった場合
+            // u が 1 ワードしかなかった場合
 
             // 最下位ワードの加算を行う
             c = _ADD_UNIT(0, up[0], v_lo, &wp[0]);
@@ -114,15 +130,19 @@ namespace Palmtree::Math::Core::Internal
             c = _ADD_UNIT(c, 0, v_hi, &wp[1]);
 
             // 桁上りが発生したら 3 番目のワードに 1 を設定する。
-            if (c)
+            if (c && w_count >= 3)
+            {
                 wp[2] = 1;
-
-            // 正常復帰する。
-            return;
+                _ZERO_MEMORY_UNIT(w_buf + 3, w_count - 3);
+            }
+            else
+            {
+                _ZERO_MEMORY_UNIT(w_buf + 2, w_count - 2);
+            }
         }
         else
         {
-            // x が 2 ワード以上あった場合
+            // u が 2 ワード以上あった場合
 
             // 最下位のワードの加算をする
             c = _ADD_UNIT(0, *up++, v_lo, wp++);
@@ -137,10 +157,10 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    // 加算の実装。x のワード数は y のワード数より小さくてはならない。
+    // 加算の実装。u のワード数は v のワード数より小さくてはならない。
     static void Add_Imp(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf, __UNIT_TYPE w_count)
     {
-        // x のワード長が y のワード長以上であるようにする
+        // u のワード長が v のワード長以上であるようにする
         if (u_count < v_count)
         {
             __UNIT_TYPE* t_buf = u_buf;
@@ -150,6 +170,14 @@ namespace Palmtree::Math::Core::Internal
             u_count = v_count;
             v_count = t_count;
         }
+
+#ifdef _DEBUG
+        if (u_count < v_count)
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_Imp;1");
+        if (w_count < u_count)
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_Imp;2");
+#endif
+
         __UNIT_TYPE* up = u_buf;
         __UNIT_TYPE* vp = v_buf;
         __UNIT_TYPE* wp = w_buf;
@@ -229,17 +257,18 @@ namespace Palmtree::Math::Core::Internal
             // x が 0 ではない場合
 
             // x + 1 を計算する
+
             ResourceHolderUINT root(tc);
             __UNIT_TYPE x_bit_count = x->UNIT_BIT_COUNT;
             __UNIT_TYPE w_bit_count = x_bit_count + 1;
-            NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
-            DoCarry(1, x->BLOCK, x->UNIT_WORD_COUNT, nw->BLOCK, nw->BLOCK_COUNT);
+            NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
+            DoCarry(1, x->BLOCK, x->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
-            root.CheckNumber(nw);
+            root.CheckNumber(w);
 #endif
-            CommitNumber(tc, nw);
-            root.UnlinkNumber(nw);
-            return (nw);
+            CommitNumber(tc, w);
+            root.UnlinkNumber(w);
+            return (w);
         }
     }
 
@@ -254,9 +283,9 @@ namespace Palmtree::Math::Core::Internal
         return (w);
     }
 
-    static NUMBER_OBJECT_UINT* PMC_Add_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* nu, _UINT32_T v)
+    static NUMBER_OBJECT_UINT* PMC_Add_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT32_T v)
     {
-        if (nu->IS_ZERO)
+        if (u->IS_ZERO)
         {
             // x が 0 である場合
 
@@ -284,7 +313,7 @@ namespace Palmtree::Math::Core::Internal
                 // y が 0 である場合
 
                 // 加算結果となる x の値を持つ NUMBER_OBJECT_UINT 構造体を獲得し、呼び出し元へ返す。
-                return (DuplicateNumber(tc, nu));
+                return (DuplicateNumber(tc, u));
             }
             else
             {
@@ -292,17 +321,17 @@ namespace Palmtree::Math::Core::Internal
 
                 // x と y の和を計算する
                 ResourceHolderUINT root(tc);
-                __UNIT_TYPE u_bit_count = nu->UNIT_BIT_COUNT;
+                __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
                 __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v);
                 __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
-                NUMBER_OBJECT_UINT* nw = root.AllocateNumber(w_bit_count);
-                Add_UX_1W(nu->BLOCK, nu->UNIT_WORD_COUNT, v, nw->BLOCK, nw->BLOCK_COUNT);
+                NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
+                Add_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
-                root.CheckNumber(nw);
+                root.CheckNumber(w);
 #endif
-                CommitNumber(tc, nw);
-                root.UnlinkNumber(nw);
-                return (nw);
+                CommitNumber(tc, w);
+                root.UnlinkNumber(w);
+                return (w);
             }
         }
     }

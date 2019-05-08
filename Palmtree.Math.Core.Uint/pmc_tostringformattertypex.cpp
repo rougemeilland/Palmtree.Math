@@ -135,6 +135,7 @@ namespace Palmtree::Math::Core::Internal
         ResourceHolderUINT root(_tc);
         __UNIT_TYPE temp_buf_bit_count = x_abs->UNIT_BIT_COUNT + 4;
         __UNIT_TYPE* temp_buf = root.AllocateBlock(temp_buf_bit_count);
+        temp_buf[_DIVIDE_CEILING_UNIT(temp_buf_bit_count, __UNIT_TYPE_BIT_COUNT) - 1] = 0; // 最上位ワードのみ 0 クリアする
         __UNIT_TYPE temp_buf_word_count = _DIVIDE_CEILING_UNIT(temp_buf_bit_count, __UNIT_TYPE_BIT_COUNT);
         __UNIT_TYPE output_len;
         wchar_t filling_char;

@@ -255,6 +255,7 @@ namespace Palmtree::Math::Core::Internal
                     new_w_buf = current_temp_buf_ptr; current_temp_buf_ptr += n * 2;
 
                     _COPY_MEMORY_UNIT(new_v_buf, v_buf, v_count);
+                    _ZERO_MEMORY_UNIT(new_v_buf + v_count, n - v_count);
                     Multiply_UX_UX_Karatsuba3(root, log2_n, temp_buf, current_temp_buf_ptr, u_buf, new_v_buf, new_w_buf);
                     _COPY_MEMORY_UNIT(w_buf, new_w_buf, u_count + v_count);
                 }
@@ -266,6 +267,7 @@ namespace Palmtree::Math::Core::Internal
                     new_w_buf = &temp_buf[n];  // n * 2 words
 
                     _COPY_MEMORY_UNIT(new_v_buf, v_buf, v_count);
+                    _ZERO_MEMORY_UNIT(new_v_buf + v_count, n - v_count);
                     Multiply_UX_UX_Karatsuba2(tc, log2_n, u_buf, new_v_buf, new_w_buf);
                     _COPY_MEMORY_UNIT(w_buf, new_w_buf, u_count + v_count);
                 }
@@ -277,6 +279,7 @@ namespace Palmtree::Math::Core::Internal
                     new_w_buf = root.AllocateBlock(n * 2 * __UNIT_TYPE_BIT_COUNT);
 
                     _COPY_MEMORY_UNIT(new_v_buf, v_buf, v_count);
+                    _ZERO_MEMORY_UNIT(new_v_buf + v_count, n - v_count);
                     Multiply_UX_UX_Karatsuba1(tc, log2_n, u_buf, new_v_buf, new_w_buf);
                     _COPY_MEMORY_UNIT(w_buf, new_w_buf, u_count + v_count);
                 }
@@ -296,6 +299,7 @@ namespace Palmtree::Math::Core::Internal
                     new_w_buf = current_temp_buf_ptr; current_temp_buf_ptr += n * 2;
 
                     _COPY_MEMORY_UNIT(new_u_buf, u_buf, u_count);
+                    _ZERO_MEMORY_UNIT(new_u_buf + u_count, n - u_count);
                     Multiply_UX_UX_Karatsuba3(root, log2_n, temp_buf, current_temp_buf_ptr, new_u_buf, v_buf, new_w_buf);
                     _COPY_MEMORY_UNIT(w_buf, new_w_buf, u_count + v_count);
                 }
@@ -307,6 +311,7 @@ namespace Palmtree::Math::Core::Internal
                     new_w_buf = &temp_buf[n];  // n * 2 words
 
                     _COPY_MEMORY_UNIT(new_u_buf, u_buf, u_count);
+                    _ZERO_MEMORY_UNIT(new_u_buf + u_count, n - u_count);
                     Multiply_UX_UX_Karatsuba2(tc, log2_n, new_u_buf, v_buf, new_w_buf);
                     _COPY_MEMORY_UNIT(w_buf, new_w_buf, u_count + v_count);
                 }
@@ -318,6 +323,7 @@ namespace Palmtree::Math::Core::Internal
                     new_w_buf = root.AllocateBlock(n * 2 * __UNIT_TYPE_BIT_COUNT);
 
                     _COPY_MEMORY_UNIT(new_u_buf, u_buf, u_count);
+                    _ZERO_MEMORY_UNIT(new_u_buf + u_count, n - u_count);
                     Multiply_UX_UX_Karatsuba1(tc, log2_n, new_u_buf, v_buf, new_w_buf);
                     _COPY_MEMORY_UNIT(w_buf, new_w_buf, u_count + v_count);
                 }
@@ -336,7 +342,9 @@ namespace Palmtree::Math::Core::Internal
                     new_w_buf = current_temp_buf_ptr; current_temp_buf_ptr += n * 2;
 
                     _COPY_MEMORY_UNIT(new_u_buf, u_buf, u_count);
+                    _ZERO_MEMORY_UNIT(new_u_buf + u_count, n - u_count);
                     _COPY_MEMORY_UNIT(new_v_buf, v_buf, v_count);
+                    _ZERO_MEMORY_UNIT(new_v_buf + v_count, n - v_count);
                     Multiply_UX_UX_Karatsuba3(root, log2_n, temp_buf, current_temp_buf_ptr, new_u_buf, new_v_buf, new_w_buf);
                     _COPY_MEMORY_UNIT(w_buf, new_w_buf, u_count + v_count);
                 }
@@ -349,7 +357,9 @@ namespace Palmtree::Math::Core::Internal
                     new_w_buf = &temp_buf[n + n];  // n * 2 words
 
                     _COPY_MEMORY_UNIT(new_u_buf, u_buf, u_count);
+                    _ZERO_MEMORY_UNIT(new_u_buf + u_count, n - u_count);
                     _COPY_MEMORY_UNIT(new_v_buf, v_buf, v_count);
+                    _ZERO_MEMORY_UNIT(new_v_buf + v_count, n - v_count);
                     Multiply_UX_UX_Karatsuba2(tc, log2_n, new_u_buf, new_v_buf, new_w_buf);
                     _COPY_MEMORY_UNIT(w_buf, new_w_buf, u_count + v_count);
                 }
@@ -362,7 +372,9 @@ namespace Palmtree::Math::Core::Internal
                     new_w_buf = root.AllocateBlock(n * 2 * __UNIT_TYPE_BIT_COUNT);
 
                     _COPY_MEMORY_UNIT(new_u_buf, u_buf, u_count);
+                    _ZERO_MEMORY_UNIT(new_u_buf + u_count, n - u_count);
                     _COPY_MEMORY_UNIT(new_v_buf, v_buf, v_count);
+                    _ZERO_MEMORY_UNIT(new_v_buf + v_count, n - v_count);
                     Multiply_UX_UX_Karatsuba1(tc, log2_n, new_u_buf, new_v_buf, new_w_buf);
                     _COPY_MEMORY_UNIT(w_buf, new_w_buf, u_count + v_count);
                 }
@@ -663,13 +675,9 @@ namespace Palmtree::Math::Core::Internal
                 current_temp_buf_ptr = temp_buf;
             }
             t1 = current_temp_buf_ptr; current_temp_buf_ptr += n_half;
-            //_ZERO_MEMORY_UNIT(t1, n_half);
             t2 = current_temp_buf_ptr; current_temp_buf_ptr += n_half;
-            //_ZERO_MEMORY_UNIT(t2, n_half);
             t3 = current_temp_buf_ptr; current_temp_buf_ptr += n;
-            //_ZERO_MEMORY_UNIT(t3, n);
             t = current_temp_buf_ptr; current_temp_buf_ptr += n;
-            //_ZERO_MEMORY_UNIT(t, n);
 
             Multiply_UX_UX_Karatsuba3(root, log2_n_half, temp_buf, current_temp_buf_ptr, &u_buf[0], &v_buf[0], &w_buf[0]);
             Multiply_UX_UX_Karatsuba3(root, log2_n_half, temp_buf, current_temp_buf_ptr, &u_buf[n_half], &v_buf[n_half], &w_buf[n]);

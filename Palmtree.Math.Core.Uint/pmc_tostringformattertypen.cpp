@@ -23,6 +23,7 @@
  */
 
 
+#include <windows.h>
 #include "pmc_tostringformattertypen.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_thousandseparatedstringwriter.h"

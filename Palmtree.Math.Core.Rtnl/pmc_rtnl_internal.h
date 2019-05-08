@@ -32,7 +32,6 @@
 #include <stdio.h>
 #endif
 
-#include <windows.h>
 #include "pmc_rtnl.h"
 #include "pmc_internal.h"
 #include "pmc_exception.h"

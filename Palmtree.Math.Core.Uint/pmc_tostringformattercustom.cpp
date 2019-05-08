@@ -23,6 +23,7 @@
  */
 
 
+#include <windows.h>
 #include "pmc_tostringformattercustom.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_threadcontext.h"

@@ -23,6 +23,7 @@
  */
 
 
+#include <windows.h>
 #include "pmc_string.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_parser.h"
@@ -485,6 +486,7 @@ namespace Palmtree::Math::Core::Internal
         // 10^word_digit_count を基数としたバイト列を 10 を基数としたバイト列に変換する
         __UNIT_TYPE o_bit_count = bin_buf_count * __UNIT_TYPE_BIT_COUNT;
         NUMBER_OBJECT_UINT* nr = root.AllocateNumber(o_bit_count);
+        _ZERO_MEMORY_UNIT(nr->BLOCK, nr->BLOCK_COUNT);
         ConvertCardinalNumber(tc, bin_buf, bin_buf_count, nr->BLOCK);
 #ifdef _DEBUG
         root.CheckNumber(nr);

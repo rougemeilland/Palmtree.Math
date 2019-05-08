@@ -59,10 +59,13 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE* work_v_buf = root.AllocateBlock(v->UNIT_BIT_COUNT);
             NUMBER_OBJECT_UINT* r = root.AllocateNumber(u->UNIT_BIT_COUNT + __UNIT_TYPE_BIT_COUNT);
             if (u->UNIT_WORD_COUNT < v->UNIT_WORD_COUNT)
+            {
+                _ZERO_MEMORY_UNIT(r->BLOCK + u->UNIT_WORD_COUNT, r->BLOCK_COUNT - u->UNIT_WORD_COUNT);
                 _COPY_MEMORY_UNIT(r->BLOCK, u->BLOCK, u->UNIT_WORD_COUNT);
+            }
             else
             {
-                DivRem_UX_UX(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, nullptr, r->BLOCK);
+                DivRem_UX_UX(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, nullptr, 0, r->BLOCK, r->BLOCK_COUNT);
 #ifdef _DEBUG
                 root.CheckBlock(work_v_buf);
                 root.CheckNumber(r);
@@ -124,7 +127,7 @@ namespace Palmtree::Math::Core::Internal
 
             // v2 を v % m に設定する。
 
-            DivRem_UX_UX(v->BLOCK, v->UNIT_WORD_COUNT, m_buf, m_count, work_v_buf, nullptr, v_2_buf);
+            DivRem_UX_UX(v->BLOCK, v->UNIT_WORD_COUNT, m_buf, m_count, work_v_buf, nullptr, 0, v_2_buf, v->UNIT_WORD_COUNT + 1);
 #ifdef _DEBUG
             root.CheckBlock(work_v_buf);
             root.CheckBlock(v_2_buf);
@@ -178,7 +181,6 @@ namespace Palmtree::Math::Core::Internal
                 break;
 
             // w := u * u を計算する
-            root.ClearBlock(w_ptr);
             Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, u_ptr, u_count, u_ptr, u_count, w_ptr);
 #ifdef _DEBUG
             root.CheckBlock(work_1_buf);
@@ -192,9 +194,7 @@ namespace Palmtree::Math::Core::Internal
             // w := u % m を計算する
             if (u_count >= m_count)
             {
-                root.ClearBlock(work_v_buf);
-                root.ClearBlock(w_ptr);
-                DivRem_UX_UX(u_ptr, u_count, m_buf, m_count, work_v_buf, nullptr, w_ptr);
+                DivRem_UX_UX(u_ptr, u_count, m_buf, m_count, work_v_buf, nullptr, 0, w_ptr, m_count * 2 + 1);
 #ifdef _DEBUG
                 root.CheckBlock(work_v_buf);
                 root.CheckBlock(work_1_buf);
@@ -217,7 +217,6 @@ namespace Palmtree::Math::Core::Internal
                 // e の当該桁のビットが立っている場合
 
                 // w := u * v を計算する
-                root.ClearBlock(w_ptr);
                 Multiply_UX_UX_Imp(tc, PMC_MULTIPLICATION_METHOD_AUTO, u_ptr, u_count, v_ptr, v_count, w_ptr);
 #ifdef _DEBUG
                 root.CheckBlock(work_1_buf);
@@ -231,9 +230,7 @@ namespace Palmtree::Math::Core::Internal
                 // w := u % m を計算する
                 if (u_count >= m_count)
                 {
-                    root.ClearBlock(work_v_buf);
-                    root.ClearBlock(w_ptr);
-                    DivRem_UX_UX(u_ptr, u_count, m_buf, m_count, work_v_buf, nullptr, w_ptr);
+                    DivRem_UX_UX(u_ptr, u_count, m_buf, m_count, work_v_buf, nullptr, 0, w_ptr, m_count * 2 + 1);
 #ifdef _DEBUG
                     root.CheckBlock(work_v_buf);
                     root.CheckBlock(work_1_buf);
@@ -254,6 +251,7 @@ namespace Palmtree::Math::Core::Internal
 
         // 最下位桁まで達したので u_ptr と u_count を解として帰る
         _COPY_MEMORY_UNIT(r->BLOCK, u_ptr, u_count);
+        _ZERO_MEMORY_UNIT(r->BLOCK + u_count, r->BLOCK_COUNT - u_count);
 #ifdef _DEBUG
         root.CheckNumber(r);
 #endif

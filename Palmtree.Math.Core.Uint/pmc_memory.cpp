@@ -32,15 +32,8 @@
 #include "pmc_inline_func.h"
 
 #pragma region プラットフォーム固有の定義
-#ifdef _M_IX86
-#define	CHECK_CODE_INIT     (0x84848484)
-#define	DEFAULT_MEMORY_DATA (0xcccccccc)
-#elif defined(_M_X64)
-#define CHECK_CODE_INIT     (0x8484848484848484)
-#define	DEFAULT_MEMORY_DATA (0xcccccccccccccccc)
-#else
-#error unknown platform
-#endif
+#define CHECK_CODE_INIT     ((__UNIT_TYPE)0x8484848484848484)
+#define	DEFAULT_MEMORY_DATA ((__UNIT_TYPE)0xcccccccccccccccc)
 #pragma endregion
 
 namespace Palmtree::Math::Core::Internal
@@ -176,7 +169,9 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE* buffer = (__UNIT_TYPE*)__AllocateHeap(words2 * __UNIT_TYPE_BYTE_COUNT);
 #else
         __UNIT_TYPE* buffer = new __UNIT_TYPE[words2];
-        _ZERO_MEMORY_UNIT(buffer, words2);
+#ifdef _DEBUG
+        _FILL_MEMORY_UNIT(buffer, DEFAULT_MEMORY_DATA, words2);
+#endif
 #endif
         tc.IncrementTypeAAllocationCount();
         buffer[0] = words1;

@@ -208,7 +208,7 @@ namespace Palmtree::Math::Core::Internal
             ResourceHolderUINT root(tc);
             __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
             __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v);
-            __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
+            __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count);
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
             BitwiseOr_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK);
 #ifdef _DEBUG
@@ -319,7 +319,7 @@ namespace Palmtree::Math::Core::Internal
                 ResourceHolderUINT root(tc);
                 __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
                 __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)v);
-                __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count) + 1;
+                __UNIT_TYPE w_bit_count = _MAXIMUM_UNIT(u_bit_count, v_bit_count);
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
                 BitwiseOr_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, w->BLOCK);
 #ifdef _DEBUG
