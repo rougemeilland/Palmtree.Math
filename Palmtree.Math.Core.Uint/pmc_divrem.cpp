@@ -1186,15 +1186,9 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT32_T PMC_DivRem_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v, _UINT32_T* q) noexcept(false)
+    static _UINT32_T PMC_DivRem_UI_UX_Imp(_UINT32_T u, NUMBER_OBJECT_UINT* v, _UINT32_T* q) noexcept(false)
     {
-        if (sizeof(__UNIT_TYPE) < sizeof(u))
-        {
-            // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_DivRem_UI_UX;1");
-        }
-        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        if (nv->IS_ZERO)
+        if (v->IS_ZERO)
         {
             // v が 0 である場合
 
@@ -1214,7 +1208,7 @@ namespace Palmtree::Math::Core::Internal
         {
             // u が 0 ではない場合
 
-            if (nv->IS_ONE)
+            if (v->IS_ONE)
             {
                 // v が 1 である場合
 
@@ -1229,7 +1223,7 @@ namespace Palmtree::Math::Core::Internal
 
                 // x と y の商・剰余を計算する
                 __UNIT_TYPE u_bit_count = sizeof(u) * 8 - _LZCNT_ALT_32(u);
-                __UNIT_TYPE v_bit_count = nv->UNIT_BIT_COUNT;
+                __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
                 if (u_bit_count < v_bit_count)
                 {
                     // 明らかに u < v である場合
@@ -1245,7 +1239,7 @@ namespace Palmtree::Math::Core::Internal
 
                     // u は 1 ワードで表現できるので、v も 1 ワードで表現できる。
                     __UNIT_TYPE temp_r;
-                    __UNIT_TYPE temp_q = _DIVREM_UNIT(0, u, (__UNIT_TYPE)nv->BLOCK[0], &temp_r);
+                    __UNIT_TYPE temp_q = _DIVREM_UNIT(0, u, (__UNIT_TYPE)v->BLOCK[0], &temp_r);
                     if (q != nullptr)
                         *q = (_UINT32_T)temp_q;
 #ifdef ENABLED_PERFORMANCE_COUNTER
@@ -1258,6 +1252,17 @@ namespace Palmtree::Math::Core::Internal
                 }
             }
         }
+    }
+
+    _UINT32_T PMC_DivRem_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v, _UINT32_T* q) noexcept(false)
+    {
+        if (sizeof(__UNIT_TYPE) < sizeof(u))
+        {
+            // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_DivRem_UI_UX;1");
+        }
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
+        return (PMC_DivRem_UI_UX_Imp(u, nv, q));
     }
 
     _UINT32_T PMC_DivRem_UX_UI_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT32_T v, NUMBER_OBJECT_UINT** q)
@@ -1365,15 +1370,10 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
-    _UINT64_T PMC_DivRem_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v, _UINT64_T* q) noexcept(false)
+#ifdef _M_IX86
+    static _UINT64_T PMC_DivRem_UL_UX_Imp(_UINT64_T u, NUMBER_OBJECT_UINT* v, _UINT64_T* q) noexcept(false)
     {
-        if (sizeof(__UNIT_TYPE) * 2 < sizeof(u))
-        {
-            // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_DivRem_UL_UX;1");
-        }
-        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        if (nv->IS_ZERO)
+        if (v->IS_ZERO)
         {
             // v が 0 である場合
 
@@ -1393,7 +1393,7 @@ namespace Palmtree::Math::Core::Internal
         {
             // u が 0 ではない場合
 
-            if (nv->IS_ONE)
+            if (v->IS_ONE)
             {
                 // v が 1 である場合
 
@@ -1407,117 +1407,45 @@ namespace Palmtree::Math::Core::Internal
                 // u > 0 かつ v > 1 である場合
 
                 // u と v の商・剰余を計算する
-                if (sizeof(__UNIT_TYPE) < sizeof(u))
+                _UINT32_T u_hi;
+                _UINT32_T u_lo = _FROMDWORDTOWORD(u, &u_hi);
+                if (u_hi == 0)
                 {
-                    // _UINT64_T が 1 ワードで表現しきれない場合
-                    _UINT32_T u_hi;
-                    _UINT32_T u_lo = _FROMDWORDTOWORD(u, &u_hi);
-                    if (u_hi == 0)
+                    // u の値が 32bit で表現可能な場合
+                    __UNIT_TYPE u_bit_count = sizeof(u_lo) * 8 - _LZCNT_ALT_32(u_lo);
+                    __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
+                    if (u_bit_count < v_bit_count)
                     {
-                        // u の値が 32bit で表現可能な場合
-                        __UNIT_TYPE u_bit_count = sizeof(u_lo) * 8 - _LZCNT_ALT_32(u_lo);
-                        __UNIT_TYPE v_bit_count = nv->UNIT_BIT_COUNT;
-                        if (u_bit_count < v_bit_count)
-                        {
-                            // 明らかに u < v である場合
+                        // 明らかに u < v である場合
 
-                            // q = 0, r = u を返す。
-                            if (q != nullptr)
-                                *q = 0;
-                            return (u_lo);
-                        }
-                        else
-                        {
-                            // u のビット数が v のビット数以上である場合
-
-                            // u は 32bit で表現できるので、v も 32bit で表現できる。
-                            __UNIT_TYPE temp_r;
-                            __UNIT_TYPE temp_q = _DIVREM_UNIT(0, u_lo, (__UNIT_TYPE)nv->BLOCK[0], &temp_r);
-#ifdef ENABLED_PERFORMANCE_COUNTER
-                            if (sizeof(u_lo) == sizeof(_UINT64_T))
-                                IncrementDIV64Counter();
-                            else
-                                IncrementDIV32Counter();
-#endif
-                            if (q != nullptr)
-                                *q = temp_q;
-                            return (temp_r);
-                        }
+                        // q = 0, r = u を返す。
+                        if (q != nullptr)
+                            *q = 0;
+                        return (u_lo);
                     }
                     else
                     {
-                        // v の値が 32bit では表現できない場合
-                        __UNIT_TYPE u_bit_count = sizeof(u) * 8 - _LZCNT_ALT_32(u_hi);
-                        __UNIT_TYPE v_bit_count = nv->UNIT_BIT_COUNT;
-                        if (u_bit_count < v_bit_count)
-                        {
-                            // 明らかに u < v である場合
+                        // u のビット数が v のビット数以上である場合
 
-                            // q = 0, r = u を返す。
-                            if (q != nullptr)
-                                *q = 0;
-                            return (u);
-                        }
+                        // u は 32bit で表現できるので、v も 32bit で表現できる。
+                        __UNIT_TYPE temp_r;
+                        __UNIT_TYPE temp_q = _DIVREM_UNIT(0, u_lo, (__UNIT_TYPE)v->BLOCK[0], &temp_r);
+#ifdef ENABLED_PERFORMANCE_COUNTER
+                        if (sizeof(u_lo) == sizeof(_UINT64_T))
+                            IncrementDIV64Counter();
                         else
-                        {
-                            // u のビット長が 33 以上 64 以下であり、かつ、u のビット長が v のビット長以上(v のビット長は多くとも64以下)である場合
-
-                            if (nv->UNIT_BIT_COUNT <= sizeof(__UNIT_TYPE) * 8)
-                            {
-                                // v が 32bit で表現できる場合
-
-                                if (q != nullptr)
-                                {
-                                    __UNIT_TYPE u_buf[] = { u_lo, u_hi };
-                                    __UNIT_TYPE q_buf[] = { 0, 0, 0 };
-                                    __UNIT_TYPE r_buf;
-
-                                    DivRem_UX_1W(u_buf, countof(u_buf), (__UNIT_TYPE)nv->BLOCK[0], q_buf, countof(q_buf), &r_buf);
-
-                                    *q = _FROMWORDTODWORD((_UINT32_T)q_buf[1], (_UINT32_T)q_buf[0]);
-                                    return (r_buf);
-                                }
-                                else
-                                {
-                                    __UNIT_TYPE u_buf[] = { u_lo, u_hi };
-                                    __UNIT_TYPE r_buf = Rem_UX_1W(u_buf, countof(u_buf), (__UNIT_TYPE)nv->BLOCK[0]);
-                                    return (r_buf);
-                                }
-                            }
-                            else
-                            {
-                                // v が 32bit では表現できない場合
-
-                                // この場合、2 ワード / 2 ワード の除算となるため、_DIVREM_UNIT 単発では計算できない。
-                                if (q != nullptr)
-                                {
-                                    __UNIT_TYPE u_buf[] = { u_lo, u_hi };
-                                    __UNIT_TYPE q_buf[] = { 0 };
-                                    __UNIT_TYPE r_buf[] = { 0, 0, 0 }; // 演算結果を格納するためには v と同じ大きさだけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
-                                    __UNIT_TYPE work_v_buf[] = { 0, 0 };
-                                    DivRem_UX_UX_Imp(u_buf, countof(u_buf), nv->BLOCK, nv->UNIT_WORD_COUNT, work_v_buf, q_buf, countof(q_buf), r_buf, countof(r_buf));
-                                    *q = q_buf[0];
-                                    return (_FROMWORDTODWORD((_UINT32_T)r_buf[1], (_UINT32_T)r_buf[0]));
-                                }
-                                else
-                                {
-                                    __UNIT_TYPE u_buf[] = { u_lo, u_hi };
-                                    __UNIT_TYPE r_buf[] = { 0, 0, 0 }; // 演算結果を格納するためには v と同じ大きさだけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
-                                    __UNIT_TYPE work_v_buf[] = { 0, 0 };
-                                    DivRem_UX_UX_Imp(u_buf, countof(u_buf), nv->BLOCK, nv->UNIT_WORD_COUNT, work_v_buf, nullptr, 0, r_buf, countof(r_buf));
-                                    return (_FROMWORDTODWORD((_UINT32_T)r_buf[1], (_UINT32_T)r_buf[0]));
-                                }
-                            }
-                        }
+                            IncrementDIV32Counter();
+#endif
+                        if (q != nullptr)
+                            *q = temp_q;
+                        return (temp_r);
                     }
                 }
                 else
                 {
-                    // _UINT64_T が 1 ワードで表現できる場合
-
-                    // x と y の商・剰余を計算する
-                    __UNIT_TYPE u_bit_count = sizeof(u) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)u);
-                    __UNIT_TYPE v_bit_count = nv->UNIT_BIT_COUNT;
+                    // v の値が 32bit では表現できない場合
+                    __UNIT_TYPE u_bit_count = sizeof(u) * 8 - _LZCNT_ALT_32(u_hi);
+                    __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
                     if (u_bit_count < v_bit_count)
                     {
                         // 明らかに u < v である場合
@@ -1529,27 +1457,143 @@ namespace Palmtree::Math::Core::Internal
                     }
                     else
                     {
-                        // u のビット数が v のビット数以上である場合
+                        // u のビット長が 33 以上 64 以下であり、かつ、u のビット長が v のビット長以上(v のビット長は多くとも64以下)である場合
 
-                        // u は 1 ワードで表現できるので、v も 1 ワードで表現できる。
-                        __UNIT_TYPE temp_r;
-                        __UNIT_TYPE temp_q = _DIVREM_UNIT(0, (__UNIT_TYPE)u, (__UNIT_TYPE)nv->BLOCK[0], &temp_r);
-#ifdef ENABLED_PERFORMANCE_COUNTER
-                        if (sizeof(temp_r) == sizeof(_UINT64_T))
-                            IncrementDIV64Counter();
+                        if (v->UNIT_BIT_COUNT <= sizeof(__UNIT_TYPE) * 8)
+                        {
+                            // v が 32bit で表現できる場合
+
+                            if (q != nullptr)
+                            {
+                                __UNIT_TYPE u_buf[] = { u_lo, u_hi };
+                                __UNIT_TYPE q_buf[] = { 0, 0, 0 };
+                                __UNIT_TYPE r_buf;
+
+                                DivRem_UX_1W(u_buf, countof(u_buf), (__UNIT_TYPE)v->BLOCK[0], q_buf, countof(q_buf), &r_buf);
+
+                                *q = _FROMWORDTODWORD((_UINT32_T)q_buf[1], (_UINT32_T)q_buf[0]);
+                                return (r_buf);
+                            }
+                            else
+                            {
+                                __UNIT_TYPE u_buf[] = { u_lo, u_hi };
+                                __UNIT_TYPE r_buf = Rem_UX_1W(u_buf, countof(u_buf), (__UNIT_TYPE)v->BLOCK[0]);
+                                return (r_buf);
+                            }
+                        }
                         else
-                            IncrementDIV32Counter();
-#endif
-                        if (q != nullptr)
-                            *q = temp_q;
-                        return (temp_r);
+                        {
+                            // v が 32bit では表現できない場合
+
+                            // この場合、2 ワード / 2 ワード の除算となるため、_DIVREM_UNIT 単発では計算できない。
+                            if (q != nullptr)
+                            {
+                                __UNIT_TYPE u_buf[] = { u_lo, u_hi };
+                                __UNIT_TYPE q_buf[] = { 0 };
+                                __UNIT_TYPE r_buf[] = { 0, 0, 0 }; // 演算結果を格納するためには v と同じ大きさだけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
+                                __UNIT_TYPE work_v_buf[] = { 0, 0 };
+                                DivRem_UX_UX_Imp(u_buf, countof(u_buf), v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, q_buf, countof(q_buf), r_buf, countof(r_buf));
+                                *q = q_buf[0];
+                                return (_FROMWORDTODWORD((_UINT32_T)r_buf[1], (_UINT32_T)r_buf[0]));
+                            }
+                            else
+                            {
+                                __UNIT_TYPE u_buf[] = { u_lo, u_hi };
+                                __UNIT_TYPE r_buf[] = { 0, 0, 0 }; // 演算結果を格納するためには v と同じ大きさだけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
+                                __UNIT_TYPE work_v_buf[] = { 0, 0 };
+                                DivRem_UX_UX_Imp(u_buf, countof(u_buf), v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, nullptr, 0, r_buf, countof(r_buf));
+                                return (_FROMWORDTODWORD((_UINT32_T)r_buf[1], (_UINT32_T)r_buf[0]));
+                            }
+                        }
                     }
                 }
-
             }
         }
     }
+#elif defined(_M_X64)
+    static _UINT64_T PMC_DivRem_UL_UX_Imp(_UINT64_T u, NUMBER_OBJECT_UINT* v, _UINT64_T* q) noexcept(false)
+    {
+        if (v->IS_ZERO)
+        {
+            // v が 0 である場合
 
+            // 0 による除算はエラーで返す
+            throw DivisionByZeroException(L"0による除算が行われようとしました。");
+        }
+        if (u == 0)
+        {
+            // x が 0 である場合
+
+            // q = 0, r = 0 を返す
+            if (q != nullptr)
+                *q = 0;
+            return (0);
+        }
+        else
+        {
+            // u が 0 ではない場合
+
+            if (v->IS_ONE)
+            {
+                // v が 1 である場合
+
+                // q = u, r = 0 を返す
+                if (q != nullptr)
+                    *q = u;
+                return (0);
+            }
+            else
+            {
+                // u > 0 かつ v > 1 である場合
+
+                // u と v の商・剰余を計算する
+                __UNIT_TYPE u_bit_count = sizeof(u) * 8 - _LZCNT_ALT_UNIT(u);
+                __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
+                if (u_bit_count < v_bit_count)
+                {
+                    // 明らかに u < v である場合
+
+                    // q = 0, r = u を返す。
+                    if (q != nullptr)
+                        *q = 0;
+                    return (u);
+                }
+                else
+                {
+                    // u のビット数が v のビット数以上である場合
+
+                    // u は 1 ワードで表現できるので、v も 1 ワードで表現できる。
+                    __UNIT_TYPE temp_r;
+                    __UNIT_TYPE temp_q = _DIVREM_UNIT(0, u, v->BLOCK[0], &temp_r);
+#ifdef ENABLED_PERFORMANCE_COUNTER
+                    if (sizeof(temp_r) == sizeof(_UINT64_T))
+                        IncrementDIV64Counter();
+                    else
+                        IncrementDIV32Counter();
+#endif
+                    if (q != nullptr)
+                        *q = temp_q;
+                    return (temp_r);
+                }
+            }
+        }
+    }
+#else
+#error unknown platform
+#endif
+
+    _UINT64_T PMC_DivRem_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v, _UINT64_T* q) noexcept(false)
+    {
+        if (sizeof(__UNIT_TYPE) * 2 < sizeof(u))
+        {
+            // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_DivRem_UL_UX;1");
+        }
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
+        return (PMC_DivRem_UL_UX_Imp(u, nv, q));
+    }
+
+#ifdef _M_IX86
     _UINT64_T PMC_DivRem_UX_UL_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT64_T v, NUMBER_OBJECT_UINT** q)
     {
         if (v == 0)
@@ -1587,123 +1631,12 @@ namespace Palmtree::Math::Core::Internal
 
                 // u と v の商・剰余を計算する
                 __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
-                if (sizeof(__UNIT_TYPE) < sizeof(v))
+                _UINT32_T v_hi;
+                _UINT32_T v_lo = _FROMDWORDTOWORD(v, &v_hi);
+                if (v_hi == 0)
                 {
-                    // _UINT64_T が 1 ワードで表現しきれない場合
-                    _UINT32_T v_hi;
-                    _UINT32_T v_lo = _FROMDWORDTOWORD(v, &v_hi);
-                    if (v_hi == 0)
-                    {
-                        // v の値が 32bit で表現可能な場合
-                        __UNIT_TYPE v_bit_count = sizeof(v_lo) * 8 - _LZCNT_ALT_32(v_lo);
-                        if (u_bit_count < v_bit_count)
-                        {
-                            // 明らかに u < v である場合
-
-                            // q = 0, r = u を返す。
-                            if (q != nullptr)
-                                *q = &number_object_uint_zero;
-                            return (u->BLOCK[0]);
-                        }
-                        else
-                        {
-                            if (q != nullptr)
-                            {
-                                ResourceHolderUINT root(tc);
-                                __UNIT_TYPE q_bit_count = u_bit_count - v_bit_count + 1 + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには u_bit_count - v_bit_count + 1 だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
-                                *q = root.AllocateNumber(q_bit_count);
-                                __UNIT_TYPE r_buf = 0;
-                                DivRem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, (*q)->BLOCK, (*q)->BLOCK_COUNT, &r_buf);
-#ifdef _DEBUG
-                                root.CheckNumber(*q);
-#endif
-                                CommitNumber(tc, *q);
-                                if ((*q)->IS_ZERO)
-                                {
-                                    root.DeallocateNumber(*q);
-                                    *q = &number_object_uint_zero;
-                                }
-                                else
-                                    root.UnlinkNumber(*q);
-                                return (r_buf);
-                            }
-                            else
-                            {
-                                __UNIT_TYPE r_buf = Rem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo);
-                                return (r_buf);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // v の値が 32bit では表現できない場合
-                        __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v_hi);
-                        if (u_bit_count < v_bit_count)
-                        {
-                            // 明らかに u < v である場合
-
-                            // q = 0, r = u を返す。
-                            if (q != nullptr)
-                                *q = &number_object_uint_zero;
-                            if (sizeof(v) == sizeof(__UNIT_TYPE))
-                                return (u->BLOCK[0]);
-                            else
-                            {
-                                __UNIT_TYPE r_lo = u->BLOCK[0];
-                                __UNIT_TYPE r_hi = u->UNIT_WORD_COUNT > 1 ? u->BLOCK[1] : 0;
-                                return (_FROMWORDTODWORD((_UINT32_T)r_hi, (_UINT32_T)r_lo));
-                            }
-                        }
-                        else
-                        {
-                            if (q != nullptr)
-                            {
-                                ResourceHolderUINT root(tc);
-                                __UNIT_TYPE q_bit_count =  (u->UNIT_WORD_COUNT - 2 + 1) * __UNIT_TYPE_BIT_COUNT;
-                                __UNIT_TYPE r_bit_count = u_bit_count + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには v_bit_count だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
-                                *q = root.AllocateNumber(q_bit_count);
-                                __UNIT_TYPE v_buf[] = { v_lo, v_hi };
-                                __UNIT_TYPE work_v_buf[] = { 0, 0 };
-                                __UNIT_TYPE* r_buf = root.AllocateBlock(r_bit_count);
-                                DivRem_UX_UX_Imp(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, countof(v_buf), work_v_buf, (*q)->BLOCK, (*q)->BLOCK_COUNT, r_buf, _DIVIDE_CEILING_UNIT(r_bit_count, __UNIT_TYPE_BIT_COUNT));
-#ifdef _DEBUG
-                                root.CheckNumber(*q);
-                                root.CheckBlock(r_buf);
-#endif
-                                CommitNumber(tc, *q);
-                                if ((*q)->IS_ZERO)
-                                {
-                                    root.DeallocateNumber(*q);
-                                    *q = &number_object_uint_zero;
-                                }
-                                else
-                                    root.UnlinkNumber(*q);
-                                return (_FROMWORDTODWORD((_UINT32_T)r_buf[1], (_UINT32_T)r_buf[0]));
-                            }
-                            else
-                            {
-                                ResourceHolderUINT root(tc);
-                                __UNIT_TYPE r_bit_count = u_bit_count + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには v_bit_count だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
-                                __UNIT_TYPE v_buf[] = { v_lo, v_hi };
-                                __UNIT_TYPE work_v_buf[] = { 0, 0 };
-                                __UNIT_TYPE* r_buf = root.AllocateBlock(r_bit_count);
-                                DivRem_UX_UX_Imp(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, countof(v_buf), work_v_buf, nullptr, 0, r_buf, _DIVIDE_CEILING_UNIT(r_bit_count, __UNIT_TYPE_BIT_COUNT));
-#ifdef _DEBUG
-                                root.CheckBlock(r_buf);
-#endif
-                                _UINT64_T r = _FROMWORDTODWORD((_UINT32_T)r_buf[1], (_UINT32_T)r_buf[0]);
-                                root.DeallocateBlock(r_buf);
-                                return (r);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    // _UINT64_T が 1 ワードで表現できる場合
-
-                    // x と y の商・剰余を計算する
-                    __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)v);
+                    // v の値が 32bit で表現可能な場合
+                    __UNIT_TYPE v_bit_count = sizeof(v_lo) * 8 - _LZCNT_ALT_32(v_lo);
                     if (u_bit_count < v_bit_count)
                     {
                         // 明らかに u < v である場合
@@ -1721,7 +1654,7 @@ namespace Palmtree::Math::Core::Internal
                             __UNIT_TYPE q_bit_count = u_bit_count - v_bit_count + 1 + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには u_bit_count - v_bit_count + 1 だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                             *q = root.AllocateNumber(q_bit_count);
                             __UNIT_TYPE r_buf = 0;
-                            DivRem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, (*q)->BLOCK, (*q)->BLOCK_COUNT, &r_buf);
+                            DivRem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, (*q)->BLOCK, (*q)->BLOCK_COUNT, &r_buf);
 #ifdef _DEBUG
                             root.CheckNumber(*q);
 #endif
@@ -1737,15 +1670,162 @@ namespace Palmtree::Math::Core::Internal
                         }
                         else
                         {
-                            __UNIT_TYPE r_buf = Rem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v);
+                            __UNIT_TYPE r_buf = Rem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, v_lo);
                             return (r_buf);
                         }
                     }
                 }
+                else
+                {
+                    // v の値が 32bit では表現できない場合
+                    __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v_hi);
+                    if (u_bit_count < v_bit_count)
+                    {
+                        // 明らかに u < v である場合
 
+                        // q = 0, r = u を返す。
+                        if (q != nullptr)
+                            *q = &number_object_uint_zero;
+                        if (sizeof(v) == sizeof(__UNIT_TYPE))
+                            return (u->BLOCK[0]);
+                        else
+                        {
+                            __UNIT_TYPE r_lo = u->BLOCK[0];
+                            __UNIT_TYPE r_hi = u->UNIT_WORD_COUNT > 1 ? u->BLOCK[1] : 0;
+                            return (_FROMWORDTODWORD((_UINT32_T)r_hi, (_UINT32_T)r_lo));
+                        }
+                    }
+                    else
+                    {
+                        if (q != nullptr)
+                        {
+                            ResourceHolderUINT root(tc);
+                            __UNIT_TYPE q_bit_count = (u->UNIT_WORD_COUNT - 2 + 1) * __UNIT_TYPE_BIT_COUNT;
+                            __UNIT_TYPE r_bit_count = u_bit_count + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには v_bit_count だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
+                            *q = root.AllocateNumber(q_bit_count);
+                            __UNIT_TYPE v_buf[] = { v_lo, v_hi };
+                            __UNIT_TYPE work_v_buf[] = { 0, 0 };
+                            __UNIT_TYPE* r_buf = root.AllocateBlock(r_bit_count);
+                            DivRem_UX_UX_Imp(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, countof(v_buf), work_v_buf, (*q)->BLOCK, (*q)->BLOCK_COUNT, r_buf, _DIVIDE_CEILING_UNIT(r_bit_count, __UNIT_TYPE_BIT_COUNT));
+#ifdef _DEBUG
+                            root.CheckNumber(*q);
+                            root.CheckBlock(r_buf);
+#endif
+                            CommitNumber(tc, *q);
+                            if ((*q)->IS_ZERO)
+                            {
+                                root.DeallocateNumber(*q);
+                                *q = &number_object_uint_zero;
+                            }
+                            else
+                                root.UnlinkNumber(*q);
+                            return (_FROMWORDTODWORD((_UINT32_T)r_buf[1], (_UINT32_T)r_buf[0]));
+                        }
+                        else
+                        {
+                            ResourceHolderUINT root(tc);
+                            __UNIT_TYPE r_bit_count = u_bit_count + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには v_bit_count だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
+                            __UNIT_TYPE v_buf[] = { v_lo, v_hi };
+                            __UNIT_TYPE work_v_buf[] = { 0, 0 };
+                            __UNIT_TYPE* r_buf = root.AllocateBlock(r_bit_count);
+                            DivRem_UX_UX_Imp(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, countof(v_buf), work_v_buf, nullptr, 0, r_buf, _DIVIDE_CEILING_UNIT(r_bit_count, __UNIT_TYPE_BIT_COUNT));
+#ifdef _DEBUG
+                            root.CheckBlock(r_buf);
+#endif
+                            _UINT64_T r = _FROMWORDTODWORD((_UINT32_T)r_buf[1], (_UINT32_T)r_buf[0]);
+                            root.DeallocateBlock(r_buf);
+                            return (r);
+                        }
+                    }
+                }
             }
         }
     }
+#elif defined(_M_X64)
+    _UINT64_T PMC_DivRem_UX_UL_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, _UINT64_T v, NUMBER_OBJECT_UINT** q)
+    {
+        if (v == 0)
+        {
+            // v が 0 である場合
+
+            // 0 による除算はエラーで返す
+            throw DivisionByZeroException(L"0による除算が行われようとしました。");
+        }
+        if (u->IS_ZERO)
+        {
+            // x が 0 である場合
+
+            // q = 0, r = 0 を返す
+            if (q != nullptr)
+                *q = &number_object_uint_zero;
+            return (0);
+        }
+        else
+        {
+            // u が 0 ではない場合
+
+            if (v == 1)
+            {
+                // v が 1 である場合
+
+                // q = u, r = 0 を返す
+                if (q != nullptr)
+                    *q = DuplicateNumber(tc, u);
+                return (0);
+            }
+            else
+            {
+                // u > 0 かつ v > 1 である場合
+
+                // u と v の商・剰余を計算する
+                __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
+                // _UINT64_T が 1 ワードで表現できる場合
+
+                // x と y の商・剰余を計算する
+                __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)v);
+                if (u_bit_count < v_bit_count)
+                {
+                    // 明らかに u < v である場合
+
+                    // q = 0, r = u を返す。
+                    if (q != nullptr)
+                        *q = &number_object_uint_zero;
+                    return (u->BLOCK[0]);
+                }
+                else
+                {
+                    if (q != nullptr)
+                    {
+                        ResourceHolderUINT root(tc);
+                        __UNIT_TYPE q_bit_count = u_bit_count - v_bit_count + 1 + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには u_bit_count - v_bit_count + 1 だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
+                        *q = root.AllocateNumber(q_bit_count);
+                        __UNIT_TYPE r_buf = 0;
+                        DivRem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v, (*q)->BLOCK, (*q)->BLOCK_COUNT, &r_buf);
+#ifdef _DEBUG
+                        root.CheckNumber(*q);
+#endif
+                        CommitNumber(tc, *q);
+                        if ((*q)->IS_ZERO)
+                        {
+                            root.DeallocateNumber(*q);
+                            *q = &number_object_uint_zero;
+                        }
+                        else
+                            root.UnlinkNumber(*q);
+                        return (r_buf);
+                    }
+                    else
+                    {
+                        __UNIT_TYPE r_buf = Rem_UX_1W(u->BLOCK, u->UNIT_WORD_COUNT, (__UNIT_TYPE)v);
+                        return (r_buf);
+                    }
+                }
+            }
+        }
+    }
+#else
+#error unknown platform
+#endif
 
     _UINT64_T PMC_DivRem_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v, PMC_HANDLE_UINT* q) noexcept(false)
     {
@@ -1999,6 +2079,317 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_UINT q = GET_NUMBER_HANDLE(nq);
         root.UnlinkNumber(nq);
         return (q);
+    }
+
+    _UINT32_T PMC_Modulo_X_UI(ThreadContext& tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, _UINT32_T v)
+    {
+        if (sizeof(__UNIT_TYPE) < sizeof(v))
+        {
+            // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_Modulo_X_UI;1");
+        }
+        NUMBER_OBJECT_UINT* nu_abs = GET_NUMBER_OBJECT(u_abs, L"u_abs");
+        _UINT32_T r = PMC_DivRem_UX_UI_Imp(tc, nu_abs, v, nullptr);
+        if (u_sign < 0 && r > 0)
+            r = v - r;
+        return (r);
+    }
+
+    _UINT64_T PMC_Modulo_X_UL(ThreadContext& tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, _UINT64_T v)
+    {
+        if (sizeof(__UNIT_TYPE) * 2 < sizeof(u_abs))
+        {
+            // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_Modulo_X_UL;1");
+        }
+        NUMBER_OBJECT_UINT* nu_abs = GET_NUMBER_OBJECT(u_abs, L"u_abs");
+        _UINT64_T r = PMC_DivRem_UX_UL_Imp(tc, nu_abs, v, nullptr);
+        if (u_sign < 0 && r > 0)
+            r = v - r;
+        return (r);
+    }
+
+    static bool CheckZero(NUMBER_OBJECT_UINT* x)
+    {
+        __UNIT_TYPE* t_ptr = x->BLOCK;
+        __UNIT_TYPE t_count = x->BLOCK_COUNT;
+        while (t_count > 0)
+        {
+            if (*t_ptr != 0)
+                return (false);
+            ++t_ptr;
+            --t_count;
+        }
+        return (true);
+    }
+
+#ifdef _DEBUG
+    static __UNIT_TYPE CountActualWords(NUMBER_OBJECT_UINT* x)
+    {
+        __UNIT_TYPE* t_ptr = x->BLOCK + x->BLOCK_COUNT - 1;
+        __UNIT_TYPE t_count = x->BLOCK_COUNT;
+        while (t_count > 0)
+        {
+            if (*t_ptr != 0)
+                return (t_count);
+            --t_ptr;
+            --t_count;
+        }
+        return (0);
+    }
+#endif
+
+    static NUMBER_OBJECT_UINT* PMC_Modulo_X_UX_Imp(ThreadContext& tc, SIGN_T u_sign, NUMBER_OBJECT_UINT* u_abs, NUMBER_OBJECT_UINT* v)
+    {
+        if (u_abs->IS_ZERO)
+        {
+            // u が 0 である場合
+
+            // r = 0 を返す
+            return (&number_object_uint_zero);
+        }
+        else
+        {
+            // u が 0 ではない場合
+
+            if (v->IS_ONE)
+            {
+                // v が 1 である場合
+
+                // r = 0 を返す
+                return (&number_object_uint_zero);
+            }
+            else
+            {
+                // u > 0 かつ v > 1 である場合
+
+                // x と y の商・剰余を計算する
+                __UNIT_TYPE u_abs_bit_count = u_abs->UNIT_BIT_COUNT;
+                __UNIT_TYPE v_bit_count = v->UNIT_BIT_COUNT;
+                if (u_abs_bit_count < v_bit_count)
+                {
+                    // 明らかに u_abs < v である場合
+
+                    // r = u ( u < 0 の場合は v - u)を返す。
+                    if (u_abs->IS_ZERO)
+                        return (&number_object_uint_zero);
+                    else if (u_sign >= 0)
+                        return (DuplicateNumber(tc, u_abs));
+                    else
+                    {
+                        ResourceHolderUINT root(tc);
+                        __UNIT_TYPE r_bit_count = v->UNIT_BIT_COUNT;
+                        NUMBER_OBJECT_UINT* r = root.AllocateNumber(r_bit_count);
+                        Subtruct_Imp(v->BLOCK, v->UNIT_WORD_COUNT, u_abs->BLOCK, u_abs->UNIT_WORD_COUNT, r->BLOCK, r->BLOCK_COUNT);
+#ifdef _DEBUG
+                        root.CheckNumber(r);
+#endif
+                        CommitNumber(tc, r);
+#ifdef _DEBUG
+                        // このルートで 0 になるはずはない
+                        if (r->IS_ZERO)
+                            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_divrem.cpp;PMC_Modulo_X_UX_Imp;1");
+#endif
+                        root.UnlinkNumber(r);
+                        return (r);
+                    }
+                }
+                else if (v_bit_count <= __UNIT_TYPE_BIT_COUNT)
+                {
+                    // 除数が 1 ワードで表現できる場合
+
+                    ResourceHolderUINT root(tc);
+                    __UNIT_TYPE r_bit_count = __UNIT_TYPE_BIT_COUNT;
+                    NUMBER_OBJECT_UINT* r = root.AllocateNumber(r_bit_count);
+                    r->BLOCK[0] = Rem_UX_1W(u_abs->BLOCK, u_abs->UNIT_WORD_COUNT, v->BLOCK[0]);
+                    if (u_sign < 0 && r->BLOCK[0] > 0)
+                        r->BLOCK[0] = v->BLOCK[0] - r->BLOCK[0];
+#ifdef _DEBUG
+                    root.CheckNumber(r);
+#endif
+                    CommitNumber(tc, r);
+                    if (r->IS_ZERO)
+                    {
+                        root.DeallocateNumber(r);
+                        r = &number_object_uint_zero;
+                    }
+                    else
+                        root.UnlinkNumber(r);
+                    return (r);
+                }
+                else
+                {
+                    // 除数を表現するのに 2 ワード以上必要な場合
+                    ResourceHolderUINT root(tc);
+                    __UNIT_TYPE r_bit_count = u_abs_bit_count + __UNIT_TYPE_BIT_COUNT; // 演算結果を格納するためには v_bit_count だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
+                    __UNIT_TYPE* work_v_buf = root.AllocateBlock(v->UNIT_WORD_COUNT * __UNIT_TYPE_BIT_COUNT);
+                    NUMBER_OBJECT_UINT* r = root.AllocateNumber(r_bit_count);
+                    DivRem_UX_UX_Imp(u_abs->BLOCK, u_abs->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, nullptr, 0, r->BLOCK, r->BLOCK_COUNT);
+#ifdef _DEBUG
+                    root.CheckBlock(work_v_buf);
+                    root.CheckNumber(r);
+
+                    // r の実際のデータのワード長は v のワード長以下のはずである
+                    if (CountActualWords(r) > v->UNIT_WORD_COUNT)
+                        throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_divrem.cpp;PMC_Modulo_X_UX_Imp;2");
+#endif
+
+                    if (u_sign < 0 && !CheckZero(r))
+                    {
+                        // r の領域長にかかわらず、v->UNIT_WORD_COUNT ワードの範囲のみで減算を行う
+                        Subtruct_Imp(v->BLOCK, v->UNIT_WORD_COUNT, r->BLOCK, v->UNIT_WORD_COUNT, r->BLOCK, r->UNIT_WORD_COUNT);
+                    }
+                    CommitNumber(tc, r);
+                    if (r->IS_ZERO)
+                    {
+                        root.DeallocateNumber(r);
+                        r = &number_object_uint_zero;
+                    }
+                    else
+                        root.UnlinkNumber(r);
+                    return (r);
+                }
+            }
+        }
+    }
+
+    PMC_HANDLE_UINT PMC_Modulo_X_UX(ThreadContext& tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, PMC_HANDLE_UINT v)
+    {
+        NUMBER_OBJECT_UINT* nu_abs = GET_NUMBER_OBJECT(u_abs, L"u_abs");
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
+        if (nv->IS_ZERO)
+        {
+            // v が 0 である場合
+
+            // 0 による除算はエラーで返す
+            throw DivisionByZeroException(L"0による除算が行われようとしました。");
+        }
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* nr = PMC_Modulo_X_UX_Imp(tc, u_sign, nu_abs, nv);
+        root.HookNumber(nr);
+        PMC_HANDLE_UINT r = GET_NUMBER_HANDLE(nr);
+        root.UnlinkNumber(nr);
+        return (r);
+    }
+
+    static NUMBER_OBJECT_UINT* PMC_Modulo_I_UX_Imp(ThreadContext& tc, SIGN_T u_sign, NUMBER_OBJECT_UINT* v, _UINT32_T r_value)
+    {
+        if (r_value == 0)
+            return (&number_object_uint_zero);
+        if (u_sign >= 0)
+            return (From_UI_Imp(tc, r_value));
+        else
+        {
+            ResourceHolderUINT root(tc);
+            __UNIT_TYPE r_bit_count = v->UNIT_BIT_COUNT;
+            NUMBER_OBJECT_UINT* r = root.AllocateNumber(r_bit_count);
+            __UNIT_TYPE u_buf[] = { r_value };
+            Subtruct_Imp(v->BLOCK, v->UNIT_WORD_COUNT, u_buf, countof(u_buf), r->BLOCK, r->BLOCK_COUNT);
+#ifdef _DEBUG
+            root.CheckNumber(r);
+#endif
+            CommitNumber(tc, r);
+#ifdef _DEBUG
+            // このルートで 0 になるはずはない
+            if (r->IS_ZERO)
+                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_divrem.cpp;PMC_Modulo_I_UX_Imp;1");
+#endif
+            root.UnlinkNumber(r);
+            return (r);
+        }
+    }
+
+    PMC_HANDLE_UINT PMC_Modulo_I_UX(ThreadContext& tc, SIGN_T u_sign, _UINT32_T u_abs, PMC_HANDLE_UINT v)
+    {
+        if (sizeof(__UNIT_TYPE) < sizeof(u_abs))
+        {
+            // _UINT32_T が 1 ワードで表現しきれない処理系には対応しない
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_Modulo_I_UX;1");
+        }
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
+
+        _UINT32_T r_value = PMC_DivRem_UI_UX_Imp(u_abs, nv, nullptr);
+        return (GET_NUMBER_HANDLE(PMC_Modulo_I_UX_Imp(tc, u_sign, nv, r_value)));
+    }
+
+#ifdef _M_IX86
+    static NUMBER_OBJECT_UINT* PMC_Modulo_L_UX_Imp(ThreadContext& tc, SIGN_T u_sign, NUMBER_OBJECT_UINT* v, _UINT64_T r_value)
+    {
+        if (r_value == 0)
+            return (&number_object_uint_zero);
+        if (u_sign >= 0)
+            return (From_UL_Imp(tc, r_value));
+        else
+        {
+            ResourceHolderUINT root(tc);
+            __UNIT_TYPE r_bit_count = v->UNIT_BIT_COUNT;
+            NUMBER_OBJECT_UINT* r = root.AllocateNumber(r_bit_count);
+            _UINT32_T r_value_hi;
+            _UINT32_T r_value_lo = _FROMDWORDTOWORD(r_value, &r_value_hi);
+            if (r_value_hi != 0)
+            {
+                __UNIT_TYPE u_buf[] = { r_value_lo, r_value_hi };
+                Subtruct_Imp(v->BLOCK, v->UNIT_WORD_COUNT, u_buf, countof(u_buf), r->BLOCK, r->BLOCK_COUNT);
+            }
+            else
+            {
+                __UNIT_TYPE u_buf[] = { r_value_lo };
+                Subtruct_Imp(v->BLOCK, v->UNIT_WORD_COUNT, u_buf, countof(u_buf), r->BLOCK, r->BLOCK_COUNT);
+            }
+#ifdef _DEBUG
+            root.CheckNumber(r);
+#endif
+            CommitNumber(tc, r);
+#ifdef _DEBUG
+            // このルートで 0 になるはずはない
+            if (r->IS_ZERO)
+                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_divrem.cpp;PMC_Modulo_L_UX_Imp;1");
+#endif
+            root.UnlinkNumber(r);
+            return (r);
+        }
+    }
+#elif defined(_M_X64)
+    static NUMBER_OBJECT_UINT* PMC_Modulo_L_UX_Imp(ThreadContext& tc, SIGN_T u_sign, NUMBER_OBJECT_UINT* v, _UINT64_T r_value)
+    {
+        if (r_value == 0)
+            return (&number_object_uint_zero);
+        if (u_sign >= 0)
+            return (From_UL_Imp(tc, r_value));
+        else
+        {
+            ResourceHolderUINT root(tc);
+            __UNIT_TYPE r_bit_count = v->UNIT_BIT_COUNT;
+            NUMBER_OBJECT_UINT* r = root.AllocateNumber(r_bit_count);
+            __UNIT_TYPE u_buf[] = { r_value };
+            Subtruct_Imp(v->BLOCK, v->UNIT_WORD_COUNT, u_buf, countof(u_buf), r->BLOCK, r->BLOCK_COUNT);
+#ifdef _DEBUG
+            root.CheckNumber(r);
+#endif
+            CommitNumber(tc, r);
+#ifdef _DEBUG
+            // このルートで 0 になるはずはない
+            if (r->IS_ZERO)
+                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_divrem.cpp;PMC_Modulo_L_UX_Imp;1");
+#endif
+            root.UnlinkNumber(r);
+            return (r);
+        }
+    }
+#else
+#error unknown platform
+#endif
+
+    PMC_HANDLE_UINT PMC_Modulo_L_UX(ThreadContext& tc, SIGN_T u_sign, _UINT64_T u_abs, PMC_HANDLE_UINT v)
+    {
+        if (sizeof(__UNIT_TYPE) * 2 < sizeof(u_abs))
+        {
+            // _UINT64_T が 2 ワードで表現しきれない処理系には対応しない
+            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_divrem.cpp;PMC_Modulo_L_UX;1");
+        }
+        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
+        _UINT64_T r_value = PMC_DivRem_UL_UX_Imp(u_abs, nv, nullptr);
+        return (GET_NUMBER_HANDLE(PMC_Modulo_L_UX_Imp(tc, u_sign, nv, r_value)));
     }
 
     PMC_STATUS_CODE Initialize_DivRem(PROCESSOR_FEATURES* feature)

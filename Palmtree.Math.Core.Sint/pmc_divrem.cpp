@@ -843,6 +843,107 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    _UINT32_T PMC_Modulo_X_UI(ThreadContext& tc, PMC_HANDLE_SINT u, _UINT32_T v)
+    {
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        if (v == 0)
+        {
+            // v == 0 の場合
+
+            // エラーを返す
+            throw DivisionByZeroException(L"0による除算が行われようとしました。");
+        }
+        else
+        {
+            // v != 0 の場合
+
+            _UINT32_T r = ep_uint.Modulo(tc, nu->SIGN, nu->ABS, v);
+            return (r);
+        }
+    }
+
+    _UINT64_T PMC_Modulo_X_UL(ThreadContext& tc, PMC_HANDLE_SINT u, _UINT64_T v)
+    {
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        if (v == 0)
+        {
+            // v == 0 の場合
+
+            // エラーを返す
+            throw DivisionByZeroException(L"0による除算が行われようとしました。");
+        }
+        else
+        {
+            // v != 0 の場合
+
+            _UINT64_T r = ep_uint.Modulo(tc, nu->SIGN, nu->ABS, v);
+            return (r);
+        }
+    }
+
+    PMC_HANDLE_UINT PMC_Modulo_X_UX(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v)
+    {
+        NUMBER_OBJECT_SINT* nu = GET_NUMBER_OBJECT(u, L"u");
+        if (v == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        if (v->FLAGS.IS_ZERO)
+        {
+            // v == 0 の場合
+
+            // エラーを返す
+            throw DivisionByZeroException(L"0による除算が行われようとしました。");
+        }
+        else
+        {
+            // v != 0 の場合
+
+            PMC_HANDLE_UINT r = ep_uint.Modulo(tc, nu->SIGN, nu->ABS, v);
+            return (r);
+        }
+    }
+
+    PMC_HANDLE_UINT PMC_Modulo_I_UX(ThreadContext& tc, _INT32_T u, PMC_HANDLE_UINT v)
+    {
+        if (v == nullptr)
+            throw ArgumentNullException(L"引数にnullが与えられています。", L"v");
+        SIGN_T u_sign;
+        _UINT32_T u_abs = GET_ABS_32(u, &u_sign);
+        if (v->FLAGS.IS_ZERO)
+        {
+            // v == 0 の場合
+
+            // エラーを返す
+            throw DivisionByZeroException(L"0による除算が行われようとしました。");
+        }
+        else
+        {
+            // v != 0 の場合
+
+            PMC_HANDLE_UINT r = ep_uint.Modulo(tc, u_sign, u_abs, v);
+            return (r);
+        }
+    }
+
+    PMC_HANDLE_UINT PMC_Modulo_L_UX(ThreadContext& tc, _INT64_T u, PMC_HANDLE_UINT v)
+    {
+        SIGN_T u_sign;
+        _UINT64_T u_abs = GET_ABS_64(u, &u_sign);
+        if (v->FLAGS.IS_ZERO)
+        {
+            // v == 0 の場合
+
+            // エラーを返す
+            throw DivisionByZeroException(L"0による除算が行われようとしました。");
+        }
+        else
+        {
+            // v != 0 の場合
+
+            PMC_HANDLE_UINT r = ep_uint.Modulo(tc, u_sign, u_abs, v);
+            return (r);
+        }
+    }
+
 }
 
 

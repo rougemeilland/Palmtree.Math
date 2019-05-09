@@ -161,6 +161,16 @@ namespace Palmtree.Math
             return (BigInt.EngineObject.Remainder(u, v.Handle));
         }
 
+        public static UInt32 Mod(this UInt32 u, UBigInt v)
+        {
+            return (UBigInt.EngineObject.Remainder(u, v.Handle));
+        }
+
+        public static UInt64 Mod(this UInt64 u, UBigInt v)
+        {
+            return (UBigInt.EngineObject.Remainder(u, v.Handle));
+        }
+
         public static UInt32 DivRem(this UInt32 u, UBigInt v, out UInt32 r)
         {
             var q = UBigInt.EngineObject.DivRem(u, v.Handle, out r);

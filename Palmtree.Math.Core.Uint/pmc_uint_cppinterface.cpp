@@ -297,6 +297,31 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_DivRem_UX_UX(tc, u, v, q));
     }
 
+    _UINT32_T PMC_UINT_CppInterface::Modulo(ThreadContext & tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, _UINT32_T v)
+    {
+        return (PMC_Modulo_X_UI(tc, u_sign, u_abs, v));
+    }
+
+    _UINT64_T PMC_UINT_CppInterface::Modulo(ThreadContext & tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, _UINT64_T v)
+    {
+        return (PMC_Modulo_X_UL(tc, u_sign, u_abs, v));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::Modulo(ThreadContext & tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, PMC_HANDLE_UINT v)
+    {
+        return (PMC_Modulo_X_UX(tc, u_sign, u_abs, v));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::Modulo(ThreadContext & tc, SIGN_T u_sign, _UINT32_T u_abs, PMC_HANDLE_UINT v)
+    {
+        return (PMC_Modulo_I_UX(tc, u_sign, u_abs, v));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::Modulo(ThreadContext & tc, SIGN_T u_sign, _UINT64_T u_abs, PMC_HANDLE_UINT v)
+    {
+        return (PMC_Modulo_L_UX(tc, u_sign, u_abs, v));
+    }
+
     PMC_HANDLE_UINT PMC_UINT_CppInterface::RightShift(ThreadContext& tc, PMC_HANDLE_UINT p, _INT32_T n) noexcept(false)
     {
         return (PMC_RightShift_UX_I(tc, p, n));

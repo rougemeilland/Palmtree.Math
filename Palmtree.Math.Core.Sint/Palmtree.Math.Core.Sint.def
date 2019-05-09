@@ -145,6 +145,11 @@ EXPORTS
 	PMCCS_IS_POWER_OF_TWO
 	PMCCS_IS_ZERO
 	PMCCS_LeftShift_X_I
+	PMCCS_Modulo_I_UX
+	PMCCS_Modulo_L_UX
+	PMCCS_Modulo_X_UI
+	PMCCS_Modulo_X_UL
+	PMCCS_Modulo_X_UX
 	PMCCS_Multiply_I_UX
 	PMCCS_Multiply_I_X
 	PMCCS_Multiply_L_UX

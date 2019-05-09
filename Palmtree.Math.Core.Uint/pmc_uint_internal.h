@@ -396,6 +396,12 @@ namespace Palmtree::Math::Core::Internal
 
     extern PMC_HANDLE_UINT PMC_DivideExactly_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
+    extern _UINT32_T PMC_Modulo_X_UI(ThreadContext& tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, _UINT32_T v);
+    extern _UINT64_T PMC_Modulo_X_UL(ThreadContext& tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, _UINT64_T v);
+    extern PMC_HANDLE_UINT PMC_Modulo_X_UX(ThreadContext& tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, PMC_HANDLE_UINT v);
+    extern PMC_HANDLE_UINT PMC_Modulo_I_UX(ThreadContext& tc, SIGN_T u_sign, _UINT32_T u_abs, PMC_HANDLE_UINT v);
+    extern PMC_HANDLE_UINT PMC_Modulo_L_UX(ThreadContext& tc, SIGN_T u_sign, _UINT64_T u_abs, PMC_HANDLE_UINT v);
+
     extern PMC_HANDLE_UINT PMC_RightShift_UX_I(ThreadContext& tc, PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);
 
     extern PMC_HANDLE_UINT PMC_LeftShift_UX_I(ThreadContext& tc, PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);

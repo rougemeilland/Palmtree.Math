@@ -157,6 +157,16 @@ namespace Palmtree.Math
             return (BigInt.EngineObject.Remainder(u, v.Handle));
         }
 
+        public static UBigInt Mod(this Int32 u, UBigInt v)
+        {
+            return (new UBigInt(BigInt.EngineObject.Modulo(u, v.Handle)));
+        }
+
+        public static UBigInt Mod(this Int64 u, UBigInt v)
+        {
+            return (new UBigInt(BigInt.EngineObject.Modulo(u, v.Handle)));
+        }
+
         public static BigInt DivRem(this UInt32 u, BigInt v, out UInt32 r)
         {
             return (new BigInt(BigInt.EngineObject.DivRem(u, v.Handle, out r)));

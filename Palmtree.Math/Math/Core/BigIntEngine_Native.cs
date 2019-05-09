@@ -464,6 +464,21 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_LeftShift_X_I(IntPtr p, Int32 n, out IntPtr o);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_Modulo_I_UX(Int32 u, IntPtr v, out IntPtr r);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_Modulo_L_UX(Int64 u, IntPtr v, out IntPtr r);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_Modulo_X_UI(IntPtr u, UInt32 v, out UInt32 r);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_Modulo_X_UL(IntPtr u, UInt64 v, out UInt64 r);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_Modulo_X_UX(IntPtr u, IntPtr v, out IntPtr r);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
         private static extern Int32 PMCCS_Multiply_I_UX(Int32 u, IntPtr v, out IntPtr w);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]

@@ -228,6 +228,11 @@ namespace Palmtree::Math::Core::Internal
     extern _UINT64_T PMC_DivRem_UX_L(ThreadContext& tc, PMC_HANDLE_UINT u, _INT64_T v, PMC_HANDLE_SINT* q) noexcept(false);
     extern PMC_HANDLE_SINT PMC_DivRem_X_UX(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* q) noexcept(false);
     extern PMC_HANDLE_SINT PMC_DivRem_X_X(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q) noexcept(false);
+    extern _UINT32_T PMC_Modulo_X_UI(ThreadContext& tc, PMC_HANDLE_SINT u, _UINT32_T v);
+    extern _UINT64_T PMC_Modulo_X_UL(ThreadContext& tc, PMC_HANDLE_SINT u, _UINT64_T v);
+    extern PMC_HANDLE_UINT PMC_Modulo_X_UX(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v);
+    extern PMC_HANDLE_UINT PMC_Modulo_I_UX(ThreadContext& tc, _INT32_T u, PMC_HANDLE_UINT v);
+    extern PMC_HANDLE_UINT PMC_Modulo_L_UX(ThreadContext& tc, _INT64_T u, PMC_HANDLE_UINT v);
     extern PMC_HANDLE_SINT PMC_DivideExactly_X_X(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_LeftShift_X_I(ThreadContext& tc, PMC_HANDLE_SINT p, _INT32_T n) noexcept(false);
     extern PMC_HANDLE_SINT PMC_RightShift_X_I(ThreadContext& tc, PMC_HANDLE_SINT p, _INT32_T n) noexcept(false);

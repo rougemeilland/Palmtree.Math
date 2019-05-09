@@ -113,6 +113,12 @@ namespace Palmtree::Math::Core::Internal
         _UINT64_T DivRem(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v, PMC_HANDLE_UINT* q) noexcept(false);
         PMC_HANDLE_UINT DivRem(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* q) noexcept(false);
 
+        _UINT32_T Modulo(ThreadContext& tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, _UINT32_T v);
+        _UINT64_T Modulo(ThreadContext& tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, _UINT64_T v);
+        PMC_HANDLE_UINT Modulo(ThreadContext& tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, PMC_HANDLE_UINT v);
+        PMC_HANDLE_UINT Modulo(ThreadContext& tc, SIGN_T u_sign, _UINT32_T u_abs, PMC_HANDLE_UINT v);
+        PMC_HANDLE_UINT Modulo(ThreadContext& tc, SIGN_T u_sign, _UINT64_T u_abs, PMC_HANDLE_UINT v);
+
         PMC_HANDLE_UINT RightShift(ThreadContext& tc, PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);
 
         PMC_HANDLE_UINT LeftShift(ThreadContext& tc, PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);

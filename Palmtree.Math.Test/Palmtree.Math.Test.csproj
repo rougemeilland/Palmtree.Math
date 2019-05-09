@@ -460,6 +460,11 @@
     <Compile Include="Plugin\Sint\ComponentTestPlugin_CompareTo_X_UX.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_CompareTo_X_X.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_Abs_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Modulo_I_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Modulo_L_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Modulo_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Modulo_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_Modulo_X_UX.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Pow_I_UI.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Pow_L_UI.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Pow_X_UI.cs" />
@@ -928,6 +933,11 @@
     <Compile Include="Plugin\Uint\ComponentTestPlugin_CompareTo_X_X.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_Multiply_X_X_Classic.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_Multiply_X_X_Karatsuba.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Modulo_I_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Modulo_L_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Modulo_X_I.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Modulo_X_L.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_Modulo_X_X.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_static_Equals_I_X.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_static_Equals_L_X.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_static_Equals_X_I.cs" />
@@ -2357,6 +2367,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Sint\test_data_lesserthan_x_x.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_modulo_i_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_modulo_l_ux.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_modulo_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_modulo_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_modulo_x_ux.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Sint\test_data_multiply_i_ux.xml">

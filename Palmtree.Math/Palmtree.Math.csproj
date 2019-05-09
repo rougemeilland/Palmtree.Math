@@ -47,6 +47,7 @@
     <Compile Include="BadBufferException.cs" />
     <Compile Include="InsufficientBufferException.cs" />
     <Compile Include="InternalErrorException.cs" />
+    <Compile Include="Math\BigInt_Modulo.cs" />
     <Compile Include="Math\MultiplicationMethod.cs" />
     <Compile Include="Math\RationalComparer.cs" />
     <Compile Include="Math\UBigIntComparer.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Math\UBigInt_ExclusiveOr.cs" />
     <Compile Include="Math\UBigInt_GreatestCommonDivisor.cs" />
     <Compile Include="Math\UBigInt_Multiply.cs" />
+    <Compile Include="Math\UBigInt_Modulo.cs" />
     <Compile Include="Math\UBigInt_Remainder.cs" />
     <Compile Include="Math\UBigInt_Shift.cs" />
     <Compile Include="Math\UBigInt_String.cs" />

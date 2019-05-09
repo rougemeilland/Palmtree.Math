@@ -994,6 +994,40 @@ namespace Palmtree.Math.Core
 
         #endregion
 
+        #region Modulo 関数
+
+        public UInt32 Modulo(BigIntHandle u, UInt32 v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Modulo_X_UI(u.NativeHandle, v, out UInt32 w));
+            return (w);
+        }
+
+        public UInt64 Modulo(BigIntHandle u, UInt64 v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Modulo_X_UL(u.NativeHandle, v, out UInt64 w));
+            return (w);
+        }
+
+        public UBigIntHandle Modulo(BigIntHandle u, UBigIntHandle v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Modulo_X_UX(u.NativeHandle, v.NativeHandle, out IntPtr w));
+            return (new UBigIntHandle(w));
+        }
+
+        public UBigIntHandle Modulo(Int32 u, UBigIntHandle v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Modulo_I_UX(u, v.NativeHandle, out IntPtr w));
+            return (new UBigIntHandle(w));
+        }
+
+        public UBigIntHandle Modulo(Int64 u, UBigIntHandle v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_Modulo_L_UX(u, v.NativeHandle, out IntPtr w));
+            return (new UBigIntHandle(w));
+        }
+
+        #endregion
+
         #region Multiply 関数
 
         public BigIntHandle Multiply(Int32 u, BigIntHandle v)
