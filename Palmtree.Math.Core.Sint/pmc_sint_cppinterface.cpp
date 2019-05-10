@@ -534,6 +534,81 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_DivRem_X_X(tc, u, v, q));
     }
 
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext & tc, _INT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    {
+        return (PMC_DivideExactly_I_UX(tc, u, v));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext & tc, _INT32_T u, PMC_HANDLE_SINT v) noexcept(false)
+    {
+        return (PMC_DivideExactly_I_X(tc, u, v));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext & tc, _INT64_T u, PMC_HANDLE_UINT v) noexcept(false)
+    {
+        return (PMC_DivideExactly_L_UX(tc, u, v));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext & tc, _INT64_T u, PMC_HANDLE_SINT v) noexcept(false)
+    {
+        return (PMC_DivideExactly_L_X(tc, u, v));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext & tc, _UINT32_T u, PMC_HANDLE_SINT v) noexcept(false)
+    {
+        return (PMC_DivideExactly_UI_X(tc, u, v));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext & tc, _UINT64_T u, PMC_HANDLE_SINT v) noexcept(false)
+    {
+        return (PMC_DivideExactly_UL_X(tc, u, v));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext & tc, PMC_HANDLE_UINT u, _INT32_T v) noexcept(false)
+    {
+        return (PMC_DivideExactly_UX_I(tc, u, v));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext & tc, PMC_HANDLE_UINT u, _INT64_T v) noexcept(false)
+    {
+        return (PMC_DivideExactly_UX_L(tc, u, v));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext & tc, PMC_HANDLE_UINT u, PMC_HANDLE_SINT v) noexcept(false)
+    {
+        return (PMC_DivideExactly_UX_X(tc, u, v));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext & tc, PMC_HANDLE_SINT u, _UINT32_T v) noexcept(false)
+    {
+        return (PMC_DivideExactly_X_UI(tc, u, v));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext & tc, PMC_HANDLE_SINT u, _INT32_T v) noexcept(false)
+    {
+        return (PMC_DivideExactly_X_I(tc, u, v));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext & tc, PMC_HANDLE_SINT u, _UINT64_T v) noexcept(false)
+    {
+        return (PMC_DivideExactly_X_UL(tc, u, v));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext & tc, PMC_HANDLE_SINT u, _INT64_T v) noexcept(false)
+    {
+        return (PMC_DivideExactly_X_L(tc, u, v));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext & tc, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false)
+    {
+        return (PMC_DivideExactly_X_UX(tc, u, v));
+    }
+
+    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext & tc, PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false)
+    {
+        return (PMC_DivideExactly_X_X(tc, u, v));
+    }
+
     PMC_HANDLE_SINT PMC_SINT_CppInterface::LeftShift(ThreadContext& tc, PMC_HANDLE_SINT p, _INT32_T n) noexcept(false)
     {
         return (PMC_LeftShift_X_I(tc, p, n));
@@ -1012,11 +1087,6 @@ namespace Palmtree::Math::Core::Internal
     size_t PMC_SINT_CppInterface::ToByteArray(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator, unsigned char * buffer, size_t buffer_size) noexcept(false)
     {
         return (PMC_ToByteArray_R(p_numerator, p_denominator, buffer, buffer_size));
-    }
-
-    PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideExactly(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v)
-    {
-        return (PMC_DivideExactly_X_X(tc, u, v));
     }
 
     PMC_HANDLE_SINT PMC_SINT_CppInterface::DivideRational(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT * w_denominator) noexcept(false)

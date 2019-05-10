@@ -172,6 +172,14 @@ namespace Palmtree::Math::Core::Internal
 
 #pragma region __UNIT_TYPE* ベースの関数の宣言
 
+    // 桁上がりを配列に反映する
+    extern bool DoCarry_UNIT(char c, __UNIT_TYPE* up, __UNIT_TYPE u_count);
+    extern bool DoCarry_UNIT(char c, __UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE* wp, __UNIT_TYPE w_count);
+
+    // 桁借りを配列に反映する
+    extern bool DoBorrow_UNIT(char c, __UNIT_TYPE* up, __UNIT_TYPE u_count);
+    extern bool DoBorrow_UNIT(char c, __UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE* wp, __UNIT_TYPE w_count);
+
     // 多倍長整数の減算を行う。u と v はどちらも 0 であってはならない。また、x のワード長は y のワード長以上でなければならない。
     extern void Subtruct_Imp(__UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE* vp, __UNIT_TYPE v_count, __UNIT_TYPE* wp, __UNIT_TYPE w_count);
 
@@ -180,6 +188,9 @@ namespace Palmtree::Math::Core::Internal
 
     // 多倍長同士の除算を行う。work_v_buf が指す領域は v_count ワード以上の大きさが必要である。q_buf が指す領域は <uのビット数> - <vのビット数> + 1 + <1ワード分のビット数> 以上の大きさが必要である。r_buf が指す領域は u_count + 1 ワード以上の大きさが必要である。q_buf に nullptr が与えられた場合は商を出力しない。
     extern void DivRem_UX_UX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE q_buf_count, __UNIT_TYPE* r_buf, __UNIT_TYPE r_buf_count);
+
+    // 乗算と減算を行う
+    extern bool MultiplySubtructArray_UNIT(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_len, __UNIT_TYPE q_index, __UNIT_TYPE q_);
 
     // 多倍長整数の大小比較を行う。
     extern SIGN_T Compare_Imp(__UNIT_TYPE* u, __UNIT_TYPE* v, __UNIT_TYPE count);
@@ -394,6 +405,10 @@ namespace Palmtree::Math::Core::Internal
     extern _UINT64_T PMC_DivRem_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v, PMC_HANDLE_UINT* q) noexcept(false);
     extern PMC_HANDLE_UINT PMC_DivRem_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* q) noexcept(false);
 
+    extern _UINT32_T PMC_DivideExactly_UI_UX(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern _UINT64_T PMC_DivideExactly_UL_UX(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_DivideExactly_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_DivideExactly_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
     extern PMC_HANDLE_UINT PMC_DivideExactly_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
 
     extern _UINT32_T PMC_Modulo_X_UI(ThreadContext& tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, _UINT32_T v);

@@ -113,6 +113,12 @@ namespace Palmtree::Math::Core::Internal
         _UINT64_T DivRem(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v, PMC_HANDLE_UINT* q) noexcept(false);
         PMC_HANDLE_UINT DivRem(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* q) noexcept(false);
 
+        _UINT32_T DivideExactly(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+        _UINT64_T DivideExactly(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+        PMC_HANDLE_UINT DivideExactly(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false);
+        PMC_HANDLE_UINT DivideExactly(ThreadContext& tc, PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false);
+        PMC_HANDLE_UINT DivideExactly(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false);
+
         _UINT32_T Modulo(ThreadContext& tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, _UINT32_T v);
         _UINT64_T Modulo(ThreadContext& tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, _UINT64_T v);
         PMC_HANDLE_UINT Modulo(ThreadContext& tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, PMC_HANDLE_UINT v);
@@ -183,8 +189,6 @@ namespace Palmtree::Math::Core::Internal
 
         PMC_MIDPOINT_ROUNDING_CODE GetDefaultRoundingMode();
         void SetDefaultRoundingMode(PMC_MIDPOINT_ROUNDING_CODE mode) noexcept(false);
-
-        PMC_HANDLE_UINT DivideExactly(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v);
 
         PMC_HANDLE_UINT FromByteArray_SINT(ThreadContext& tc, const unsigned char* buffer, size_t count, SIGN_T* o_sign) noexcept(false);
         PMC_HANDLE_UINT FromByteArray_RTNL(ThreadContext& tc, const unsigned char* buffer, size_t count, SIGN_T* o_numerator_sign, PMC_HANDLE_UINT* o_numerator_abs) noexcept(false);

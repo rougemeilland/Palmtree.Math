@@ -399,6 +399,41 @@ namespace Palmtree.Math.Core
             return (new UBigIntHandle(q_handle));
         }
 
+        public UInt32 DivideExactly(UInt32 u, UBigIntHandle v)
+        {
+            UInt32 q;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_UI_UX(u, v.NativeHandle, out q));
+            return (q);
+        }
+
+        public UInt64 DivideExactly(UInt64 u, UBigIntHandle v)
+        {
+            UInt64 q;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_UL_UX(u, v.NativeHandle, out q));
+            return (q);
+        }
+
+        public UBigIntHandle DivideExactly(UBigIntHandle u, UInt32 v)
+        {
+            IntPtr q_handle;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_UX_UI(u.NativeHandle, v, out q_handle));
+            return (new UBigIntHandle(q_handle));
+        }
+
+        public UBigIntHandle DivideExactly(UBigIntHandle u, UInt64 v)
+        {
+            IntPtr q_handle;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_UX_UL(u.NativeHandle, v, out q_handle));
+            return (new UBigIntHandle(q_handle));
+        }
+
+        public UBigIntHandle DivideExactly(UBigIntHandle u, UBigIntHandle v)
+        {
+            IntPtr q_handle;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_UX_UX(u.NativeHandle, v.NativeHandle, out q_handle));
+            return (new UBigIntHandle(q_handle));
+        }
+
         public UInt32 Remainder(UInt32 u, UBigIntHandle v)
         {
             UInt32 r;

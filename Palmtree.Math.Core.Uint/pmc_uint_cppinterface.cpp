@@ -297,6 +297,31 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_DivRem_UX_UX(tc, u, v, q));
     }
 
+    _UINT32_T PMC_UINT_CppInterface::DivideExactly(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)
+    {
+        return (PMC_DivideExactly_UI_UX(tc, u, v));
+    }
+
+    _UINT64_T PMC_UINT_CppInterface::DivideExactly(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_UINT v) noexcept(false)
+    {
+        return (PMC_DivideExactly_UL_UX(tc, u, v));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::DivideExactly(ThreadContext & tc, PMC_HANDLE_UINT u, _UINT32_T v) noexcept(false)
+    {
+        return (PMC_DivideExactly_UX_UI(tc, u, v));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::DivideExactly(ThreadContext & tc, PMC_HANDLE_UINT u, _UINT64_T v) noexcept(false)
+    {
+        return (PMC_DivideExactly_UX_UL(tc, u, v));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::DivideExactly(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
+    {
+        return (PMC_DivideExactly_UX_UX(tc, u, v));
+    }
+
     _UINT32_T PMC_UINT_CppInterface::Modulo(ThreadContext & tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, _UINT32_T v)
     {
         return (PMC_Modulo_X_UI(tc, u_sign, u_abs, v));
@@ -610,11 +635,6 @@ namespace Palmtree::Math::Core::Internal
     size_t PMC_UINT_CppInterface::ToString(ThreadContext& tc, SIGN_T x_numerator_sign, PMC_HANDLE_UINT x_numerator_abs, PMC_HANDLE_UINT x_denominator, const wchar_t * format, const PMC_NUMBER_FORMAT_INFO * format_option, wchar_t * buffer, size_t buffer_size)
     {
         return (PMC_ToString_R(tc, x_numerator_sign, x_numerator_abs, x_denominator, format, format_option, buffer, buffer_size));
-    }
-
-    PMC_HANDLE_UINT PMC_UINT_CppInterface::DivideExactly(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v)
-    {
-        return (PMC_DivideExactly_UX_UX(tc, u, v));
     }
 
     PMC_HANDLE_SFMT PMC_UINT_CppInterface::AllocateRandomStateObject(ThreadContext & tc, _UINT32_T seed)

@@ -103,6 +103,9 @@
     <ClInclude Include="pmc_multiply_schonHagestrassen.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="pmc_inversetable.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ヘッダー ファイル">
@@ -276,6 +279,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="pmc_multiply_schonHagestrassen.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="pmc_divideexactly.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

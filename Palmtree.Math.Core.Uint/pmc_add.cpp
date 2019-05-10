@@ -32,7 +32,37 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    static void DoCarry(char c, __UNIT_TYPE* u_ptr, __UNIT_TYPE u_count, __UNIT_TYPE* w_ptr, __UNIT_TYPE w_count)
+    bool DoCarry_UNIT(char c, __UNIT_TYPE* u_ptr, __UNIT_TYPE u_count)
+    {
+        // 繰り上がりを続く限り行う
+        for (;;)
+        {
+            if (u_count <= 0)
+            {
+                // u の最上位まで達してしまった場合
+
+                return (c != 0);
+            }
+            else if (c)
+            {
+                // u の最上位に達しておらず、かつキャリーが立っている場合
+
+                // 繰り上がりを継続する
+                c = _ADD_UNIT(c, *u_ptr, 0, u_ptr);
+                ++u_ptr;
+                --u_count;
+            }
+            else
+            {
+                // u の最上位に達しておらず、かつキャリーが立っていない場合
+
+                // 繰り上がりを中断し、正常復帰する。
+                return (false);
+            }
+        }
+    }
+
+    bool DoCarry_UNIT(char c, __UNIT_TYPE* u_ptr, __UNIT_TYPE u_count, __UNIT_TYPE* w_ptr, __UNIT_TYPE w_count)
     {
         // 繰り上がりを続く限り行う
         for (;;)
@@ -48,8 +78,8 @@ namespace Palmtree::Math::Core::Internal
                     {
                         // しかし w がもう終端に達してしまった場合
 
-                        // w のバッファはこの余裕を見込んでいるのでこのルートには到達しないはず。
-                        throw InternalErrorException(L"内部エラーが発生しました。", L"pcm_add.cpp;DoCarry;1");
+                        // キャリーの発生を呼び出し元に通知する
+                        return (true);
                     }
                     *w_ptr++ = 1;
                     --w_count;
@@ -81,6 +111,7 @@ namespace Palmtree::Math::Core::Internal
             }
         }
         _ZERO_MEMORY_UNIT(w_ptr, w_count);
+        return (false);
     }
 
 
@@ -88,11 +119,11 @@ namespace Palmtree::Math::Core::Internal
     {
 #ifdef _DEBUG
         if (u_count < 1)
-            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_Imp;1");
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_UX_1W;1");
         if (w_count < u_count)
-            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_Imp;2");
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_UX_1W;2");
         if (w_count < 1)
-            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_Imp;3");
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_UX_1W;3");
 #endif
         char c;
 
@@ -102,18 +133,22 @@ namespace Palmtree::Math::Core::Internal
         --w_count;
 
         // 残りの桁の繰上りを行い復帰する。
-        DoCarry(c, u_ptr, u_count, w_ptr, w_count);
+        if (DoCarry_UNIT(c, u_ptr, u_count, w_ptr, w_count))
+        {
+            // w のバッファが十分にあればキャリーは発生しないはず
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_UX_1W;4");
+        }
     }
 
     static void Add_UX_2W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, __UNIT_TYPE* w_buf, __UNIT_TYPE w_count)
     {
 #ifdef _DEBUG
         if (u_count < 1)
-            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_Imp;1");
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_UX_2W;1");
         if (w_count < u_count)
-            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_Imp;2");
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_UX_2W;2");
         if (w_count < 2)
-            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_Imp;3");
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_UX_2W;3");
 #endif
         __UNIT_TYPE* up = u_buf;
         __UNIT_TYPE* wp = w_buf;
@@ -153,7 +188,11 @@ namespace Palmtree::Math::Core::Internal
             w_count -= 2;
 
             // 残りの桁の繰り上がりを計算し、復帰する。
-            DoCarry(c, up, u_count, wp, w_count);
+            if (DoCarry_UNIT(c, up, u_count, wp, w_count))
+            {
+                // w のバッファが十分にあればキャリーは発生しないはず
+                throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_UX_2W;4");
+            }
         }
     }
 
@@ -240,7 +279,11 @@ namespace Palmtree::Math::Core::Internal
             c = _ADD_UNIT(c, *up++, *vp++, wp++);
 
         // 残りの桁の繰り上がりを計算し、復帰する。
-        DoCarry(c, up, u_count - v_count, wp, w_count - v_count);
+        if (DoCarry_UNIT(c, up, u_count - v_count, wp, w_count - v_count))
+        {
+            // w のバッファが十分にあればキャリーは発生しないはず
+            throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_Imp;3");
+        }
     }
 
     NUMBER_OBJECT_UINT* PMC_Increment_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* x)
@@ -262,7 +305,11 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE x_bit_count = x->UNIT_BIT_COUNT;
             __UNIT_TYPE w_bit_count = x_bit_count + 1;
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
-            DoCarry(1, x->BLOCK, x->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
+            if (DoCarry_UNIT(1, x->BLOCK, x->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT))
+            {
+                // w のバッファが十分にあればキャリーは発生しないはず
+                throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;PMC_Increment_UX_Imp;1");
+            }
 #ifdef _DEBUG
             root.CheckNumber(w);
 #endif

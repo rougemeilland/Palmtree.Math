@@ -32,8 +32,13 @@
 #include <intrin.h>
 #include "pmc_internal.h"
 
-
 #define __EFLAGS_DF    (1 << 10) // 方向フラグのビットマスク
+
+#ifdef PALMTREEMATHCOREUINT_EXPORTS
+#define __DLLEXPORT_DIVREM __declspec(dllexport)
+#else
+#define __DLLEXPORT_DIVREM __declspec(dllimport)
+#endif
 
 
 #ifdef __cplusplus
@@ -227,6 +232,11 @@ namespace Palmtree::Math::Core::Internal
         return (x <= y ? x : y);
     }
 
+    __inline static char _ADD_32(char carry, _UINT32_T u, _UINT32_T v, _UINT32_T* w)
+    {
+        return (_addcarry_u32(carry, u, v, w));
+    }
+
     __inline static char _ADD_UNIT(char carry, __UNIT_TYPE u, __UNIT_TYPE v, __UNIT_TYPE* w)
     {
 #ifdef _M_IX86
@@ -249,6 +259,11 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
+    __inline static char _SUBTRUCT_32(char borrow, _UINT32_T u, _UINT32_T v, _UINT32_T* w)
+    {
+        return (_subborrow_u32(borrow, u, v, w));
+    }
+
     __inline static char _SUBTRUCT_UNIT(char borrow, __UNIT_TYPE u, __UNIT_TYPE v, __UNIT_TYPE* w)
     {
 #ifdef _M_IX86
@@ -257,6 +272,19 @@ namespace Palmtree::Math::Core::Internal
         return (_subborrow_u64(borrow, u, v, w));
 #else
 #error unknown platform
+#endif
+    }
+
+    __inline static _UINT32_T _MULTIPLY_32(_UINT32_T u, _UINT32_T v, _UINT32_T* w_hi)
+    {
+#ifdef _MSC_VER
+        return (_FROMDWORDTOWORD((_UINT64_T)u * v, w_hi));
+#elif defined(__GNUC__)
+        _UINT32_T w_lo;
+        __asm__("mull %3": "=a"(w_lo), "=d"(*w_hi) : "0"(u), "rm"(v));
+        return (w_lo);
+#else
+#error unknown compiler
 #endif
     }
 
@@ -305,12 +333,6 @@ namespace Palmtree::Math::Core::Internal
 #error unknown compiler
 #endif
     }
-
-#ifdef PALMTREEMATHCOREUINT_EXPORTS
-#define __DLLEXPORT_DIVREM __declspec(dllexport)
-#else
-#define __DLLEXPORT_DIVREM __declspec(dllimport)
-#endif
 
     // ワード除算関数。一般的な用途向けである。
 #ifdef _MSC_VER
@@ -374,6 +396,28 @@ namespace Palmtree::Math::Core::Internal
 #else
 #error unknown compiler
 #endif
+
+    __inline static char _MULTIPLY_SUBTRUCT_32(char c, _UINT32_T* k, _UINT32_T* vp, _UINT32_T q_, _UINT32_T* up)
+    {
+        _UINT32_T t_hi;
+        _UINT32_T t_lo;
+        t_lo = _MULTIPLY_32(*vp, q_, &t_hi);
+        _ADD_32(_ADD_32(0, t_lo, *k, &t_lo), t_hi, 0, &t_hi);
+        c = _SUBTRUCT_32(c, *up, t_lo, up);
+        *k = t_hi;
+        return (c);
+    }
+
+    __inline static char _MULTIPLY_SUBTRUCT_UNIT(char c, __UNIT_TYPE* k, __UNIT_TYPE* vp, __UNIT_TYPE q_, __UNIT_TYPE* up)
+    {
+        __UNIT_TYPE t_hi;
+        __UNIT_TYPE t_lo;
+        t_lo = _MULTIPLY_UNIT(*vp, q_, &t_hi);
+        _ADD_UNIT(_ADD_UNIT(0, t_lo, *k, &t_lo), t_hi, 0, &t_hi);
+        c = _SUBTRUCT_UNIT(c, *up, t_lo, up);
+        *k = t_hi;
+        return (c);
+    }
 
     __inline static void _MEMCPY_UNIT(__UNIT_TYPE* dst, __UNIT_TYPE* src, size_t count)
     {

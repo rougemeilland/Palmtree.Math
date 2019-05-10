@@ -165,6 +165,22 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_SINT DivRem(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v, PMC_HANDLE_SINT* q) noexcept(false);
         PMC_HANDLE_SINT DivRem(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_SINT v, PMC_HANDLE_SINT* q) noexcept(false);
 
+        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, _INT32_T u, PMC_HANDLE_UINT v) noexcept(false);
+        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, _INT32_T u, PMC_HANDLE_SINT v) noexcept(false);
+        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, _INT64_T u, PMC_HANDLE_UINT v) noexcept(false);
+        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, _INT64_T u, PMC_HANDLE_SINT v) noexcept(false);
+        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_SINT v) noexcept(false);
+        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_SINT v) noexcept(false);
+        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, PMC_HANDLE_UINT u, _INT32_T v) noexcept(false);
+        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, PMC_HANDLE_UINT u, _INT64_T v) noexcept(false);
+        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_SINT v) noexcept(false);
+        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, PMC_HANDLE_SINT u, _UINT32_T v) noexcept(false);
+        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, PMC_HANDLE_SINT u, _INT32_T v) noexcept(false);
+        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, PMC_HANDLE_SINT u, _UINT64_T v) noexcept(false);
+        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, PMC_HANDLE_SINT u, _INT64_T v) noexcept(false);
+        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
+        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
+
         PMC_HANDLE_SINT LeftShift(ThreadContext& tc, PMC_HANDLE_SINT p, _INT32_T n) noexcept(false);
 
         PMC_HANDLE_SINT RightShift(ThreadContext& tc, PMC_HANDLE_SINT p, _INT32_T n) noexcept(false);
@@ -270,8 +286,6 @@ namespace Palmtree::Math::Core::Internal
 
         PMC_HANDLE_UINT FromByteArray_RTNL(ThreadContext& tc, const unsigned char* buffer, size_t count, PMC_HANDLE_SINT* o_numerator) noexcept(false);
         size_t ToByteArray(PMC_HANDLE_SINT p_numerator, PMC_HANDLE_UINT p_denominator, unsigned char* buffer, size_t buffer_size) noexcept(false);
-
-        PMC_HANDLE_SINT DivideExactly(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v);
 
         PMC_HANDLE_SINT DivideRational(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT* w_denominator) noexcept(false);
         PMC_HANDLE_SINT DivideRational(ThreadContext& tc, _UINT64_T u, PMC_HANDLE_SINT v_numerator, PMC_HANDLE_UINT v_denominator, PMC_HANDLE_UINT* w_denominator) noexcept(false);

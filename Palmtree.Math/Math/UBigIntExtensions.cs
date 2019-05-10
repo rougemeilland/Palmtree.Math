@@ -141,6 +141,30 @@ namespace Palmtree.Math
             return (new BigInt(q_handle));
         }
 
+        public static UInt32 DivideExactly(this UInt32 u, UBigInt v)
+        {
+            var q = UBigInt.EngineObject.DivideExactly(u, v.Handle);
+            return (q);
+        }
+
+        public static UInt64 DivideExactly(this UInt64 u, UBigInt v)
+        {
+            var q = UBigInt.EngineObject.DivideExactly(u, v.Handle);
+            return (q);
+        }
+
+        public static BigInt DivideExactly(this Int32 u, UBigInt v)
+        {
+            var q_handle = BigInt.EngineObject.DivideExactly(u, v.Handle);
+            return (new BigInt(q_handle));
+        }
+
+        public static BigInt DivideExactly(this Int64 u, UBigInt v)
+        {
+            var q_handle = BigInt.EngineObject.DivideExactly(u, v.Handle);
+            return (new BigInt(q_handle));
+        }
+
         public static UInt32 Remainder(this UInt32 u, UBigInt v)
         {
             return (UBigInt.EngineObject.Remainder(u, v.Handle));

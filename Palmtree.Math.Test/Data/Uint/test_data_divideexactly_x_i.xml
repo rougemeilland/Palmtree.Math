@@ -1,0 +1,2253 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dataitems>
+  <dataitem index="0">
+    <param1 type="ubigint">00,00</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="1">
+    <param1 type="ubigint">00,00</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">00,00</result1>
+  </dataitem>
+  <dataitem index="2">
+    <param1 type="ubigint">00,00</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">00,00</result1>
+  </dataitem>
+  <dataitem index="3">
+    <param1 type="ubigint">00,00</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">00,00</result1>
+  </dataitem>
+  <dataitem index="4">
+    <param1 type="ubigint">00,00</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">00,00</result1>
+  </dataitem>
+  <dataitem index="5">
+    <param1 type="ubigint">00,00</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="ubigint">00,00</result1>
+  </dataitem>
+  <dataitem index="6">
+    <param1 type="ubigint">00,00</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">00,00</result1>
+  </dataitem>
+  <dataitem index="7">
+    <param1 type="ubigint">00,00</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="ubigint">00,00</result1>
+  </dataitem>
+  <dataitem index="8">
+    <param1 type="ubigint">00,00</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">00,00</result1>
+  </dataitem>
+  <dataitem index="9">
+    <param1 type="ubigint">00,00</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="ubigint">00,00</result1>
+  </dataitem>
+  <dataitem index="10">
+    <param1 type="ubigint">01,01,01</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="11">
+    <param1 type="ubigint">01,01,01</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,01,01</result1>
+  </dataitem>
+  <dataitem index="12">
+    <param1 type="ubigint">01,01,01</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="13">
+    <param1 type="ubigint">01,01,01</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="14">
+    <param1 type="ubigint">01,01,01</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="15">
+    <param1 type="ubigint">01,01,01</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="16">
+    <param1 type="ubigint">01,01,01</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="17">
+    <param1 type="ubigint">01,01,01</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="18">
+    <param1 type="ubigint">01,01,01</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="19">
+    <param1 type="ubigint">01,01,01</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="20">
+    <param1 type="ubigint">01,01,03</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="21">
+    <param1 type="ubigint">01,01,03</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,01,03</result1>
+  </dataitem>
+  <dataitem index="22">
+    <param1 type="ubigint">01,01,03</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,01,01</result1>
+  </dataitem>
+  <dataitem index="23">
+    <param1 type="ubigint">01,01,03</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="24">
+    <param1 type="ubigint">01,01,03</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="25">
+    <param1 type="ubigint">01,01,03</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="26">
+    <param1 type="ubigint">01,01,03</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="27">
+    <param1 type="ubigint">01,01,03</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="28">
+    <param1 type="ubigint">01,01,03</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="29">
+    <param1 type="ubigint">01,01,03</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="30">
+    <param1 type="ubigint">01,01,64</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="31">
+    <param1 type="ubigint">01,01,64</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,01,64</result1>
+  </dataitem>
+  <dataitem index="32">
+    <param1 type="ubigint">01,01,64</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="33">
+    <param1 type="ubigint">01,01,64</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">01,01,01</result1>
+  </dataitem>
+  <dataitem index="34">
+    <param1 type="ubigint">01,01,64</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="35">
+    <param1 type="ubigint">01,01,64</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="36">
+    <param1 type="ubigint">01,01,64</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="37">
+    <param1 type="ubigint">01,01,64</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="38">
+    <param1 type="ubigint">01,01,64</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="39">
+    <param1 type="ubigint">01,01,64</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="40">
+    <param1 type="ubigint">01,02,00,01</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="41">
+    <param1 type="ubigint">01,02,00,01</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,02,00,01</result1>
+  </dataitem>
+  <dataitem index="42">
+    <param1 type="ubigint">01,02,00,01</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="43">
+    <param1 type="ubigint">01,02,00,01</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="44">
+    <param1 type="ubigint">01,02,00,01</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,01,01</result1>
+  </dataitem>
+  <dataitem index="45">
+    <param1 type="ubigint">01,02,00,01</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="46">
+    <param1 type="ubigint">01,02,00,01</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="47">
+    <param1 type="ubigint">01,02,00,01</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="48">
+    <param1 type="ubigint">01,02,00,01</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="49">
+    <param1 type="ubigint">01,02,00,01</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="50">
+    <param1 type="ubigint">01,02,10,27</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="51">
+    <param1 type="ubigint">01,02,10,27</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,02,10,27</result1>
+  </dataitem>
+  <dataitem index="52">
+    <param1 type="ubigint">01,02,10,27</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="53">
+    <param1 type="ubigint">01,02,10,27</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">01,01,64</result1>
+  </dataitem>
+  <dataitem index="54">
+    <param1 type="ubigint">01,02,10,27</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="55">
+    <param1 type="ubigint">01,02,10,27</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="ubigint">01,01,01</result1>
+  </dataitem>
+  <dataitem index="56">
+    <param1 type="ubigint">01,02,10,27</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="57">
+    <param1 type="ubigint">01,02,10,27</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="58">
+    <param1 type="ubigint">01,02,10,27</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="59">
+    <param1 type="ubigint">01,02,10,27</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="60">
+    <param1 type="ubigint">01,03,00,00,01</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="61">
+    <param1 type="ubigint">01,03,00,00,01</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,03,00,00,01</result1>
+  </dataitem>
+  <dataitem index="62">
+    <param1 type="ubigint">01,03,00,00,01</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="63">
+    <param1 type="ubigint">01,03,00,00,01</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="64">
+    <param1 type="ubigint">01,03,00,00,01</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,02,00,01</result1>
+  </dataitem>
+  <dataitem index="65">
+    <param1 type="ubigint">01,03,00,00,01</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="66">
+    <param1 type="ubigint">01,03,00,00,01</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,01,01</result1>
+  </dataitem>
+  <dataitem index="67">
+    <param1 type="ubigint">01,03,00,00,01</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="68">
+    <param1 type="ubigint">01,03,00,00,01</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="69">
+    <param1 type="ubigint">01,03,00,00,01</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="70">
+    <param1 type="ubigint">01,04,00,e1,f5,05</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="71">
+    <param1 type="ubigint">01,04,00,e1,f5,05</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,04,00,e1,f5,05</result1>
+  </dataitem>
+  <dataitem index="72">
+    <param1 type="ubigint">01,04,00,e1,f5,05</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="73">
+    <param1 type="ubigint">01,04,00,e1,f5,05</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">01,03,40,42,0f</result1>
+  </dataitem>
+  <dataitem index="74">
+    <param1 type="ubigint">01,04,00,e1,f5,05</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,03,e1,f5,05</result1>
+  </dataitem>
+  <dataitem index="75">
+    <param1 type="ubigint">01,04,00,e1,f5,05</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="ubigint">01,02,10,27</result1>
+  </dataitem>
+  <dataitem index="76">
+    <param1 type="ubigint">01,04,00,e1,f5,05</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="77">
+    <param1 type="ubigint">01,04,00,e1,f5,05</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="ubigint">01,01,01</result1>
+  </dataitem>
+  <dataitem index="78">
+    <param1 type="ubigint">01,04,00,e1,f5,05</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="79">
+    <param1 type="ubigint">01,04,00,e1,f5,05</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="80">
+    <param1 type="ubigint">01,04,d2,02,96,49</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="81">
+    <param1 type="ubigint">01,04,d2,02,96,49</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,04,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="82">
+    <param1 type="ubigint">01,04,d2,02,96,49</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,04,46,56,87,18</result1>
+  </dataitem>
+  <dataitem index="83">
+    <param1 type="ubigint">01,04,d2,02,96,49</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="84">
+    <param1 type="ubigint">01,04,d2,02,96,49</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="85">
+    <param1 type="ubigint">01,04,d2,02,96,49</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="86">
+    <param1 type="ubigint">01,04,d2,02,96,49</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="87">
+    <param1 type="ubigint">01,04,d2,02,96,49</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="88">
+    <param1 type="ubigint">01,04,d2,02,96,49</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,01,01</result1>
+  </dataitem>
+  <dataitem index="89">
+    <param1 type="ubigint">01,04,d2,02,96,49</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="90">
+    <param1 type="ubigint">01,04,ff,ff,ff,ff</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="91">
+    <param1 type="ubigint">01,04,ff,ff,ff,ff</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,04,ff,ff,ff,ff</result1>
+  </dataitem>
+  <dataitem index="92">
+    <param1 type="ubigint">01,04,ff,ff,ff,ff</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,04,55,55,55,55</result1>
+  </dataitem>
+  <dataitem index="93">
+    <param1 type="ubigint">01,04,ff,ff,ff,ff</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="94">
+    <param1 type="ubigint">01,04,ff,ff,ff,ff</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="95">
+    <param1 type="ubigint">01,04,ff,ff,ff,ff</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="96">
+    <param1 type="ubigint">01,04,ff,ff,ff,ff</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="97">
+    <param1 type="ubigint">01,04,ff,ff,ff,ff</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="98">
+    <param1 type="ubigint">01,04,ff,ff,ff,ff</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="99">
+    <param1 type="ubigint">01,04,ff,ff,ff,ff</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="ubigint">01,01,01</result1>
+  </dataitem>
+  <dataitem index="100">
+    <param1 type="ubigint">01,05,00,00,00,00,01</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="101">
+    <param1 type="ubigint">01,05,00,00,00,00,01</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,05,00,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="102">
+    <param1 type="ubigint">01,05,00,00,00,00,01</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="103">
+    <param1 type="ubigint">01,05,00,00,00,00,01</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="104">
+    <param1 type="ubigint">01,05,00,00,00,00,01</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,04,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="105">
+    <param1 type="ubigint">01,05,00,00,00,00,01</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="106">
+    <param1 type="ubigint">01,05,00,00,00,00,01</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,03,00,00,01</result1>
+  </dataitem>
+  <dataitem index="107">
+    <param1 type="ubigint">01,05,00,00,00,00,01</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="108">
+    <param1 type="ubigint">01,05,00,00,00,00,01</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="109">
+    <param1 type="ubigint">01,05,00,00,00,00,01</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="110">
+    <param1 type="ubigint">01,05,ff,e3,0b,54,02</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="111">
+    <param1 type="ubigint">01,05,ff,e3,0b,54,02</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,05,ff,e3,0b,54,02</result1>
+  </dataitem>
+  <dataitem index="112">
+    <param1 type="ubigint">01,05,ff,e3,0b,54,02</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,04,55,a1,ae,c6</result1>
+  </dataitem>
+  <dataitem index="113">
+    <param1 type="ubigint">01,05,ff,e3,0b,54,02</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="114">
+    <param1 type="ubigint">01,05,ff,e3,0b,54,02</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="115">
+    <param1 type="ubigint">01,05,ff,e3,0b,54,02</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="116">
+    <param1 type="ubigint">01,05,ff,e3,0b,54,02</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="117">
+    <param1 type="ubigint">01,05,ff,e3,0b,54,02</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="118">
+    <param1 type="ubigint">01,05,ff,e3,0b,54,02</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="119">
+    <param1 type="ubigint">01,05,ff,e3,0b,54,02</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="120">
+    <param1 type="ubigint">01,05,08,1a,99,be,1c</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="121">
+    <param1 type="ubigint">01,05,08,1a,99,be,1c</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,05,08,1a,99,be,1c</result1>
+  </dataitem>
+  <dataitem index="122">
+    <param1 type="ubigint">01,05,08,1a,99,be,1c</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,05,58,b3,dd,94,09</result1>
+  </dataitem>
+  <dataitem index="123">
+    <param1 type="ubigint">01,05,08,1a,99,be,1c</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">01,04,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="124">
+    <param1 type="ubigint">01,05,08,1a,99,be,1c</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="125">
+    <param1 type="ubigint">01,05,08,1a,99,be,1c</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="126">
+    <param1 type="ubigint">01,05,08,1a,99,be,1c</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="127">
+    <param1 type="ubigint">01,05,08,1a,99,be,1c</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="128">
+    <param1 type="ubigint">01,05,08,1a,99,be,1c</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,01,64</result1>
+  </dataitem>
+  <dataitem index="129">
+    <param1 type="ubigint">01,05,08,1a,99,be,1c</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="130">
+    <param1 type="ubigint">01,05,00,d2,02,96,49</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="131">
+    <param1 type="ubigint">01,05,00,d2,02,96,49</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,05,00,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="132">
+    <param1 type="ubigint">01,05,00,d2,02,96,49</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,05,00,46,56,87,18</result1>
+  </dataitem>
+  <dataitem index="133">
+    <param1 type="ubigint">01,05,00,d2,02,96,49</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="134">
+    <param1 type="ubigint">01,05,00,d2,02,96,49</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,04,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="135">
+    <param1 type="ubigint">01,05,00,d2,02,96,49</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="136">
+    <param1 type="ubigint">01,05,00,d2,02,96,49</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="137">
+    <param1 type="ubigint">01,05,00,d2,02,96,49</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="138">
+    <param1 type="ubigint">01,05,00,d2,02,96,49</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,02,00,01</result1>
+  </dataitem>
+  <dataitem index="139">
+    <param1 type="ubigint">01,05,00,d2,02,96,49</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="140">
+    <param1 type="ubigint">01,06,20,2b,ce,73,3a,0b</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="141">
+    <param1 type="ubigint">01,06,20,2b,ce,73,3a,0b</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,06,20,2b,ce,73,3a,0b</result1>
+  </dataitem>
+  <dataitem index="142">
+    <param1 type="ubigint">01,06,20,2b,ce,73,3a,0b</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,06,60,0e,9a,26,be,03</result1>
+  </dataitem>
+  <dataitem index="143">
+    <param1 type="ubigint">01,06,20,2b,ce,73,3a,0b</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">01,05,08,1a,99,be,1c</result1>
+  </dataitem>
+  <dataitem index="144">
+    <param1 type="ubigint">01,06,20,2b,ce,73,3a,0b</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="145">
+    <param1 type="ubigint">01,06,20,2b,ce,73,3a,0b</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="ubigint">01,04,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="146">
+    <param1 type="ubigint">01,06,20,2b,ce,73,3a,0b</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="147">
+    <param1 type="ubigint">01,06,20,2b,ce,73,3a,0b</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="148">
+    <param1 type="ubigint">01,06,20,2b,ce,73,3a,0b</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,02,10,27</result1>
+  </dataitem>
+  <dataitem index="149">
+    <param1 type="ubigint">01,06,20,2b,ce,73,3a,0b</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="150">
+    <param1 type="ubigint">01,06,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="151">
+    <param1 type="ubigint">01,06,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,06,00,00,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="152">
+    <param1 type="ubigint">01,06,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,06,00,00,46,56,87,18</result1>
+  </dataitem>
+  <dataitem index="153">
+    <param1 type="ubigint">01,06,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="154">
+    <param1 type="ubigint">01,06,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,05,00,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="155">
+    <param1 type="ubigint">01,06,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="156">
+    <param1 type="ubigint">01,06,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,04,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="157">
+    <param1 type="ubigint">01,06,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="158">
+    <param1 type="ubigint">01,06,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,03,00,00,01</result1>
+  </dataitem>
+  <dataitem index="159">
+    <param1 type="ubigint">01,06,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="160">
+    <param1 type="ubigint">01,07,00,00,c1,6f,f2,86,23</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="161">
+    <param1 type="ubigint">01,07,00,00,c1,6f,f2,86,23</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,07,00,00,c1,6f,f2,86,23</result1>
+  </dataitem>
+  <dataitem index="162">
+    <param1 type="ubigint">01,07,00,00,c1,6f,f2,86,23</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="163">
+    <param1 type="ubigint">01,07,00,00,c1,6f,f2,86,23</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">01,06,00,40,7a,10,f3,5a</result1>
+  </dataitem>
+  <dataitem index="164">
+    <param1 type="ubigint">01,07,00,00,c1,6f,f2,86,23</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,06,00,c1,6f,f2,86,23</result1>
+  </dataitem>
+  <dataitem index="165">
+    <param1 type="ubigint">01,07,00,00,c1,6f,f2,86,23</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="ubigint">01,05,00,10,a5,d4,e8</result1>
+  </dataitem>
+  <dataitem index="166">
+    <param1 type="ubigint">01,07,00,00,c1,6f,f2,86,23</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,05,c1,6f,f2,86,23</result1>
+  </dataitem>
+  <dataitem index="167">
+    <param1 type="ubigint">01,07,00,00,c1,6f,f2,86,23</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="ubigint">01,04,00,e1,f5,05</result1>
+  </dataitem>
+  <dataitem index="168">
+    <param1 type="ubigint">01,07,00,00,c1,6f,f2,86,23</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="169">
+    <param1 type="ubigint">01,07,00,00,c1,6f,f2,86,23</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="170">
+    <param1 type="ubigint">01,08,00,92,74,a5,4b,9b,b6,01</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="171">
+    <param1 type="ubigint">01,08,00,92,74,a5,4b,9b,b6,01</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,08,00,92,74,a5,4b,9b,b6,01</result1>
+  </dataitem>
+  <dataitem index="172">
+    <param1 type="ubigint">01,08,00,92,74,a5,4b,9b,b6,01</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,07,00,86,d1,e1,c3,33,92</result1>
+  </dataitem>
+  <dataitem index="173">
+    <param1 type="ubigint">01,08,00,92,74,a5,4b,9b,b6,01</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">01,07,80,d8,88,3c,d5,62,04</result1>
+  </dataitem>
+  <dataitem index="174">
+    <param1 type="ubigint">01,08,00,92,74,a5,4b,9b,b6,01</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,07,92,74,a5,4b,9b,b6,01</result1>
+  </dataitem>
+  <dataitem index="175">
+    <param1 type="ubigint">01,08,00,92,74,a5,4b,9b,b6,01</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="ubigint">01,06,20,2b,ce,73,3a,0b</result1>
+  </dataitem>
+  <dataitem index="176">
+    <param1 type="ubigint">01,08,00,92,74,a5,4b,9b,b6,01</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="177">
+    <param1 type="ubigint">01,08,00,92,74,a5,4b,9b,b6,01</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="ubigint">01,04,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="178">
+    <param1 type="ubigint">01,08,00,92,74,a5,4b,9b,b6,01</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,04,00,e1,f5,05</result1>
+  </dataitem>
+  <dataitem index="179">
+    <param1 type="ubigint">01,08,00,92,74,a5,4b,9b,b6,01</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="180">
+    <param1 type="ubigint">01,08,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="181">
+    <param1 type="ubigint">01,08,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,08,00,00,00,00,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="182">
+    <param1 type="ubigint">01,08,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,08,00,00,00,00,46,56,87,18</result1>
+  </dataitem>
+  <dataitem index="183">
+    <param1 type="ubigint">01,08,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="184">
+    <param1 type="ubigint">01,08,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,07,00,00,00,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="185">
+    <param1 type="ubigint">01,08,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="186">
+    <param1 type="ubigint">01,08,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,06,00,00,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="187">
+    <param1 type="ubigint">01,08,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="188">
+    <param1 type="ubigint">01,08,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,05,00,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="189">
+    <param1 type="ubigint">01,08,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="190">
+    <param1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="191">
+    <param1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="192">
+    <param1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,08,46,ae,5f,4e,84,38,1c,39</result1>
+  </dataitem>
+  <dataitem index="193">
+    <param1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="194">
+    <param1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="195">
+    <param1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="196">
+    <param1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="197">
+    <param1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="198">
+    <param1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,05,01,e4,0b,54,02</result1>
+  </dataitem>
+  <dataitem index="199">
+    <param1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="200">
+    <param1 type="ubigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="201">
+    <param1 type="ubigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</result1>
+  </dataitem>
+  <dataitem index="202">
+    <param1 type="ubigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,08,55,55,55,55,55,55,55,55</result1>
+  </dataitem>
+  <dataitem index="203">
+    <param1 type="ubigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="204">
+    <param1 type="ubigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="205">
+    <param1 type="ubigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="206">
+    <param1 type="ubigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="207">
+    <param1 type="ubigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="208">
+    <param1 type="ubigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="209">
+    <param1 type="ubigint">01,08,ff,ff,ff,ff,ff,ff,ff,ff</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="ubigint">01,05,01,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="210">
+    <param1 type="ubigint">01,09,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="211">
+    <param1 type="ubigint">01,09,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,09,00,00,00,00,00,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="212">
+    <param1 type="ubigint">01,09,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="213">
+    <param1 type="ubigint">01,09,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="214">
+    <param1 type="ubigint">01,09,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,08,00,00,00,00,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="215">
+    <param1 type="ubigint">01,09,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="216">
+    <param1 type="ubigint">01,09,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,07,00,00,00,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="217">
+    <param1 type="ubigint">01,09,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="218">
+    <param1 type="ubigint">01,09,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="219">
+    <param1 type="ubigint">01,09,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="220">
+    <param1 type="ubigint">01,09,ff,ff,0f,63,2d,5e,c7,6b,05</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="221">
+    <param1 type="ubigint">01,09,ff,ff,0f,63,2d,5e,c7,6b,05</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,09,ff,ff,0f,63,2d,5e,c7,6b,05</result1>
+  </dataitem>
+  <dataitem index="222">
+    <param1 type="ubigint">01,09,ff,ff,0f,63,2d,5e,c7,6b,05</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,09,55,55,05,21,0f,ca,97,ce,01</result1>
+  </dataitem>
+  <dataitem index="223">
+    <param1 type="ubigint">01,09,ff,ff,0f,63,2d,5e,c7,6b,05</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="224">
+    <param1 type="ubigint">01,09,ff,ff,0f,63,2d,5e,c7,6b,05</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="225">
+    <param1 type="ubigint">01,09,ff,ff,0f,63,2d,5e,c7,6b,05</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="226">
+    <param1 type="ubigint">01,09,ff,ff,0f,63,2d,5e,c7,6b,05</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="227">
+    <param1 type="ubigint">01,09,ff,ff,0f,63,2d,5e,c7,6b,05</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="228">
+    <param1 type="ubigint">01,09,ff,ff,0f,63,2d,5e,c7,6b,05</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="229">
+    <param1 type="ubigint">01,09,ff,ff,0f,63,2d,5e,c7,6b,05</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="230">
+    <param1 type="ubigint">01,09,08,3a,20,d8,0b,3b,12,ed,42</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="231">
+    <param1 type="ubigint">01,09,08,3a,20,d8,0b,3b,12,ed,42</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,09,08,3a,20,d8,0b,3b,12,ed,42</result1>
+  </dataitem>
+  <dataitem index="232">
+    <param1 type="ubigint">01,09,08,3a,20,d8,0b,3b,12,ed,42</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,09,58,13,60,9d,ae,13,06,4f,16</result1>
+  </dataitem>
+  <dataitem index="233">
+    <param1 type="ubigint">01,09,08,3a,20,d8,0b,3b,12,ed,42</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="234">
+    <param1 type="ubigint">01,09,08,3a,20,d8,0b,3b,12,ed,42</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="235">
+    <param1 type="ubigint">01,09,08,3a,20,d8,0b,3b,12,ed,42</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="236">
+    <param1 type="ubigint">01,09,08,3a,20,d8,0b,3b,12,ed,42</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="237">
+    <param1 type="ubigint">01,09,08,3a,20,d8,0b,3b,12,ed,42</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="238">
+    <param1 type="ubigint">01,09,08,3a,20,d8,0b,3b,12,ed,42</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,05,64,10,a5,d4,e8</result1>
+  </dataitem>
+  <dataitem index="239">
+    <param1 type="ubigint">01,09,08,3a,20,d8,0b,3b,12,ed,42</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="240">
+    <param1 type="ubigint">01,09,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="241">
+    <param1 type="ubigint">01,09,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,09,00,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="242">
+    <param1 type="ubigint">01,09,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,09,00,46,ae,5f,4e,84,38,1c,39</result1>
+  </dataitem>
+  <dataitem index="243">
+    <param1 type="ubigint">01,09,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="244">
+    <param1 type="ubigint">01,09,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="245">
+    <param1 type="ubigint">01,09,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="246">
+    <param1 type="ubigint">01,09,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="247">
+    <param1 type="ubigint">01,09,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="248">
+    <param1 type="ubigint">01,09,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,06,00,01,e4,0b,54,02</result1>
+  </dataitem>
+  <dataitem index="249">
+    <param1 type="ubigint">01,09,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="250">
+    <param1 type="ubigint">01,0a,20,ab,96,6c,a0,10,1f,9b,24,1a</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="251">
+    <param1 type="ubigint">01,0a,20,ab,96,6c,a0,10,1f,9b,24,1a</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,0a,20,ab,96,6c,a0,10,1f,9b,24,1a</result1>
+  </dataitem>
+  <dataitem index="252">
+    <param1 type="ubigint">01,0a,20,ab,96,6c,a0,10,1f,9b,24,1a</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,0a,60,8e,87,79,35,b0,5f,de,b6,08</result1>
+  </dataitem>
+  <dataitem index="253">
+    <param1 type="ubigint">01,0a,20,ab,96,6c,a0,10,1f,9b,24,1a</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">01,09,08,3a,20,d8,0b,3b,12,ed,42</result1>
+  </dataitem>
+  <dataitem index="254">
+    <param1 type="ubigint">01,0a,20,ab,96,6c,a0,10,1f,9b,24,1a</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="255">
+    <param1 type="ubigint">01,0a,20,ab,96,6c,a0,10,1f,9b,24,1a</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="256">
+    <param1 type="ubigint">01,0a,20,ab,96,6c,a0,10,1f,9b,24,1a</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="257">
+    <param1 type="ubigint">01,0a,20,ab,96,6c,a0,10,1f,9b,24,1a</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="258">
+    <param1 type="ubigint">01,0a,20,ab,96,6c,a0,10,1f,9b,24,1a</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,06,10,67,7a,10,f3,5a</result1>
+  </dataitem>
+  <dataitem index="259">
+    <param1 type="ubigint">01,0a,20,ab,96,6c,a0,10,1f,9b,24,1a</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="260">
+    <param1 type="ubigint">01,0a,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="261">
+    <param1 type="ubigint">01,0a,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,0a,00,00,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="262">
+    <param1 type="ubigint">01,0a,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,0a,00,00,46,ae,5f,4e,84,38,1c,39</result1>
+  </dataitem>
+  <dataitem index="263">
+    <param1 type="ubigint">01,0a,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="264">
+    <param1 type="ubigint">01,0a,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,09,00,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="265">
+    <param1 type="ubigint">01,0a,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="266">
+    <param1 type="ubigint">01,0a,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="267">
+    <param1 type="ubigint">01,0a,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="268">
+    <param1 type="ubigint">01,0a,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,07,00,00,01,e4,0b,54,02</result1>
+  </dataitem>
+  <dataitem index="269">
+    <param1 type="ubigint">01,0a,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="270">
+    <param1 type="ubigint">01,0b,00,00,52,2e,d5,1b,1e,98,4c,36,0a</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="271">
+    <param1 type="ubigint">01,0b,00,00,52,2e,d5,1b,1e,98,4c,36,0a</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,0b,00,00,52,2e,d5,1b,1e,98,4c,36,0a</result1>
+  </dataitem>
+  <dataitem index="272">
+    <param1 type="ubigint">01,0b,00,00,52,2e,d5,1b,1e,98,4c,36,0a</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,0b,00,00,c6,64,9c,5e,5f,dd,6e,67,03</result1>
+  </dataitem>
+  <dataitem index="273">
+    <param1 type="ubigint">01,0b,00,00,52,2e,d5,1b,1e,98,4c,36,0a</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">01,0a,00,80,c8,f8,65,05,1f,9b,24,1a</result1>
+  </dataitem>
+  <dataitem index="274">
+    <param1 type="ubigint">01,0b,00,00,52,2e,d5,1b,1e,98,4c,36,0a</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,0a,00,52,2e,d5,1b,1e,98,4c,36,0a</result1>
+  </dataitem>
+  <dataitem index="275">
+    <param1 type="ubigint">01,0b,00,00,52,2e,d5,1b,1e,98,4c,36,0a</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="ubigint">01,09,00,20,87,19,ef,3a,12,ed,42</result1>
+  </dataitem>
+  <dataitem index="276">
+    <param1 type="ubigint">01,0b,00,00,52,2e,d5,1b,1e,98,4c,36,0a</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,09,52,2e,d5,1b,1e,98,4c,36,0a</result1>
+  </dataitem>
+  <dataitem index="277">
+    <param1 type="ubigint">01,0b,00,00,52,2e,d5,1b,1e,98,4c,36,0a</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="ubigint">01,08,00,92,74,a5,4b,9b,b6,01</result1>
+  </dataitem>
+  <dataitem index="278">
+    <param1 type="ubigint">01,0b,00,00,52,2e,d5,1b,1e,98,4c,36,0a</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,07,00,00,c1,6f,f2,86,23</result1>
+  </dataitem>
+  <dataitem index="279">
+    <param1 type="ubigint">01,0b,00,00,52,2e,d5,1b,1e,98,4c,36,0a</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="280">
+    <param1 type="ubigint">01,0c,00,92,7c,bd,91,7a,79,6d,eb,35,fd,03</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="281">
+    <param1 type="ubigint">01,0c,00,92,7c,bd,91,7a,79,6d,eb,35,fd,03</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,0c,00,92,7c,bd,91,7a,79,6d,eb,35,fd,03</result1>
+  </dataitem>
+  <dataitem index="282">
+    <param1 type="ubigint">01,0c,00,92,7c,bd,91,7a,79,6d,eb,35,fd,03</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,0c,00,86,29,3f,db,28,d3,79,4e,67,54,01</result1>
+  </dataitem>
+  <dataitem index="283">
+    <param1 type="ubigint">01,0c,00,92,7c,bd,91,7a,79,6d,eb,35,fd,03</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">01,0b,80,d8,da,6a,aa,7e,22,98,4c,36,0a</result1>
+  </dataitem>
+  <dataitem index="284">
+    <param1 type="ubigint">01,0c,00,92,7c,bd,91,7a,79,6d,eb,35,fd,03</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,0b,92,7c,bd,91,7a,79,6d,eb,35,fd,03</result1>
+  </dataitem>
+  <dataitem index="285">
+    <param1 type="ubigint">01,0c,00,92,7c,bd,91,7a,79,6d,eb,35,fd,03</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="ubigint">01,0a,20,ab,96,6c,a0,10,1f,9b,24,1a</result1>
+  </dataitem>
+  <dataitem index="286">
+    <param1 type="ubigint">01,0c,00,92,7c,bd,91,7a,79,6d,eb,35,fd,03</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="287">
+    <param1 type="ubigint">01,0c,00,92,7c,bd,91,7a,79,6d,eb,35,fd,03</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="ubigint">01,08,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="288">
+    <param1 type="ubigint">01,0c,00,92,7c,bd,91,7a,79,6d,eb,35,fd,03</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,08,00,e1,59,ad,b3,b6,e0,0d</result1>
+  </dataitem>
+  <dataitem index="289">
+    <param1 type="ubigint">01,0c,00,92,7c,bd,91,7a,79,6d,eb,35,fd,03</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="290">
+    <param1 type="ubigint">01,0c,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="291">
+    <param1 type="ubigint">01,0c,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,0c,00,00,00,00,00,00,00,00,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="292">
+    <param1 type="ubigint">01,0c,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,0c,00,00,00,00,00,00,00,00,46,56,87,18</result1>
+  </dataitem>
+  <dataitem index="293">
+    <param1 type="ubigint">01,0c,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="294">
+    <param1 type="ubigint">01,0c,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,0b,00,00,00,00,00,00,00,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="295">
+    <param1 type="ubigint">01,0c,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="296">
+    <param1 type="ubigint">01,0c,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,0a,00,00,00,00,00,00,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="297">
+    <param1 type="ubigint">01,0c,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="298">
+    <param1 type="ubigint">01,0c,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,09,00,00,00,00,00,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="299">
+    <param1 type="ubigint">01,0c,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="300">
+    <param1 type="ubigint">01,0c,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="301">
+    <param1 type="ubigint">01,0c,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,0c,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="302">
+    <param1 type="ubigint">01,0c,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,0c,00,00,00,00,46,ae,5f,4e,84,38,1c,39</result1>
+  </dataitem>
+  <dataitem index="303">
+    <param1 type="ubigint">01,0c,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="304">
+    <param1 type="ubigint">01,0c,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,0b,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="305">
+    <param1 type="ubigint">01,0c,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="306">
+    <param1 type="ubigint">01,0c,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,0a,00,00,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="307">
+    <param1 type="ubigint">01,0c,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="308">
+    <param1 type="ubigint">01,0c,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,09,00,00,00,00,01,e4,0b,54,02</result1>
+  </dataitem>
+  <dataitem index="309">
+    <param1 type="ubigint">01,0c,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="310">
+    <param1 type="ubigint">01,0e,00,00,00,00,81,ef,ac,85,5b,41,6d,2d,ee,04</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="311">
+    <param1 type="ubigint">01,0e,00,00,00,00,81,ef,ac,85,5b,41,6d,2d,ee,04</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,0e,00,00,00,00,81,ef,ac,85,5b,41,6d,2d,ee,04</result1>
+  </dataitem>
+  <dataitem index="312">
+    <param1 type="ubigint">01,0e,00,00,00,00,81,ef,ac,85,5b,41,6d,2d,ee,04</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="313">
+    <param1 type="ubigint">01,0e,00,00,00,00,81,ef,ac,85,5b,41,6d,2d,ee,04</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">01,0d,00,00,00,40,ea,ed,74,46,d0,9c,2c,9f,0c</result1>
+  </dataitem>
+  <dataitem index="314">
+    <param1 type="ubigint">01,0e,00,00,00,00,81,ef,ac,85,5b,41,6d,2d,ee,04</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,0d,00,00,00,81,ef,ac,85,5b,41,6d,2d,ee,04</result1>
+  </dataitem>
+  <dataitem index="315">
+    <param1 type="ubigint">01,0e,00,00,00,00,81,ef,ac,85,5b,41,6d,2d,ee,04</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="ubigint">01,0c,00,00,00,10,61,02,25,3e,5e,ce,4f,20</result1>
+  </dataitem>
+  <dataitem index="316">
+    <param1 type="ubigint">01,0e,00,00,00,00,81,ef,ac,85,5b,41,6d,2d,ee,04</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,0c,00,00,81,ef,ac,85,5b,41,6d,2d,ee,04</result1>
+  </dataitem>
+  <dataitem index="317">
+    <param1 type="ubigint">01,0e,00,00,00,00,81,ef,ac,85,5b,41,6d,2d,ee,04</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="ubigint">01,0a,00,00,00,a1,ed,cc,ce,1b,c2,d3</result1>
+  </dataitem>
+  <dataitem index="318">
+    <param1 type="ubigint">01,0e,00,00,00,00,81,ef,ac,85,5b,41,6d,2d,ee,04</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="319">
+    <param1 type="ubigint">01,0e,00,00,00,00,81,ef,ac,85,5b,41,6d,2d,ee,04</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="320">
+    <param1 type="ubigint">01,0f,00,00,52,36,9c,de,e7,ea,de,0f,d7,bf,e3,c6,17</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="321">
+    <param1 type="ubigint">01,0f,00,00,52,36,9c,de,e7,ea,de,0f,d7,bf,e3,c6,17</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,0f,00,00,52,36,9c,de,e7,ea,de,0f,d7,bf,e3,c6,17</result1>
+  </dataitem>
+  <dataitem index="322">
+    <param1 type="ubigint">01,0f,00,00,52,36,9c,de,e7,ea,de,0f,d7,bf,e3,c6,17</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,0f,00,00,c6,bc,de,f4,f7,f8,f4,af,47,95,f6,ec,07</result1>
+  </dataitem>
+  <dataitem index="323">
+    <param1 type="ubigint">01,0f,00,00,52,36,9c,de,e7,ea,de,0f,d7,bf,e3,c6,17</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">01,0e,00,80,c8,0a,96,51,82,de,32,97,ff,6f,de,3c</result1>
+  </dataitem>
+  <dataitem index="324">
+    <param1 type="ubigint">01,0f,00,00,52,36,9c,de,e7,ea,de,0f,d7,bf,e3,c6,17</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,0e,00,52,36,9c,de,e7,ea,de,0f,d7,bf,e3,c6,17</result1>
+  </dataitem>
+  <dataitem index="325">
+    <param1 type="ubigint">01,0f,00,00,52,36,9c,de,e7,ea,de,0f,d7,bf,e3,c6,17</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="ubigint">01,0d,00,20,07,d2,f9,dc,43,59,64,3c,0a,d3,9b</result1>
+  </dataitem>
+  <dataitem index="326">
+    <param1 type="ubigint">01,0f,00,00,52,36,9c,de,e7,ea,de,0f,d7,bf,e3,c6,17</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,0d,52,36,9c,de,e7,ea,de,0f,d7,bf,e3,c6,17</result1>
+  </dataitem>
+  <dataitem index="327">
+    <param1 type="ubigint">01,0f,00,00,52,36,9c,de,e7,ea,de,0f,d7,bf,e3,c6,17</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="ubigint">01,0c,00,92,7c,bd,91,7a,79,6d,eb,35,fd,03</result1>
+  </dataitem>
+  <dataitem index="328">
+    <param1 type="ubigint">01,0f,00,00,52,36,9c,de,e7,ea,de,0f,d7,bf,e3,c6,17</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,0b,00,00,c1,53,c5,93,eb,dc,d2,b7,52</result1>
+  </dataitem>
+  <dataitem index="329">
+    <param1 type="ubigint">01,0f,00,00,52,36,9c,de,e7,ea,de,0f,d7,bf,e3,c6,17</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="330">
+    <param1 type="ubigint">01,10,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="331">
+    <param1 type="ubigint">01,10,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,10,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="332">
+    <param1 type="ubigint">01,10,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,10,00,00,00,00,00,00,00,00,46,ae,5f,4e,84,38,1c,39</result1>
+  </dataitem>
+  <dataitem index="333">
+    <param1 type="ubigint">01,10,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="334">
+    <param1 type="ubigint">01,10,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,0f,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="335">
+    <param1 type="ubigint">01,10,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="336">
+    <param1 type="ubigint">01,10,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,0e,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="337">
+    <param1 type="ubigint">01,10,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="338">
+    <param1 type="ubigint">01,10,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,0d,00,00,00,00,00,00,00,00,01,e4,0b,54,02</result1>
+  </dataitem>
+  <dataitem index="339">
+    <param1 type="ubigint">01,10,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="340">
+    <param1 type="ubigint">01,11,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="341">
+    <param1 type="ubigint">01,11,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,11,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="342">
+    <param1 type="ubigint">01,11,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="343">
+    <param1 type="ubigint">01,11,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="344">
+    <param1 type="ubigint">01,11,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,10,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="345">
+    <param1 type="ubigint">01,11,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="346">
+    <param1 type="ubigint">01,11,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,0f,00,00,00,00,00,00,00,00,00,00,00,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="347">
+    <param1 type="ubigint">01,11,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="348">
+    <param1 type="ubigint">01,11,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="349">
+    <param1 type="ubigint">01,11,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,01</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="350">
+    <param1 type="ubigint">01,11,d2,0a,3f,ce,96,5f,bc,ac,b8,f3,db,c0,75,20,c9,a0,03</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="351">
+    <param1 type="ubigint">01,11,d2,0a,3f,ce,96,5f,bc,ac,b8,f3,db,c0,75,20,c9,a0,03</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,11,d2,0a,3f,ce,96,5f,bc,ac,b8,f3,db,c0,75,20,c9,a0,03</result1>
+  </dataitem>
+  <dataitem index="352">
+    <param1 type="ubigint">01,11,d2,0a,3f,ce,96,5f,bc,ac,b8,f3,db,c0,75,20,c9,a0,03</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,11,46,ae,bf,44,32,75,e9,8e,3d,51,49,40,27,60,98,35,01</result1>
+  </dataitem>
+  <dataitem index="353">
+    <param1 type="ubigint">01,11,d2,0a,3f,ce,96,5f,bc,ac,b8,f3,db,c0,75,20,c9,a0,03</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="354">
+    <param1 type="ubigint">01,11,d2,0a,3f,ce,96,5f,bc,ac,b8,f3,db,c0,75,20,c9,a0,03</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="355">
+    <param1 type="ubigint">01,11,d2,0a,3f,ce,96,5f,bc,ac,b8,f3,db,c0,75,20,c9,a0,03</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="356">
+    <param1 type="ubigint">01,11,d2,0a,3f,ce,96,5f,bc,ac,b8,f3,db,c0,75,20,c9,a0,03</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="357">
+    <param1 type="ubigint">01,11,d2,0a,3f,ce,96,5f,bc,ac,b8,f3,db,c0,75,20,c9,a0,03</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="358">
+    <param1 type="ubigint">01,11,d2,0a,3f,ce,96,5f,bc,ac,b8,f3,db,c0,75,20,c9,a0,03</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,0d,01,e4,1b,f7,19,4c,3c,b2,d5,9c,2c,9f,0c</result1>
+  </dataitem>
+  <dataitem index="359">
+    <param1 type="ubigint">01,11,d2,0a,3f,ce,96,5f,bc,ac,b8,f3,db,c0,75,20,c9,a0,03</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="360">
+    <param1 type="ubigint">01,11,ff,ff,ff,ff,ff,60,f5,b9,ab,bf,a4,5c,c3,f1,29,63,1d</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="361">
+    <param1 type="ubigint">01,11,ff,ff,ff,ff,ff,60,f5,b9,ab,bf,a4,5c,c3,f1,29,63,1d</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,11,ff,ff,ff,ff,ff,60,f5,b9,ab,bf,a4,5c,c3,f1,29,63,1d</result1>
+  </dataitem>
+  <dataitem index="362">
+    <param1 type="ubigint">01,11,ff,ff,ff,ff,ff,60,f5,b9,ab,bf,a4,5c,c3,f1,29,63,1d</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,11,55,55,55,55,55,20,a7,e8,e3,3f,8c,c9,eb,a5,b8,cb,09</result1>
+  </dataitem>
+  <dataitem index="363">
+    <param1 type="ubigint">01,11,ff,ff,ff,ff,ff,60,f5,b9,ab,bf,a4,5c,c3,f1,29,63,1d</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="364">
+    <param1 type="ubigint">01,11,ff,ff,ff,ff,ff,60,f5,b9,ab,bf,a4,5c,c3,f1,29,63,1d</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="365">
+    <param1 type="ubigint">01,11,ff,ff,ff,ff,ff,60,f5,b9,ab,bf,a4,5c,c3,f1,29,63,1d</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="366">
+    <param1 type="ubigint">01,11,ff,ff,ff,ff,ff,60,f5,b9,ab,bf,a4,5c,c3,f1,29,63,1d</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="367">
+    <param1 type="ubigint">01,11,ff,ff,ff,ff,ff,60,f5,b9,ab,bf,a4,5c,c3,f1,29,63,1d</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="368">
+    <param1 type="ubigint">01,11,ff,ff,ff,ff,ff,60,f5,b9,ab,bf,a4,5c,c3,f1,29,63,1d</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="369">
+    <param1 type="ubigint">01,11,ff,ff,ff,ff,ff,60,f5,b9,ab,bf,a4,5c,c3,f1,29,63,1d</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="370">
+    <param1 type="ubigint">01,12,00,00,00,00,d2,79,51,20,bf,f7,e0,82,63,ad,90,ce,6a,01</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="371">
+    <param1 type="ubigint">01,12,00,00,00,00,d2,79,51,20,bf,f7,e0,82,63,ad,90,ce,6a,01</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,12,00,00,00,00,d2,79,51,20,bf,f7,e0,82,63,ad,90,ce,6a,01</result1>
+  </dataitem>
+  <dataitem index="372">
+    <param1 type="ubigint">01,12,00,00,00,00,d2,79,51,20,bf,f7,e0,82,63,ad,90,ce,6a,01</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,11,00,00,00,00,46,d3,c5,0a,95,52,a0,2b,21,8f,85,ef,78</result1>
+  </dataitem>
+  <dataitem index="373">
+    <param1 type="ubigint">01,12,00,00,00,00,d2,79,51,20,bf,f7,e0,82,63,ad,90,ce,6a,01</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">01,11,00,00,00,80,a8,7e,48,e9,c1,e3,f2,31,74,20,c9,a0,03</result1>
+  </dataitem>
+  <dataitem index="374">
+    <param1 type="ubigint">01,12,00,00,00,00,d2,79,51,20,bf,f7,e0,82,63,ad,90,ce,6a,01</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,11,00,00,00,d2,79,51,20,bf,f7,e0,82,63,ad,90,ce,6a,01</result1>
+  </dataitem>
+  <dataitem index="375">
+    <param1 type="ubigint">01,12,00,00,00,00,d2,79,51,20,bf,f7,e0,82,63,ad,90,ce,6a,01</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="ubigint">01,10,00,00,00,20,bf,15,d0,56,28,fd,04,ec,f6,b0,49,09</result1>
+  </dataitem>
+  <dataitem index="376">
+    <param1 type="ubigint">01,12,00,00,00,00,d2,79,51,20,bf,f7,e0,82,63,ad,90,ce,6a,01</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,10,00,00,d2,79,51,20,bf,f7,e0,82,63,ad,90,ce,6a,01</result1>
+  </dataitem>
+  <dataitem index="377">
+    <param1 type="ubigint">01,12,00,00,00,00,d2,79,51,20,bf,f7,e0,82,63,ad,90,ce,6a,01</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="ubigint">01,0e,00,00,00,12,30,4c,63,43,0e,7d,ff,6f,de,3c</result1>
+  </dataitem>
+  <dataitem index="378">
+    <param1 type="ubigint">01,12,00,00,00,00,d2,79,51,20,bf,f7,e0,82,63,ad,90,ce,6a,01</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,0e,00,00,00,00,81,ef,ac,85,5b,41,6d,2d,ee,04</result1>
+  </dataitem>
+  <dataitem index="379">
+    <param1 type="ubigint">01,12,00,00,00,00,d2,79,51,20,bf,f7,e0,82,63,ad,90,ce,6a,01</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="380">
+    <param1 type="ubigint">01,14,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="381">
+    <param1 type="ubigint">01,14,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,14,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="382">
+    <param1 type="ubigint">01,14,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,14,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,46,56,87,18</result1>
+  </dataitem>
+  <dataitem index="383">
+    <param1 type="ubigint">01,14,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="384">
+    <param1 type="ubigint">01,14,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,13,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="385">
+    <param1 type="ubigint">01,14,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="386">
+    <param1 type="ubigint">01,14,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,12,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,02,96,49</result1>
+  </dataitem>
+  <dataitem index="387">
+    <param1 type="ubigint">01,14,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="388">
+    <param1 type="ubigint">01,14,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,11,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,01</result1>
+  </dataitem>
+  <dataitem index="389">
+    <param1 type="ubigint">01,14,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,02,96,49</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="390">
+    <param1 type="ubigint">01,16,00,00,00,00,d2,81,d6,d4,a4,43,fb,7b,67,ae,f7,c8,46,d5,c2,b9,4c,03</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="391">
+    <param1 type="ubigint">01,16,00,00,00,00,d2,81,d6,d4,a4,43,fb,7b,67,ae,f7,c8,46,d5,c2,b9,4c,03</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,16,00,00,00,00,d2,81,d6,d4,a4,43,fb,7b,67,ae,f7,c8,46,d5,c2,b9,4c,03</result1>
+  </dataitem>
+  <dataitem index="392">
+    <param1 type="ubigint">01,16,00,00,00,00,d2,81,d6,d4,a4,43,fb,7b,67,ae,f7,c8,46,d5,c2,b9,4c,03</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,16,00,00,00,00,46,2b,f2,46,8c,16,a9,7e,22,3a,fd,42,c2,f1,40,93,19,01</result1>
+  </dataitem>
+  <dataitem index="393">
+    <param1 type="ubigint">01,16,00,00,00,00,d2,81,d6,d4,a4,43,fb,7b,67,ae,f7,c8,46,d5,c2,b9,4c,03</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="ubigint">01,15,00,00,00,80,a8,10,54,35,84,64,3d,c1,9f,3c,f8,aa,69,63,7f,72,08</result1>
+  </dataitem>
+  <dataitem index="394">
+    <param1 type="ubigint">01,16,00,00,00,00,d2,81,d6,d4,a4,43,fb,7b,67,ae,f7,c8,46,d5,c2,b9,4c,03</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,15,00,00,00,d2,81,d6,d4,a4,43,fb,7b,67,ae,f7,c8,46,d5,c2,b9,4c,03</result1>
+  </dataitem>
+  <dataitem index="395">
+    <param1 type="ubigint">01,16,00,00,00,00,d2,81,d6,d4,a4,43,fb,7b,67,ae,f7,c8,46,d5,c2,b9,4c,03</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="ubigint">01,14,00,00,00,20,3f,ae,e4,8f,0b,18,55,28,c4,5c,fd,22,6f,fe,9f,15</result1>
+  </dataitem>
+  <dataitem index="396">
+    <param1 type="ubigint">01,16,00,00,00,00,d2,81,d6,d4,a4,43,fb,7b,67,ae,f7,c8,46,d5,c2,b9,4c,03</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,14,00,00,d2,81,d6,d4,a4,43,fb,7b,67,ae,f7,c8,46,d5,c2,b9,4c,03</result1>
+  </dataitem>
+  <dataitem index="397">
+    <param1 type="ubigint">01,16,00,00,00,00,d2,81,d6,d4,a4,43,fb,7b,67,ae,f7,c8,46,d5,c2,b9,4c,03</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="ubigint">01,12,00,00,00,12,38,e2,36,e3,b6,43,e0,8f,bd,f7,83,b0,b8,8d</result1>
+  </dataitem>
+  <dataitem index="398">
+    <param1 type="ubigint">01,16,00,00,00,00,d2,81,d6,d4,a4,43,fb,7b,67,ae,f7,c8,46,d5,c2,b9,4c,03</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,12,00,00,00,00,81,d3,86,29,70,20,c8,5d,3e,75,62,bc,7a,0b</result1>
+  </dataitem>
+  <dataitem index="399">
+    <param1 type="ubigint">01,16,00,00,00,00,d2,81,d6,d4,a4,43,fb,7b,67,ae,f7,c8,46,d5,c2,b9,4c,03</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="400">
+    <param1 type="ubigint">01,18,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="401">
+    <param1 type="ubigint">01,18,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,18,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="402">
+    <param1 type="ubigint">01,18,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,18,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,46,ae,5f,4e,84,38,1c,39</result1>
+  </dataitem>
+  <dataitem index="403">
+    <param1 type="ubigint">01,18,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="404">
+    <param1 type="ubigint">01,18,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="ubigint">01,17,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="405">
+    <param1 type="ubigint">01,18,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="406">
+    <param1 type="ubigint">01,18,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="ubigint">01,16,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</result1>
+  </dataitem>
+  <dataitem index="407">
+    <param1 type="ubigint">01,18,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="408">
+    <param1 type="ubigint">01,18,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,15,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,01,e4,0b,54,02</result1>
+  </dataitem>
+  <dataitem index="409">
+    <param1 type="ubigint">01,18,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,d2,0a,1f,eb,8c,a9,54,ab</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="410">
+    <param1 type="ubigint">01,21,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,29,cb,1d,a1,6a,6d,15,7f,09,b4,68,92,ad,31,8f,22,3c,b6,3c,a2,8e,9e,6a</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="411">
+    <param1 type="ubigint">01,21,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,29,cb,1d,a1,6a,6d,15,7f,09,b4,68,92,ad,31,8f,22,3c,b6,3c,a2,8e,9e,6a</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,21,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,29,cb,1d,a1,6a,6d,15,7f,09,b4,68,92,ad,31,8f,22,3c,b6,3c,a2,8e,9e,6a</result1>
+  </dataitem>
+  <dataitem index="412">
+    <param1 type="ubigint">01,21,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,29,cb,1d,a1,6a,6d,15,7f,09,b4,68,92,ad,31,8f,22,3c,b6,3c,a2,8e,9e,6a</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,21,46,ae,bf,44,32,fb,ef,8e,6e,50,63,ee,09,8b,23,cf,b1,7f,58,91,cd,30,8f,10,85,0b,14,92,69,8b,2f,8a,23</result1>
+  </dataitem>
+  <dataitem index="413">
+    <param1 type="ubigint">01,21,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,29,cb,1d,a1,6a,6d,15,7f,09,b4,68,92,ad,31,8f,22,3c,b6,3c,a2,8e,9e,6a</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="414">
+    <param1 type="ubigint">01,21,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,29,cb,1d,a1,6a,6d,15,7f,09,b4,68,92,ad,31,8f,22,3c,b6,3c,a2,8e,9e,6a</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="415">
+    <param1 type="ubigint">01,21,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,29,cb,1d,a1,6a,6d,15,7f,09,b4,68,92,ad,31,8f,22,3c,b6,3c,a2,8e,9e,6a</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="416">
+    <param1 type="ubigint">01,21,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,29,cb,1d,a1,6a,6d,15,7f,09,b4,68,92,ad,31,8f,22,3c,b6,3c,a2,8e,9e,6a</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="417">
+    <param1 type="ubigint">01,21,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,29,cb,1d,a1,6a,6d,15,7f,09,b4,68,92,ad,31,8f,22,3c,b6,3c,a2,8e,9e,6a</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="418">
+    <param1 type="ubigint">01,21,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,29,cb,1d,a1,6a,6d,15,7f,09,b4,68,92,ad,31,8f,22,3c,b6,3c,a2,8e,9e,6a</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,1e,01,e4,1b,f7,19,ad,95,31,98,24,d1,5b,90,45,49,f1,34,02,58,cc,c3,93,ef,c2,7b,6e,ad,eb,72,01</result1>
+  </dataitem>
+  <dataitem index="419">
+    <param1 type="ubigint">01,21,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,29,cb,1d,a1,6a,6d,15,7f,09,b4,68,92,ad,31,8f,22,3c,b6,3c,a2,8e,9e,6a</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="420">
+    <param1 type="ubigint">01,22,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,c0,ce,64,27,a2,63,ca,18,a4,ef,25,7b,d1,cd,70,ef,df,6b,1f,3e,ea,9d,5f,03</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="421">
+    <param1 type="ubigint">01,22,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,c0,ce,64,27,a2,63,ca,18,a4,ef,25,7b,d1,cd,70,ef,df,6b,1f,3e,ea,9d,5f,03</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,22,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,c0,ce,64,27,a2,63,ca,18,a4,ef,25,7b,d1,cd,70,ef,df,6b,1f,3e,ea,9d,5f,03</result1>
+  </dataitem>
+  <dataitem index="422">
+    <param1 type="ubigint">01,22,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,c0,ce,64,27,a2,63,ca,18,a4,ef,25,7b,d1,cd,70,ef,df,6b,1f,3e,ea,9d,5f,03</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,22,55,55,55,55,55,55,55,55,55,55,40,9a,21,0d,36,21,ee,b2,36,a5,0c,29,9b,44,d0,4f,f5,23,b5,14,4e,df,1f,01</result1>
+  </dataitem>
+  <dataitem index="423">
+    <param1 type="ubigint">01,22,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,c0,ce,64,27,a2,63,ca,18,a4,ef,25,7b,d1,cd,70,ef,df,6b,1f,3e,ea,9d,5f,03</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="424">
+    <param1 type="ubigint">01,22,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,c0,ce,64,27,a2,63,ca,18,a4,ef,25,7b,d1,cd,70,ef,df,6b,1f,3e,ea,9d,5f,03</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="425">
+    <param1 type="ubigint">01,22,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,c0,ce,64,27,a2,63,ca,18,a4,ef,25,7b,d1,cd,70,ef,df,6b,1f,3e,ea,9d,5f,03</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="426">
+    <param1 type="ubigint">01,22,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,c0,ce,64,27,a2,63,ca,18,a4,ef,25,7b,d1,cd,70,ef,df,6b,1f,3e,ea,9d,5f,03</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="427">
+    <param1 type="ubigint">01,22,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,c0,ce,64,27,a2,63,ca,18,a4,ef,25,7b,d1,cd,70,ef,df,6b,1f,3e,ea,9d,5f,03</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="428">
+    <param1 type="ubigint">01,22,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,c0,ce,64,27,a2,63,ca,18,a4,ef,25,7b,d1,cd,70,ef,df,6b,1f,3e,ea,9d,5f,03</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="429">
+    <param1 type="ubigint">01,22,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,c0,ce,64,27,a2,63,ca,18,a4,ef,25,7b,d1,cd,70,ef,df,6b,1f,3e,ea,9d,5f,03</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="430">
+    <param1 type="ubigint">01,43,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,7b,ef,61,11,3d,24,5e,93,a9,88,45,42,21,db,9c,0c,9b,de,c4,1f,c6,58,cf,f4,5a,d1,cc,d6,fc,c7,a6,32,88,ea,83,91,c5,0a,a6,20,1d,29,a6,c5,44,75,6f,c3,13,88,06,32,a1,47,ae,67,01</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="431">
+    <param1 type="ubigint">01,43,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,7b,ef,61,11,3d,24,5e,93,a9,88,45,42,21,db,9c,0c,9b,de,c4,1f,c6,58,cf,f4,5a,d1,cc,d6,fc,c7,a6,32,88,ea,83,91,c5,0a,a6,20,1d,29,a6,c5,44,75,6f,c3,13,88,06,32,a1,47,ae,67,01</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,43,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,7b,ef,61,11,3d,24,5e,93,a9,88,45,42,21,db,9c,0c,9b,de,c4,1f,c6,58,cf,f4,5a,d1,cc,d6,fc,c7,a6,32,88,ea,83,91,c5,0a,a6,20,1d,29,a6,c5,44,75,6f,c3,13,88,06,32,a1,47,ae,67,01</result1>
+  </dataitem>
+  <dataitem index="432">
+    <param1 type="ubigint">01,43,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,7b,ef,61,11,3d,24,5e,93,a9,88,45,42,21,db,9c,0c,9b,de,c4,1f,c6,58,cf,f4,5a,d1,cc,d6,fc,c7,a6,32,88,ea,83,91,c5,0a,a6,20,1d,29,a6,c5,44,75,6f,c3,13,88,06,32,a1,47,ae,67,01</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,42,46,ae,bf,44,32,fb,ef,8e,6e,50,29,a5,20,5b,14,0c,ca,db,8d,2d,17,16,0b,49,34,04,89,9f,41,b5,ec,72,9a,51,1e,9b,99,47,54,ed,8c,bb,82,a3,d6,85,ec,58,37,60,b4,0d,e2,41,6c,7c,7a,96,06,d8,ac,10,8b,c2,e4,77</result1>
+  </dataitem>
+  <dataitem index="433">
+    <param1 type="ubigint">01,43,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,7b,ef,61,11,3d,24,5e,93,a9,88,45,42,21,db,9c,0c,9b,de,c4,1f,c6,58,cf,f4,5a,d1,cc,d6,fc,c7,a6,32,88,ea,83,91,c5,0a,a6,20,1d,29,a6,c5,44,75,6f,c3,13,88,06,32,a1,47,ae,67,01</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="434">
+    <param1 type="ubigint">01,43,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,7b,ef,61,11,3d,24,5e,93,a9,88,45,42,21,db,9c,0c,9b,de,c4,1f,c6,58,cf,f4,5a,d1,cc,d6,fc,c7,a6,32,88,ea,83,91,c5,0a,a6,20,1d,29,a6,c5,44,75,6f,c3,13,88,06,32,a1,47,ae,67,01</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="435">
+    <param1 type="ubigint">01,43,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,7b,ef,61,11,3d,24,5e,93,a9,88,45,42,21,db,9c,0c,9b,de,c4,1f,c6,58,cf,f4,5a,d1,cc,d6,fc,c7,a6,32,88,ea,83,91,c5,0a,a6,20,1d,29,a6,c5,44,75,6f,c3,13,88,06,32,a1,47,ae,67,01</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="436">
+    <param1 type="ubigint">01,43,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,7b,ef,61,11,3d,24,5e,93,a9,88,45,42,21,db,9c,0c,9b,de,c4,1f,c6,58,cf,f4,5a,d1,cc,d6,fc,c7,a6,32,88,ea,83,91,c5,0a,a6,20,1d,29,a6,c5,44,75,6f,c3,13,88,06,32,a1,47,ae,67,01</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="437">
+    <param1 type="ubigint">01,43,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,7b,ef,61,11,3d,24,5e,93,a9,88,45,42,21,db,9c,0c,9b,de,c4,1f,c6,58,cf,f4,5a,d1,cc,d6,fc,c7,a6,32,88,ea,83,91,c5,0a,a6,20,1d,29,a6,c5,44,75,6f,c3,13,88,06,32,a1,47,ae,67,01</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="438">
+    <param1 type="ubigint">01,43,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,7b,ef,61,11,3d,24,5e,93,a9,88,45,42,21,db,9c,0c,9b,de,c4,1f,c6,58,cf,f4,5a,d1,cc,d6,fc,c7,a6,32,88,ea,83,91,c5,0a,a6,20,1d,29,a6,c5,44,75,6f,c3,13,88,06,32,a1,47,ae,67,01</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="ubigint">01,3f,01,e4,1b,f7,19,ad,95,31,98,24,92,0e,74,3a,f8,c8,bd,91,d6,34,14,a2,78,76,14,59,e5,68,5a,d2,61,ee,49,e1,ba,e6,f2,3f,4d,31,9e,7d,3b,d6,35,8e,61,5d,54,0d,54,d7,95,4e,0a,e1,19,3f,96,4b,4d,e3,04</result1>
+  </dataitem>
+  <dataitem index="439">
+    <param1 type="ubigint">01,43,d2,0a,3f,ce,96,f1,cf,ac,4b,f1,7b,ef,61,11,3d,24,5e,93,a9,88,45,42,21,db,9c,0c,9b,de,c4,1f,c6,58,cf,f4,5a,d1,cc,d6,fc,c7,a6,32,88,ea,83,91,c5,0a,a6,20,1d,29,a6,c5,44,75,6f,c3,13,88,06,32,a1,47,ae,67,01</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="440">
+    <param1 type="ubigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param2 type="uint32">0</param2>
+    <result1 type="exception">DivideByZeroException</result1>
+  </dataitem>
+  <dataitem index="441">
+    <param1 type="ubigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param2 type="uint32">1</param2>
+    <result1 type="ubigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</result1>
+  </dataitem>
+  <dataitem index="442">
+    <param1 type="ubigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param2 type="uint32">3</param2>
+    <result1 type="ubigint">01,43,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,80,64,96,fe,a6,45,b6,70,c5,62,5a,92,a6,fb,5b,72,06,5c,6b,49,7f,74,68,47,33,b3,1d,a8,09,68,db,aa,9c,b1,3b,82,e8,27,37,7e,20,aa,92,5b,23,cb,03</result1>
+  </dataitem>
+  <dataitem index="443">
+    <param1 type="ubigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param2 type="uint32">100</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="444">
+    <param1 type="ubigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param2 type="uint32">256</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="445">
+    <param1 type="ubigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param2 type="uint32">10000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="446">
+    <param1 type="ubigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param2 type="uint32">65536</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="447">
+    <param1 type="ubigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param2 type="uint32">100000000</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="448">
+    <param1 type="ubigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param2 type="uint32">1234567890</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+  <dataitem index="449">
+    <param1 type="ubigint">01,43,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,80,2d,c3,fb,f4,d0,22,52,50,28,0f,b7,f3,f2,13,57,13,14,42,dc,7d,5d,39,d6,99,19,59,f8,1c,38,92,00,d6,14,b3,86,b9,77,a5,7a,61,fe,b7,12,6a,61,0b</param1>
+    <param2 type="uint32">4294967295</param2>
+    <result1 type="exception">ArithmeticException</result1>
+  </dataitem>
+</dataitems>

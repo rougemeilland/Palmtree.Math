@@ -442,6 +442,100 @@ namespace Palmtree.Math.Core
 
         #endregion
 
+        #region DivideExactly 関数
+
+        public BigIntHandle DivideExactly(Int32 u, BigIntHandle v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_I_X(u, v.NativeHandle, out IntPtr q_handle));
+            return (new BigIntHandle(q_handle));
+        }
+
+        public BigIntHandle DivideExactly(Int64 u, BigIntHandle v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_L_X(u, v.NativeHandle, out IntPtr q_handle));
+            return (new BigIntHandle(q_handle));
+        }
+
+        public BigIntHandle DivideExactly(UInt32 u, BigIntHandle v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_UI_X(u, v.NativeHandle, out IntPtr q_handle));
+            return (new BigIntHandle(q_handle));
+        }
+
+        public BigIntHandle DivideExactly(UInt64 u, BigIntHandle v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_UL_X(u, v.NativeHandle, out IntPtr q_handle));
+            return (new BigIntHandle(q_handle));
+        }
+
+        public BigIntHandle DivideExactly(UBigIntHandle u, BigIntHandle v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_UX_X(u.NativeHandle, v.NativeHandle, out IntPtr q_handle));
+            return (new BigIntHandle(q_handle));
+        }
+
+        public BigIntHandle DivideExactly(BigIntHandle u, Int32 v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_X_I(u.NativeHandle, v, out IntPtr q_handle));
+            return (new BigIntHandle(q_handle));
+        }
+
+        public BigIntHandle DivideExactly(BigIntHandle u, Int64 v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_X_L(u.NativeHandle, v, out IntPtr q_handle));
+            return (new BigIntHandle(q_handle));
+        }
+
+        public BigIntHandle DivideExactly(BigIntHandle u, UInt32 v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_X_UI(u.NativeHandle, v, out IntPtr q_handle));
+            return (new BigIntHandle(q_handle));
+        }
+
+        public BigIntHandle DivideExactly(BigIntHandle u, UInt64 v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_X_UL(u.NativeHandle, v, out IntPtr q_handle));
+            return (new BigIntHandle(q_handle));
+        }
+
+        public BigIntHandle DivideExactly(BigIntHandle u, UBigIntHandle v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_X_UX(u.NativeHandle, v.NativeHandle, out IntPtr q_handle));
+            return (new BigIntHandle(q_handle));
+        }
+
+        public BigIntHandle DivideExactly(BigIntHandle u, BigIntHandle v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_X_X(u.NativeHandle, v.NativeHandle, out IntPtr q_handle));
+            return (new BigIntHandle(q_handle));
+        }
+
+        public BigIntHandle DivideExactly(Int32 u, UBigIntHandle v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_I_UX(u, v.NativeHandle, out IntPtr q_handle));
+            return (new BigIntHandle(q_handle));
+        }
+
+        public BigIntHandle DivideExactly(Int64 u, UBigIntHandle v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_L_UX(u, v.NativeHandle, out IntPtr q_handle));
+            return (new BigIntHandle(q_handle));
+        }
+
+        public BigIntHandle DivideExactly(UBigIntHandle u, Int32 v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_UX_I(u.NativeHandle, v, out IntPtr q_handle));
+            return (new BigIntHandle(q_handle));
+        }
+
+        public BigIntHandle DivideExactly(UBigIntHandle u, Int64 v)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_DivideExactly_UX_L(u.NativeHandle, v, out IntPtr q_handle));
+            return (new BigIntHandle(q_handle));
+        }
+
+        #endregion
+
         #region DivRem 関数
 
         public BigIntHandle DivRem(Int32 u, BigIntHandle v, out Int32 r)

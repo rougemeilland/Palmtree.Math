@@ -142,7 +142,7 @@ namespace Palmtree::Math::Core::Internal
             return (q_);
         }
 
-        static char _MULTIPLY_DIGIT_UNIT(char c, _UINT32_T* k, _UINT32_T* u, _UINT32_T v, _UINT32_T q_)
+        static char _MULTIPLY_SUBTRUCT_UNIT(char c, _UINT32_T* k, _UINT32_T* u, _UINT32_T v, _UINT32_T q_)
         {
             _UINT64_T t = (_UINT64_T)v * q_;
             _UINT32_T t_hi;
@@ -759,58 +759,7 @@ namespace Palmtree::Math::Core::Internal
         return (q_);
     }
 
-    static bool DoBorrow(char c, __UNIT_TYPE* up, __UNIT_TYPE u_count)
-    {
-        // 桁借りを続く限り行う
-        for (;;)
-        {
-            if (u_count <= 0)
-            {
-                // u の最上位まで達してしまった場合
-
-                if (c)
-                {
-                    // かつそれでも桁借りを行う必要がある場合
-
-                    // 減算結果が負になってしまったので呼び出し元に通知する。
-                    return (true);
-                }
-
-                // u の最上位に達してしまった場合はいずれにしろループを中断して正常復帰する。
-
-                return (false);
-            }
-            else if (c)
-            {
-                // u の最上位に達しておらず、かつボローが立っている場合
-
-                // 桁借りを継続する
-                c = _SUBTRUCT_UNIT(c, *up, 0, up);
-                ++up;
-                --u_count;
-            }
-            else
-            {
-                // u の最上位に達しておらず、かつボローが立っていない場合
-
-                // 桁借りを中断し復帰する。
-                return (false);
-            }
-        }
-    }
-
-    __inline static char _MULTIPLY_DIGIT_UNIT(char c, __UNIT_TYPE* k, __UNIT_TYPE* vp, __UNIT_TYPE q_, __UNIT_TYPE* up)
-    {
-        __UNIT_TYPE t_hi;
-        __UNIT_TYPE t_lo;
-        t_lo = _MULTIPLY_UNIT(*vp, q_, &t_hi);
-        _ADD_UNIT(_ADD_UNIT(0, t_lo, *k, &t_lo), t_hi, 0, &t_hi);
-        c = _SUBTRUCT_UNIT(c, *up, t_lo, up);
-        *k = t_hi;
-        return (c);
-    }
-
-    static bool SubtructOneLine(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_len, __UNIT_TYPE q_index, __UNIT_TYPE q_)
+    bool MultiplySubtructArray_UNIT(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_len, __UNIT_TYPE q_index, __UNIT_TYPE q_)
     {
         __UNIT_TYPE* u_ptr = &u_buf[q_index];
         __UNIT_TYPE* v_ptr = &v_buf[0];
@@ -821,38 +770,38 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE count = v_count >> 5;
         while (count != 0)
         {
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[0], q_, &u_ptr[0]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[1], q_, &u_ptr[1]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[2], q_, &u_ptr[2]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[3], q_, &u_ptr[3]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[4], q_, &u_ptr[4]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[5], q_, &u_ptr[5]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[6], q_, &u_ptr[6]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[7], q_, &u_ptr[7]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[8], q_, &u_ptr[8]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[9], q_, &u_ptr[9]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[10], q_, &u_ptr[10]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[11], q_, &u_ptr[11]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[12], q_, &u_ptr[12]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[13], q_, &u_ptr[13]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[14], q_, &u_ptr[14]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[15], q_, &u_ptr[15]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[16], q_, &u_ptr[16]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[17], q_, &u_ptr[17]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[18], q_, &u_ptr[18]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[19], q_, &u_ptr[19]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[20], q_, &u_ptr[20]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[21], q_, &u_ptr[21]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[22], q_, &u_ptr[22]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[23], q_, &u_ptr[23]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[24], q_, &u_ptr[24]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[25], q_, &u_ptr[25]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[26], q_, &u_ptr[26]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[27], q_, &u_ptr[27]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[28], q_, &u_ptr[28]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[29], q_, &u_ptr[29]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[30], q_, &u_ptr[30]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[31], q_, &u_ptr[31]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[0], q_, &u_ptr[0]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[1], q_, &u_ptr[1]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[2], q_, &u_ptr[2]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[3], q_, &u_ptr[3]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[4], q_, &u_ptr[4]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[5], q_, &u_ptr[5]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[6], q_, &u_ptr[6]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[7], q_, &u_ptr[7]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[8], q_, &u_ptr[8]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[9], q_, &u_ptr[9]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[10], q_, &u_ptr[10]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[11], q_, &u_ptr[11]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[12], q_, &u_ptr[12]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[13], q_, &u_ptr[13]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[14], q_, &u_ptr[14]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[15], q_, &u_ptr[15]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[16], q_, &u_ptr[16]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[17], q_, &u_ptr[17]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[18], q_, &u_ptr[18]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[19], q_, &u_ptr[19]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[20], q_, &u_ptr[20]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[21], q_, &u_ptr[21]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[22], q_, &u_ptr[22]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[23], q_, &u_ptr[23]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[24], q_, &u_ptr[24]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[25], q_, &u_ptr[25]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[26], q_, &u_ptr[26]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[27], q_, &u_ptr[27]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[28], q_, &u_ptr[28]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[29], q_, &u_ptr[29]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[30], q_, &u_ptr[30]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[31], q_, &u_ptr[31]);
             u_ptr += 32;
             v_ptr += 32;
             --count;
@@ -866,22 +815,22 @@ namespace Palmtree::Math::Core::Internal
 
         if (v_count & 0x10)
         {
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[0], q_, &u_ptr[0]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[1], q_, &u_ptr[1]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[2], q_, &u_ptr[2]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[3], q_, &u_ptr[3]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[4], q_, &u_ptr[4]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[5], q_, &u_ptr[5]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[6], q_, &u_ptr[6]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[7], q_, &u_ptr[7]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[8], q_, &u_ptr[8]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[9], q_, &u_ptr[9]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[10], q_, &u_ptr[10]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[11], q_, &u_ptr[11]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[12], q_, &u_ptr[12]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[13], q_, &u_ptr[13]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[14], q_, &u_ptr[14]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[15], q_, &u_ptr[15]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[0], q_, &u_ptr[0]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[1], q_, &u_ptr[1]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[2], q_, &u_ptr[2]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[3], q_, &u_ptr[3]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[4], q_, &u_ptr[4]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[5], q_, &u_ptr[5]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[6], q_, &u_ptr[6]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[7], q_, &u_ptr[7]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[8], q_, &u_ptr[8]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[9], q_, &u_ptr[9]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[10], q_, &u_ptr[10]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[11], q_, &u_ptr[11]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[12], q_, &u_ptr[12]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[13], q_, &u_ptr[13]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[14], q_, &u_ptr[14]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[15], q_, &u_ptr[15]);
             u_ptr += 16;
             v_ptr += 16;
 #ifdef ENABLED_PERFORMANCE_COUNTER
@@ -894,14 +843,14 @@ namespace Palmtree::Math::Core::Internal
 
         if (v_count & 0x8)
         {
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[0], q_, &u_ptr[0]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[1], q_, &u_ptr[1]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[2], q_, &u_ptr[2]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[3], q_, &u_ptr[3]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[4], q_, &u_ptr[4]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[5], q_, &u_ptr[5]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[6], q_, &u_ptr[6]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[7], q_, &u_ptr[7]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[0], q_, &u_ptr[0]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[1], q_, &u_ptr[1]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[2], q_, &u_ptr[2]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[3], q_, &u_ptr[3]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[4], q_, &u_ptr[4]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[5], q_, &u_ptr[5]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[6], q_, &u_ptr[6]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[7], q_, &u_ptr[7]);
             u_ptr += 8;
             v_ptr += 8;
 #ifdef ENABLED_PERFORMANCE_COUNTER
@@ -914,10 +863,10 @@ namespace Palmtree::Math::Core::Internal
 
         if (v_count & 0x4)
         {
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[0], q_, &u_ptr[0]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[1], q_, &u_ptr[1]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[2], q_, &u_ptr[2]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[3], q_, &u_ptr[3]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[0], q_, &u_ptr[0]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[1], q_, &u_ptr[1]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[2], q_, &u_ptr[2]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[3], q_, &u_ptr[3]);
             u_ptr += 4;
             v_ptr += 4;
 #ifdef ENABLED_PERFORMANCE_COUNTER
@@ -930,8 +879,8 @@ namespace Palmtree::Math::Core::Internal
 
         if (v_count & 0x2)
         {
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[0], q_, &u_ptr[0]);
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[1], q_, &u_ptr[1]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[0], q_, &u_ptr[0]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[1], q_, &u_ptr[1]);
             u_ptr += 2;
             v_ptr += 2;
 #ifdef ENABLED_PERFORMANCE_COUNTER
@@ -944,7 +893,7 @@ namespace Palmtree::Math::Core::Internal
 
         if (v_count & 0x1)
         {
-            c = _MULTIPLY_DIGIT_UNIT(c, &k, &v_ptr[0], q_, &u_ptr[0]);
+            c = _MULTIPLY_SUBTRUCT_UNIT(c, &k, &v_ptr[0], q_, &u_ptr[0]);
             u_ptr += 1;
             v_ptr += 1;
 #ifdef ENABLED_PERFORMANCE_COUNTER
@@ -958,36 +907,7 @@ namespace Palmtree::Math::Core::Internal
         c = _SUBTRUCT_UNIT(c, *u_ptr, k, u_ptr);
         u_ptr += 1;
 
-        return (DoBorrow(c, u_ptr, u_buf + u_buf_len + 1 - u_ptr));
-    }
-
-    static void DoCarry(char c, __UNIT_TYPE* u_ptr, __UNIT_TYPE u_count)
-    {
-        // 繰り上がりを続く限り行う
-        for (;;)
-        {
-            if (u_count <= 0)
-            {
-                // u の最上位まで達してしまった場合
-                return;
-            }
-            else if (c)
-            {
-                // u の最上位に達しておらず、かつキャリーが立っている場合
-
-                // 繰り上がりを継続する
-                c = _ADD_UNIT(c, *u_ptr, 0, u_ptr);
-                ++u_ptr;
-                --u_count;
-            }
-            else
-            {
-                // u の最上位に達しておらず、かつキャリーが立っていない場合
-
-                // 繰り上がりを中断し、復帰する。
-                return;
-            }
-        }
+        return (DoBorrow_UNIT(c, u_ptr, u_buf + u_buf_len - u_ptr));
     }
 
     static void AddOneLine(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_len, __UNIT_TYPE q_index)
@@ -1053,7 +973,7 @@ namespace Palmtree::Math::Core::Internal
         }
 
         // 残りの桁の繰り上がりを計算する。
-        DoCarry(c, u_ptr, u_buf + u_buf_len + 1 - u_ptr);
+        DoCarry_UNIT(c, u_ptr, u_buf + u_buf_len - u_ptr); // キャリーは無視する
     }
 
     static void DivRem_UX_UX_Imp(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_len, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE q_buf_len, __UNIT_TYPE* r_buf, __UNIT_TYPE r_buf_len)
@@ -1096,11 +1016,11 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE q_ = CalculateQ_(work_u_buf, work_v_buf, v_buf_len, q_index);
 
 
-            if (SubtructOneLine(work_u_buf, u_buf_len, work_v_buf, v_buf_len, q_index, q_))
+            if (MultiplySubtructArray_UNIT(work_u_buf, r_buf_len, work_v_buf, v_buf_len, q_index, q_))
             {
                 // 桁借りが発生した場合
                 --q_;
-                AddOneLine(work_u_buf, u_buf_len, work_v_buf, v_buf_len, q_index);
+                AddOneLine(work_u_buf, r_buf_len, work_v_buf, v_buf_len, q_index);
             }
 
             if (q_buf != nullptr)
@@ -1111,7 +1031,7 @@ namespace Palmtree::Math::Core::Internal
         }
 
         if (d_factor > 0)
-            RightShift_Imp(work_u_buf, u_buf_len + 1, d_factor, work_u_buf, true);
+            RightShift_Imp(work_u_buf, r_buf_len, d_factor, work_u_buf, true);
     }
 
     void DivRem_UX_UX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE q_buf_count, __UNIT_TYPE* r_buf, __UNIT_TYPE r_buf_count)
@@ -2043,42 +1963,6 @@ namespace Palmtree::Math::Core::Internal
             root.UnlinkNumber(nr);
             return (r);
         }
-    }
-
-    NUMBER_OBJECT_UINT* PMC_DivideExactly_UX_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v) noexcept(false)
-    {
-        if (v->IS_ZERO)
-        {
-            // v が 0 である場合
-
-            // 0 による除算はエラーで返す
-            throw DivisionByZeroException(L"0による除算が行われようとしました。");
-        }
-        ResourceHolderUINT root(tc);
-        NUMBER_OBJECT_UINT* q;
-        NUMBER_OBJECT_UINT* r;
-        r = PMC_DivRem_UX_UX_Imp(tc, u, v, &q);
-        root.HookNumber(q);
-        root.HookNumber(r);
-        if (!r->IS_ZERO)
-        {
-            // 割り切れていない場合は例外とする
-            throw ArithmeticException(L"u が v で割り切れませんでした。");
-        }
-        root.UnlinkNumber(q);
-        return (q);
-    }
-
-    PMC_HANDLE_UINT PMC_DivideExactly_UX_UX(ThreadContext& tc, PMC_HANDLE_UINT u, PMC_HANDLE_UINT v) noexcept(false)
-    {
-        NUMBER_OBJECT_UINT* nu = GET_NUMBER_OBJECT(u, L"u");
-        NUMBER_OBJECT_UINT* nv = GET_NUMBER_OBJECT(v, L"v");
-        ResourceHolderUINT root(tc);
-        NUMBER_OBJECT_UINT* nq = PMC_DivideExactly_UX_UX_Imp(tc, nu, nv);
-        root.HookNumber(nq);
-        PMC_HANDLE_UINT q = GET_NUMBER_HANDLE(nq);
-        root.UnlinkNumber(nq);
-        return (q);
     }
 
     _UINT32_T PMC_Modulo_X_UI(ThreadContext& tc, SIGN_T u_sign, PMC_HANDLE_UINT u_abs, _UINT32_T v)

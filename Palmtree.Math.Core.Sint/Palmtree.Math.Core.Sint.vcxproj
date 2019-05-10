@@ -243,6 +243,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pmc_divide.cpp" />
+    <ClCompile Include="pmc_divideexactly.cpp" />
     <ClCompile Include="pmc_dllmain.cpp" />
     <ClCompile Include="pmc_add_sub.cpp" />
     <ClCompile Include="pmc_bitwiseand.cpp" />

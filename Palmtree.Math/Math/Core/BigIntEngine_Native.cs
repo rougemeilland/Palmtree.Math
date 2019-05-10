@@ -236,6 +236,51 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_Dispose_X(IntPtr p);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_I_UX(Int32 u, IntPtr v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_I_X(Int32 u, IntPtr v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_L_UX(Int64 u, IntPtr v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_L_X(Int64 u, IntPtr v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_UI_X(UInt32 u, IntPtr v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_UL_X(UInt64 u, IntPtr v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_UX_I(IntPtr u, Int32 v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_UX_L(IntPtr u, Int64 v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_UX_X(IntPtr u, IntPtr v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_X_I(IntPtr u, Int32 v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_X_L(IntPtr u, Int64 v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_X_UI(IntPtr u, UInt32 v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_X_UL(IntPtr u, UInt64 v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_X_UX(IntPtr u, IntPtr v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_X_X(IntPtr u, IntPtr v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
         private static extern Int32 PMCCS_DivRem_I_UX(Int32 u, IntPtr v, out IntPtr q, out Int32 r);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]

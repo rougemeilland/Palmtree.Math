@@ -32,7 +32,47 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    static void DoBorrow(char c, __UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE* wp, __UNIT_TYPE w_count)
+    bool DoBorrow_UNIT(char c, __UNIT_TYPE* up, __UNIT_TYPE u_count)
+    {
+        // 桁借りを続く限り行う
+        for (;;)
+        {
+            if (u_count <= 0)
+            {
+                // u の最上位まで達してしまった場合
+
+                if (c)
+                {
+                    // かつそれでも桁借りを行う必要がある場合
+
+                    // 減算結果が負になってしまったので呼び出し元に通知する。
+                    return (true);
+                }
+
+                // u の最上位に達してしまった場合はいずれにしろループを中断して正常復帰する。
+
+                return (false);
+            }
+            else if (c)
+            {
+                // u の最上位に達しておらず、かつボローが立っている場合
+
+                // 桁借りを継続する
+                c = _SUBTRUCT_UNIT(c, *up, 0, up);
+                ++up;
+                --u_count;
+            }
+            else
+            {
+                // u の最上位に達しておらず、かつボローが立っていない場合
+
+                // 桁借りを中断し復帰する。
+                return (false);
+            }
+        }
+    }
+
+    bool DoBorrow_UNIT(char c, __UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE* wp, __UNIT_TYPE w_count)
     {
         // 桁借りを続く限り行う
         for (;;)
@@ -46,12 +86,12 @@ namespace Palmtree::Math::Core::Internal
                     // かつそれでも桁借りを行う必要がある場合
 
                     // 減算結果が負になってしまったので呼び出し元に通知する。
-                    throw OverflowException(L"減算によりオーバーフローが発生しました。");
+                    return (true);
                 }
 
                 // xの最上位に達してしまった場合はいずれにしろループを中断して正常復帰する。
 
-                return;
+                return (false);
             }
             else if (c)
             {
@@ -73,7 +113,7 @@ namespace Palmtree::Math::Core::Internal
                     --u_count;
                     --w_count;
                 }
-                return;
+                return (false);
             }
         }
     }
@@ -86,7 +126,8 @@ namespace Palmtree::Math::Core::Internal
         --w_count;
 
         // 残りの桁の繰上りを行い復帰する。
-        DoBorrow(c, up, u_count, wp, w_count);
+        if (DoBorrow_UNIT(c, up, u_count, wp, w_count))
+            throw OverflowException(L"減算によりオーバーフローが発生しました。");
     }
 
     // y_hi は 0 であってはならない。
@@ -112,7 +153,8 @@ namespace Palmtree::Math::Core::Internal
             w_count -= 2;
 
             // 残りの桁の繰り上がりを計算し、復帰する。
-            DoBorrow(c, up, u_count, wp, w_count);
+            if (DoBorrow_UNIT(c, up, u_count, wp, w_count))
+                throw OverflowException(L"減算によりオーバーフローが発生しました。");
         }
     }
 
@@ -178,7 +220,8 @@ namespace Palmtree::Math::Core::Internal
             c = _SUBTRUCT_UNIT(c, *up++, *vp++, wp++);
 
         // 残りの桁の繰り上がりを計算し、復帰する。
-        DoBorrow(c, up, u_count - v_count, wp, w_count - v_count);
+        if (DoBorrow_UNIT(c, up, u_count - v_count, wp, w_count - v_count))
+            throw OverflowException(L"減算によりオーバーフローが発生しました。");
     }
 
     static NUMBER_OBJECT_UINT* PMC_Decrement_UX_Imp(ThreadContext& tc, NUMBER_OBJECT_UINT* x)
@@ -199,7 +242,8 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE x_bit_count = x->UNIT_BIT_COUNT;
             __UNIT_TYPE w_bit_count = x_bit_count;
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(w_bit_count);
-            DoBorrow(1, x->BLOCK, x->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
+            if (DoBorrow_UNIT(1, x->BLOCK, x->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT))
+                throw OverflowException(L"減算によりオーバーフローが発生しました。");
 #ifdef _DEBUG
             root.CheckNumber(w);
 #endif

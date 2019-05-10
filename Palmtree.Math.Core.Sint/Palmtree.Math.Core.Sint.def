@@ -68,6 +68,21 @@ EXPORTS
 	PMCCS_Decrement_X
 	PMCCS_Dispose_UX
 	PMCCS_Dispose_X
+	PMCCS_DivideExactly_I_UX
+	PMCCS_DivideExactly_I_X
+	PMCCS_DivideExactly_L_UX
+	PMCCS_DivideExactly_L_X
+	PMCCS_DivideExactly_UI_X
+	PMCCS_DivideExactly_UL_X
+	PMCCS_DivideExactly_UX_I
+	PMCCS_DivideExactly_UX_L
+	PMCCS_DivideExactly_UX_X
+	PMCCS_DivideExactly_X_I
+	PMCCS_DivideExactly_X_L
+	PMCCS_DivideExactly_X_UI
+	PMCCS_DivideExactly_X_UL
+	PMCCS_DivideExactly_X_UX
+	PMCCS_DivideExactly_X_X
 	PMCCS_DivRem_I_UX
 	PMCCS_DivRem_I_X
 	PMCCS_DivRem_L_UX

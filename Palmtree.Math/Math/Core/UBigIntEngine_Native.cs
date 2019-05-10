@@ -106,6 +106,21 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_Dispose_UX(IntPtr p);
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_UI_UX(UInt32 u, IntPtr v, out UInt32 q);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_UL_UX(UInt64 u, IntPtr v, out UInt64 q);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_UX_UI(IntPtr u, UInt32 v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_UX_UL(IntPtr u, UInt64 v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_DivideExactly_UX_UX(IntPtr u, IntPtr v, out IntPtr q);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
         private static extern Int32 PMCCS_DivRem_UI_UX(UInt32 u, IntPtr v, out UInt32 q, out UInt32 r);
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]

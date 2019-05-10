@@ -47,6 +47,7 @@
     <Compile Include="BadBufferException.cs" />
     <Compile Include="InsufficientBufferException.cs" />
     <Compile Include="InternalErrorException.cs" />
+    <Compile Include="Math\BigInt_DivideExactly.cs" />
     <Compile Include="Math\BigInt_Modulo.cs" />
     <Compile Include="Math\MultiplicationMethod.cs" />
     <Compile Include="Math\RationalComparer.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Math\UBigInt_Bytes.cs" />
     <Compile Include="Math\UBigInt_Cast.cs" />
     <Compile Include="Math\UBigInt_Compare.cs" />
+    <Compile Include="Math\UBigInt_DivideExactly.cs" />
     <Compile Include="Math\UBigInt_Divide.cs" />
     <Compile Include="Math\UBigInt_DivRem.cs" />
     <Compile Include="Math\UBigInt_Equals.cs" />

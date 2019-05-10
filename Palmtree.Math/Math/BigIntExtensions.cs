@@ -137,6 +137,26 @@ namespace Palmtree.Math
             return (new BigInt(BigInt.EngineObject.DivRem(u, v.Handle, out Int64 r)));
         }
 
+        public static BigInt DivideExactly(this UInt32 u, BigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.DivideExactly(u, v.Handle)));
+        }
+
+        public static BigInt DivideExactly(this UInt64 u, BigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.DivideExactly(u, v.Handle)));
+        }
+
+        public static BigInt DivideExactly(this Int32 u, BigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.DivideExactly(u, v.Handle)));
+        }
+
+        public static BigInt DivideExactly(this Int64 u, BigInt v)
+        {
+            return (new BigInt(BigInt.EngineObject.DivideExactly(u, v.Handle)));
+        }
+
         public static UInt32 Remainder(this UInt32 u, BigInt v)
         {
             return (BigInt.EngineObject.Remainder(u, v.Handle));

@@ -173,13 +173,13 @@ namespace Palmtree.Math.Test
 
         private static bool PluginFilter(IComponentTestPlugin plugin)
         {
-            //return (plugin.PluginName.StartsWith("uint.div") || plugin.PluginName.StartsWith("uint.modulo") || plugin.PluginName.StartsWith("uint.remainder"));
+            //return (plugin.PluginName.StartsWith("uint.remainder") | plugin.PluginName.StartsWith("uint.div"));
             return (true);
         }
 
         private static bool TestItemFilter(IComponentTestItem test_item)
         {
-            //return (test_item.Index == 87);
+            //return (test_item.Index == 181);
             return (true);
         }
 

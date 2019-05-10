@@ -2433,6 +2433,141 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_DivideExactly_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v, _UINT32_T* q)
+    {
+        if (q == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            *q = PMC_DivideExactly_UI_UX(tc, u, v);
+            tc.VerifyAllocationCount(0, true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_DivideExactly_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v, _UINT64_T* q)
+    {
+        if (q == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            *q = PMC_DivideExactly_UL_UX(tc, u, v);
+            tc.VerifyAllocationCount(0, true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_DivideExactly_UX_UI(PMC_HANDLE_UINT u, _UINT32_T v, PMC_HANDLE_UINT* q)
+    {
+        if (q == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            *q = PMC_DivideExactly_UX_UI(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*q), true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_DivideExactly_UX_UL(PMC_HANDLE_UINT u, _UINT64_T v, PMC_HANDLE_UINT* q)
+    {
+        if (q == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            *q = PMC_DivideExactly_UX_UL(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*q), true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_DivideExactly_UX_UX(PMC_HANDLE_UINT u, PMC_HANDLE_UINT v, PMC_HANDLE_UINT* q)
+    {
+        if (q == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            *q = PMC_DivideExactly_UX_UX(tc, u, v);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*q), true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
+    }
+
 }
 
 

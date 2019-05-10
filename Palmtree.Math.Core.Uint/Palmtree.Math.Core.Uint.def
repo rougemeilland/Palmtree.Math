@@ -25,6 +25,11 @@ EXPORTS
 	PMCCS_Compare_UX_UX
 	PMCCS_Decrement_UX
 	PMCCS_Dispose_UX
+	PMCCS_DivideExactly_UI_UX
+	PMCCS_DivideExactly_UL_UX
+	PMCCS_DivideExactly_UX_UI
+	PMCCS_DivideExactly_UX_UL
+	PMCCS_DivideExactly_UX_UX
 	PMCCS_DivRem_UI_UX
 	PMCCS_DivRem_UL_UX
 	PMCCS_DivRem_UX_UI
