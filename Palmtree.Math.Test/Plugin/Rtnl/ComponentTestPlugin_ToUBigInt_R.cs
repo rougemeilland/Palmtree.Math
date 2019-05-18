@@ -41,6 +41,8 @@ namespace Palmtree.Math.Test.Plugin.Rtnl
             var w = u.ToUBigInt();
             return (new UBigIntDataItem(w));
         }
+
+        public override int Order => 102;
     }
 }
 

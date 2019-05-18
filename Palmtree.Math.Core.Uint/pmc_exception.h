@@ -22,12 +22,10 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_EXCEPTION_H
 #define PMC_EXCEPTION_H
-
 
 #include <wchar.h>
 #include <exception>

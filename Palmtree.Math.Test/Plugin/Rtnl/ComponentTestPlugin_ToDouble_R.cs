@@ -41,6 +41,8 @@ namespace Palmtree.Math.Test.Plugin.Rtnl
             var w = u.ToDouble();
             return (new DoubleDataItem(w));
         }
+
+        public override int Order => 102;
     }
 }
 

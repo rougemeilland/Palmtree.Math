@@ -58,5 +58,12 @@ namespace Palmtree.Math.Experiment
         {
             return (array.Concat(Enumerable.Repeat(0U, n)).Take(n).ToArray());
         }
+
+        public static BigInteger DivideExactly(this BigInteger u, int v)
+        {
+            if (u % v != 0)
+                throw new ApplicationException();
+            return (u / v);
+        }
     }
 }

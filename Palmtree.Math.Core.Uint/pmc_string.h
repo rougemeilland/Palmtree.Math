@@ -22,15 +22,13 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
+
 #ifndef PMC_STRING_H
 #define PMC_STRING_H
 
-
 #include "pmc_uint_internal.h"
 #include "pmc_thousandseparatedstringwriter.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

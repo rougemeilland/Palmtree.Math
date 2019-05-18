@@ -41,6 +41,8 @@ namespace Palmtree.Math.Test.Plugin.Sint
             --u;
             return (new BigIntDataItem(u));
         }
+
+        public override int Order => 101;
     }
 }
 

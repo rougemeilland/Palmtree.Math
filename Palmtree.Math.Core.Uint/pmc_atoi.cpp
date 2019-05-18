@@ -22,13 +22,12 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_string.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_parser.h"
+#include "pmc_basic.h"
 #include "pmc_inline_func.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {
@@ -43,9 +42,7 @@ namespace Palmtree::Math::Core::Internal
 #error unknown platform
 #endif
 
-    static __UNIT_TYPE* (*fp_MultiplyAndAdd)(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE x);
-
-    __inline static __UNIT_TYPE MultiplyAndAdd1Word_using_ADC_MUL(__UNIT_TYPE k, __UNIT_TYPE u, __UNIT_TYPE* w_buf)
+    __inline static __UNIT_TYPE MultiplyAndAdd1Word(__UNIT_TYPE k, __UNIT_TYPE u, __UNIT_TYPE* w_buf)
     {
         __UNIT_TYPE t_hi;
         __UNIT_TYPE t_lo = _MULTIPLY_UNIT(u, _10n_base_number, &t_hi);
@@ -53,53 +50,47 @@ namespace Palmtree::Math::Core::Internal
         return (k);
     }
 
-    __inline static __UNIT_TYPE MultiplyAndAdd1Word_using_ADCX_MULX(__UNIT_TYPE k, __UNIT_TYPE u, __UNIT_TYPE* w_buf)
+    static __UNIT_TYPE* MultiplyAndAdd(_UBASIC_T u_buf, __UNIT_TYPE x)
     {
-        __UNIT_TYPE t_hi;
-        __UNIT_TYPE t_lo = _MULTIPLYX_UNIT(u, _10n_base_number, &t_hi);
-        _ADDX_UNIT(_ADDX_UNIT(0, t_lo, k, w_buf), t_hi, 0, &k);
-        return (k);
-    }
-
-    static __UNIT_TYPE* MultiplyAndAdd_using_ADC_MUL(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE x)
-    {
+        __UNIT_TYPE* u_ptr = u_buf.BLOCK;
+        __UNIT_TYPE u_count= u_buf.BLOCK_COUNT;
         __UNIT_TYPE k = x;
         __UNIT_TYPE count = u_count >> 5;
         while (count > 0)
         {
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[0], &u_buf[0]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[1], &u_buf[1]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[2], &u_buf[2]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[3], &u_buf[3]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[4], &u_buf[4]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[5], &u_buf[5]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[6], &u_buf[6]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[7], &u_buf[7]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[8], &u_buf[8]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[9], &u_buf[9]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[10], &u_buf[10]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[11], &u_buf[11]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[12], &u_buf[12]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[13], &u_buf[13]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[14], &u_buf[14]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[15], &u_buf[15]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[16], &u_buf[16]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[17], &u_buf[17]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[18], &u_buf[18]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[19], &u_buf[19]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[20], &u_buf[20]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[21], &u_buf[21]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[22], &u_buf[22]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[23], &u_buf[23]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[24], &u_buf[24]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[25], &u_buf[25]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[26], &u_buf[26]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[27], &u_buf[27]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[28], &u_buf[28]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[29], &u_buf[29]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[30], &u_buf[30]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[31], &u_buf[31]);
-            u_buf += 32;
+            k = MultiplyAndAdd1Word(k, u_ptr[0], &u_ptr[0]);
+            k = MultiplyAndAdd1Word(k, u_ptr[1], &u_ptr[1]);
+            k = MultiplyAndAdd1Word(k, u_ptr[2], &u_ptr[2]);
+            k = MultiplyAndAdd1Word(k, u_ptr[3], &u_ptr[3]);
+            k = MultiplyAndAdd1Word(k, u_ptr[4], &u_ptr[4]);
+            k = MultiplyAndAdd1Word(k, u_ptr[5], &u_ptr[5]);
+            k = MultiplyAndAdd1Word(k, u_ptr[6], &u_ptr[6]);
+            k = MultiplyAndAdd1Word(k, u_ptr[7], &u_ptr[7]);
+            k = MultiplyAndAdd1Word(k, u_ptr[8], &u_ptr[8]);
+            k = MultiplyAndAdd1Word(k, u_ptr[9], &u_ptr[9]);
+            k = MultiplyAndAdd1Word(k, u_ptr[10], &u_ptr[10]);
+            k = MultiplyAndAdd1Word(k, u_ptr[11], &u_ptr[11]);
+            k = MultiplyAndAdd1Word(k, u_ptr[12], &u_ptr[12]);
+            k = MultiplyAndAdd1Word(k, u_ptr[13], &u_ptr[13]);
+            k = MultiplyAndAdd1Word(k, u_ptr[14], &u_ptr[14]);
+            k = MultiplyAndAdd1Word(k, u_ptr[15], &u_ptr[15]);
+            k = MultiplyAndAdd1Word(k, u_ptr[16], &u_ptr[16]);
+            k = MultiplyAndAdd1Word(k, u_ptr[17], &u_ptr[17]);
+            k = MultiplyAndAdd1Word(k, u_ptr[18], &u_ptr[18]);
+            k = MultiplyAndAdd1Word(k, u_ptr[19], &u_ptr[19]);
+            k = MultiplyAndAdd1Word(k, u_ptr[20], &u_ptr[20]);
+            k = MultiplyAndAdd1Word(k, u_ptr[21], &u_ptr[21]);
+            k = MultiplyAndAdd1Word(k, u_ptr[22], &u_ptr[22]);
+            k = MultiplyAndAdd1Word(k, u_ptr[23], &u_ptr[23]);
+            k = MultiplyAndAdd1Word(k, u_ptr[24], &u_ptr[24]);
+            k = MultiplyAndAdd1Word(k, u_ptr[25], &u_ptr[25]);
+            k = MultiplyAndAdd1Word(k, u_ptr[26], &u_ptr[26]);
+            k = MultiplyAndAdd1Word(k, u_ptr[27], &u_ptr[27]);
+            k = MultiplyAndAdd1Word(k, u_ptr[28], &u_ptr[28]);
+            k = MultiplyAndAdd1Word(k, u_ptr[29], &u_ptr[29]);
+            k = MultiplyAndAdd1Word(k, u_ptr[30], &u_ptr[30]);
+            k = MultiplyAndAdd1Word(k, u_ptr[31], &u_ptr[31]);
+            u_ptr += 32;
             --count;
 #ifdef ENABLED_PERFORMANCE_COUNTER
             if (sizeof(k) == sizeof(_UINT32_T))
@@ -111,23 +102,23 @@ namespace Palmtree::Math::Core::Internal
 
         if (u_count & 0x10)
         {
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[0], &u_buf[0]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[1], &u_buf[1]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[2], &u_buf[2]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[3], &u_buf[3]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[4], &u_buf[4]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[5], &u_buf[5]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[6], &u_buf[6]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[7], &u_buf[7]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[8], &u_buf[8]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[9], &u_buf[9]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[10], &u_buf[10]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[11], &u_buf[11]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[12], &u_buf[12]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[13], &u_buf[13]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[14], &u_buf[14]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[15], &u_buf[15]);
-            u_buf += 16;
+            k = MultiplyAndAdd1Word(k, u_ptr[0], &u_ptr[0]);
+            k = MultiplyAndAdd1Word(k, u_ptr[1], &u_ptr[1]);
+            k = MultiplyAndAdd1Word(k, u_ptr[2], &u_ptr[2]);
+            k = MultiplyAndAdd1Word(k, u_ptr[3], &u_ptr[3]);
+            k = MultiplyAndAdd1Word(k, u_ptr[4], &u_ptr[4]);
+            k = MultiplyAndAdd1Word(k, u_ptr[5], &u_ptr[5]);
+            k = MultiplyAndAdd1Word(k, u_ptr[6], &u_ptr[6]);
+            k = MultiplyAndAdd1Word(k, u_ptr[7], &u_ptr[7]);
+            k = MultiplyAndAdd1Word(k, u_ptr[8], &u_ptr[8]);
+            k = MultiplyAndAdd1Word(k, u_ptr[9], &u_ptr[9]);
+            k = MultiplyAndAdd1Word(k, u_ptr[10], &u_ptr[10]);
+            k = MultiplyAndAdd1Word(k, u_ptr[11], &u_ptr[11]);
+            k = MultiplyAndAdd1Word(k, u_ptr[12], &u_ptr[12]);
+            k = MultiplyAndAdd1Word(k, u_ptr[13], &u_ptr[13]);
+            k = MultiplyAndAdd1Word(k, u_ptr[14], &u_ptr[14]);
+            k = MultiplyAndAdd1Word(k, u_ptr[15], &u_ptr[15]);
+            u_ptr += 16;
 #ifdef ENABLED_PERFORMANCE_COUNTER
             if (sizeof(k) == sizeof(_UINT32_T))
                 AddToMULTI32Counter(16);
@@ -138,15 +129,15 @@ namespace Palmtree::Math::Core::Internal
 
         if (u_count & 0x8)
         {
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[0], &u_buf[0]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[1], &u_buf[1]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[2], &u_buf[2]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[3], &u_buf[3]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[4], &u_buf[4]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[5], &u_buf[5]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[6], &u_buf[6]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[7], &u_buf[7]);
-            u_buf += 8;
+            k = MultiplyAndAdd1Word(k, u_ptr[0], &u_ptr[0]);
+            k = MultiplyAndAdd1Word(k, u_ptr[1], &u_ptr[1]);
+            k = MultiplyAndAdd1Word(k, u_ptr[2], &u_ptr[2]);
+            k = MultiplyAndAdd1Word(k, u_ptr[3], &u_ptr[3]);
+            k = MultiplyAndAdd1Word(k, u_ptr[4], &u_ptr[4]);
+            k = MultiplyAndAdd1Word(k, u_ptr[5], &u_ptr[5]);
+            k = MultiplyAndAdd1Word(k, u_ptr[6], &u_ptr[6]);
+            k = MultiplyAndAdd1Word(k, u_ptr[7], &u_ptr[7]);
+            u_ptr += 8;
 #ifdef ENABLED_PERFORMANCE_COUNTER
             if (sizeof(k) == sizeof(_UINT32_T))
                 AddToMULTI32Counter(8);
@@ -157,11 +148,11 @@ namespace Palmtree::Math::Core::Internal
 
         if (u_count & 0x4)
         {
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[0], &u_buf[0]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[1], &u_buf[1]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[2], &u_buf[2]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[3], &u_buf[3]);
-            u_buf += 4;
+            k = MultiplyAndAdd1Word(k, u_ptr[0], &u_ptr[0]);
+            k = MultiplyAndAdd1Word(k, u_ptr[1], &u_ptr[1]);
+            k = MultiplyAndAdd1Word(k, u_ptr[2], &u_ptr[2]);
+            k = MultiplyAndAdd1Word(k, u_ptr[3], &u_ptr[3]);
+            u_ptr += 4;
 #ifdef ENABLED_PERFORMANCE_COUNTER
             if (sizeof(k) == sizeof(_UINT32_T))
                 AddToMULTI32Counter(4);
@@ -172,9 +163,9 @@ namespace Palmtree::Math::Core::Internal
 
         if (u_count & 0x2)
         {
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[0], &u_buf[0]);
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[1], &u_buf[1]);
-            u_buf += 2;
+            k = MultiplyAndAdd1Word(k, u_ptr[0], &u_ptr[0]);
+            k = MultiplyAndAdd1Word(k, u_ptr[1], &u_ptr[1]);
+            u_ptr += 2;
 #ifdef ENABLED_PERFORMANCE_COUNTER
             if (sizeof(k) == sizeof(_UINT32_T))
                 AddToMULTI32Counter(2);
@@ -185,8 +176,8 @@ namespace Palmtree::Math::Core::Internal
 
         if (u_count & 0x1)
         {
-            k = MultiplyAndAdd1Word_using_ADC_MUL(k, u_buf[0], &u_buf[0]);
-            u_buf += 1;
+            k = MultiplyAndAdd1Word(k, u_ptr[0], &u_ptr[0]);
+            u_ptr += 1;
 #ifdef ENABLED_PERFORMANCE_COUNTER
             if (sizeof(k) == sizeof(_UINT32_T))
                 IncrementMULTI32Counter();
@@ -197,154 +188,11 @@ namespace Palmtree::Math::Core::Internal
 
         if (k > 0)
         {
-            u_buf[0] = k;
-            u_buf += 1;
+            u_ptr[0] = k;
+            u_ptr += 1;
         }
 
-        return (u_buf);
-    }
-
-    static __UNIT_TYPE* MultiplyAndAdd_using_ADCX_MULX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE x)
-    {
-        __UNIT_TYPE k = x;
-        __UNIT_TYPE count = u_count >> 5;
-        while (count > 0)
-        {
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[0], &u_buf[0]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[1], &u_buf[1]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[2], &u_buf[2]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[3], &u_buf[3]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[4], &u_buf[4]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[5], &u_buf[5]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[6], &u_buf[6]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[7], &u_buf[7]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[8], &u_buf[8]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[9], &u_buf[9]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[10], &u_buf[10]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[11], &u_buf[11]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[12], &u_buf[12]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[13], &u_buf[13]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[14], &u_buf[14]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[15], &u_buf[15]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[16], &u_buf[16]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[17], &u_buf[17]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[18], &u_buf[18]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[19], &u_buf[19]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[20], &u_buf[20]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[21], &u_buf[21]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[22], &u_buf[22]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[23], &u_buf[23]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[24], &u_buf[24]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[25], &u_buf[25]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[26], &u_buf[26]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[27], &u_buf[27]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[28], &u_buf[28]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[29], &u_buf[29]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[30], &u_buf[30]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[31], &u_buf[31]);
-            u_buf += 32;
-            --count;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                AddToMULTI32Counter(32);
-            else
-                AddToMULTI64Counter(32);
-#endif
-        }
-
-        if (u_count & 0x10)
-        {
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[0], &u_buf[0]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[1], &u_buf[1]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[2], &u_buf[2]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[3], &u_buf[3]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[4], &u_buf[4]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[5], &u_buf[5]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[6], &u_buf[6]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[7], &u_buf[7]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[8], &u_buf[8]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[9], &u_buf[9]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[10], &u_buf[10]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[11], &u_buf[11]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[12], &u_buf[12]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[13], &u_buf[13]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[14], &u_buf[14]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[15], &u_buf[15]);
-            u_buf += 16;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                AddToMULTI32Counter(16);
-            else
-                AddToMULTI64Counter(16);
-#endif
-        }
-
-        if (u_count & 0x8)
-        {
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[0], &u_buf[0]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[1], &u_buf[1]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[2], &u_buf[2]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[3], &u_buf[3]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[4], &u_buf[4]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[5], &u_buf[5]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[6], &u_buf[6]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[7], &u_buf[7]);
-            u_buf += 8;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                AddToMULTI32Counter(8);
-            else
-                AddToMULTI64Counter(8);
-#endif
-        }
-
-        if (u_count & 0x4)
-        {
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[0], &u_buf[0]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[1], &u_buf[1]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[2], &u_buf[2]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[3], &u_buf[3]);
-            u_buf += 4;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                AddToMULTI32Counter(4);
-            else
-                AddToMULTI64Counter(4);
-#endif
-        }
-
-        if (u_count & 0x2)
-        {
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[0], &u_buf[0]);
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[1], &u_buf[1]);
-            u_buf += 2;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                AddToMULTI32Counter(2);
-            else
-                AddToMULTI64Counter(2);
-#endif
-        }
-
-        if (u_count & 0x1)
-        {
-            k = MultiplyAndAdd1Word_using_ADCX_MULX(k, u_buf[0], &u_buf[0]);
-            u_buf += 1;
-#ifdef ENABLED_PERFORMANCE_COUNTER
-            if (sizeof(k) == sizeof(_UINT32_T))
-                IncrementMULTI32Counter();
-            else
-                IncrementMULTI64Counter();
-#endif
-        }
-
-        if (k > 0)
-        {
-            u_buf[0] = k;
-            u_buf += 1;
-        }
-
-        return (u_buf);
+        return (u_ptr);
     }
 
     static __UNIT_TYPE BuildLeading1WordFromDecimalString(const wchar_t* in_ptr, __UNIT_TYPE count)
@@ -426,7 +274,7 @@ namespace Palmtree::Math::Core::Internal
 
     // 16進数の数値を表す文字列から整数部を抽出する。
     // 10進整数を表す文字列を、word_digit_count 毎に 1 ワードずつ分割してバイナリー化し、out_buf に格納する。
-    static void BuildBinaryFromDecimalString(const wchar_t* source, __UNIT_TYPE* out_buf, __UNIT_TYPE* out_buf_count)
+    static void BuildBinaryFromDecimalString(const wchar_t* source, _UBASIC_T& out_buf)
     {
 #ifdef _M_IX86
         int word_digit_count = 9;
@@ -436,7 +284,7 @@ namespace Palmtree::Math::Core::Internal
 #error unknown platform
 #endif
         const wchar_t* in_ptr = source;
-        __UNIT_TYPE* out_ptr = out_buf;
+        __UNIT_TYPE* out_ptr = out_buf.BLOCK;
         __UNIT_TYPE source_count = lstrlenW(source);
         int r = source_count % word_digit_count;
         if (r > 0)
@@ -451,43 +299,41 @@ namespace Palmtree::Math::Core::Internal
             in_ptr += word_digit_count;
             source_count -= word_digit_count;
         }
-        *out_buf_count = out_ptr - out_buf;
+        out_buf.Region(out_ptr - out_buf.BLOCK).Clear();
     }
 
-    static void ConvertCardinalNumber(ThreadContext& tc, __UNIT_TYPE* in_buf, __UNIT_TYPE in_buf_count, __UNIT_TYPE* out_buf)
+    static void ConvertCardinalNumber(ThreadContext& tc, _UBASIC_T in_buf, _UBASIC_T out_buf)
     {
         ResourceHolderUINT root(tc);
-        __UNIT_TYPE* work_buf = root.AllocateBlock(__UNIT_TYPE_BIT_COUNT * (in_buf_count + 1));
+        _UBASIC_T work_buf = root.AllocateBlock(in_buf.BLOCK_COUNT + 1);
         __UNIT_TYPE work_buf_count = 1;
-        work_buf[0] = in_buf[0];
-        ++in_buf;
-        --in_buf_count;
-        while (in_buf_count > 0)
+        work_buf.BLOCK[0] = in_buf.BLOCK[0];
+        __UNIT_TYPE* in_ptr = in_buf.BLOCK + 1;
+        __UNIT_TYPE in_count = in_buf.BLOCK_COUNT - 1;
+        while (in_count > 0)
         {
-            __UNIT_TYPE* w_tail = (*fp_MultiplyAndAdd)(work_buf, work_buf_count, *in_buf);
-            work_buf_count = w_tail - work_buf;
-            ++in_buf;
-            --in_buf_count;
+            __UNIT_TYPE* w_tail = MultiplyAndAdd(work_buf.Region(0, work_buf_count), *in_ptr);
+            work_buf_count = w_tail - work_buf.BLOCK;
+            ++in_ptr;
+            --in_count;
         }
 #ifdef _DEBUG
         root.CheckBlock(work_buf);
 #endif
-        _COPY_MEMORY_UNIT(out_buf, work_buf, work_buf_count);
+        out_buf.CopyFrom(work_buf.Region(0, work_buf_count));
     }
 
     NUMBER_OBJECT_UINT* PMC_AToL_Imp(ThreadContext& tc, const wchar_t* source)
     {
         ResourceHolderUINT root(tc);
         // 整数部を 10^word_digit_count を基数としたバイト列に変換する
-        __UNIT_TYPE* bin_buf = root.AllocateBlock(_DIVIDE_CEILING_SIZE(lstrlenW(source), _digit_count_on_word) * __UNIT_TYPE_BIT_COUNT);
-        __UNIT_TYPE bin_buf_count;
-        BuildBinaryFromDecimalString(source, bin_buf, &bin_buf_count);
+        _UBASIC_T bin_buf = root.AllocateBlock(_DIVIDE_CEILING_SIZE(lstrlenW(source), _digit_count_on_word));
+        BuildBinaryFromDecimalString(source, bin_buf);
 
         // 10^word_digit_count を基数としたバイト列を 10 を基数としたバイト列に変換する
-        __UNIT_TYPE o_bit_count = bin_buf_count * __UNIT_TYPE_BIT_COUNT;
-        NUMBER_OBJECT_UINT* nr = root.AllocateNumber(o_bit_count);
+        NUMBER_OBJECT_UINT* nr = root.AllocateNumber(bin_buf.BLOCK_COUNT);
         _ZERO_MEMORY_UNIT(nr->BLOCK, nr->BLOCK_COUNT);
-        ConvertCardinalNumber(tc, bin_buf, bin_buf_count, nr->BLOCK);
+        ConvertCardinalNumber(tc, bin_buf, _UBASIC_T(nr));
 #ifdef _DEBUG
         root.CheckNumber(nr);
 #endif
@@ -531,11 +377,6 @@ namespace Palmtree::Math::Core::Internal
 
     PMC_STATUS_CODE Initialize_AToI(PROCESSOR_FEATURES* feature)
     {
-        if (feature->PROCESSOR_FEATURE_ADX && feature->PROCESSOR_FEATURE_BMI2)
-            fp_MultiplyAndAdd = MultiplyAndAdd_using_ADCX_MULX;
-        else
-            fp_MultiplyAndAdd = MultiplyAndAdd_using_ADC_MUL;
-
         return (PMC_STATUS_OK);
     }
 

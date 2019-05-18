@@ -22,11 +22,9 @@
  * THE SOFTWARE.
  */
 
-
-#include <windows.h>
 #include "pmc_uint_internal.h"
+#include "pmc_basic.h"
 #include "pmc_inline_func.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {
@@ -46,22 +44,12 @@ namespace Palmtree::Math::Core::Internal
         else
         {
             // x と y がともに 0 ではない場合
-            __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
-            __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v);
-            if (u_bit_count != v_bit_count)
-            {
-                // 明らかに u != v である場合
-                return (false);
-            }
-            else
-            {
-                // u > 0 && v > 0 かつ u のビット長と v のビット長が等しい場合
-                // ⇒ u と v はともに 1 ワードで表現できる
-                return (u->BLOCK[0] == v);
-            }
+
+            return (basic_ep.Equals(_UBASIC_T(u), v));
         }
     }
 
+#ifdef _M_IX86
     static bool Equals_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
     {
         if (u->IS_ZERO)
@@ -77,78 +65,36 @@ namespace Palmtree::Math::Core::Internal
         else
         {
             // u と v がともに 0 ではない場合
-            if (__UNIT_TYPE_BIT_COUNT < sizeof(v) * 8)
-            {
-                // _UINT64_T が 1 ワードで表現しきれない場合
-                __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
-                _UINT32_T v_hi;
-                _UINT32_T v_lo = _FROMDWORDTOWORD(v, &v_hi);
-                if (v_hi == 0)
-                {
-                    // v の値が 32bit では表現できる場合
-                    __UNIT_TYPE v_bit_count = sizeof(v_lo) * 8 - _LZCNT_ALT_32(v_lo);
-                    if (u_bit_count != v_bit_count)
-                    {
-                        // 明らかに u > v である場合
-                        return (false);
-                    }
-                    else
-                    {
-                        // u > 0 && v > 0 かつ u のビット長と v のビット長が等しく、かつ v が 1 ワードで表現できる場合
-                        // ⇒ u と v はともに 1 ワードで表現できる
-                        return (u->BLOCK[0] == v_lo);
-                    }
-                }
-                else
-                {
-                    // v の値が 32bit では表現できない場合
-                    __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_32(v_hi);
-                    if (u_bit_count != v_bit_count)
-                    {
-                        // 明らかに u > v である場合
-                        return (false);
-                    }
-                    else
-                    {
-                        // u > 0 && v > 0 かつ u のビット長と v のビット長が等しく、かつ v が 2 ワードで表現できる場合
-                        // ⇒ u と v はともに 2 ワードで表現できる
-                        return (u->BLOCK[1] == v_hi && u->BLOCK[0] == v_lo);
-                    }
-                }
-            }
-            else
-            {
-                // _UINT64_T が 1 ワードで表現できる場合
 
-                __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
-                __UNIT_TYPE v_bit_count = sizeof(v) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)v);
-                if (u_bit_count != v_bit_count)
-                {
-                    // 明らかに u != v である場合
-                    return (false);
-                }
-                else
-                {
-                    // u > 0 && v > 0 かつ u のビット長と v のビット長が等しく、かつ v が 1 ワードで表現できる場合
-                    // ⇒ u と v はともに 1 ワードで表現できる
-                    return (u->BLOCK[0] == v);
-                }
-            }
+            _UINT32_T v_hi;
+            _UINT32_T v_lo = _FROMDWORDTOWORD(v, &v_hi);
+
+            return (basic_ep.Equals(_UBASIC_T(u), v_hi, v_lo));
         }
     }
-
-    static bool Equals_UX_UX_Imp(__UNIT_TYPE* u, __UNIT_TYPE* v, __UNIT_TYPE count)
+#elif defined(_M_X64)
+    static bool Equals_UX_UL_Imp(NUMBER_OBJECT_UINT* u, _UINT64_T v)
     {
-        while (count > 0)
+        if (u->IS_ZERO)
         {
-            if (*u != *v)
-                return (false);
-            ++u;
-            ++v;
-            --count;
+            // u が 0 である場合
+            return (v == 0);
         }
-        return (true);
+        else if (v == 0)
+        {
+            // v が 0 である場合
+            return (false);
+        }
+        else
+        {
+            // u と v がともに 0 ではない場合
+
+            return (basic_ep.Equals(_UBASIC_T(u), v));
+        }
     }
+#else
+#error unknown platform
+#endif
 
     static bool EPILOGUE(bool r)
     {
@@ -206,22 +152,9 @@ namespace Palmtree::Math::Core::Internal
         if (nu->IS_ZERO)
             return (EPILOGUE(nv->IS_ZERO ? 1 : 0));
         else if (nv->IS_ZERO)
-            return (EPILOGUE(0));
+            return (EPILOGUE(false));
         else
-        {
-            __UNIT_TYPE u_bit_count = nu->UNIT_BIT_COUNT;
-            __UNIT_TYPE v_bit_count = nv->UNIT_BIT_COUNT;
-            if (u_bit_count != v_bit_count)
-            {
-                // 明らかに u != v である場合
-                return (EPILOGUE(0));
-            }
-            else
-            {
-                // u > 0 && v > 0 かつ u のビット長と v のビット長が等しい場合
-                return (EPILOGUE(Equals_UX_UX_Imp(nu->BLOCK, nv->BLOCK, nu->UNIT_WORD_COUNT)));
-            }
-        }
+            return (EPILOGUE(basic_ep.Equals(_UBASIC_T(nu), _UBASIC_T(nv))));
     }
 
     PMC_STATUS_CODE Initialize_Equals(PROCESSOR_FEATURES* feature)

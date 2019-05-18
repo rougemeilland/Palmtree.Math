@@ -22,12 +22,10 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_tostringformattertypep.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_thousandseparatedstringwriter.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

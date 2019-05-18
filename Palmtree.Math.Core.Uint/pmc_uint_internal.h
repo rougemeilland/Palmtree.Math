@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_UINT_INTERNAL_H
@@ -134,8 +133,8 @@ namespace Palmtree::Math::Core::Internal
     extern void __DeallocateHeap(void* buffer) noexcept(true);
 #endif
 
-    // 与えられたビット数のメモリを獲得するのに十分な __UNIT_TYPE 配列を獲得する。
-    extern __UNIT_TYPE* __AllocateBlock(ThreadContext& tc, size_t bits, __UNIT_TYPE* allocated_block_words, __UNIT_TYPE* code);
+    // 与えられたワード数の __UNIT_TYPE 配列を獲得する。
+    extern __UNIT_TYPE* __AllocateBlock(ThreadContext& tc, size_t word_count, __UNIT_TYPE* code);
 
     // AllocateBlock によって獲得されたメモリ領域を解放する。
     extern void __DeallocateBlock(ThreadContext& tc, __UNIT_TYPE* buffer, __UNIT_TYPE buffer_words, __UNIT_TYPE check_code);
@@ -143,9 +142,9 @@ namespace Palmtree::Math::Core::Internal
     // 与えられた __UNIT_TYPE の配列がオーバーランを引き起こしていないかどうか検査する。
     extern void __CheckBlock(__UNIT_TYPE* buffer, __UNIT_TYPE count, __UNIT_TYPE code);
 
-    extern void __AttatchNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count);
+    extern void __AttatchNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p, __UNIT_TYPE word_count);
 
-    extern NUMBER_OBJECT_UINT* __AllocateNumber(ThreadContext& tc, __UNIT_TYPE bit_count);
+    extern NUMBER_OBJECT_UINT* __AllocateNumber(ThreadContext& tc, __UNIT_TYPE word_count);
 
     extern void __DetatchNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p);
 
@@ -172,13 +171,14 @@ namespace Palmtree::Math::Core::Internal
 
 #pragma region __UNIT_TYPE* ベースの関数の宣言
 
+#if false
     // 桁上がりを配列に反映する
-    extern bool DoCarry_UNIT(char c, __UNIT_TYPE* up, __UNIT_TYPE u_count);
-    extern bool DoCarry_UNIT(char c, __UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE* wp, __UNIT_TYPE w_count);
+    extern bool DoCarry_UNIT(__CARRY_T c, __UNIT_TYPE* up, __UNIT_TYPE u_count);
+    extern bool DoCarry_UNIT(__CARRY_T c, __UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE* wp, __UNIT_TYPE w_count);
 
     // 桁借りを配列に反映する
-    extern bool DoBorrow_UNIT(char c, __UNIT_TYPE* up, __UNIT_TYPE u_count);
-    extern bool DoBorrow_UNIT(char c, __UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE* wp, __UNIT_TYPE w_count);
+    extern bool DoBorrow_UNIT(__BORROW_T c, __UNIT_TYPE* up, __UNIT_TYPE u_count);
+    extern bool DoBorrow_UNIT(__BORROW_T c, __UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE* wp, __UNIT_TYPE w_count);
 
     // 多倍長整数の減算を行う。u と v はどちらも 0 であってはならない。また、x のワード長は y のワード長以上でなければならない。
     extern void Subtruct_Imp(__UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE* vp, __UNIT_TYPE v_count, __UNIT_TYPE* wp, __UNIT_TYPE w_count);
@@ -200,6 +200,7 @@ namespace Palmtree::Math::Core::Internal
 
     // 指定されたワード列を左にシフトして指定された領域に格納する。シフト数は 0 であってはならない。
     extern void LeftShift_Imp(__UNIT_TYPE* p, __UNIT_TYPE p_word_count, __UNIT_TYPE n, __UNIT_TYPE* o, bool padding_zero);
+#endif
 
 #pragma endregion
 
@@ -296,7 +297,7 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_STATUS_CODE Initialize_Subtruct(PROCESSOR_FEATURES* feature);
 
     // 乗算演算子の実装の初期化処理を行う。
-    extern PMC_STATUS_CODE Initialize_Multiply(PROCESSOR_FEATURES* feature);
+    extern PMC_STATUS_CODE Initialize_BasicMultiply(PROCESSOR_FEATURES* feature);
 
     // 除算演算子の実装の初期化処理を行う。
     extern PMC_STATUS_CODE Initialize_DivRem(PROCESSOR_FEATURES* feature);

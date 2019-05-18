@@ -25,7 +25,6 @@
 #include "pmc_lock.h"
 #include "pmc_uint_internal.h"
 
-
 namespace Palmtree::Math::Core::Internal
 {
 

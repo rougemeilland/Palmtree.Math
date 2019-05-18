@@ -22,13 +22,10 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_PARSER_H
 #define PMC_PARSER_H
-
-
 namespace Palmtree::Math::Core::Internal
 {
 

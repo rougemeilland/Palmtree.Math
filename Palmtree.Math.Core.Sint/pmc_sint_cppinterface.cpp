@@ -23,7 +23,6 @@
  * THE SOFTWARE.
  */
 
-
 #include "pmc_sint_internal.h"
 #include "pmc_sint_cppinterface.h"
 #include "pmc_resourceholder_sint.h"

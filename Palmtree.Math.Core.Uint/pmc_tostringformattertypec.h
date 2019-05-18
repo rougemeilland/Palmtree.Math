@@ -22,15 +22,12 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_TOSTRING_FORMATTER_TYPE_C_H
 #define PMC_TOSTRING_FORMATTER_TYPE_C_H
 
-
 #include "pmc_tostringformatter.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

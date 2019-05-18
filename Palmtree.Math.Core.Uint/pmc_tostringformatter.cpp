@@ -22,14 +22,12 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_tostringformatter.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_threadcontext.h"
 #include "pmc_string.h"
 #include "pmc_inline_func.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

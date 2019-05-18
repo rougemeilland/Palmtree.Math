@@ -22,10 +22,8 @@
  * THE SOFTWARE.
  */
 
-
 #include "pmc_sint_internal.h"
 #include "pmc_threadcontext.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

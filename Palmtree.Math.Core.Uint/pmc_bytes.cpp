@@ -22,24 +22,22 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_resourceholder_uint.h"
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
 
-
 namespace Palmtree::Math::Core::Internal
 {
 
-    static __UNIT_TYPE CountActualBitsFromBuffer(const unsigned char* p, size_t count)
+    static __UNIT_TYPE CountActualByteCountFromBuffer(const unsigned char* p, size_t count)
     {
         p += count;
         while (count > 0)
         {
             --p;
             if (*p != 0)
-                return (count * 8 - _LZCNT_ALT_8(*p));
+                return (count);
             --count;
         }
         return (0);
@@ -121,8 +119,8 @@ namespace Palmtree::Math::Core::Internal
             throw FormatException(L"与えられたバイト列が多倍長整数として認識できません。");
         else
         {
-            __UNIT_TYPE bit_count = CountActualBitsFromBuffer(data_ptr, data_length);
-            if (bit_count == 0)
+            __UNIT_TYPE byte_count = CountActualByteCountFromBuffer(data_ptr, data_length);
+            if (byte_count == 0)
             {
                 *o_sign = SIGN_ZERO;
                 *o_abs = &number_object_uint_zero;
@@ -131,9 +129,8 @@ namespace Palmtree::Math::Core::Internal
             else
             {
                 ResourceHolderUINT root(tc);
-                NUMBER_OBJECT_UINT* no_abs = root.AllocateNumber(bit_count);
-                __UNIT_TYPE byte_count = _DIVIDE_CEILING_SIZE(bit_count, 8);
-                __UNIT_TYPE word_count = _DIVIDE_CEILING_SIZE(bit_count, __UNIT_TYPE_BIT_COUNT);
+                __UNIT_TYPE word_count = _DIVIDE_CEILING_SIZE(byte_count, __UNIT_TYPE_BYTE_COUNT);
+                NUMBER_OBJECT_UINT* no_abs = root.AllocateNumber(word_count);
                 no_abs->BLOCK[word_count - 1] = 0; // 最上位ワードのみ 0 クリアする
                 _COPY_MEMORY_BYTE(no_abs->BLOCK, data_ptr, byte_count);
                 CommitNumber(tc, no_abs);

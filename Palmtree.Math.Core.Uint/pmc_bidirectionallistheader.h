@@ -22,13 +22,10 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_BIDIRECTIONAL_LIST_HEADER_H
 #define PMC_BIDIRECTIONAL_LIST_HEADER_H
-
-
 namespace Palmtree::Math::Core::Internal
 {
     template<typename ELEMENT_T>

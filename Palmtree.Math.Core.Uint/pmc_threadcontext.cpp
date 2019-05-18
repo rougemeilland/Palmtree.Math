@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_threadcontext.h"
 #include "pmc_exception.h"

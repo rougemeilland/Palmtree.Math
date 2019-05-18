@@ -42,6 +42,8 @@ namespace Palmtree.Math.Test.Plugin.Uint
             r2 = new UBigIntDataItem(r);
             return (new UBigIntDataItem(q));
         }
+
+        public override int Order => 1;
     }
 }
 

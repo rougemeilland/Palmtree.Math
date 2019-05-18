@@ -43,6 +43,8 @@ namespace Palmtree.Math.Test.Plugin.Rtnl
             var r = Rational.Parse(s, (NumberStyles)f, n);
             return (new RationalDataItem(r));
         }
+
+        public override int Order => 102;
     }
 }
 

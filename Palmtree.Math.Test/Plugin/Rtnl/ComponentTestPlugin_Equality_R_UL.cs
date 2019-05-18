@@ -42,6 +42,8 @@ namespace Palmtree.Math.Test.Plugin.Rtnl
             var w = u.Equals(v) ? 1U : 0U;
             return (new UInt32DataItem(w));
         }
+
+        public override int Order => 102;
     }
 }
 

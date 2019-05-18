@@ -22,11 +22,9 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_parserstate.h"
 #include "pmc_parser.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

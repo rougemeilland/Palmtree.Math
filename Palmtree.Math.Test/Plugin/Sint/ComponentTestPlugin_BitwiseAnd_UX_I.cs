@@ -40,6 +40,8 @@ namespace Palmtree.Math.Test.Plugin.Sint
             var w = u.BitwiseAnd(v);
             return (new UBigIntDataItem(w));
         }
+
+        public override int Order => 101;
     }
 }
 

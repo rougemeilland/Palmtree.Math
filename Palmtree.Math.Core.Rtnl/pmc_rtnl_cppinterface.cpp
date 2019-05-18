@@ -22,10 +22,8 @@
  * THE SOFTWARE.
  */
 
-
 #include "pmc_rtnl_internal.h"
 #include "pmc_rtnl_cppinterface.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

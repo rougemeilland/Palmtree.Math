@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_sint_internal.h"
 #include "pmc_resourceholder_sint.h"
@@ -40,7 +39,6 @@
 #error unknown platform
 #endif
 #pragma endregion
-
 
 namespace Palmtree::Math::Core::Internal
 {

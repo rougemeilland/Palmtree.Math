@@ -22,18 +22,15 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_TOSTRING_FORMATTER_CUSTOM_H
 #define PMC_TOSTRING_FORMATTER_CUSTOM_H
 
-
 #include "pmc_uint_internal.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_stringio.h"
 #include "pmc_bidirectionallistheader.h"
-
 
 namespace Palmtree::Math::Core::Internal::CustomFormat
 {

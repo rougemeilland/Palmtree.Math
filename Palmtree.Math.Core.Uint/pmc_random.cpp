@@ -111,7 +111,7 @@ namespace Palmtree::Math::Core::Internal
 
         ResourceHolderUINT root(tc);
 
-        NUMBER_OBJECT_UINT* nr = root.AllocateNumber(bit_count);
+        NUMBER_OBJECT_UINT* nr = root.AllocateNumber(_DIVIDE_CEILING_UNIT(bit_count, __UNIT_TYPE_BIT_COUNT));
         for (__UNIT_TYPE index = 0; index < nr->BLOCK_COUNT; ++index)
         {
 #ifdef _M_IX86
@@ -154,7 +154,7 @@ namespace Palmtree::Math::Core::Internal
 
         ResourceHolderUINT root(tc);
 
-        NUMBER_OBJECT_UINT* nr = root.AllocateNumber(bit_count);
+        NUMBER_OBJECT_UINT* nr = root.AllocateNumber(_DIVIDE_CEILING_UNIT(bit_count, __UNIT_TYPE_BIT_COUNT));
         size_t byte_count = (bit_count + 7) / 8;
         _COPY_MEMORY_BYTE(nr->BLOCK, data, byte_count);
         if (nr->BLOCK_COUNT*__UNIT_TYPE_BIT_COUNT > (__UNIT_TYPE)bit_count)

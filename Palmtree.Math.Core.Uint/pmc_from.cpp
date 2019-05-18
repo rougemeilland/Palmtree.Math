@@ -22,12 +22,10 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_resourceholder_uint.h"
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {
@@ -35,60 +33,52 @@ namespace Palmtree::Math::Core::Internal
     NUMBER_OBJECT_UINT* From_UI_Imp(ThreadContext& tc, _UINT32_T x) noexcept(false)
     {
         ResourceHolderUINT root(tc);
-        NUMBER_OBJECT_UINT* o = root.AllocateNumber(sizeof(x) * 8 - _LZCNT_ALT_32(x));
+        NUMBER_OBJECT_UINT* o = root.AllocateNumber(_DIVIDE_CEILING_UNIT(sizeof(x), __UNIT_TYPE_BYTE_COUNT));
         o->BLOCK[0] = x;
         CommitNumber(tc, o);
         root.UnlinkNumber(o);
         return (o);
     }
 
+#ifdef _M_IX86
     NUMBER_OBJECT_UINT* From_UL_Imp(ThreadContext& tc, _UINT64_T x) noexcept(false)
     {
-        if (sizeof(__UNIT_TYPE) * 2 < sizeof(x))
+        _UINT32_T x_hi;
+        _UINT32_T x_lo = _FROMDWORDTOWORD(x, &x_hi);
+        if (x_hi == 0)
         {
-            // _UINT64_T を表現するのに 2 ワードでは不足する処理系には対応しない。
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_from.cpp;From_UL_Imp;1");
-        }
-        else if (sizeof(__UNIT_TYPE) < sizeof(x))
-        {
-            // _UINT64_T を表現するのに 1 ワードでは不足する(ちょうど 2 ワード必要とする)処理系の場合
-
-            _UINT32_T x_hi;
-            _UINT32_T x_lo = _FROMDWORDTOWORD(x, &x_hi);
-            if (x_hi == 0)
-            {
-                ResourceHolderUINT root(tc);
-                __UNIT_TYPE x_bit_length = sizeof(x_lo) * 8 - _LZCNT_ALT_32(x_lo);
-                NUMBER_OBJECT_UINT* o = root.AllocateNumber(x_bit_length);
-                o->BLOCK[0] = x_lo;
-                CommitNumber(tc, o);
-                root.UnlinkNumber(o);
-                return (o);
-            }
-            else
-            {
-                ResourceHolderUINT root(tc);
-                __UNIT_TYPE x_bit_length = sizeof(x) * 8 - _LZCNT_ALT_32(x_hi);
-                NUMBER_OBJECT_UINT* o = root.AllocateNumber(x_bit_length);
-                o->BLOCK[0] = x_lo;
-                o->BLOCK[1] = x_hi;
-                CommitNumber(tc, o);
-                root.UnlinkNumber(o);
-                return (o);
-            }
+            ResourceHolderUINT root(tc);
+            NUMBER_OBJECT_UINT* o = root.AllocateNumber(_DIVIDE_CEILING_UNIT(sizeof(x_lo), __UNIT_TYPE_BYTE_COUNT));
+            o->BLOCK[0] = x_lo;
+            CommitNumber(tc, o);
+            root.UnlinkNumber(o);
+            return (o);
         }
         else
         {
-            // _UINT64_T を表現するのに 1 ワードで十分である処理系の場合
             ResourceHolderUINT root(tc);
-            __UNIT_TYPE x_bit_length = sizeof(x) * 8 - _LZCNT_ALT_UNIT((__UNIT_TYPE)x);
-            NUMBER_OBJECT_UINT* o = root.AllocateNumber(x_bit_length);
-            o->BLOCK[0] = (__UNIT_TYPE)x;
+            NUMBER_OBJECT_UINT* o = root.AllocateNumber(_DIVIDE_CEILING_UNIT(sizeof(x), __UNIT_TYPE_BYTE_COUNT));
+            o->BLOCK[0] = x_lo;
+            o->BLOCK[1] = x_hi;
             CommitNumber(tc, o);
             root.UnlinkNumber(o);
             return (o);
         }
     }
+#elif defined(_M_X64)
+    NUMBER_OBJECT_UINT* From_UL_Imp(ThreadContext& tc, _UINT64_T x) noexcept(false)
+    {
+        ResourceHolderUINT root(tc);
+        NUMBER_OBJECT_UINT* o = root.AllocateNumber(_DIVIDE_CEILING_UNIT(sizeof(x), __UNIT_TYPE_BYTE_COUNT));
+        o->BLOCK[0] = (__UNIT_TYPE)x;
+        CommitNumber(tc, o);
+        root.UnlinkNumber(o);
+        return (o);
+    }
+#else
+#error unknown platform
+#endif
+
 
     PMC_HANDLE_UINT PMC_From_UI(ThreadContext& tc, _INT32_T x) noexcept(false)
     {
@@ -180,8 +170,7 @@ namespace Palmtree::Math::Core::Internal
         ResourceHolderUINT root(tc);
 
         *o_sign = x.SIGN != 0 ? SIGN_NEGATIVE : SIGN_POSITIVE;
-        __UNIT_TYPE x_bit_length = (sizeof(x.HI_32) + sizeof(x.LO_64)) * 8;
-        NUMBER_OBJECT_UINT* o_numerator = root.AllocateNumber(x_bit_length);
+        NUMBER_OBJECT_UINT* o_numerator = root.AllocateNumber(_DIVIDE_CEILING_UNIT(sizeof(x.HI_32) + sizeof(x.LO_64), __UNIT_TYPE_BYTE_COUNT));
 #ifdef _M_IX86
         _UINT32_T x_lo_hi;
         _UINT32_T x_lo_lo = _FROMDWORDTOWORD(x.LO_64, &x_lo_hi);
@@ -275,7 +264,7 @@ namespace Palmtree::Math::Core::Internal
 
             // 分子の作成
             __UNIT_TYPE x_bit_length = 53;
-            NUMBER_OBJECT_UINT* o_numerator = root.AllocateNumber(x_bit_length);
+            NUMBER_OBJECT_UINT* o_numerator = root.AllocateNumber(_DIVIDE_CEILING_UNIT(x_bit_length, __UNIT_TYPE_BIT_COUNT));
             _UINT64_T mantissa_value = x_mantissa_part | 0x0010000000000000;
             _INT16_T exponent_value = (_INT16_T)x_exponent_part - 1023 - 52;
 #ifdef _M_IX86

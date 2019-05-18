@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_RTNL_CPPINTERFACE_H

@@ -42,6 +42,8 @@ namespace Palmtree.Math.Test.Plugin.Rtnl
             var w = Rational.Pow(u, v);
             return (new RationalDataItem(w));
         }
+
+        public override int Order => 102;
     }
 }
 

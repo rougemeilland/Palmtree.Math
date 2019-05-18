@@ -22,10 +22,8 @@
  * THE SOFTWARE.
  */
 
-
 #include "pmc___unit_type_array_chainbuffertag.h"
 #include "pmc_inline_func.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

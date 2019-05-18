@@ -22,12 +22,10 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_SFMT_H
 #define PMC_SFMT_H
-
 namespace Palmtree::Math::Core::Internal
 {
 

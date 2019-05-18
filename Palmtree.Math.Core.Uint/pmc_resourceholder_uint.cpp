@@ -22,15 +22,14 @@
  * THE SOFTWARE.
  */
 
-
 #include "pmc_resourceholder_uint.h"
 #include "pmc_threadcontext.h"
 #include "pmc_lock.h"
 #include "pmc_uint_internal.h"
 #include "pmc___unit_type_array_chainbuffertag.h"
+#include "pmc_basic.h"
 #include "pmc_sfmt.h"
 #include "pmc_inline_func.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {
@@ -227,31 +226,30 @@ namespace Palmtree::Math::Core::Internal
         _tc.DecrementTypeBAllocationCount();
     }
 
-    __UNIT_TYPE * ResourceHolderUINT::AllocateBlock(__UNIT_TYPE bit_count)
+    _UBASIC_T ResourceHolderUINT::AllocateBlock(__UNIT_TYPE word_count)
     {
         Lock lock_obj;
-        __UNIT_TYPE word_count;
         __UNIT_TYPE check_code;
-        __UNIT_TYPE* buffer = Palmtree::Math::Core::Internal::__AllocateBlock(_tc, bit_count, &word_count, &check_code);
+        __UNIT_TYPE* buffer = Palmtree::Math::Core::Internal::__AllocateBlock(_tc, word_count, &check_code);
         __ChainBufferTag* tag = new ____UNIT_TYPE_Array_ChainBufferTag(_tc, buffer, word_count, check_code);
         _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);
-        return (buffer);
+        return (_UBASIC_T(buffer, word_count));
     }
 
-    void ResourceHolderUINT::ClearBlock(__UNIT_TYPE * buffer)
+    void ResourceHolderUINT::ClearBlock(_UBASIC_T buffer)
     {
         Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
+        __ChainBufferTag* tag = FindTag(buffer.BLOCK);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::ClearBlock;1");
         tag->Clear();
     }
 
-    void ResourceHolderUINT::DeallocateBlock(__UNIT_TYPE * buffer)
+    void ResourceHolderUINT::DeallocateBlock(_UBASIC_T buffer)
     {
         Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
+        __ChainBufferTag* tag = FindTag(buffer.BLOCK);
         if (tag != nullptr)
         {
             tag->Destruct();
@@ -261,20 +259,20 @@ namespace Palmtree::Math::Core::Internal
     }
 
 #ifdef _DEBUG
-    void ResourceHolderUINT::CheckBlock(__UNIT_TYPE * buffer)
+    void ResourceHolderUINT::CheckBlock(_UBASIC_T buffer)
     {
         Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
+        __ChainBufferTag* tag = FindTag(buffer.BLOCK);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::CheckBlock;1");
         tag->Check();
     }
 #endif
 
-    void ResourceHolderUINT::UnlinkBlock(__UNIT_TYPE * buffer)
+    void ResourceHolderUINT::UnlinkBlock(_UBASIC_T buffer)
     {
         Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer);
+        __ChainBufferTag* tag = FindTag(buffer.BLOCK);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::UnlinkBlock;1");
         delete tag;
@@ -282,10 +280,10 @@ namespace Palmtree::Math::Core::Internal
     }
 
 
-    NUMBER_OBJECT_UINT * ResourceHolderUINT::AllocateNumber(__UNIT_TYPE bit_count)
+    NUMBER_OBJECT_UINT * ResourceHolderUINT::AllocateNumber(__UNIT_TYPE word_count)
     {
         Lock lock_obj;
-        NUMBER_OBJECT_UINT* buffer = Palmtree::Math::Core::Internal::__AllocateNumber(_tc, bit_count);
+        NUMBER_OBJECT_UINT* buffer = Palmtree::Math::Core::Internal::__AllocateNumber(_tc, word_count);
         __ChainBufferTag* tag = new __DynamicNumberChainBufferTag(_tc, buffer);
         _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);
@@ -342,13 +340,13 @@ namespace Palmtree::Math::Core::Internal
         _tc.DecrementTypeBAllocationCount();
     }
 
-    void ResourceHolderUINT::AttatchStaticNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count)
+    void ResourceHolderUINT::AttatchStaticNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE word_count)
     {
         Lock lock_obj;
 #ifdef _DEBUG
         NotExists(p);
 #endif
-        Palmtree::Math::Core::Internal::__AttatchNumber(_tc, p, bit_count);
+        Palmtree::Math::Core::Internal::__AttatchNumber(_tc, p, word_count);
         __ChainBufferTag* tag = new __StaticNumberChainBufferTag(_tc, p);
         _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);

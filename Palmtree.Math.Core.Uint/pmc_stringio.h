@@ -22,14 +22,12 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
+
 #ifndef PMC_STRINGIO_H
 #define PMC_STRINGIO_H
 
-
 #include "pmc_uint.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

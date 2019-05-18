@@ -43,6 +43,8 @@ namespace Palmtree.Math.Test.Plugin.Sint
             var r = BigInt.Parse(s, (NumberStyles)f, n);
             return (new BigIntDataItem(r));
         }
+
+        public override int Order => 101;
     }
 }
 

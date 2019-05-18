@@ -1,4 +1,4 @@
-﻿/*
+/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -22,29 +22,29 @@
  * THE SOFTWARE.
  */
 
-
-#pragma once
-#ifndef PMC_MULTIPLY_CLASSIC_H
-#define PMC_MULTIPLY_CLASSIC_H
-
-#include "pmc_uint_internal.h"
+#include "pmc_basic_multiply_toomcook.h"
+#include "pmc_basic_multiply_karatsuba.h"
+#include "pmc_basic.h"
+#include "pmc_exception.h"
 
 namespace Palmtree::Math::Core::Internal
 {
 
-    class ClassicMultiplicationEngine
+    ToomCookMultiplicationEngine::ToomCookMultiplicationEngine(bool fixed, KaratsubaMultiplicationEngine & karatsuba_engine, ClassicMultiplicationEngine & classic_engine)
+        : _fixed(fixed), _karatsuba_engine(karatsuba_engine), _classic_engine(classic_engine)
     {
-    public:
-        ClassicMultiplicationEngine();
-        ~ClassicMultiplicationEngine();
-        void Multiply_UX_1W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE v, __UNIT_TYPE* w_buf);
-        void Multiply_UX_2W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, __UNIT_TYPE* w_buf);
-        void Multiply_UX_UX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf);
-    };
+    }
+
+    ToomCookMultiplicationEngine::~ToomCookMultiplicationEngine()
+    {
+    }
+
+    void ToomCookMultiplicationEngine::Multiply_UX_UX(ThreadContext & tc, _UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T & w_buf)
+    {
+        _karatsuba_engine.Multiply_UX_UX(tc, u_buf, v_buf, w_buf);
+    }
 
 }
-
-#endif
 
 
 /*

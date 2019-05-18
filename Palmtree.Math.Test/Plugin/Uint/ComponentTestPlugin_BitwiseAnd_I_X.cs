@@ -42,6 +42,8 @@ namespace Palmtree.Math.Test.Plugin.Uint
             var w = u.BitwiseAnd(v);
             return (new UInt32DataItem(w));
         }
+
+        public override int Order => 1;
     }
 }
 

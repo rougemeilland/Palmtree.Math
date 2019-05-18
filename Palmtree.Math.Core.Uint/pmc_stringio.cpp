@@ -22,11 +22,9 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_stringio.h"
 #include "pmc_exception.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

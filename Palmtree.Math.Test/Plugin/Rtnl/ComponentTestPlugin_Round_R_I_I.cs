@@ -43,6 +43,8 @@ namespace Palmtree.Math.Test.Plugin.Rtnl
             var r = x.Round(d, m);
             return (new RationalDataItem(r));
         }
+
+        public override int Order => 102;
     }
 }
 

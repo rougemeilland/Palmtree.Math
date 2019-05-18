@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_uint_internal.h"
 #include "pmc_resourceholder_uint.h"
@@ -35,7 +34,6 @@
 #define CHECK_CODE_INIT     ((__UNIT_TYPE)0x8484848484848484)
 #define	DEFAULT_MEMORY_DATA ((__UNIT_TYPE)0xcccccccccccccccc)
 #pragma endregion
-
 namespace Palmtree::Math::Core::Internal
 {
 
@@ -58,94 +56,94 @@ namespace Palmtree::Math::Core::Internal
         __UNIT_TYPE count = words >> 5;
         while (count != 0)
         {
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[0];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[1];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[2];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[3];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[4];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[5];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[6];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[7];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[8];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[9];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[10];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[11];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[12];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[13];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[14];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[15];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[16];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[17];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[18];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[19];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[20];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[21];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[22];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[23];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[24];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[25];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[26];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[27];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[28];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[29];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[30];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[31];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[0];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[1];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[2];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[3];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[4];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[5];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[6];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[7];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[8];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[9];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[10];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[11];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[12];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[13];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[14];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[15];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[16];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[17];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[18];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[19];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[20];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[21];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[22];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[23];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[24];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[25];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[26];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[27];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[28];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[29];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[30];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[31];
             p += 32;
             --count;
         }
 
         if (words & 0x10)
         {
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[0];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[1];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[2];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[3];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[4];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[5];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[6];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[7];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[8];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[9];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[10];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[11];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[12];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[13];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[14];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[15];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[0];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[1];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[2];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[3];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[4];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[5];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[6];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[7];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[8];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[9];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[10];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[11];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[12];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[13];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[14];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[15];
             p += 16;
         }
 
         if (words & 0x8)
         {
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[0];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[1];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[2];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[3];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[4];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[5];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[6];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[7];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[0];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[1];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[2];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[3];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[4];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[5];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[6];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[7];
             p += 8;
         }
 
         if (words & 0x4)
         {
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[0];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[1];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[2];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[3];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[0];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[1];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[2];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[3];
             p += 4;
         }
 
         if (words & 0x2)
         {
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[0];
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[1];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[0];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[1];
             p += 2;
         }
 
         if (words & 0x1)
-            code = _ROTATE_UL_UNIT(code, 3) ^ p[0];
+            code = _ROTATE_L_UNIT(code, 3) ^ p[0];
 
         return (code);
     }
@@ -156,26 +154,22 @@ namespace Palmtree::Math::Core::Internal
 
     // 多倍長整数をバイト列として格納するためのメモリ領域を獲得する。
     // 引数には格納可能な多倍長整数の合計ワード数が渡される。
-    __UNIT_TYPE* __AllocateBlock(ThreadContext& tc, size_t bits, __UNIT_TYPE* allocated_block_words, __UNIT_TYPE* code)
+    __UNIT_TYPE* __AllocateBlock(ThreadContext& tc, size_t word_count, __UNIT_TYPE* code)
     {
 #ifdef _DEBUG
         // 実際に獲得されるメモリ領域は「引数で渡されたワード数+2」のワード数となる。
         // 最初のワードには獲得時に引数で渡されたワード数が格納される。
         // 最後のワードには格納されている内容の正当性確認のための値が格納される。
         // 2番目のワードへのポインタは呼び出し元に通知され利用される。
-        __UNIT_TYPE words1 = _DIVIDE_CEILING_UNIT(bits, __UNIT_TYPE_BIT_COUNT);
-        __UNIT_TYPE words2 = words1 + 2;
+        __UNIT_TYPE words2 = word_count + 2;
 #ifdef USE_WIN32_HEAP
         __UNIT_TYPE* buffer = (__UNIT_TYPE*)__AllocateHeap(words2 * __UNIT_TYPE_BYTE_COUNT);
 #else
         __UNIT_TYPE* buffer = new __UNIT_TYPE[words2];
-#ifdef _DEBUG
         _FILL_MEMORY_UNIT(buffer, DEFAULT_MEMORY_DATA, words2);
 #endif
-#endif
         tc.IncrementTypeAAllocationCount();
-        buffer[0] = words1;
-        *allocated_block_words = words1;
+        buffer[0] = word_count;
 
         // 乱数もどきを生成する。
 #ifdef _M_IX86
@@ -193,20 +187,17 @@ namespace Palmtree::Math::Core::Internal
 #error unknown platform
 #endif
         __UNIT_TYPE check_code = CHECK_CODE_INIT | r;
-        buffer[words1 + 1] = check_code;
+        buffer[word_count + 1] = check_code;
         *code = check_code;
 
         return (&buffer[1]);
 #else
-        __UNIT_TYPE words = _DIVIDE_CEILING_UNIT(bits, __UNIT_TYPE_BIT_COUNT);
 #ifdef USE_WIN32_HEAP
-        __UNIT_TYPE* buffer = (__UNIT_TYPE*)__AllocateHeap(words * __UNIT_TYPE_BYTE_COUNT);
+        __UNIT_TYPE* buffer = (__UNIT_TYPE*)__AllocateHeap(word_count * __UNIT_TYPE_BYTE_COUNT);
 #else
-        __UNIT_TYPE* buffer = new __UNIT_TYPE[words];
-        _ZERO_MEMORY_UNIT(buffer, words);
+        __UNIT_TYPE* buffer = new __UNIT_TYPE[word_count];
 #endif
         tc.IncrementTypeAAllocationCount();
-        *allocated_block_words = words;
         *code = 0;
         return (&buffer[0]);
 #endif
@@ -354,17 +345,17 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    static void InitializeNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count)
+    static void InitializeNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p, __UNIT_TYPE word_count)
     {
-        if (bit_count > 0)
+        if (word_count > 0)
         {
-            __UNIT_TYPE word_count;
             __UNIT_TYPE check_code;
-            __UNIT_TYPE* block = __AllocateBlock(tc, bit_count, &word_count, &check_code);
+            __UNIT_TYPE* block = __AllocateBlock(tc, word_count, &check_code);
             ClearNumberHeader(p);
             p->SIGNATURE1 = PMC_SIGNATURE;
             p->SIGNATURE2 = PMC_UINT_SIGNATURE;
-            p->UNIT_BIT_COUNT = bit_count;
+            p->UNIT_BIT_COUNT = word_count * __UNIT_TYPE_BIT_COUNT;
+            p->UNIT_WORD_COUNT = word_count;
             p->BLOCK_COUNT = word_count;
             p->BLOCK = block;
             p->BLOCK_CHECK_CODE = check_code;
@@ -372,11 +363,12 @@ namespace Palmtree::Math::Core::Internal
         }
         else
         {
-            // bit_count に 0 が与えられるのは、数値が 0 の場合。
+            // word_count に 0 が与えられるのは、数値が 0 の場合。
             ClearNumberHeader(p);
             p->SIGNATURE1 = PMC_SIGNATURE;
             p->SIGNATURE2 = PMC_UINT_SIGNATURE;
             p->UNIT_BIT_COUNT = 0;
+            p->UNIT_WORD_COUNT = 0;
             p->BLOCK_COUNT = 0;
             p->BLOCK = nullptr;
             p->BLOCK_CHECK_CODE = 0;
@@ -395,17 +387,17 @@ namespace Palmtree::Math::Core::Internal
             __DeallocateBlock(tc, block, block_count, block_check_code);        }
     }
 
-    void __AttatchNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count)
+    void __AttatchNumber(ThreadContext& tc, NUMBER_OBJECT_UINT* p, __UNIT_TYPE word_count)
     {
-        InitializeNumber(tc, p, bit_count);
+        InitializeNumber(tc, p, word_count);
         p->IS_SHARED = true;
     }
 
-    NUMBER_OBJECT_UINT* __AllocateNumber(ThreadContext& tc, __UNIT_TYPE bit_count)
+    NUMBER_OBJECT_UINT* __AllocateNumber(ThreadContext& tc, __UNIT_TYPE word_count)
     {
         ResourceHolderUINT root(tc);
         NUMBER_OBJECT_UINT* p = (NUMBER_OBJECT_UINT*)root.AllocateUBigIntNumberObjectStructure();
-        InitializeNumber(tc, p, bit_count);
+        InitializeNumber(tc, p, word_count);
         p->IS_SHARED = false;
         root.UnlinkUBigIntNumberObjectStructure(p);
         return (p);
@@ -580,8 +572,8 @@ namespace Palmtree::Math::Core::Internal
             return (x);
         if (x->IS_ZERO)
             return (&number_object_uint_zero);
-        __UNIT_TYPE x_bit_count = x->UNIT_BIT_COUNT;
-        NUMBER_OBJECT_UINT* o = __AllocateNumber(tc, x_bit_count);
+        __UNIT_TYPE x_word_count = x->UNIT_WORD_COUNT;
+        NUMBER_OBJECT_UINT* o = __AllocateNumber(tc, x_word_count);
         _COPY_MEMORY_UNIT(o->BLOCK, x->BLOCK, o->BLOCK_COUNT);
         CommitNumber(tc, o);
         return (o);

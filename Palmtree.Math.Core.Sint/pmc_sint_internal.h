@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_SINT_INTERNAL_H

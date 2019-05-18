@@ -22,21 +22,16 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_INTERNAL_H
 #define PMC_INTERNAL_H
 
-
 #include "pmc.h"
 #include "pmc_cpuid.h"
 
-
-#ifdef __cplusplus
 namespace Palmtree::Math::Core::Internal
 {
-#endif
 
 #pragma region マクロの定義
 #define countof(x)  (sizeof(x)/sizeof(*(x)))
@@ -46,6 +41,9 @@ namespace Palmtree::Math::Core::Internal
 #define PMC_SINT_SIGNATURE (((_UINT32_T)'t' << 24) | ((_UINT32_T)'N' << 16) | ((_UINT32_T)'I' << 8) | (_UINT32_T)'s')
 #define PMC_RTNL_SIGNATURE (((_UINT32_T)'L' << 24) | ((_UINT32_T)'n' << 16) | ((_UINT32_T)'t' << 8) | (_UINT32_T)'R')
 #define PMC_SFMT_SIGNATURE (((_UINT32_T)'t' << 24) | ((_UINT32_T)'M' << 16) | ((_UINT32_T)'F' << 8) | (_UINT32_T)'s')
+
+#define __UNIT_TYPE_BYTE_COUNT (sizeof(__UNIT_TYPE))
+#define __UNIT_TYPE_BIT_COUNT (sizeof(__UNIT_TYPE) * 8)
 #pragma endregion
 
 
@@ -58,9 +56,8 @@ namespace Palmtree::Math::Core::Internal
 #error unknown platform
 #endif
 
-#define __UNIT_TYPE_BYTE_COUNT (sizeof(__UNIT_TYPE))
-#define __UNIT_TYPE_BIT_COUNT (sizeof(__UNIT_TYPE) * 8)
-
+    typedef unsigned char __CARRY_T;
+    typedef unsigned char __BORROW_T;
 #pragma endregion
 
 #pragma region インライン関数
@@ -122,9 +119,7 @@ namespace Palmtree::Math::Core::Internal
 
 #pragma endregion
 
-#ifdef __cplusplus
 }
-#endif
 
 #endif /* PMC_INTERNAL_H */
 

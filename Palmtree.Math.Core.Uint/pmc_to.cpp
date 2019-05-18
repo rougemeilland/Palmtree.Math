@@ -22,13 +22,11 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_resourceholder_uint.h"
 #include "pmc_threadcontext.h"
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {
@@ -43,47 +41,53 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt32_UX;1");
         }
         NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
-        if (np->UNIT_BIT_COUNT > sizeof(_UINT32_T) * 8)
-            throw OverflowException(L"符号なし32bit整数への型変換に失敗しました。");
         if (np->IS_ZERO)
             return (0);
-        if (np->BLOCK[0] > 0x7fffffffU)
+        else if (np->UNIT_WORD_COUNT == 1)
+        {
+            if (np->BLOCK[0] > 0x7fffffffU)
+                throw OverflowException(L"符号なし32bit整数への型変換に失敗しました。");
+            return ((_INT32_T)np->BLOCK[0]);
+        }
+        else
             throw OverflowException(L"符号なし32bit整数への型変換に失敗しました。");
-        return ((_INT32_T)np->BLOCK[0]);
     }
 
+#ifdef _M_IX86
     _INT64_T PMC_ToInt64_UX(PMC_HANDLE_UINT p) noexcept(false)
     {
-        if (sizeof(__UNIT_TYPE) * 2 < sizeof(_UINT64_T))
-        {
-            // 32bit未満のCPUは未対応
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt64_UX;1");
-        }
         NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
-        if (np->UNIT_BIT_COUNT > sizeof(_UINT64_T) * 8)
-            throw OverflowException(L"符号なし64bit整数への型変換に失敗しました。");
         if (np->IS_ZERO)
             return (0);
-        else
+        else if (np->UNIT_WORD_COUNT == 1)
+            return (np->BLOCK[0]);
+        else if (np->UNIT_WORD_COUNT == 2)
         {
-            if (np->UNIT_BIT_COUNT <= __UNIT_TYPE_BIT_COUNT)
-            {
-                // 値が 1 ワードで表現できる場合
-                if (np->BLOCK[0] > 0x7fffffffffffffffUL)
-                    throw OverflowException(L"符号なし64bit整数への型変換に失敗しました。");
-                return (np->BLOCK[0]);
-            }
-            else if (np->UNIT_BIT_COUNT <= __UNIT_TYPE_BIT_COUNT * 2)
-            {
-                // 値が 2 ワードで表現できる場合
-                if (np->BLOCK[1] > 0x7fffffffUL)
-                    throw OverflowException(L"符号なし64bit整数への型変換に失敗しました。");
-                return (_FROMWORDTODWORD((_UINT32_T)np->BLOCK[1], (_UINT32_T)np->BLOCK[0]));
-            }
-            else
-                throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt64_UX;2");
+            if (np->BLOCK[1] > 0x7fffffffUL)
+                throw OverflowException(L"符号なし64bit整数への型変換に失敗しました。");
+            return (_FROMWORDTODWORD((_UINT32_T)np->BLOCK[1], (_UINT32_T)np->BLOCK[0]));
         }
+        else
+            throw OverflowException(L"符号なし64bit整数への型変換に失敗しました。");
     }
+#elif defined(_M_X64)
+    _INT64_T PMC_ToInt64_UX(PMC_HANDLE_UINT p) noexcept(false)
+    {
+        NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
+        if (np->IS_ZERO)
+            return (0);
+        if (np->UNIT_WORD_COUNT == 1)
+        {
+            if (np->BLOCK[0] > 0x7fffffffffffffffUL)
+                throw OverflowException(L"符号なし64bit整数への型変換に失敗しました。");
+            return (np->BLOCK[0]);
+        }
+        else
+            throw OverflowException(L"符号なし64bit整数への型変換に失敗しました。");
+    }
+#else
+#error unknown platform
+#endif
 
     _UINT32_T PMC_ToUInt32_UX(PMC_HANDLE_UINT p) noexcept(false)
     {
@@ -93,39 +97,45 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt32_UX;1");
         }
         NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
-        if (np->UNIT_BIT_COUNT > sizeof(_UINT32_T) * 8)
-            throw OverflowException(L"符号なし32bit整数への型変換に失敗しました。");
-        return (np->IS_ZERO ? 0 : (_UINT32_T)np->BLOCK[0]);
-    }
-
-    _UINT64_T PMC_ToUInt64_UX(PMC_HANDLE_UINT p) noexcept(false)
-    {
-        if (sizeof(__UNIT_TYPE) * 2 < sizeof(_UINT64_T))
-        {
-            // 32bit未満のCPUは未対応
-            throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt64_UX;1");
-        }
-        NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
-        if (np->UNIT_BIT_COUNT > sizeof(_UINT64_T) * 8)
-            throw OverflowException(L"符号なし64bit整数への型変換に失敗しました。");
         if (np->IS_ZERO)
             return (0);
-        else
+        else if (np->UNIT_WORD_COUNT == 1)
         {
-            if (np->UNIT_BIT_COUNT <= __UNIT_TYPE_BIT_COUNT)
-            {
-                // 値が 1 ワードで表現できる場合
-                return (np->BLOCK[0]);
-            }
-            else if (np->UNIT_BIT_COUNT <= __UNIT_TYPE_BIT_COUNT * 2)
-            {
-                // 値が 2 ワードで表現できる場合
-                return (_FROMWORDTODWORD((_UINT32_T)np->BLOCK[1], (_UINT32_T)np->BLOCK[0]));
-            }
-            else
-                throw InternalErrorException(L"予期していないコードに到達しました。", L"pmc_to.cpp;PMC_ToUInt64_UX;2");
+            if (np->BLOCK[0] > 0xffffffffU)
+                throw OverflowException(L"符号なし32bit整数への型変換に失敗しました。");
+            return ((_INT32_T)np->BLOCK[0]);
         }
+        else
+            throw OverflowException(L"符号なし32bit整数への型変換に失敗しました。");
     }
+
+#ifdef _M_IX86
+    _UINT64_T PMC_ToUInt64_UX(PMC_HANDLE_UINT p) noexcept(false)
+    {
+        NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
+        if (np->IS_ZERO)
+            return (0);
+        else if (np->UNIT_WORD_COUNT == 1)
+            return (np->BLOCK[0]);
+        else if (np->UNIT_WORD_COUNT == 2)
+            return (_FROMWORDTODWORD(np->BLOCK[1], np->BLOCK[0]));
+        else
+            throw OverflowException(L"符号なし64bit整数への型変換に失敗しました。");
+    }
+#elif defined(_M_X64)
+    _UINT64_T PMC_ToUInt64_UX(PMC_HANDLE_UINT p) noexcept(false)
+    {
+        NUMBER_OBJECT_UINT* np = GET_NUMBER_OBJECT(p, L"p");
+        if (np->IS_ZERO)
+            return (0);
+        else if (np->UNIT_WORD_COUNT == 1)
+            return (np->BLOCK[0]);
+        else
+            throw OverflowException(L"符号なし64bit整数への型変換に失敗しました。");
+    }
+#else 
+#error unknown platform
+#endif
 
     DECIMAL PMC_ToDecimal_R(ThreadContext& tc, SIGN_T p_sign, PMC_HANDLE_UINT p_numerator, PMC_HANDLE_UINT p_denominator) noexcept(false)
     {
@@ -346,7 +356,7 @@ namespace Palmtree::Math::Core::Internal
 
         try
         {
-            root.AttatchStaticNumber(&number_object_uint_decimal_max, 96);
+            root.AttatchStaticNumber(&number_object_uint_decimal_max, _DIVIDE_CEILING_UNIT(96, __UNIT_TYPE_BIT_COUNT));
 #ifdef _M_IX86
             number_object_uint_decimal_max.BLOCK[0] = 0xffffffff;
             number_object_uint_decimal_max.BLOCK[1] = 0xffffffff;

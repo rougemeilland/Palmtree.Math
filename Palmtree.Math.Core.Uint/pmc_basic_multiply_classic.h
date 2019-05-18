@@ -22,28 +22,26 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
-#ifndef PMC_MULTIPLY_SCHONHAGESTRASSENMULTIPLICATIONENGINE_H
-#define PMC_MULTIPLY_SCHONHAGESTRASSENMULTIPLICATIONENGINE_H
+
+#ifndef PMC_MULTIPLY_CLASSIC_H
+#define PMC_MULTIPLY_CLASSIC_H
 
 #include "pmc_uint_internal.h"
 
 namespace Palmtree::Math::Core::Internal
 {
 
-    class KaratsubaMultiplicationEngine;
+    class _UBASIC_T;
 
-    class SchonHageStrassenMultiplicationEngine
+    class ClassicMultiplicationEngine
     {
-    private:
-        bool _fixed;
-        KaratsubaMultiplicationEngine& _karatsuba_engine;
-
     public:
-        SchonHageStrassenMultiplicationEngine(bool fixed, KaratsubaMultiplicationEngine& karatsuba_engine);
-        ~SchonHageStrassenMultiplicationEngine();
-        void Multiply_UX_UX(ThreadContext& tc, __UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf);
+        ClassicMultiplicationEngine();
+        ~ClassicMultiplicationEngine();
+        void Multiply_UX_1W(_UBASIC_T u_buf, __UNIT_TYPE v, _UBASIC_T& w_buf);
+        void Multiply_UX_2W(_UBASIC_T u_buf, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, _UBASIC_T& w_buf);
+        void Multiply_UX_UX(_UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T& w_buf);
     };
 
 }

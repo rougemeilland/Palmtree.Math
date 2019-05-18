@@ -41,6 +41,8 @@ namespace Palmtree.Math.Test.Plugin.Uint
             var w = u.FloorLog10();
             return (new UInt32DataItem(w));
         }
+
+        public override int Order => 9;
     }
 }
 

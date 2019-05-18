@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 #include <iostream>
 #include <stdio.h>
 #include <locale.h>

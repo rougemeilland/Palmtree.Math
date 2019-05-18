@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_THOUSAND_SEPARATED_STRING_WRITER_H

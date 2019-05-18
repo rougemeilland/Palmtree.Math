@@ -42,6 +42,8 @@ namespace Palmtree.Math.Test.Plugin.Uint
             var w = UBigInt.Pow(u, v);
             return (new UBigIntDataItem(w));
         }
+
+        public override int Order => 8;
     }
 }
 

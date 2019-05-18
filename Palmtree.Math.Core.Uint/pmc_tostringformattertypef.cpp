@@ -22,10 +22,8 @@
  * THE SOFTWARE.
  */
 
-
 #include "pmc_tostringformattertypef.h"
 #include "pmc_resourceholder_uint.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

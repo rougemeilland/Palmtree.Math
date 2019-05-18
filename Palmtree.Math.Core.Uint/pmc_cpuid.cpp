@@ -22,12 +22,10 @@
  * THE SOFTWARE.
  */
 
-
 #include <intrin.h>
 #include <immintrin.h>
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

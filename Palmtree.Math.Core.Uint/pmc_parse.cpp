@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_uint_internal.h"
 #include "pmc_resourceholder_uint.h"
@@ -30,7 +29,6 @@
 #include "pmc_string.h"
 #include "pmc_parserstate.h"
 #include "pmc_inline_func.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {
@@ -348,7 +346,7 @@ namespace Palmtree::Math::Core::Internal
             }
 
             __UNIT_TYPE o_bit_count = lstrlenW(int_part_buf) * 4;
-            *o_abs = root.AllocateNumber(o_bit_count);
+            *o_abs = root.AllocateNumber(_DIVIDE_CEILING_UNIT(o_bit_count, __UNIT_TYPE_BIT_COUNT));
             BuildBinaryFromHexString(int_part_buf, (*o_abs)->BLOCK);
 #ifdef _DEBUG
             root.CheckNumber(*o_abs);
@@ -366,7 +364,7 @@ namespace Palmtree::Math::Core::Internal
                 }
 
                 // 配列 (*o_abs)->BLOCK の内容をビット反転してインクリメントする
-                char carry = 1;
+                __CARRY_T carry = 1;
                 __UNIT_TYPE* p = (*o_abs)->BLOCK;
                 __UNIT_TYPE count = (*o_abs)->BLOCK_COUNT;
                 while (count > 0)

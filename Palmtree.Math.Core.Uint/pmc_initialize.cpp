@@ -22,13 +22,11 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include <intrin.h>
 #include <immintrin.h>
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {
@@ -173,7 +171,7 @@ namespace Palmtree::Math::Core::Internal
                 return (false);
             if (Initialize_Subtruct(&feature) != PMC_STATUS_OK)
                 return (false);
-            if (Initialize_Multiply(&feature) != PMC_STATUS_OK)
+            if (Initialize_BasicMultiply(&feature) != PMC_STATUS_OK)
                 return (false);
             if (Initialize_DivRem(&feature) != PMC_STATUS_OK)
                 return (false);

@@ -41,6 +41,8 @@ namespace Palmtree.Math.Test.Plugin.Rtnl
             var w = u.Floor();
             return (new BigIntDataItem(w));
         }
+
+        public override int Order => 102;
     }
 }
 

@@ -45,6 +45,8 @@ namespace Palmtree.Math.Test.Plugin.Rtnl
             r2 = new RationalDataItem(v);
             return (new UInt32DataItem(r ? 1U : 0U));
         }
+
+        public override int Order => 102;
     }
 }
 

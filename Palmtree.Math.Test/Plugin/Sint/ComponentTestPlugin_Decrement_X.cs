@@ -41,6 +41,8 @@ namespace Palmtree.Math.Test.Plugin.Sint
             var w = u.Decrement();
             return (new BigIntDataItem(w));
         }
+
+        public override int Order => 101;
     }
 }
 

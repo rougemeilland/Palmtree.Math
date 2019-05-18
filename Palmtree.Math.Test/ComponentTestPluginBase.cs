@@ -49,6 +49,8 @@ namespace Palmtree.Math.Test
 
         public string DataFileID { get; }
 
+        public virtual int Order => 1;
+
         public long DataFileSize { get; }
 
         public string PluginName { get; }

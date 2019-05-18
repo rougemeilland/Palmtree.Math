@@ -43,6 +43,8 @@ namespace Palmtree.Math.Test.Plugin.Uint
             var r = UBigInt.Parse(s, (NumberStyles)f, n);
             return (new UBigIntDataItem(r));
         }
+
+        public override int Order => 10;
     }
 }
 

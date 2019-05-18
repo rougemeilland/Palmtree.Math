@@ -41,6 +41,8 @@ namespace Palmtree.Math.Test.Plugin.Rtnl
             var w = u.ToUInt32();
             return (new UInt32DataItem(w));
         }
+
+        public override int Order => 102;
     }
 }
 

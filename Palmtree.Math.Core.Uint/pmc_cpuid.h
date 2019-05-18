@@ -22,13 +22,10 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_CPUID_H
 #define PMC_CPUID_H
-
-
 namespace Palmtree::Math::Core::Internal
 {
 

@@ -23,7 +23,6 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_UINT_H
@@ -31,13 +30,10 @@
 
 #include "pmc.h"
 
-#ifdef __cplusplus
 namespace Palmtree::Math::Core::Internal
 {
+
 #define __THROWS noexcept(false)
-#else
-#define __THROWS
-#endif
 
 #ifdef PALMTREEMATHCOREUINT_EXPORTS
 #define __DLLEXPORT_UINT __declspec(dllexport)
@@ -79,17 +75,11 @@ struct __tag_PMC_HANDLE_SFMT
 };
 typedef struct __tag_PMC_HANDLE_SFMT* PMC_HANDLE_SFMT;
 
-
-
 #pragma endregion
 
-
-#ifdef __cplusplus
 }
+
 #endif
-
-#endif /* PMC_UINT_H */
-
 
 /*
  * END OF FILE

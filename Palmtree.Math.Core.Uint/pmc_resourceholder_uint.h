@@ -22,20 +22,19 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
+
 #pragma warning(disable:4067)
 
 #ifndef PMC_RESOURCEHOLDER_UINT_H
 #define PMC_RESOURCEHOLDER_UINT_H
 
-
 #include "pmc_resourceholder.h"
 #include "pmc_uint_internal.h"
 
-
 namespace Palmtree::Math::Core::Internal
 {
+    class _UBASIC_T;
 
     class ResourceHolderUINT
         : public ResourceHolder
@@ -131,15 +130,15 @@ namespace Palmtree::Math::Core::Internal
         void DeallocateUBigIntNumberObjectStructure(NUMBER_OBJECT_UINT* buffer);
         void UnlinkUBigIntNumberObjectStructure(NUMBER_OBJECT_UINT* buffer);
 
-        __UNIT_TYPE* AllocateBlock(__UNIT_TYPE bit_count);
-        void ClearBlock(__UNIT_TYPE* buffer);
-        void DeallocateBlock(__UNIT_TYPE* buffer);
+        _UBASIC_T AllocateBlock(__UNIT_TYPE word_count);
+        void ClearBlock(_UBASIC_T buffer);
+        void DeallocateBlock(_UBASIC_T buffer);
 #ifdef _DEBUG
-        void CheckBlock(__UNIT_TYPE* buffer);
+        void CheckBlock(_UBASIC_T buffer);
 #endif
-        void UnlinkBlock(__UNIT_TYPE* buffer);
+        void UnlinkBlock(_UBASIC_T buffer);
 
-        NUMBER_OBJECT_UINT* AllocateNumber(__UNIT_TYPE bit_count);
+        NUMBER_OBJECT_UINT* AllocateNumber(__UNIT_TYPE word_count);
         void HookNumber(NUMBER_OBJECT_UINT* buffer);
         void DeallocateNumber(NUMBER_OBJECT_UINT* buffer);
 #ifdef _DEBUG
@@ -147,7 +146,7 @@ namespace Palmtree::Math::Core::Internal
 #endif
         void UnlinkNumber(NUMBER_OBJECT_UINT* buffer);
 
-        void AttatchStaticNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE bit_count);
+        void AttatchStaticNumber(NUMBER_OBJECT_UINT* p, __UNIT_TYPE word_count);
         void DetatchStaticNumber(NUMBER_OBJECT_UINT* buffer);
         void UnlinkStatickNumber(NUMBER_OBJECT_UINT* buffer);
 

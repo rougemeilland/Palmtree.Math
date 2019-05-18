@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 #pragma warning(disable:4067)
 
@@ -32,7 +31,6 @@
 
 #include "pmc_resourceholder.h"
 #include "pmc_sint_internal.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

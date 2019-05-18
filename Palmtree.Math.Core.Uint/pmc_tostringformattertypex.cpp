@@ -22,11 +22,10 @@
  * THE SOFTWARE.
  */
 
-
 #include "pmc_tostringformattertypex.h"
 #include "pmc_resourceholder_uint.h"
+#include "pmc_basic.h"
 #include "pmc_inline_func.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {
@@ -45,53 +44,53 @@ namespace Palmtree::Math::Core::Internal
         unsigned int count = __UNIT_TYPE_BIT_COUNT / 4;
         if (skip_digit_len > 0)
         {
-            x = _ROTATE_UL_UNIT(x, 4 * skip_digit_len);
+            x = _ROTATE_L_UNIT(x, 4 * skip_digit_len);
             count -= skip_digit_len;
         }
         if (count & 0x10)
         {
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
         }
         if (count & 0x8)
         {
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
         }
         if (count & 0x4)
         {
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
         }
         if (count & 0x2)
         {
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
         }
         if (count & 0x1)
         {
-            x = _ROTATE_UL_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
+            x = _ROTATE_L_UNIT(x, 4); writer.Write(digit_table[x & 0x0f]);
         }
     }
 
@@ -133,20 +132,18 @@ namespace Palmtree::Math::Core::Internal
     void ToStringFormatterTypeX::WriteValue(SIGN_T x_sign, NUMBER_OBJECT_UINT * x_abs, StringWriter& writer)
     {
         ResourceHolderUINT root(_tc);
-        __UNIT_TYPE temp_buf_bit_count = x_abs->UNIT_BIT_COUNT + 4;
-        __UNIT_TYPE* temp_buf = root.AllocateBlock(temp_buf_bit_count);
-        temp_buf[_DIVIDE_CEILING_UNIT(temp_buf_bit_count, __UNIT_TYPE_BIT_COUNT) - 1] = 0; // 最上位ワードのみ 0 クリアする
-        __UNIT_TYPE temp_buf_word_count = _DIVIDE_CEILING_UNIT(temp_buf_bit_count, __UNIT_TYPE_BIT_COUNT);
+        _UBASIC_T temp_buf = root.AllocateBlock(x_abs->UNIT_WORD_COUNT + 1);
+        temp_buf.BLOCK[temp_buf.BLOCK_COUNT - 1] = 0; // 最上位ワードのみ 0 クリアする
         __UNIT_TYPE output_len;
         wchar_t filling_char;
         if (x_sign >= 0)
         {
             // x >= 0 の場合
 
-            _COPY_MEMORY_UNIT(temp_buf, x_abs->BLOCK, x_abs->UNIT_WORD_COUNT);
-            output_len = temp_buf_word_count * (__UNIT_TYPE_BIT_COUNT / 4);
-            unsigned char* ptr = (unsigned char*)&temp_buf[temp_buf_word_count] - 1;
-            while (ptr >= (unsigned char*)temp_buf)
+            temp_buf.CopyFrom(_UBASIC_T(x_abs));
+            output_len = temp_buf.BLOCK_COUNT * (__UNIT_TYPE_BIT_COUNT / 4);
+            unsigned char* ptr = (unsigned char*)&temp_buf.BLOCK[temp_buf.BLOCK_COUNT] - 1;
+            while (ptr >= (unsigned char*)temp_buf.BLOCK)
             {
                 if ((ptr[0] >> 4) != 0 || (ptr[0] & 0xf) >= 0x8)
                     break;
@@ -154,7 +151,7 @@ namespace Palmtree::Math::Core::Internal
                 // ⇒最上位桁の '0' を削除する
                 --output_len;
 
-                if (&ptr[-1] < (unsigned char*)temp_buf)
+                if (&ptr[-1] < (unsigned char*)temp_buf.BLOCK)
                     break;
 
                 if (ptr[0] != 0 || (ptr[-1] >> 4) >= 0x8)
@@ -172,10 +169,10 @@ namespace Palmtree::Math::Core::Internal
             // x < 0 の場合
 
             __UNIT_TYPE *in_ptr = x_abs->BLOCK;
-            __UNIT_TYPE *out_ptr = temp_buf;
+            __UNIT_TYPE *out_ptr = temp_buf.BLOCK;
             __UNIT_TYPE count1 = x_abs->UNIT_WORD_COUNT;
-            __UNIT_TYPE count2 = temp_buf_word_count;
-            char carry = 1;
+            __UNIT_TYPE count2 = temp_buf.BLOCK_COUNT;
+            __CARRY_T carry = 1;
             while (count1 > 0)
             {
                 carry = _ADD_UNIT(carry, ~*in_ptr, 0, out_ptr);
@@ -191,9 +188,9 @@ namespace Palmtree::Math::Core::Internal
                 ++out_ptr;
                 --count2;
             }
-            output_len = temp_buf_word_count * (__UNIT_TYPE_BIT_COUNT / 4);
-            unsigned char* ptr = (unsigned char*)&temp_buf[temp_buf_word_count] - 1;
-            while (ptr >= (unsigned char*)temp_buf)
+            output_len = temp_buf.BLOCK_COUNT * (__UNIT_TYPE_BIT_COUNT / 4);
+            unsigned char* ptr = (unsigned char*)&temp_buf.BLOCK[temp_buf.BLOCK_COUNT] - 1;
+            while (ptr >= (unsigned char*)temp_buf.BLOCK)
             {
                 if ((ptr[0] >> 4) != 0xf || (ptr[0] & 0xf) < 0x8)
                     break;
@@ -202,7 +199,7 @@ namespace Palmtree::Math::Core::Internal
                 *ptr &= 0x0f;
                 --output_len;
 
-                if (&ptr[-1] < (unsigned char*)temp_buf)
+                if (&ptr[-1] < (unsigned char*)temp_buf.BLOCK)
                     break;
 
                 if (ptr[0] != 0xf || (ptr[-1] >> 4) < 0x8)
@@ -241,10 +238,10 @@ namespace Palmtree::Math::Core::Internal
         }
         writer.Write(filling_char, filling_digit_len);
 
-        __UNIT_TYPE* s_ptr = &temp_buf[_DIVIDE_CEILING_UNIT(output_len, __UNIT_TYPE_BIT_COUNT / 4) - 1];
+        __UNIT_TYPE* s_ptr = &temp_buf.BLOCK[_DIVIDE_CEILING_UNIT(output_len, __UNIT_TYPE_BIT_COUNT / 4) - 1];
         OutputHexNumberSequenceOneWord(*s_ptr, leading_zero_digit_count, _character_set, writer);
         --s_ptr;
-        while (s_ptr >= temp_buf)
+        while (s_ptr >= temp_buf.BLOCK)
         {
             OutputHexNumberSequenceOneWord(*s_ptr, 0, _character_set, writer);
             --s_ptr;

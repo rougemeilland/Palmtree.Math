@@ -40,6 +40,8 @@ namespace Palmtree.Math.Test.Plugin.Sint
             var w = u.Equals(v);
             return (new UInt32DataItem(w ? 1U : 0U));
         }
+
+        public override int Order => 101;
     }
 }
 

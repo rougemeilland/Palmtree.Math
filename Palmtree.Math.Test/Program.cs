@@ -84,7 +84,8 @@ namespace Palmtree.Math.Test
             var plugins = current_assembly.GetTypes()
                           .Where(t => t.IsClass /*&& t.IsPublic */&& !t.IsAbstract && t.GetInterface(interface_name) != null)
                           .Select(t => (IComponentTestPlugin)current_assembly.CreateInstance(t.FullName))
-                          .OrderBy(p => p.DataFileSize)
+                          .OrderBy(p => p.Order)
+                          .ThenBy(p => p.DataFileSize)
                           .ToArray();
 
             // プラグインの重複の確認
@@ -173,13 +174,13 @@ namespace Palmtree.Math.Test
 
         private static bool PluginFilter(IComponentTestPlugin plugin)
         {
-            //return (plugin.PluginName.StartsWith("uint.remainder") | plugin.PluginName.StartsWith("uint.div"));
+            //return (plugin.PluginName.StartsWith("rtnl."));
             return (true);
         }
 
         private static bool TestItemFilter(IComponentTestItem test_item)
         {
-            //return (test_item.Index == 181);
+            //return (test_item.Index == 49);
             return (true);
         }
 

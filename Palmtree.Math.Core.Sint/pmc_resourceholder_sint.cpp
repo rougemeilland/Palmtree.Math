@@ -22,11 +22,9 @@
  * THE SOFTWARE.
  */
 
-
 #include "pmc_resourceholder_sint.h"
 #include "pmc_threadcontext.h"
 #include "pmc_lock.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

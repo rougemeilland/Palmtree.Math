@@ -26,11 +26,9 @@
  * THE SOFTWARE.
  */
 
-
 #include "pmc_uint_internal.h"
 #include "pmc_resourceholder_uint.h"
 #include "pmc_string.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

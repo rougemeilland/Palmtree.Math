@@ -22,12 +22,10 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_INLINE_FUNC_H
 #define PMC_INLINE_FUNC_H
-
 
 #include <intrin.h>
 #include "pmc_internal.h"
@@ -40,11 +38,8 @@
 #define __DLLEXPORT_DIVREM __declspec(dllimport)
 #endif
 
-
-#ifdef __cplusplus
 namespace Palmtree::Math::Core::Internal
 {
-#endif
 
     __inline static void _COPY_MEMORY_BYTE(void* d, const void* s, size_t count)
     {
@@ -232,12 +227,12 @@ namespace Palmtree::Math::Core::Internal
         return (x <= y ? x : y);
     }
 
-    __inline static char _ADD_32(char carry, _UINT32_T u, _UINT32_T v, _UINT32_T* w)
+    __inline static __CARRY_T _ADD_32(__CARRY_T carry, _UINT32_T u, _UINT32_T v, _UINT32_T* w)
     {
         return (_addcarry_u32(carry, u, v, w));
     }
 
-    __inline static char _ADD_UNIT(char carry, __UNIT_TYPE u, __UNIT_TYPE v, __UNIT_TYPE* w)
+    __inline static __CARRY_T _ADD_UNIT(__CARRY_T carry, __UNIT_TYPE u, __UNIT_TYPE v, __UNIT_TYPE* w)
     {
 #ifdef _M_IX86
         return (_addcarry_u32(carry, u, v, w));
@@ -248,7 +243,7 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    __inline static char _ADDX_UNIT(char carry, __UNIT_TYPE u, __UNIT_TYPE v, __UNIT_TYPE* w)
+    __inline static __CARRY_T _ADDX_UNIT(__CARRY_T carry, __UNIT_TYPE u, __UNIT_TYPE v, __UNIT_TYPE* w)
     {
 #ifdef _M_IX86
         return (_addcarryx_u32(carry, u, v, w));
@@ -259,12 +254,12 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    __inline static char _SUBTRUCT_32(char borrow, _UINT32_T u, _UINT32_T v, _UINT32_T* w)
+    __inline static __BORROW_T _SUBTRUCT_32(__BORROW_T borrow, _UINT32_T u, _UINT32_T v, _UINT32_T* w)
     {
         return (_subborrow_u32(borrow, u, v, w));
     }
 
-    __inline static char _SUBTRUCT_UNIT(char borrow, __UNIT_TYPE u, __UNIT_TYPE v, __UNIT_TYPE* w)
+    __inline static __BORROW_T _SUBTRUCT_UNIT(__BORROW_T borrow, __UNIT_TYPE u, __UNIT_TYPE v, __UNIT_TYPE* w)
     {
 #ifdef _M_IX86
         return (_subborrow_u32(borrow, u, v, w));
@@ -397,7 +392,7 @@ namespace Palmtree::Math::Core::Internal
 #error unknown compiler
 #endif
 
-    __inline static char _MULTIPLY_SUBTRUCT_32(char c, _UINT32_T* k, _UINT32_T* vp, _UINT32_T q_, _UINT32_T* up)
+    __inline static __BORROW_T _MULTIPLY_SUBTRUCT_32(__BORROW_T c, _UINT32_T* k, _UINT32_T* vp, _UINT32_T q_, _UINT32_T* up)
     {
         _UINT32_T t_hi;
         _UINT32_T t_lo;
@@ -408,7 +403,7 @@ namespace Palmtree::Math::Core::Internal
         return (c);
     }
 
-    __inline static char _MULTIPLY_SUBTRUCT_UNIT(char c, __UNIT_TYPE* k, __UNIT_TYPE* vp, __UNIT_TYPE q_, __UNIT_TYPE* up)
+    __inline static __BORROW_T _MULTIPLY_SUBTRUCT_UNIT(__BORROW_T c, __UNIT_TYPE* k, __UNIT_TYPE* vp, __UNIT_TYPE q_, __UNIT_TYPE* up)
     {
         __UNIT_TYPE t_hi;
         __UNIT_TYPE t_lo;
@@ -430,7 +425,7 @@ namespace Palmtree::Math::Core::Internal
 #endif
     }
 
-    __inline static __UNIT_TYPE _ROTATE_UL_UNIT(__UNIT_TYPE x, int count)
+    __inline static __UNIT_TYPE _ROTATE_L_UNIT(__UNIT_TYPE x, int count)
     {
 #ifdef _M_IX86
         return (_rotl(x, count));
@@ -655,9 +650,7 @@ namespace Palmtree::Math::Core::Internal
         return (x);
     }
 
-#ifdef __cplusplus
 }
-#endif
 
 #endif /* PMC_INLINE_FUNC_H */
 

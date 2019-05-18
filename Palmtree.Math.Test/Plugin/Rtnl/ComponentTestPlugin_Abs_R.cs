@@ -41,6 +41,8 @@ namespace Palmtree.Math.Test.Plugin.Rtnl
             var w = u.Abs();
             return (new RationalDataItem(w));
         }
+
+        public override int Order => 102;
     }
 }
 

@@ -22,12 +22,10 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_LOCK_H
 #define PMC_LOCK_H
-
 
 #include "pmc_uint.h"
 

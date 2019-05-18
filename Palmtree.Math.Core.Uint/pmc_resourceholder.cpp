@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 #include "pmc_resourceholder.h"
 #include "pmc_exception.h"
 #include "pmc_threadcontext.h"
@@ -30,7 +29,6 @@
 #include "pmc_uint_internal.h"
 #include "pmc_inline_func.h"
 #include "pmc___unit_type_array_chainbuffertag.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {
@@ -94,9 +92,9 @@ namespace Palmtree::Math::Core::Internal
      wchar_t * ResourceHolder::AllocateString(size_t count)
      {
          Lock lock_obj;
-         __UNIT_TYPE word_count;
+         __UNIT_TYPE word_count = _DIVIDE_CEILING_UNIT(count * sizeof(wchar_t), __UNIT_TYPE_BYTE_COUNT);
          __UNIT_TYPE check_code;
-         __UNIT_TYPE* buffer = Palmtree::Math::Core::Internal::__AllocateBlock(_tc, count * sizeof(wchar_t) * 8, &word_count, &check_code);
+         __UNIT_TYPE* buffer = Palmtree::Math::Core::Internal::__AllocateBlock(_tc, word_count, &check_code);
          __ChainBufferTag* tag = new ____UNIT_TYPE_Array_ChainBufferTag(_tc, buffer, word_count, check_code);
          _tc.IncrementTypeBAllocationCount();
          LinkTag(tag);

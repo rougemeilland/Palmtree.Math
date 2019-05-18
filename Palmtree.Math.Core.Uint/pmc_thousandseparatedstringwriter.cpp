@@ -22,9 +22,7 @@
  * THE SOFTWARE.
  */
 
-
 #include "pmc_thousandseparatedstringwriter.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

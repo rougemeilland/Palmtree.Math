@@ -22,16 +22,13 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef ____UNIT_TYPE_Array_ChainBufferTag_h
 #define ____UNIT_TYPE_Array_ChainBufferTag_h
 
-
 #include "pmc_resourceholder.h"
 #include "pmc_uint_internal.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

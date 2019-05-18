@@ -22,16 +22,13 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_TOSTRING_FORMATTER_TYPE_X_H
 #define PMC_TOSTRING_FORMATTER_TYPE_X_H
 
-
 #include "pmc_uint_internal.h"
 #include "pmc_stringio.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

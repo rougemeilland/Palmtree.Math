@@ -43,6 +43,8 @@ namespace Palmtree.Math.Test.Plugin.Uint
             var r = v.ModPow(e, m);
             return (new UBigIntDataItem(r));
         }
+
+        public override int Order => 10;
     }
 }
 

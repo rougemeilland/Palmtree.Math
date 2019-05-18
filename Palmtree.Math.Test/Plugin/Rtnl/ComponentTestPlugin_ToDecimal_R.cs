@@ -41,6 +41,8 @@ namespace Palmtree.Math.Test.Plugin.Rtnl
             var w = u.ToDecimal();
             return (new DecimalDataItem(w));
         }
+
+        public override int Order => 102;
     }
 }
 

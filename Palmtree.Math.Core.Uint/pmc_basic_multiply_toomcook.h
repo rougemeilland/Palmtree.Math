@@ -1,4 +1,4 @@
-﻿/*
+/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -22,30 +22,36 @@
  * THE SOFTWARE.
  */
 
+#pragma once
 
-#include "pmc_multiply_schonHagestrassen.h"
-#include "pmc_exception.h"
-#include "pmc_inline_func.h"
+#ifndef PMC_MULTIPLY_TOOMCOOKMULTIPLICATIONENGINE_H
+#define PMC_MULTIPLY_TOOMCOOKMULTIPLICATIONENGINE_H
+
+#include "pmc_uint_internal.h"
 
 namespace Palmtree::Math::Core::Internal
 {
 
-    SchonHageStrassenMultiplicationEngine::SchonHageStrassenMultiplicationEngine(bool fixed, KaratsubaMultiplicationEngine& karatsuba_engine)
-        : _fixed(fixed), _karatsuba_engine(karatsuba_engine)
-    {
-    }
+    class ClassicMultiplicationEngine;
+    class KaratsubaMultiplicationEngine;
+    class _UBASIC_T;
 
-
-    SchonHageStrassenMultiplicationEngine::~SchonHageStrassenMultiplicationEngine()
+    class ToomCookMultiplicationEngine
     {
-    }
+    private:
+        bool _fixed;
+        ClassicMultiplicationEngine& _classic_engine;
+        KaratsubaMultiplicationEngine& _karatsuba_engine;
 
-    void SchonHageStrassenMultiplicationEngine::Multiply_UX_UX(ThreadContext& tc, __UNIT_TYPE * u_buf, __UNIT_TYPE u_count, __UNIT_TYPE * v_buf, __UNIT_TYPE v_count, __UNIT_TYPE * w_buf)
-    {
-        throw InternalErrorException(L"未実装です。", L"pmc_multiply_schonHagestrassen.cpp;SchonHageStrassenMultiplicationEngine::Multiply_UX_UX;1");
-    }
+    public:
+        ToomCookMultiplicationEngine(bool fixed, KaratsubaMultiplicationEngine& karatsuba_engine, ClassicMultiplicationEngine& classic_engine);
+        ~ToomCookMultiplicationEngine();
+        void Multiply_UX_UX(ThreadContext& tc, _UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T& w_buf);
+    };
 
 }
+
+#endif
 
 
 /*

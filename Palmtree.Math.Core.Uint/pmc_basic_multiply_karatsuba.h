@@ -1,4 +1,4 @@
-/*
+﻿/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -22,23 +22,38 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
-#ifndef PMC_INVERSETABLE_H
-#define PMC_INVERSETABLE_H
 
-#include "pmc.h"
+#ifndef PMC_MULTIPLY_KARATSUBA_H
+#define PMC_MULTIPLY_KARATSUBA_H
+
+#include "pmc_uint_internal.h"
 
 namespace Palmtree::Math::Core::Internal
 {
+    class ResourceHolderUINT;
+    class ClassicMultiplicationEngine;
+    class _UBASIC_T;
+    class _BASIC_T;
+    class BasicOperatorEngine;
 
-#ifdef _M_IX86
-#define INVERSE_3_MOD_UNIT_TYPE (2863311531U)
-#elif defined(_M_X64)
-#define INVERSE_3_MOD_UNIT_TYPE (12297829382473034411U)
-#else
-#error unknown platform
-#endif
+    class KaratsubaMultiplicationEngine
+    {
+    private:
+        bool _fixed;
+        ClassicMultiplicationEngine& _classic_engine;
+        BasicOperatorEngine& _basic_ep;
+
+    public:
+        KaratsubaMultiplicationEngine(bool fixed, ClassicMultiplicationEngine& classic_engine, BasicOperatorEngine& basic_ep);
+        ~KaratsubaMultiplicationEngine();
+        void Multiply_UX_UX(ThreadContext& tc, _UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T& w_buf);
+
+    private:
+        bool CalculateTempBufferSize(__UNIT_TYPE u_buf_count, __UNIT_TYPE v_buf_count, __UNIT_TYPE& buffer_size);
+        void Multiply_UX_UX_Karatsuba(ResourceHolderUINT& root, _UBASIC_T temp_buf, __UNIT_TYPE current_temp_buf_index, _UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T& w_buf);
+        void Multiply_UX_UX_Karatsuba(ResourceHolderUINT& root, _UBASIC_T temp_buf, __UNIT_TYPE current_temp_buf_index, _BASIC_T u_buf, _BASIC_T v_buf, _BASIC_T& w_buf);
+    };
 
 }
 

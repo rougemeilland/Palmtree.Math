@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_rtnl_internal.h"
 #include "pmc_resourceholder_rtnl.h"
@@ -40,7 +39,6 @@
 #error unknown platform
 #endif
 #pragma endregion
-
 
 namespace Palmtree::Math::Core::Internal
 {

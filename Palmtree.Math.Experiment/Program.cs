@@ -1,4 +1,5 @@
 ﻿using System;
+using Palmtree.Math;
 using System.Globalization;
 using System.Linq;
 using System.Numerics;
@@ -9,68 +10,80 @@ namespace Palmtree.Math.Experiment
     {
         static void Main(string[] args)
         {
-            //ModPowの障害調査コード();
 
-            //DivRemの障害調査コード();
+            var x64 = ((BigInteger)UInt64.MaxValue + 1) / 6 - 1;
+            if ((x64 + 1) * 6 > UInt64.MaxValue)
+                throw new ApplicationException();
 
-            // 数字の書式に含まれる各種記号の文字数_通貨記号は複数文字のカルチャあり_正負符号と小数点と3桁区切りカンマとパーセント記号パーミル記号は2文字以上のカルチャはない();
+            var x32 = ((BigInteger)UInt32.MaxValue + 1) / 6 - 1;
+            if ((x32 + 1) * 6 > UInt32.MaxValue)
+                throw new ApplicationException();
 
-            //Currency_Number_PercentによってDecimalSeparatorあるいはGeoupSeparatorが異なるカルチャはいくつか存在する();
-
-            var source = Enumerable.Range(1, 32)
-                         .SelectMany(n => new[]
-                         {
-                             new { value = (1UL << n) - 1, bit_length = n },
-                             new { value = 1UL << n, bit_length = n + 1 },
-                         });
-            var log10_2 = System.Math.Log10(2);
-            Func<int, int> ビット長の算出フィルタ = ビット長の差 => ビット長の差 > 1 ? ビット長の差 - 1 : ビット長の差 < -1 ? ビット長の差 + 1 : ビット長の差; 
-            var query = source
-                        .SelectMany(item1 => source, (item1, item2) => new
-                        {
-                            numerator = item1.value,
-                            denominator = item2.value,
-                            ビット長の差 = ビット長の算出フィルタ(item1.bit_length - item2.bit_length),
-                            Log10の真値 = System.Math.Log10((double)item1.value / item2.value),
-                        })
-                        .Select(item => new
-                        {
-                            item.numerator,
-                            item.denominator,
-                            item.ビット長の差,
-                            Log10の近似値 = item.ビット長の差 * log10_2,
-                            item.Log10の真値, 
-                        })
-                        .Select(item => new
-                        {
-                            item.numerator,
-                            item.denominator,
-                            item.ビット長の差,
-                            item.Log10の近似値,
-                            item.Log10の真値,
-                            Truncate_Log10_近似値 = System.Math.Truncate(item.Log10の近似値),
-                            Truncate_Log10_真値 = System.Math.Truncate(item.Log10の真値),
-                        })
-                        .Select(item => new
-                        {
-                            item.numerator,
-                            item.denominator,
-                            item.ビット長の差,
-                            item.Log10の近似値,
-                            item.Log10の真値,
-                            item.Truncate_Log10_近似値,
-                            item.Truncate_Log10_真値,
-                            近似値の絶対値が真値を超えている = System.Math.Abs(item.Truncate_Log10_近似値) > System.Math.Abs(item.Truncate_Log10_真値),
-                        })
-                        .OrderBy(item => item.近似値の絶対値が真値を超えている)
-                        .ThenBy(item => item.Log10の真値);
-            foreach (var item in query)
-            {
-                Console.WriteLine(string.Format("numerator={0}, denominator={1}, 近似値={2}, 真値={3}, 結果={4}",
-                                                item.numerator, item.denominator, item.Truncate_Log10_近似値, item.Truncate_Log10_真値, item.近似値の絶対値が真値を超えている ? "NG" : "OK"));
-            }
+            Console.WriteLine(string.Format("{0} (0x{0:x16}), {1} (0x{1:x8})", x64, x32));
 
             Console.ReadLine();
+        }
+
+        private static BigInteger ToomCook法による乗算(int N, BigInteger u, BigInteger v)
+        {
+            var mask = (BigInteger.One << N) - 1;
+            var u0 = u & mask;
+            var u1 = (u >> N) & mask;
+            var u2 = (u >> (N * 2)) & mask;
+            var v0 = v & mask;
+            var v1 = (v >> N) & mask;
+            var v2 = (v >> (N * 2)) & mask;
+
+            var U_infinity = u2;
+            var U_2 = 4 * u2 + 2 * u1 + u0;
+            var U_1 = u2 + u1 + u0;
+            var U_0 = u0;
+            var U_minus1 = u2 - u1 + u0;
+
+            var V_infinity = v2;
+            var V_2 = 4 * v2 + 2 * v1 + v0;
+            var V_1 = v2 + v1 + v0;
+            var V_0 = v0;
+            var V_minus1 = v2 - v1 + v0;
+
+            var W_infinity = U_infinity * V_infinity;
+            var W_2 = U_2 * V_2;
+            var W_1 = U_1 * V_1;
+            var W_0 = U_0 * V_0;
+            var W_minus1 = U_minus1 * V_minus1;
+
+            //
+            // 5つの整数 w0, w1, w2, w3, w4 があって以下が成り立つとする
+            //
+            //W_infinity == w4;
+            //W_2 = 16 * w4 + 8 * w3 + 4 * w2 + 2 * w1 + w0;
+            //W_1 = w4 + w3 + w2 + w1 + w0;
+            //W_0 = w0;
+            //W_minus1 = w4 - w3 + w2 - w1 + w0;
+            //
+            // この連立方程式を行列によって解く
+            // |W_infinity|   |  1  0  0  0  0 | |w4|
+            // |W_2       |   | 16  8  4  2  1 | |w3|
+            // |W_1       | = |  1  1  1  1  1 | |w2|
+            // |W_0       |   |  0  0  0  0  1 | |w1|
+            // |W_minus1  |   |  1 -1  1 -1  1 | |w0|
+            //
+            // 逆行列を計算することにより以下に変形できる
+            // |w4|   |  1     0     0     0     0 | |W_infinity|
+            // |w3|   | -2   1/6  -1/2   1/2  -1/6 | |W_2       |
+            // |w2| = | -1     0   1/2    -1   1/2 | |W_1       |
+            // |w1|   |  2  -1/6     1  -1/2  -1/3 | |W_0       |
+            // |w0|   |  0     0     0     1     0 | |W_minus1  |
+            //
+
+            var w4 = W_infinity;
+            var w3 = (-12 * W_infinity + W_2 - 3 * W_1 + 3 * W_0 - W_minus1).DivideExactly(6);
+            var w2 = (-2 * W_infinity + W_1 - 2 * W_0 + W_minus1).DivideExactly(2);
+            var w1 = (12 * W_infinity - W_2 + 6 * W_1 - 3 * W_0 - 2 * W_minus1).DivideExactly(6);
+            var w0 = W_0;
+
+            var actual_w = (w4 << (N * 4)) + (w3 << (N * 3)) + (w2 << (N * 2)) + (w1 << N) + w0;
+            return (actual_w);
         }
 
         private static void Currency_Number_PercentによってDecimalSeparatorあるいはGeoupSeparatorが異なるカルチャはいくつか存在する()

@@ -22,17 +22,15 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
+
 #pragma warning(disable:4067)
 
 #ifndef PMC_RESOURCEHOLDER_H
 #define PMC_RESOURCEHOLDER_H
 
-
 #include "pmc_uint.h"
 #include "pmc_bidirectionallistheader.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

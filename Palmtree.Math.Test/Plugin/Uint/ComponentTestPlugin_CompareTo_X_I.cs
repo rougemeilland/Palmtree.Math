@@ -42,6 +42,8 @@ namespace Palmtree.Math.Test.Plugin.Uint
             var w = u.CompareTo(v);
             return (new Int32DataItem(w));
         }
+
+        public override int Order => 1;
     }
 }
 

@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_H
@@ -31,11 +30,8 @@
 #ifdef __GNUC__
 #include <stdint.h>
 #endif
-
-#ifdef __cplusplus
 namespace Palmtree::Math::Core::Internal
 {
-#endif
 
 #pragma region マクロの定義
 
@@ -172,9 +168,7 @@ namespace Palmtree::Math::Core::Internal
 #pragma endregion
 
 
-#ifdef __cplusplus
 }
-#endif
 
 #endif
 
@@ -182,4 +176,3 @@ namespace Palmtree::Math::Core::Internal
 /*
  * END OF FILE
  */
-

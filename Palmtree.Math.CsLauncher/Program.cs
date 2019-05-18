@@ -15,10 +15,21 @@ namespace Palmtree.Math.CsLauncher
 
         static void Main(string[] args)
         {
-            var u = 5302428712241725440UL;
-            var v = UBigInt.FromByteArray(new byte[] { 0x01, 0x05, 0xff, 0xe3, 0x0b, 0x54, 0x02 });
-            var w = u.DivideExactly(v);
+            //var v = UBigInt.FromByteArray(new byte[] { 0x01, 0x01, 0x01 });
+            //var v = UBigInt.FromByteArray(new byte[] { 0x01, 0x04, 0xd2, 0x02, 0x96, 0x49 });
+            //var v = UBigInt.FromByteArray(new byte[] { 0x01, 0x05, 0x00, 0x00, 0x00, 0x00, 0x01 });
+            //var u = UBigInt.FromByteArray(new byte[] { 0x01, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 });
+            //var v = UBigInt.FromByteArray(new byte[] { 0x01, 0x09, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 });
+            //var u = BigInt.FromByteArray(new byte[] { 0x03, 0x05, 0x00, 0x00, 0x00, 0x00, 0x01 });
+            //var v = 1UL;
+            //var u = 4294967296UL;
+            //var u = 1234567890U;
+            //var u = 4294967296UL;
+            //var u = 12345678901234567890UL;
 
+            var u = UBigInt.FromByteArray(new byte[] { 0x01, 0x05, 0x00, 0x00, 0x00, 0x00, 0x01 });
+            var v = BigInt.FromByteArray(new byte[] { 0x03, 0x05, 0x00, 0x00, 0x00, 0x00, 0x01 });
+            var w = u.BitwiseOr(v);
 
             Console.ReadLine();
         }

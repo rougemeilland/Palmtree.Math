@@ -22,11 +22,9 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_resourceholder_rtnl.h"
 #include "pmc_rtnl_internal.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

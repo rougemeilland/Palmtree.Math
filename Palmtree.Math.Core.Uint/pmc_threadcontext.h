@@ -22,12 +22,10 @@
  * THE SOFTWARE.
  */
 
-
 #pragma once
 
 #ifndef PMC_THREAD_CONTEXT_H
 #define PMC_THREAD_CONTEXT_H
-
 
 #include "pmc_uint.h"
 

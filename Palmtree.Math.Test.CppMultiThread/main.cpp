@@ -16,7 +16,6 @@
 #include "pmc_threadcontext.h"
 
 #define countof(x)  (sizeof(x)/sizeof(*(x)))
-
 namespace Palmtree::Math::Core::Internal
 {
     unsigned char data_item_0[] = { 0x00, 0x00 };

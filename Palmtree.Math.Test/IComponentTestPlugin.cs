@@ -31,6 +31,7 @@ namespace Palmtree.Math.Test
     {
         string PluginName { get; }
         string DataFileID { get; }
+        int Order { get; }
         long DataFileSize { get; }
         IEnumerable<IComponentTestItem> TestItems { get; }
     }

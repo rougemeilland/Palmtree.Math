@@ -40,6 +40,8 @@ namespace Palmtree.Math.Test.Plugin.Sint
             var w = u.Remainder(v);
             return (new Int64DataItem(w));
         }
+
+        public override int Order => 101;
     }
 }
 

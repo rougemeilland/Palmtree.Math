@@ -43,6 +43,8 @@ namespace Palmtree.Math.Test.Plugin.Uint
             var r = n.ToString(f, c);
             return (new XStringDataItem(r));
         }
+
+        public override int Order => 10;
     }
 }
 

@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 #include "pmc_uint_internal.h"
 #include "pmc_threadcontext.h"
 

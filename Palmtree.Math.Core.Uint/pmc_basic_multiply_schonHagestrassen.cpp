@@ -22,38 +22,30 @@
  * THE SOFTWARE.
  */
 
-
-#pragma once
-#ifndef PMC_MULTIPLY_KARATSUBA_H
-#define PMC_MULTIPLY_KARATSUBA_H
-
-#include "pmc_uint_internal.h"
+#include "pmc_basic_multiply_schonHagestrassen.h"
+#include "pmc_basic_multiply_toomcook.h"
+#include "pmc_basic.h"
+#include "pmc_exception.h"
+#include "pmc_inline_func.h"
 
 namespace Palmtree::Math::Core::Internal
 {
-    class ResourceHolderUINT;
-    class ClassicMultiplicationEngine;
 
-    class KaratsubaMultiplicationEngine
+    SchonHageStrassenMultiplicationEngine::SchonHageStrassenMultiplicationEngine(bool fixed, ToomCookMultiplicationEngine & toomcook_engine, ClassicMultiplicationEngine & classic_engine)
+        : _fixed(fixed), _toomcook_engine(toomcook_engine), _classic_engine(classic_engine)
     {
-    private:
-        bool _fixed;
-        ClassicMultiplicationEngine& _classic_engine;
+    }
 
-    public:
-        KaratsubaMultiplicationEngine(bool fixed, ClassicMultiplicationEngine& classic_engine);
-        ~KaratsubaMultiplicationEngine();
-        void Multiply_UX_UX(ThreadContext& tc, __UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* w_buf);
+    SchonHageStrassenMultiplicationEngine::~SchonHageStrassenMultiplicationEngine()
+    {
+    }
 
-    private:
-        void Multiply_UX_UX_Karatsuba1(ThreadContext& tc, _UINT32_T log2_n, __UNIT_TYPE * u_buf, __UNIT_TYPE * v_buf, __UNIT_TYPE * w_buf);
-        void Multiply_UX_UX_Karatsuba2(ThreadContext& tc, _UINT32_T log2_n, __UNIT_TYPE * u_buf, __UNIT_TYPE * v_buf, __UNIT_TYPE * w_buf);
-        void Multiply_UX_UX_Karatsuba3(ResourceHolderUINT& root, _UINT32_T log2_n, __UNIT_TYPE* temp_buf, __UNIT_TYPE* current_temp_buf_ptr, __UNIT_TYPE * u_buf, __UNIT_TYPE * v_buf, __UNIT_TYPE * w_buf);
-    };
+    void SchonHageStrassenMultiplicationEngine::Multiply_UX_UX(ThreadContext & tc, _UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T & w_buf)
+    {
+        _toomcook_engine.Multiply_UX_UX(tc, u_buf, v_buf, w_buf);
+    }
 
 }
-
-#endif
 
 
 /*

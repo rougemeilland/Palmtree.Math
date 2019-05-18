@@ -22,11 +22,9 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_sint_internal.h"
 #include "pmc_resourceholder_sint.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {

@@ -40,6 +40,8 @@ namespace Palmtree.Math.Test.Plugin.Sint
             var w = u.GreatestCommonDivisor(v);
             return (new UBigIntDataItem(w));
         }
+
+        public override int Order => 101;
     }
 }
 

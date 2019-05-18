@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-
 #include <windows.h>
 #include "pmc_uint_internal.h"
 #include "pmc_resourceholder_uint.h"
@@ -36,7 +35,6 @@
 #include "pmc_tostringformattertypen.h"
 #include "pmc_tostringformattertypep.h"
 #include "pmc_tostringformattertypex.h"
-
 
 namespace Palmtree::Math::Core::Internal
 {
