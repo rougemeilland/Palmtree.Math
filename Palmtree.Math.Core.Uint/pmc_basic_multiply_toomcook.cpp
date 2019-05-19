@@ -27,10 +27,10 @@
 #include "pmc_basic.h"
 #include "pmc_exception.h"
 
-namespace Palmtree::Math::Core::Internal
+namespace Palmtree::Math::Core::Internal::Multiply::ToomCook
 {
 
-    ToomCookMultiplicationEngine::ToomCookMultiplicationEngine(bool fixed, KaratsubaMultiplicationEngine & karatsuba_engine, ClassicMultiplicationEngine & classic_engine)
+    ToomCookMultiplicationEngine::ToomCookMultiplicationEngine(bool fixed, Multiply::Karatsuba::KaratsubaMultiplicationEngine & karatsuba_engine, Multiply::Classic::ClassicMultiplicationEngine & classic_engine)
         : _fixed(fixed), _karatsuba_engine(karatsuba_engine), _classic_engine(classic_engine)
     {
     }

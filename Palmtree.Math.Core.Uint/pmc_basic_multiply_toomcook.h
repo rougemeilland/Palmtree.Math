@@ -31,20 +31,31 @@
 
 namespace Palmtree::Math::Core::Internal
 {
-
-    class ClassicMultiplicationEngine;
-    class KaratsubaMultiplicationEngine;
     class _UBASIC_T;
+}
+
+namespace Palmtree::Math::Core::Internal::Multiply::Karatsuba
+{
+    class KaratsubaMultiplicationEngine;
+}
+
+namespace Palmtree::Math::Core::Internal::Multiply::Classic
+{
+    class ClassicMultiplicationEngine;
+}
+
+namespace Palmtree::Math::Core::Internal::Multiply::ToomCook
+{
 
     class ToomCookMultiplicationEngine
     {
     private:
         bool _fixed;
-        ClassicMultiplicationEngine& _classic_engine;
-        KaratsubaMultiplicationEngine& _karatsuba_engine;
+        Karatsuba::KaratsubaMultiplicationEngine& _karatsuba_engine;
+        Classic::ClassicMultiplicationEngine& _classic_engine;
 
     public:
-        ToomCookMultiplicationEngine(bool fixed, KaratsubaMultiplicationEngine& karatsuba_engine, ClassicMultiplicationEngine& classic_engine);
+        ToomCookMultiplicationEngine(bool fixed, Karatsuba::KaratsubaMultiplicationEngine& karatsuba_engine, Classic::ClassicMultiplicationEngine& classic_engine);
         ~ToomCookMultiplicationEngine();
         void Multiply_UX_UX(ThreadContext& tc, _UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T& w_buf);
     };

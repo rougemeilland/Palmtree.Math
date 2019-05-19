@@ -169,41 +169,6 @@ namespace Palmtree::Math::Core::Internal
 
 #pragma endregion
 
-#pragma region __UNIT_TYPE* ベースの関数の宣言
-
-#if false
-    // 桁上がりを配列に反映する
-    extern bool DoCarry_UNIT(__CARRY_T c, __UNIT_TYPE* up, __UNIT_TYPE u_count);
-    extern bool DoCarry_UNIT(__CARRY_T c, __UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE* wp, __UNIT_TYPE w_count);
-
-    // 桁借りを配列に反映する
-    extern bool DoBorrow_UNIT(__BORROW_T c, __UNIT_TYPE* up, __UNIT_TYPE u_count);
-    extern bool DoBorrow_UNIT(__BORROW_T c, __UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE* wp, __UNIT_TYPE w_count);
-
-    // 多倍長整数の減算を行う。u と v はどちらも 0 であってはならない。また、x のワード長は y のワード長以上でなければならない。
-    extern void Subtruct_Imp(__UNIT_TYPE* up, __UNIT_TYPE u_count, __UNIT_TYPE* vp, __UNIT_TYPE v_count, __UNIT_TYPE* wp, __UNIT_TYPE w_count);
-
-    // 多倍長整数の乗算を行う。u と v はどちらも 0 であってはならない。
-    extern void Multiply_UX_UX_Imp(ThreadContext& tc, PMC_MULTIPLICATION_METHOD_CODE method, __UNIT_TYPE* u, __UNIT_TYPE u_count, __UNIT_TYPE* v, __UNIT_TYPE v_count, __UNIT_TYPE* w);
-
-    // 多倍長同士の除算を行う。work_v_buf が指す領域は v_count ワード以上の大きさが必要である。q_buf が指す領域は <uのビット数> - <vのビット数> + 1 + <1ワード分のビット数> 以上の大きさが必要である。r_buf が指す領域は u_count + 1 ワード以上の大きさが必要である。q_buf に nullptr が与えられた場合は商を出力しない。
-    extern void DivRem_UX_UX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_count, __UNIT_TYPE* work_v_buf, __UNIT_TYPE* q_buf, __UNIT_TYPE q_buf_count, __UNIT_TYPE* r_buf, __UNIT_TYPE r_buf_count);
-
-    // 乗算と減算を行う
-    extern bool MultiplySubtructArray_UNIT(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_len, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_len, __UNIT_TYPE q_index, __UNIT_TYPE q_);
-
-    // 多倍長整数の大小比較を行う。
-    extern SIGN_T Compare_Imp(__UNIT_TYPE* u, __UNIT_TYPE* v, __UNIT_TYPE count);
-
-    // 指定されたワード列を右にシフトして指定された領域に格納する。シフト数は 0 であってはならない。
-    extern void RightShift_Imp(__UNIT_TYPE* p, __UNIT_TYPE p_word_count, __UNIT_TYPE n, __UNIT_TYPE* o, bool padding_zero);
-
-    // 指定されたワード列を左にシフトして指定された領域に格納する。シフト数は 0 であってはならない。
-    extern void LeftShift_Imp(__UNIT_TYPE* p, __UNIT_TYPE p_word_count, __UNIT_TYPE n, __UNIT_TYPE* o, bool padding_zero);
-#endif
-
-#pragma endregion
-
 #pragma region NUMBER_OBJECT_UINT* ベースの関数
 
     // 符号なし 32bit 整数 x から NUMBER_OBJECT_UINT 構造体を構築し、そのポインタを o が指す領域に格納して返す。x は 0 であってはならない。

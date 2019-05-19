@@ -31,17 +31,20 @@
 
 namespace Palmtree::Math::Core::Internal
 {
-
     class _UBASIC_T;
+}
+
+namespace Palmtree::Math::Core::Internal::Multiply::Classic
+{
 
     class ClassicMultiplicationEngine
     {
     public:
         ClassicMultiplicationEngine();
         ~ClassicMultiplicationEngine();
-        void Multiply_UX_1W(_UBASIC_T u_buf, __UNIT_TYPE v, _UBASIC_T& w_buf);
-        void Multiply_UX_2W(_UBASIC_T u_buf, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, _UBASIC_T& w_buf);
-        void Multiply_UX_UX(_UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T& w_buf);
+        void Multiply_UX_1W(_UBASIC_T u_buf, __UNIT_TYPE v, _UBASIC_T w_buf);
+        void Multiply_UX_2W(_UBASIC_T u_buf, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, _UBASIC_T w_buf);
+        void Multiply_UX_UX(_UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T w_buf);
     };
 
 }

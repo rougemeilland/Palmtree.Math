@@ -28,10 +28,10 @@
 #include "pmc_exception.h"
 #include "pmc_inline_func.h"
 
-namespace Palmtree::Math::Core::Internal
+namespace Palmtree::Math::Core::Internal::Multiply::SchonHageStrassen
 {
 
-    SchonHageStrassenMultiplicationEngine::SchonHageStrassenMultiplicationEngine(bool fixed, ToomCookMultiplicationEngine & toomcook_engine, ClassicMultiplicationEngine & classic_engine)
+    SchonHageStrassenMultiplicationEngine::SchonHageStrassenMultiplicationEngine(bool fixed, Multiply::ToomCook::ToomCookMultiplicationEngine & toomcook_engine, Multiply::Classic::ClassicMultiplicationEngine & classic_engine)
         : _fixed(fixed), _toomcook_engine(toomcook_engine), _classic_engine(classic_engine)
     {
     }

@@ -107,6 +107,11 @@ namespace Palmtree::Math::Core::Internal
             _ZERO_MEMORY_UNIT(BLOCK, BLOCK_COUNT);
         }
 
+        void Fill(__UNIT_TYPE data)
+        {
+            _FILL_MEMORY_UNIT(BLOCK, data, BLOCK_COUNT);
+        }
+
         _BASIC_T ToSigned() const;
         __UNIT_TYPE TZCount() const;
     };

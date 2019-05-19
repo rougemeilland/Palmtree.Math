@@ -28,9 +28,11 @@ namespace Palmtree.Math.CsLauncher
             //var u = 12345678901234567890UL;
 
             var u = UBigInt.FromByteArray(new byte[] { 0x01, 0x05, 0x00, 0x00, 0x00, 0x00, 0x01 });
-            var v = BigInt.FromByteArray(new byte[] { 0x03, 0x05, 0x00, 0x00, 0x00, 0x00, 0x01 });
-            var w = u.BitwiseOr(v);
-
+            var v = UBigInt.FromByteArray(new byte[] { 0x01, 0x05, 0x00, 0x00, 0x00, 0x00, 0x01 });
+            var w1 = u.Multiply(MultiplicationMethod.Karatsuba, v);
+            var w2 = u.Multiply(MultiplicationMethod.Auto, v);
+            if (w1 != w2)
+                throw new ApplicationException();
             Console.ReadLine();
         }
 

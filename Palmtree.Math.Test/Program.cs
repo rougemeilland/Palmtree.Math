@@ -174,7 +174,7 @@ namespace Palmtree.Math.Test
 
         private static bool PluginFilter(IComponentTestPlugin plugin)
         {
-            //return (plugin.PluginName.StartsWith("rtnl."));
+            //return (plugin.PluginName.Contains("karatsuba"));
             return (true);
         }
 

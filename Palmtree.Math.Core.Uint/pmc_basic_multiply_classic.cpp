@@ -26,7 +26,7 @@
 #include "pmc_basic.h"
 #include "pmc_inline_func.h"
 
-namespace Palmtree::Math::Core::Internal
+namespace Palmtree::Math::Core::Internal::Multiply::Classic
 {
 
     __inline static __UNIT_TYPE _MULTIPLY_DIGIT_UNIT(__UNIT_TYPE k, __UNIT_TYPE* up, __UNIT_TYPE v, __UNIT_TYPE* wp)
@@ -353,7 +353,7 @@ namespace Palmtree::Math::Core::Internal
     {
     }
 
-    void ClassicMultiplicationEngine::Multiply_UX_1W(_UBASIC_T u_buf, __UNIT_TYPE v, _UBASIC_T & w_buf)
+    void ClassicMultiplicationEngine::Multiply_UX_1W(_UBASIC_T u_buf, __UNIT_TYPE v, _UBASIC_T w_buf)
     {
 #ifdef _DEBUG
         if (u_buf.BLOCK_COUNT == 0)
@@ -365,7 +365,7 @@ namespace Palmtree::Math::Core::Internal
         w_buf.Region(u_buf.BLOCK_COUNT + 1).Clear();
     }
 
-    void ClassicMultiplicationEngine::Multiply_UX_2W(_UBASIC_T u_buf, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, _UBASIC_T & w_buf)
+    void ClassicMultiplicationEngine::Multiply_UX_2W(_UBASIC_T u_buf, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, _UBASIC_T w_buf)
     {
 #ifdef _DEBUG
         if (u_buf.BLOCK_COUNT == 0)
@@ -378,7 +378,7 @@ namespace Palmtree::Math::Core::Internal
         Multiply_Add_WORD(u_buf, v_hi, w_buf.Region(1, w_buf.BLOCK_COUNT - 1));
     }
 
-    void ClassicMultiplicationEngine::Multiply_UX_UX(_UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T & w_buf)
+    void ClassicMultiplicationEngine::Multiply_UX_UX(_UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T w_buf)
     {
 #ifdef _DEBUG
         if (u_buf.BLOCK_COUNT == 0)

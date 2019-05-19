@@ -31,28 +31,36 @@
 
 namespace Palmtree::Math::Core::Internal
 {
+    class _UBASIC_T;
     class ResourceHolderUINT;
-    class ClassicMultiplicationEngine;
     class _UBASIC_T;
     class _BASIC_T;
     class BasicOperatorEngine;
+}
+
+namespace Palmtree::Math::Core::Internal::Multiply::Classic
+{
+    class ClassicMultiplicationEngine;
+}
+
+namespace Palmtree::Math::Core::Internal::Multiply::Karatsuba
+{
 
     class KaratsubaMultiplicationEngine
     {
     private:
         bool _fixed;
-        ClassicMultiplicationEngine& _classic_engine;
+        Classic::ClassicMultiplicationEngine& _classic_engine;
         BasicOperatorEngine& _basic_ep;
 
     public:
-        KaratsubaMultiplicationEngine(bool fixed, ClassicMultiplicationEngine& classic_engine, BasicOperatorEngine& basic_ep);
+        KaratsubaMultiplicationEngine(bool fixed, Classic::ClassicMultiplicationEngine& classic_engine, BasicOperatorEngine& basic_ep);
         ~KaratsubaMultiplicationEngine();
         void Multiply_UX_UX(ThreadContext& tc, _UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T& w_buf);
 
     private:
         bool CalculateTempBufferSize(__UNIT_TYPE u_buf_count, __UNIT_TYPE v_buf_count, __UNIT_TYPE& buffer_size);
-        void Multiply_UX_UX_Karatsuba(ResourceHolderUINT& root, _UBASIC_T temp_buf, __UNIT_TYPE current_temp_buf_index, _UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T& w_buf);
-        void Multiply_UX_UX_Karatsuba(ResourceHolderUINT& root, _UBASIC_T temp_buf, __UNIT_TYPE current_temp_buf_index, _BASIC_T u_buf, _BASIC_T v_buf, _BASIC_T& w_buf);
+        void Multiply_UX_UX_Karatsuba(__UNIT_TYPE* current_temp_buf_ptr, __UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_count, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count);
     };
 
 }

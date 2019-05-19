@@ -91,11 +91,12 @@ namespace Palmtree::Math::Core::Internal
                     // かつそれでも桁借りを行う必要がある場合
 
                     // 減算結果が負になってしまったので呼び出し元に通知する。
+                    w_buf.Region(wp - w_buf.BLOCK).Fill((__UNIT_TYPE)-1);
                     return (true);
                 }
 
                 // xの最上位に達してしまった場合はいずれにしろループを中断して正常復帰する。
-
+                w_buf.Region(wp - w_buf.BLOCK).Clear();
                 return (false);
             }
             else if (c)
@@ -118,6 +119,7 @@ namespace Palmtree::Math::Core::Internal
                     --u_count;
                     --w_count;
                 }
+                w_buf.Region(wp - w_buf.BLOCK).Clear();
                 return (false);
             }
         }

@@ -32,13 +32,13 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    static ClassicMultiplicationEngine* _engine_classic;
-    static KaratsubaMultiplicationEngine* _engine_karatsuba;
-    static KaratsubaMultiplicationEngine* _fixed_engine_karatsuba;
-    static ToomCookMultiplicationEngine* _engine_toomcook;
-    static ToomCookMultiplicationEngine* _fixed_engine_toomcook;
-    static SchonHageStrassenMultiplicationEngine* _engine_schonHagestrassen;
-    static SchonHageStrassenMultiplicationEngine* _fixed_engine_schonHagestrassen;
+    static Multiply::Classic::ClassicMultiplicationEngine* _engine_classic;
+    static Multiply::Karatsuba ::KaratsubaMultiplicationEngine* _engine_karatsuba;
+    static Multiply::Karatsuba::KaratsubaMultiplicationEngine* _fixed_engine_karatsuba;
+    static Multiply::ToomCook::ToomCookMultiplicationEngine* _engine_toomcook;
+    static Multiply::ToomCook::ToomCookMultiplicationEngine* _fixed_engine_toomcook;
+    static Multiply::SchonHageStrassen::SchonHageStrassenMultiplicationEngine* _engine_schonHagestrassen;
+    static Multiply::SchonHageStrassen::SchonHageStrassenMultiplicationEngine* _fixed_engine_schonHagestrassen;
 
     void BasicOperatorEngine::Multiply(_UBASIC_T u_buf, __UNIT_TYPE v, _UBASIC_T w_buf)
     {
@@ -89,12 +89,10 @@ namespace Palmtree::Math::Core::Internal
             case PMC_MULTIPLICATION_METHOD_CLASSIC:
                 return (_engine_classic->Multiply_UX_UX(u_buf, v_buf, w_buf));
             case PMC_MULTIPLICATION_METHOD_KARATSUBA:
-                return (_engine_karatsuba->Multiply_UX_UX(tc, u_buf, v_buf, w_buf));
-            case PMC_MULTIPLICATION_METHOD_FIXED_KARATSUBA:
                 return (_fixed_engine_karatsuba->Multiply_UX_UX(tc, u_buf, v_buf, w_buf));
+            case PMC_MULTIPLICATION_METHOD_TOOMCOOK:
+                return (_fixed_engine_toomcook->Multiply_UX_UX(tc, u_buf, v_buf, w_buf));
             case PMC_MULTIPLICATION_METHOD_SCHONSTRASSEN:
-                return (_engine_schonHagestrassen->Multiply_UX_UX(tc, u_buf, v_buf, w_buf));
-            case PMC_MULTIPLICATION_METHOD_FIXED_SCHONSTRASSEN:
                 return (_fixed_engine_schonHagestrassen->Multiply_UX_UX(tc, u_buf, v_buf, w_buf));
             default:
                 throw ArgumentException(L"methodが不正です。");
@@ -106,13 +104,13 @@ namespace Palmtree::Math::Core::Internal
     {
         try
         {
-            _engine_classic = new ClassicMultiplicationEngine();
-            _engine_karatsuba = new KaratsubaMultiplicationEngine(false, *_engine_classic, basic_ep);
-            _fixed_engine_karatsuba = new KaratsubaMultiplicationEngine(true, *_engine_classic, basic_ep);
-            _engine_toomcook = new ToomCookMultiplicationEngine(false, *_engine_karatsuba, *_engine_classic);
-            _fixed_engine_toomcook = new ToomCookMultiplicationEngine(true, *_engine_karatsuba, *_engine_classic);
-            _engine_schonHagestrassen = new SchonHageStrassenMultiplicationEngine(false, *_engine_toomcook, *_engine_classic);
-            _fixed_engine_schonHagestrassen = new SchonHageStrassenMultiplicationEngine(true, *_engine_toomcook, *_engine_classic);
+            _engine_classic = new Multiply::Classic::ClassicMultiplicationEngine();
+            _engine_karatsuba = new Multiply::Karatsuba::KaratsubaMultiplicationEngine(false, *_engine_classic, basic_ep);
+            _fixed_engine_karatsuba = new Multiply::Karatsuba::KaratsubaMultiplicationEngine(true, *_engine_classic, basic_ep);
+            _engine_toomcook = new Multiply::ToomCook::ToomCookMultiplicationEngine(false, *_engine_karatsuba, *_engine_classic);
+            _fixed_engine_toomcook = new Multiply::ToomCook::ToomCookMultiplicationEngine(true, *_engine_karatsuba, *_engine_classic);
+            _engine_schonHagestrassen = new Multiply::SchonHageStrassen::SchonHageStrassenMultiplicationEngine(false, *_engine_toomcook, *_engine_classic);
+            _fixed_engine_schonHagestrassen = new Multiply::SchonHageStrassen::SchonHageStrassenMultiplicationEngine(true, *_engine_toomcook, *_engine_classic);
             return (PMC_STATUS_OK);
         }
         catch (std::bad_alloc)

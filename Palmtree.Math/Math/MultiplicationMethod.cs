@@ -37,9 +37,8 @@ namespace Palmtree.Math
         Auto = 0,
         Classic = 1,
         Karatsuba = 2,
-        FixedKaratsuba = 3,
+        ToomCook = 3,
         SchonStrassen = 4,
-        FixedSchonStrassen = 5,
     }
 
 }

@@ -31,20 +31,31 @@
 
 namespace Palmtree::Math::Core::Internal
 {
-
-    class ClassicMultiplicationEngine;
-    class ToomCookMultiplicationEngine;
     class _UBASIC_T;
+}
+
+namespace Palmtree::Math::Core::Internal::Multiply::ToomCook
+{
+    class ToomCookMultiplicationEngine;
+}
+
+namespace Palmtree::Math::Core::Internal::Multiply::Classic
+{
+    class ClassicMultiplicationEngine;
+}
+
+namespace Palmtree::Math::Core::Internal::Multiply::SchonHageStrassen
+{
 
     class SchonHageStrassenMultiplicationEngine
     {
     private:
         bool _fixed;
-        ClassicMultiplicationEngine& _classic_engine;
-        ToomCookMultiplicationEngine& _toomcook_engine;
+        ToomCook::ToomCookMultiplicationEngine& _toomcook_engine;
+        Classic::ClassicMultiplicationEngine& _classic_engine;
 
     public:
-        SchonHageStrassenMultiplicationEngine(bool fixed, ToomCookMultiplicationEngine& toomcook_engine, ClassicMultiplicationEngine& classic_engine);
+        SchonHageStrassenMultiplicationEngine(bool fixed, ToomCook::ToomCookMultiplicationEngine& toomcook_engine, Classic::ClassicMultiplicationEngine& classic_engine);
         ~SchonHageStrassenMultiplicationEngine();
         void Multiply_UX_UX(ThreadContext& tc, _UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T& w_buf);
     };

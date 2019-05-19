@@ -144,7 +144,7 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_UX_1W;1");
         if (w_buf.BLOCK_COUNT < u_buf.BLOCK_COUNT + 1)
             throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_UX_1W;2");
-        if (w_buf.BLOCK_COUNT < 1 + 1)
+        if (w_buf.BLOCK_COUNT < 1)
             throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_UX_1W;3");
 #endif
         // 最下桁の加算を行う
@@ -157,7 +157,7 @@ namespace Palmtree::Math::Core::Internal
     static __CARRY_T Add_UX_2W(BasicOperatorEngine& ep, _UBASIC_T& u_buf, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo)
     {
 #ifdef _DEBUG
-        if (u_buf.BLOCK_COUNT < 2 + 1)
+        if (u_buf.BLOCK_COUNT < 2)
             throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_UX_2W;1");
 #endif
         // 最下位のワードの加算をする
@@ -177,7 +177,7 @@ namespace Palmtree::Math::Core::Internal
             throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_UX_2W;1");
         if (w_buf.BLOCK_COUNT < u_buf.BLOCK_COUNT + 1)
             throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_UX_2W;2");
-        if (w_buf.BLOCK_COUNT < 2 + 1)
+        if (w_buf.BLOCK_COUNT < 2)
             throw InternalErrorException(L"予期しないルートに到達しました。", L"pmc_add.cpp;Add_UX_2W;3");
 #endif
         if (u_buf.BLOCK_COUNT < 2)

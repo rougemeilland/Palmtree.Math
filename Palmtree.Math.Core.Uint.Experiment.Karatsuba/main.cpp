@@ -55,7 +55,7 @@ namespace Palmtree::Math::Core::Internal
             classic_total_time += elapsed_time;
 
             begin = std::chrono::steady_clock::now();
-            w2 = ep.Multiply(tc, PMC_MULTIPLICATION_METHOD_FIXED_KARATSUBA, u, v);
+            w2 = ep.Multiply(tc, PMC_MULTIPLICATION_METHOD_KARATSUBA, u, v);
             end = std::chrono::steady_clock::now();
             elapsed_time = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
             karatsuba_total_time += elapsed_time;
@@ -82,7 +82,7 @@ namespace Palmtree::Math::Core::Internal
         ep.Initialize();
         ThreadContext tc;
         PMC_HANDLE_SFMT random = ep.AllocateRandomStateObject(tc, 0);
-        int loop_count = 10000;
+        int loop_count = 1;
 
         int bit_count = 1 << 8;
 

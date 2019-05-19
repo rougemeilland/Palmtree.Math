@@ -29,6 +29,7 @@
 
 #include <intrin.h>
 #include "pmc_internal.h"
+#include "pmc_exception.h"
 
 #define __EFLAGS_DF    (1 << 10) // 方向フラグのビットマスク
 
@@ -43,17 +44,29 @@ namespace Palmtree::Math::Core::Internal
 
     __inline static void _COPY_MEMORY_BYTE(void* d, const void* s, size_t count)
     {
+#ifdef _DEBUG
+        if (count > (size_t)-1 >> 1)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;_COPY_MEMORY_BYTE;1");
+#endif
         __movsb((unsigned char*)d, (const unsigned char*)s, count);
     }
 
     __inline static void _COPY_MEMORY_32(_UINT32_T* d, const _UINT32_T* s, _UINT32_T count)
     {
+#ifdef _DEBUG
+        if (count > (_UINT32_T)-1 >> 1)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;_COPY_MEMORY_32;1");
+#endif
         __movsd((unsigned long *)d, (unsigned long *)s, (unsigned long)count);
     }
 
 #ifdef _M_X64
     __inline static void _COPY_MEMORY_64(_UINT64_T* d, const _UINT64_T* s, _UINT64_T count)
     {
+#ifdef _DEBUG
+        if (count > (_UINT64_T)-1 >> 1)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;_COPY_MEMORY_64;1");
+#endif
         __movsq(d, s, count);
     }
 #endif
@@ -93,6 +106,10 @@ namespace Palmtree::Math::Core::Internal
 
     __inline static void _COPY_MEMORY_REV_BYTE(void* d, const void* s, size_t count)
     {
+#ifdef _DEBUG
+        if (count > (size_t)-1 >> 1)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;_COPY_MEMORY_REV_BYTE;1");
+#endif
         __SET_DIRECTION_FLAG();
         __movsb((unsigned char*)d + count - 1, (const unsigned char*)s + count - 1, count);
         __CLEAR_DIRECTION_FLAG();
@@ -100,6 +117,10 @@ namespace Palmtree::Math::Core::Internal
 
     __inline static void _COPY_MEMORY_REV_32(_UINT32_T* d, const _UINT32_T* s, _UINT32_T count)
     {
+#ifdef _DEBUG
+        if (count > (_UINT32_T)-1 >> 1)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;_COPY_MEMORY_REV_32;1");
+#endif
         __SET_DIRECTION_FLAG();
         __movsd((unsigned long *)(d + count - 1), (unsigned long *)(s + count - 1), (unsigned long)count);
         __CLEAR_DIRECTION_FLAG();
@@ -108,6 +129,10 @@ namespace Palmtree::Math::Core::Internal
 #ifdef _M_X64
     __inline static void _COPY_MEMORY_REV_64(_UINT64_T* d, const _UINT64_T* s, _UINT64_T count)
     {
+#ifdef _DEBUG
+        if (count > (_UINT64_T)-1 >> 1)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;_COPY_MEMORY_REV_64;1");
+#endif
         __SET_DIRECTION_FLAG();
         __movsq(d + count - 1, s + count - 1, count);
         __CLEAR_DIRECTION_FLAG();
@@ -127,22 +152,38 @@ namespace Palmtree::Math::Core::Internal
 
     __inline static void _ZERO_MEMORY_BYTE(void* d, size_t count)
     {
+#ifdef _DEBUG
+        if (count > (size_t)-1 >> 1)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;_ZERO_MEMORY_BYTE;1");
+#endif
         __stosb((unsigned char*)d, 0, count);
     }
 
     __inline static void _ZERO_MEMORY_16(_UINT16_T* d, size_t count)
     {
+#ifdef _DEBUG
+        if (count > (size_t)-1 >> 1)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;_ZERO_MEMORY_16;1");
+#endif
         __stosw(d, 0, count);
     }
 
     __inline static void _ZERO_MEMORY_32(_UINT32_T* d, size_t count)
     {
+#ifdef _DEBUG
+        if (count > (size_t)-1 >> 1)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;_ZERO_MEMORY_32;1");
+#endif
         __stosd((unsigned long*)d, 0, count);
     }
 
 #ifdef _M_X64
     __inline static void _ZERO_MEMORY_64(_UINT64_T* d, size_t count)
     {
+#ifdef _DEBUG
+        if (count > (size_t)-1 >> 1)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;_ZERO_MEMORY_64;1");
+#endif
         __stosq(d, 0, count);
     }
 #endif
@@ -160,22 +201,38 @@ namespace Palmtree::Math::Core::Internal
 
     __inline static void _FILL_MEMORY_BYTE(void* d, unsigned char x, size_t count)
     {
+#ifdef _DEBUG
+        if (count > (size_t)-1 >> 1)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;_FILL_MEMORY_BYTE;1");
+#endif
         __stosb((unsigned char*)d, x, count);
     }
 
     __inline static void _FILL_MEMORY_16(_UINT16_T* d, _UINT16_T x, size_t count)
     {
+#ifdef _DEBUG
+        if (count > (size_t)-1 >> 1)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;_FILL_MEMORY_16;1");
+#endif
         __stosw((_UINT16_T*)d, x, count);
     }
 
     __inline static void _FILL_MEMORY_32(_UINT32_T* d, _UINT32_T x, size_t count)
     {
+#ifdef _DEBUG
+        if (count > (size_t)-1 >> 1)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;_FILL_MEMORY_32;1");
+#endif
         __stosd((unsigned long*)d, x, count);
     }
 
 #ifdef _M_X64
     __inline static void _FILL_MEMORY_64(_UINT64_T* d, _UINT64_T x, size_t count)
     {
+#ifdef _DEBUG
+        if (count > (size_t)-1 >> 1)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_inline_func.h;_FILL_MEMORY_64;1");
+#endif
         __stosq(d, x, count);
     }
 #endif

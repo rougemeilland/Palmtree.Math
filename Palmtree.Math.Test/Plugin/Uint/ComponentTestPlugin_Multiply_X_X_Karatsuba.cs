@@ -39,7 +39,7 @@ namespace Palmtree.Math.Test.Plugin.Uint
         {
             var u = p1.ToUBigInt().Value;
             var v = p2.ToUBigInt().Value;
-            var w = u.Multiply(MultiplicationMethod.FixedKaratsuba, v);
+            var w = u.Multiply(MultiplicationMethod.Karatsuba, v);
             return (new UBigIntDataItem(w));
         }
 

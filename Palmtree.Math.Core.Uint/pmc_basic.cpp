@@ -108,7 +108,7 @@ namespace Palmtree::Math::Core::Internal
             }
             else
             {
-                SIGN_T c = Compare(u_buf.ABS, v_buf.ABS);
+                SIGN_T c = Compare(u_buf.ABS.Shrink(), v_buf.ABS);
                 if (c == 0)
                     u_buf.Clear();
                 else if (c > 0)
@@ -131,7 +131,7 @@ namespace Palmtree::Math::Core::Internal
             }
             else if (v_buf.SIGN > 0)
             {
-                SIGN_T c = Compare(v_buf.ABS, u_buf.ABS);
+                SIGN_T c = Compare(v_buf.ABS, u_buf.ABS.Shrink());
                 if (c == 0)
                     u_buf.Clear();
                 else if (c > 0)
