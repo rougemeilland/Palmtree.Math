@@ -51,6 +51,11 @@ namespace Palmtree.Math
             _random_state_object_handle = random_state_object_handle;
         }
 
+        public Random()
+            : this(EngineObject.AllocateRandomStateObject((uint)Environment.TickCount))
+        {
+        }
+
         public Random(UInt32 seed)
             : this(EngineObject.AllocateRandomStateObject(seed))
         {

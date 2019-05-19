@@ -41,7 +41,10 @@ namespace Palmtree::Math::Core::Internal::Multiply::ToomCook
 
     void ToomCookMultiplicationEngine::Multiply_UX_UX(ThreadContext & tc, _UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T & w_buf)
     {
+
         _karatsuba_engine.Multiply_UX_UX(tc, u_buf, v_buf, w_buf);
+
+        // u_buf と v_buf がどちらも 4 ワード以下になると配列を 3 分割できないことがあるため、その場合は _fixed フラグの値にかかわらず Karatsuba に移行する
     }
 
 }
