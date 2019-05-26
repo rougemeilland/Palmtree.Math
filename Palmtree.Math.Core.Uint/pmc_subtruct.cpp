@@ -49,7 +49,7 @@ namespace Palmtree::Math::Core::Internal
 
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(x->UNIT_WORD_COUNT);
 
-            if (basic_ep.Borrow(1, _UBASIC_T(x), _UBASIC_T(w)))
+            if (Basic::Borrow(1, x->BLOCK, x->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT))
                 throw OverflowException(L"減算によりオーバーフローが発生しました。");
 #ifdef _DEBUG
             root.CheckNumber(w);
@@ -122,7 +122,7 @@ namespace Palmtree::Math::Core::Internal
                 // x と y の差を計算する
 
                 __UNIT_TYPE w;
-                basic_ep.USubtruct(u, _UBASIC_T(nv), w);
+                Basic::USubtruct(u, nv->BLOCK, nv->UNIT_WORD_COUNT, w);
                 return ((_UINT32_T)w);
             }
         }
@@ -170,7 +170,7 @@ namespace Palmtree::Math::Core::Internal
 
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(u->UNIT_WORD_COUNT);
 
-                basic_ep.USubtruct(_UBASIC_T(u), v, _UBASIC_T(w));
+                Basic::USubtruct(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
                 root.CheckNumber(w);
 #endif
@@ -254,7 +254,7 @@ namespace Palmtree::Math::Core::Internal
                 __UNIT_TYPE w_hi;
                 __UNIT_TYPE w_lo;
 
-                basic_ep.USubtruct(u_hi, u_lo, _UBASIC_T(nv), w_hi, w_lo);
+                Basic::USubtruct(u_hi, u_lo, nv->BLOCK, nv->UNIT_WORD_COUNT, w_hi, w_lo);
 
                 return (_FROMWORDTODWORD((_UINT32_T)w_hi, (_UINT32_T)w_lo));
             }
@@ -306,8 +306,7 @@ namespace Palmtree::Math::Core::Internal
                 // u と v の差を計算する
 
                 __UNIT_TYPE w;
-
-                basic_ep.USubtruct(u, _UBASIC_T(nv), w);
+                Basic::USubtruct(u, nv->BLOCK, nv->UNIT_WORD_COUNT, w);
 
                 return (w);
             }
@@ -363,7 +362,7 @@ namespace Palmtree::Math::Core::Internal
 
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(u->UNIT_WORD_COUNT);
 
-                basic_ep.USubtruct(_UBASIC_T(u), v_hi, v_lo, _UBASIC_T(w));
+                Basic::USubtruct(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
                 root.CheckNumber(w);
 #endif
@@ -422,7 +421,7 @@ namespace Palmtree::Math::Core::Internal
 
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(u->UNIT_WORD_COUNT);
 
-                basic_ep.USubtruct(_UBASIC_T(u), v, _UBASIC_T(w));
+                Basic::USubtruct(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
                 root.CheckNumber(w);
 #endif
@@ -497,7 +496,7 @@ namespace Palmtree::Math::Core::Internal
 
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(u->UNIT_WORD_COUNT);
 
-                basic_ep.USubtruct(_UBASIC_T(u), _UBASIC_T(v), _UBASIC_T(w));
+                Basic::USubtruct(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
                 root.CheckNumber(w);
 #endif

@@ -22,8 +22,8 @@
  * THE SOFTWARE.
  */
 
-#include "pmc_basic_multiply_schonHagestrassen.h"
-#include "pmc_basic_multiply_toomcook.h"
+#include "pmc_multiply_schonHagestrassen.h"
+#include "pmc_multiply_toomcook.h"
 #include "pmc_basic.h"
 #include "pmc_exception.h"
 #include "pmc_inline_func.h"
@@ -31,18 +31,9 @@
 namespace Palmtree::Math::Core::Internal::Multiply::SchonHageStrassen
 {
 
-    SchonHageStrassenMultiplicationEngine::SchonHageStrassenMultiplicationEngine(bool fixed, Multiply::ToomCook::ToomCookMultiplicationEngine & toomcook_engine, Multiply::Classic::ClassicMultiplicationEngine & classic_engine)
-        : _fixed(fixed), _toomcook_engine(toomcook_engine), _classic_engine(classic_engine)
+    void Multiply_UX_UX(ThreadContext& tc, bool fixed, __UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_count, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count)
     {
-    }
-
-    SchonHageStrassenMultiplicationEngine::~SchonHageStrassenMultiplicationEngine()
-    {
-    }
-
-    void SchonHageStrassenMultiplicationEngine::Multiply_UX_UX(ThreadContext & tc, _UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T & w_buf)
-    {
-        _toomcook_engine.Multiply_UX_UX(tc, u_buf, v_buf, w_buf);
+        Palmtree::Math::Core::Internal::Multiply::ToomCook::Multiply_UX_UX(tc, fixed, u_buf, u_buf_count, v_buf, v_buf_count, w_buf, w_buf_count);
     }
 
 }

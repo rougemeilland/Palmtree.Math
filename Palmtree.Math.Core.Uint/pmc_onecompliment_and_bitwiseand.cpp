@@ -64,7 +64,7 @@ namespace Palmtree::Math::Core::Internal
 
             NUMBER_OBJECT_UINT* nw = root.AllocateNumber(nv->UNIT_WORD_COUNT);
 
-            basic_ep.OneCompliment_And_BitwiseAnd(u, _UBASIC_T(nv), _UBASIC_T(nw));
+            Basic::OneCompliment_And_BitwiseAnd(u, nv->BLOCK, nv->UNIT_WORD_COUNT, nw->BLOCK, nw->BLOCK_COUNT);
 #ifdef _DEBUG
             root.CheckNumber(nw);
 #endif
@@ -113,7 +113,7 @@ namespace Palmtree::Math::Core::Internal
 
             NUMBER_OBJECT_UINT* nw = root.AllocateNumber(nv->UNIT_WORD_COUNT);
 
-            basic_ep.OneCompliment_And_BitwiseAnd(u_hi, u_lo, _UBASIC_T(nv), _UBASIC_T(nw));
+            Basic::OneCompliment_And_BitwiseAnd(u_hi, u_lo, nv->BLOCK, nv->UNIT_WORD_COUNT, nw->BLOCK, nw->BLOCK_COUNT);
 #ifdef _DEBUG
             root.CheckNumber(nw);
 #endif
@@ -158,7 +158,7 @@ namespace Palmtree::Math::Core::Internal
 
             NUMBER_OBJECT_UINT* nw = root.AllocateNumber(nv->UNIT_WORD_COUNT);
 
-            basic_ep.OneCompliment_And_BitwiseAnd(u, _UBASIC_T(nv), _UBASIC_T(nw));
+            Basic::OneCompliment_And_BitwiseAnd(u, nv->BLOCK, nv->UNIT_WORD_COUNT, nw->BLOCK, nw->BLOCK_COUNT);
 #ifdef _DEBUG
             root.CheckNumber(nw);
 #endif
@@ -203,7 +203,7 @@ namespace Palmtree::Math::Core::Internal
             // u と v がともに 0 ではない場合
 
             __UNIT_TYPE w;
-            basic_ep.OneCompliment_And_BitwiseAnd(_UBASIC_T(nu), v, w);
+            Basic::OneCompliment_And_BitwiseAnd(nu->BLOCK, nu->UNIT_WORD_COUNT, v, w);
             return ((_UINT32_T)w);
         }
     }
@@ -234,7 +234,7 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE w_lo;
             __UNIT_TYPE w_hi;
 
-            basic_ep.OneCompliment_And_BitwiseAnd(_UBASIC_T(nu), v_hi, v_lo, w_hi, w_lo);
+            Basic::OneCompliment_And_BitwiseAnd(nu->BLOCK, nu->UNIT_WORD_COUNT, v_hi, v_lo, w_hi, w_lo);
 
             return (_FROMWORDTODWORD(w_hi, w_lo));
         }
@@ -261,7 +261,7 @@ namespace Palmtree::Math::Core::Internal
             // u と v がともに 0 ではない場合
 
             __UNIT_TYPE w;
-            basic_ep.OneCompliment_And_BitwiseAnd(_UBASIC_T(nu), v, w);
+            Basic::OneCompliment_And_BitwiseAnd(nu->BLOCK, nu->UNIT_WORD_COUNT, v, w);
             return (w);
         }
     }
@@ -291,7 +291,7 @@ namespace Palmtree::Math::Core::Internal
 
             NUMBER_OBJECT_UINT* nw = root.AllocateNumber(nv->UNIT_WORD_COUNT);
 
-            basic_ep.OneCompliment_And_BitwiseAnd(_UBASIC_T(nu), _UBASIC_T(nv), _UBASIC_T(nw));
+            Basic::OneCompliment_And_BitwiseAnd(nu->BLOCK, nu->UNIT_WORD_COUNT, nv->BLOCK, nv->UNIT_WORD_COUNT, nw->BLOCK, nw->BLOCK_COUNT);
 #ifdef _DEBUG
             root.CheckNumber(nw);
 #endif

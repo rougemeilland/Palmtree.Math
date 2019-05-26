@@ -45,7 +45,7 @@ namespace Palmtree::Math::Core::Internal
         {
             // x と y がともに 0 ではない場合
 
-            return (basic_ep.Equals(_UBASIC_T(u), v));
+            return (Basic::Equals(u->BLOCK, u->UNIT_WORD_COUNT, v));
         }
     }
 
@@ -69,7 +69,7 @@ namespace Palmtree::Math::Core::Internal
             _UINT32_T v_hi;
             _UINT32_T v_lo = _FROMDWORDTOWORD(v, &v_hi);
 
-            return (basic_ep.Equals(_UBASIC_T(u), v_hi, v_lo));
+            return (Basic::Equals(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo));
         }
     }
 #elif defined(_M_X64)
@@ -89,7 +89,7 @@ namespace Palmtree::Math::Core::Internal
         {
             // u と v がともに 0 ではない場合
 
-            return (basic_ep.Equals(_UBASIC_T(u), v));
+            return (Basic::Equals(u->BLOCK, u->UNIT_WORD_COUNT, v));
         }
     }
 #else
@@ -154,7 +154,7 @@ namespace Palmtree::Math::Core::Internal
         else if (nv->IS_ZERO)
             return (EPILOGUE(false));
         else
-            return (EPILOGUE(basic_ep.Equals(_UBASIC_T(nu), _UBASIC_T(nv))));
+            return (EPILOGUE(Basic::Equals(nu->BLOCK, nu->UNIT_WORD_COUNT, nv->BLOCK, nv->UNIT_WORD_COUNT)));
     }
 
     PMC_STATUS_CODE Initialize_Equals(PROCESSOR_FEATURES* feature)

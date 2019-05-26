@@ -4,93 +4,49 @@ clean:
 	rm -f ../../dist/Debug/x64/Palmtree.Math.Core.Uint.dll ../build/x64_Debug/Palmtree.Math.Core.Uint.map
 	rm -r -f ../build/x64_Debug
 
-OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_Debug/pmc_basic.o ../build/x64_Debug/pmc_basic_add.o ../build/x64_Debug/pmc_basic_bitwiseand.o ../build/x64_Debug/pmc_basic_bitwiseor.o ../build/x64_Debug/pmc_basic_compare.o ../build/x64_Debug/pmc_basic_divrem.o ../build/x64_Debug/pmc_basic_equals.o ../build/x64_Debug/pmc_basic_exclusiveor.o ../build/x64_Debug/pmc_basic_greatestcommondivisor.o ../build/x64_Debug/pmc_basic_multiply.o ../build/x64_Debug/pmc_basic_multiply_classic.o ../build/x64_Debug/pmc_basic_multiply_karatsuba.o ../build/x64_Debug/pmc_basic_multiply_schonHagestrassen.o ../build/x64_Debug/pmc_basic_multiply_toomcook.o ../build/x64_Debug/pmc_basic_onecompliment_and_bitwiseand.o ../build/x64_Debug/pmc_basic_shift.o ../build/x64_Debug/pmc_basic_subtruct.o ../build/x64_Debug/pmc_bitwiseand.o ../build/x64_Debug/pmc_bitwiseor.o ../build/x64_Debug/pmc_bytes.o ../build/x64_Debug/pmc_compare.o ../build/x64_Debug/pmc_cpuid.o ../build/x64_Debug/pmc_divideexactly.o ../build/x64_Debug/pmc_divrem.o ../build/x64_Debug/pmc_dllmain.o ../build/x64_Debug/pmc_equals.o ../build/x64_Debug/pmc_exclusiveor.o ../build/x64_Debug/pmc_from.o ../build/x64_Debug/pmc_greatestcommondivisor.o ../build/x64_Debug/pmc_initialize.o ../build/x64_Debug/pmc_interface_csharp.o ../build/x64_Debug/pmc_internaltest.o ../build/x64_Debug/pmc_itoa.o ../build/x64_Debug/pmc_lock.o ../build/x64_Debug/pmc_log.o ../build/x64_Debug/pmc_memory.o ../build/x64_Debug/pmc_modpow.o ../build/x64_Debug/pmc_multiply.o ../build/x64_Debug/pmc_onecompliment_and_bitwiseand.o ../build/x64_Debug/pmc_parse.o ../build/x64_Debug/pmc_parserstate.o ../build/x64_Debug/pmc_pow.o ../build/x64_Debug/pmc_random.o ../build/x64_Debug/pmc_resourceholder.o ../build/x64_Debug/pmc_resourceholder_uint.o ../build/x64_Debug/pmc_round.o ../build/x64_Debug/pmc_shift.o ../build/x64_Debug/pmc_statistics.o ../build/x64_Debug/pmc_stringio.o ../build/x64_Debug/pmc_subtruct.o ../build/x64_Debug/pmc_thousandseparatedstringwriter.o ../build/x64_Debug/pmc_threadcontext.o ../build/x64_Debug/pmc_to.o ../build/x64_Debug/pmc_tostring.o ../build/x64_Debug/pmc_tostringformatter.o ../build/x64_Debug/pmc_tostringformattercustom.o ../build/x64_Debug/pmc_tostringformattertypec.o ../build/x64_Debug/pmc_tostringformattertyped.o ../build/x64_Debug/pmc_tostringformattertypee.o ../build/x64_Debug/pmc_tostringformattertypef.o ../build/x64_Debug/pmc_tostringformattertypeg.o ../build/x64_Debug/pmc_tostringformattertypen.o ../build/x64_Debug/pmc_tostringformattertypep.o ../build/x64_Debug/pmc_tostringformattertypex.o ../build/x64_Debug/pmc_uint_cppinterface.o ../build/x64_Debug/pmc___unit_type_array_chainbuffertag.o ../build/x64_Debug/version.o ../../dist/Release/x64/Palmtree.Math.Core.Sfmt.dll
+OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_Debug/pmc_basic_divrem.o ../build/x64_Debug/pmc_basic_multiply.o ../build/x64_Debug/pmc_basic_multiply_classic.o ../build/x64_Debug/pmc_basic_multiply_karatsuba.o ../build/x64_Debug/pmc_basic_multiply_schonHagestrassen.o ../build/x64_Debug/pmc_basic_multiply_toomcook.o ../build/x64_Debug/pmc_bitwiseand.o ../build/x64_Debug/pmc_bitwiseor.o ../build/x64_Debug/pmc_bytes.o ../build/x64_Debug/pmc_compare.o ../build/x64_Debug/pmc_cpuid.o ../build/x64_Debug/pmc_divideexactly.o ../build/x64_Debug/pmc_divrem.o ../build/x64_Debug/pmc_dllmain.o ../build/x64_Debug/pmc_equals.o ../build/x64_Debug/pmc_exclusiveor.o ../build/x64_Debug/pmc_from.o ../build/x64_Debug/pmc_greatestcommondivisor.o ../build/x64_Debug/pmc_initialize.o ../build/x64_Debug/pmc_interface_csharp.o ../build/x64_Debug/pmc_internaltest.o ../build/x64_Debug/pmc_itoa.o ../build/x64_Debug/pmc_lock.o ../build/x64_Debug/pmc_log.o ../build/x64_Debug/pmc_memory.o ../build/x64_Debug/pmc_modpow.o ../build/x64_Debug/pmc_multiply.o ../build/x64_Debug/pmc_onecompliment_and_bitwiseand.o ../build/x64_Debug/pmc_parse.o ../build/x64_Debug/pmc_parserstate.o ../build/x64_Debug/pmc_pow.o ../build/x64_Debug/pmc_random.o ../build/x64_Debug/pmc_resourceholder.o ../build/x64_Debug/pmc_resourceholder_uint.o ../build/x64_Debug/pmc_round.o ../build/x64_Debug/pmc_shift.o ../build/x64_Debug/pmc_statistics.o ../build/x64_Debug/pmc_stringio.o ../build/x64_Debug/pmc_subtruct.o ../build/x64_Debug/pmc_thousandseparatedstringwriter.o ../build/x64_Debug/pmc_threadcontext.o ../build/x64_Debug/pmc_to.o ../build/x64_Debug/pmc_tostring.o ../build/x64_Debug/pmc_tostringformatter.o ../build/x64_Debug/pmc_tostringformattercustom.o ../build/x64_Debug/pmc_tostringformattertypec.o ../build/x64_Debug/pmc_tostringformattertyped.o ../build/x64_Debug/pmc_tostringformattertypee.o ../build/x64_Debug/pmc_tostringformattertypef.o ../build/x64_Debug/pmc_tostringformattertypeg.o ../build/x64_Debug/pmc_tostringformattertypen.o ../build/x64_Debug/pmc_tostringformattertypep.o ../build/x64_Debug/pmc_tostringformattertypex.o ../build/x64_Debug/pmc_uint_cppinterface.o ../build/x64_Debug/pmc___unit_type_array_chainbuffertag.o ../build/x64_Debug/version.o ../../dist/Release/x64/Palmtree.Math.Core.Sfmt.dll
 
 ../../dist/Debug/x64/Palmtree.Math.Core.Uint.dll: $(OBJS) ../Palmtree.Math.Core.Uint.def
 	mkdir -p ../../dist/Debug/x64
 	g++ -o ../../dist/Debug/x64/Palmtree.Math.Core.Uint.dll $(OBJS) ../Palmtree.Math.Core.Uint.def -shared -lkernel32 -luser32 -mwindows -Wl,--enable-stdcall-fixup -Wl,-Map=../build/x64_Debug/Palmtree.Math.Core.Uint.map -LZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/dist/Release/x64/
 
-../build/x64_Debug/pmc_add.o: ../pmc_add.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_add.o: ../pmc_add.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_add.o ../pmc_add.cpp
 
-../build/x64_Debug/pmc_atoi.o: ../pmc_atoi.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_stringio.h  ../pmc_uint_internal.h  ../pmc_thousandseparatedstringwriter.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_inline_func.h  ../pmc_string.h  ../pmc_resourceholder_uint.h  ../pmc_parser.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_atoi.o: ../pmc_atoi.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_stringio.h  ../pmc_uint_internal.h  ../pmc_thousandseparatedstringwriter.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_string.h  ../pmc_resourceholder_uint.h  ../pmc_parser.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_atoi.o ../pmc_atoi.cpp
 
-../build/x64_Debug/pmc_basic.o: ../pmc_basic.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic.h  ../mymakefile.xml
-	mkdir -p ../build/x64_Debug
-	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic.o ../pmc_basic.cpp
-
-../build/x64_Debug/pmc_basic_add.o: ../pmc_basic_add.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic.h  ../pmc_autogenerated_inline_func.h  ../mymakefile.xml
-	mkdir -p ../build/x64_Debug
-	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_add.o ../pmc_basic_add.cpp
-
-../build/x64_Debug/pmc_basic_bitwiseand.o: ../pmc_basic_bitwiseand.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic.h  ../mymakefile.xml
-	mkdir -p ../build/x64_Debug
-	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_bitwiseand.o ../pmc_basic_bitwiseand.cpp
-
-../build/x64_Debug/pmc_basic_bitwiseor.o: ../pmc_basic_bitwiseor.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic.h  ../mymakefile.xml
-	mkdir -p ../build/x64_Debug
-	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_bitwiseor.o ../pmc_basic_bitwiseor.cpp
-
-../build/x64_Debug/pmc_basic_compare.o: ../pmc_basic_compare.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic.h  ../mymakefile.xml
-	mkdir -p ../build/x64_Debug
-	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_compare.o ../pmc_basic_compare.cpp
-
-../build/x64_Debug/pmc_basic_divrem.o: ../pmc_basic_divrem.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_autogenerated_inline_func.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_basic_divrem.o: ../pmc_basic_divrem.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_divrem.o ../pmc_basic_divrem.cpp
 
-../build/x64_Debug/pmc_basic_equals.o: ../pmc_basic_equals.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic.h  ../mymakefile.xml
-	mkdir -p ../build/x64_Debug
-	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_equals.o ../pmc_basic_equals.cpp
-
-../build/x64_Debug/pmc_basic_exclusiveor.o: ../pmc_basic_exclusiveor.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic.h  ../mymakefile.xml
-	mkdir -p ../build/x64_Debug
-	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_exclusiveor.o ../pmc_basic_exclusiveor.cpp
-
-../build/x64_Debug/pmc_basic_greatestcommondivisor.o: ../pmc_basic_greatestcommondivisor.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic.h  ../mymakefile.xml
-	mkdir -p ../build/x64_Debug
-	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_greatestcommondivisor.o ../pmc_basic_greatestcommondivisor.cpp
-
-../build/x64_Debug/pmc_basic_multiply.o: ../pmc_basic_multiply.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic.h  ../pmc_basic_multiply_classic.h  ../pmc_basic_multiply_karatsuba.h  ../pmc_basic_multiply_toomcook.h  ../pmc_basic_multiply_schonHagestrassen.h  ../mymakefile.xml
+../build/x64_Debug/pmc_basic_multiply.o: ../pmc_basic_multiply.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_inline_func.h  ../pmc_uint_internal.h  ../pmc_autogenerated_inline_func.h  ../pmc_basic.h  ../pmc_multiply_classic.h  ../pmc_multiply_karatsuba.h  ../pmc_multiply_toomcook.h  ../pmc_multiply_schonHagestrassen.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_multiply.o ../pmc_basic_multiply.cpp
 
-../build/x64_Debug/pmc_basic_multiply_classic.o: ../pmc_basic_multiply_classic.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic_multiply_classic.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_basic_multiply_classic.o: ../pmc_basic_multiply_classic.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_multiply_classic.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_multiply_classic.o ../pmc_basic_multiply_classic.cpp
 
-../build/x64_Debug/pmc_basic_multiply_karatsuba.o: ../pmc_basic_multiply_karatsuba.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_inline_func.h  ../pmc_basic_multiply_karatsuba.h  ../pmc_basic_multiply_classic.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_basic_multiply_karatsuba.o: ../pmc_basic_multiply_karatsuba.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_basic.h  ../pmc_multiply_karatsuba.h  ../pmc_multiply_classic.h  ../pmc_resourceholder_uint.h  ../pmc_signedunitarray.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_multiply_karatsuba.o ../pmc_basic_multiply_karatsuba.cpp
 
-../build/x64_Debug/pmc_basic_multiply_schonHagestrassen.o: ../pmc_basic_multiply_schonHagestrassen.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic_multiply_schonHagestrassen.h  ../pmc_basic_multiply_toomcook.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_basic_multiply_schonHagestrassen.o: ../pmc_basic_multiply_schonHagestrassen.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_multiply_schonHagestrassen.h  ../pmc_multiply_toomcook.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_multiply_schonHagestrassen.o ../pmc_basic_multiply_schonHagestrassen.cpp
 
-../build/x64_Debug/pmc_basic_multiply_toomcook.o: ../pmc_basic_multiply_toomcook.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic_multiply_toomcook.h  ../pmc_basic_multiply_karatsuba.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_basic_multiply_toomcook.o: ../pmc_basic_multiply_toomcook.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_multiply_toomcook.h  ../pmc_multiply_karatsuba.h  ../pmc_multiply_classic.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_multiply_toomcook.o ../pmc_basic_multiply_toomcook.cpp
 
-../build/x64_Debug/pmc_basic_onecompliment_and_bitwiseand.o: ../pmc_basic_onecompliment_and_bitwiseand.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic.h  ../mymakefile.xml
-	mkdir -p ../build/x64_Debug
-	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_onecompliment_and_bitwiseand.o ../pmc_basic_onecompliment_and_bitwiseand.cpp
-
-../build/x64_Debug/pmc_basic_shift.o: ../pmc_basic_shift.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic.h  ../mymakefile.xml
-	mkdir -p ../build/x64_Debug
-	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_shift.o ../pmc_basic_shift.cpp
-
-../build/x64_Debug/pmc_basic_subtruct.o: ../pmc_basic_subtruct.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic.h  ../pmc_autogenerated_inline_func.h  ../mymakefile.xml
-	mkdir -p ../build/x64_Debug
-	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_basic_subtruct.o ../pmc_basic_subtruct.cpp
-
-../build/x64_Debug/pmc_bitwiseand.o: ../pmc_bitwiseand.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_bitwiseand.o: ../pmc_bitwiseand.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_bitwiseand.o ../pmc_bitwiseand.cpp
 
-../build/x64_Debug/pmc_bitwiseor.o: ../pmc_bitwiseor.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_bitwiseor.o: ../pmc_bitwiseor.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_bitwiseor.o ../pmc_bitwiseor.cpp
 
@@ -98,7 +54,7 @@ OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_D
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_bytes.o ../pmc_bytes.cpp
 
-../build/x64_Debug/pmc_compare.o: ../pmc_compare.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_compare.o: ../pmc_compare.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_inline_func.h  ../pmc_uint_internal.h  ../pmc_autogenerated_inline_func.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_compare.o ../pmc_compare.cpp
 
@@ -106,11 +62,11 @@ OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_D
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_cpuid.o ../pmc_cpuid.cpp
 
-../build/x64_Debug/pmc_divideexactly.o: ../pmc_divideexactly.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_divideexactly.o: ../pmc_divideexactly.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_divideexactly.o ../pmc_divideexactly.cpp
 
-../build/x64_Debug/pmc_divrem.o: ../pmc_divrem.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_divrem.o: ../pmc_divrem.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_divrem.o ../pmc_divrem.cpp
 
@@ -118,11 +74,11 @@ OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_D
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_dllmain.o ../pmc_dllmain.cpp
 
-../build/x64_Debug/pmc_equals.o: ../pmc_equals.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_equals.o: ../pmc_equals.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_inline_func.h  ../pmc_uint_internal.h  ../pmc_autogenerated_inline_func.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_equals.o ../pmc_equals.cpp
 
-../build/x64_Debug/pmc_exclusiveor.o: ../pmc_exclusiveor.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_exclusiveor.o: ../pmc_exclusiveor.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_exclusiveor.o ../pmc_exclusiveor.cpp
 
@@ -130,7 +86,7 @@ OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_D
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_from.o ../pmc_from.cpp
 
-../build/x64_Debug/pmc_greatestcommondivisor.o: ../pmc_greatestcommondivisor.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_greatestcommondivisor.o: ../pmc_greatestcommondivisor.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_greatestcommondivisor.o ../pmc_greatestcommondivisor.cpp
 
@@ -162,15 +118,15 @@ OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_D
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_memory.o ../pmc_memory.cpp
 
-../build/x64_Debug/pmc_modpow.o: ../pmc_modpow.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_modpow.o: ../pmc_modpow.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_modpow.o ../pmc_modpow.cpp
 
-../build/x64_Debug/pmc_multiply.o: ../pmc_multiply.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_multiply.o: ../pmc_multiply.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_multiply.o ../pmc_multiply.cpp
 
-../build/x64_Debug/pmc_onecompliment_and_bitwiseand.o: ../pmc_onecompliment_and_bitwiseand.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_onecompliment_and_bitwiseand.o: ../pmc_onecompliment_and_bitwiseand.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_onecompliment_and_bitwiseand.o ../pmc_onecompliment_and_bitwiseand.cpp
 
@@ -182,7 +138,7 @@ OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_D
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_parserstate.o ../pmc_parserstate.cpp
 
-../build/x64_Debug/pmc_pow.o: ../pmc_pow.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_pow.o: ../pmc_pow.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_pow.o ../pmc_pow.cpp
 
@@ -194,7 +150,7 @@ OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_D
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_resourceholder.o ../pmc_resourceholder.cpp
 
-../build/x64_Debug/pmc_resourceholder_uint.o: ../pmc_resourceholder_uint.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_threadcontext.h  ../pmc_lock.h  ../pmc___unit_type_array_chainbuffertag.h  ../pmc_basic.h  ../../Palmtree.Math.Core.Sfmt/pmc_sfmt.h  ../mymakefile.xml
+../build/x64_Debug/pmc_resourceholder_uint.o: ../pmc_resourceholder_uint.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_threadcontext.h  ../pmc_lock.h  ../pmc___unit_type_array_chainbuffertag.h  ../pmc_basic.h  ../../Palmtree.Math.Core.Sfmt/pmc_sfmt.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_resourceholder_uint.o ../pmc_resourceholder_uint.cpp
 
@@ -202,7 +158,7 @@ OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_D
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_round.o ../pmc_round.cpp
 
-../build/x64_Debug/pmc_shift.o: ../pmc_shift.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_shift.o: ../pmc_shift.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_shift.o ../pmc_shift.cpp
 
@@ -214,7 +170,7 @@ OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_D
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_stringio.o ../pmc_stringio.cpp
 
-../build/x64_Debug/pmc_subtruct.o: ../pmc_subtruct.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_subtruct.o: ../pmc_subtruct.cpp  ../pmc.h  ../pmc_uint.h  ../pmc_bidirectionallistheader.h  ../pmc_cpuid.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_resourceholder.h  ../pmc_uint_internal.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_subtruct.o ../pmc_subtruct.cpp
 
@@ -270,7 +226,7 @@ OBJS = ../build/x64_Debug/pmc_add.o ../build/x64_Debug/pmc_atoi.o ../build/x64_D
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_tostringformattertypep.o ../pmc_tostringformattertypep.cpp
 
-../build/x64_Debug/pmc_tostringformattertypex.o: ../pmc_tostringformattertypex.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_stringio.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_inline_func.h  ../pmc_tostringformattertypex.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
+../build/x64_Debug/pmc_tostringformattertypex.o: ../pmc_tostringformattertypex.cpp  ../pmc.h  ../pmc_cpuid.h  ../pmc_uint.h  ../pmc_internal.h  ../pmc_exception.h  ../pmc_uint_internal.h  ../pmc_stringio.h  ../pmc_bidirectionallistheader.h  ../pmc_resourceholder.h  ../pmc_inline_func.h  ../pmc_autogenerated_inline_func.h  ../pmc_tostringformattertypex.h  ../pmc_resourceholder_uint.h  ../pmc_basic.h  ../mymakefile.xml
 	mkdir -p ../build/x64_Debug
 	g++ -c -save-temps=obj -Werror -D_M_X64 -DENABLED_PERFORMANCE_COUNTER -DPALMTREEMATHCOREUINT_EXPORTS -g -D_DEBUG -std=c++1z -IZ:/Sources/Lunor/Repos/rougemeilland/Palmtree.Math/Palmtree.Math.Core.Sfmt/ -o ../build/x64_Debug/pmc_tostringformattertypex.o ../pmc_tostringformattertypex.cpp
 

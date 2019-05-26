@@ -34,7 +34,6 @@
 
 namespace Palmtree::Math::Core::Internal
 {
-    class _UBASIC_T;
 
     class ResourceHolderUINT
         : public ResourceHolder
@@ -130,13 +129,13 @@ namespace Palmtree::Math::Core::Internal
         void DeallocateUBigIntNumberObjectStructure(NUMBER_OBJECT_UINT* buffer);
         void UnlinkUBigIntNumberObjectStructure(NUMBER_OBJECT_UINT* buffer);
 
-        _UBASIC_T AllocateBlock(__UNIT_TYPE word_count);
-        void ClearBlock(_UBASIC_T buffer);
-        void DeallocateBlock(_UBASIC_T buffer);
+        __UNIT_TYPE* AllocateBlock(__UNIT_TYPE word_count);
+        void ClearBlock(__UNIT_TYPE* buffer);
+        void DeallocateBlock(__UNIT_TYPE* buffer);
 #ifdef _DEBUG
-        void CheckBlock(_UBASIC_T buffer);
+        void CheckBlock(__UNIT_TYPE* buffer);
 #endif
-        void UnlinkBlock(_UBASIC_T buffer);
+        void UnlinkBlock(__UNIT_TYPE* buffer);
 
         NUMBER_OBJECT_UINT* AllocateNumber(__UNIT_TYPE word_count);
         void HookNumber(NUMBER_OBJECT_UINT* buffer);

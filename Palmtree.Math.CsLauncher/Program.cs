@@ -18,21 +18,20 @@ namespace Palmtree.Math.CsLauncher
             //var v = UBigInt.FromByteArray(new byte[] { 0x01, 0x01, 0x01 });
             //var v = UBigInt.FromByteArray(new byte[] { 0x01, 0x04, 0xd2, 0x02, 0x96, 0x49 });
             //var v = UBigInt.FromByteArray(new byte[] { 0x01, 0x05, 0x00, 0x00, 0x00, 0x00, 0x01 });
+            //var v = UBigInt.FromByteArray(new byte[] { 0x01, 0x08, 0xd2, 0x0a, 0x1f, 0xeb, 0x8c, 0xa9, 0x54, 0xab });
             //var u = UBigInt.FromByteArray(new byte[] { 0x01, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 });
+            //var v = UBigInt.FromByteArray(new byte[] { 0x01, 0x09, 0xff, 0xff, 0x0f, 0x63, 0x2d, 0x5e, 0xc7, 0x6b, 0x05 });
             //var v = UBigInt.FromByteArray(new byte[] { 0x01, 0x09, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 });
             //var u = BigInt.FromByteArray(new byte[] { 0x03, 0x05, 0x00, 0x00, 0x00, 0x00, 0x01 });
             //var v = 1UL;
-            //var u = 4294967296UL;
             //var u = 1234567890U;
+            //var u = 4294967295U;
             //var u = 4294967296UL;
             //var u = 12345678901234567890UL;
 
             var u = UBigInt.FromByteArray(new byte[] { 0x01, 0x05, 0x00, 0x00, 0x00, 0x00, 0x01 });
-            var v = UBigInt.FromByteArray(new byte[] { 0x01, 0x05, 0x00, 0x00, 0x00, 0x00, 0x01 });
-            var w1 = u.Multiply(MultiplicationMethod.Karatsuba, v);
-            var w2 = u.Multiply(MultiplicationMethod.Auto, v);
-            if (w1 != w2)
-                throw new ApplicationException();
+            var v = BigInt.FromByteArray(new byte[] { 0x03, 0x05, 0x00, 0x00, 0x00, 0x00, 0x01 });
+            var w = u.BitwiseOr(v);
             Console.ReadLine();
         }
 

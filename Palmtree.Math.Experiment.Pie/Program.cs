@@ -13,12 +13,14 @@ namespace Palmtree.Math.Experiment.Pie
     {
         static void Main(string[] args)
         {
-            性能測定_BigInt((u, v) => u + v, "加算", 65536, 1000);
-            性能測定_BigInteger((u, v) => u + v, "加算", 65536, 1000);
-            性能測定_BigInt((u, v) => u * v, "乗算", 65536, 1000);
-            性能測定_BigInteger((u, v) => u * v, "乗算", 65536, 1000);
-            性能測定_BigInt((u, v) => u / v, "除算", 65536, 1000);
-            性能測定_BigInteger((u, v) => u / v, "除算", 65536, 1000);
+            Pie_BigInt測定(10000);
+            Pie_BigInteger測定(10000);
+            //性能測定_BigInt((u, v) => u + v, "加算", 65536, 1000000);
+            //性能測定_BigInteger((u, v) => u + v, "加算", 65536, 1000000);
+            //性能測定_BigInt((u, v) => u * v, "乗算", 65536, 1000);
+            //性能測定_BigInteger((u, v) => u * v, "乗算", 65536, 1000);
+            //性能測定_BigInt((u, v) => u / v, "除算", 65536, 1000);
+            //性能測定_BigInteger((u, v) => u / v, "除算", 65536, 1000);
         }
 
         private static void 性能測定_BigInteger(Func<BigInteger, BigInteger, BigInteger> op, string name, int bit_count, int loop_count)
@@ -55,30 +57,28 @@ namespace Palmtree.Math.Experiment.Pie
             }
         }
 
-        private static void Pie_BigInt測定()
+        private static void Pie_BigInt測定(uint digit_count)
         {
             var pie1 = new BigIntPie();
-            var prsn = 1000U;
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
             UBigInt u, v;
-            pie1.CalculatePie(prsn, out u, out v);
+            pie1.CalculatePie(digit_count, out u, out v);
             sw.Stop();
 
             Console.WriteLine("{0}.{1}", u, v);
             Console.WriteLine("計算時間(BigInt)={0}", sw.ElapsedMilliseconds / 1000.0);
         }
 
-        private static void Pie_BigInteger測定()
+        private static void Pie_BigInteger測定(int digit_count)
         {
             var pie1 = new BigIntegerPie();
-            var prsn = 1000;
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
             BigInteger u, v;
-            pie1.CalculatePie(prsn, out u, out v);
+            pie1.CalculatePie(digit_count, out u, out v);
             sw.Stop();
 
             Console.WriteLine("{0}.{1}", u, v);

@@ -24,41 +24,15 @@
 
 #pragma once
 
-#ifndef PMC_MULTIPLY_SCHONHAGESTRASSENMULTIPLICATIONENGINE_H
-#define PMC_MULTIPLY_SCHONHAGESTRASSENMULTIPLICATIONENGINE_H
+#ifndef PMC_MULTIPLY_KARATSUBA_H
+#define PMC_MULTIPLY_KARATSUBA_H
 
 #include "pmc_uint_internal.h"
 
-namespace Palmtree::Math::Core::Internal
-{
-    class _UBASIC_T;
-}
-
-namespace Palmtree::Math::Core::Internal::Multiply::ToomCook
-{
-    class ToomCookMultiplicationEngine;
-}
-
-namespace Palmtree::Math::Core::Internal::Multiply::Classic
-{
-    class ClassicMultiplicationEngine;
-}
-
-namespace Palmtree::Math::Core::Internal::Multiply::SchonHageStrassen
+namespace Palmtree::Math::Core::Internal::Multiply::Karatsuba
 {
 
-    class SchonHageStrassenMultiplicationEngine
-    {
-    private:
-        bool _fixed;
-        ToomCook::ToomCookMultiplicationEngine& _toomcook_engine;
-        Classic::ClassicMultiplicationEngine& _classic_engine;
-
-    public:
-        SchonHageStrassenMultiplicationEngine(bool fixed, ToomCook::ToomCookMultiplicationEngine& toomcook_engine, Classic::ClassicMultiplicationEngine& classic_engine);
-        ~SchonHageStrassenMultiplicationEngine();
-        void Multiply_UX_UX(ThreadContext& tc, _UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T& w_buf);
-    };
+    extern void Multiply_UX_UX(ThreadContext& tc, bool fixed, __UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_count, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count);
 
 }
 

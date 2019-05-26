@@ -83,7 +83,7 @@ namespace Palmtree::Math::Core::Internal
                 ResourceHolderUINT root(tc);
 
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(u->UNIT_WORD_COUNT + 1);
-                basic_ep.Multiply(_UBASIC_T(u), v, _UBASIC_T(w));
+                Basic::Multiply(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
                 root.CheckNumber(w);
 #endif
@@ -185,7 +185,7 @@ namespace Palmtree::Math::Core::Internal
 
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(u->UNIT_WORD_COUNT + 2);
 
-                basic_ep.Multiply(_UBASIC_T(u), v_hi, v_lo, _UBASIC_T(w));
+                Basic::Multiply(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
                 root.CheckNumber(w);
 #endif
@@ -252,7 +252,7 @@ namespace Palmtree::Math::Core::Internal
 
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(u->UNIT_WORD_COUNT + 1);
 
-                basic_ep.Multiply(_UBASIC_T(u), v, _UBASIC_T(w));
+                Basic::Multiply(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
                 root.CheckNumber(w);
 #endif
@@ -353,7 +353,7 @@ namespace Palmtree::Math::Core::Internal
                 ResourceHolderUINT root(tc);
 
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(u->UNIT_WORD_COUNT + v->UNIT_WORD_COUNT);
-                basic_ep.Multiply(tc, method, _UBASIC_T(u), _UBASIC_T(v), _UBASIC_T(w));
+                Basic::Multiply(tc, method, u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
                 root.CheckNumber(w);
 #endif

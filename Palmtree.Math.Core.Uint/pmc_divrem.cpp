@@ -69,14 +69,14 @@ namespace Palmtree::Math::Core::Internal
                 {
                     __UNIT_TYPE q_buf;
                     __UNIT_TYPE r_buf;
-                    basic_ep.DivRem(u, _UBASIC_T(v), q_buf, r_buf);
+                    Basic::DivRem(u, v->BLOCK, v->UNIT_WORD_COUNT, q_buf, r_buf);
                     *q = (_UINT32_T)q_buf;
                     return ((_UINT32_T)r_buf);
                 }
                 else
                 {
                     __UNIT_TYPE r_buf;
-                    basic_ep.Remainder(u, _UBASIC_T(v), r_buf);
+                    Basic::Remainder(u, v->BLOCK, v->UNIT_WORD_COUNT, r_buf);
                     return ((_UINT32_T)r_buf);
                 }
             }
@@ -139,7 +139,7 @@ namespace Palmtree::Math::Core::Internal
                     *q = root.AllocateNumber(u->UNIT_WORD_COUNT);
 
                     __UNIT_TYPE r_buf;
-                    basic_ep.DivRem(_UBASIC_T(u), v, _UBASIC_T(*q), r_buf);
+                    Basic::DivRem(u->BLOCK, u->UNIT_WORD_COUNT, v, (*q)->BLOCK, (*q)->BLOCK_COUNT, r_buf);
 #ifdef _DEBUG
                     root.CheckNumber(*q);
 #endif
@@ -156,7 +156,7 @@ namespace Palmtree::Math::Core::Internal
                 else
                 {
                     __UNIT_TYPE r_buf;
-                    basic_ep.Remainder(_UBASIC_T(u), v, r_buf);
+                    Basic::Remainder(u->BLOCK, u->UNIT_WORD_COUNT, v, r_buf);
                     return ((_UINT32_T)r_buf);
                 }
             }
@@ -235,14 +235,14 @@ namespace Palmtree::Math::Core::Internal
                     {
                         __UNIT_TYPE r_buf;
                         __UNIT_TYPE q_buf;
-                        basic_ep.DivRem(u_lo, _UBASIC_T(v), q_buf, r_buf);
+                        Basic::DivRem(u_lo, v->BLOCK, v->UNIT_WORD_COUNT, q_buf, r_buf);
                         *q = q_buf;
                         return (r_buf);
                     }
                     else
                     {
                         __UNIT_TYPE r_buf;
-                        basic_ep.Remainder(u_lo, _UBASIC_T(v), r_buf);
+                        Basic::Remainder(u_lo, v->BLOCK, v->UNIT_WORD_COUNT, r_buf);
                         return (r_buf);
                     }
                 }
@@ -256,7 +256,7 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE q_buf[countof(u_buf)];
                         __UNIT_TYPE r_buf[countof(u_buf) + 1]; // 演算結果を格納するためには v と同じ大きさだけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                         __UNIT_TYPE work_v_buf[2];
-                        basic_ep.DivRem(_UBASIC_T(u_buf, countof(u_buf)), _UBASIC_T(v), _UBASIC_T(work_v_buf, countof(work_v_buf)), _UBASIC_T(q_buf, countof(q_buf)), _UBASIC_T(r_buf, countof(r_buf)));
+                        Basic::DivRem(u_buf, countof(u_buf), v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, countof(work_v_buf), q_buf, countof(q_buf), r_buf, countof(r_buf));
                         *q = _FROMWORDTODWORD(q_buf[1], q_buf[0]);
                         return (_FROMWORDTODWORD(r_buf[1], r_buf[0]));
                     }
@@ -265,7 +265,7 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE u_buf[] = { u_lo, u_hi };
                         __UNIT_TYPE r_buf[countof(u_buf) + 1]; // 演算結果を格納するためには v と同じ大きさだけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
                         __UNIT_TYPE work_v_buf[2];
-                        basic_ep.Remainder(_UBASIC_T(u_buf, countof(u_buf)), _UBASIC_T(v), _UBASIC_T(work_v_buf, countof(work_v_buf)), _UBASIC_T(r_buf, countof(r_buf)));
+                        Basic::Remainder(u_buf, countof(u_buf), v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, countof(work_v_buf), r_buf, countof(r_buf));
                         return (_FROMWORDTODWORD(r_buf[1], r_buf[0]));
                     }
                 }
@@ -314,14 +314,14 @@ namespace Palmtree::Math::Core::Internal
                 {
                     __UNIT_TYPE r_buf;
                     __UNIT_TYPE q_buf;
-                    basic_ep.DivRem(u, _UBASIC_T(v), q_buf, r_buf);
+                    Basic::DivRem(u, v->BLOCK, v->UNIT_WORD_COUNT, q_buf, r_buf);
                     *q = q_buf;
                     return (r_buf);
                 }
                 else
                 {
                     __UNIT_TYPE r_buf;
-                    basic_ep.Remainder(u, _UBASIC_T(v), r_buf);
+                    Basic::Remainder(u, v->BLOCK, v->UNIT_WORD_COUNT, r_buf);
                     return (r_buf);
                 }
             }
@@ -392,7 +392,7 @@ namespace Palmtree::Math::Core::Internal
 
                         __UNIT_TYPE r_buf = 0;
 
-                        basic_ep.DivRem(_UBASIC_T(u), v_lo, _UBASIC_T(*q), r_buf);
+                        Basic::DivRem(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, (*q)->BLOCK, (*q)->BLOCK_COUNT, r_buf);
 #ifdef _DEBUG
                         root.CheckNumber(*q);
 #endif
@@ -409,7 +409,7 @@ namespace Palmtree::Math::Core::Internal
                     else
                     {
                         __UNIT_TYPE r_buf = 0;
-                        basic_ep.Remainder(_UBASIC_T(u), v_lo, r_buf);
+                        Basic::Remainder(u->BLOCK, u->UNIT_WORD_COUNT, v_lo, r_buf);
                         return (r_buf);
                     }
                 }
@@ -441,9 +441,10 @@ namespace Palmtree::Math::Core::Internal
 
                             *q = root.AllocateNumber(u->UNIT_WORD_COUNT - countof(v_buf) + 1);
 
-                            _UBASIC_T r_buf = root.AllocateBlock(u->UNIT_WORD_COUNT + 1);
+                            __UNIT_TYPE r_buf_count = u->UNIT_WORD_COUNT + 1;
+                            __UNIT_TYPE* r_buf = root.AllocateBlock(r_buf_count);
 
-                            basic_ep.DivRem(_UBASIC_T(u), _UBASIC_T(v_buf, countof(v_buf)), _UBASIC_T(work_v_buf, countof(work_v_buf)), _UBASIC_T(*q), r_buf);
+                            Basic::DivRem(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, countof(v_buf), work_v_buf, countof(work_v_buf), (*q)->BLOCK, (*q)->BLOCK_COUNT, r_buf, r_buf_count);
 #ifdef _DEBUG
                             root.CheckNumber(*q);
                             root.CheckBlock(r_buf);
@@ -456,7 +457,7 @@ namespace Palmtree::Math::Core::Internal
                             }
                             else
                                 root.UnlinkNumber(*q);
-                            return (_FROMWORDTODWORD(r_buf.BLOCK[1], r_buf.BLOCK[0]));
+                            return (_FROMWORDTODWORD(r_buf[1], r_buf[0]));
                         }
                         else
                         {
@@ -465,13 +466,14 @@ namespace Palmtree::Math::Core::Internal
                             __UNIT_TYPE v_buf[] = { v_lo, v_hi };
                             __UNIT_TYPE work_v_buf[countof(v_buf)];
 
-                            _UBASIC_T r_buf = root.AllocateBlock(u->UNIT_WORD_COUNT + 1);
+                            __UNIT_TYPE r_buf_count = u->UNIT_WORD_COUNT + 1;
+                            __UNIT_TYPE* r_buf = root.AllocateBlock(r_buf_count);
 
-                            basic_ep.Remainder(_UBASIC_T(u), _UBASIC_T(v_buf, countof(v_buf)), _UBASIC_T(work_v_buf, countof(work_v_buf)), r_buf);
+                            Basic::Remainder(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, countof(v_buf), work_v_buf, countof(work_v_buf), r_buf, r_buf_count);
 #ifdef _DEBUG
                             root.CheckBlock(r_buf);
 #endif
-                            return (_FROMWORDTODWORD(r_buf.BLOCK[1], r_buf.BLOCK[0]));
+                            return (_FROMWORDTODWORD(r_buf[1], r_buf[0]));
                         }
                     }
                 }
@@ -524,7 +526,7 @@ namespace Palmtree::Math::Core::Internal
 
                     __UNIT_TYPE r_buf;
 
-                    basic_ep.DivRem(_UBASIC_T(u), v, _UBASIC_T(*q), r_buf);
+                    Basic::DivRem(u->BLOCK, u->UNIT_WORD_COUNT, v, (*q)->BLOCK, (*q)->BLOCK_COUNT, r_buf);
 #ifdef _DEBUG
                     root.CheckNumber(*q);
 #endif
@@ -541,7 +543,7 @@ namespace Palmtree::Math::Core::Internal
                 else
                 {
                     __UNIT_TYPE r_buf;
-                    basic_ep.Remainder(_UBASIC_T(u), v, r_buf);
+                    Basic::Remainder(u->BLOCK, u->UNIT_WORD_COUNT, v, r_buf);
                     return (r_buf);
                 }
             }
@@ -625,9 +627,10 @@ namespace Palmtree::Math::Core::Internal
 
                         *q = root.AllocateNumber(u->UNIT_WORD_COUNT - v->UNIT_WORD_COUNT + 1);
                         NUMBER_OBJECT_UINT* r = root.AllocateNumber(u->UNIT_WORD_COUNT + 1); // 演算結果を格納するためには v->UNIT_WORD_COUNT だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
-                        _UBASIC_T work_v_buf = root.AllocateBlock(v->UNIT_WORD_COUNT);
+                        __UNIT_TYPE work_v_buf_count = v->UNIT_WORD_COUNT;
+                        __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_v_buf_count);
 
-                        basic_ep.DivRem(_UBASIC_T(u), _UBASIC_T(v), work_v_buf, _UBASIC_T(*q), _UBASIC_T(r));
+                        Basic::DivRem(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, work_v_buf_count, (*q)->BLOCK, (*q)->BLOCK_COUNT, r->BLOCK, r->BLOCK_COUNT);
 #ifdef _DEBUG
                         root.CheckBlock(work_v_buf);
                         root.CheckNumber(*q);
@@ -657,9 +660,10 @@ namespace Palmtree::Math::Core::Internal
                         ResourceHolderUINT root(tc);
 
                         NUMBER_OBJECT_UINT* r = root.AllocateNumber(u->UNIT_WORD_COUNT + 1); // 演算結果を格納するためには v->UNIT_WORD_COUNT だけあれば十分であるが、除算の作業用バッファも兼ねているので余分にとっている。
-                        _UBASIC_T work_v_buf = root.AllocateBlock(v->UNIT_WORD_COUNT);
+                        __UNIT_TYPE work_v_buf_count = v->UNIT_WORD_COUNT;
+                        __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_v_buf_count);
 
-                        basic_ep.Remainder(_UBASIC_T(u), _UBASIC_T(v), work_v_buf, _UBASIC_T(r));
+                        Basic::Remainder(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, work_v_buf_count, r->BLOCK, r->BLOCK_COUNT);
 #ifdef _DEBUG
                         root.CheckBlock(work_v_buf);
                         root.CheckNumber(r);
@@ -783,7 +787,7 @@ namespace Palmtree::Math::Core::Internal
                         ResourceHolderUINT root(tc);
 
                         NUMBER_OBJECT_UINT* r = root.AllocateNumber(v->UNIT_WORD_COUNT);
-                        basic_ep.USubtruct(_UBASIC_T(v), _UBASIC_T(u_abs), _UBASIC_T(r));
+                        Basic::USubtruct(v->BLOCK, v->UNIT_WORD_COUNT, u_abs->BLOCK, u_abs->UNIT_WORD_COUNT, r->BLOCK, r->BLOCK_COUNT);
 #ifdef _DEBUG
                         root.CheckNumber(r);
 #endif
@@ -801,23 +805,24 @@ namespace Palmtree::Math::Core::Internal
                 {
                     ResourceHolderUINT root(tc);
 
-                    _UBASIC_T work_v_buf = root.AllocateBlock(v->UNIT_WORD_COUNT);
+                    __UNIT_TYPE work_v_buf_count = v->UNIT_WORD_COUNT;
+                    __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_v_buf_count);
 
                     NUMBER_OBJECT_UINT* r = root.AllocateNumber(u_abs->UNIT_WORD_COUNT + 1);
 
-                    basic_ep.Remainder(_UBASIC_T(u_abs), _UBASIC_T(v), work_v_buf, _UBASIC_T(r));
-                    _UBASIC_T result_r_buf = _UBASIC_T(r).Shrink();
+                    Basic::Remainder(u_abs->BLOCK, u_abs->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, work_v_buf_count, r->BLOCK, r->BLOCK_COUNT);
+                    __UNIT_TYPE result_r_buf_count = Basic::__Shrink(r->BLOCK, r->BLOCK_COUNT);
 #ifdef _DEBUG
                     root.CheckBlock(work_v_buf);
                     root.CheckNumber(r);
 
                     // r の実際のデータのワード長は v のワード長以下のはずである
-                    if (result_r_buf.BLOCK_COUNT > v->UNIT_WORD_COUNT)
+                    if (result_r_buf_count > v->UNIT_WORD_COUNT)
                         throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_divrem.cpp;PMC_Modulo_X_UX_Imp;2");
 #endif
 
-                    if (u_sign < 0 && result_r_buf.BLOCK_COUNT != 0)
-                        basic_ep.UNegativeSubtruct(_UBASIC_T(r), _UBASIC_T(v));
+                    if (u_sign < 0 && result_r_buf_count > 0)
+                        Basic::UNegativeSubtruct(r->BLOCK, r->BLOCK_COUNT, v->BLOCK, v->UNIT_WORD_COUNT);
                     CommitNumber(tc, r);
                     if (r->IS_ZERO)
                     {
@@ -863,7 +868,7 @@ namespace Palmtree::Math::Core::Internal
 
             NUMBER_OBJECT_UINT* r = root.AllocateNumber(v->UNIT_WORD_COUNT);
             __UNIT_TYPE u_buf[] = { r_value };
-            basic_ep.USubtruct(_UBASIC_T(v), _UBASIC_T(u_buf, countof(u_buf)), _UBASIC_T(r));
+            Basic::USubtruct(v->BLOCK, v->UNIT_WORD_COUNT, u_buf, countof(u_buf), r->BLOCK, r->BLOCK_COUNT);
 #ifdef _DEBUG
             root.CheckNumber(r);
 #endif
@@ -907,12 +912,12 @@ namespace Palmtree::Math::Core::Internal
             if (r_value_hi != 0)
             {
                 __UNIT_TYPE u_buf[] = { r_value_lo, r_value_hi };
-                basic_ep.USubtruct(_UBASIC_T(v), _UBASIC_T(u_buf, countof(u_buf)), _UBASIC_T(r));
+                Basic::USubtruct(v->BLOCK, v->UNIT_WORD_COUNT, u_buf, countof(u_buf), r->BLOCK, r->BLOCK_COUNT);
             }
             else
             {
                 __UNIT_TYPE u_buf[] = { r_value_lo };
-                basic_ep.USubtruct(_UBASIC_T(v), _UBASIC_T(u_buf, countof(u_buf)), _UBASIC_T(r));
+                Basic::USubtruct(v->BLOCK, v->UNIT_WORD_COUNT, u_buf, countof(u_buf), r->BLOCK, r->BLOCK_COUNT);
             }
 #ifdef _DEBUG
             root.CheckNumber(r);
@@ -939,7 +944,7 @@ namespace Palmtree::Math::Core::Internal
             ResourceHolderUINT root(tc);
             NUMBER_OBJECT_UINT* r = root.AllocateNumber(v->UNIT_WORD_COUNT);
             __UNIT_TYPE u_buf[] = { r_value };
-            basic_ep.USubtruct(_UBASIC_T(v), _UBASIC_T(u_buf, countof(u_buf)), _UBASIC_T(r));
+            Basic::USubtruct(v->BLOCK, v->UNIT_WORD_COUNT, u_buf, countof(u_buf), r->BLOCK, r->BLOCK_COUNT);
 #ifdef _DEBUG
             root.CheckNumber(r);
 #endif

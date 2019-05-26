@@ -24,6 +24,7 @@
 
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.ExceptionServices;
@@ -122,7 +123,9 @@ namespace Palmtree.Math.Test
             Console.WriteLine(string.Format("***UBigInt settings: {0}", string.Join(", ", UBigInt.ConfigurationSettings.Select(item => string.Format("{0}={1}", item.Key, item.Value)))));
             Console.WriteLine(string.Format("***BigInt settings: {0}", string.Join(", ", BigInt.ConfigurationSettings.Select(item => string.Format("{0}={1}", item.Key, item.Value)))));
             Console.WriteLine(string.Format("***Rational settings: {0}", string.Join(", ", Rational.ConfigurationSettings.Select(item => string.Format("{0}={1}", item.Key, item.Value)))));
+            var sw = new Stopwatch();
             Console.WriteLine("***test start");
+            sw.Start();
             var lock_obj = new object();
             if (_parallel)
             {
@@ -140,6 +143,8 @@ namespace Palmtree.Math.Test
                     TaskAction(test_item, ref 合計項目数, ref NG項目数, lock_obj);
                 };
             }
+            sw.Stop();
+            var elapsed_time = sw.Elapsed.TotalSeconds; 
             if (NG項目数 > 0)
             {
                 var default_fgc = Console.ForegroundColor;
@@ -158,7 +163,7 @@ namespace Palmtree.Math.Test
                     Console.Write(string.Format("NG率:{0:p2}", (double)NG項目数 / 合計項目数));
                     Console.ForegroundColor = default_fgc;
                     Console.BackgroundColor = default_bgc;
-                    Console.WriteLine();
+                    Console.WriteLine(string.Format(", 所要時間:{0:F2}[秒]", elapsed_time));
                 }
                 finally
                 {
@@ -168,19 +173,19 @@ namespace Palmtree.Math.Test
             }
             else
             {
-                Console.WriteLine(string.Format("***test end: 合計項目数:{0}, OK項目数:{1}, NG項目数:{2}, NG率:{3:p2}", 合計項目数, 合計項目数, 0, 0.0));
+                Console.WriteLine(string.Format("***test end: 合計項目数:{0}, OK項目数:{1}, NG項目数:{2}, NG率:{3:p2}, 所要時間:{4:F2}[秒]", 合計項目数, 合計項目数, 0, 0.0, elapsed_time));
             }
         }
 
         private static bool PluginFilter(IComponentTestPlugin plugin)
         {
-            //return (plugin.PluginName.Contains("karatsuba"));
+            //return (plugin.PluginName.Contains("uint.increment"));
             return (true);
         }
 
         private static bool TestItemFilter(IComponentTestItem test_item)
         {
-            //return (test_item.Index == 49);
+            //return (test_item.Index == 549);
             return (true);
         }
 

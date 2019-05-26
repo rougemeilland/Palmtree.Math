@@ -72,11 +72,11 @@ namespace Palmtree::Math::Core::Internal
 
                 __UNIT_TYPE v_buf[] = { v };
                 __UNIT_TYPE work_buf_count = _MAXIMUM_UNIT(u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(sizeof(v), __UNIT_TYPE_BYTE_COUNT));
-                _UBASIC_T work_u_buf = root.AllocateBlock(work_buf_count);
-                _UBASIC_T work_v_buf = root.AllocateBlock(work_buf_count);
+                __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_buf_count);
+                __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_buf_count);
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(_MINIMUM_UNIT(u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(sizeof(v), __UNIT_TYPE_BYTE_COUNT)) + 1);
 
-                basic_ep.GreatestCommonDivisor(_UBASIC_T(u), _UBASIC_T(v_buf, countof(v_buf)), work_u_buf, work_v_buf, _UBASIC_T(w));
+                Basic::GreatestCommonDivisor(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, countof(v_buf), work_u_buf, work_buf_count, work_v_buf, work_buf_count, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
                 root.CheckBlock(work_u_buf);
                 root.CheckBlock(work_v_buf);
@@ -138,11 +138,11 @@ namespace Palmtree::Math::Core::Internal
 
                     __UNIT_TYPE v_buf[] = { v_lo };
                     __UNIT_TYPE work_buf_count = _MAXIMUM_UNIT(u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(sizeof(v), __UNIT_TYPE_BYTE_COUNT));
-                    _UBASIC_T work_u_buf = root.AllocateBlock(work_buf_count);
-                    _UBASIC_T work_v_buf = root.AllocateBlock(work_buf_count);
+                    __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_buf_count);
+                    __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_buf_count);
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(_MINIMUM_UNIT(u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(sizeof(v), __UNIT_TYPE_BYTE_COUNT)) + 1);
 
-                    basic_ep.GreatestCommonDivisor(_UBASIC_T(u), _UBASIC_T(v_buf, countof(v_buf)), work_u_buf, work_v_buf, _UBASIC_T(w));
+                    Basic::GreatestCommonDivisor(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, countof(v_buf), work_u_buf, work_buf_count, work_v_buf, work_buf_count, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
                     root.CheckBlock(work_u_buf);
                     root.CheckBlock(work_v_buf);
@@ -160,11 +160,11 @@ namespace Palmtree::Math::Core::Internal
 
                     __UNIT_TYPE v_buf[] = { v_lo, v_hi };
                     __UNIT_TYPE work_buf_count = _MAXIMUM_UNIT(u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(sizeof(v), __UNIT_TYPE_BYTE_COUNT));
-                    _UBASIC_T work_u_buf = root.AllocateBlock(work_buf_count);
-                    _UBASIC_T work_v_buf = root.AllocateBlock(work_buf_count);
+                    __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_buf_count);
+                    __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_buf_count);
                     NUMBER_OBJECT_UINT* w = root.AllocateNumber(_MINIMUM_UNIT(u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(sizeof(v), __UNIT_TYPE_BYTE_COUNT)) + 1);
 
-                    basic_ep.GreatestCommonDivisor(_UBASIC_T(u), _UBASIC_T(v_buf, countof(v_buf)), work_u_buf, work_v_buf, _UBASIC_T(w));
+                    Basic::GreatestCommonDivisor(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, countof(v_buf), work_u_buf, work_buf_count, work_v_buf, work_buf_count, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
                     root.CheckBlock(work_u_buf);
                     root.CheckBlock(work_v_buf);
@@ -220,11 +220,11 @@ namespace Palmtree::Math::Core::Internal
 
                 __UNIT_TYPE v_buf[] = { v };
                 __UNIT_TYPE work_buf_count = _MAXIMUM_UNIT(u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(sizeof(v), __UNIT_TYPE_BYTE_COUNT));
-                _UBASIC_T work_u_buf = root.AllocateBlock(work_buf_count);
-                _UBASIC_T work_v_buf = root.AllocateBlock(work_buf_count);
+                __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_buf_count);
+                __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_buf_count);
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(_MINIMUM_UNIT(u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(sizeof(v), __UNIT_TYPE_BYTE_COUNT)) + 1);
 
-                basic_ep.GreatestCommonDivisor(_UBASIC_T(u), _UBASIC_T(v_buf, countof(v_buf)), work_u_buf, work_v_buf, _UBASIC_T(w));
+                Basic::GreatestCommonDivisor(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, countof(v_buf), work_u_buf, work_buf_count, work_v_buf, work_buf_count, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
                 root.CheckBlock(work_u_buf);
                 root.CheckBlock(work_v_buf);
@@ -282,11 +282,11 @@ namespace Palmtree::Math::Core::Internal
                 ResourceHolderUINT root(tc);
 
                 __UNIT_TYPE work_buf_count = _MAXIMUM_UNIT(u->UNIT_WORD_COUNT, v->BLOCK_COUNT);
-                _UBASIC_T work_u_buf = root.AllocateBlock(work_buf_count);
-                _UBASIC_T work_v_buf = root.AllocateBlock(work_buf_count);
+                __UNIT_TYPE* work_u_buf = root.AllocateBlock(work_buf_count);
+                __UNIT_TYPE* work_v_buf = root.AllocateBlock(work_buf_count);
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(_MINIMUM_UNIT(u->UNIT_WORD_COUNT, v->BLOCK_COUNT) + 1);
 
-                basic_ep.GreatestCommonDivisor(_UBASIC_T(u), _UBASIC_T(v), work_u_buf, work_v_buf, _UBASIC_T(w));
+                Basic::GreatestCommonDivisor(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_u_buf, work_buf_count, work_v_buf, work_buf_count, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
                 root.CheckBlock(work_u_buf);
                 root.CheckBlock(work_v_buf);

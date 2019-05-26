@@ -59,7 +59,7 @@ namespace Palmtree::Math::Core::Internal
 
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(_MAXIMUM_UNIT(u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(sizeof(v), __UNIT_TYPE_BYTE_COUNT)));
 
-            basic_ep.BitwiseOr(_UBASIC_T(u), v, _UBASIC_T(w));
+            Basic::BitwiseOr(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
             root.CheckNumber(w);
 #endif
@@ -134,7 +134,7 @@ namespace Palmtree::Math::Core::Internal
 
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(_MAXIMUM_UNIT(u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(sizeof(v), __UNIT_TYPE_BYTE_COUNT)));
 
-            basic_ep.BitwiseOr(_UBASIC_T(u), v_hi, v_lo, _UBASIC_T(w));
+            Basic::BitwiseOr(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
             root.CheckNumber(w);
 #endif
@@ -172,7 +172,7 @@ namespace Palmtree::Math::Core::Internal
 
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(_MAXIMUM_UNIT(u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(sizeof(v), __UNIT_TYPE_BYTE_COUNT)));
 
-            basic_ep.BitwiseOr(_UBASIC_T(u), v, _UBASIC_T(w));
+            Basic::BitwiseOr(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
             root.CheckNumber(w);
 #endif
@@ -229,7 +229,7 @@ namespace Palmtree::Math::Core::Internal
 
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(_MAXIMUM_UNIT(u->UNIT_WORD_COUNT, v->UNIT_WORD_COUNT));
 
-            basic_ep.BitwiseOr(_UBASIC_T(u), _UBASIC_T(v), _UBASIC_T(w));
+            Basic::BitwiseOr(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
             root.CheckNumber(w);
 #endif

@@ -355,7 +355,7 @@ namespace Palmtree::Math::Core::Internal
             p->SIGNATURE1 = PMC_SIGNATURE;
             p->SIGNATURE2 = PMC_UINT_SIGNATURE;
             p->UNIT_BIT_COUNT = word_count * __UNIT_TYPE_BIT_COUNT;
-            p->UNIT_WORD_COUNT = word_count;
+            p->UNIT_WORD_COUNT = 0;
             p->BLOCK_COUNT = word_count;
             p->BLOCK = block;
             p->BLOCK_CHECK_CODE = check_code;

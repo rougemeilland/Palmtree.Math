@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-#include "pmc_basic_multiply_classic.h"
+#include "pmc_multiply_classic.h"
 #include "pmc_basic.h"
 #include "pmc_inline_func.h"
 
@@ -51,13 +51,12 @@ namespace Palmtree::Math::Core::Internal::Multiply::Classic
         return (k);
     }
 
-    static void Multiply_WORD(_UBASIC_T u_buf, __UNIT_TYPE v, _UBASIC_T w_buf)
+    static void Multiply_WORD(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE v, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count)
     {
-        __UNIT_TYPE* up = u_buf.BLOCK;
-        __UNIT_TYPE u_count = u_buf.BLOCK_COUNT;
-        __UNIT_TYPE* wp = w_buf.BLOCK;
+        __UNIT_TYPE* up = u_buf;
+        __UNIT_TYPE* wp = w_buf;
         __UNIT_TYPE k = 0;
-        __UNIT_TYPE count = u_count >> 5;
+        __UNIT_TYPE count = u_buf_count >> 5;
 
         while (count != 0)
         {
@@ -104,7 +103,7 @@ namespace Palmtree::Math::Core::Internal::Multiply::Classic
 #endif
         }
 
-        if (u_count & 0x10)
+        if (u_buf_count & 0x10)
         {
             k = _MULTIPLY_DIGIT_UNIT(k, &up[0], v, &wp[0]);
             k = _MULTIPLY_DIGIT_UNIT(k, &up[1], v, &wp[1]);
@@ -132,7 +131,7 @@ namespace Palmtree::Math::Core::Internal::Multiply::Classic
 #endif
         }
 
-        if (u_count & 0x8)
+        if (u_buf_count & 0x8)
         {
             k = _MULTIPLY_DIGIT_UNIT(k, &up[0], v, &wp[0]);
             k = _MULTIPLY_DIGIT_UNIT(k, &up[1], v, &wp[1]);
@@ -152,7 +151,7 @@ namespace Palmtree::Math::Core::Internal::Multiply::Classic
 #endif
         }
 
-        if (u_count & 0x4)
+        if (u_buf_count & 0x4)
         {
             k = _MULTIPLY_DIGIT_UNIT(k, &up[0], v, &wp[0]);
             k = _MULTIPLY_DIGIT_UNIT(k, &up[1], v, &wp[1]);
@@ -168,7 +167,7 @@ namespace Palmtree::Math::Core::Internal::Multiply::Classic
 #endif
         }
 
-        if (u_count & 0x2)
+        if (u_buf_count & 0x2)
         {
             k = _MULTIPLY_DIGIT_UNIT(k, &up[0], v, &wp[0]);
             k = _MULTIPLY_DIGIT_UNIT(k, &up[1], v, &wp[1]);
@@ -182,7 +181,7 @@ namespace Palmtree::Math::Core::Internal::Multiply::Classic
 #endif
         }
 
-        if (u_count & 0x1)
+        if (u_buf_count & 0x1)
         {
             k = _MULTIPLY_DIGIT_UNIT(k, &up[0], v, &wp[0]);
             up += 1;
@@ -198,13 +197,12 @@ namespace Palmtree::Math::Core::Internal::Multiply::Classic
         *wp = k;
     }
 
-    static void Multiply_Add_WORD(_UBASIC_T u_buf, __UNIT_TYPE v, _UBASIC_T w_buf)
+    static void Multiply_Add_WORD(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE v, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count)
     {
-        __UNIT_TYPE* up = u_buf.BLOCK;
-        __UNIT_TYPE u_count = u_buf.BLOCK_COUNT;
-        __UNIT_TYPE* wp = w_buf.BLOCK;
+        __UNIT_TYPE* up = u_buf;
+        __UNIT_TYPE* wp = w_buf;
         __UNIT_TYPE k = 0;
-        __UNIT_TYPE count = u_count >> 5;
+        __UNIT_TYPE count = u_buf_count >> 5;
 
         while (count != 0)
         {
@@ -251,7 +249,7 @@ namespace Palmtree::Math::Core::Internal::Multiply::Classic
 #endif
         }
 
-        if (u_count & 0x10)
+        if (u_buf_count & 0x10)
         {
             k = _MULTIPLY_ADD_DIGIT_UNIT(k, &up[0], v, &wp[0]);
             k = _MULTIPLY_ADD_DIGIT_UNIT(k, &up[1], v, &wp[1]);
@@ -279,7 +277,7 @@ namespace Palmtree::Math::Core::Internal::Multiply::Classic
 #endif
         }
 
-        if (u_count & 0x8)
+        if (u_buf_count & 0x8)
         {
             k = _MULTIPLY_ADD_DIGIT_UNIT(k, &up[0], v, &wp[0]);
             k = _MULTIPLY_ADD_DIGIT_UNIT(k, &up[1], v, &wp[1]);
@@ -299,7 +297,7 @@ namespace Palmtree::Math::Core::Internal::Multiply::Classic
 #endif
         }
 
-        if (u_count & 0x4)
+        if (u_buf_count & 0x4)
         {
             k = _MULTIPLY_ADD_DIGIT_UNIT(k, &up[0], v, &wp[0]);
             k = _MULTIPLY_ADD_DIGIT_UNIT(k, &up[1], v, &wp[1]);
@@ -315,7 +313,7 @@ namespace Palmtree::Math::Core::Internal::Multiply::Classic
 #endif
         }
 
-        if (u_count & 0x2)
+        if (u_buf_count & 0x2)
         {
             k = _MULTIPLY_ADD_DIGIT_UNIT(k, &up[0], v, &wp[0]);
             k = _MULTIPLY_ADD_DIGIT_UNIT(k, &up[1], v, &wp[1]);
@@ -329,7 +327,7 @@ namespace Palmtree::Math::Core::Internal::Multiply::Classic
 #endif
         }
 
-        if (u_count & 0x1)
+        if (u_buf_count & 0x1)
         {
             k = _MULTIPLY_ADD_DIGIT_UNIT(k, &up[0], v, &wp[0]);
             up += 1;
@@ -345,68 +343,63 @@ namespace Palmtree::Math::Core::Internal::Multiply::Classic
         *wp = k;
     }
 
-    ClassicMultiplicationEngine::ClassicMultiplicationEngine()
-    {
-    }
-
-    ClassicMultiplicationEngine::~ClassicMultiplicationEngine()
-    {
-    }
-
-    void ClassicMultiplicationEngine::Multiply_UX_1W(_UBASIC_T u_buf, __UNIT_TYPE v, _UBASIC_T w_buf)
+    void Multiply_UX_1W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE v, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count)
     {
 #ifdef _DEBUG
-        if (u_buf.BLOCK_COUNT == 0)
+        if (u_buf_count == 0)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_basic_multiply_classic.cpp;BasicOperatorEngine::Multiply_UX_1W;1");
         if (v == 0)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_basic_multiply_classic.cpp;BasicOperatorEngine::Multiply_UX_1W;2");
 #endif
-        Multiply_WORD(u_buf, v, w_buf);
-        w_buf.Region(u_buf.BLOCK_COUNT + 1).Clear();
+        Multiply_WORD(u_buf, u_buf_count, v, w_buf, w_buf_count);
+        _ZERO_MEMORY_UNIT(w_buf + (u_buf_count + 1), w_buf_count - (u_buf_count + 1));
     }
 
-    void ClassicMultiplicationEngine::Multiply_UX_2W(_UBASIC_T u_buf, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, _UBASIC_T w_buf)
+    void Multiply_UX_2W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count)
     {
 #ifdef _DEBUG
-        if (u_buf.BLOCK_COUNT == 0)
+        if (u_buf_count == 0)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_basic_multiply_classic.cpp;BasicOperatorEngine::Multiply_UX_2W;1");
         if (v_hi == 0 && v_lo == 0)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_basic_multiply_classic.cpp;BasicOperatorEngine::Multiply_UX_2W;2");
 #endif
-        Multiply_WORD(u_buf, v_lo, w_buf);
-        w_buf.Region(u_buf.BLOCK_COUNT + 1).Clear();
-        Multiply_Add_WORD(u_buf, v_hi, w_buf.Region(1, w_buf.BLOCK_COUNT - 1));
+        Multiply_WORD(u_buf, u_buf_count, v_lo, w_buf, w_buf_count);
+        _ZERO_MEMORY_UNIT(w_buf + (u_buf_count + 1), w_buf_count - (u_buf_count + 1));
+        Multiply_Add_WORD(u_buf, u_buf_count, v_hi, w_buf + 1, w_buf_count - 1);
     }
 
-    void ClassicMultiplicationEngine::Multiply_UX_UX(_UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T w_buf)
+    static void Multiply_UX_UX_Classic(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_count, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count)
     {
 #ifdef _DEBUG
-        if (u_buf.BLOCK_COUNT == 0)
+        if (u_buf_count < v_buf_count)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_basic_multiply_classic.cpp;BasicOperatorEngine::Multiply_UX_UX;1");
-        if (v_buf.BLOCK_COUNT == 0)
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_basic_multiply_classic.cpp;BasicOperatorEngine::Multiply_UX_UX;1");
+        if (v_buf_count == 0)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_basic_multiply_classic.cpp;BasicOperatorEngine::Multiply_UX_UX;2");
 #endif
-        if (u_buf.BLOCK_COUNT < v_buf.BLOCK_COUNT)
-            Multiply_UX_UX(v_buf, u_buf, w_buf);
-        else
-        {
-            __UNIT_TYPE* vp = v_buf.BLOCK;
-            __UNIT_TYPE count = v_buf.BLOCK_COUNT;
-            __UNIT_TYPE w_index = 0;
+        __UNIT_TYPE* vp = v_buf;
+        __UNIT_TYPE count = v_buf_count;
+        __UNIT_TYPE w_index = 0;
 
-            Multiply_WORD(u_buf, *vp, w_buf);
-            w_buf.Region(u_buf.BLOCK_COUNT + 1).Clear();
+        Multiply_WORD(u_buf, u_buf_count, *vp, w_buf, w_buf_count);
+        _ZERO_MEMORY_UNIT(w_buf + (u_buf_count + 1), w_buf_count - (u_buf_count + 1));
+        ++vp;
+        --count;
+        ++w_index;
+        while (count > 0)
+        {
+            Multiply_Add_WORD(u_buf, u_buf_count, *vp, w_buf + w_index, w_buf_count - w_index);
             ++vp;
             --count;
             ++w_index;
-            while (count > 0)
-            {
-                Multiply_Add_WORD(u_buf, *vp, w_buf.Region(w_index));
-                ++vp;
-                --count;
-                ++w_index;
-            }
         }
+    }
+
+    void Multiply_UX_UX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_count, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count)
+    {
+        if (u_buf_count >= v_buf_count)
+            Multiply_UX_UX_Classic(u_buf, u_buf_count, v_buf, v_buf_count, w_buf, w_buf_count);
+        else
+            Multiply_UX_UX_Classic(v_buf, v_buf_count, u_buf, u_buf_count, w_buf, w_buf_count);
     }
 
 }

@@ -397,7 +397,15 @@ namespace Palmtree::Math::Core::Internal
         return ((_UINT32_T)(t / v));
     }
 #elif defined(_M_X64)
-    extern __UNIT_TYPE __DLLEXPORT_DIVREM _DIVREM_UNIT(__UNIT_TYPE u_high, __UNIT_TYPE u_low, __UNIT_TYPE v, __UNIT_TYPE *r);
+    namespace Basic
+    {
+        extern __UNIT_TYPE __DLLEXPORT_DIVREM _DIVREM_UNIT(__UNIT_TYPE u_high, __UNIT_TYPE u_low, __UNIT_TYPE v, __UNIT_TYPE *r);
+    }
+
+    __inline static __UNIT_TYPE _DIVREM_UNIT(__UNIT_TYPE u_high, __UNIT_TYPE u_low, __UNIT_TYPE v, __UNIT_TYPE *r)
+    {
+        return (Basic::_DIVREM_UNIT(u_high, u_low, v, r));
+    }
 #else
 #error unknown platform
 #endif
@@ -429,7 +437,15 @@ namespace Palmtree::Math::Core::Internal
         return ((_UINT32_T)(t % v));
     }
 #elif defined(_M_X64)
-    extern __UNIT_TYPE __DLLEXPORT_DIVREM _DIVREM_SINGLE_UNIT(__UNIT_TYPE r, __UNIT_TYPE u, __UNIT_TYPE v, __UNIT_TYPE *q);
+    namespace Basic
+    {
+        extern __UNIT_TYPE __DLLEXPORT_DIVREM _DIVREM_SINGLE_UNIT(__UNIT_TYPE r, __UNIT_TYPE u, __UNIT_TYPE v, __UNIT_TYPE *q);
+    }
+
+    __inline static __UNIT_TYPE _DIVREM_SINGLE_UNIT(__UNIT_TYPE r, __UNIT_TYPE u, __UNIT_TYPE v, __UNIT_TYPE *q)
+    {
+        return (_DIVREM_SINGLE_UNIT(r, u, v, q));
+    }
 #else
 #error unknown platform
 #endif

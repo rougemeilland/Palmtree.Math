@@ -1,4 +1,4 @@
-﻿/*
+/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -24,28 +24,15 @@
 
 #pragma once
 
-#ifndef PMC_MULTIPLY_CLASSIC_H
-#define PMC_MULTIPLY_CLASSIC_H
+#ifndef PMC_MULTIPLY_TOOMCOOKMULTIPLICATIONENGINE_H
+#define PMC_MULTIPLY_TOOMCOOKMULTIPLICATIONENGINE_H
 
 #include "pmc_uint_internal.h"
 
-namespace Palmtree::Math::Core::Internal
-{
-    class _UBASIC_T;
-}
-
-namespace Palmtree::Math::Core::Internal::Multiply::Classic
+namespace Palmtree::Math::Core::Internal::Multiply::ToomCook
 {
 
-    class ClassicMultiplicationEngine
-    {
-    public:
-        ClassicMultiplicationEngine();
-        ~ClassicMultiplicationEngine();
-        void Multiply_UX_1W(_UBASIC_T u_buf, __UNIT_TYPE v, _UBASIC_T w_buf);
-        void Multiply_UX_2W(_UBASIC_T u_buf, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, _UBASIC_T w_buf);
-        void Multiply_UX_UX(_UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T w_buf);
-    };
+    extern void Multiply_UX_UX(ThreadContext& tc, bool fixed, __UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_count, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count);
 
 }
 

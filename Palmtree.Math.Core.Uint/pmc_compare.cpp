@@ -54,7 +54,7 @@ namespace Palmtree::Math::Core::Internal
         {
             // x と y がともに 0 ではない場合
 
-            return (basic_ep.Compare(_UBASIC_T(u), v));
+            return (Basic::Compare(u->BLOCK, u->UNIT_WORD_COUNT, v));
         }
     }
 
@@ -119,7 +119,7 @@ namespace Palmtree::Math::Core::Internal
             __UNIT_TYPE u_bit_count = u->UNIT_BIT_COUNT;
             _UINT32_T v_hi;
             _UINT32_T v_lo = _FROMDWORDTOWORD(v, &v_hi);
-            return (basic_ep.Compare(_UBASIC_T(u), v_hi, v_lo));
+            return (Basic::Compare(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo));
         }
     }
 #elif defined(_M_X64)
@@ -148,7 +148,7 @@ namespace Palmtree::Math::Core::Internal
         {
             // u と v がともに 0 ではない場合
 
-            return (basic_ep.Compare(_UBASIC_T(u), v));
+            return (Basic::Compare(u->BLOCK, u->UNIT_WORD_COUNT, v));
         }
     }
 #else
@@ -195,7 +195,7 @@ namespace Palmtree::Math::Core::Internal
             return (SIGN_POSITIVE);
         else
         {
-            return (basic_ep.Compare(_UBASIC_T(u), _UBASIC_T(v)));
+            return (Basic::Compare(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT));
         }
     }
 

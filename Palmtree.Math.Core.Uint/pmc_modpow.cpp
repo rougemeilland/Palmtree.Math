@@ -30,13 +30,6 @@
 namespace Palmtree::Math::Core::Internal
 {
 
-    __inline static void SwapPointer(_UBASIC_T** u, _UBASIC_T** v)
-    {
-        _UBASIC_T* t = *u;
-        *u = *v;
-        *v = t;
-    }
-
     static NUMBER_OBJECT_UINT* Remainder(ThreadContext& tc, NUMBER_OBJECT_UINT* u, NUMBER_OBJECT_UINT* v)
     {
         if (u->UNIT_WORD_COUNT < v->UNIT_WORD_COUNT)
@@ -44,10 +37,10 @@ namespace Palmtree::Math::Core::Internal
         else
         {
             ResourceHolderUINT root(tc);
-            _UBASIC_T work_v_buf = root.AllocateBlock(v->UNIT_WORD_COUNT);
+            __UNIT_TYPE* work_v_buf = root.AllocateBlock(v->UNIT_WORD_COUNT);
             NUMBER_OBJECT_UINT* r = root.AllocateNumber(u->UNIT_WORD_COUNT + 1);
 
-            basic_ep.Remainder(_UBASIC_T(u), _UBASIC_T(v), work_v_buf, _UBASIC_T(r));
+            Basic::Remainder(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_v_buf, v->UNIT_WORD_COUNT, r->BLOCK, r->BLOCK_COUNT);
 #ifdef _DEBUG
             root.CheckBlock(work_v_buf);
             root.CheckNumber(r);
@@ -68,16 +61,24 @@ namespace Palmtree::Math::Core::Internal
     {
         ResourceHolderUINT root(tc);
 
-        _UBASIC_T m_buf(m);
+        _UINT32_T m_factor = _LZCNT_ALT_UNIT(m->BLOCK[m->UNIT_WORD_COUNT - 1]);
 
-        // 作業域を獲得する
-        _UBASIC_T _v_2_buf = root.AllocateBlock(v->UNIT_WORD_COUNT + 1);
-        _UBASIC_T work_1_buf = root.AllocateBlock(m_buf.BLOCK_COUNT * 2 + 1);
-        _UBASIC_T work_2_buf = root.AllocateBlock(m_buf.BLOCK_COUNT * 2 + 1);
-        _UBASIC_T work_v_buf = root.AllocateBlock(m_buf.BLOCK_COUNT);
-        NUMBER_OBJECT_UINT* r = root.AllocateNumber(m_buf.BLOCK_COUNT);
+        __UNIT_TYPE v_buf_length = v->UNIT_WORD_COUNT + 2;
+        __UNIT_TYPE* v_buf = root.AllocateBlock(v_buf_length);
+        Basic::LeftShift(v->BLOCK, v->UNIT_WORD_COUNT, m_factor, v_buf, v_buf_length);
+        __UNIT_TYPE v_buf_count = Basic::__Shrink(v_buf, v_buf_length);
 
-        int cmp = basic_ep.Compare(_UBASIC_T(v), _UBASIC_T(m));
+        __UNIT_TYPE m_buf_count = m->UNIT_WORD_COUNT;
+        __UNIT_TYPE* m_buf = root.AllocateBlock(m_buf_count);
+        Basic::LeftShift(m->BLOCK, m->UNIT_WORD_COUNT, m_factor, m_buf, m_buf_count);
+
+        __UNIT_TYPE work_buf_count = m->UNIT_WORD_COUNT * 2 + 1;
+        __UNIT_TYPE* work_1_buf = root.AllocateBlock(work_buf_count);
+        __UNIT_TYPE* work_2_buf = root.AllocateBlock(work_buf_count);
+
+        NUMBER_OBJECT_UINT* r = root.AllocateNumber(m->UNIT_WORD_COUNT);
+
+        int cmp = Basic::Compare(v_buf, v_buf_count, m_buf, m_buf_count);
         if (cmp == 0)
         {
             // v == m である場合
@@ -89,24 +90,25 @@ namespace Palmtree::Math::Core::Internal
         {
             // v > m である場合
 
-            // v2 を v % m に設定する。
+            // v %= m とする。
 
-            basic_ep.Remainder(_UBASIC_T(v), m_buf, work_v_buf, _v_2_buf);
 #ifdef _DEBUG
-            root.CheckBlock(work_v_buf);
-            root.CheckBlock(_v_2_buf);
+            if (v_buf_count + 1 > v_buf_length)
+                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_modpow.cpp;ModulePower;2");
 #endif
+            v_buf[v_buf_count++] = 0;
+            Basic::Remainder(v_buf, v_buf_count, m_buf, m_buf_count);
+#ifdef _DEBUG
+            root.CheckBlock(v_buf);
+#endif
+            v_buf_count = Basic::__Shrink(v_buf, v_buf_count);
         }
         else
         {
-            // v2 を v に設定する。
-
-            _v_2_buf.CopyFrom(_UBASIC_T(v));
+            // nop
         }
 
-        _UBASIC_T v_2_buf = _v_2_buf.Shrink();
-
-        if (v_2_buf.BLOCK_COUNT == 0)
+        if (v_buf_count == 0)
         {
             // v2 が 0 になってしまった場合はべき乗を繰り返しても 0 になることが確定なので 0 を返す
             return (&number_object_uint_zero);
@@ -119,10 +121,13 @@ namespace Palmtree::Math::Core::Internal
         // e_mask は e の最上位 bit を示しているはず
         // かつ、e は 2以上であるので、同時に最下位 bit であることはあり得ない
 
-        work_1_buf.CopyFrom(v_2_buf);
-        _UBASIC_T* u_ptr = &work_1_buf;
-        _UBASIC_T* w_ptr = &work_2_buf;
-        __UNIT_TYPE u_count = v_2_buf.BLOCK_COUNT;
+        __UNIT_TYPE* u_ptr = work_1_buf;
+        __UNIT_TYPE* w_ptr = work_2_buf;
+
+        // u の初期値として v を設定する
+        _COPY_MEMORY_UNIT(u_ptr, v_buf, v_buf_count);
+
+        __UNIT_TYPE u_count = v_buf_count;
 
         while (e_count > 0)
         {
@@ -138,33 +143,46 @@ namespace Palmtree::Math::Core::Internal
                 break;
 
             // w := u * u を計算する
-            basic_ep.Multiply(tc, PMC_MULTIPLICATION_METHOD_AUTO, u_ptr->Region(0, u_count), u_ptr->Region(0, u_count), *w_ptr);
 #ifdef _DEBUG
-            root.CheckBlock(*w_ptr);
+            if (u_count * 2 > work_buf_count)
+                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_modpow.cpp;ModulePower;1");
 #endif
-            SwapPointer(&u_ptr, &w_ptr);
-            u_count *= 2;
-            while (u_ptr->BLOCK[u_count - 1] == 0)
-                --u_count;
+            Basic::Multiply(tc, PMC_MULTIPLICATION_METHOD_AUTO, u_ptr, u_count, u_ptr, u_count, w_ptr, u_count * 2);
+#ifdef _DEBUG
+            root.CheckBlock(w_ptr);
+#endif
+            u_count = Basic::__Shrink(w_ptr, u_count * 2);
 
-            // w := u % m を計算する
-            if (u_count >= m_buf.BLOCK_COUNT)
-            {
-                basic_ep.Remainder(u_ptr->Region(0, u_count), m_buf, work_v_buf, *w_ptr);
+            // u := w >> m_factor を計算する
+            Basic::RightShift(w_ptr, u_count, m_factor, u_ptr, u_count);
 #ifdef _DEBUG
-                root.CheckBlock(work_v_buf);
-                root.CheckBlock(*w_ptr);
+            root.CheckBlock(u_ptr);
 #endif
-                SwapPointer(&u_ptr, &w_ptr);
-                u_count = m_buf.BLOCK_COUNT;
-                while (u_ptr->BLOCK[u_count - 1] == 0)
-                    --u_count;
+            u_count = Basic::__Shrink(u_ptr, u_count);
+
+            // u := u % m を計算する
+            if (u_count >= m_buf_count)
+            {
+#ifdef _DEBUG
+                if (u_count + 1 > work_buf_count)
+                    throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_modpow.cpp;ModulePower;2");
+#endif
+                u_ptr[u_count++] = 0;
+                Basic::Remainder(u_ptr, u_count, m_buf, m_buf_count);
+#ifdef _DEBUG
+                root.CheckBlock(u_ptr);
+#endif
+                u_count = Basic::__Shrink(u_ptr, u_count);
 
                 if (u_count <= 0)
                 {
                     // 剰余が 0 になった場合はこれ以上続行しても解が 0 以外にはならないので、処理を中断して 0 を返す
                     return (&number_object_uint_zero);
                 }
+#ifdef _DEBUG
+                if (u_count > m_buf_count)
+                    throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_modpow.cpp;ModulePower;3");
+#endif
             }
 
             if (e_mask & e->BLOCK[e_count - 1])
@@ -172,39 +190,52 @@ namespace Palmtree::Math::Core::Internal
                 // e の当該桁のビットが立っている場合
 
                 // w := u * v を計算する
-                basic_ep.Multiply(tc, PMC_MULTIPLICATION_METHOD_AUTO, u_ptr->Region(0, u_count), v_2_buf, *w_ptr);
 #ifdef _DEBUG
-                root.CheckBlock(*w_ptr);
+                if (u_count + v_buf_count > work_buf_count)
+                    throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_modpow.cpp;ModulePower;4");
 #endif
-                SwapPointer(&u_ptr, &w_ptr);
-                u_count += v_2_buf.BLOCK_COUNT;
-                while (u_ptr->BLOCK[u_count - 1] == 0)
-                    --u_count;
+                Basic::Multiply(tc, PMC_MULTIPLICATION_METHOD_AUTO, u_ptr, u_count, v_buf, v_buf_count, w_ptr, u_count + v_buf_count);
+#ifdef _DEBUG
+                root.CheckBlock(w_ptr);
+#endif
+                u_count = Basic::__Shrink(w_ptr, u_count + v_buf_count);
 
-                // w := u % m を計算する
-                if (u_count >= m_buf.BLOCK_COUNT)
-                {
-                    basic_ep.Remainder(u_ptr->Region(0, u_count), m_buf, work_v_buf, *w_ptr);
+                // u := w >> m_factor を計算する
+                Basic::RightShift(w_ptr, u_count, m_factor, u_ptr, u_count);
 #ifdef _DEBUG
-                    root.CheckBlock(work_v_buf);
-                    root.CheckBlock(*w_ptr);
+                root.CheckBlock(u_ptr);
 #endif
-                    SwapPointer(&u_ptr, &w_ptr);
-                    u_count = m_buf.BLOCK_COUNT;
-                    while (u_ptr->BLOCK[u_count - 1] == 0)
-                        --u_count;
+                u_count = Basic::__Shrink(u_ptr, u_count);
+
+                // u := u % m を計算する
+                if (u_count >= m_buf_count)
+                {
+#ifdef _DEBUG
+                    if (u_count + 1 > work_buf_count)
+                        throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_modpow.cpp;ModulePower;5");
+#endif
+                    u_ptr[u_count++] = 0;
+                    Basic::Remainder(u_ptr, u_count, m_buf, m_buf_count);
+#ifdef _DEBUG
+                    root.CheckBlock(u_ptr);
+#endif
+                    u_count = Basic::__Shrink(u_ptr, u_count);
 
                     if (u_count <= 0)
                     {
                         // 剰余が 0 になった場合はこれ以上続行しても解が 0 以外にはならないので、処理を中断して 0 を返す
                         return (&number_object_uint_zero);
                     }
+#ifdef _DEBUG
+                    if (u_count > m_buf_count)
+                        throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_modpow.cpp;ModulePower;6");
+#endif
                 }
             }
         }
 
-        // 最下位桁まで達したので u_ptr と u_count を解として帰る
-        _UBASIC_T(r).CopyFrom(u_ptr->Region(0, u_count));
+        // 最下位桁まで達したので u_ptr と u_count を m_factor bit だけ右シフトした数値を解として返る
+        Basic::RightShift(u_ptr, u_count, m_factor, r->BLOCK, r->BLOCK_COUNT);
 #ifdef _DEBUG
         root.CheckNumber(r);
 #endif

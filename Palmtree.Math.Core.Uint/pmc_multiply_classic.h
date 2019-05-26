@@ -1,4 +1,4 @@
-/*
+﻿/*
  * The MIT License
  *
  * Copyright 2019 Palmtree Software.
@@ -24,41 +24,17 @@
 
 #pragma once
 
-#ifndef PMC_MULTIPLY_TOOMCOOKMULTIPLICATIONENGINE_H
-#define PMC_MULTIPLY_TOOMCOOKMULTIPLICATIONENGINE_H
+#ifndef PMC_MULTIPLY_CLASSIC_H
+#define PMC_MULTIPLY_CLASSIC_H
 
 #include "pmc_uint_internal.h"
 
-namespace Palmtree::Math::Core::Internal
-{
-    class _UBASIC_T;
-}
-
-namespace Palmtree::Math::Core::Internal::Multiply::Karatsuba
-{
-    class KaratsubaMultiplicationEngine;
-}
-
 namespace Palmtree::Math::Core::Internal::Multiply::Classic
 {
-    class ClassicMultiplicationEngine;
-}
 
-namespace Palmtree::Math::Core::Internal::Multiply::ToomCook
-{
-
-    class ToomCookMultiplicationEngine
-    {
-    private:
-        bool _fixed;
-        Karatsuba::KaratsubaMultiplicationEngine& _karatsuba_engine;
-        Classic::ClassicMultiplicationEngine& _classic_engine;
-
-    public:
-        ToomCookMultiplicationEngine(bool fixed, Karatsuba::KaratsubaMultiplicationEngine& karatsuba_engine, Classic::ClassicMultiplicationEngine& classic_engine);
-        ~ToomCookMultiplicationEngine();
-        void Multiply_UX_UX(ThreadContext& tc, _UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T& w_buf);
-    };
+    extern void Multiply_UX_1W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE v, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count);
+    extern void Multiply_UX_2W(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count);
+    extern void Multiply_UX_UX(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_count, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count);
 
 }
 

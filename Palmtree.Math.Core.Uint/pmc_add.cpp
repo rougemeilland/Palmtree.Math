@@ -49,7 +49,7 @@ namespace Palmtree::Math::Core::Internal
 
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(u->UNIT_WORD_COUNT + 1);
 
-            basic_ep.Carry(1, _UBASIC_T(u), _UBASIC_T(w));
+            Basic::Carry(1, u->BLOCK, u->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
             root.CheckNumber(w);
 #endif
@@ -111,7 +111,7 @@ namespace Palmtree::Math::Core::Internal
 
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(_MAXIMUM_UNIT(u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(sizeof(v), __UNIT_TYPE_BYTE_COUNT)) + 1);
 
-                if (basic_ep.Add(_UBASIC_T(u), v, _UBASIC_T(w)))
+                if (Basic::Add(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK, w->BLOCK_COUNT))
                 {
                     // w のサイズが十分にあれば通知されないはずのキャリーが通知された場合
                     throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_add.cpp;PMC_Add_UX_UI_Imp;1");
@@ -204,7 +204,7 @@ namespace Palmtree::Math::Core::Internal
 
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(_MAXIMUM_UNIT(u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(sizeof(v), __UNIT_TYPE_BYTE_COUNT)) + 1);
 
-                if (basic_ep.Add(_UBASIC_T(u), v_hi, v_lo, _UBASIC_T(w)))
+                if (Basic::Add(u->BLOCK, u->UNIT_WORD_COUNT, v_hi, v_lo, w->BLOCK, w->BLOCK_COUNT))
                 {
                     // w のサイズが十分にあれば通知されないはずのキャリーが通知された場合
                     throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_add.cpp;PMC_Add_UX_UL_Imp;1");
@@ -261,7 +261,7 @@ namespace Palmtree::Math::Core::Internal
 
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(_MAXIMUM_UNIT(u->UNIT_WORD_COUNT, _DIVIDE_CEILING_UNIT(sizeof(v), __UNIT_TYPE_BYTE_COUNT)) + 1);
 
-                if (basic_ep.Add(_UBASIC_T(u), v, _UBASIC_T(w)))
+                if (Basic::Add(u->BLOCK, u->UNIT_WORD_COUNT, v, w->BLOCK, w->BLOCK_COUNT))
                 {
                     // w のサイズが十分にあれば通知されないはずのキャリーが通知された場合
                     throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_add.cpp;PMC_Add_UX_UL_Imp;1");
@@ -328,7 +328,7 @@ namespace Palmtree::Math::Core::Internal
             {
                 ResourceHolderUINT root(tc);
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(_MAXIMUM_UNIT(u->UNIT_WORD_COUNT, v->UNIT_WORD_COUNT) + 1);
-                if (basic_ep.Add(_UBASIC_T(u), _UBASIC_T(v), _UBASIC_T(w)))
+                if (Basic::Add(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT))
                 {
                     // w のサイズが十分にあれば通知されないはずのキャリーが通知された場合
                     throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_add.cpp;PMC_Add_UX_UX_Imp;1");

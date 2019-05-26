@@ -70,7 +70,7 @@ namespace Palmtree.Math.Test
 
         public override string ToSummaryString()
         {
-            return (string.Format("[{0}]", _serialized_text));
+            return (string.Format("[{0}]", string.Join(",", _serialized_text.Split(',').Select(x => "0x" + x))));
         }
     }
 }

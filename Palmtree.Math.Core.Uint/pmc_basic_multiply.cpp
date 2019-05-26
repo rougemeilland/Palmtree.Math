@@ -24,99 +24,87 @@
 
 #include "pmc_uint_internal.h"
 #include "pmc_basic.h"
-#include "pmc_basic_multiply_classic.h"
-#include "pmc_basic_multiply_karatsuba.h"
-#include "pmc_basic_multiply_toomcook.h"
-#include "pmc_basic_multiply_schonHagestrassen.h"
+#include "pmc_multiply_classic.h"
+#include "pmc_multiply_karatsuba.h"
+#include "pmc_multiply_toomcook.h"
+#include "pmc_multiply_schonHagestrassen.h"
 
 namespace Palmtree::Math::Core::Internal
 {
 
-    static Multiply::Classic::ClassicMultiplicationEngine* _engine_classic;
-    static Multiply::Karatsuba ::KaratsubaMultiplicationEngine* _engine_karatsuba;
-    static Multiply::Karatsuba::KaratsubaMultiplicationEngine* _fixed_engine_karatsuba;
-    static Multiply::ToomCook::ToomCookMultiplicationEngine* _engine_toomcook;
-    static Multiply::ToomCook::ToomCookMultiplicationEngine* _fixed_engine_toomcook;
-    static Multiply::SchonHageStrassen::SchonHageStrassenMultiplicationEngine* _engine_schonHagestrassen;
-    static Multiply::SchonHageStrassen::SchonHageStrassenMultiplicationEngine* _fixed_engine_schonHagestrassen;
-
-    void BasicOperatorEngine::Multiply(_UBASIC_T u_buf, __UNIT_TYPE v, _UBASIC_T w_buf)
+    namespace Basic
     {
-#ifdef _DEBUG
-        if (u_buf.BLOCK_COUNT > 0 && u_buf.BLOCK[u_buf.BLOCK_COUNT - 1] == 0)
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_basic_multiply.cpp;BasicOperatorEngine::Multiply;1");
-#endif
-        if (v == 0)
-            w_buf.Clear(); 
-        else if (u_buf.BLOCK_COUNT == 0)
-            w_buf.Clear();
-        else
-            _engine_classic->Multiply_UX_1W(u_buf, v, w_buf);
-    }
 
-    void BasicOperatorEngine::Multiply(_UBASIC_T u_buf, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, _UBASIC_T w_buf)
-    {
-#ifdef _DEBUG
-        if (u_buf.BLOCK_COUNT > 0 && u_buf.BLOCK[u_buf.BLOCK_COUNT - 1] == 0)
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_basic_multiply.cpp;BasicOperatorEngine::Multiply;1");
-#endif
-        if (v_hi == 0)
-            Multiply(u_buf, v_lo, w_buf);
-        else if (u_buf.BLOCK_COUNT == 0)
-            w_buf.Clear();
-        else
-            _engine_classic->Multiply_UX_2W(u_buf, v_hi, v_lo, w_buf);
-    }
-
-    void BasicOperatorEngine::Multiply(ThreadContext & tc, PMC_MULTIPLICATION_METHOD_CODE method, _UBASIC_T u_buf, _UBASIC_T v_buf, _UBASIC_T w_buf)
-    {
-#ifdef _DEBUG
-        if (u_buf.BLOCK_COUNT > 0 && u_buf.BLOCK[u_buf.BLOCK_COUNT - 1] == 0)
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_basic_multiply.cpp;BasicOperatorEngine::Multiply;1");
-        if (v_buf.BLOCK_COUNT > 0 && v_buf.BLOCK[v_buf.BLOCK_COUNT - 1] == 0)
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_basic_multiply.cpp;BasicOperatorEngine::Multiply;2");
-#endif
-        if (u_buf.BLOCK_COUNT == 0)
-            w_buf.Clear();
-        else if (v_buf.BLOCK_COUNT == 0)
-            w_buf.Clear();
-        else
+        // w_buf = u_buf * v;
+        void Multiply(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE v, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count)
         {
-            switch (method)
+#ifdef _DEBUG
+            if (u_buf_count > 0 && u_buf[u_buf_count - 1] == 0)
+                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_basic_multiply.cpp;Multiply;1");
+#endif
+            if (v == 0)
+                _ZERO_MEMORY_UNIT(w_buf, w_buf_count);
+            else if (u_buf_count == 0)
+                _ZERO_MEMORY_UNIT(w_buf, w_buf_count);
+            else
+                Palmtree::Math::Core::Internal::Multiply::Classic::Multiply_UX_1W(u_buf, u_buf_count, v, w_buf, w_buf_count);
+        }
+
+
+        // w_buf = u_buf * v;
+        void Multiply(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE v_hi, __UNIT_TYPE v_lo, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count)
+        {
+#ifdef _DEBUG
+            if (u_buf_count > 0 && u_buf[u_buf_count - 1] == 0)
+                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_basic_multiply.cpp;Multiply;1");
+#endif
+            if (v_hi == 0)
+                Multiply(u_buf, u_buf_count, v_lo, w_buf, w_buf_count);
+            else if (u_buf_count == 0)
+                _ZERO_MEMORY_UNIT(w_buf, w_buf_count);
+            else
+                Palmtree::Math::Core::Internal::Multiply::Classic::Multiply_UX_2W(u_buf, u_buf_count, v_hi, v_lo, w_buf, w_buf_count);
+        }
+
+
+        // w_buf = u_buf * v_buf;
+        void Multiply(ThreadContext& tc, PMC_MULTIPLICATION_METHOD_CODE method, __UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_count, __UNIT_TYPE* w_buf, __UNIT_TYPE w_buf_count)
+        {
+#ifdef _DEBUG
+            if (u_buf_count > 0 && u_buf[u_buf_count - 1] == 0)
+                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_basic_multiply.cpp;Multiply;1");
+            if (v_buf_count > 0 && v_buf[v_buf_count - 1] == 0)
+                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_basic_multiply.cpp;Multiply;2");
+#endif
+            if (u_buf_count == 0)
+                _ZERO_MEMORY_UNIT(w_buf, w_buf_count);
+            else if (v_buf_count == 0)
+                _ZERO_MEMORY_UNIT(w_buf, w_buf_count);
+            else
             {
-            case PMC_MULTIPLICATION_METHOD_AUTO:
-                return (_engine_schonHagestrassen->Multiply_UX_UX(tc, u_buf, v_buf, w_buf));
-            case PMC_MULTIPLICATION_METHOD_CLASSIC:
-                return (_engine_classic->Multiply_UX_UX(u_buf, v_buf, w_buf));
-            case PMC_MULTIPLICATION_METHOD_KARATSUBA:
-                return (_fixed_engine_karatsuba->Multiply_UX_UX(tc, u_buf, v_buf, w_buf));
-            case PMC_MULTIPLICATION_METHOD_TOOMCOOK:
-                return (_fixed_engine_toomcook->Multiply_UX_UX(tc, u_buf, v_buf, w_buf));
-            case PMC_MULTIPLICATION_METHOD_SCHONSTRASSEN:
-                return (_fixed_engine_schonHagestrassen->Multiply_UX_UX(tc, u_buf, v_buf, w_buf));
-            default:
-                throw ArgumentException(L"methodが不正です。");
+                switch (method)
+                {
+                case PMC_MULTIPLICATION_METHOD_AUTO:
+                    return (Palmtree::Math::Core::Internal::Multiply::SchonHageStrassen::Multiply_UX_UX(tc, false, u_buf, u_buf_count, v_buf, v_buf_count, w_buf, w_buf_count));
+                case PMC_MULTIPLICATION_METHOD_CLASSIC:
+                    return (Palmtree::Math::Core::Internal::Multiply::Classic::Multiply_UX_UX(u_buf, u_buf_count, v_buf, v_buf_count, w_buf, w_buf_count));
+                case PMC_MULTIPLICATION_METHOD_KARATSUBA:
+                    return (Palmtree::Math::Core::Internal::Multiply::Karatsuba::Multiply_UX_UX(tc, true, u_buf, u_buf_count, v_buf, v_buf_count, w_buf, w_buf_count));
+                case PMC_MULTIPLICATION_METHOD_TOOMCOOK:
+                    return (Palmtree::Math::Core::Internal::Multiply::ToomCook::Multiply_UX_UX(tc, true, u_buf, u_buf_count, v_buf, v_buf_count, w_buf, w_buf_count));
+                case PMC_MULTIPLICATION_METHOD_SCHONSTRASSEN:
+                    return (Palmtree::Math::Core::Internal::Multiply::SchonHageStrassen::Multiply_UX_UX(tc, true, u_buf, u_buf_count, v_buf, v_buf_count, w_buf, w_buf_count));
+                default:
+                    throw ArgumentException(L"methodが不正です。");
+                }
             }
         }
+
     }
 
     PMC_STATUS_CODE Initialize_BasicMultiply(PROCESSOR_FEATURES* feature)
     {
-        try
-        {
-            _engine_classic = new Multiply::Classic::ClassicMultiplicationEngine();
-            _engine_karatsuba = new Multiply::Karatsuba::KaratsubaMultiplicationEngine(false, *_engine_classic, basic_ep);
-            _fixed_engine_karatsuba = new Multiply::Karatsuba::KaratsubaMultiplicationEngine(true, *_engine_classic, basic_ep);
-            _engine_toomcook = new Multiply::ToomCook::ToomCookMultiplicationEngine(false, *_engine_karatsuba, *_engine_classic);
-            _fixed_engine_toomcook = new Multiply::ToomCook::ToomCookMultiplicationEngine(true, *_engine_karatsuba, *_engine_classic);
-            _engine_schonHagestrassen = new Multiply::SchonHageStrassen::SchonHageStrassenMultiplicationEngine(false, *_engine_toomcook, *_engine_classic);
-            _fixed_engine_schonHagestrassen = new Multiply::SchonHageStrassen::SchonHageStrassenMultiplicationEngine(true, *_engine_toomcook, *_engine_classic);
-            return (PMC_STATUS_OK);
-        }
-        catch (std::bad_alloc)
-        {
-            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
-        }
+        return (PMC_STATUS_OK);
     }
 
 }

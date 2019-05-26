@@ -64,7 +64,7 @@ namespace Palmtree::Math::Core::Internal
                 // x と y の商・剰余を計算する
 
                 __UNIT_TYPE temp_q;
-                basic_ep.DivideExactly(u, _UBASIC_T(v), temp_q);
+                Basic::DivideExactly(u, v->BLOCK, v->UNIT_WORD_COUNT, temp_q);
                 return ((_UINT32_T)temp_q);
             }
         }
@@ -117,10 +117,10 @@ namespace Palmtree::Math::Core::Internal
                 {
                     ResourceHolderUINT root(tc);
 
-                    _UBASIC_T work_u_buf = root.AllocateBlock(u->UNIT_WORD_COUNT);
+                    __UNIT_TYPE* work_u_buf = root.AllocateBlock(u->UNIT_WORD_COUNT);
                     NUMBER_OBJECT_UINT* q = root.AllocateNumber(u->UNIT_WORD_COUNT);
 
-                    basic_ep.DivideExactlyBy3(_UBASIC_T(u), work_u_buf, _UBASIC_T(q));
+                    Basic::DivideExactlyBy3(u->BLOCK, u->UNIT_WORD_COUNT, work_u_buf, u->UNIT_WORD_COUNT, q->BLOCK, q->BLOCK_COUNT);
 #ifdef _DEBUG
                     root.CheckBlock(work_u_buf);
                     root.CheckNumber(q);
@@ -139,14 +139,14 @@ namespace Palmtree::Math::Core::Internal
                 {
                     ResourceHolderUINT root(tc);
 
-                    _UBASIC_T work_u_buf = root.AllocateBlock(u->UNIT_WORD_COUNT + 1);
+                    __UNIT_TYPE* work_u_buf = root.AllocateBlock(u->UNIT_WORD_COUNT + 1);
 
                     __UNIT_TYPE v_buf[] = { v };
                     __UNIT_TYPE work_v_buf[countof(v_buf)];
 
                     NUMBER_OBJECT_UINT* q = root.AllocateNumber(u->UNIT_WORD_COUNT - countof(v_buf) + 2);
 
-                    basic_ep.DivideExactly(_UBASIC_T(u), _UBASIC_T(v_buf, countof(v_buf)), work_u_buf, _UBASIC_T(work_v_buf, countof(work_v_buf)), _UBASIC_T(q));
+                    Basic::DivideExactly(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, countof(v_buf), work_u_buf, u->UNIT_WORD_COUNT + 1, work_v_buf, countof(work_v_buf), q->BLOCK, q->BLOCK_COUNT);
 #ifdef _DEBUG
                     root.CheckBlock(work_u_buf);
                     root.CheckNumber(q);
@@ -221,7 +221,7 @@ namespace Palmtree::Math::Core::Internal
                     // u の値が 32bit で表現可能な場合
 
                     __UNIT_TYPE temp_q;
-                    basic_ep.DivideExactly(u_lo, _UBASIC_T(v), temp_q);
+                    Basic::DivideExactly(u_lo, v->BLOCK, v->UNIT_WORD_COUNT, temp_q);
                     return (temp_q);
                 }
                 else
@@ -243,16 +243,15 @@ namespace Palmtree::Math::Core::Internal
                         __UNIT_TYPE u_buf[] = { u_lo, u_hi };
                         __UNIT_TYPE work_u_buf[countof(u_buf) + 1];
 
-                        _UBASIC_T work_v_buf = root.AllocateBlock(v->UNIT_WORD_COUNT);
+                        __UNIT_TYPE* work_v_buf = root.AllocateBlock(v->UNIT_WORD_COUNT);
 
-                        _UBASIC_T q_buf = root.AllocateBlock(countof(u_buf) - v->UNIT_WORD_COUNT + 2);
+                        __UNIT_TYPE q_buf[3];
 
-                        basic_ep.DivideExactly(_UBASIC_T(u_buf, countof(u_buf)), _UBASIC_T(v), _UBASIC_T(work_u_buf, countof(work_u_buf)), work_v_buf, q_buf);
+                        Basic::DivideExactly(u_buf, countof(u_buf), v->BLOCK, v->UNIT_WORD_COUNT, work_u_buf, countof(work_u_buf), work_v_buf, v->UNIT_WORD_COUNT, q_buf, countof(q_buf));
 #ifdef _DEBUG
                         root.CheckBlock(work_v_buf);
-                        root.CheckBlock(q_buf);
 #endif
-                        return (_FROMWORDTODWORD(q_buf.BLOCK[1], q_buf.BLOCK[0]));
+                        return (_FROMWORDTODWORD(q_buf[1], q_buf[0]));
                     }
                 }
             }
@@ -293,7 +292,7 @@ namespace Palmtree::Math::Core::Internal
                 // u と v の商・剰余を計算する
 
                 __UNIT_TYPE temp_q;
-                basic_ep.DivideExactly(u, _UBASIC_T(v), temp_q);
+                Basic::DivideExactly(u, v->BLOCK, v->UNIT_WORD_COUNT, temp_q);
                 return (temp_q);
             }
         }
@@ -353,14 +352,14 @@ namespace Palmtree::Math::Core::Internal
                     // v の値が 32bit で表現可能な場合
                     ResourceHolderUINT root(tc);
 
-                    _UBASIC_T work_u_buf = root.AllocateBlock(u->UNIT_WORD_COUNT + 1);
+                    __UNIT_TYPE* work_u_buf = root.AllocateBlock(u->UNIT_WORD_COUNT + 1);
 
                     __UNIT_TYPE v_buf[] = { v_lo };
                     __UNIT_TYPE work_v_buf[countof(v_buf)];
 
                     NUMBER_OBJECT_UINT* q = root.AllocateNumber(u->UNIT_WORD_COUNT - countof(v_buf) + 2);
 
-                    basic_ep.DivideExactly(_UBASIC_T(u), _UBASIC_T(v_buf, countof(v_buf)), work_u_buf, _UBASIC_T(work_v_buf, countof(work_v_buf)), _UBASIC_T(q));
+                    Basic::DivideExactly(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, countof(v_buf), work_u_buf, u->UNIT_WORD_COUNT + 1, work_v_buf, countof(work_v_buf), q->BLOCK, q->BLOCK_COUNT);
 #ifdef _DEBUG
                     root.CheckBlock(work_u_buf);
                     root.CheckNumber(q);
@@ -380,14 +379,14 @@ namespace Palmtree::Math::Core::Internal
                     // v の値が 32bit では表現できない場合
                     ResourceHolderUINT root(tc);
 
-                    _UBASIC_T work_u_buf = root.AllocateBlock(u->UNIT_WORD_COUNT + 1);
+                    __UNIT_TYPE* work_u_buf = root.AllocateBlock(u->UNIT_WORD_COUNT + 1);
 
                     __UNIT_TYPE v_buf[] = { v_lo, v_hi };
                     __UNIT_TYPE work_v_buf[countof(v_buf)];
 
                     NUMBER_OBJECT_UINT* q = root.AllocateNumber(u->UNIT_WORD_COUNT - countof(v_buf) + 2);
 
-                    basic_ep.DivideExactly(_UBASIC_T(u), _UBASIC_T(v_buf, countof(v_buf)), work_u_buf, _UBASIC_T(work_v_buf, countof(work_v_buf)), _UBASIC_T(q));
+                    Basic::DivideExactly(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, countof(v_buf), work_u_buf, u->UNIT_WORD_COUNT + 1, work_v_buf, countof(work_v_buf), q->BLOCK, q->BLOCK_COUNT);
 #ifdef _DEBUG
                     root.CheckBlock(work_u_buf);
                     root.CheckNumber(q);
@@ -440,14 +439,14 @@ namespace Palmtree::Math::Core::Internal
                 // u と v の商・剰余を計算する
                 ResourceHolderUINT root(tc);
 
-                _UBASIC_T work_u_buf = root.AllocateBlock(u->UNIT_WORD_COUNT + 1);
+                __UNIT_TYPE* work_u_buf = root.AllocateBlock(u->UNIT_WORD_COUNT + 1);
 
                 __UNIT_TYPE v_buf[] = { v };
                 __UNIT_TYPE work_v_buf[countof(v_buf)];
 
                 NUMBER_OBJECT_UINT* q = root.AllocateNumber(u->UNIT_WORD_COUNT - countof(v_buf) + 2);
 
-                basic_ep.DivideExactly(_UBASIC_T(u), _UBASIC_T(v_buf, countof(v_buf)), work_u_buf, _UBASIC_T(work_v_buf, countof(work_v_buf)), _UBASIC_T(q));
+                Basic::DivideExactly(u->BLOCK, u->UNIT_WORD_COUNT, v_buf, countof(v_buf), work_u_buf, u->UNIT_WORD_COUNT + 1, work_v_buf, countof(work_v_buf), q->BLOCK, q->BLOCK_COUNT);
 #ifdef _DEBUG
                 root.CheckBlock(work_u_buf);
                 root.CheckNumber(q);
@@ -520,13 +519,13 @@ namespace Palmtree::Math::Core::Internal
                 {
                     ResourceHolderUINT root(tc);
 
-                    _UBASIC_T work_u_buf = root.AllocateBlock(u->UNIT_WORD_COUNT + 1);
+                    __UNIT_TYPE* work_u_buf = root.AllocateBlock(u->UNIT_WORD_COUNT + 1);
 
-                    _UBASIC_T work_v_buf = root.AllocateBlock(v->UNIT_WORD_COUNT);
+                    __UNIT_TYPE* work_v_buf = root.AllocateBlock(v->UNIT_WORD_COUNT);
 
                     NUMBER_OBJECT_UINT* q = root.AllocateNumber(u->UNIT_WORD_COUNT - v->UNIT_WORD_COUNT + 2);
 
-                    basic_ep.DivideExactly(_UBASIC_T(u), _UBASIC_T(v), work_u_buf, work_v_buf, _UBASIC_T(q));
+                    Basic::DivideExactly(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, work_u_buf, u->UNIT_WORD_COUNT + 1, work_v_buf, v->UNIT_WORD_COUNT, q->BLOCK, q->BLOCK_COUNT);
 #ifdef _DEBUG
                     root.CheckBlock(work_u_buf);
                     root.CheckBlock(work_v_buf);

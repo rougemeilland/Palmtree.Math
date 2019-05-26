@@ -54,7 +54,7 @@ namespace Palmtree::Math::Core::Internal
 
             // u と v の bit AND を計算する
             __UNIT_TYPE w;
-            basic_ep.BitwiseAnd(_UBASIC_T(nv), u, w);
+            Basic::BitwiseAnd(nv->BLOCK, nv->UNIT_WORD_COUNT, u, w);
             return ((_UINT32_T)w);
         }
     }
@@ -83,7 +83,7 @@ namespace Palmtree::Math::Core::Internal
 
             // u と v の bit AND を計算する
             __UNIT_TYPE w;
-            basic_ep.BitwiseAnd(_UBASIC_T(nu), v, w);
+            Basic::BitwiseAnd(nu->BLOCK, nu->UNIT_WORD_COUNT, v, w);
             return ((_UINT32_T)w);
         }
     }
@@ -116,7 +116,7 @@ namespace Palmtree::Math::Core::Internal
             _UINT32_T u_lo = _FROMDWORDTOWORD(u, &u_hi);
             _UINT32_T w_hi = nv->UNIT_WORD_COUNT > 1 ? nv->BLOCK[1] & u_hi : 0;
             _UINT32_T w_lo = nv->BLOCK[0] & u_lo;
-            basic_ep.BitwiseAnd(_UBASIC_T(nv), u_hi, u_lo, w_hi, w_lo);
+            Basic::BitwiseAnd(nv->BLOCK, nv->UNIT_WORD_COUNT, u_hi, u_lo, w_hi, w_lo);
             return (_FROMWORDTODWORD(w_hi, w_lo));
         }
     }
@@ -145,7 +145,7 @@ namespace Palmtree::Math::Core::Internal
 
             // x と y の bit AND を計算する
             __UNIT_TYPE w;
-            basic_ep.BitwiseAnd(_UBASIC_T(nv), u, w);
+            Basic::BitwiseAnd(nv->BLOCK, nv->UNIT_WORD_COUNT, u, w);
             return (w);
         }
     }
@@ -181,7 +181,7 @@ namespace Palmtree::Math::Core::Internal
             _UINT32_T v_lo = _FROMDWORDTOWORD(v, &v_hi);
             _UINT32_T w_hi;
             _UINT32_T w_lo;
-            basic_ep.BitwiseAnd(_UBASIC_T(nu), v_hi, v_lo, w_hi, w_lo);
+            Basic::BitwiseAnd(nu->BLOCK, nu->UNIT_WORD_COUNT, v_hi, v_lo, w_hi, w_lo);
             return (_FROMWORDTODWORD(w_hi, w_lo));
         }
     }
@@ -210,7 +210,7 @@ namespace Palmtree::Math::Core::Internal
 
             // x と y の bit AND を計算する
             __UNIT_TYPE w;
-            basic_ep.BitwiseAnd(_UBASIC_T(nu), v, w);
+            Basic::BitwiseAnd(nu->BLOCK, nu->UNIT_WORD_COUNT, v, w);
             return (w);
         }
     }
@@ -228,7 +228,7 @@ namespace Palmtree::Math::Core::Internal
         {
             ResourceHolderUINT root(tc);
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(_MINIMUM_UNIT(u->UNIT_WORD_COUNT, v->UNIT_WORD_COUNT));
-            basic_ep.BitwiseAnd(_UBASIC_T(u), _UBASIC_T(v), _UBASIC_T(w));
+            Basic::BitwiseAnd(u->BLOCK, u->UNIT_WORD_COUNT, v->BLOCK, v->UNIT_WORD_COUNT, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
             root.CheckNumber(w);
 #endif

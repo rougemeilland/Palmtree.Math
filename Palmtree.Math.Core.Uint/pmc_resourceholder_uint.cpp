@@ -226,7 +226,7 @@ namespace Palmtree::Math::Core::Internal
         _tc.DecrementTypeBAllocationCount();
     }
 
-    _UBASIC_T ResourceHolderUINT::AllocateBlock(__UNIT_TYPE word_count)
+    __UNIT_TYPE* ResourceHolderUINT::AllocateBlock(__UNIT_TYPE word_count)
     {
         Lock lock_obj;
         __UNIT_TYPE check_code;
@@ -234,22 +234,22 @@ namespace Palmtree::Math::Core::Internal
         __ChainBufferTag* tag = new ____UNIT_TYPE_Array_ChainBufferTag(_tc, buffer, word_count, check_code);
         _tc.IncrementTypeBAllocationCount();
         LinkTag(tag);
-        return (_UBASIC_T(buffer, word_count));
+        return (buffer);
     }
 
-    void ResourceHolderUINT::ClearBlock(_UBASIC_T buffer)
+    void ResourceHolderUINT::ClearBlock(__UNIT_TYPE* buffer)
     {
         Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer.BLOCK);
+        __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::ClearBlock;1");
         tag->Clear();
     }
 
-    void ResourceHolderUINT::DeallocateBlock(_UBASIC_T buffer)
+    void ResourceHolderUINT::DeallocateBlock(__UNIT_TYPE* buffer)
     {
         Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer.BLOCK);
+        __ChainBufferTag* tag = FindTag(buffer);
         if (tag != nullptr)
         {
             tag->Destruct();
@@ -259,20 +259,20 @@ namespace Palmtree::Math::Core::Internal
     }
 
 #ifdef _DEBUG
-    void ResourceHolderUINT::CheckBlock(_UBASIC_T buffer)
+    void ResourceHolderUINT::CheckBlock(__UNIT_TYPE* buffer)
     {
         Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer.BLOCK);
+        __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::CheckBlock;1");
         tag->Check();
     }
 #endif
 
-    void ResourceHolderUINT::UnlinkBlock(_UBASIC_T buffer)
+    void ResourceHolderUINT::UnlinkBlock(__UNIT_TYPE* buffer)
     {
         Lock lock_obj;
-        __ChainBufferTag* tag = FindTag(buffer.BLOCK);
+        __ChainBufferTag* tag = FindTag(buffer);
         if (tag == nullptr)
             throw BadBufferException(L"メモリ領域の不整合を検出しました。", L"pmc_memory.cpp;ResourceHolderUINT::UnlinkBlock;1");
         delete tag;

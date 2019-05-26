@@ -50,10 +50,10 @@ namespace Palmtree::Math::Core::Internal
         return (k);
     }
 
-    static __UNIT_TYPE* MultiplyAndAdd(_UBASIC_T u_buf, __UNIT_TYPE x)
+    static __UNIT_TYPE* MultiplyAndAdd(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE x)
     {
-        __UNIT_TYPE* u_ptr = u_buf.BLOCK;
-        __UNIT_TYPE u_count= u_buf.BLOCK_COUNT;
+        __UNIT_TYPE* u_ptr = u_buf;
+        __UNIT_TYPE u_count= u_buf_count;
         __UNIT_TYPE k = x;
         __UNIT_TYPE count = u_count >> 5;
         while (count > 0)
@@ -274,7 +274,7 @@ namespace Palmtree::Math::Core::Internal
 
     // 16進数の数値を表す文字列から整数部を抽出する。
     // 10進整数を表す文字列を、word_digit_count 毎に 1 ワードずつ分割してバイナリー化し、out_buf に格納する。
-    static void BuildBinaryFromDecimalString(const wchar_t* source, _UBASIC_T& out_buf)
+    static void BuildBinaryFromDecimalString(const wchar_t* source, __UNIT_TYPE* out_buf, __UNIT_TYPE out_buf_count)
     {
 #ifdef _M_IX86
         int word_digit_count = 9;
@@ -284,7 +284,7 @@ namespace Palmtree::Math::Core::Internal
 #error unknown platform
 #endif
         const wchar_t* in_ptr = source;
-        __UNIT_TYPE* out_ptr = out_buf.BLOCK;
+        __UNIT_TYPE* out_ptr = out_buf;
         __UNIT_TYPE source_count = lstrlenW(source);
         int r = source_count % word_digit_count;
         if (r > 0)
@@ -299,41 +299,43 @@ namespace Palmtree::Math::Core::Internal
             in_ptr += word_digit_count;
             source_count -= word_digit_count;
         }
-        out_buf.Region(out_ptr - out_buf.BLOCK).Clear();
+        _ZERO_MEMORY_UNIT(out_ptr, out_buf + out_buf_count - out_ptr);
     }
 
-    static void ConvertCardinalNumber(ThreadContext& tc, _UBASIC_T in_buf, _UBASIC_T out_buf)
+    static void ConvertCardinalNumber(ThreadContext& tc, __UNIT_TYPE* in_buf, __UNIT_TYPE in_buf_count, __UNIT_TYPE* out_buf, __UNIT_TYPE out_buf_count)
     {
         ResourceHolderUINT root(tc);
-        _UBASIC_T work_buf = root.AllocateBlock(in_buf.BLOCK_COUNT + 1);
+        __UNIT_TYPE* work_buf = root.AllocateBlock(in_buf_count + 1);
         __UNIT_TYPE work_buf_count = 1;
-        work_buf.BLOCK[0] = in_buf.BLOCK[0];
-        __UNIT_TYPE* in_ptr = in_buf.BLOCK + 1;
-        __UNIT_TYPE in_count = in_buf.BLOCK_COUNT - 1;
+        work_buf[0] = in_buf[0];
+        __UNIT_TYPE* in_ptr = in_buf + 1;
+        __UNIT_TYPE in_count = in_buf_count - 1;
         while (in_count > 0)
         {
-            __UNIT_TYPE* w_tail = MultiplyAndAdd(work_buf.Region(0, work_buf_count), *in_ptr);
-            work_buf_count = w_tail - work_buf.BLOCK;
+            __UNIT_TYPE* w_tail = MultiplyAndAdd(work_buf, work_buf_count, *in_ptr);
+            work_buf_count = w_tail - work_buf;
             ++in_ptr;
             --in_count;
         }
 #ifdef _DEBUG
         root.CheckBlock(work_buf);
 #endif
-        out_buf.CopyFrom(work_buf.Region(0, work_buf_count));
+        _COPY_MEMORY_UNIT(out_buf, work_buf, work_buf_count);
+        _ZERO_MEMORY_UNIT(out_buf + work_buf_count, out_buf_count - work_buf_count);
     }
 
     NUMBER_OBJECT_UINT* PMC_AToL_Imp(ThreadContext& tc, const wchar_t* source)
     {
         ResourceHolderUINT root(tc);
         // 整数部を 10^word_digit_count を基数としたバイト列に変換する
-        _UBASIC_T bin_buf = root.AllocateBlock(_DIVIDE_CEILING_SIZE(lstrlenW(source), _digit_count_on_word));
-        BuildBinaryFromDecimalString(source, bin_buf);
+        __UNIT_TYPE bin_buf_count = _DIVIDE_CEILING_SIZE(lstrlenW(source), _digit_count_on_word);
+        __UNIT_TYPE* bin_buf = root.AllocateBlock(bin_buf_count);
+        BuildBinaryFromDecimalString(source, bin_buf, bin_buf_count);
 
         // 10^word_digit_count を基数としたバイト列を 10 を基数としたバイト列に変換する
-        NUMBER_OBJECT_UINT* nr = root.AllocateNumber(bin_buf.BLOCK_COUNT);
+        NUMBER_OBJECT_UINT* nr = root.AllocateNumber(bin_buf_count);
         _ZERO_MEMORY_UNIT(nr->BLOCK, nr->BLOCK_COUNT);
-        ConvertCardinalNumber(tc, bin_buf, _UBASIC_T(nr));
+        ConvertCardinalNumber(tc, bin_buf, bin_buf_count, nr->BLOCK, nr->BLOCK_COUNT);
 #ifdef _DEBUG
         root.CheckNumber(nr);
 #endif

@@ -136,20 +136,20 @@ namespace Palmtree.Math.Core.Uint.CodeGen.InlineFunc
         {
             writer.WriteLine(string.Format("__inline static {4} _{0}_{1}WORDS_{2}{3}({4} c, {5}* xp, {5}* yp, {5}* zp)", title_func, max_count, op.ToUpper(), suffix, carry_type, pointer_type));
             writer.WriteLine("{");
-            writer.WriteLine("#ifdef _MSC_VER");
+            //writer.WriteLine("#ifdef _MSC_VER");
             for (int count = 0; count < max_count; ++count)
                 writer.WriteLine(string.Format("    c = {1}(c, xp[{0}], yp[{0}], &zp[{0}]);", count, alt_func_name));
-            writer.WriteLine("#elif defined(__GNUC__)");
-            writer.WriteLine("#ifdef _M_IX86");
-            GenerateASM_ADD(writer, max_count, op, 32, "l", "ecx");
-            writer.WriteLine("#elif defined(_M_X64)");
-            GenerateASM_ADD(writer, max_count, op, 64, "q", "rcx");
-            writer.WriteLine("#else");
-            writer.WriteLine("#error unknown platform");
-            writer.WriteLine("#endif");
-            writer.WriteLine("#else");
-            writer.WriteLine("#error unknown compiler");
-            writer.WriteLine("#endif");
+            //writer.WriteLine("#elif defined(__GNUC__)");
+            //writer.WriteLine("#ifdef _M_IX86");
+            //GenerateASM_ADD(writer, max_count, op, 32, "l", "ecx");
+            //writer.WriteLine("#elif defined(_M_X64)");
+            //GenerateASM_ADD(writer, max_count, op, 64, "q", "rcx");
+            //writer.WriteLine("#else");
+            //writer.WriteLine("#error unknown platform");
+            //writer.WriteLine("#endif");
+            //writer.WriteLine("#else");
+            //writer.WriteLine("#error unknown compiler");
+            //writer.WriteLine("#endif");
             writer.WriteLine("    return (c);");
             writer.WriteLine("}");
         }

@@ -46,7 +46,7 @@ namespace Palmtree::Math::Core::Internal
 
                 NUMBER_OBJECT_UINT* w = root.AllocateNumber(u->UNIT_WORD_COUNT - n / __UNIT_TYPE_BIT_COUNT);
 
-                basic_ep.RightShift(_UBASIC_T(u), n, _UBASIC_T(w));
+                Basic::RightShift(u->BLOCK, u->UNIT_WORD_COUNT, n, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
                 root.CheckNumber(w);
 #endif
@@ -75,7 +75,7 @@ namespace Palmtree::Math::Core::Internal
 
             NUMBER_OBJECT_UINT* w = root.AllocateNumber(u->UNIT_WORD_COUNT + _DIVIDE_CEILING_UNIT(n, __UNIT_TYPE_BIT_COUNT));
 
-            basic_ep.LeftShift(_UBASIC_T(u), n, _UBASIC_T(w));
+            Basic::LeftShift(u->BLOCK, u->UNIT_WORD_COUNT, n, w->BLOCK, w->BLOCK_COUNT);
 #ifdef _DEBUG
             root.CheckNumber(w);
 #endif
