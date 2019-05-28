@@ -6,8 +6,8 @@
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,1,0
- PRODUCTVERSION 1,0,1,0
+ FILEVERSION 1,0,2,0
+ PRODUCTVERSION 1,4,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -24,12 +24,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Palmtree Software"
             VALUE "FileDescription", "Palmtree 数値演算ライブラリ SFMT乱数生成アンマネージドモジュール"
-            VALUE "FileVersion", "1.0.1.0"
+            VALUE "FileVersion", "1.0.2.0"
             VALUE "InternalName", "Palmtree.Math.Core.Sfmt"
             VALUE "LegalCopyright", "© 2019 Palmtree Software\r\n\r\nSFMT.c, SFMT-*.h:\r\n Copyright (C) 2006, 2007 Mutsuo Saito, Makoto Matsumoto and Hiroshima  University.\r\n Copyright (c) 2012 Mutsuo Saito, Makoto Matsumoto, Hiroshima University  and The University of Tokyo.\r\n All rights reserved."
             VALUE "OriginalFilename", "Palmtree.Math.Core.Sfmt"
             VALUE "ProductName", "Palmtree 数値演算ライブラリ"
-            VALUE "ProductVersion", "1.0.1.0"
+            VALUE "ProductVersion", "1.4.0.0"
         END
     END
     BLOCK "VarFileInfo"
