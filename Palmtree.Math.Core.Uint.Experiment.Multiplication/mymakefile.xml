@@ -5,7 +5,7 @@
     <!--<toolchain platform="x86">C:\GNU\MINGW64\i686-8.1.0-win32-sjlj-rt_v6-rev0\mingw32\bin</toolchain>-->
     <toolchain platform="x64">C:\GNU\MINGW64\x86_64-8.1.0-win32-seh-rt_v6-rev0\mingw64\bin</toolchain>
   </toolchains>
-  <targetfilename>Palmtree.Math.Core.Uint.Experiment.Karatsuba.exe</targetfilename>
+  <targetfilename>Palmtree.Math.Core.Uint.Experiment.Multiplication.exe</targetfilename>
   <includepaths>
     <includepath>Z:\Sources\Lunor\Repos\rougemeilland\Palmtree.Math\Palmtree.Math.Core.Uint\</includepath>
   </includepaths>

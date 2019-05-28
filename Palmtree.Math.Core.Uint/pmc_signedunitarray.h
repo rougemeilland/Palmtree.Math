@@ -244,6 +244,51 @@ namespace Palmtree::Math::Core::Internal::Basic
     }
 
     // w_buf = u_buf + v_buf;
+    __inline static void Add(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_count, SIGNED_UNIT_ARRAY& w_buf)
+    {
+#ifdef _DEBUG
+        if (u_buf_count > 0 && u_buf[u_buf_count - 1] == 0)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_signedunitarray.h;Add;1");
+        if (v_buf_count > 0 && v_buf[v_buf_count - 1] == 0)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_signedunitarray.h;Add;2");
+#endif
+        if (u_buf_count == 0)
+        {
+            if (v_buf_count == 0)
+            {
+                _ZERO_MEMORY_UNIT(w_buf.BLOCK, w_buf.BLOCK_COUNT);
+                w_buf.WORD_COUNT = 0;
+                w_buf.SIGN = SIGN_ZERO;
+            }
+            else
+            {
+                _COPY_MEMORY_UNIT(w_buf.BLOCK, v_buf, v_buf_count);
+                _ZERO_MEMORY_UNIT(w_buf.BLOCK + v_buf_count, w_buf.BLOCK_COUNT - v_buf_count);
+                w_buf.WORD_COUNT = v_buf_count;
+                w_buf.SIGN = SIGN_POSITIVE;
+            }
+        }
+        else
+        {
+            if (v_buf_count == 0)
+            {
+                _COPY_MEMORY_UNIT(w_buf.BLOCK, u_buf, u_buf_count);
+                _ZERO_MEMORY_UNIT(w_buf.BLOCK + u_buf_count, w_buf.BLOCK_COUNT - u_buf_count);
+                w_buf.WORD_COUNT = u_buf_count;
+                w_buf.SIGN = SIGN_POSITIVE;
+            }
+            else
+            {
+                if (Add(u_buf, u_buf_count, v_buf, v_buf_count, w_buf.BLOCK, w_buf.BLOCK_COUNT))
+                    throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_signedunitarray.h;Add;3");
+                w_buf.WORD_COUNT = w_buf.BLOCK_COUNT;
+                w_buf.SIGN = SIGN_POSITIVE;
+                w_buf.Shrink();
+            }
+        }
+    }
+
+    // w_buf = u_buf + v_buf;
     __inline static void Add(SIGNED_UNIT_ARRAY& u_buf, SIGNED_UNIT_ARRAY& v_buf, SIGNED_UNIT_ARRAY& w_buf)
     {
 #ifdef _DEBUG
@@ -355,6 +400,73 @@ namespace Palmtree::Math::Core::Internal::Basic
     }
 
     // u_buf -= v_buf;
+    __inline static void Subtruct(SIGNED_UNIT_ARRAY& u_buf, __UNIT_TYPE* v_buf, __UNIT_TYPE v_buf_count)
+    {
+#ifdef _DEBUG
+        if (u_buf.WORD_COUNT > 0 && u_buf.BLOCK[u_buf.WORD_COUNT - 1] == 0)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_signedunitarray.h;Subtruct;1");
+        if (v_buf_count > 0 && v_buf[v_buf_count - 1] == 0)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_signedunitarray.h;Subtruct;2");
+#endif
+        if (u_buf.SIGN == 0)
+        {
+            if (v_buf_count == 0)
+            {
+                // nop
+            }
+            else
+            {
+                _COPY_MEMORY_UNIT(u_buf.BLOCK, v_buf, v_buf_count);
+                u_buf.WORD_COUNT = v_buf_count;
+                u_buf.SIGN = SIGN_NEGATIVE;
+            }
+        }
+        else if (u_buf.SIGN > 0)
+        {
+            if (v_buf_count == 0)
+            {
+                // nop
+            }
+            else
+            {
+                SIGN_T c = Compare(u_buf.BLOCK, u_buf.WORD_COUNT, v_buf, v_buf_count);
+                if (c == 0)
+                {
+                    u_buf.WORD_COUNT = 0;
+                    u_buf.SIGN = SIGN_ZERO;
+                }
+                else if (c > 0)
+                {
+                    USubtruct(u_buf.BLOCK, u_buf.BLOCK_COUNT, v_buf, v_buf_count);
+                    u_buf.WORD_COUNT = u_buf.BLOCK_COUNT;
+                    u_buf.Shrink();
+                }
+                else
+                {
+                    UNegativeSubtruct(u_buf.BLOCK, u_buf.BLOCK_COUNT, v_buf, v_buf_count);
+                    u_buf.WORD_COUNT = u_buf.BLOCK_COUNT;
+                    u_buf.SIGN = SIGN_NEGATIVE;
+                    u_buf.Shrink();
+                }
+            }
+        }
+        else
+        {
+            if (v_buf_count == 0)
+            {
+                // nop
+            }
+            else
+            {
+                if (Add(u_buf.BLOCK, u_buf.BLOCK_COUNT, v_buf, v_buf_count))
+                    throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_signedunitarray.h;Subtruct;4");
+                u_buf.WORD_COUNT = u_buf.BLOCK_COUNT;
+                u_buf.Shrink();
+            }
+        }
+    }
+
+    // u_buf -= v_buf;
     __inline static void Subtruct(SIGNED_UNIT_ARRAY& u_buf, SIGNED_UNIT_ARRAY& v_buf)
     {
 #ifdef _DEBUG
@@ -435,15 +547,15 @@ namespace Palmtree::Math::Core::Internal::Basic
                 }
                 else if (c > 0)
                 {
-                    UNegativeSubtruct(u_buf.BLOCK, u_buf.BLOCK_COUNT, v_buf.BLOCK, v_buf.WORD_COUNT);
+                    USubtruct(u_buf.BLOCK, u_buf.BLOCK_COUNT, v_buf.BLOCK, v_buf.WORD_COUNT);
                     u_buf.WORD_COUNT = u_buf.BLOCK_COUNT;
-                    u_buf.SIGN = SIGN_POSITIVE;
                     u_buf.Shrink();
                 }
                 else
                 {
-                    USubtruct(u_buf.BLOCK, u_buf.BLOCK_COUNT, v_buf.BLOCK, v_buf.WORD_COUNT);
+                    UNegativeSubtruct(u_buf.BLOCK, u_buf.BLOCK_COUNT, v_buf.BLOCK, v_buf.WORD_COUNT);
                     u_buf.WORD_COUNT = u_buf.BLOCK_COUNT;
+                    u_buf.SIGN = SIGN_POSITIVE;
                     u_buf.Shrink();
                 }
             }
@@ -507,6 +619,75 @@ namespace Palmtree::Math::Core::Internal::Basic
                     w_buf.SIGN = SIGN_NEGATIVE;
                     w_buf.Shrink();
                 }
+            }
+        }
+    }
+
+    // w_buf = u_buf - v_buf;
+    __inline static void Subtruct(__UNIT_TYPE* u_buf, __UNIT_TYPE u_buf_count, SIGNED_UNIT_ARRAY& v_buf, SIGNED_UNIT_ARRAY& w_buf)
+    {
+#ifdef _DEBUG
+        if (u_buf_count > 0 && u_buf[u_buf_count - 1] == 0)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_signedunitarray.h;Subtruct;1");
+        if (v_buf.WORD_COUNT > 0 && v_buf.BLOCK[v_buf.WORD_COUNT - 1] == 0)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_signedunitarray.h;Subtruct;2");
+#endif
+        if (u_buf_count == 0)
+        {
+            if (v_buf.SIGN == 0)
+            {
+                _ZERO_MEMORY_UNIT(w_buf.BLOCK, w_buf.BLOCK_COUNT);
+                w_buf.WORD_COUNT = 0;
+                w_buf.SIGN = SIGN_ZERO;
+            }
+            else
+            {
+                _COPY_MEMORY_UNIT(w_buf.BLOCK, v_buf.BLOCK, v_buf.WORD_COUNT);
+                _ZERO_MEMORY_UNIT(w_buf.BLOCK + v_buf.WORD_COUNT, w_buf.BLOCK_COUNT - v_buf.WORD_COUNT);
+                w_buf.WORD_COUNT = v_buf.WORD_COUNT;
+                w_buf.SIGN = INVERT_SIGN(v_buf.SIGN);
+            }
+        }
+        else
+        {
+            if (v_buf.SIGN == 0)
+            {
+                _COPY_MEMORY_UNIT(w_buf.BLOCK, u_buf, u_buf_count);
+                _ZERO_MEMORY_UNIT(w_buf.BLOCK + u_buf_count, w_buf.BLOCK_COUNT - u_buf_count);
+                w_buf.WORD_COUNT = u_buf_count;
+                w_buf.SIGN = SIGN_POSITIVE;
+            }
+            else if (v_buf.SIGN > 0)
+            {
+                SIGN_T c = Compare(u_buf, u_buf_count, v_buf.BLOCK, v_buf.WORD_COUNT);
+                if (c == 0)
+                {
+                    _ZERO_MEMORY_UNIT(w_buf.BLOCK, w_buf.BLOCK_COUNT);
+                    w_buf.WORD_COUNT = 0;
+                    w_buf.SIGN = SIGN_ZERO;
+                }
+                else if (c > 0)
+                {
+                    USubtruct(u_buf, u_buf_count, v_buf.BLOCK, v_buf.WORD_COUNT, w_buf.BLOCK, w_buf.BLOCK_COUNT);
+                    w_buf.WORD_COUNT = u_buf_count;
+                    w_buf.SIGN = SIGN_POSITIVE;
+                    w_buf.Shrink();
+                }
+                else
+                {
+                    USubtruct(v_buf.BLOCK, v_buf.WORD_COUNT, u_buf, u_buf_count, w_buf.BLOCK, w_buf.BLOCK_COUNT);
+                    w_buf.WORD_COUNT = v_buf.WORD_COUNT;
+                    w_buf.SIGN = SIGN_NEGATIVE;
+                    w_buf.Shrink();
+                }
+            }
+            else
+            {
+                if (Add(u_buf, u_buf_count, v_buf.BLOCK, v_buf.WORD_COUNT, w_buf.BLOCK, w_buf.BLOCK_COUNT))
+                    throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_signedunitarray.h;Subtruct;3");
+                w_buf.WORD_COUNT = w_buf.BLOCK_COUNT;
+                w_buf.SIGN = SIGN_POSITIVE;
+                w_buf.Shrink();
             }
         }
     }
@@ -676,7 +857,7 @@ namespace Palmtree::Math::Core::Internal::Basic
     {
 #ifdef _DEBUG
         if (inout_buf.WORD_COUNT > 0 && inout_buf.BLOCK[inout_buf.WORD_COUNT - 1] == 0)
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_signedunitarray.h;RightShift;1");
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_signedunitarray.h;LeftShift;1");
 #endif
         LeftShift(inout_buf.BLOCK, inout_buf.BLOCK_COUNT, n);
         inout_buf.WORD_COUNT = inout_buf.BLOCK_COUNT;
@@ -684,11 +865,25 @@ namespace Palmtree::Math::Core::Internal::Basic
     }
 
     // r_buf = u_buf << n;
+    __inline static void LeftShift(__UNIT_TYPE* in_buf, __UNIT_TYPE in_buf_count, __UNIT_TYPE n, SIGNED_UNIT_ARRAY& out_buf)
+    {
+#ifdef _DEBUG
+        if (in_buf_count > 0 && in_buf[in_buf_count - 1] == 0)
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_signedunitarray.h;LeftShift;1");
+#endif
+        LeftShift(in_buf, in_buf_count, n, out_buf.BLOCK, out_buf.BLOCK_COUNT);
+        __UNIT_TYPE n_word = _DIVIDE_CEILING_UNIT(n, __UNIT_TYPE_BIT_COUNT);
+        out_buf.WORD_COUNT = _MINIMUM_UNIT(in_buf_count + n_word, out_buf.BLOCK_COUNT);
+        out_buf.SIGN = SIGN_POSITIVE;
+        out_buf.Shrink();
+    }
+
+    // r_buf = u_buf << n;
     __inline static void LeftShift(SIGNED_UNIT_ARRAY& in_buf, __UNIT_TYPE n, SIGNED_UNIT_ARRAY& out_buf)
     {
 #ifdef _DEBUG
         if (in_buf.WORD_COUNT > 0 && in_buf.BLOCK[in_buf.WORD_COUNT - 1] == 0)
-            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_signedunitarray.h;RightShift;1");
+            throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_signedunitarray.h;LeftShift;1");
 #endif
         LeftShift(in_buf.BLOCK, in_buf.WORD_COUNT, n, out_buf.BLOCK, out_buf.BLOCK_COUNT);
         __UNIT_TYPE n_word = _DIVIDE_CEILING_UNIT(n, __UNIT_TYPE_BIT_COUNT);

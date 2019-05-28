@@ -65,5 +65,10 @@ namespace Palmtree.Math.Experiment
                 throw new ApplicationException();
             return (u / v);
         }
+
+        public static string ToHexFormatString(this BigInteger x)
+        {
+            return ((x.Sign < 0 ? "-" : "") + string.Concat(BigInteger.Abs(x).ToString("X").Reverse().Zip(Enumerable.Range(0, int.MaxValue), (c, index) => index > 0 && index % 8 == 0 ? c.ToString() + ":" : c.ToString()).Reverse()));
+        }
     }
 }

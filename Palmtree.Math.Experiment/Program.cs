@@ -10,17 +10,18 @@ namespace Palmtree.Math.Experiment
     {
         static void Main(string[] args)
         {
-
-            var x64 = ((BigInteger)UInt64.MaxValue + 1) / 6 - 1;
-            if ((x64 + 1) * 6 > UInt64.MaxValue)
-                throw new ApplicationException();
-
-            var x32 = ((BigInteger)UInt32.MaxValue + 1) / 6 - 1;
-            if ((x32 + 1) * 6 > UInt32.MaxValue)
-                throw new ApplicationException();
-
-            Console.WriteLine(string.Format("{0} (0x{0:x16}), {1} (0x{1:x8})", x64, x32));
-
+            using (var random = new Random(0))
+            {
+                var N = 224;
+                //var u = random.GenerateUBigInt(N * 3).ToBigInteger();
+                //var v = random.GenerateUBigInt(N * 3).ToBigInteger();
+                var u = UBigInt.FromByteArray(new byte[] { 0x01, 0x43, 0xd2, 0x0a, 0x3f, 0xce, 0x96, 0xf1, 0xcf, 0xac, 0x4b, 0xf1, 0x7b, 0xef, 0x61, 0x11, 0x3d, 0x24, 0x5e, 0x93, 0xa9, 0x88, 0x45, 0x42, 0x21, 0xdb, 0x9c, 0x0c, 0x9b, 0xde, 0xc4, 0x1f, 0xc6, 0x58, 0xcf, 0xf4, 0x5a, 0xd1, 0xcc, 0xd6, 0xfc, 0xc7, 0xa6, 0x32, 0x88, 0xea, 0x83, 0x91, 0xc5, 0x0a, 0xa6, 0x20, 0x1d, 0x29, 0xa6, 0xc5, 0x44, 0x75, 0x6f, 0xc3, 0x13, 0x88, 0x06, 0x32, 0xa1, 0x47, 0xae, 0x67, 0x01 }).ToBigInteger();
+                var v = UBigInt.FromByteArray(new byte[] { 0x01, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 }).ToBigInteger();
+                var actual_w = ToomCook法による乗算(N, u, v);
+                var desired_w = u * v;
+                if (actual_w != desired_w)
+                    throw new ApplicationException();
+            }
             Console.ReadLine();
         }
 
@@ -28,29 +29,50 @@ namespace Palmtree.Math.Experiment
         {
             var mask = (BigInteger.One << N) - 1;
             var u0 = u & mask;
+            Console.WriteLine(string.Format("{0}={1}", "u0", u0.ToHexFormatString()));
             var u1 = (u >> N) & mask;
+            Console.WriteLine(string.Format("{0}={1}", "u1", u1.ToHexFormatString()));
             var u2 = (u >> (N * 2)) & mask;
+            Console.WriteLine(string.Format("{0}={1}", "u2", u2.ToHexFormatString()));
             var v0 = v & mask;
+            Console.WriteLine(string.Format("{0}={1}", "v0", v0.ToHexFormatString()));
             var v1 = (v >> N) & mask;
+            Console.WriteLine(string.Format("{0}={1}", "v1", v1.ToHexFormatString()));
             var v2 = (v >> (N * 2)) & mask;
+            Console.WriteLine(string.Format("{0}={1}", "v2", v2.ToHexFormatString()));
 
             var U_infinity = u2;
-            var U_2 = 4 * u2 + 2 * u1 + u0;
+            Console.WriteLine(string.Format("{0}={1}", "Uinfinity", U_infinity.ToHexFormatString()));
+            var U_2 = (((u2 << 1) + u1) << 1) + u0; // 4 * u2 + 2 * u1 + u0;
+            Console.WriteLine(string.Format("{0}={1}", "U2", U_2.ToHexFormatString()));
             var U_1 = u2 + u1 + u0;
+            Console.WriteLine(string.Format("{0}={1}", "U1", U_1.ToHexFormatString()));
             var U_0 = u0;
+            Console.WriteLine(string.Format("{0}={1}", "U0", U_0.ToHexFormatString()));
             var U_minus1 = u2 - u1 + u0;
+            Console.WriteLine(string.Format("{0}={1}", "Uminus1", U_minus1.ToHexFormatString()));
 
             var V_infinity = v2;
-            var V_2 = 4 * v2 + 2 * v1 + v0;
+            Console.WriteLine(string.Format("{0}={1}", "Vinfinity", V_infinity.ToHexFormatString()));
+            var V_2 = (((v2 << 1) + v1) << 1) + v0; // 4 * v2 + 2 * v1 + v0;
+            Console.WriteLine(string.Format("{0}={1}", "V2", V_2.ToHexFormatString()));
             var V_1 = v2 + v1 + v0;
+            Console.WriteLine(string.Format("{0}={1}", "V1", V_1.ToHexFormatString()));
             var V_0 = v0;
+            Console.WriteLine(string.Format("{0}={1}", "V0", V_0.ToHexFormatString()));
             var V_minus1 = v2 - v1 + v0;
+            Console.WriteLine(string.Format("{0}={1}", "Vminus1", V_minus1.ToHexFormatString()));
 
             var W_infinity = U_infinity * V_infinity;
+            Console.WriteLine(string.Format("{0}={1}", "Winfinity", W_infinity.ToHexFormatString()));
             var W_2 = U_2 * V_2;
+            Console.WriteLine(string.Format("{0}={1}", "W2", W_2.ToHexFormatString()));
             var W_1 = U_1 * V_1;
+            Console.WriteLine(string.Format("{0}={1}", "W1", W_1.ToHexFormatString()));
             var W_0 = U_0 * V_0;
+            Console.WriteLine(string.Format("{0}={1}", "W0", W_0.ToHexFormatString()));
             var W_minus1 = U_minus1 * V_minus1;
+            Console.WriteLine(string.Format("{0}={1}", "Wminus1", W_minus1.ToHexFormatString()));
 
             //
             // 5つの整数 w0, w1, w2, w3, w4 があって以下が成り立つとする
@@ -77,12 +99,18 @@ namespace Palmtree.Math.Experiment
             //
 
             var w4 = W_infinity;
-            var w3 = (-12 * W_infinity + W_2 - 3 * W_1 + 3 * W_0 - W_minus1).DivideExactly(6);
-            var w2 = (-2 * W_infinity + W_1 - 2 * W_0 + W_minus1).DivideExactly(2);
-            var w1 = (12 * W_infinity - W_2 + 6 * W_1 - 3 * W_0 - 2 * W_minus1).DivideExactly(6);
+            Console.WriteLine(string.Format("{0}={1}", "w4", w4.ToHexFormatString()));
+            var w3 = ((-(W_infinity << 2) - W_1 + W_0) * 3 + W_2 - W_minus1).DivideExactly(6); // (-12 * W_infinity + W_2 - 3 * W_1 + 3 * W_0 - W_minus1).DivideExactly(6);
+            Console.WriteLine(string.Format("{0}={1}", "w3", w3.ToHexFormatString()));
+            var w2 = (-(W_infinity + W_0) * 2 + W_1 + W_minus1).DivideExactly(2); // (-2 * W_infinity + W_1 - 2 * W_0 + W_minus1).DivideExactly(2);
+            Console.WriteLine(string.Format("{0}={1}", "w2", w2.ToHexFormatString()));
+            var w1 = (((((W_infinity << 1) + W_1) << 1) - W_0) * 3 - 2 * W_minus1 - W_2).DivideExactly(6);
+            Console.WriteLine(string.Format("{0}={1}", "w1", w1.ToHexFormatString()));
             var w0 = W_0;
+            Console.WriteLine(string.Format("{0}={1}", "w0", w0.ToHexFormatString()));
 
             var actual_w = (w4 << (N * 4)) + (w3 << (N * 3)) + (w2 << (N * 2)) + (w1 << N) + w0;
+            Console.WriteLine(string.Format("{0}={1}", "w", actual_w.ToHexFormatString()));
             return (actual_w);
         }
 

@@ -18,7 +18,7 @@ cd Palmtree.Math.Core.Uint.Launcher
 start powershell
 cd..
 
-cd Palmtree.Math.Core.Uint.Experiment.Karatsuba
+cd Palmtree.Math.Core.Uint.Experiment.Multiplication
 start powershell
 cd..
 

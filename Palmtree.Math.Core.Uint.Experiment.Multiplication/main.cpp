@@ -38,12 +38,14 @@ namespace Palmtree::Math::Core::Internal
     {
         std::chrono::microseconds classic_total_time(0);
         std::chrono::microseconds karatsuba_total_time(0);
+        std::chrono::microseconds toomcook_total_time(0);
         PMC_HANDLE_UINT u = ep.GenerateUBigIntRandomValue(tc, random, bit_count);
         PMC_HANDLE_UINT v = ep.GenerateUBigIntRandomValue(tc, random, bit_count);
         for (int count = loop_count; count > 0; --count)
         {
             PMC_HANDLE_UINT w1;
             PMC_HANDLE_UINT w2;
+            PMC_HANDLE_UINT w3;
             std::chrono::steady_clock::time_point begin;
             std::chrono::steady_clock::time_point end;
             std::chrono::microseconds elapsed_time;
@@ -60,7 +62,18 @@ namespace Palmtree::Math::Core::Internal
             elapsed_time = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
             karatsuba_total_time += elapsed_time;
 
+            begin = std::chrono::steady_clock::now();
+            w3 = ep.Multiply(tc, PMC_MULTIPLICATION_METHOD_TOOMCOOK, u, v);
+            end = std::chrono::steady_clock::now();
+            elapsed_time = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+            toomcook_total_time += elapsed_time;
+
             if (!ep.Equals(w1, w2))
+            {
+                std::cout << "bad result" << std::endl;
+                break;
+            }
+            if (!ep.Equals(w1, w3))
             {
                 std::cout << "bad result" << std::endl;
                 break;
@@ -68,10 +81,15 @@ namespace Palmtree::Math::Core::Internal
 
             ep.Dispose(tc, w1);
             ep.Dispose(tc, w2);
+            ep.Dispose(tc, w3);
         }
         ep.Dispose(tc, u);
         ep.Dispose(tc, v);
-        std::cout << "bit_count: " << bit_count << ", classic: " << std::fixed << classic_total_time.count() * 0.000001 / loop_count << "[sec], karatsuba: " << std::fixed << karatsuba_total_time.count() * 0.000001 / loop_count << "[sec]" << std::endl;
+        std::cout << "bit_count: " << bit_count << ", ";
+        std::cout << "classic: " << std::fixed << classic_total_time.count() * 0.000001 / loop_count << "[sec], ";
+        std::cout << "karatsuba: " << std::fixed << karatsuba_total_time.count() * 0.000001 / loop_count << "[sec],";
+        std::cout << "toom&cook: " << std::fixed << toomcook_total_time.count() * 0.000001 / loop_count << "[sec]";
+        std::cout << std::endl;
     }
 
     extern "C" int main(int argc, char** argv)

@@ -2207,7 +2207,7 @@ namespace Palmtree::Math::Core::Internal::Basic
         }
         else
         {
-            __UNIT_TYPE in_buf_count = __Shrink(inout_buf, in_buf_count);
+            __UNIT_TYPE in_buf_count = __Shrink(inout_buf, inoput_buf_count);
             if (in_buf_count == 0)
             {
                 // nop

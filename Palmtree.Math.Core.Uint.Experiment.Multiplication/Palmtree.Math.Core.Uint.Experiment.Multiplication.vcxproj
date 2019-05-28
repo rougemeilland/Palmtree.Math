@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{49149F69-860B-4072-8A22-9BCD4CA2E180}</ProjectGuid>
+    <ProjectGuid>{9E0F4628-F227-4C68-8779-E85F4A77AC37}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>PalmtreeMathCoreUintExperimentKaratsuba</RootNamespace>
+    <RootNamespace>PalmtreeMathCoreUintExperimentMultiplication</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -183,7 +183,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="mymakefile.xml" />
+    <Xml Include="mymakefile.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

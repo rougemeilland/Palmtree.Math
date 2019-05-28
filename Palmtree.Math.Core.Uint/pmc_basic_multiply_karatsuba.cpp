@@ -75,23 +75,12 @@ namespace Palmtree::Math::Core::Internal::Multiply::Karatsuba
             return (true);
         }
 
-#ifdef _M_IX86
-        if (n_half > (0xffffffffU - 1U) / 4U)
+        if (n_half > ((__UNIT_TYPE)-1 - 1U) / 4U)
         {
-            // 4 * n + 1 が 32bit 符号なし整数で表現できる範囲を超える場合
+            // 4 * n_half + 1 が __UNIT_TYPE で表現できる範囲を超える場合
             buffer_size = 0;
             return (true);
         }
-#elif defined(_M_X64)
-        if (n_half > (0xffffffffffffffffUL - 1U) / 4U)
-        {
-            // 4 * n + 1 が 64bit 符号なし整数で表現できる範囲を超える場合
-            buffer_size = 0;
-            return (true);
-        }
-#else
-#error unknown platform
-#endif
         __UNIT_TYPE size2 = 4 * n_half + 1;
 
         buffer_size = size1;
@@ -238,13 +227,7 @@ namespace Palmtree::Math::Core::Internal::Multiply::Karatsuba
         if (u_buf_count < v_buf_count)
             throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;1");
 #endif
-        if (!fixed && v_buf_count < WORD_COUNT_THRESHOLD_CLASSIC)
-        {
-            // 桁数が閾値より小さい場合は classic 法で計算する
-
-            Palmtree::Math::Core::Internal::Multiply::Classic::Multiply_UX_UX(u_buf, u_buf_count, v_buf, v_buf_count, w_buf, w_buf_count);
-        }
-        else if (v_buf_count == 0)
+        if (v_buf_count == 0)
         {
             // u_buf と v_buf の少なくともどちらかが 0 の場合
 
@@ -257,7 +240,7 @@ namespace Palmtree::Math::Core::Internal::Multiply::Karatsuba
 
 #ifdef _DEBUG
             if (w_buf_count < 2)
-                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;1");
+                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;2");
 #endif
             w_buf[0] = _MULTIPLY_UNIT(u_buf[0], v_buf[0], &w_buf[1]);
 #ifdef ENABLED_PERFORMANCE_COUNTER
@@ -268,19 +251,25 @@ namespace Palmtree::Math::Core::Internal::Multiply::Karatsuba
 #endif
             _ZERO_MEMORY_UNIT(w_buf + 2, w_buf_count - 2);
         }
+        else if (!fixed && v_buf_count < WORD_COUNT_THRESHOLD_CLASSIC)
+        {
+            // 桁数が閾値より小さい場合は classic 法で計算する
+
+            Palmtree::Math::Core::Internal::Multiply::Classic::Multiply_UX_UX(u_buf, u_buf_count, v_buf, v_buf_count, w_buf, w_buf_count);
+        }
         else
         {
             // u_buf と v_buf の少なくともどちらかが 2 ワード以上の場合
 
 #ifdef _DEBUG
             if (w_buf_count != u_buf_count + v_buf_count)
-                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;1");
+                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;3");
 #endif
 
             const __UNIT_TYPE n_half = _DIVIDE_CEILING_UNIT(u_buf_count, 2);
 #ifdef _DEBUG
             if (n_half <= 0)
-                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;2");
+                throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;4");
 #endif
 
             const __UNIT_TYPE u_buf_lo_length = n_half;
@@ -337,7 +326,7 @@ namespace Palmtree::Math::Core::Internal::Multiply::Karatsuba
                 Add_Debug(t3, w_buf_lo, w_buf_lo_count);
 
                 if (t3.SIGN < 0)
-                    throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;3");
+                    throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;5");
 
                 Add_Debug(w_buf_mid, w_buf_mid_length, t3.BLOCK, t3.WORD_COUNT);
             }
@@ -355,7 +344,7 @@ namespace Palmtree::Math::Core::Internal::Multiply::Karatsuba
                 Add_Debug(t3, w_buf_lo, w_buf_lo_count);
 
                 if (t3.SIGN < 0)
-                    throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;3");
+                    throw InternalErrorException(L"内部エラーが発生しました。", L"pmc_multiply_karatsuba.cpp;Multiply_UX_UX_Karatsuba;6");
 
                 Add_Debug(w_buf_mid, w_buf_mid_length, t3.BLOCK, t3.WORD_COUNT);
             }

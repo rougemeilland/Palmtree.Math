@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Palmtree.Math, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PalmtreeSoftware.Palmtree.Math.1.3.4\lib\net471\Palmtree.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Palmtree.Math.Interop, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PalmtreeSoftware.Palmtree.Math.Interop.1.0.0\lib\net471\Palmtree.Math.Interop.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
@@ -50,12 +58,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Palmtree.Math\Palmtree.Math.csproj">
-      <Project>{b800b958-9d3a-4312-9ef6-65f2cc87da84}</Project>
-      <Name>Palmtree.Math</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\PalmtreeSoftware.Palmtree.Math.1.3.4\build\PalmtreeSoftware.Palmtree.Math.targets" Condition="Exists('..\packages\PalmtreeSoftware.Palmtree.Math.1.3.4\build\PalmtreeSoftware.Palmtree.Math.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\PalmtreeSoftware.Palmtree.Math.1.3.4\build\PalmtreeSoftware.Palmtree.Math.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PalmtreeSoftware.Palmtree.Math.1.3.4\build\PalmtreeSoftware.Palmtree.Math.targets'))" />
+  </Target>
 </Project>

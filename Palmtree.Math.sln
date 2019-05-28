@@ -33,9 +33,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Palmtree.Math.Core.Sfmt", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Palmtree.Math.CodeGen.VersionInfo", "Palmtree.Math.CodeGen.VersionInfo\Palmtree.Math.CodeGen.VersionInfo.csproj", "{53C620BA-A831-4F40-B24E-D973059807D9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Palmtree.Math.Core.Uint.Experiment.Karatsuba", "Palmtree.Math.Core.Uint.Experiment.Karatsuba\Palmtree.Math.Core.Uint.Experiment.Karatsuba.vcxproj", "{49149F69-860B-4072-8A22-9BCD4CA2E180}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Palmtree.Math.Experiment.Pie", "Palmtree.Math.Experiment.Pie\Palmtree.Math.Experiment.Pie.csproj", "{C10157AA-7CF7-4F12-B785-CC1628CBB99A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Palmtree.Math.Core.Uint.Experiment.Multiplication", "Palmtree.Math.Core.Uint.Experiment.Multiplication\Palmtree.Math.Core.Uint.Experiment.Multiplication.vcxproj", "{9E0F4628-F227-4C68-8779-E85F4A77AC37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -211,16 +211,6 @@ Global
 		{53C620BA-A831-4F40-B24E-D973059807D9}.Release|x64.Build.0 = Release|Any CPU
 		{53C620BA-A831-4F40-B24E-D973059807D9}.Release|x86.ActiveCfg = Release|Any CPU
 		{53C620BA-A831-4F40-B24E-D973059807D9}.Release|x86.Build.0 = Release|Any CPU
-		{49149F69-860B-4072-8A22-9BCD4CA2E180}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{49149F69-860B-4072-8A22-9BCD4CA2E180}.Debug|x64.ActiveCfg = Debug|x64
-		{49149F69-860B-4072-8A22-9BCD4CA2E180}.Debug|x64.Build.0 = Debug|x64
-		{49149F69-860B-4072-8A22-9BCD4CA2E180}.Debug|x86.ActiveCfg = Debug|Win32
-		{49149F69-860B-4072-8A22-9BCD4CA2E180}.Debug|x86.Build.0 = Debug|Win32
-		{49149F69-860B-4072-8A22-9BCD4CA2E180}.Release|Any CPU.ActiveCfg = Release|Win32
-		{49149F69-860B-4072-8A22-9BCD4CA2E180}.Release|x64.ActiveCfg = Release|x64
-		{49149F69-860B-4072-8A22-9BCD4CA2E180}.Release|x64.Build.0 = Release|x64
-		{49149F69-860B-4072-8A22-9BCD4CA2E180}.Release|x86.ActiveCfg = Release|Win32
-		{49149F69-860B-4072-8A22-9BCD4CA2E180}.Release|x86.Build.0 = Release|Win32
 		{C10157AA-7CF7-4F12-B785-CC1628CBB99A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C10157AA-7CF7-4F12-B785-CC1628CBB99A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C10157AA-7CF7-4F12-B785-CC1628CBB99A}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -233,6 +223,16 @@ Global
 		{C10157AA-7CF7-4F12-B785-CC1628CBB99A}.Release|x64.Build.0 = Release|Any CPU
 		{C10157AA-7CF7-4F12-B785-CC1628CBB99A}.Release|x86.ActiveCfg = Release|Any CPU
 		{C10157AA-7CF7-4F12-B785-CC1628CBB99A}.Release|x86.Build.0 = Release|Any CPU
+		{9E0F4628-F227-4C68-8779-E85F4A77AC37}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{9E0F4628-F227-4C68-8779-E85F4A77AC37}.Debug|x64.ActiveCfg = Debug|x64
+		{9E0F4628-F227-4C68-8779-E85F4A77AC37}.Debug|x64.Build.0 = Debug|x64
+		{9E0F4628-F227-4C68-8779-E85F4A77AC37}.Debug|x86.ActiveCfg = Debug|Win32
+		{9E0F4628-F227-4C68-8779-E85F4A77AC37}.Debug|x86.Build.0 = Debug|Win32
+		{9E0F4628-F227-4C68-8779-E85F4A77AC37}.Release|Any CPU.ActiveCfg = Release|Win32
+		{9E0F4628-F227-4C68-8779-E85F4A77AC37}.Release|x64.ActiveCfg = Release|x64
+		{9E0F4628-F227-4C68-8779-E85F4A77AC37}.Release|x64.Build.0 = Release|x64
+		{9E0F4628-F227-4C68-8779-E85F4A77AC37}.Release|x86.ActiveCfg = Release|Win32
+		{9E0F4628-F227-4C68-8779-E85F4A77AC37}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
