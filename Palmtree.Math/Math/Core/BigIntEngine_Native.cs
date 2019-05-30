@@ -509,6 +509,15 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_LeftShift_X_I(IntPtr p, Int32 n, out IntPtr o);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_LeftShift_X_UI(IntPtr p, UInt32 n, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_LeftShift_X_L(IntPtr p, Int64 n, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_LeftShift_X_UL(IntPtr p, UInt64 n, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
         private static extern Int32 PMCCS_Modulo_I_UX(Int32 u, IntPtr v, out IntPtr r);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
@@ -636,6 +645,15 @@ namespace Palmtree.Math.Core
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
         private static extern Int32 PMCCS_RightShift_X_I(IntPtr p, Int32 n, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_RightShift_X_UI(IntPtr p, UInt32 n, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_RightShift_X_L(IntPtr p, Int64 n, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Sint.dll")]
+        private static extern Int32 PMCCS_RightShift_X_UL(IntPtr p, UInt64 n, out IntPtr o);
 
         [DllImport("Palmtree.Math.Core.Sint.dll")]
         private static extern Int32 PMCCS_Subtruct_I_UX(Int32 u, IntPtr v, out IntPtr w);

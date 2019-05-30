@@ -82,6 +82,8 @@ namespace Palmtree.Math
 
         public bool IsZero => EngineObject.IsZero(Handle);
 
+        public UInt64 BitLength => EngineObject.GetBitLength(Handle);
+
         public static RoundingMode DefaultRoundingMode
         {
             get

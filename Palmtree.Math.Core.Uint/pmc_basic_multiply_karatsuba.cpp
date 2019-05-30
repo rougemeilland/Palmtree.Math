@@ -34,11 +34,9 @@
 #include "pmc_inline_func.h"
 
 #ifdef _M_IX86
-#define WORD_COUNT_THRESHOLD_CLASSIC    (32768U)                // u_buf と v_buf のどちらかのワード長がこの値未満ならば classic法 に切り替える
-#define MAX_USER_MEMORY_SIZE            (0x80000000U)           // 現実的に利用可能なユーザメモリの最大サイズ
+#define WORD_COUNT_THRESHOLD_CLASSIC    (32768U)    // u_buf と v_buf のどちらかのワード長がこの値未満ならば classic法 に切り替える
 #elif defined(_M_X64)
-#define WORD_COUNT_THRESHOLD_CLASSIC    (32768U)                // u_buf と v_buf のどちらかのワード長がこの値未満ならば classic法 に切り替える
-#define MAX_USER_MEMORY_SIZE            (0x8000000000000000UL)  // 現実的に利用可能なユーザメモリの最大サイズ
+#define WORD_COUNT_THRESHOLD_CLASSIC    (32768U)    // u_buf と v_buf のどちらかのワード長がこの値未満ならば classic法 に切り替える
 #else
 #error unknown platform
 #endif

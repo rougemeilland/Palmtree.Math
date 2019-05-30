@@ -156,6 +156,13 @@ namespace Palmtree::Math::Core::Internal
     // 引数には格納可能な多倍長整数の合計ワード数が渡される。
     __UNIT_TYPE* __AllocateBlock(ThreadContext& tc, size_t word_count, __UNIT_TYPE* code)
     {
+        if (
+            // 実際に獲得されるメモリのバイト数が MAX_USER_MEMORY_SIZE を超えないためのチェック
+            word_count > MAX_USER_MEMORY_SIZE / __UNIT_TYPE_BYTE_COUNT ||
+            // word_count が大きすぎて 'UNIT_BIT_COUNT' がオーバーフローしないためのチェック
+            word_count > (__UNIT_TYPE)-1 / __UNIT_TYPE_BIT_COUNT
+            )
+            throw NotEnoughMemoryException(L"数値が大きすぎるために数値を格納するメモリが獲得できませんでした。");
 #ifdef _DEBUG
         // 実際に獲得されるメモリ領域は「引数で渡されたワード数+2」のワード数となる。
         // 最初のワードには獲得時に引数で渡されたワード数が格納される。

@@ -10,19 +10,56 @@ namespace Palmtree.Math.Experiment
     {
         static void Main(string[] args)
         {
-            using (var random = new Random(0))
+            using (var random = new Random())
             {
-                var N = 224;
-                //var u = random.GenerateUBigInt(N * 3).ToBigInteger();
-                //var v = random.GenerateUBigInt(N * 3).ToBigInteger();
-                var u = UBigInt.FromByteArray(new byte[] { 0x01, 0x43, 0xd2, 0x0a, 0x3f, 0xce, 0x96, 0xf1, 0xcf, 0xac, 0x4b, 0xf1, 0x7b, 0xef, 0x61, 0x11, 0x3d, 0x24, 0x5e, 0x93, 0xa9, 0x88, 0x45, 0x42, 0x21, 0xdb, 0x9c, 0x0c, 0x9b, 0xde, 0xc4, 0x1f, 0xc6, 0x58, 0xcf, 0xf4, 0x5a, 0xd1, 0xcc, 0xd6, 0xfc, 0xc7, 0xa6, 0x32, 0x88, 0xea, 0x83, 0x91, 0xc5, 0x0a, 0xa6, 0x20, 0x1d, 0x29, 0xa6, 0xc5, 0x44, 0x75, 0x6f, 0xc3, 0x13, 0x88, 0x06, 0x32, 0xa1, 0x47, 0xae, 0x67, 0x01 }).ToBigInteger();
-                var v = UBigInt.FromByteArray(new byte[] { 0x01, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 }).ToBigInteger();
-                var actual_w = ToomCook法による乗算(N, u, v);
-                var desired_w = u * v;
+                var N = 64;
+                var u = random.GenerateUBigInt(N * 2);
+                var v = random.GenerateUBigInt(N);
+                var desired_w = u / v;
+                var actual_w = ニュートンラプソン法による除算(u, v);
                 if (actual_w != desired_w)
                     throw new ApplicationException();
             }
             Console.ReadLine();
+        }
+
+        static UBigInt ニュートンラプソン法による除算(UBigInt u, UBigInt v)
+        {
+            var factor_v = GetBitCount(v);
+            int factor_x;
+            UBigInt xi;
+            ニュートンラプソン法による逆数の計算(v, factor_v, out xi, out factor_x);
+            var q = (u * xi) >> (factor_v + factor_x);
+            var r = u.USubtruct(v * q);
+            if (r >= v)
+            {
+                r = r.USubtruct(v);
+                ++q;
+            }
+            return (q);
+        }
+
+        private static void ニュートンラプソン法による逆数の計算(UBigInt v, int factor_v, out UBigInt xi, out int factor_x)
+        {
+            factor_x = factor_v + 1;
+            xi = (UBigInt.From(7U) << (factor_x - 1)).USubtruct((v << (factor_x - factor_v + 1)));
+            while (true)
+            {
+                var t = (UBigInt.One << (factor_v + factor_x + 1)).USubtruct(v * xi);
+                var xi_plus_1 = (xi * t) >> (factor_v + factor_x);
+                if (xi_plus_1 == xi)
+                    break;
+                xi = xi_plus_1;
+            }
+        }
+
+        // 2^(k-1) <= v < 2^k が成り立つ k を返す
+        private static int GetBitCount(UBigInt v)
+        {
+            var k = 0;
+            while ((UBigInt.One << k) <= v)
+                ++k;
+            return (k);
         }
 
         private static BigInteger ToomCook法による乗算(int N, BigInteger u, BigInteger v)
@@ -410,3 +447,4 @@ namespace Palmtree.Math.Experiment
         }
     }
 }
+

@@ -475,11 +475,17 @@
     <Compile Include="Plugin\Sint\ComponentTestPlugin_DivideExactly_X_UL.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_DivideExactly_X_UX.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_DivideExactly_X_X.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_LeftShift_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_LeftShift_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_LeftShift_X_L.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_Modulo_I_UX.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_Modulo_L_UX.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_Modulo_X_UI.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_Modulo_X_UL.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_Modulo_X_UX.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_RightShift_X_UI.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_RightShift_X_UL.cs" />
+    <Compile Include="Plugin\Sint\ComponentTestPlugin_RightShift_X_L.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Pow_I_UI.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Pow_L_UI.cs" />
     <Compile Include="Plugin\Sint\ComponentTestPlugin_static_Pow_X_UI.cs" />
@@ -951,6 +957,9 @@
     <Compile Include="Plugin\Uint\ComponentTestPlugin_DivideExactly_X_I.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_DivideExactly_X_L.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_DivideExactly_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_LeftShift_X_UI.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_LeftShift_X_UL.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_LeftShift_X_L.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_Multiply_X_X_Classic.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_Multiply_X_X_ToomCook.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_Multiply_X_X_Karatsuba.cs" />
@@ -959,6 +968,9 @@
     <Compile Include="Plugin\Uint\ComponentTestPlugin_Modulo_X_I.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_Modulo_X_L.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_Modulo_X_X.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_RightShift_X_UI.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_RightShift_X_UL.cs" />
+    <Compile Include="Plugin\Uint\ComponentTestPlugin_RightShift_X_L.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_static_Equals_I_X.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_static_Equals_L_X.cs" />
     <Compile Include="Plugin\Uint\ComponentTestPlugin_static_Equals_X_I.cs" />
@@ -2345,6 +2357,15 @@
     <Content Include="Data\Sint\test_data_leftshift_x_i.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\Sint\test_data_leftshift_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_leftshift_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_leftshift_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Sint\test_data_lesserthanorequal_i_ux.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2574,6 +2595,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Sint\test_data_rightshift_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_rightshift_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_rightshift_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sint\test_data_rightshift_x_ul.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Sint\test_data_subtruct_i_ux.xml">
@@ -2918,6 +2948,15 @@
     <Content Include="Data\Uint\test_data_leftshift_x_i.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\Uint\test_data_leftshift_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_leftshift_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_leftshift_x_ul.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Uint\test_data_lesserthanorequal_i_x.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -3003,6 +3042,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Uint\test_data_rightshift_x_i.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_rightshift_x_l.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_rightshift_x_ui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Uint\test_data_rightshift_x_ul.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Uint\test_data_subtruct_i_x.xml">

@@ -350,9 +350,39 @@ namespace Palmtree::Math::Core::Internal
         return (PMC_RightShift_UX_I(tc, p, n));
     }
 
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::RightShift(ThreadContext & tc, PMC_HANDLE_UINT p, _UINT32_T n) noexcept(false)
+    {
+        return (PMC_RightShift_UX_UI(tc, p, n));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::RightShift(ThreadContext & tc, PMC_HANDLE_UINT p, _INT64_T n) noexcept(false)
+    {
+        return (PMC_RightShift_UX_L(tc, p, n));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::RightShift(ThreadContext & tc, PMC_HANDLE_UINT p, _UINT64_T n) noexcept(false)
+    {
+        return (PMC_RightShift_UX_UL(tc, p, n));
+    }
+
     PMC_HANDLE_UINT PMC_UINT_CppInterface::LeftShift(ThreadContext& tc, PMC_HANDLE_UINT p, _INT32_T n) noexcept(false)
     {
         return (PMC_LeftShift_UX_I(tc, p, n));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::LeftShift(ThreadContext & tc, PMC_HANDLE_UINT p, _UINT32_T n) noexcept(false)
+    {
+        return (PMC_LeftShift_UX_UI(tc, p, n));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::LeftShift(ThreadContext & tc, PMC_HANDLE_UINT p, _INT64_T n) noexcept(false)
+    {
+        return (PMC_LeftShift_UX_L(tc, p, n));
+    }
+
+    PMC_HANDLE_UINT PMC_UINT_CppInterface::LeftShift(ThreadContext & tc, PMC_HANDLE_UINT p, _UINT64_T n) noexcept(false)
+    {
+        return (PMC_LeftShift_UX_UL(tc, p, n));
     }
 
     _UINT32_T PMC_UINT_CppInterface::BitwiseAnd(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false)

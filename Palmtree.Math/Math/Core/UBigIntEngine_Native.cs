@@ -184,6 +184,9 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_From_UL(UInt64 x, out IntPtr o);
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_GET_BIT_LENGTH(IntPtr p, out UInt64 r);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
         private static extern Int32 PMCCS_GET_HASH_CODE(IntPtr p, out Int32 r);
 
         [DllImport("Palmtree.Math.Core.Uint.dll", CharSet = CharSet.Unicode, EntryPoint = "PMCCS_GetConfigurationSettings")]
@@ -238,6 +241,15 @@ namespace Palmtree.Math.Core
         private static extern Int32 PMCCS_LeftShift_UX_I(IntPtr p, Int32 n, out IntPtr o);
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_LeftShift_UX_UI(IntPtr p, UInt32 n, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_LeftShift_UX_L(IntPtr p, Int64 n, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_LeftShift_UX_UL(IntPtr p, UInt64 n, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
         private static extern Int32 PMCCS_ModPow_UX_UX_UX(IntPtr v, IntPtr e, IntPtr m, out IntPtr r);
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
@@ -284,6 +296,15 @@ namespace Palmtree.Math.Core
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
         private static extern Int32 PMCCS_RightShift_UX_I(IntPtr p, Int32 n, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_RightShift_UX_UI(IntPtr p, UInt32 n, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_RightShift_UX_L(IntPtr p, Int64 n, out IntPtr o);
+
+        [DllImport("Palmtree.Math.Core.Uint.dll")]
+        private static extern Int32 PMCCS_RightShift_UX_UL(IntPtr p, UInt64 n, out IntPtr o);
 
         [DllImport("Palmtree.Math.Core.Uint.dll")]
         private static extern Int32 PMCCS_SetDefaultRoundingMode(Int32 mode);

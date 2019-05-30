@@ -51,6 +51,7 @@ EXPORTS
 	PMCCS_From_L
 	PMCCS_From_UI
 	PMCCS_From_UL
+	PMCCS_GET_BIT_LENGTH
 	PMCCS_GET_HASH_CODE
 	PMCCS_GetConfigurationSettings
 	PMCCS_GetConstantValue_I
@@ -67,6 +68,9 @@ EXPORTS
 	PMCCS_IS_ZERO
 	PMCCS_Increment_UX
 	PMCCS_LeftShift_UX_I
+	PMCCS_LeftShift_UX_UI
+	PMCCS_LeftShift_UX_L
+	PMCCS_LeftShift_UX_UL
 	PMCCS_ModPow_UX_UX_UX
 	PMCCS_Multiply_UI_UX
 	PMCCS_Multiply_UL_UX
@@ -83,6 +87,9 @@ EXPORTS
 	PMCCS_Remainder_UX_UL
 	PMCCS_Remainder_UX_UX
 	PMCCS_RightShift_UX_I
+	PMCCS_RightShift_UX_UI
+	PMCCS_RightShift_UX_L
+	PMCCS_RightShift_UX_UL
     PMCCS_SetDefaultRoundingMode
 	PMCCS_Subtruct_UI_UX
 	PMCCS_Subtruct_UL_UX

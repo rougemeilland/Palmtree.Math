@@ -160,6 +160,9 @@ EXPORTS
 	PMCCS_IS_POWER_OF_TWO
 	PMCCS_IS_ZERO
 	PMCCS_LeftShift_X_I
+	PMCCS_LeftShift_X_UI
+	PMCCS_LeftShift_X_L
+	PMCCS_LeftShift_X_UL
 	PMCCS_Modulo_I_UX
 	PMCCS_Modulo_L_UX
 	PMCCS_Modulo_X_UI
@@ -204,6 +207,9 @@ EXPORTS
 	PMCCS_Remainder_X_UX
 	PMCCS_Remainder_X_X
 	PMCCS_RightShift_X_I
+	PMCCS_RightShift_X_UI
+	PMCCS_RightShift_X_L
+	PMCCS_RightShift_X_UL
 	PMCCS_SINT_Initialize
 	PMCCS_Subtruct_I_UX
 	PMCCS_Subtruct_I_X

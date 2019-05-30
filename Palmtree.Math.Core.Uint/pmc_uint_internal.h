@@ -36,6 +36,14 @@
 #include "pmc_internal.h"
 #include "pmc_exception.h"
 
+#ifdef _M_IX86
+#define MAX_USER_MEMORY_SIZE    (0x80000000U)           // 現実的に利用可能なユーザメモリの最大サイズ
+#elif defined(_M_X64)
+#define MAX_USER_MEMORY_SIZE    (0x8000000000000000UL)  // 現実的に利用可能なユーザメモリの最大サイズ
+#else
+#error unknown platform
+#endif
+
 namespace Palmtree::Math::Core::Internal
 {
 
@@ -308,6 +316,8 @@ namespace Palmtree::Math::Core::Internal
 #pragma region エントリポイントに登録される関数の宣言
     extern bool PMC_UINT_Initialize();
 
+    extern __UNIT_TYPE PMC_GetBitLength(PMC_HANDLE_UINT x) noexcept(false);
+
     extern PMC_STATUS_CODE PMC_GetConfigurationSettings(const wchar_t* key, wchar_t* value_buffer, _INT32_T value_buffer_size, _INT32_T* count);
 
     extern _UINT64_T PMC_GetPerformanceCounter(const wchar_t* key);
@@ -384,8 +394,14 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_UINT PMC_Modulo_L_UX(ThreadContext& tc, SIGN_T u_sign, _UINT64_T u_abs, PMC_HANDLE_UINT v);
 
     extern PMC_HANDLE_UINT PMC_RightShift_UX_I(ThreadContext& tc, PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_RightShift_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT p, _UINT32_T n) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_RightShift_UX_L(ThreadContext& tc, PMC_HANDLE_UINT p, _INT64_T n) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_RightShift_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT p, _UINT64_T n) noexcept(false);
 
     extern PMC_HANDLE_UINT PMC_LeftShift_UX_I(ThreadContext& tc, PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_LeftShift_UX_UI(ThreadContext& tc, PMC_HANDLE_UINT p, _UINT32_T n) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_LeftShift_UX_L(ThreadContext& tc, PMC_HANDLE_UINT p, _INT64_T n) noexcept(false);
+    extern PMC_HANDLE_UINT PMC_LeftShift_UX_UL(ThreadContext& tc, PMC_HANDLE_UINT p, _UINT64_T n) noexcept(false);
 
     extern _UINT32_T PMC_BitwiseAnd_UI_UX(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
     extern _UINT64_T PMC_BitwiseAnd_UL_UX(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);

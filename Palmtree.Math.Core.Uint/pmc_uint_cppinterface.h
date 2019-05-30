@@ -125,8 +125,14 @@ namespace Palmtree::Math::Core::Internal
         PMC_HANDLE_UINT Modulo(ThreadContext& tc, SIGN_T u_sign, _UINT64_T u_abs, PMC_HANDLE_UINT v);
 
         PMC_HANDLE_UINT RightShift(ThreadContext& tc, PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);
+        PMC_HANDLE_UINT RightShift(ThreadContext& tc, PMC_HANDLE_UINT p, _UINT32_T n) noexcept(false);
+        PMC_HANDLE_UINT RightShift(ThreadContext& tc, PMC_HANDLE_UINT p, _INT64_T n) noexcept(false);
+        PMC_HANDLE_UINT RightShift(ThreadContext& tc, PMC_HANDLE_UINT p, _UINT64_T n) noexcept(false);
 
         PMC_HANDLE_UINT LeftShift(ThreadContext& tc, PMC_HANDLE_UINT p, _INT32_T n) noexcept(false);
+        PMC_HANDLE_UINT LeftShift(ThreadContext& tc, PMC_HANDLE_UINT p, _UINT32_T n) noexcept(false);
+        PMC_HANDLE_UINT LeftShift(ThreadContext& tc, PMC_HANDLE_UINT p, _INT64_T n) noexcept(false);
+        PMC_HANDLE_UINT LeftShift(ThreadContext& tc, PMC_HANDLE_UINT p, _UINT64_T n) noexcept(false);
 
         _UINT32_T BitwiseAnd(_UINT32_T u, PMC_HANDLE_UINT v) noexcept(false);
         _UINT64_T BitwiseAnd(_UINT64_T u, PMC_HANDLE_UINT v) noexcept(false);

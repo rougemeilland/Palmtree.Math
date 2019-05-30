@@ -37,7 +37,37 @@ namespace Palmtree.Math
             return (new BigInt(EngineObject.RightShift(Handle, v)));
         }
 
+        public BigInt RightShift(UInt32 v)
+        {
+            return (new BigInt(EngineObject.RightShift(Handle, v)));
+        }
+
+        public BigInt RightShift(Int64 v)
+        {
+            return (new BigInt(EngineObject.RightShift(Handle, v)));
+        }
+
+        public BigInt RightShift(UInt64 v)
+        {
+            return (new BigInt(EngineObject.RightShift(Handle, v)));
+        }
+
         public BigInt LeftShift(Int32 v)
+        {
+            return (new BigInt(EngineObject.LeftShift(Handle, v)));
+        }
+
+        public BigInt LeftShift(UInt32 v)
+        {
+            return (new BigInt(EngineObject.LeftShift(Handle, v)));
+        }
+
+        public BigInt LeftShift(Int64 v)
+        {
+            return (new BigInt(EngineObject.LeftShift(Handle, v)));
+        }
+
+        public BigInt LeftShift(UInt64 v)
         {
             return (new BigInt(EngineObject.LeftShift(Handle, v)));
         }

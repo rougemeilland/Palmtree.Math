@@ -1086,6 +1086,24 @@ namespace Palmtree.Math.Core
             return (new BigIntHandle(r));
         }
 
+        public BigIntHandle LeftShift(BigIntHandle x, UInt32 n)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_LeftShift_X_UI(x.NativeHandle, n, out IntPtr r));
+            return (new BigIntHandle(r));
+        }
+
+        public BigIntHandle LeftShift(BigIntHandle x, Int64 n)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_LeftShift_X_L(x.NativeHandle, n, out IntPtr r));
+            return (new BigIntHandle(r));
+        }
+
+        public BigIntHandle LeftShift(BigIntHandle x, UInt64 n)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_LeftShift_X_UL(x.NativeHandle, n, out IntPtr r));
+            return (new BigIntHandle(r));
+        }
+
         #endregion
 
         #region Modulo 関数
@@ -1372,6 +1390,24 @@ namespace Palmtree.Math.Core
         public BigIntHandle RightShift(BigIntHandle x, Int32 n)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_RightShift_X_I(x.NativeHandle, n, out IntPtr r));
+            return (new BigIntHandle(r));
+        }
+
+        public BigIntHandle RightShift(BigIntHandle x, UInt32 n)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_RightShift_X_UI(x.NativeHandle, n, out IntPtr r));
+            return (new BigIntHandle(r));
+        }
+
+        public BigIntHandle RightShift(BigIntHandle x, Int64 n)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_RightShift_X_L(x.NativeHandle, n, out IntPtr r));
+            return (new BigIntHandle(r));
+        }
+
+        public BigIntHandle RightShift(BigIntHandle x, UInt64 n)
+        {
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_RightShift_X_UL(x.NativeHandle, n, out IntPtr r));
             return (new BigIntHandle(r));
         }
 

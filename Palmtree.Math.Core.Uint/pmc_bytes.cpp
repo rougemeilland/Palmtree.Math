@@ -322,6 +322,12 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    __UNIT_TYPE PMC_GetBitLength(PMC_HANDLE_UINT x) noexcept(false)
+    {
+        NUMBER_OBJECT_UINT* nx = GET_NUMBER_OBJECT(x, L"x");
+        return (nx->UNIT_BIT_COUNT);
+    }
+
     size_t PMC_ToByteArray_R(SIGN_T p_numerator_sign, PMC_HANDLE_UINT p_numerator_abs, PMC_HANDLE_UINT p_denominator, unsigned char* buffer, size_t buffer_size) noexcept(false)
     {
         NUMBER_OBJECT_UINT* np_numerator_abs = GET_NUMBER_OBJECT(p_numerator_abs, L"p_numerator_abs");

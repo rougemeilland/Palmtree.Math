@@ -143,6 +143,27 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_GET_BIT_LENGTH(PMC_HANDLE_UINT p, _UINT64_T* r)
+    {
+        if (p == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        if (r == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        try
+        {
+            *r = (_UINT64_T)PMC_GetBitLength(p);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
+    }
+
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_From_I(_INT32_T x, PMC_HANDLE_UINT* o)
     {
         if (o == nullptr)
@@ -1286,6 +1307,87 @@ namespace Palmtree::Math::Core::Internal
         }
     }
 
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_RightShift_UX_UI(PMC_HANDLE_UINT p, _UINT32_T n, PMC_HANDLE_UINT* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            *o = PMC_RightShift_UX_UI(tc, p, n);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_RightShift_UX_L(PMC_HANDLE_UINT p, _INT64_T n, PMC_HANDLE_UINT* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            *o = PMC_RightShift_UX_L(tc, p, n);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_RightShift_UX_UL(PMC_HANDLE_UINT p, _UINT64_T n, PMC_HANDLE_UINT* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            *o = PMC_RightShift_UX_UL(tc, p, n);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
+    }
+
     extern "C" PMC_STATUS_CODE __stdcall PMCCS_LeftShift_UX_I(PMC_HANDLE_UINT p, _INT32_T n, PMC_HANDLE_UINT* o)
     {
         if (o == nullptr)
@@ -1294,6 +1396,87 @@ namespace Palmtree::Math::Core::Internal
         try
         {
             *o = PMC_LeftShift_UX_I(tc, p, n);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_LeftShift_UX_UI(PMC_HANDLE_UINT p, _UINT32_T n, PMC_HANDLE_UINT* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            *o = PMC_LeftShift_UX_UI(tc, p, n);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_LeftShift_UX_L(PMC_HANDLE_UINT p, _INT64_T n, PMC_HANDLE_UINT* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            *o = PMC_LeftShift_UX_L(tc, p, n);
+            tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
+            return (PMC_STATUS_OK);
+        }
+        catch (const Palmtree::Math::Core::Internal::BadBufferException& ex)
+        {
+            return (ex.GetStatusCode());
+        }
+        catch (const Palmtree::Math::Core::Internal::Exception& ex)
+        {
+            if (!tc.VerifyAllocationCount(0, false))
+                return (PMC_STATUS_BAD_BUFFER);
+            return (ex.GetStatusCode());
+        }
+        catch (std::bad_alloc)
+        {
+            return (PMC_STATUS_NOT_ENOUGH_MEMORY);
+        }
+    }
+
+    extern "C" PMC_STATUS_CODE __stdcall PMCCS_LeftShift_UX_UL(PMC_HANDLE_UINT p, _UINT64_T n, PMC_HANDLE_UINT* o)
+    {
+        if (o == nullptr)
+            return (PMC_STATUS_ARGUMENT_NULL_ERROR);
+        ThreadContext tc;
+        try
+        {
+            *o = PMC_LeftShift_UX_UL(tc, p, n);
             tc.VerifyAllocationCount(PMC_GetBufferCount_UX(*o), true);
             return (PMC_STATUS_OK);
         }

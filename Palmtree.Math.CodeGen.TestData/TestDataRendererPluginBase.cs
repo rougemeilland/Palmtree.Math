@@ -220,6 +220,14 @@ namespace Palmtree.Math.CodeGen.TestData
             }
         }
 
+        protected IEnumerable<UInt32> UBitCountDataSource
+        {
+            get
+            {
+                return (new[] { 0U, 1U, 31U, 32U, 33U, 63U, 64U, 65U });
+            }
+        }
+
         protected IEnumerable<UInt32> UExponentDataSource
         {
             get

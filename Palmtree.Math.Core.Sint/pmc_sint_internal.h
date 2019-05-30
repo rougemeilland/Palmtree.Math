@@ -248,7 +248,13 @@ namespace Palmtree::Math::Core::Internal
     extern PMC_HANDLE_SINT PMC_DivideExactly_X_UX(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_UINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_DivideExactly_X_X(ThreadContext& tc, PMC_HANDLE_SINT u, PMC_HANDLE_SINT v) noexcept(false);
     extern PMC_HANDLE_SINT PMC_LeftShift_X_I(ThreadContext& tc, PMC_HANDLE_SINT p, _INT32_T n) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_LeftShift_X_UI(ThreadContext& tc, PMC_HANDLE_SINT p, _UINT32_T n) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_LeftShift_X_L(ThreadContext& tc, PMC_HANDLE_SINT p, _INT64_T n) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_LeftShift_X_UL(ThreadContext& tc, PMC_HANDLE_SINT p, _UINT64_T n) noexcept(false);
     extern PMC_HANDLE_SINT PMC_RightShift_X_I(ThreadContext& tc, PMC_HANDLE_SINT p, _INT32_T n) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_RightShift_X_UI(ThreadContext& tc, PMC_HANDLE_SINT p, _UINT32_T n) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_RightShift_X_L(ThreadContext& tc, PMC_HANDLE_SINT p, _INT64_T n) noexcept(false);
+    extern PMC_HANDLE_SINT PMC_RightShift_X_UL(ThreadContext& tc, PMC_HANDLE_SINT p, _UINT64_T n) noexcept(false);
     extern PMC_HANDLE_SINT PMC_OneComplement_UX(ThreadContext& tc, PMC_HANDLE_UINT x) noexcept(false);
     extern PMC_HANDLE_SINT PMC_OneComplement_X(ThreadContext& tc, PMC_HANDLE_SINT x) noexcept(false);
     extern _UINT32_T PMC_BitwiseAnd_UI_X(ThreadContext& tc, _UINT32_T u, PMC_HANDLE_SINT v) noexcept(false);

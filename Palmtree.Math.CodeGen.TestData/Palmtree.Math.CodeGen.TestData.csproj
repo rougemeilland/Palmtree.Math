@@ -276,6 +276,9 @@
     <Compile Include="Plugin\Sint\TestDataRendererPlugin_DivideExactly_X_UL.cs" />
     <Compile Include="Plugin\Sint\TestDataRendererPlugin_DivideExactly_X_UX.cs" />
     <Compile Include="Plugin\Sint\TestDataRendererPlugin_DivideExactly_X_X.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LeftShift_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LeftShift_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_LeftShift_X_L.cs" />
     <Compile Include="Plugin\Sint\TestDataRendererPlugin_Pow_I_UI.cs" />
     <Compile Include="Plugin\Sint\TestDataRendererPlugin_Pow_L_UI.cs" />
     <Compile Include="Plugin\Sint\TestDataRendererPlugin_Pow_X_UI.cs" />
@@ -284,6 +287,9 @@
     <Compile Include="Plugin\Sint\TestDataRendererPlugin_Modulo_X_UI.cs" />
     <Compile Include="Plugin\Sint\TestDataRendererPlugin_Modulo_X_UL.cs" />
     <Compile Include="Plugin\Sint\TestDataRendererPlugin_Modulo_X_UX.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_RightShift_X_UI.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_RightShift_X_UL.cs" />
+    <Compile Include="Plugin\Sint\TestDataRendererPlugin_RightShift_X_L.cs" />
     <Compile Include="Plugin\Sint\TestDataRendererPlugin_ToStringCustom1.cs" />
     <Compile Include="Plugin\Sint\TestDataRendererPlugin_ToStringCustom2.cs" />
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_DivideExactly_I_X.cs" />
@@ -291,8 +297,14 @@
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_DivideExactly_X_I.cs" />
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_DivideExactly_X_L.cs" />
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_DivideExactly_X_X.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_LeftShift_X_UI.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_LeftShift_X_UL.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_LeftShift_X_L.cs" />
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_Pow_I_I.cs" />
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_Pow_L_I.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_RightShift_X_UI.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_RightShift_X_UL.cs" />
+    <Compile Include="Plugin\Uint\TestDataRendererPlugin_RightShift_X_L.cs" />
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringCustom1.cs" />
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringCustom2.cs" />
     <Compile Include="Plugin\Uint\TestDataRendererPlugin_ToStringR.cs" />

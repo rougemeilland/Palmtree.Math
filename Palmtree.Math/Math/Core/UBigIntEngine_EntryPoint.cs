@@ -80,6 +80,13 @@ namespace Palmtree.Math.Core
             return (r);
         }
 
+        public UInt64 GetBitLength(UBigIntHandle value)
+        {
+            UInt64 r;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_GET_BIT_LENGTH(value.NativeHandle, out r));
+            return (r);
+        }
+
         public Int64 GetPerformanceCounter(string key)
         {
             HandleResultCode((PMC_STATUS_CODE)PMCCS_GetPerformanceCounter(key, out Int64 w));
@@ -476,10 +483,52 @@ namespace Palmtree.Math.Core
             return (new UBigIntHandle(r));
         }
 
+        public UBigIntHandle RightShift(UBigIntHandle x, UInt32 n)
+        {
+            IntPtr r;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_RightShift_UX_UI(x.NativeHandle, n, out r));
+            return (new UBigIntHandle(r));
+        }
+
+        public UBigIntHandle RightShift(UBigIntHandle x, Int64 n)
+        {
+            IntPtr r;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_RightShift_UX_L(x.NativeHandle, n, out r));
+            return (new UBigIntHandle(r));
+        }
+
+        public UBigIntHandle RightShift(UBigIntHandle x, UInt64 n)
+        {
+            IntPtr r;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_RightShift_UX_UL(x.NativeHandle, n, out r));
+            return (new UBigIntHandle(r));
+        }
+
         public UBigIntHandle LeftShift(UBigIntHandle x, Int32 n)
         {
             IntPtr r;
             HandleResultCode((PMC_STATUS_CODE)PMCCS_LeftShift_UX_I(x.NativeHandle, n, out r));
+            return (new UBigIntHandle(r));
+        }
+
+        public UBigIntHandle LeftShift(UBigIntHandle x, UInt32 n)
+        {
+            IntPtr r;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_LeftShift_UX_UI(x.NativeHandle, n, out r));
+            return (new UBigIntHandle(r));
+        }
+
+        public UBigIntHandle LeftShift(UBigIntHandle x, Int64 n)
+        {
+            IntPtr r;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_LeftShift_UX_L(x.NativeHandle, n, out r));
+            return (new UBigIntHandle(r));
+        }
+
+        public UBigIntHandle LeftShift(UBigIntHandle x, UInt64 n)
+        {
+            IntPtr r;
+            HandleResultCode((PMC_STATUS_CODE)PMCCS_LeftShift_UX_UL(x.NativeHandle, n, out r));
             return (new UBigIntHandle(r));
         }
 
